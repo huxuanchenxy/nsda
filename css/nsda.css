@@ -262,7 +262,7 @@
         line-height: 25px;
     }
     .media-know #lj1{
-        margin-top: 40px;
+        margin-top: 33px;
         margin-left: 60px;
     }
 
@@ -270,12 +270,10 @@
         margin-left: 60px;
     }
     .media-know #lj3{
-        margin-top: 55px;
-        margin-left: 60px;
+        margin-top: 35px;
     }
     .media-know #lj4{
-        margin-top: 53px;
-        margin-left: 60px;
+        margin-top: 33px;
     }
 
     .course-time .icon2{
@@ -744,7 +742,7 @@
     .course-dot{
         width: 70px;
         height: 12px;
-        margin:1500px auto 30px;
+        margin:1450px auto 30px;
     }
     .contact{
         margin: 0 auto;
@@ -1083,7 +1081,7 @@
         margin-left: 0;
     }
     .media-know #lj2{
-        margin-top: 65px;
+        margin-top: 35px;
         margin-left: 0;
     }
     #lj3{
@@ -1712,6 +1710,56 @@
     .data-num-right{
         margin-top: 0;
     }
+    .coach-list{
+        width: 337px;
+        margin: 0 auto;
+    }
+    .insert-coach h3{
+        margin-left: 10px;
+    }
+    .data-right .thumbnail h3,.data-right .thumbnail p{
+        font-size: 20px;
+        color: white;
+        text-align: left;
+        line-height: 26px;
+    }
+    .data-right{
+        padding: 10px 0;
+        box-sizing: border-box;
+    }
+
+}
+.header{
+    background: #FFD600;
+    color: #161616;
+    border: none;
+}
+.use{
+    font-size: 26px;
+    line-height: 50px;
+    color: white;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+    background: rgba(255,214,0,0.5);
+    color: #161616;
+}
+.navbar-default .navbar-nav>li>a{
+    color: #161616;
+}
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+    background: #FFD600;
+}
+.navbar-default .navbar-toggle{
+    border: none;
+}
+.dropdown-menu{
+    background: rgba(255,214,0,0.8);
+}
+.navbar{
+    margin-bottom:0;
+}
+.insert-coach h3{
+    color: #10B5FF;
 }
 .testmsg-dot li{
 

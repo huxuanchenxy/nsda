@@ -23,11 +23,11 @@
 
         <div class="collapse navbar-collapse">
             <div class="container">
-                <div class="navbar-form navbar-right" style="margin-right: 30px;">
-                    <input type="text" class="form-control" name="" placeholder="" style="border-radius: 20px">
-                    <a href=""><span class="iconfont icon-sousuo" aria-hidden="true" style="margin-right: 30px;font-size: 20px;color: white;"></span></a>
+                <div class="navbar-form navbar-right">
+                    <input type="text" class="form-control" name="" placeholder="">
+                    <a href=""><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
                     <!--<button class="btn btn-success" style="margin-right: 30px;">搜索</button>-->
-                    <span class="iconfont icon-yonghu" aria-hidden="true" style="color: white;font-size: 20px"></span>
+                    <span class="iconfont icon-yonghu use" aria-hidden="true"></span>
                     <a href="#" class="navbar-link">注册</a> | <a href="#" class="navbar-link">登录 </a>
                 </div>
             </div>
@@ -35,29 +35,48 @@
         </div>
     </div>
 </nav>
-<nav class="nav navbar-inverse" role="navgation" style="background: #FFD600;">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="#" class="navbar-brand">
-                nsda
-            </a>
+<nav class="navbar navbar-default header" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#example-navbar-collapse">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">NSDA</a>
+    </div>
+    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class=""><a href="#">首页</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    关于我们 <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">关于NSDA</a></li>
+                    <li><a href="#">NSDA中国</a></li>
+                    <li><a href="#">合作伙伴</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    会员系统 <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">会员系统</a></li>
+                    <li><a href="#">裁判招募</a></li>
+                    <li><a href="#">申请赛事管理员</a></li>
+                    <li><a href="#">排名榜单</a></li>
+                </ul>
+            </li>
 
-            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav nav">
-                <li class="active"><a href="#">首页</a></li>
-                <li><a href="">关于我们</a></li>
-                <li><a href="">会员系统</a></li>
-                <li><a href="">赛事活动</a></li>
-                <li><a href="">课程专栏</a></li>
-                <li><a href="">更多</a></li>
-            </ul>
-        </div>
+            <li class=""><a href="#">赛事活动</a></li>
+            <li class=""><a href="#">课程专栏</a></li>
+
+            <li class=""><a href="#">更多</a></li>
+        </ul>
     </div>
 </nav>
 
@@ -103,10 +122,11 @@
 </div>
 
 <div class="container-fluid content">
-    <h2>NSDA China</h2>
-    <h3>全美辩论与演讲联盟</h3>
-    <p>自1925 年起，NSDA 就开始为梦想在演讲与辩论领域有所成就的中学生提供实现自我的平台与资源支持。</p>
+
     <div class="container">
+        <h2>NSDA China</h2>
+        <h3>全美辩论与演讲联盟</h3>
+        <p>自1925 年起，NSDA 就开始为梦想在演讲与辩论领域有所成就的中学生提供实现自我的平台与资源支持。</p>
         <div class="row">
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
