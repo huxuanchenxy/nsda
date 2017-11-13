@@ -18,18 +18,17 @@
     <title>NSDA</title>
 </head>
 <body>
-<nav class="nav navbar-inverse" role="navgation">
+<nav class="nav navbar-inverse nav-top" role="navgation">
     <div class="container-fluid">
 
         <div class="collapse navbar-collapse">
-            <div class="container">
-                <div class="navbar-form navbar-right">
-                    <input type="text" class="form-control" name="" placeholder="">
-                    <a href=""><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
-                    <!--<button class="btn btn-success" style="margin-right: 30px;">搜索</button>-->
-                    <span class="iconfont icon-yonghu use" aria-hidden="true"></span>
-                    <a href="#" class="navbar-link">注册</a> | <a href="#" class="navbar-link">登录 </a>
-                </div>
+            <div class="container search navbar-right">
+                <input type="text" class="form-control" name="" placeholder="">
+                <a href=""><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
+                <span class="iconfont icon-yonghu" aria-hidden="true"></span>
+                <a href="#" class="navbar-link link">注册 | </a><a href="#" class="navbar-link link"> 登录 </a>
+
+
             </div>
 
         </div>
@@ -37,8 +36,15 @@
 </nav>
 <nav class="navbar navbar-default header" role="navigation">
     <div class="navbar-header">
+        <div class="sear hidden-md hidden-lg">
+            <input type="text" class="form-control" name="" placeholder="">
+            <a href=""><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
+            <span class="iconfont icon-yonghu" aria-hidden="true"></span>
+            <a href="#" class="navbar-link link">注册 | </a><a href="#" class="navbar-link link">登录 </a>
+        </div>
         <button type="button" class="navbar-toggle" data-toggle="collapse"
                 data-target="#example-navbar-collapse">
+
             <span class="sr-only">切换导航</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -47,7 +53,7 @@
         <a class="navbar-brand" href="#">NSDA</a>
     </div>
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav" id="lead">
             <li class=""><a href="#">首页</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -128,79 +134,93 @@
         <h3>全美辩论与演讲联盟</h3>
         <p>自1925 年起，NSDA 就开始为梦想在演讲与辩论领域有所成就的中学生提供实现自我的平台与资源支持。</p>
         <div class="row">
-            <div class="col-sm-6 col-md-3">
+            <div class="col-sm-6 col-md-3 cont">
                 <div class="thumbnail">
-                    <div class="media media-know">
+                    <div class="media">
                         <div class="media-left">
                             <i class="iconfont icon-iconset0202 icon1" aria-hidden="true"></i>
                         </div>
-                        <div class="media-body media-body-con">
-                            <div class="body-top">
+                        <div class="media-body">
+                            <div class="media-b-top">
                                 <h4 class="media-heading">NSDA 会员体系</h4>
                                 <p>Membership</p>
                             </div>
-                            独有的会员积分和排名系统,在全美范围内建立起一个客观的学术评价体系。该体系作为学生的学术成就指标之一，得到全美各大学的大力认可，在每年的招生过程中被广泛使用。
+                            <div class="media-b-con">
+                                <p>独有的会员积分和排名系统,在全美范围内建立起一个客观的学术评价体系。该体系作为学生的学术成就指标之一，得到全美各大学的大力认可，在每年的招生过程中被广泛使用。</p>
+                            </div>
                         </div>
-                        <span class="media-body-bottom" id="lj1"><a href="">了解详情</a></span>
                     </div>
+                    <span class="media-bot">
+                        <a href="">了解详情</a>
+                    </span>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3">
+            <div class="col-sm-6 col-md-3 cont">
                 <div class="thumbnail">
-                    <div class="media media-know">
+                    <div class="media">
                         <div class="media-left">
                             <i class="iconfont icon-jiangbei icon1" aria-hidden="true"></i>
                         </div>
-                        <div class="media-body media-body-con">
-                            <div class="body-top">
+                        <div class="media-body">
+                            <div class="media-b-top">
                                 <h4 class="media-heading">丰富的赛事活动</h4>
                                 <p>Tournament</p>
                             </div>
-                            举办辩论与演讲比赛、组织海内外辩论与演讲培训、提供校级比赛及学生俱乐部支持，并且组织中国学生参加多项NSDA 主办的大型国际赛事。
+                            <div class="media-b-con">
+                                <p>举办辩论与演讲比赛、组织海内外辩论与演讲培训、提供校级比赛及学生俱乐部支持，并且组织中国学生参加多项NSDA 主办的大型国际赛事。</p>
+                            </div>
                         </div>
-                        <span class="media-body-bottom" id="lj2"><a href="">了解详情</a></span>
                     </div>
+                    <span class="media-bot">
+                        <a href="">了解详情</a>
+                    </span>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3">
+            <div class="col-sm-6 col-md-3 cont">
                 <div class="thumbnail">
-                    <div class="media media-know">
+                    <div class="media">
                         <div class="media-left">
                             <i class="iconfont icon-shu icon1" aria-hidden="true"></i>
                         </div>
-                        <div class="media-body media-body-con">
-                            <div class="body-top">
+                        <div class="media-body">
+                            <div class="media-b-top">
                                 <h4 class="media-heading">多样化的课程平台</h4>
                                 <p>Curriculum</p>
                             </div>
-                            提供丰富多样化的线上、线下课程。旨在全面培养学生语言、思维和表达能力。为爱好辩论与演讲的中国学生提供一个良好的生态圈。
+                            <div class="media-b-con">
+                                <p>提供丰富多样化的线上、线下课程。旨在全面培养学生语言、思维和表达能力。为爱好辩论与演讲的中国学生提供一个良好的生态圈。</p>
+                            </div>
                         </div>
-                        <span class="media-body-bottom" id="lj3"><a href="">了解详情</a></span>
                     </div>
+                    <span class="media-bot">
+                        <a href="">了解详情</a>
+                    </span>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3">
+            <div class="col-sm-6 col-md-3 cont">
                 <div class="thumbnail">
-                    <div class="media media-know">
+                    <div class="media">
                         <div class="media-left">
                             <i class="iconfont icon-qianbi icon1" aria-hidden="true"></i>
                         </div>
-                        <div class="media-body media-body-con">
-                            <div class="body-top">
+                        <div class="media-body">
+                            <div class="media-b-top">
                                 <h4 class="media-heading">提供社团技术支持</h4>
                                 <p>Support</p>
                             </div>
-                            为各辩论演讲社团提供更好更稳定的平台。您可以通过此系统组织和运营比赛，同时比赛经过NSDA 中国认证后，参赛选手将能获得NSDA官方积分。
+                            <div class="media-b-con">
+                                <p>为各辩论演讲社团提供更好更稳定的平台。您可以通过此系统组织和运营比赛，同时比赛经过NSDA 中国认证后，参赛选手将能获得NSDA官方积分。</p>
+                            </div>
                         </div>
-                        <span class="media-body-bottom" id="lj4"><a href="">了解详情</a></span>
                     </div>
+                    <span class="media-bot">
+                        <a href="">了解详情</a>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <div class="parallax-window container-fluid" data-parallax="scroll" data-image-src="img/scroll-bg.png">
     <div class="container">
@@ -614,53 +634,153 @@
 
 <div class="container-fluid info">
     <div class="media">
-        <div class="media-body">
-            <div id="insert-coach" class="insert-coach">
-                <h3>全面提供NSDA中国注册会员与机构支持，<br>为辩论与演讲在中国更好的发展！</h3>
-                <ul class="coach-list col-md-12 col-sm-6 col-xs-6">
-                    <li class="list-inf"><p>01.</p> <h5>查询NSDA China注册教练</h5><a href="javascript:;" class="navlink"><i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i></a>
-                        <div class="div">
-                            <p>我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的</p>
-                        </div>
-                    </li>
-                    <li class="list-inf"><p>02.</p> <h5>帮助辩论与演讲社团成立</h5><a href="javascript:;" class="navlink"><i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i></a>
-                        <div class="div">
-                            <p>我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的</p>
-                        </div>
-                    </li>
-                    <li class="list-inf"><p>03.</p> <h5>裁判招募，以支持各地赛事</h5><a href="javascript:;" class="navlink"><i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i></a>
-                        <div class="div">
-                            <p>我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的</p>
-                        </div>
-                    </li>
-                    <li class="list-inf"><p>04.</p> <h5>比赛标准计分系统</h5><a href="javascript:;" class="navlink"><i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i></a>
-                        <div class="div">
-                            <p>我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="media-left media-middle info-img">
+            <img class="media-object" src="img/coach.png" alt="...">
         </div>
-        <div class="media-right hidden-sm">
-            <img class="media-object" src="img/speach.png" alt="...">
+        <div class="media-body info-con">
+            <h3>全面提供NSDA中国注册会员与机构支持，</h3>
+            <h3>为辩论与演讲在中国更好的发展！</h3>
+            <div class="panel-group group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading title" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <p>01.</p><h5> 查询NSDA China注册教练</h5>
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="glyphicon glyphicon-menu-down" style="display: none" aria-hidden="true"></i>
+                                <i class="glyphicon glyphicon-menu-up" aria-hidden="true"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading title" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <p>02.</p><h5> 帮助辩论与演讲社团成立</h5>
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i>
+                                <i class="glyphicon glyphicon-menu-up" style="display: none" aria-hidden="true"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading title" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <p>03.</p><h5> 裁判招募，以支持各地赛事</h5>
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i>
+                                <i class="glyphicon glyphicon-menu-up" style="display: none" aria-hidden="true"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body">
+                            我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading title" role="tab" id="headingFour">
+                        <h4 class="panel-title">
+                            <p>04.</p><h5> 比赛标准计分系统</h5>
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i>
+                                <i class="glyphicon glyphicon-menu-up" style="display: none" aria-hidden="true"></i>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                        <div class="panel-body">
+                            我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="container sinfo">
+    <h3>全面提供NSDA中国注册会员与机构支持，为辩论与演讲在中国更好的发展！</h3>
+    <div class="panel-group sgroup" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading title" role="tab" id="headingFive">
+                <h4 class="panel-title">
+                    <p>01.</p><h5> 查询NSDA China注册教练</h5>
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                        <i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i>
+                        <i class="glyphicon glyphicon-menu-up" style="display: none" aria-hidden="true"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
+                <div class="panel-body">
+                    我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading title" role="tab" id="headingSix">
+                <h4 class="panel-title">
+                    <p>02.</p><h5> 帮助辩论与演讲社团成立</h5>
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        <i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i>
+                        <i class="glyphicon glyphicon-menu-up" style="display: none" aria-hidden="true"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                <div class="panel-body">
+                    我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading title" role="tab" id="headingSeven">
+                <h4 class="panel-title">
+                    <p>03.</p><h5> 裁判招募，以支持各地赛事</h5>
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        <i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i>
+                        <i class="glyphicon glyphicon-menu-up" style="display: none" aria-hidden="true"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                <div class="panel-body">
+                    我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading title" role="tab" id="headingEight">
+                <h4 class="panel-title">
+                    <p>04.</p><h5> 比赛标准计分系统</h5>
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        <i class="glyphicon glyphicon-menu-down" aria-hidden="true"></i>
+                        <i class="glyphicon glyphicon-menu-up" style="display: none" aria-hidden="true"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
+                <div class="panel-body">
+                    我们记录在华教练的履历信息，并且我将通过记录教练对应的学生比赛成绩，学生评价等多方参数就算出教练等级。以帮助学生选择适合自己的
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    var btn = document.getElementsByClassName('navlink');
-    var list = document.getElementsByClassName('div');
-    for(let index=0;index<list.length;index++){
-        var flag = true
-        btn[index].onclick = function () {
-            if(flag){
-                flag=false;
-                list[index].style.display="block";
-            }else{
-                flag=true;
-                list[index].style.display="none";
-            }
-        }
-    }
+
 </script>
 
 <div class="container contact">
