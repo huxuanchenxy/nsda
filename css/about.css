@@ -1,0 +1,457 @@
+.ad{
+    width: 100%;
+    height: 138px;
+    background: #FF7A4C;
+}
+.rode{
+    width: 100%;
+    height: 27px;
+    background: #FF5655;
+}
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "-\00a0";
+}
+.breadcrumb {
+    padding: 3px 15px;
+    background: #FF5655;
+}
+.rode a{
+    font-size: 12px;
+    color: white;
+}
+.rode a:hover{
+    color: #EEEEEE;
+}
+.nsda{
+    margin: 36px auto 58px;
+}
+.rode .col-lg-6,.col-md-12,.col-sm-12,.col-xs-12{
+    padding: 0;
+}
+.nsda .panel-heading{
+    border-left: 5px solid #FF5655;
+    font-size: 40px;
+    line-height:40px;
+    color: black;
+}
+.nsda .panel-heading p{
+    font-size: 20px;
+    line-height: 40px;
+}
+.nsda .panel-body{
+    padding: 0;
+    font-size: 14px;
+    color: #797979;
+    line-height: 24px;
+}
+.nsda .panel-body p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.nsda .view{
+    margin-top: 20px;
+}
+.nsda .view span{
+    display: inline-block;
+    float: left;
+    width: 10px;
+    height:10px;
+    margin-right: 5px;
+    background: #FFD600;
+}
+.nsda .view p{
+    font-size: 14px;
+    line-height: 0.8;
+}
+
+.famous-title{
+    text-align: center;
+    margin-bottom: 45px;
+}
+.famous-title h3{
+    font-size: 36px;
+    line-height: 1;
+}
+.famous-title p{
+    font-size: 14px;
+    color: #797979;
+}
+.famous-title span{
+    display: inline-block;
+    padding: 2px 35px;
+    background: red;
+    margin: 0 auto;
+}
+.famous-content .famous-ins{
+    height: 788px;
+    background: #FF5655;
+    float: right;
+}
+.famous-ins .yin{
+    font-size: 90px;
+    color: whitesmoke;
+    line-height: 200px;
+}
+.famous-ins h3{
+    font-size: 22px;
+    line-height: 50px;
+    padding-left: 70px;
+    padding-right: 180px;
+    color: whitesmoke;
+}
+.famous-ins h5{
+    font-size: 16px;
+    line-height: 40px;
+    padding-left: 70px;
+    padding-right: 180px;
+    color: whitesmoke;
+}
+.famous-ins .p{
+    margin-top: 60px;
+}
+.famous-ins p{
+    font-size: 14px;
+    padding-left: 70px;
+}
+.famous-content .famous-men{
+    width: 560px;
+    height: 100%;
+    float: right;
+    margin-right: 20px;
+}
+.famous-men h4{
+    font-size: 14px;
+    line-height:1.5;
+    color: #797979;
+}
+.famous-men .img{
+    display: inline-block;
+    width: 235px;
+    height: 260px;
+
+}
+.famous-pic{
+    margin-top:30px;
+}
+.famous-men .img1{
+    background: url("../img/Sonia_Sotomayor_in_SCOTUS_robe.jpg") no-repeat center /cover;
+}
+.famous-men .img2{
+    background: url("../img/Stephen Breyer.jpg") no-repeat center /cover;
+}
+.famous-men .img3{
+    background: url("../img/Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg") no-repeat center /cover;
+}
+.famous-men .img4{
+    background: url("../img/Samuel Alito.jpg") no-repeat center /cover;
+}
+.famous-men .caption span{
+    font-size: 14px;
+    line-height: 0.8;
+    color: #797979;
+    display: inline-block;
+    width: 125px;
+    border-bottom: 5px solid #FFD600;
+}
+.famous{
+    margin-bottom: 60px;
+}
+.history{
+    padding: 30px 60px;
+    background: #FF7A4C;
+    color: whitesmoke;
+    text-align: right;
+}
+.history h3{
+    font-size: 28px;
+    line-height: 50px;
+    letter-spacing: 2px;
+}
+.history h4{
+    font-size: 20px;
+
+}
+.times {display:block;margin:15px 0;}/*首先，我们要创建一个容器class*/
+.times ul{
+    margin-right: 25px;
+    border-right: 1px solid whitesmoke;
+}
+.times ul li{
+    width: 100%;
+    margin-right: -12px;
+    line-height:100px;
+    text-align: right;
+    color: whitesmoke;
+    font-weight:normal;
+    position: relative;
+    padding-right: 10px;
+    margin-bottom: 30px;
+}
+.times ul li::before{
+    content: '';
+    position: absolute;
+    right: -4px;
+    width: 8px;
+    height: 8px;
+    line-height: 80px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    background: whitesmoke;
+    float: right;
+}
+.times ul li h3{
+    font-size: 14px;
+    line-height:1;
+    margin-bottom: 7px;
+}
+.times ul li p{
+    font-size: 12px;
+    line-height:20px;
+}
+.times .mem{
+    padding-bottom: 40px;
+}
+.step{
+    padding-top: 125px;
+    padding-left: 85px;
+}
+.step span{
+    display: inline-block;
+    width: 110px;
+    height:5px;
+    background: #FF5655;
+    margin-bottom: 30px;
+}
+.step p{
+    font-size: 18px;
+    color: #797979;
+    line-height: 30px;
+}
+.step .morestep{
+    margin-top: 100px;
+}
+.step .morestep ul{
+    width: 280px;
+    height: 100px;
+    border-bottom: 1px solid #FF7A4C;
+    padding-right: 30px;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+.step .morestep ul li{
+    width: 240px;
+    height:52px;
+    border: 4px solid black;
+    box-sizing: border-box;
+}
+.step .morestep ul li a h3{
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+    line-height: 50px;
+    text-align: center;
+}
+.step .morestep ul li:hover{
+    background: #FF7A4C;
+}
+.step .morestep ul li a h3:hover{
+    color: whitesmoke;
+}
+@media (max-width: 1024px){
+    .famous-title h3{
+        font-size: 32px;
+    }
+    .famous-title p{
+        font-size: 16px;
+    }
+    .famous-content .famous-men {
+        width: 600px;
+        height: 100%;
+        margin-right: 180px;
+    }
+    .famous-men .famous-pic{
+        /*padding-left: 240px;*/
+        margin-top: 20px;
+    }
+    .famous-men{
+        margin-top: 20px;
+    }
+    .famous-men h4{
+
+        margin-top: 20px;
+    }
+}
+@media (max-width: 768px){
+    .famous-title h3{
+        font-size: 20px;
+    }
+    .famous-title p{
+        font-size: 12px;
+    }
+    .famous-content .famous-men {
+        width: 560px;
+        height: 100%;
+        margin-right: 60px;
+    }
+    .famous-men .famous-pic{
+        /*padding-left: 240px;*/
+        margin-top: 20px;
+    }
+    .famous-men h4{
+        padding-left: -16px;
+        margin-top: 20px;
+    }
+    .step{
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .step .morestep{
+        margin-top: 15px;
+    }
+}
+
+
+@media (max-width: 450px){
+    .ad{
+        width: 100%;
+        height: 60px;
+        background: #FF7A4C;
+    }
+    .nsda .panel-heading{
+        border-left: 5px solid #FF5655;
+        font-size: 20px;
+        line-height:20px;
+        color: black;
+    }
+    .nsda .panel-heading p{
+        font-size: 14px;
+        line-height: 20px;
+    }
+    .nsda .panel-body{
+        padding: 0;
+        font-size: 12px;
+        color: #797979;
+        line-height: 22px;
+    }
+    .nsda .panel-body p{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .nsda .view{
+        margin-top: 20px;
+    }
+    .nsda .view span{
+        display: inline-block;
+        float: left;
+        width: 10px;
+        height:10px;
+        margin-right: 5px;
+        background: #FFD600;
+    }
+    .nsda .view p{
+        font-size: 12px;
+        line-height: 0.9;
+    }
+
+    .famous-title h3{
+        font-size: 28px;
+    }
+    .famous-ins{
+        padding: 50px 10px;
+    }
+    .famous-ins h3{
+        font-size: 20px;
+        line-height: 24px;
+        padding: 10px;
+    }
+    .famous-ins h5{
+        font-size: 16px;
+        line-height: 24px;
+        padding: 10px;
+    }
+    .famous-ins p{
+        font-size: 12px;
+        line-height: 20px;
+        padding: 10px;
+    }
+    .famous-men .famous-pic{
+        padding-left: 290px;
+        margin-top: 20px;
+    }
+    .famous-men h4{
+        padding-left: 250px;
+        margin-top: 20px;
+    }
+
+    .history,.step{
+        padding: 30px;
+    }
+    .step .morestep{
+        margin-top: 20px;
+    }
+}
+@media (max-width: 375px){
+    .famous-title h3{
+        font-size: 18px;
+    }
+    .famous-title span{
+        display: inline-block;
+        padding: 2px 20px;
+    }
+    .famous-title p{
+        font-size: 12px;
+    }
+
+    .famous-men .famous-pic{
+        padding-left: 330px;
+        margin-top: 20px;
+    }
+    .famous-men h4{
+        padding-left: 280px;
+        margin-top: 20px;
+    }
+}
+@media (max-width: 320px){
+    .famous-title h3{
+        font-size: 20px;
+    }
+    .famous-title p{
+        font-size: 12px;
+    }
+
+    .famous-men .famous-pic{
+        padding-left: 380px;
+        margin-top: 20px;
+    }
+    .famous-men h4{
+        padding-left: 330px;
+        margin-top: 20px;
+    }
+    .history h3{
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+    .history h4{
+        font-size: 16px;
+    }
+    .step p{
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
+.thumbnail{
+    display: block;
+    border: none;
+}
+
+
+
+
+
+
+
+
+

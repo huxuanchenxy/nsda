@@ -1878,6 +1878,22 @@
     .content .media-bot:hover{
         background: #0AA5EA;
     }
+    .testmin{
+        height: 500px;
+    }
+    .testmin .testmsg .testmsg-dot{
+        margin-top: 360px;
+    }
+    #hi{
+        display: none;
+    }
+    #he{
+        display: none;
+    }
+    .course .course-dot{
+        margin-top: 1430px;
+    }
+    
 }
 
 .info .panel-default{
