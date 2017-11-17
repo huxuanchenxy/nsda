@@ -98,14 +98,14 @@
     font-size: 22px;
     line-height: 50px;
     padding-left: 70px;
-    padding-right: 180px;
+    padding-right:340px;
     color: whitesmoke;
 }
 .famous-ins h5{
     font-size: 16px;
     line-height: 40px;
     padding-left: 70px;
-    padding-right: 180px;
+    padding-right: 340px;
     color: whitesmoke;
 }
 .famous-ins .p{
@@ -114,6 +114,7 @@
 .famous-ins p{
     font-size: 14px;
     padding-left: 70px;
+    padding-right: 500px;
 }
 .famous-content .famous-men{
     width: 560px;
@@ -199,7 +200,8 @@
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
-    background: whitesmoke;
+    border: 1px solid whitesmoke;
+    background: #FF7A4C;
     float: right;
 }
 .times ul li h3{
@@ -283,6 +285,31 @@
 
         margin-top: 20px;
     }
+    .famous-content .famous-ins{
+        height: 600px;
+    }
+    .famous-ins h3{
+        font-size: 22px;
+        line-height: 50px;
+        padding-left: 70px;
+        padding-right:70px;
+        color: whitesmoke;
+    }
+    .famous-ins h5{
+        font-size: 18px;
+        line-height: 40px;
+        padding-left: 70px;
+        padding-right: 70px;
+        color: whitesmoke;
+    }
+    .famous-ins .p{
+        margin-top: 60px;
+    }
+    .famous-ins p{
+        font-size: 16px;
+        padding-left: 70px;
+        padding-right: 240px;
+    }
 }
 @media (max-width: 768px){
     .famous-title h3{
@@ -310,6 +337,32 @@
     }
     .step .morestep{
         margin-top: 15px;
+        padding: 20px 10px;
+    }
+    .famous-content .famous-ins{
+        height: 680px;
+    }
+    .famous-ins h3{
+        font-size: 22px;
+        line-height: 50px;
+        padding-left: 70px;
+        padding-right:70px;
+        color: whitesmoke;
+    }
+    .famous-ins h5{
+        font-size: 18px;
+        line-height: 40px;
+        padding-left: 70px;
+        padding-right: 70px;
+        color: whitesmoke;
+    }
+    .famous-ins .p{
+        margin-top: 60px;
+    }
+    .famous-ins p{
+        font-size: 16px;
+        padding-left: 70px;
+        padding-right: 280px;
     }
 }
 
@@ -359,16 +412,17 @@
     .famous-title h3{
         font-size: 28px;
     }
-    .famous-ins{
-        padding: 50px 10px;
+    .famous-content .famous-ins{
+        height: 620px;
+        padding: 20px 10px;
     }
     .famous-ins h3{
-        font-size: 20px;
-        line-height: 24px;
+        font-size: 18px;
+        line-height: 20px;
         padding: 10px;
     }
     .famous-ins h5{
-        font-size: 16px;
+        font-size: 14px;
         line-height: 24px;
         padding: 10px;
     }
@@ -385,7 +439,9 @@
         padding-left: 250px;
         margin-top: 20px;
     }
-
+    .history h3{
+        font-size: 22px;
+    }
     .history,.step{
         padding: 30px;
     }
@@ -412,6 +468,25 @@
     .famous-men h4{
         padding-left: 280px;
         margin-top: 20px;
+    }
+    .famous-content .famous-ins{
+        height: 620px;
+        padding: 20px 10px;
+    }
+    .famous-ins h3{
+        font-size: 18px;
+        line-height: 20px;
+        padding: 10px;
+    }
+    .famous-ins h5{
+        font-size: 14px;
+        line-height: 24px;
+        padding: 10px;
+    }
+    .famous-ins p{
+        font-size: 12px;
+        line-height: 20px;
+        padding: 10px;
     }
 }
 @media (max-width: 320px){
@@ -441,6 +516,26 @@
         font-size: 14px;
         line-height: 22px;
     }
+    .famous-content .famous-ins{
+        height: 660px;
+        padding: 20px 10px;
+    }
+    .famous-ins h3{
+        font-size: 18px;
+        line-height: 20px;
+        padding: 10px;
+    }
+    .famous-ins h5{
+        font-size: 14px;
+        line-height: 24px;
+        padding: 10px;
+    }
+    .famous-ins p{
+        font-size: 12px;
+        line-height: 20px;
+        padding: 10px;
+    }
+
 }
 .thumbnail{
     display: block;
