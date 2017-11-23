@@ -115,6 +115,7 @@
     margin-top: 350px;
     margin-left: 170px;
     margin-bottom: 50px;
+    padding-top: 2px;
 }
 .sendmsg h3{
     font-size: 20px;
@@ -124,9 +125,10 @@
 .sendmsg p{
     font-size: 14px;
     text-align: center;
+    color: #797979;
 }
 .sendmsg:hover{
-    background: #797979;
+    background: #5e5e5e;
 }
 @media (max-width: 1024px){
     .sendmsg{

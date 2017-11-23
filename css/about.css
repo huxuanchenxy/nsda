@@ -98,14 +98,14 @@
     font-size: 22px;
     line-height: 50px;
     padding-left: 70px;
-    padding-right:340px;
+    padding-right:200px;
     color: whitesmoke;
 }
 .famous-ins h5{
     font-size: 16px;
     line-height: 40px;
     padding-left: 70px;
-    padding-right: 340px;
+    padding-right: 200px;
     color: whitesmoke;
 }
 .famous-ins .p{
@@ -114,7 +114,7 @@
 .famous-ins p{
     font-size: 14px;
     padding-left: 70px;
-    padding-right: 500px;
+    padding-right: 300px;
 }
 .famous-content .famous-men{
     width: 560px;
