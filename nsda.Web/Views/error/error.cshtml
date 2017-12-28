@@ -1,0 +1,58 @@
+﻿<html lang="en">
+<head>
+    <title>NSDA</title>
+    <style>
+        body {
+            background-color: #459df5;
+            text-align: center;
+            color: #fff;
+        }
+
+
+        .err-type {
+            font-size: 80px;
+            padding-top: 24px;
+        }
+
+        .err-info {
+            font-size: 30px;
+            margin-bottom: 24px;
+        }
+
+        .tools {
+            margin-bottom: 45px;
+        }
+
+        .tools a {
+            font-size: 20px;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 4px;
+        }
+
+        .tools a:hover {
+            background-color: #459df5;
+        }
+
+        .tools span {
+            font-size: 20px;
+            margin: 0 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="err-type" style="padding-top:18%;">404</div>
+    <div class="err-info">亲~ 你访问的页面异常哦！</div>
+    <div class="tools"><a href="javascript:history.back()">返回上一页</a><span></span><a href="/">返回首页</a> </div>
+    <script src="/asset/jquery/jquery-1.11.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (window.top != null && window.top.document.URL != document.URL) {
+                window.top.location = document.URL;
+            }
+        });
+    </script>
+</body>
+</html>
