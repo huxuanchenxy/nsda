@@ -114,8 +114,9 @@
     <Compile Include="Areas\member\memberAreaRegistration.cs" />
     <Compile Include="Areas\trainer\Controllers\trainerController.cs" />
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
+    <Compile Include="Controllers\aboutController.cs" />
     <Compile Include="Controllers\errorController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\homeController.cs" />
     <Compile Include="Filter\AdminLoginAttribute.cs" />
     <Compile Include="Filter\CommonExceptionFilter.cs" />
     <Compile Include="Filter\EventManageLoginAttribute.cs" />
@@ -127,14 +128,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="asset\bootstrap\css\bootstrap.extension.css" />
-    <Content Include="asset\bootstrap\css\bootstrap.min.css" />
-    <Content Include="asset\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="asset\bootstrap\js\bootstrap.min.js" />
+    <Content Include="asset\css\about.css" />
+    <Content Include="asset\css\aboutp.css" />
+    <Content Include="asset\css\aboutus.css" />
+    <Content Include="asset\css\basic.css" />
+    <Content Include="asset\css\bootstrap.min.css" />
+    <Content Include="asset\css\iconfont.css" />
+    <Content Include="asset\css\nsda.css" />
     <Content Include="asset\jquery\jquery-1.11.1.min.js" />
+    <Content Include="asset\jquery\jquery-3.2.1.min.js" />
     <Content Include="asset\jquery\jquery.cookie.js" />
     <Content Include="asset\jquery\jquery.form.js" />
     <Content Include="asset\jquery\jquery.validate.js" />
+    <Content Include="asset\js\bootstrap.min.js" />
+    <Content Include="asset\js\nsda.js" />
+    <Content Include="asset\js\parallax.min.js" />
     <Content Include="asset\layer\css\layer.css" />
     <Content Include="asset\layer\css\layer.ext.css" />
     <Content Include="asset\layer\img\icon.png" />
@@ -152,7 +160,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\home\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -168,6 +176,8 @@
     <Folder Include="Areas\trainer\Models\" />
     <Folder Include="Areas\trainer\Views\Shared\" />
     <Folder Include="Areas\trainer\Views\trainer\" />
+    <Folder Include="asset\fonts\" />
+    <Folder Include="asset\img\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -193,12 +203,6 @@
     <Content Include="Areas\eventmanage\Views\web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="asset\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="asset\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="asset\bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="asset\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\error\error.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +218,15 @@
       <Project>{C0A8D7CC-1257-4FCC-9DFF-F4F04A0E4674}</Project>
       <Name>nsda.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\about\us.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\about\nsda.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\about\partner.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

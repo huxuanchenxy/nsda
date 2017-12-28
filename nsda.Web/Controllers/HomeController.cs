@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Controllers
 {
-    public class HomeController : Controller
+    public class homeController : Controller
     {
         public ActionResult Index()
         {
