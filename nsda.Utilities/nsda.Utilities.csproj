@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>nsda.Utilities</RootNamespace>
     <AssemblyName>nsda.Utilities</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;ASYNC</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -33,6 +33,9 @@
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\Newtonsoft.Json.dll</HintPath>
@@ -53,7 +56,8 @@
       <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -65,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="DataTypeEnum.cs" />
     <Compile Include="EmailUtility.cs" />
@@ -75,6 +80,59 @@
     <Compile Include="LoginModeEnum.cs" />
     <Compile Include="LogUtils.cs" />
     <Compile Include="nsdaRequest.cs" />
+    <Compile Include="Orm\DapperExtensions.cs" />
+    <Compile Include="Orm\DapperPagedList.cs" />
+    <Compile Include="Orm\Dapper\CommandDefinition.cs" />
+    <Compile Include="Orm\Dapper\CommandFlags.cs" />
+    <Compile Include="Orm\Dapper\CustomPropertyTypeMap.cs" />
+    <Compile Include="Orm\Dapper\DataTableHandler.cs" />
+    <Compile Include="Orm\Dapper\DbString.cs" />
+    <Compile Include="Orm\Dapper\DefaultTypeMap.cs" />
+    <Compile Include="Orm\Dapper\DynamicParameters.CachedOutputSetters.cs" />
+    <Compile Include="Orm\Dapper\DynamicParameters.cs" />
+    <Compile Include="Orm\Dapper\DynamicParameters.ParamInfo.cs" />
+    <Compile Include="Orm\Dapper\ExplicitConstructorAttribute.cs" />
+    <Compile Include="Orm\Dapper\FeatureSupport.cs" />
+    <Compile Include="Orm\Dapper\SimpleMemberMap.cs" />
+    <Compile Include="Orm\Dapper\SqlDataRecordHandler.cs" />
+    <Compile Include="Orm\Dapper\SqlDataRecordListTVPParameter.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.Async.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.CacheInfo.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.DapperRow.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.DapperRowMetaObject.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.DapperTable.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.DeserializerState.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.DontMap.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.GridReader.Async.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.GridReader.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.ICustomQueryParameter.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.IDataReader.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.Identity.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.IDynamicParameters.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.IMemberMap.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.IParameterCallbacks.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.IParameterLookup.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.ITypeHandler.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.ITypeMap.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.Link.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.LiteralToken.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.Settings.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.TypeDeserializerCache.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.TypeHandler.cs" />
+    <Compile Include="Orm\Dapper\SqlMapper.TypeHandlerCache.cs" />
+    <Compile Include="Orm\Dapper\TableValuedParameter.cs" />
+    <Compile Include="Orm\Dapper\TypeExtensions.cs" />
+    <Compile Include="Orm\Dapper\UdtTypeHandler.cs" />
+    <Compile Include="Orm\Dapper\WrappedDataReader.cs" />
+    <Compile Include="Orm\Dapper\WrappedReader.cs" />
+    <Compile Include="Orm\Dapper\XmlHandlers.cs" />
+    <Compile Include="Orm\DBContext.cs" />
+    <Compile Include="Orm\DBContextFactory.cs" />
+    <Compile Include="Orm\IDBContext.cs" />
+    <Compile Include="Orm\MySqlDBContext.cs" />
+    <Compile Include="Orm\SqlServerDBContext.cs" />
+    <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionCookieUtility.cs" />
     <Compile Include="Utility.cs" />
