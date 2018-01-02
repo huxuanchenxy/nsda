@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nsda.Services.member
+namespace nsda.Model.dto.request
 {
-    /// <summary>
-    /// 会员教练管理
-    /// </summary>
-    public class MemberTrainerService
+    public class RegisterRequest
     {
 
     }

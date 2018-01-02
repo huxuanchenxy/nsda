@@ -44,15 +44,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="member\MemberEduExperRepo.cs" />
-    <Compile Include="member\MemberRepo.cs" />
-    <Compile Include="member\MemberTrainerRepo.cs" />
+    <Compile Include="DataRepository.cs" />
+    <Compile Include="IDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="admin\" />
-    <Folder Include="eventmanage\" />
-    <Folder Include="trainer\" />
+    <Folder Include="Contract\admin\" />
+    <Folder Include="Contract\eventmanage\" />
+    <Folder Include="Contract\member\" />
+    <Folder Include="Contract\trainer\" />
+    <Folder Include="Implement\admin\" />
+    <Folder Include="Implement\eventmanage\" />
+    <Folder Include="Implement\member\" />
+    <Folder Include="Implement\trainer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nsda.Utilities\nsda.Utilities.csproj">
+      <Project>{C0A8D7CC-1257-4FCC-9DFF-F4F04A0E4674}</Project>
+      <Name>nsda.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dto\request\EmailLogRequest.cs" />
+    <Compile Include="dto\request\LeavingMsgRequest.cs" />
+    <Compile Include="dto\request\LoginLogRequest.cs" />
+    <Compile Include="dto\request\PagedQuery.cs" />
+    <Compile Include="dto\request\RegisterRequest.cs" />
+    <Compile Include="dto\request\SchoolRequest.cs" />
+    <Compile Include="dto\request\SysOperLogRequest.cs" />
+    <Compile Include="dto\response\EmailLogResponse.cs" />
+    <Compile Include="dto\response\LeavingMsgResponse.cs" />
+    <Compile Include="dto\response\LoginLogResponse.cs" />
+    <Compile Include="dto\response\SchoolResponse.cs" />
+    <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\Result.cs" />
     <Compile Include="enums\CardTypeEm.cs" />
     <Compile Include="enums\DataTypeEm.cs" />
@@ -137,10 +149,7 @@
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="dto\request\" />
-    <Folder Include="dto\response\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="model\entityHelper.ttinclude" />

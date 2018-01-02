@@ -41,6 +41,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDLL\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc">
+      <HintPath>..\ReferenceDLL\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -210,9 +217,9 @@
       <Project>{155a1743-f85c-4dd1-ad59-3946f5aae339}</Project>
       <Name>nsda.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\nsda.unittest\nsda.Unittest.csproj">
-      <Project>{5ad09bc9-febc-4463-82e4-4d573bbaa3cc}</Project>
-      <Name>nsda.Unittest</Name>
+    <ProjectReference Include="..\nsda.Services\nsda.Services.csproj">
+      <Project>{8e6a4482-8c13-410e-b588-fbc35199242a}</Project>
+      <Name>nsda.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\nsda.Utilities\nsda.Utilities.csproj">
       <Project>{C0A8D7CC-1257-4FCC-9DFF-F4F04A0E4674}</Project>

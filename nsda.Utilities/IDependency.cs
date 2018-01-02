@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nsda.Services.member
-{
+namespace nsda.Utilities
+{  
     /// <summary>
-    /// 会员管理
+    /// 依赖服务，用于Ioc自动装配
     /// </summary>
-    public class MemberRepo
+    public interface IDependency
     {
 
     }

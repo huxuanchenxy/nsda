@@ -29,10 +29,24 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
+        /// <summary>
+        /// 姓名
+        /// </summary>
         public string name { get; set; }
     
+        /// <summary>
+        /// 邮箱
+        /// </summary>
         public string email { get; set; }
     
+        /// <summary>
+        /// 手机号码
+        /// </summary>
+        public string mobile { get; set; }
+    
+        /// <summary>
+        /// 留言内容
+        /// </summary>
         public string message { get; set; }
     
         /// <summary>

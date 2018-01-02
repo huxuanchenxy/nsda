@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>nsda.unittest</RootNamespace>
     <AssemblyName>nsda.unittest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\ReferenceDLL\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -51,7 +54,27 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="LeavingMsgTest.cs" />
+    <Compile Include="LoginLogServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nsda.Model\nsda.Model.csproj">
+      <Project>{155a1743-f85c-4dd1-ad59-3946f5aae339}</Project>
+      <Name>nsda.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nsda.Services\nsda.Services.csproj">
+      <Project>{8e6a4482-8c13-410e-b588-fbc35199242a}</Project>
+      <Name>nsda.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nsda.Utilities\nsda.Utilities.csproj">
+      <Project>{c0a8d7cc-1257-4fcc-9dff-f4f04a0e4674}</Project>
+      <Name>nsda.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

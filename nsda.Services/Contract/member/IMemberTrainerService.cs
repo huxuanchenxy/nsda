@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace nsda.Services.member
     /// <summary>
     /// 会员教练管理
     /// </summary>
-    public class MemberTrainerRepo
+    public interface IMemberTrainerService : IDependency
     {
 
     }

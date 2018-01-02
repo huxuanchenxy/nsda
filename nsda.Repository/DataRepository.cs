@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nsda.Services.member
+namespace nsda.Repository
 {
-    /// <summary>
-    /// 会员教育经历
-    /// </summary>
-    public class MemberEduExperRepo
+    public class DataRepository: IDataRepository
     {
     }
 }

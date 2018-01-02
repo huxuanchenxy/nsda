@@ -84,6 +84,7 @@
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExportFieldInfo.cs" />
+    <Compile Include="IDependency.cs" />
     <Compile Include="JsonUtils.cs" />
     <Compile Include="LoginModeEnum.cs" />
     <Compile Include="LogUtils.cs" />

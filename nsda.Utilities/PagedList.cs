@@ -46,6 +46,11 @@ namespace nsda.Utilities
         ///数据集合
         /// </summary>
         public IEnumerable<T> Items { get; set; }
+
+        public object ToList()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IPagedList
