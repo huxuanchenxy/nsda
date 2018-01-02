@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
-    public enum GenderEnum
+    public enum SysUserStatusEm
     {
-        未知 = 0,
-        男 = 1,
-        女 = 2
+        正常 = 1,
+        禁用 = 2
     }
 }

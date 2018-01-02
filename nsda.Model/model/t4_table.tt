@@ -1,0 +1,99 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="manager.ttinclude" #>
+<#@ include file="entityHelper.ttinclude" #>
+<#@ assembly name="System.Core"#>
+<#@ import namespace="System.Linq" #>
+<# 
+    // 数据库连接
+    var connectionString = @"server=192.168.50.110;port=3307;database=nsdadb_dev;uid=root;password=cac-111.;character set=utf8;";
+
+    // 需要解析的数据库
+    var database = new List<string> { "nsdadb_dev"};
+
+    // 文件版权信息
+    var copyright = DateTime.Now.Year + " NERICHIST All Rights Reserved";
+    var version = Environment.Version;
+    var author = "generated t4 by guanlei"; 
+
+	var isEnableEM=true; //是否启用枚举字段 字段名称+Em 为枚举类型
+
+    var manager = Manager.Create(Host, GenerationEnvironment);
+    var entities = EntityHelper.GetEntities(connectionString, database);
+
+    foreach(Entity entity in entities)
+    {
+		//判断是否联合主键
+	   var mitkey= entity.Fields.Where(p => p.IsPRI).Count() > 1;
+
+        manager.StartNewFile(entity.EntityName + ".cs");
+#>
+//-----------------------------------------------------------------------
+//<copyright>
+// * Copyright (C) <#= copyright #>
+// * version : <#= version #>
+// * author  : <#= author #>
+// </copyright>
+//-----------------------------------------------------------------------
+
+using System;
+using Dapper;
+using nsda.Model.enums;
+namespace nsda.Models
+{
+    /// <summary>
+    /// <#= entity.Comment #>TableModel
+    /// </summary>    
+	[Table("<#= entity.EntityName #>")]
+    public class <#= entity.EntityName #>
+    {
+	   //默认构造函数
+	   public <#=entity.EntityName#>()
+	    {
+			//初始化默认字段
+            createtime = DateTime.Now;
+            updatetime = DateTime.Now;
+            isdelete = false;
+        }
+<#
+        for(int i = 0; i < entity.Fields.Count; i++)
+        {
+            if(entity.Fields[i].IsPRI &&  entity.Fields[i].Type=="int" && !mitkey){
+#>       
+        [Key]
+	    public <#= entity.Fields[i].Type #> <#= entity.Fields[i].Name #> { get; set; }
+<#
+    }else if(entity.Fields[i].IsPRI ){
+#>
+	    [ExplicitKey]
+       <#if(entity.Fields[i].Type=="byte" && isEnableEM){ #>
+ public <#= (entity.Fields[i].Name[0].ToString().ToUpper()+entity.Fields[i].Name.Substring(1)) #>Em <#= entity.Fields[i].Name #> { get; set; }
+
+<#}else{#>
+ public <#= entity.Fields[i].Type #> <#= entity.Fields[i].Name #> { get; set; }
+
+<#}#>
+<#
+            }else{
+#>    
+<#if(!string.IsNullOrWhiteSpace(entity.Fields[i].Comment)){ #>
+        /// <summary>
+        /// <#= entity.Fields[i].Comment #>
+        /// </summary>
+<#}#>
+<#if(entity.Fields[i].Type=="byte" && isEnableEM){ #>
+        public <#= (entity.Fields[i].Name[0].ToString().ToUpper()+entity.Fields[i].Name.Substring(1)) #>Em<#= entity.Fields[i].IsNull?"?":""#> <#= entity.Fields[i].Name #> { get; set; }
+<#}else{#>
+        public <#= entity.Fields[i].Type #><#= entity.Fields[i].IsNull?"?":""#> <#= entity.Fields[i].Name #> { get; set; }
+<#}#>
+<#           
+			 }
+        }
+#>
+    }
+}
+<#        
+        manager.EndBlock(); 
+    }
+
+    manager.Process(true);
+#>

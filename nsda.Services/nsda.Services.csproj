@@ -51,6 +51,24 @@
     <Folder Include="eventmanage\" />
     <Folder Include="trainer\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nsda.FactoryCache\nsda.FactoryCache.csproj">
+      <Project>{402ec055-25a2-4418-9111-b648cdb8904b}</Project>
+      <Name>nsda.FactoryCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nsda.Model\nsda.Model.csproj">
+      <Project>{155a1743-f85c-4dd1-ad59-3946f5aae339}</Project>
+      <Name>nsda.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nsda.Repository\nsda.Repository.csproj">
+      <Project>{4b266661-69de-4f1d-b0ed-ab2f5a5e2593}</Project>
+      <Name>nsda.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nsda.Utilities\nsda.Utilities.csproj">
+      <Project>{c0a8d7cc-1257-4fcc-9dff-f4f04a0e4674}</Project>
+      <Name>nsda.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

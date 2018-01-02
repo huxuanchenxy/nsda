@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
-    public enum GradeEnum
+    public enum GradeEm
     {
         [Description("不限")]
         unlimited = -1,
