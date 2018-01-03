@@ -9,6 +9,7 @@ namespace nsda.Model.enums
     public enum CardTypeEm
     {
         身份证 = 1,
-        护照 = 2
+        护照 = 2,
+        台胞证=3
     }
 }

@@ -61,28 +61,30 @@
     <Compile Include="dto\Result.cs" />
     <Compile Include="enums\CardTypeEm.cs" />
     <Compile Include="enums\DataTypeEm.cs" />
-    <Compile Include="enums\EventUserStatusEm.cs" />
     <Compile Include="enums\GenderEm.cs" />
     <Compile Include="enums\GradeEm.cs" />
     <Compile Include="enums\LeavingStatusEm.cs" />
+    <Compile Include="enums\MemberExtendStatusEm.cs" />
     <Compile Include="enums\MemberStatusEm.cs" />
     <Compile Include="enums\MemberTrainerStatusEm.cs" />
+    <Compile Include="enums\MemberTypeEm.cs" />
+    <Compile Include="enums\OrderStatusEm.cs" />
+    <Compile Include="enums\OrderTypeEm.cs" />
+    <Compile Include="enums\PayStatusEm.cs" />
+    <Compile Include="enums\PayTypeEm.cs" />
     <Compile Include="enums\PrizeTypeEm.cs" />
+    <Compile Include="enums\RefundStatusEm.cs" />
+    <Compile Include="enums\RoleEm.cs" />
     <Compile Include="enums\SignUpStatusEm.cs" />
     <Compile Include="enums\SignUpTypeEm.cs" />
     <Compile Include="enums\SysUserStatusEm.cs" />
-    <Compile Include="enums\TrainerSignUpStatusEm.cs" />
-    <Compile Include="enums\TrainerstatusEm.cs" />
+    <Compile Include="enums\TempStatusEm.cs" />
+    <Compile Include="enums\TempTypeEm.cs" />
+    <Compile Include="enums\RefereeSignUpStatusEm.cs" />
     <Compile Include="model\t_city.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_emaillog.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_eventoperlog.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_eventuser.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_leavingmsg.cs">
@@ -127,19 +129,13 @@
     <Compile Include="model\t_signupform_member_detail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_signupform_trainer.cs">
+    <Compile Include="model\t_signupform_referee.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_sysoperlog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_sysuser.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_trainer.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_traineroperlog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

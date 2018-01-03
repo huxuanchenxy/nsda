@@ -47,10 +47,10 @@
     <Compile Include="Contract\admin\ISchoolService.cs" />
     <Compile Include="Contract\admin\ISysOperLogService.cs" />
     <Compile Include="Contract\admin\ISysUserService.cs" />
-    <Compile Include="Contract\eventmanage\IEventUserService.cs" />
     <Compile Include="Contract\member\IMemberEduExperService.cs" />
     <Compile Include="Contract\member\IMemberService.cs" />
     <Compile Include="Contract\member\IMemberTrainerService.cs" />
+    <Compile Include="Contract\referee\IRefereeService.cs" />
     <Compile Include="Contract\trainer\ITrainerService.cs" />
     <Compile Include="Implement\admin\EmailLogService.cs" />
     <Compile Include="Implement\admin\LeavingMsgService.cs" />
@@ -58,14 +58,17 @@
     <Compile Include="Implement\admin\SchoolService.cs" />
     <Compile Include="Implement\admin\SysOperLogService.cs" />
     <Compile Include="Implement\admin\SysUserService.cs" />
-    <Compile Include="Implement\eventmanage\EventUserService.cs" />
     <Compile Include="Implement\member\MemberEduExperService.cs" />
     <Compile Include="Implement\member\MemberService.cs" />
     <Compile Include="Implement\member\MemberTrainerService.cs" />
+    <Compile Include="Implement\referee\RefereeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implement\trainer\TrainerService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Contract\eventmanage\" />
+    <Folder Include="Implement\eventmanage\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\nsda.FactoryCache\nsda.FactoryCache.csproj">
       <Project>{402ec055-25a2-4418-9111-b648cdb8904b}</Project>
