@@ -1,4 +1,6 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.dto.request;
+using nsda.Model.dto.response;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,14 @@ namespace nsda.Services.member
     public interface IMemberEduExperService : IDependency
     {
         //1.0 添加教育经历
-        bool Insert(out string msg);
+        bool Insert(MemberEduExperRequest request,out string msg);
         //1.1 修改教育经历
-        bool Edit(out string msg);
+        bool Edit(MemberEduExperRequest request, out string msg);
         //1.2 删除教育经历
-        bool Delete(out string msg);
+        bool Delete(int id, int userId, out string msg);
         //1.3 教育经历列表
-        void List();
+        PagedList<MemberEduExperResponse> List(MemberEduExperQueryRequest request);
+        //1.4 教育经历详情
+        MemberEduExperResponse Detail(int id,int userId);
     }
 }

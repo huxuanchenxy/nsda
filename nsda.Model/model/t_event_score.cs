@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_membereduexper")]
-    public class t_membereduexper
+	[Table("t_event_score")]
+    public class t_event_score
     {
 	   //默认构造函数
-	   public t_membereduexper()
+	   public t_event_score()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,27 +29,13 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        /// <summary>
-        /// 会员id
-        /// </summary>
-        public int memberId { get; set; }
+        public int eventid { get; set; }
     
-        /// <summary>
-        /// 开始时间
-        /// </summary>
-        public DateTime startdate { get; set; }
+        public string title { get; set; }
     
-        /// <summary>
-        /// 结束时间
-        /// </summary>
-        public DateTime? enddate { get; set; }
+        public string remark { get; set; }
     
-        public string reserveName { get; set; }
-    
-        /// <summary>
-        /// 学校id
-        /// </summary>
-        public int schoolId { get; set; }
+        public string filepath { get; set; }
     
         /// <summary>
         /// 创建时间

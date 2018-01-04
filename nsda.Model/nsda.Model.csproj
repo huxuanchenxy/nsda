@@ -46,9 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dto\request\DataSourceRequest.cs" />
     <Compile Include="dto\request\EmailLogRequest.cs" />
     <Compile Include="dto\request\LeavingMsgRequest.cs" />
     <Compile Include="dto\request\LoginLogRequest.cs" />
+    <Compile Include="dto\request\MemberEduExperRequest.cs" />
     <Compile Include="dto\request\PagedQuery.cs" />
     <Compile Include="dto\request\RegisterRequest.cs" />
     <Compile Include="dto\request\SchoolRequest.cs" />
@@ -56,9 +58,11 @@
     <Compile Include="dto\request\SysUserRequest.cs" />
     <Compile Include="dto\request\VoteRequest.cs" />
     <Compile Include="dto\response\BaseDataResponse.cs" />
+    <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
+    <Compile Include="dto\response\MemberEduExperResponse.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\response\SysUserResponse.cs" />
@@ -89,7 +93,13 @@
     <Compile Include="model\t_city.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_datasource.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_emaillog.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_event_score.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_leavingmsg.cs">

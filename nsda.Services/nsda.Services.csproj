@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contract\admin\IBaseService.cs" />
+    <Compile Include="Contract\admin\IDataSourceService.cs" />
     <Compile Include="Contract\admin\IEmailLogService.cs" />
+    <Compile Include="Contract\admin\IEventScoreService.cs" />
     <Compile Include="Contract\admin\ILeavingMsgService.cs" />
     <Compile Include="Contract\admin\ILoginLogService.cs" />
     <Compile Include="Contract\admin\ISchoolService.cs" />
@@ -55,7 +57,9 @@
     <Compile Include="Contract\referee\IRefereeService.cs" />
     <Compile Include="Contract\trainer\ITrainerService.cs" />
     <Compile Include="Implement\admin\BaseService.cs" />
+    <Compile Include="Implement\admin\DataSourceService.cs" />
     <Compile Include="Implement\admin\EmailLogService.cs" />
+    <Compile Include="Implement\admin\EventScoreService.cs" />
     <Compile Include="Implement\admin\LeavingMsgService.cs" />
     <Compile Include="Implement\admin\LoginLogService.cs" />
     <Compile Include="Implement\admin\SchoolService.cs" />

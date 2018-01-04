@@ -164,7 +164,7 @@ namespace nsda.Services.admin
             try
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(@"select * from t_vote where isdelete=0");
+                sb.Append(@"select * from t_sysuser where isdelete=0");
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";

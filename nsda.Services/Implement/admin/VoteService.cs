@@ -120,6 +120,7 @@ namespace nsda.Services.Implement.admin
                     }
                 }
                 _dbContext.CommitChanges();
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -187,6 +188,7 @@ namespace nsda.Services.Implement.admin
                 }
                 _dbContext.Update(model);
                 _dbContext.CommitChanges();
+                flag = true;
             }
             catch (Exception ex)
             {
