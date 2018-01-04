@@ -186,5 +186,21 @@ namespace nsda.Services.member
             }
             return flag;
         }
+
+        /// <summary>
+        /// 保存用户缓存
+        /// </summary>
+        private void SaveCurrentUser(WebUserContext context)
+        {
+            try
+            {
+                DateTime expireTime = DateTime.Now.AddHours(12);
+                SessionCookieUtility.WriteCookie(Constant.WebCookieKey, MemberEncoderAndDecoder.encrypt(context.Serialize()), expireTime);
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.SaveCurrentUser", ex);
+            }
+        }
     }
 }

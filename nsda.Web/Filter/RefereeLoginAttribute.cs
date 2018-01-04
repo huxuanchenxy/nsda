@@ -7,11 +7,11 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Filter
 {
-    public class AdminLoginAttribute : AuthorizeAttribute
+    public class RefereeLoginAttribute : AuthorizeAttribute
     {
         private LoginModeEnum _customMode;
 
-        public AdminLoginAttribute(LoginModeEnum Mode)
+        public RefereeLoginAttribute(LoginModeEnum Mode)
         {
             _customMode = Mode;
         }
@@ -20,13 +20,6 @@ namespace nsda.Web.Filter
         {
             if (_customMode == LoginModeEnum.Ignore)
             {
-                return;
-            }
-
-            var user = UserContext.SysUserContext();
-            if (user == null)
-            {
-                filterContext.Result = new RedirectResult("/login/login");
                 return;
             }
         }

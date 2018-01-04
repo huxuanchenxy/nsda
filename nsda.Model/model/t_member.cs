@@ -40,19 +40,19 @@ namespace nsda.Models
         public string pwd { get; set; }
     
         /// <summary>
-        /// 会员编码
-        /// </summary>
-        public string code { get; set; }
-    
-        /// <summary>
         /// 证件类型
         /// </summary>
-        public CardTypeEm cardType { get; set; }
+        public CardTypeEm? cardType { get; set; }
     
         /// <summary>
         /// 证件号
         /// </summary>
         public string card { get; set; }
+    
+        /// <summary>
+        /// 会员编码
+        /// </summary>
+        public string code { get; set; }
     
         /// <summary>
         /// 姓
@@ -87,7 +87,7 @@ namespace nsda.Models
         /// <summary>
         /// 年级
         /// </summary>
-        public GradeEm grade { get; set; }
+        public GradeEm? grade { get; set; }
     
         /// <summary>
         /// 联系电话
@@ -102,7 +102,9 @@ namespace nsda.Models
         /// <summary>
         /// 性别
         /// </summary>
-        public GenderEm gender { get; set; }
+        public GenderEm? gender { get; set; }
+    
+        public MemberTypeEm memberType { get; set; }
     
         /// <summary>
         /// 会员状态
@@ -127,7 +129,7 @@ namespace nsda.Models
         /// <summary>
         /// 修改时间
         /// </summary>
-        public DateTime updatetime { get; set; }
+        public DateTime? updatetime { get; set; }
     
         public bool isdelete { get; set; }
     }

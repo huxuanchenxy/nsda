@@ -88,6 +88,7 @@
     <Compile Include="JsonUtils.cs" />
     <Compile Include="LoginModeEnum.cs" />
     <Compile Include="LogUtils.cs" />
+    <Compile Include="MemberEncoderAndDecoder.cs" />
     <Compile Include="nsdaRequest.cs" />
     <Compile Include="Orm\DapperExtensions.cs" />
     <Compile Include="Orm\DapperPagedList.cs" />
@@ -144,8 +145,11 @@
     <Compile Include="PagedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionCookieUtility.cs" />
+    <Compile Include="SysUserContext.cs" />
+    <Compile Include="UserContext.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="VerifyCode.cs" />
+    <Compile Include="WebUserContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

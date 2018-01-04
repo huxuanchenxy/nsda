@@ -52,10 +52,12 @@
     <Folder Include="Contract\admin\" />
     <Folder Include="Contract\eventmanage\" />
     <Folder Include="Contract\member\" />
+    <Folder Include="Contract\referee\" />
     <Folder Include="Contract\trainer\" />
     <Folder Include="Implement\admin\" />
     <Folder Include="Implement\eventmanage\" />
     <Folder Include="Implement\member\" />
+    <Folder Include="Implement\referee\" />
     <Folder Include="Implement\trainer\" />
   </ItemGroup>
   <ItemGroup>

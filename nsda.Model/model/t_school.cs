@@ -36,7 +36,11 @@ namespace nsda.Models
         /// <summary>
         /// 学校名称
         /// </summary>
-        public string name { get; set; }
+        public string chinessname { get; set; }
+    
+        public string englishname { get; set; }
+    
+        public bool isInter { get; set; }
     
         /// <summary>
         /// 创建时间

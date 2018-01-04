@@ -24,5 +24,8 @@ namespace nsda.Utilities
         public static readonly string cuq1 = ConfigurationManager.AppSettings["cuq1"];//联通虚拟号
         public static readonly string ctc = ConfigurationManager.AppSettings["ctc"];//电信号码
         public static readonly string ctc1 = ConfigurationManager.AppSettings["ctc1"];//电信虚拟号
+
+        public static readonly string WebCookieKey = "memberkey";
+        public static readonly string SysCookieKey = "sysuserkey";
     }
 }

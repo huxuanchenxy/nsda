@@ -41,23 +41,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\admin\IBaseService.cs" />
     <Compile Include="Contract\admin\IEmailLogService.cs" />
     <Compile Include="Contract\admin\ILeavingMsgService.cs" />
     <Compile Include="Contract\admin\ILoginLogService.cs" />
     <Compile Include="Contract\admin\ISchoolService.cs" />
     <Compile Include="Contract\admin\ISysOperLogService.cs" />
     <Compile Include="Contract\admin\ISysUserService.cs" />
+    <Compile Include="Contract\admin\IVoteService.cs" />
     <Compile Include="Contract\member\IMemberEduExperService.cs" />
     <Compile Include="Contract\member\IMemberService.cs" />
     <Compile Include="Contract\member\IMemberTrainerService.cs" />
     <Compile Include="Contract\referee\IRefereeService.cs" />
     <Compile Include="Contract\trainer\ITrainerService.cs" />
+    <Compile Include="Implement\admin\BaseService.cs" />
     <Compile Include="Implement\admin\EmailLogService.cs" />
     <Compile Include="Implement\admin\LeavingMsgService.cs" />
     <Compile Include="Implement\admin\LoginLogService.cs" />
     <Compile Include="Implement\admin\SchoolService.cs" />
     <Compile Include="Implement\admin\SysOperLogService.cs" />
     <Compile Include="Implement\admin\SysUserService.cs" />
+    <Compile Include="Implement\admin\VoteService.cs" />
     <Compile Include="Implement\member\MemberEduExperService.cs" />
     <Compile Include="Implement\member\MemberService.cs" />
     <Compile Include="Implement\member\MemberTrainerService.cs" />

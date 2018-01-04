@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_sysuser")]
-    public class t_sysuser
+	[Table("t_vote")]
+    public class t_vote
     {
 	   //默认构造函数
-	   public t_sysuser()
+	   public t_vote()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,17 +29,25 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        public string account { get; set; }
+        /// <summary>
+        /// 辩题标题
+        /// </summary>
+        public string title { get; set; }
     
-        public string pwd { get; set; }
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string remark { get; set; }
     
-        public string name { get; set; }
+        /// <summary>
+        /// 投票开始时间
+        /// </summary>
+        public DateTime voteStartTime { get; set; }
     
-        public string mobile { get; set; }
-    
-        public SysUserStatusEm sysUserStatus { get; set; }
-    
-        public DateTime? lastlogintime { get; set; }
+        /// <summary>
+        /// 投票结束时间
+        /// </summary>
+        public DateTime voteEndTime { get; set; }
     
         /// <summary>
         /// 创建时间

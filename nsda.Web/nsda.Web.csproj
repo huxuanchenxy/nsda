@@ -119,6 +119,8 @@
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
     <Compile Include="Areas\member\Controllers\baseController.cs" />
     <Compile Include="Areas\member\memberAreaRegistration.cs" />
+    <Compile Include="Areas\referee\Controllers\baseController.cs" />
+    <Compile Include="Areas\referee\refereeAreaRegistration.cs" />
     <Compile Include="Areas\trainer\Controllers\trainerController.cs" />
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
     <Compile Include="Controllers\aboutController.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Controllers\homeController.cs" />
     <Compile Include="Filter\AdminLoginAttribute.cs" />
     <Compile Include="Filter\CommonExceptionFilter.cs" />
+    <Compile Include="Filter\RefereeLoginAttribute.cs" />
     <Compile Include="Filter\EventManageLoginAttribute.cs" />
     <Compile Include="Filter\MemberLoginAttribute.cs" />
     <Compile Include="Filter\TrainerLoginAttribute.cs" />
@@ -180,6 +183,9 @@
     <Folder Include="Areas\member\Models\" />
     <Folder Include="Areas\member\Views\base\" />
     <Folder Include="Areas\member\Views\Shared\" />
+    <Folder Include="Areas\referee\Models\" />
+    <Folder Include="Areas\referee\Views\base\" />
+    <Folder Include="Areas\referee\Views\Shared\" />
     <Folder Include="Areas\trainer\Models\" />
     <Folder Include="Areas\trainer\Views\Shared\" />
     <Folder Include="Areas\trainer\Views\trainer\" />
@@ -234,6 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\about\partner.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\referee\Views\web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

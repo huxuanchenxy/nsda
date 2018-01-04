@@ -14,7 +14,9 @@ namespace nsda.Model.dto.response
         public DateTime UpdateTime { get; set; }
         public int CityId { get; set; }
         public int ProvinceId { get; set; }
-        public string Name { get; set; }
+        public string ChinessName { get; set; }
+        public string EnglishName { get; set; }
+        public bool isInter { get; set; }
         public string CityName { get; set; }
         public string ProvinceName { get; set; }
     }

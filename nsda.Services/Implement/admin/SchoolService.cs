@@ -60,12 +60,14 @@ namespace nsda.Services.Implement.admin
                 if (school != null)
                 {
                     response = new SchoolResponse {
-                        Id=school.id,
-                        CityId=school.cityId,
-                        CreateTime=school.createtime,
-                        UpdateTime=school.updatetime,
-                        IsDelete=school.isdelete,
-                        Name=school.name,
+                        Id = school.id,
+                        CityId = school.cityId,
+                        CreateTime = school.createtime,
+                        UpdateTime = school.updatetime,
+                        IsDelete = school.isdelete,
+                        ChinessName = school.chinessname,
+                        EnglishName = school.englishname,
+                        isInter=school.isInter,
                         ProvinceId=school.provinceId  
                     };
                 }
@@ -87,7 +89,9 @@ namespace nsda.Services.Implement.admin
                 if (school != null)
                 {
                     school.provinceId = request.ProvinceId;
-                    school.name = request.Name;
+                    school.englishname = request.EnglishName;
+                    school.chinessname = request.ChinessName;
+                    school.isInter = request.IsInter;
                     school.cityId = request.CityId;
                     school.updatetime = DateTime.Now;
                     _dbContext.Update(school);
@@ -115,7 +119,9 @@ namespace nsda.Services.Implement.admin
             {
                 var model = new t_school {
                      cityId=request.CityId,
-                     name=request.Name,
+                     englishname=request.EnglishName,
+                     chinessname=request.ChinessName,
+                     isInter=request.IsInter,
                      provinceId=request.ProvinceId   
                 };
                 _dbContext.Insert(model);
@@ -135,6 +141,30 @@ namespace nsda.Services.Implement.admin
             PagedList<SchoolResponse> list = new PagedList<SchoolResponse>();
             try
             {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(@"select a.*,b.name as ProvinceName,c.name as CityName from t_school a 
+                            left join t_province b on a.provinceId=b.id
+                            left join t_city c on a.cityId=c.id
+                            where isdelete=0");
+                if (request.EnglishName.IsNotEmpty())
+                {
+                    request.EnglishName = "%" + request.EnglishName + "%";
+                    sb.Append(" and englishname like @EnglishName");
+                }
+                if (request.ChinessName.IsNotEmpty())
+                {
+                    request.ChinessName = "%" + request.ChinessName + "%";
+                    sb.Append(" and chinessname like @ChinessName");
+                }
+                if (request.ProvinceId.HasValue)
+                {
+                    sb.Append(" and provinceId = @ProvinceId");
+                }
+                if (request.CityId.HasValue)
+                {
+                    sb.Append(" and cityId = @CityId");
+                }
+                list = _dbContext.Page<SchoolResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
             }
             catch (Exception ex)
             {
