@@ -26,6 +26,11 @@ namespace nsda.Utilities
             return sysContext;
         }
 
+        public  static void RemoveSysCookie()
+        {
+            SessionCookieUtility.RemoveCookie(Constant.SysCookieKey);
+        }
+
         public static WebUserContext WebUserContext()
         {
             WebUserContext webContext = null;
@@ -42,6 +47,11 @@ namespace nsda.Utilities
                 LogUtils.LogError("UserContext.webContext", ex);
             }
             return webContext;
+        }
+
+        public static void RemoveWebCookie()
+        {
+            SessionCookieUtility.RemoveCookie(Constant.WebCookieKey);
         }
     }
 }

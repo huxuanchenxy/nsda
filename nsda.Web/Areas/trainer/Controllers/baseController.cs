@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace nsda.Web.Areas.trainer.Controllers
 {
     [TrainerLogin(LoginModeEnum.Enforce)]
-    public class trainerController : Controller
+    public class baseController : Controller
     {
         protected virtual ContentResult Result<T>(bool flag, string message = "", T data = default(T))
         {

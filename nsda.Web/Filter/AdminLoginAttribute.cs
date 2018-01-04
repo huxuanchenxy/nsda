@@ -26,7 +26,7 @@ namespace nsda.Web.Filter
             var user = UserContext.SysUserContext();
             if (user == null)
             {
-                filterContext.Result = new RedirectResult("/login/login");
+                filterContext.Result = new RedirectResult("/admin/login/login");
                 return;
             }
         }

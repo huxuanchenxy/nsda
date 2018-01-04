@@ -115,13 +115,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
     <Compile Include="Areas\admin\Controllers\baseController.cs" />
+    <Compile Include="Areas\admin\Controllers\homeController.cs" />
+    <Compile Include="Areas\admin\Controllers\loginController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\baseController.cs" />
+    <Compile Include="Areas\eventmanage\Controllers\homeController.cs" />
+    <Compile Include="Areas\eventmanage\Controllers\loginController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
     <Compile Include="Areas\member\Controllers\baseController.cs" />
+    <Compile Include="Areas\member\Controllers\homeController.cs" />
+    <Compile Include="Areas\member\Controllers\loginController.cs" />
     <Compile Include="Areas\member\memberAreaRegistration.cs" />
     <Compile Include="Areas\referee\Controllers\baseController.cs" />
+    <Compile Include="Areas\referee\Controllers\homeController.cs" />
+    <Compile Include="Areas\referee\Controllers\loginController.cs" />
     <Compile Include="Areas\referee\refereeAreaRegistration.cs" />
-    <Compile Include="Areas\trainer\Controllers\trainerController.cs" />
+    <Compile Include="Areas\trainer\Controllers\baseController.cs" />
+    <Compile Include="Areas\trainer\Controllers\homeController.cs" />
+    <Compile Include="Areas\trainer\Controllers\loginController.cs" />
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
     <Compile Include="Controllers\aboutController.cs" />
     <Compile Include="Controllers\errorController.cs" />
@@ -175,20 +185,23 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Models\" />
-    <Folder Include="Areas\admin\Views\base\" />
     <Folder Include="Areas\admin\Views\Shared\" />
     <Folder Include="Areas\eventmanage\Models\" />
-    <Folder Include="Areas\eventmanage\Views\base\" />
+    <Folder Include="Areas\eventmanage\Views\home\" />
+    <Folder Include="Areas\eventmanage\Views\login\" />
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\member\Models\" />
-    <Folder Include="Areas\member\Views\base\" />
+    <Folder Include="Areas\member\Views\home\" />
+    <Folder Include="Areas\member\Views\login\" />
     <Folder Include="Areas\member\Views\Shared\" />
     <Folder Include="Areas\referee\Models\" />
-    <Folder Include="Areas\referee\Views\base\" />
+    <Folder Include="Areas\referee\Views\home\" />
+    <Folder Include="Areas\referee\Views\login\" />
     <Folder Include="Areas\referee\Views\Shared\" />
     <Folder Include="Areas\trainer\Models\" />
+    <Folder Include="Areas\trainer\Views\home\" />
+    <Folder Include="Areas\trainer\Views\login\" />
     <Folder Include="Areas\trainer\Views\Shared\" />
-    <Folder Include="Areas\trainer\Views\trainer\" />
     <Folder Include="asset\fonts\" />
     <Folder Include="asset\img\" />
     <Folder Include="Models\" />
@@ -243,6 +256,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\referee\Views\web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\admin\Views\login\login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\admin\Views\home\index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
