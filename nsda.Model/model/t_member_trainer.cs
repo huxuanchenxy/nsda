@@ -33,10 +33,9 @@ namespace nsda.Models
         /// 会员id
         /// </summary>
         public int memberId { get; set; }
-
-        public bool flag { get; set; }
+    
         /// <summary>
-        /// 教练或学生id
+        /// 教练id
         /// </summary>
         public int objMemberId { get; set; }
     
@@ -44,6 +43,8 @@ namespace nsda.Models
         /// 状态
         /// </summary>
         public MemberTrainerStatusEm memberTrainerStatus { get; set; }
+    
+        public bool flag { get; set; }
     
         public DateTime startdate { get; set; }
     
