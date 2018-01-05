@@ -32,7 +32,7 @@ namespace nsda.Models
         /// <summary>
         /// 裁判id
         /// </summary>
-        public int trainerId { get; set; }
+        public int memberId { get; set; }
     
         /// <summary>
         /// 赛事id

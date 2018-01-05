@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data">
-      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDLL\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -46,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dto\request\CityRequest.cs" />
     <Compile Include="dto\request\DataSourceRequest.cs" />
     <Compile Include="dto\request\EmailLogRequest.cs" />
     <Compile Include="dto\request\EventScoreRequest.cs" />
@@ -54,12 +56,14 @@
     <Compile Include="dto\request\MemberEduExperRequest.cs" />
     <Compile Include="dto\request\MemberTrainerRequest.cs" />
     <Compile Include="dto\request\PagedQuery.cs" />
+    <Compile Include="dto\request\ProvinceRequest.cs" />
     <Compile Include="dto\request\RegisterRequest.cs" />
     <Compile Include="dto\request\SchoolRequest.cs" />
     <Compile Include="dto\request\SysOperLogRequest.cs" />
     <Compile Include="dto\request\SysUserRequest.cs" />
     <Compile Include="dto\request\VoteRequest.cs" />
     <Compile Include="dto\response\BaseDataResponse.cs" />
+    <Compile Include="dto\response\CityResponse.cs" />
     <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
     <Compile Include="dto\response\EventScoreResponse.cs" />
@@ -68,6 +72,7 @@
     <Compile Include="dto\response\MemberEduExperResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
     <Compile Include="dto\response\MemberTrainerResponse.cs" />
+    <Compile Include="dto\response\ProvinceResponse.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\response\SysUserResponse.cs" />
@@ -75,6 +80,7 @@
     <Compile Include="dto\Result.cs" />
     <Compile Include="enums\CardTypeEm.cs" />
     <Compile Include="enums\DataTypeEm.cs" />
+    <Compile Include="enums\EventTypeEm.cs" />
     <Compile Include="enums\GenderEm.cs" />
     <Compile Include="enums\GradeEm.cs" />
     <Compile Include="enums\LeavingStatusEm.cs" />
@@ -104,6 +110,9 @@
     <Compile Include="model\t_emaillog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_eventprize.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_event_score.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
@@ -119,6 +128,9 @@
     <Compile Include="model\t_membereduexper.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_memberextend.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_memberoperlog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
@@ -129,6 +141,9 @@
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_memberpointsrecord.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_membertemp.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_member_trainer.cs">

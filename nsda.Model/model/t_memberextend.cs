@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_memberpointsdetail")]
-    public class t_memberpointsdetail
+	[Table("t_memberextend")]
+    public class t_memberextend
     {
 	   //默认构造函数
-	   public t_memberpointsdetail()
+	   public t_memberextend()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,40 +29,13 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        /// <summary>
-        /// 会员id
-        /// </summary>
         public int memberId { get; set; }
     
-        /// <summary>
-        /// 积分记录id
-        /// </summary>
-        public int recordId { get; set; }
+        public RoleEm role { get; set; }
     
-        /// <summary>
-        /// 赛事id
-        /// </summary>
-        public int eventId { get; set; }
-    
-        /// <summary>
-        /// 赛事组别
-        /// </summary>
-        public int groupId { get; set; }
-    
-        /// <summary>
-        /// 赛事类型
-        /// </summary>
-        public EventTypeEm eventType { get; set; }
-    
-        /// <summary>
-        /// 积分
-        /// </summary>
-        public decimal points { get; set; }
-    
-        /// <summary>
-        /// 获取积分备注
-        /// </summary>
         public string remark { get; set; }
+    
+        public MemberExtendStatusEm? memberExtendStatus { get; set; }
     
         /// <summary>
         /// 创建时间

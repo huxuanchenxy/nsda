@@ -32,5 +32,7 @@ namespace nsda.Services.member
         bool Delete(int id, out string msg);
         //1.8 重置密码
         bool Reset(int id, out string msg);
+        //1.9 启用、禁用账号
+        bool IsEnable(int id,bool isEnable, out string msg);
     }
 }

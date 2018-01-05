@@ -39,6 +39,10 @@ namespace nsda.Models
         /// </summary>
         public decimal points { get; set; }
     
+        public decimal eventPoints { get; set; }
+    
+        public decimal servicePoints { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

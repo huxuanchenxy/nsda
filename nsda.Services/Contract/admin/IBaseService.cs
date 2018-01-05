@@ -10,7 +10,9 @@ namespace nsda.Services.Contract.admin
 {
     public interface IBaseService: IDependency
     {
+        //省份列表
         List<BaseDataResponse> Province();
+        // 城市列表
         List<BaseDataResponse> City(int provinceId);
     }
 }

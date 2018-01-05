@@ -1,4 +1,5 @@
 ﻿using nsda.Model.dto.request;
+using nsda.Model.enums;
 using nsda.Models;
 using nsda.Repository;
 using nsda.Utilities;
@@ -250,6 +251,34 @@ namespace nsda.Services.member
             }
             return flag;
         }
+        //1.9 启用禁用账号
+        public bool IsEnable(int id, bool isEnable, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                var member = _dbContext.Get<t_member>(id);
+                if (member != null)
+                {
+                    member.memberStatus = isEnable ? MemberStatusEm.启用 : MemberStatusEm.禁用;
+                    member.updatetime = DateTime.Now;
+                    _dbContext.Update(member);
+                }
+                else
+                {
+                    msg = "会员信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("MemberService.IsEnable", ex);
+            }
+            return flag;
+        }
+
         /// <summary>
         /// 保存用户缓存
         /// </summary>

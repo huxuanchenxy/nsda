@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contract\admin\IBaseService.cs" />
+    <Compile Include="Contract\admin\ICityService.cs" />
     <Compile Include="Contract\admin\IDataSourceService.cs" />
     <Compile Include="Contract\admin\IEmailLogService.cs" />
     <Compile Include="Contract\admin\IEventScoreService.cs" />
@@ -51,32 +52,64 @@
     <Compile Include="Contract\admin\ISysOperLogService.cs" />
     <Compile Include="Contract\admin\ISysUserService.cs" />
     <Compile Include="Contract\admin\IVoteService.cs" />
+    <Compile Include="Contract\eventmanage\IEventCheckService.cs" />
+    <Compile Include="Contract\eventmanage\IEventCyclingRaceService.cs" />
+    <Compile Include="Contract\eventmanage\IEventCyclingRaceSettingsService.cs" />
+    <Compile Include="Contract\eventmanage\IEventGroupService.cs" />
+    <Compile Include="Contract\eventmanage\IEventknockoutService.cs" />
+    <Compile Include="Contract\eventmanage\IEventknockoutSettingsService.cs" />
+    <Compile Include="Contract\eventmanage\IEventPrizeService.cs" />
+    <Compile Include="Contract\eventmanage\IEventRoomService.cs" />
+    <Compile Include="Contract\eventmanage\IEventRoomSpecService.cs" />
+    <Compile Include="Contract\eventmanage\IEventService.cs" />
+    <Compile Include="Contract\eventmanage\IEventSignUpService.cs" />
     <Compile Include="Contract\member\IMemberEduExperService.cs" />
+    <Compile Include="Contract\member\IMemberExtendService.cs" />
+    <Compile Include="Contract\member\IMemberPointsService.cs" />
     <Compile Include="Contract\member\IMemberService.cs" />
+    <Compile Include="Contract\member\IMemberTempService.cs" />
     <Compile Include="Contract\member\IMemberTrainerService.cs" />
+    <Compile Include="Contract\member\ISignUpPlayerService.cs" />
     <Compile Include="Contract\referee\IRefereeService.cs" />
+    <Compile Include="Contract\referee\ISignUpRefereeService.cs" />
     <Compile Include="Contract\trainer\ITrainerService.cs" />
     <Compile Include="Implement\admin\BaseService.cs" />
+    <Compile Include="Implement\admin\CityService.cs" />
     <Compile Include="Implement\admin\DataSourceService.cs" />
     <Compile Include="Implement\admin\EmailLogService.cs" />
     <Compile Include="Implement\admin\EventScoreService.cs" />
+    <Compile Include="Contract\admin\IProvinceService.cs" />
     <Compile Include="Implement\admin\LeavingMsgService.cs" />
     <Compile Include="Implement\admin\LoginLogService.cs" />
+    <Compile Include="Implement\admin\ProvinceService.cs" />
     <Compile Include="Implement\admin\SchoolService.cs" />
     <Compile Include="Implement\admin\SysOperLogService.cs" />
     <Compile Include="Implement\admin\SysUserService.cs" />
     <Compile Include="Implement\admin\VoteService.cs" />
+    <Compile Include="Implement\eventmanage\EventCheckService.cs" />
+    <Compile Include="Implement\eventmanage\EventCyclingRaceService.cs" />
+    <Compile Include="Implement\eventmanage\EventCyclingRaceSettingsService.cs" />
+    <Compile Include="Implement\eventmanage\EventGroupService.cs" />
+    <Compile Include="Implement\eventmanage\EventknockoutService.cs" />
+    <Compile Include="Implement\eventmanage\EventknockoutSettingsService.cs" />
+    <Compile Include="Implement\eventmanage\EventPrizeService.cs" />
+    <Compile Include="Implement\eventmanage\EventRoomService.cs" />
+    <Compile Include="Implement\eventmanage\EventRoomSpecService.cs" />
+    <Compile Include="Implement\eventmanage\EventService.cs" />
+    <Compile Include="Implement\eventmanage\EventSignUpService.cs" />
     <Compile Include="Implement\member\MemberEduExperService.cs" />
+    <Compile Include="Implement\member\MemberExtendService.cs" />
+    <Compile Include="Implement\member\MemberPointsService.cs" />
     <Compile Include="Implement\member\MemberService.cs" />
+    <Compile Include="Implement\member\MemberTempService.cs" />
     <Compile Include="Implement\member\MemberTrainerService.cs" />
+    <Compile Include="Implement\member\SignUpPlayerService.cs" />
     <Compile Include="Implement\referee\RefereeService.cs" />
+    <Compile Include="Implement\referee\SignUpRefereeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implement\trainer\TrainerService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contract\eventmanage\" />
-    <Folder Include="Implement\eventmanage\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\nsda.FactoryCache\nsda.FactoryCache.csproj">
       <Project>{402ec055-25a2-4418-9111-b648cdb8904b}</Project>

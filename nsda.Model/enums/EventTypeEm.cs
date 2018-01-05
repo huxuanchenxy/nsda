@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
-    /// <summary>
-    /// 会员状态
-    /// </summary>
-    public enum MemberStatusEm
+    public enum EventTypeEm
     {
-        待认证 = 1,
-        启用 = 2,
-        禁用=3
+        辩论 = 1,
+        演讲 = 2
     }
 }
