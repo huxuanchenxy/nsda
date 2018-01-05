@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace nsda.Web.Areas.member
+namespace nsda.Web.Areas.player
 {
-    public class memberAreaRegistration : AreaRegistration 
+    public class playerAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "member";
+                return "player";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "member_default",
-                "member/{controller}/{action}/{id}",
+                "player_default",
+                "player/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

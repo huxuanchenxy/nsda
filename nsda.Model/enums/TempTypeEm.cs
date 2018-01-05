@@ -8,7 +8,7 @@ namespace nsda.Model.enums
 {
     public enum TempTypeEm
     {
-        临时学生会员 = 1,
+        临时选手 = 1,
         临时裁判 = 2
     }
 }

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace nsda.Web.Areas.member.Controllers
+namespace nsda.Web.Areas.player.Controllers
 {
-    [MemberLogin(LoginModeEnum.Enforce)]
+    [PlayerLogin(LoginModeEnum.Enforce)]
     public class baseController : Controller
     {
         protected virtual ContentResult Result<T>(bool flag, string message = "", T data = default(T))

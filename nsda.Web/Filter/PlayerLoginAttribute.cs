@@ -7,11 +7,11 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Filter
 {
-    public class RefereeLoginAttribute : AuthorizeAttribute
+    public class PlayerLoginAttribute : AuthorizeAttribute
     {
         private LoginModeEnum _customMode;
 
-        public RefereeLoginAttribute(LoginModeEnum Mode)
+        public PlayerLoginAttribute(LoginModeEnum Mode)
         {
             _customMode = Mode;
         }
@@ -30,9 +30,9 @@ namespace nsda.Web.Filter
                 return;
             }
 
-            if (user.MemberType != (int)Model.enums.MemberTypeEm.裁判)
+            if (user.MemberType != (int)Model.enums.MemberTypeEm.选手)
             {
-                if (!user.Role.Contains(((int)Model.enums.MemberTypeEm.裁判).ToString()))
+                if (!user.Role.Contains(((int)Model.enums.MemberTypeEm.选手).ToString()))
                 {
                     filterContext.Result = new RedirectResult("/login/login");
                     return;

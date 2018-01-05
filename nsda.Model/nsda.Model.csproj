@@ -66,6 +66,7 @@
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
     <Compile Include="dto\response\MemberEduExperResponse.cs" />
+    <Compile Include="dto\response\MemberResponse.cs" />
     <Compile Include="dto\response\MemberTrainerResponse.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />

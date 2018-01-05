@@ -22,6 +22,22 @@ namespace nsda.Web.Filter
             {
                 return;
             }
+
+            var user = UserContext.WebUserContext();
+            if (user == null)
+            {
+                filterContext.Result = new RedirectResult("/login/login");
+                return;
+            }
+
+            if (user.MemberType != (int)Model.enums.MemberTypeEm.赛事管理员)
+            {
+                if (!user.Role.Contains(((int)Model.enums.MemberTypeEm.赛事管理员).ToString()))
+                {
+                    filterContext.Result = new RedirectResult("/login/login");
+                    return;
+                }
+            }
         }
     }
 }

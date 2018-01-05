@@ -119,28 +119,27 @@
     <Compile Include="Areas\admin\Controllers\loginController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\baseController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\homeController.cs" />
-    <Compile Include="Areas\eventmanage\Controllers\loginController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
-    <Compile Include="Areas\member\Controllers\baseController.cs" />
-    <Compile Include="Areas\member\Controllers\homeController.cs" />
-    <Compile Include="Areas\member\Controllers\loginController.cs" />
-    <Compile Include="Areas\member\memberAreaRegistration.cs" />
+    <Compile Include="Areas\player\Controllers\baseController.cs" />
+    <Compile Include="Areas\player\Controllers\homeController.cs" />
+    <Compile Include="Areas\player\playerAreaRegistration.cs" />
     <Compile Include="Areas\referee\Controllers\baseController.cs" />
     <Compile Include="Areas\referee\Controllers\homeController.cs" />
-    <Compile Include="Areas\referee\Controllers\loginController.cs" />
     <Compile Include="Areas\referee\refereeAreaRegistration.cs" />
     <Compile Include="Areas\trainer\Controllers\baseController.cs" />
     <Compile Include="Areas\trainer\Controllers\homeController.cs" />
-    <Compile Include="Areas\trainer\Controllers\loginController.cs" />
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
     <Compile Include="Controllers\aboutController.cs" />
     <Compile Include="Controllers\errorController.cs" />
+    <Compile Include="Controllers\findpwdController.cs" />
     <Compile Include="Controllers\homeController.cs" />
+    <Compile Include="Controllers\loginController.cs" />
+    <Compile Include="Controllers\registerController.cs" />
     <Compile Include="Filter\AdminLoginAttribute.cs" />
     <Compile Include="Filter\CommonExceptionFilter.cs" />
     <Compile Include="Filter\RefereeLoginAttribute.cs" />
     <Compile Include="Filter\EventManageLoginAttribute.cs" />
-    <Compile Include="Filter\MemberLoginAttribute.cs" />
+    <Compile Include="Filter\PlayerLoginAttribute.cs" />
     <Compile Include="Filter\TrainerLoginAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -397,24 +396,19 @@
     <Folder Include="Areas\admin\Models\" />
     <Folder Include="Areas\admin\Views\Shared\" />
     <Folder Include="Areas\eventmanage\Models\" />
-    <Folder Include="Areas\eventmanage\Views\home\" />
-    <Folder Include="Areas\eventmanage\Views\login\" />
     <Folder Include="Areas\eventmanage\Views\Shared\" />
-    <Folder Include="Areas\member\Models\" />
-    <Folder Include="Areas\member\Views\home\" />
-    <Folder Include="Areas\member\Views\login\" />
-    <Folder Include="Areas\member\Views\Shared\" />
+    <Folder Include="Areas\player\Models\" />
+    <Folder Include="Areas\player\Views\Shared\" />
     <Folder Include="Areas\referee\Models\" />
-    <Folder Include="Areas\referee\Views\home\" />
-    <Folder Include="Areas\referee\Views\login\" />
     <Folder Include="Areas\referee\Views\Shared\" />
     <Folder Include="Areas\trainer\Models\" />
-    <Folder Include="Areas\trainer\Views\home\" />
-    <Folder Include="Areas\trainer\Views\login\" />
     <Folder Include="Areas\trainer\Views\Shared\" />
     <Folder Include="asset\fonts\" />
     <Folder Include="asset\img\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\findpwd\" />
+    <Folder Include="Views\login\" />
+    <Folder Include="Views\register\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -427,7 +421,7 @@
     <Content Include="NLog.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\member\Views\web.config" />
+    <Content Include="Areas\player\Views\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\trainer\Views\web.config" />
@@ -490,6 +484,18 @@
     <Content Include="Areas\admin\asset\js\plugins\simditor\css\editor.scss" />
     <Content Include="Areas\admin\asset\js\plugins\simditor\css\fonticon.scss" />
     <Content Include="Areas\admin\asset\js\plugins\simditor\css\simditor.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\eventmanage\Views\home\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\home\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\referee\Views\home\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\trainer\Views\home\index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

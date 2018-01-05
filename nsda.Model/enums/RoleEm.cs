@@ -8,7 +8,7 @@ namespace nsda.Model.enums
 {
     public enum RoleEm
     {
-        学生会员 = 1,
+        选手 = 1,
         教练 = 2,
         裁判 = 3
     }

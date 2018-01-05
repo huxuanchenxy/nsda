@@ -4,12 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace nsda.Web.Areas.eventmanage.Controllers
+namespace nsda.Web.Areas.player.Controllers
 {
     public class homeController : baseController
     {
-        // GET: eventmanage/home
-        public ActionResult Index()
+        public ActionResult index()
         {
             return View();
         }

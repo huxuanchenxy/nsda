@@ -1,4 +1,6 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.dto.request;
+using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,9 @@ namespace nsda.Services.member
     public interface IMemberService : IDependency
     {
         //1.0 注册
-        bool Register(out string msg);
+        bool Register(RegisterRequest request,out string msg);
         //1.1 登录
-        bool Login(string account, string pwd, out string msg);
+        WebUserContext Login(string account, string pwd,out string msg);
         //1.2 修改
         bool Edit(out string msg);
         //1.3 修改密码

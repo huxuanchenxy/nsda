@@ -8,6 +8,6 @@ namespace nsda.Model.dto.request
 {
     public class RegisterRequest
     {
-
+        public int MemberType { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using nsda.Models;
+﻿using nsda.Model.dto.request;
+using nsda.Models;
 using nsda.Repository;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
@@ -24,37 +25,36 @@ namespace nsda.Services.member
         }
 
         //1.0 注册
-        public  bool Register(out string msg)
+        public bool Register(RegisterRequest request,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                SaveCurrentUser(new WebUserContext { });
-                flag = true;
+                var userContext = new WebUserContext { };
+                SaveCurrentUser(userContext); 
             }
             catch (Exception ex)
             {
-                flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("MemberService.Register", ex);
             }
             return flag;
         }
         //1.1 登录
-        public  bool Login(string account,string pwd,out string msg)
+        public WebUserContext Login(string account,string pwd,out string msg)
         {
-            bool flag = false;
+            WebUserContext userContext = null;
             msg = string.Empty;
             try
             {
                 if (account.IsEmpty() || pwd.IsEmpty())
                 {
                     msg = "账号或密码不能为空";
-                    return flag;
+                    return userContext;
                 }
 
-                var detail = _dbContext.QueryFirstOrDefault<t_sysuser>(@"select * from t_member where account=@account and pwd=@pwd ",
+                var detail = _dbContext.QueryFirstOrDefault<t_member>(@"select * from t_member where account=@account and pwd=@pwd ",
                          new
                          {
                              account = account,
@@ -67,24 +67,23 @@ namespace nsda.Services.member
                 else
                 {
                     //记录缓存
-                    var users = new WebUserContext
+                    userContext = new WebUserContext
                     {
                         Id = detail.id,
                         Name = detail.name,
                         Account = detail.account,
-                        Role="1"
+                        Role="1",
+                        MemberType=(int)detail.memberType
                     };
-                    SaveCurrentUser(users);
-                    flag = true;
+                    SaveCurrentUser(userContext);
                 }
             }
             catch (Exception ex)
             {
-                flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("MemberService.Login", ex);
             }
-            return flag;
+            return userContext;
         }
         //1.2 修改
         public  bool Edit(out string msg)
