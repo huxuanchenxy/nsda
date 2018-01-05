@@ -16,5 +16,6 @@ namespace nsda.Services.Contract.admin
         bool Delete(int id, out string msg);
         PagedList<SchoolResponse> List(SchoolQueryRequest request);
         SchoolResponse Detail(int id);
+        List<BaseDataResponse> Select(int? provinceId, int? cityId, string name);
     }
 }

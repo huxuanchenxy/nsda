@@ -98,7 +98,35 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                //加判断
+                if (request.Title.IsEmpty())
+                {
+                    msg = "辩题标题不能为空";
+                    return flag;
+                }
+
+                if (request.VoteStartTime == DateTime.MinValue || request.VoteStartTime == DateTime.MaxValue|| request.VoteStartTime < DateTime.Now)
+                {
+                    msg = "投票开始时间有误";
+                    return flag;
+                }
+
+                if (request.VoteEndTime == DateTime.MinValue || request.VoteEndTime == DateTime.MaxValue)
+                {
+                    msg = "投票结束时间有误";
+                    return flag;
+                }
+
+                if (request.VoteStartTime > request.VoteEndTime)
+                {
+                    msg = "投票结束时间必须晚于开始时间";
+                    return flag;
+                }
+
+                if (request.VoteDetail == null || request.VoteDetail.Count == 0)
+                {
+                    msg = "投票辩题不能为空";
+                }
+
                 _dbContext.BeginTransaction();
                 request.VoteId = _dbContext.Insert(new t_vote
                 {
@@ -107,17 +135,15 @@ namespace nsda.Services.Implement.admin
                     voteEndTime = request.VoteEndTime,
                     voteStartTime = request.VoteStartTime
                 }).ToObjInt();
-                if (request.VoteDetail != null && request.VoteDetail.Count > 0)
+
+                foreach (var item in request.VoteDetail)
                 {
-                    foreach (var item in request.VoteDetail)
+                    _dbContext.Insert(new t_votedetail
                     {
-                        _dbContext.Insert(new t_votedetail
-                        {
-                            numberOfVotes = 0,
-                            title = item.Title,
-                            voteId = request.VoteId
-                        });
-                    }
+                        numberOfVotes = 0,
+                        title = item.Title,
+                        voteId = request.VoteId
+                    });
                 }
                 _dbContext.CommitChanges();
                 flag = true;
@@ -139,7 +165,35 @@ namespace nsda.Services.Implement.admin
             bool flag = false;
             try
             {
-                //需要加判断
+                if (request.Title.IsEmpty())
+                {
+                    msg = "辩题标题不能为空";
+                    return flag;
+                }
+
+                if (request.VoteStartTime == DateTime.MinValue || request.VoteStartTime == DateTime.MaxValue || request.VoteStartTime < DateTime.Now)
+                {
+                    msg = "投票开始时间有误";
+                    return flag;
+                }
+
+                if (request.VoteEndTime == DateTime.MinValue || request.VoteEndTime == DateTime.MaxValue)
+                {
+                    msg = "投票结束时间有误";
+                    return flag;
+                }
+
+                if (request.VoteStartTime > request.VoteEndTime)
+                {
+                    msg = "投票结束时间必须晚于开始时间";
+                    return flag;
+                }
+
+                if (request.VoteDetail == null || request.VoteDetail.Count == 0)
+                {
+                    msg = "投票辩题不能为空";
+                }
+
                 var model = _dbContext.Get<t_vote>(request.VoteId);
                 model.updatetime = DateTime.Now;
                 model.voteEndTime = request.VoteEndTime;
@@ -150,40 +204,30 @@ namespace nsda.Services.Implement.admin
                 _dbContext.BeginTransaction();
                 if (voteDetail != null && voteDetail.Count > 0)
                 {
-                    if (request.VoteDetail != null && request.VoteDetail.Count > 0)
+                    foreach (var item in voteDetail)
                     {
-                        foreach (var item in voteDetail)
+                        var detail = request.VoteDetail.FirstOrDefault(c => c.Id == item.id);
+                        if (detail == null)
                         {
-                            var detail = request.VoteDetail.FirstOrDefault(c => c.Id == item.id);
-                            if (detail == null)
-                            {
-                                _dbContext.Delete<t_votedetail>(item);
-                            }
-                            else
-                            {
-                                item.title = detail.Title;
-                                _dbContext.Update<t_votedetail>(item);
-                            }
+                            _dbContext.Delete<t_votedetail>(item);
                         }
-                    }
-                    else
-                    {
-                        _dbContext.Delete<t_votedetail>(c => c.voteId == request.VoteId);
+                        else
+                        {
+                            item.title = detail.Title;
+                            _dbContext.Update<t_votedetail>(item);
+                        }
                     }
                 }
                 else
                 {
-                    if (request.VoteDetail != null && request.VoteDetail.Count > 0)
+                    foreach (var item in request.VoteDetail)
                     {
-                        foreach (var item in request.VoteDetail)
+                        _dbContext.Insert(new t_votedetail
                         {
-                            _dbContext.Insert(new t_votedetail
-                            {
-                                numberOfVotes = 0,
-                                title = item.Title,
-                                voteId = request.VoteId
-                            });
-                        }
+                            numberOfVotes = 0,
+                            title = item.Title,
+                            voteId = request.VoteId
+                        });
                     }
                 }
                 _dbContext.Update(model);

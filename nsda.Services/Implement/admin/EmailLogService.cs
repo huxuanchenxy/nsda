@@ -30,12 +30,11 @@ namespace nsda.Services.admin
         {
             try
             {
-                t_emaillog model = new t_emaillog {
+                _dbContext.Insert(new t_emaillog {
                     account = request.Account,
                     dataType = request.DataType,
-                    content=request.Content
-                };
-                _dbContext.Insert(model);
+                    content = request.Content
+                });
             }
             catch (Exception ex)
             {

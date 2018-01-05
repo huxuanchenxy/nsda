@@ -8,8 +8,8 @@ namespace nsda.Model.enums
 {
     public enum MemberTrainerStatusEm
     {
-        待审核 = 0,
-        通过 = 1,
+        待确认 = 0,
+        已确认 = 1,
         拒绝 = 2
     }
 }

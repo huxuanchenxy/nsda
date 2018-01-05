@@ -61,6 +61,18 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
+                if (request.Title.IsEmpty())
+                {
+                    msg = "资源标题不能为空";
+                    return flag;
+                }
+
+                if (request.FilePath.IsEmpty())
+                {
+                    msg = "附件不能为空";
+                    return flag;
+                }
+
                 _dbContext.Insert(new t_datasource
                 {
                     remark = request.Remark,
@@ -84,6 +96,18 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
+                if (request.Title.IsEmpty())
+                {
+                    msg = "资源标题不能为空";
+                    return flag;
+                }
+
+                if (request.FilePath.IsEmpty())
+                {
+                    msg = "附件不能为空";
+                    return flag;
+                }
+
                 var datasource = _dbContext.Get<t_datasource>(request.Id);
                 if (datasource != null)
                 {

@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 namespace nsda.Services.Contract.trainer
 {
     public interface ITrainerService: IDependency
-    {
+    {  
     }
 }

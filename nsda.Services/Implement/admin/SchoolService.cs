@@ -10,6 +10,7 @@ using nsda.Utilities;
 using nsda.Utilities.Orm;
 using nsda.Repository;
 using nsda.Models;
+using Dapper;
 
 namespace nsda.Services.Implement.admin
 {
@@ -85,6 +86,23 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
+                if (request.ProvinceId <= 0)
+                {
+                    msg = "省份不能为空";
+                    return flag;
+                }
+                if (request.CityId<=0)
+                {
+                    msg = "城市不能为空";
+                    return flag;
+                }
+
+                if (request.ChinessName.IsEmpty())
+                {
+                    msg = "学校名称不能为空";
+                    return flag;
+                }
+
                 var school = _dbContext.Get<t_school>(request.Id);
                 if (school != null)
                 {
@@ -117,6 +135,23 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
+                if (request.ProvinceId <= 0)
+                {
+                    msg = "省份不能为空";
+                    return flag;
+                }
+                if (request.CityId <= 0)
+                {
+                    msg = "城市不能为空";
+                    return flag;
+                }
+
+                if (request.ChinessName.IsEmpty())
+                {
+                    msg = "学校名称不能为空";
+                    return flag;
+                }
+
                 var model = new t_school {
                      cityId=request.CityId,
                      englishname=request.EnglishName,
@@ -169,6 +204,37 @@ namespace nsda.Services.Implement.admin
             catch (Exception ex)
             {
                 LogUtils.LogError("SchoolService.List", ex);
+            }
+            return list;
+        }
+        //学校下拉框
+        public List<BaseDataResponse> Select(int? provinceId, int? cityId, string name)
+        {
+            List<BaseDataResponse> list = new List<BaseDataResponse>();
+            try
+            {
+                StringBuilder sb = new StringBuilder("select id,chinessname as Name from t_school where 1=1 ");
+                var dy = new DynamicParameters();
+                if (provinceId != null && provinceId > 0)
+                {
+                    sb.Append(" and provinceId=@provinceId ");
+                    dy.Add("provinceId", provinceId);
+                }
+                if (cityId != null && cityId > 0)
+                {
+                    sb.Append(" and cityId=@cityId ");
+                    dy.Add("cityId", cityId);
+                }
+                if (name.IsNotEmpty())
+                {
+                    sb.Append(" and chinessname like @ChinessName");
+                    dy.Add("ChinessName", "%" + name + "%");
+                }
+                list = _dbContext.Query<BaseDataResponse>(sb.ToString(),dy).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SchoolService.Select", ex);
             }
             return list;
         }

@@ -6,6 +6,7 @@ using nsda.Repository;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace nsda.Services.admin
@@ -30,7 +31,25 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                //需要加判断
+                if (request.Account.IsEmpty()|| request.Pwd.IsEmpty())
+                {
+                    msg = "账号或密码为空";
+                    return flag;
+                }
+
+                if (request.Name.IsEmpty())
+                {
+                    msg = "姓名不能为空";
+                    return flag;
+                }
+
+                var isexist = _dbContext.Select<t_sysuser>(c => c.name == request.Name).ToList();
+                if (isexist != null && isexist.Count > 0)
+                {
+                    msg = "已存在此账号";
+                    return flag;
+                }
+
                 _dbContext.Insert(new t_sysuser
                 {
                     account = request.Account,
@@ -55,6 +74,12 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
+                if (account.IsEmpty() || pwd.IsEmpty())
+                {
+                    msg = "账号或密码不能为空";
+                    return flag;
+                }
+
                 var detail = _dbContext.QueryFirstOrDefault<t_sysuser>(@"select * from t_sysuser where account=@account and pwd=@pwd ",
                               new
                               {
@@ -100,6 +125,18 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
+                if (request.Account.IsEmpty())
+                {
+                    msg = "账号不能为空";
+                    return flag;
+                }
+
+                if (request.Name.IsEmpty())
+                {
+                    msg = "姓名不能为空";
+                    return flag;
+                }
+
                 var sysuser = _dbContext.Get<t_sysuser>(request.Id);
                 if (sysuser != null)
                 {
@@ -129,6 +166,24 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
+                if (oldPwd.IsEmpty())
+                {
+                    msg = "原密码不能为空";
+                    return flag;
+                }
+
+                if (newPwd.IsEmpty())
+                {
+                    msg = "新密码不能为空";
+                    return flag;
+                }
+
+                if (!string.Equals(oldPwd, newPwd))
+                {
+                    msg = "新密码和原密码相同";
+                    return flag;
+                }
+
                 var sysuser = _dbContext.Get<t_sysuser>(id);
                 if (sysuser != null)
                 {

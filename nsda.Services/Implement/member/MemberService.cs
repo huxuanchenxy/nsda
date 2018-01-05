@@ -30,7 +30,8 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-
+                SaveCurrentUser(new WebUserContext { });
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -47,7 +48,35 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
+                if (account.IsEmpty() || pwd.IsEmpty())
+                {
+                    msg = "账号或密码不能为空";
+                    return flag;
+                }
 
+                var detail = _dbContext.QueryFirstOrDefault<t_sysuser>(@"select * from t_member where account=@account and pwd=@pwd ",
+                         new
+                         {
+                             account = account,
+                             pwd = pwd
+                         });
+                if (detail == null)
+                {
+                    msg = "账号或密码错误";
+                }
+                else
+                {
+                    //记录缓存
+                    var users = new WebUserContext
+                    {
+                        Id = detail.id,
+                        Name = detail.name,
+                        Account = detail.account,
+                        Role="1"
+                    };
+                    SaveCurrentUser(users);
+                    flag = true;
+                }
             }
             catch (Exception ex)
             {
@@ -75,13 +104,49 @@ namespace nsda.Services.member
             return flag;
         }
         //1.3 修改密码
-        public  bool UpdatePwd(out string msg)
+        public bool UpdatePwd(int memberId, string oldPwd, string newPwd, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
+                if (oldPwd.IsEmpty())
+                {
+                    msg = "原密码不能为空";
+                    return flag;
+                }
 
+                if (newPwd.IsEmpty())
+                {
+                    msg = "新密码不能为空";
+                    return flag;
+                }
+
+                if (!string.Equals(oldPwd, newPwd))
+                {
+                    msg = "新密码和原密码相同";
+                    return flag;
+                }
+
+                var member = _dbContext.Get<t_member>(memberId);
+                if (member != null)
+                {
+                    if (!string.Equals(oldPwd, member.pwd, StringComparison.OrdinalIgnoreCase))
+                    {
+                        msg = "原密码有误";
+                    }
+                    else
+                    {
+                        member.pwd = newPwd;
+                        member.updatetime = DateTime.Now;
+                        _dbContext.Update(member);
+                        flag = true;
+                    }
+                }
+                else
+                {
+                    msg = "修改有误";
+                }
             }
             catch (Exception ex)
             {
@@ -186,7 +251,6 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
         /// <summary>
         /// 保存用户缓存
         /// </summary>

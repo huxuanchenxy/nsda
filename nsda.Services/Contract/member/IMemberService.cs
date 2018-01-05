@@ -19,7 +19,7 @@ namespace nsda.Services.member
         //1.2 修改
         bool Edit(out string msg);
         //1.3 修改密码
-        bool UpdatePwd(out string msg);
+        bool UpdatePwd(int memberId, string oldPwd, string newPwd, out string msg);
         //1.4 实名认证回调 修改用户状态
         void CallBack();
         //1.5 会员列表 
