@@ -1,0 +1,92 @@
+﻿.tipsmodal.in {
+    bottom: 0;
+}
+
+.modal-dialog {
+    margin: 10px auto;
+}
+
+.tipsmodal {
+    position: absolute;
+    right: 15px;
+    bottom: -530px;
+    transition: all .5s ease;
+    z-index: 222;
+}
+
+.w-400px {
+    width: 400px;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+    background-clip: padding-box;
+    outline: 0;
+}
+
+.modal-header {
+    background-color: #1e89e1;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 10px;
+    border-bottom: 1px solid #1e89e1;
+    min-height: 16.428571429px;
+}
+
+.modal-content .close-modal-button, .modal-content .close {
+    color: #ccc;
+    opacity: 1;
+    text-shadow: none;
+}
+
+.modal-header .close {
+    margin-top: -2px;
+}
+
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+
+.tipsmodal .modal-header p {
+    margin-bottom: 0;
+    color: #fff;
+    margin: 0 0 10px;
+}
+
+.modal-body {
+    padding: 34px 20px;
+    position: inherit;
+}
+
+.bordb {
+    border-bottom: #e8e8e8 1px solid;
+}
+
+.hei30 {
+    height: 30px;
+}
+
+.marb15 {
+    margin-bottom: 15px;
+}
