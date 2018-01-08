@@ -56,7 +56,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //2.0 管理员审核处理
-        public bool IsProcess(int id, int sysUserId, string remark, bool isAppro, out string msg)
+        public bool Process(int id, int sysUserId, string remark, bool isAppro, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -78,7 +78,7 @@ namespace nsda.Services.Implement.member
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("MemberExtendService.IsProcess", ex);
+                LogUtils.LogError("MemberExtendService.Process", ex);
             }
             return flag;
         }
