@@ -13,7 +13,9 @@ namespace nsda.Model.dto.response
 
         public int MemberId { get; set; }
 
-        public TempTypeEm tempType { get; set; }
+        public string MemberName { get; set; }
+
+        public TempTypeEm TempType { get; set; }
 
         /// <summary>
         /// 队伍编码 或者裁判临时编码
@@ -36,6 +38,11 @@ namespace nsda.Model.dto.response
         public int? ToMemberId { get; set; }
 
         /// <summary>
+        /// 绑定至此会员
+        /// </summary>
+        public string ToMemberName { get; set; }
+
+        /// <summary>
         /// 临时会员状态
         /// </summary>
         public TempStatusEm TempStatus { get; set; }
@@ -44,6 +51,11 @@ namespace nsda.Model.dto.response
         /// 具体赛事添加的临时会员
         /// </summary>
         public int EventId { get; set; }
+
+        /// <summary>
+        /// 赛事名称
+        /// </summary>
+        public string EventName { get; set; }
 
         /// <summary>
         /// 创建时间

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Model.enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,7 @@ namespace nsda.Model.dto.request
     //绑定临时选手
     public class BindTempPlayerRequest
     {
+        public int MemberId { get; set; }
         /// <summary>
         /// 队伍编码
         /// </summary>
@@ -70,6 +72,7 @@ namespace nsda.Model.dto.request
     //绑定临时裁判
     public class BindTempRefereeRequest
     {
+        public int MemberId { get; set; }
         /// <summary>
         /// 临时裁判编码
         /// </summary>
@@ -83,6 +86,7 @@ namespace nsda.Model.dto.request
     //临时会员数据查询
     public class TempMemberQueryRequest:PagedQuery
     {
-
+        public TempTypeEm? TempType { get; set; }
+        public TempStatusEm? TempStatus { get; set; }
     }
 }

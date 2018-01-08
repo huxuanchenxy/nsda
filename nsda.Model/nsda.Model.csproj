@@ -118,6 +118,9 @@
     <Compile Include="model\t_emaillog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_event.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_eventprize.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>

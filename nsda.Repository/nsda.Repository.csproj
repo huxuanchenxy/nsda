@@ -45,19 +45,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\eventmanage\IEventRepo.cs" />
+    <Compile Include="Contract\eventmanage\IEventRoomRepo.cs" />
+    <Compile Include="Contract\member\IMemberRepo.cs" />
+    <Compile Include="Contract\member\ISignUpPlayerRepo.cs" />
     <Compile Include="DataRepository.cs" />
     <Compile Include="IDataRepository.cs" />
+    <Compile Include="Implement\eventmanage\EventRepo.cs" />
+    <Compile Include="Implement\eventmanage\EventRoomRepo.cs" />
+    <Compile Include="Implement\member\MemberRepo.cs" />
+    <Compile Include="Implement\member\SignUpPlayerRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contract\admin\" />
-    <Folder Include="Contract\eventmanage\" />
-    <Folder Include="Contract\member\" />
     <Folder Include="Contract\referee\" />
     <Folder Include="Contract\trainer\" />
     <Folder Include="Implement\admin\" />
-    <Folder Include="Implement\eventmanage\" />
-    <Folder Include="Implement\member\" />
     <Folder Include="Implement\referee\" />
     <Folder Include="Implement\trainer\" />
   </ItemGroup>

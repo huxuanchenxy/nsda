@@ -4,6 +4,7 @@ using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Models;
 using nsda.Repository;
+using nsda.Services.admin;
 using nsda.Services.Contract.member;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
@@ -23,14 +24,16 @@ namespace nsda.Services.member
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
-        public MemberService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        ISysOperLogService _sysOperLogService;
+        public MemberService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
+            _sysOperLogService = sysOperLogService;
         }
 
-        //1.0 注册
+        //注册
         public bool Register(MemberRequest request, out string msg)
         {
             bool flag = false;
@@ -48,7 +51,7 @@ namespace nsda.Services.member
                     account = request.Account,
                     card = request.Card,
                     cardType = request.CardType,
-                    code = RenderCode(),
+                    code = _dataRepository.MemberRepo.RenderCode(),
                     completename = request.Name,
                     completepinyin = request.CompletePinYin,
                     contactaddress = request.ContactAddress,
@@ -92,7 +95,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.1 登录
+        //登录
         public WebUserContext Login(string account, string pwd, out string msg)
         {
             WebUserContext userContext = null;
@@ -140,7 +143,7 @@ namespace nsda.Services.member
             }
             return userContext;
         }
-        //1.2 修改
+        //修改
         public bool Edit(MemberRequest request, out string msg)
         {
             bool flag = false;
@@ -188,7 +191,7 @@ namespace nsda.Services.member
             return flag;
         }
 
-        //1.3 修改密码
+        //修改密码
         public bool EditPwd(int memberId, string oldPwd, string newPwd, out string msg)
         {
             bool flag = false;
@@ -241,7 +244,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.4 实名认证回调 修改用户状态
+        //实名认证回调 修改用户状态
         public void CallBack(int id)
         {
             try
@@ -258,7 +261,7 @@ namespace nsda.Services.member
                 LogUtils.LogError("MemberService.CallBack", ex);
             }
         }
-        //1.5 会员列表 
+        //会员列表 
         public PagedList<MemberResponse> List(MemberQueryRequest request)
         {
             PagedList<MemberResponse> list = new PagedList<MemberResponse>();
@@ -272,25 +275,8 @@ namespace nsda.Services.member
             }
             return list;
         }
-        //1.6 手动添加临时会员信息
-        public bool AddTempMember(out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("MemberService.AddTempMember", ex);
-            }
-            return flag;
-        }
-        //1.7 删除会员信息
-        public bool Delete(int id, out string msg)
+        //删除会员信息
+        public bool Delete(int id,int sysUserId,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -317,8 +303,8 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.8 重置密码
-        public bool Reset(int id, out string msg)
+        //重置密码
+        public bool Reset(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -344,8 +330,8 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.9 启用禁用账号
-        public bool IsEnable(int id, bool isEnable, out string msg)
+        //启用禁用账号
+        public bool IsEnable(int id, int sysUserId, bool isEnable, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -371,7 +357,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.10 找回密码
+        //找回密码
         public bool FindPwd(int memberId, string pwd, out string msg)
         {
             bool flag = false;
@@ -403,7 +389,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.11 验证邮箱是否有效 并返回用户id
+        //验证邮箱是否有效 并返回用户id
         public int SendEmail(string email, out string msg)
         {
             int memberId = 0;
@@ -492,32 +478,6 @@ namespace nsda.Services.member
             catch (Exception ex)
             {
                 LogUtils.LogError("MemberService.SaveCurrentUser", ex);
-            }
-        }
-
-        private static object lockObject = new object();
-
-        //生成会员Code
-        private string RenderCode()
-        {
-            lock (lockObject)
-            {
-                var dy = new DynamicParameters();
-                string sql = @"select  code from t_member where code like 'nsda%' order by Id desc limit 1";
-                object obj = _dbContext.Query<object>(sql).FirstOrDefault();
-
-                if (obj == null || obj.ToString().IsEmpty())
-                {
-                    return "nsda1000001";
-                }
-                else
-                {
-                    string number = obj.ToString();
-                    number = number.Substring(4);
-                    int sequence = Convert.ToInt32(number);
-                    sequence += 1;
-                    return $"nsda{sequence}";
-                }
             }
         }
     }
