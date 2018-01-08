@@ -1,9 +1,12 @@
 ﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.enums;
 using nsda.Services.admin;
 using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,9 +15,11 @@ namespace nsda.Web.Areas.admin.Controllers
     public class loginController : Controller
     {
         ISysUserService _sysUserService;
-        public loginController(ISysUserService sysUserService)
+        ILoginLogService _loginLogService;
+        public loginController(ISysUserService sysUserService, ILoginLogService loginLogService)
         {
             _sysUserService = sysUserService;
+            _loginLogService = loginLogService;
         }
 
         public ActionResult logout()
@@ -25,7 +30,7 @@ namespace nsda.Web.Areas.admin.Controllers
 
         public ActionResult login()
         {
-            if (UserContext.SysUserContext() != null)
+            if (UserContext.SysUserContext != null)
             {
                 return RedirectToAction("index", "home");
             }
@@ -38,8 +43,23 @@ namespace nsda.Web.Areas.admin.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
+            if (account.IsEmpty() || pwd.IsEmpty())
+            {
+                res.flag = false;
+                res.msg = "账号或密码不能为空";
+                return Json(res, JsonRequestBehavior.DenyGet);
+            }
+
             res.flag = _sysUserService.Login(account,pwd, out msg);
             res.msg = msg;
+            Task.Factory.StartNew(() => {
+                _loginLogService.Insert(new LoginLogRequest
+                {
+                    Account = account,
+                    LoginResult = res.flag  ? "ok" : msg,
+                    DataType = DataTypeEm.平台管理员
+                });
+            });
             return Json(res, JsonRequestBehavior.DenyGet);
         }
     }

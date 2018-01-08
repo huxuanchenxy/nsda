@@ -1,7 +1,10 @@
-﻿using nsda.Model.dto.request;
+﻿using Dapper;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Models;
 using nsda.Repository;
+using nsda.Services.Contract.member;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
 using System;
@@ -15,46 +18,87 @@ namespace nsda.Services.member
     /// <summary>
     /// 会员管理
     /// </summary>
-    public class MemberService: IMemberService
+    public class MemberService : IMemberService
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public MemberService(IDBContext dbContext, IDataRepository dataRepository)
+        IMemberOperLogService _memberOperLogService;
+        public MemberService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _memberOperLogService = memberOperLogService;
         }
 
         //1.0 注册
-        public bool Register(RegisterRequest request,out string msg)
+        public bool Register(MemberRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                var userContext = new WebUserContext { };
-                SaveCurrentUser(userContext); 
+                bool validateflag = Validate(request, out msg);
+                if (!validateflag)
+                {
+                    return flag;
+                }
+                _dbContext.BeginTransaction();
+                int id = _dbContext.Insert(new t_member
+                {
+                    account = request.Account,
+                    card = request.Card,
+                    cardType = request.CardType,
+                    code = RenderCode(),
+                    completename = request.Name,
+                    completepinyin = request.CompletePinYin,
+                    contactaddress = request.ContactAddress,
+                    contactmobile = request.ContactMobile,
+                    emergencycontact = request.EmergencyContact,
+                    gender = request.Gender,
+                    grade = request.Grade,
+                    lastlogintime = DateTime.Now,
+                    memberStatus = request.MemberType != MemberTypeEm.选手 ? MemberStatusEm.启用 : MemberStatusEm.待认证,
+                    name = request.Name,
+                    memberType = request.MemberType,
+                    pinyinname = request.PinYinName,
+                    pinyinsurname = request.PinYinSurName,
+                    pwd = request.Pwd,
+                    surname = request.SurName
+                }).ToObjInt();
+
+                _dbContext.Insert(new t_memberpoints
+                {
+                    eventPoints = 0,
+                    memberId = id,
+                    points = 0,
+                    servicePoints = 0,
+                });
+
+                _dbContext.CommitChanges();
+                var userContext = new WebUserContext
+                {
+                    Name = request.Name,
+                    Account = request.Account,
+                    Role = ((int)request.MemberType).ToString(),
+                    MemberType = (int)request.MemberType
+                };
+                SaveCurrentUser(userContext);
             }
             catch (Exception ex)
             {
+                _dbContext.Rollback();
                 msg = "服务异常";
                 LogUtils.LogError("MemberService.Register", ex);
             }
             return flag;
         }
         //1.1 登录
-        public WebUserContext Login(string account,string pwd,out string msg)
+        public WebUserContext Login(string account, string pwd, out string msg)
         {
             WebUserContext userContext = null;
             msg = string.Empty;
             try
             {
-                if (account.IsEmpty() || pwd.IsEmpty())
-                {
-                    msg = "账号或密码不能为空";
-                    return userContext;
-                }
-
                 var detail = _dbContext.QueryFirstOrDefault<t_member>(@"select * from t_member where account=@account and pwd=@pwd ",
                          new
                          {
@@ -67,14 +111,24 @@ namespace nsda.Services.member
                 }
                 else
                 {
+                    //读取已经认证的
+                    string role = ((int)detail.memberType).ToString();
+                    var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.通过).ToList();
+                    if (memberextend != null && memberextend.Count > 0)
+                    {
+                        foreach (var item in memberextend)
+                        {
+                            role += $",{((int)item.role).ToString()}";
+                        }
+                    }
                     //记录缓存
                     userContext = new WebUserContext
                     {
                         Id = detail.id,
                         Name = detail.name,
                         Account = detail.account,
-                        Role="1",
-                        MemberType=(int)detail.memberType
+                        Role = role,
+                        MemberType = (int)detail.memberType
                     };
                     SaveCurrentUser(userContext);
                 }
@@ -87,13 +141,35 @@ namespace nsda.Services.member
             return userContext;
         }
         //1.2 修改
-        public  bool Edit(out string msg)
+        public bool Edit(MemberRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
+                t_member member = _dbContext.Get<t_member>(request.Id);
 
+                bool validateflag = Validate(request, out msg);
+                if (!validateflag)
+                {
+                    return flag;
+                }
+
+                member.card = request.Card;
+                member.cardType = request.CardType;
+                member.completename = request.Name;
+                member.completepinyin = request.CompletePinYin;
+                member.contactaddress = request.ContactAddress;
+                member.contactmobile = request.ContactMobile;
+                member.emergencycontact = request.EmergencyContact;
+                member.gender = request.Gender;
+                member.grade = request.Grade;
+                member.name = request.Name;
+                member.memberType = request.MemberType;
+                member.pinyinname = request.PinYinName;
+                member.pinyinsurname = request.PinYinSurName;
+                member.surname = request.SurName;
+                _dbContext.Update(member);
             }
             catch (Exception ex)
             {
@@ -103,8 +179,17 @@ namespace nsda.Services.member
             }
             return flag;
         }
+
+        private bool Validate(MemberRequest request, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+
+            return flag;
+        }
+
         //1.3 修改密码
-        public bool UpdatePwd(int memberId, string oldPwd, string newPwd, out string msg)
+        public bool EditPwd(int memberId, string oldPwd, string newPwd, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -157,11 +242,16 @@ namespace nsda.Services.member
             return flag;
         }
         //1.4 实名认证回调 修改用户状态
-        public void CallBack()
+        public void CallBack(int id)
         {
             try
             {
-
+                var member = _dbContext.Get<t_member>(id);
+                if (member != null)
+                {
+                    member.updatetime = DateTime.Now;
+                    member.memberStatus = MemberStatusEm.启用;
+                }
             }
             catch (Exception ex)
             {
@@ -169,8 +259,9 @@ namespace nsda.Services.member
             }
         }
         //1.5 会员列表 
-        public void List()
+        public PagedList<MemberResponse> List(MemberQueryRequest request)
         {
+            PagedList<MemberResponse> list = new PagedList<MemberResponse>();
             try
             {
 
@@ -179,9 +270,10 @@ namespace nsda.Services.member
             {
                 LogUtils.LogError("MemberService.List", ex);
             }
+            return list;
         }
         //1.6 手动添加临时会员信息
-        public  bool AddTempMember(out string msg)
+        public bool AddTempMember(out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -198,7 +290,7 @@ namespace nsda.Services.member
             return flag;
         }
         //1.7 删除会员信息
-        public  bool Delete(int id, out string msg)
+        public bool Delete(int id, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -226,7 +318,7 @@ namespace nsda.Services.member
             return flag;
         }
         //1.8 重置密码
-        public bool Reset(int id,out string msg)
+        public bool Reset(int id, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -239,7 +331,8 @@ namespace nsda.Services.member
                     member.updatetime = DateTime.Now;
                     _dbContext.Update(member);
                 }
-                else {
+                else
+                {
                     msg = "会员信息不存在";
                 }
             }
@@ -278,6 +371,113 @@ namespace nsda.Services.member
             }
             return flag;
         }
+        //1.10 找回密码
+        public bool FindPwd(int memberId, string pwd, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                if (pwd.IsEmpty())
+                {
+                    msg = "密码不能为空";
+                    return flag;
+                }
+                var member = _dbContext.Get<t_member>(memberId);
+                if (member != null)
+                {
+                    member.pwd = pwd;
+                    member.updatetime = DateTime.Now;
+                    _dbContext.Update(member);
+                }
+                else
+                {
+                    msg = "会员信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("MemberService.FindPwd", ex);
+            }
+            return flag;
+        }
+        //1.11 验证邮箱是否有效 并返回用户id
+        public int SendEmail(string email, out string msg)
+        {
+            int memberId = 0;
+            msg = string.Empty;
+            try
+            {
+                if (email.IsEmpty())
+                {
+                    msg = "邮箱不能为空";
+                    return memberId;
+                }
+
+                if (!email.IsSuccessEmail())
+                {
+                    msg = "邮箱有误";
+                    return memberId;
+                }
+                var member = _dbContext.Select<t_member>(c => c.account == email && c.memberStatus != MemberStatusEm.禁用 && c.memberType != MemberTypeEm.临时裁判 && c.memberType != MemberTypeEm.临时选手).FirstOrDefault();
+                if (member != null)
+                {
+                    memberId = member.id;
+                }
+                else
+                {
+                    msg = "会员信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "服务异常";
+                LogUtils.LogError("MemberService.SendEmail", ex);
+            }
+            return memberId;
+        }
+        //会员详情
+        public MemberResponse Detail(int id)
+        {
+            MemberResponse repsonse = null;
+            try
+            {
+                var detail = _dbContext.Get<t_member>(id);
+                if (detail != null)
+                {
+                    repsonse = new MemberResponse
+                    {
+                        Account = detail.account,
+                        Name = detail.name,
+                        Card = detail.card,
+                        CardType = detail.cardType,
+                        Code = detail.code,
+                        CompleteName = detail.completename,
+                        ContactAddress = detail.contactaddress,
+                        ContactMobile = detail.contactmobile,
+                        CompletePinYin = detail.completepinyin,
+                        EmergencyContact = detail.emergencycontact,
+                        Gender = detail.gender,
+                        CreateTime = detail.createtime,
+                        Grade = detail.grade,
+                        Id = detail.id,
+                        MemberStatus = detail.memberStatus,
+                        MemberType = detail.memberType,
+                        PinYinName = detail.pinyinname,
+                        PinYinSurName = detail.pinyinsurname,
+                        SurName = detail.surname,
+                        UpdateTime = detail.updatetime
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.Detail", ex);
+            }
+            return repsonse;
+        }
 
         /// <summary>
         /// 保存用户缓存
@@ -292,6 +492,32 @@ namespace nsda.Services.member
             catch (Exception ex)
             {
                 LogUtils.LogError("MemberService.SaveCurrentUser", ex);
+            }
+        }
+
+        private static object lockObject = new object();
+
+        //生成会员Code
+        private string RenderCode()
+        {
+            lock (lockObject)
+            {
+                var dy = new DynamicParameters();
+                string sql = @"select  code from t_member where code like 'nsda%' order by Id desc limit 1";
+                object obj = _dbContext.Query<object>(sql).FirstOrDefault();
+
+                if (obj == null || obj.ToString().IsEmpty())
+                {
+                    return "nsda1000001";
+                }
+                else
+                {
+                    string number = obj.ToString();
+                    number = number.Substring(4);
+                    int sequence = Convert.ToInt32(number);
+                    sequence += 1;
+                    return $"nsda{sequence}";
+                }
             }
         }
     }

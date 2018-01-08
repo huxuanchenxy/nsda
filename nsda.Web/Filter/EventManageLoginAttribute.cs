@@ -23,7 +23,7 @@ namespace nsda.Web.Filter
                 return;
             }
 
-            var user = UserContext.WebUserContext();
+            var user = UserContext.WebUserContext;
             if (user == null)
             {
                 filterContext.Result = new RedirectResult("/login/login");

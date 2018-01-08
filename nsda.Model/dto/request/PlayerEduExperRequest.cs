@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.request
 {
-    public class MemberEduExperRequest
+    public class PlayerEduExperRequest
     {
         public int Id { get; set; }
         public int SchoolId { get; set; }
@@ -16,7 +16,7 @@ namespace nsda.Model.dto.request
         public int MemberId { get; set; }
     }
 
-    public class MemberEduExperQueryRequest : PagedQuery
+    public class PlayerEduExperQueryRequest : PagedQuery
     {
         public int MemberId { get; set; }
     }

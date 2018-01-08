@@ -13,10 +13,12 @@ namespace nsda.Services.Implement.member
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public MemberExtendService(IDBContext dbContext, IDataRepository dataRepository)
+        IMemberOperLogService _memberOperLogService;
+        public MemberExtendService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _memberOperLogService = memberOperLogService;
         }
     }
 }

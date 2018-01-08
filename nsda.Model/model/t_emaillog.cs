@@ -35,11 +35,6 @@ namespace nsda.Models
         public string account { get; set; }
     
         /// <summary>
-        /// 发送类型
-        /// </summary>
-        public DataTypeEm dataType { get; set; }
-    
-        /// <summary>
         /// 发送内容
         /// </summary>
         public string content { get; set; }

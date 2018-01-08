@@ -25,7 +25,14 @@ namespace nsda.Utilities
         public static readonly string ctc = ConfigurationManager.AppSettings["ctc"];//电信号码
         public static readonly string ctc1 = ConfigurationManager.AppSettings["ctc1"];//电信虚拟号
 
-        public static readonly string WebCookieKey = "memberkey";
+        public static readonly string WebCookieKey = "webuserkey";
         public static readonly string SysCookieKey = "sysuserkey";
+        public static readonly string FindPwd = "findpwdid";
+        public static readonly string FindPwdEmail = "findpwdemail";
+
+        public static readonly string EmailAccount = ConfigurationManager.AppSettings["fromaccount"];//邮件发送账号
+        public static readonly string EmailPwd = ConfigurationManager.AppSettings["frompwd"];//邮件发送账号密码
+        public static readonly string email_smtp = ConfigurationManager.AppSettings["email_smtp"];
+        public static readonly string email_port = ConfigurationManager.AppSettings["email_port"];
     }
 }

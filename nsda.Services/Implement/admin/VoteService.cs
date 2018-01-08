@@ -2,6 +2,7 @@
 using nsda.Model.dto.response;
 using nsda.Models;
 using nsda.Repository;
+using nsda.Services.admin;
 using nsda.Services.Contract.admin;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
@@ -17,10 +18,12 @@ namespace nsda.Services.Implement.admin
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public VoteService(IDBContext dbContext, IDataRepository dataRepository)
+        ISysOperLogService _sysOperLogService;
+        public VoteService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _sysOperLogService = sysOperLogService;
         }
 
         //删除辩题

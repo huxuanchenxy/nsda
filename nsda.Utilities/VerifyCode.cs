@@ -70,5 +70,18 @@ namespace nsda.Utilities
             }
         }
 
+        public static string GetVerifyCode(int length = 6)
+        {
+            string chkCode = string.Empty;
+            char[] character = { '2', '3', '4', '5', '6', '8', '9', 'a', 'b', 'd', 'e', 'f', 'h', 'k', 'm', 'n', 'r', 'x', 'y', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'W', 'X', 'Y' };
+            Random rnd = new Random();
+
+            for (int i = 0; i < length; i++)
+            {
+                chkCode += character[rnd.Next(character.Length)];
+            }
+
+            return chkCode;
+        }
     }
 }

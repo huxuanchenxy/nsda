@@ -1,5 +1,6 @@
 ﻿using nsda.Repository;
 using nsda.Services.Contract.eventmanage;
+using nsda.Services.Contract.member;
 using nsda.Utilities.Orm;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace nsda.Services.Implement.eventmanage
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public EventPrizeService(IDBContext dbContext, IDataRepository dataRepository)
+        IMemberOperLogService _memberOperLogService;
+        public EventPrizeService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _memberOperLogService = memberOperLogService;
         }
     }
 }

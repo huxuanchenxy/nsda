@@ -8,7 +8,15 @@ namespace nsda.Utilities
 {
     public  class UserContext
     {
-        public  static SysUserContext SysUserContext()
+        public static SysUserContext SysUserContext
+        {
+            get
+            {
+                return GetSysUser();
+            }
+        }
+
+        public  static SysUserContext GetSysUser()
         {
             SysUserContext sysContext = null;
             try
@@ -31,7 +39,17 @@ namespace nsda.Utilities
             SessionCookieUtility.RemoveCookie(Constant.SysCookieKey);
         }
 
-        public static WebUserContext WebUserContext()
+
+        public static WebUserContext WebUserContext
+        {
+            get
+            {
+                return GetWebUser();
+            }
+        }
+
+
+        public static WebUserContext GetWebUser()
         {
             WebUserContext webContext = null;
             try

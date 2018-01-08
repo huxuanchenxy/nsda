@@ -53,14 +53,16 @@
     <Compile Include="dto\request\EventScoreRequest.cs" />
     <Compile Include="dto\request\LeavingMsgRequest.cs" />
     <Compile Include="dto\request\LoginLogRequest.cs" />
-    <Compile Include="dto\request\MemberEduExperRequest.cs" />
-    <Compile Include="dto\request\MemberTrainerRequest.cs" />
+    <Compile Include="dto\request\MemberOperLogRequest.cs" />
+    <Compile Include="dto\request\PlayerEduExperRequest.cs" />
+    <Compile Include="dto\request\PlayerTrainerRequest.cs" />
     <Compile Include="dto\request\PagedQuery.cs" />
     <Compile Include="dto\request\ProvinceRequest.cs" />
-    <Compile Include="dto\request\RegisterRequest.cs" />
+    <Compile Include="dto\request\MemberRequest.cs" />
     <Compile Include="dto\request\SchoolRequest.cs" />
     <Compile Include="dto\request\SysOperLogRequest.cs" />
     <Compile Include="dto\request\SysUserRequest.cs" />
+    <Compile Include="dto\request\TempMemberRequest.cs" />
     <Compile Include="dto\request\VoteRequest.cs" />
     <Compile Include="dto\response\BaseDataResponse.cs" />
     <Compile Include="dto\response\CityResponse.cs" />
@@ -69,9 +71,11 @@
     <Compile Include="dto\response\EventScoreResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
-    <Compile Include="dto\response\MemberEduExperResponse.cs" />
+    <Compile Include="dto\response\MemberOperLogResponse.cs" />
+    <Compile Include="dto\response\MenuData.cs" />
+    <Compile Include="dto\response\PlayerEduExperResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
-    <Compile Include="dto\response\MemberTrainerResponse.cs" />
+    <Compile Include="dto\response\PlayerTrainerResponse.cs" />
     <Compile Include="dto\response\ProvinceResponse.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
@@ -125,9 +129,6 @@
     <Compile Include="model\t_member.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_membereduexper.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
     <Compile Include="model\t_memberextend.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
@@ -146,7 +147,10 @@
     <Compile Include="model\t_membertemp.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_member_trainer.cs">
+    <Compile Include="model\t_playereduexper.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_player_trainer.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_prize.cs">
@@ -158,10 +162,10 @@
     <Compile Include="model\t_school.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_signupform_member.cs">
+    <Compile Include="model\t_signupform_player.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_signupform_member_detail.cs">
+    <Compile Include="model\t_signupform_player_detail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_signupform_referee.cs">

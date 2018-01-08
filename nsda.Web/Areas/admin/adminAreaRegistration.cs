@@ -17,7 +17,7 @@ namespace nsda.Web.Areas.admin
             context.MapRoute(
                 "admin_default",
                 "admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "index", id = UrlParameter.Optional }
             );
         }
     }

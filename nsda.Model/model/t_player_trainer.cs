@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_signupform_member")]
-    public class t_signupform_member
+	[Table("t_player_trainer")]
+    public class t_player_trainer
     {
 	   //默认构造函数
-	   public t_signupform_member()
+	   public t_player_trainer()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -35,24 +35,28 @@ namespace nsda.Models
         public int memberId { get; set; }
     
         /// <summary>
-        /// 赛事id
+        /// 教练id
         /// </summary>
-        public int eventId { get; set; }
+        public int objMemberId { get; set; }
     
         /// <summary>
-        /// 赛事组别
+        /// 状态
         /// </summary>
-        public int groupId { get; set; }
+        public MemberTrainerStatusEm memberTrainerStatus { get; set; }
     
         /// <summary>
-        /// 报名费
+        /// 是否正面 1 选手绑定教练 2. 教练绑定选手
         /// </summary>
-        public decimal signfee { get; set; }
+        public bool IsPositive { get; set; }
     
         /// <summary>
-        /// 队伍编码
+        /// 是否是教练
         /// </summary>
-        public string groupnum { get; set; }
+        public bool IsTrainer { get; set; }
+    
+        public DateTime startdate { get; set; }
+    
+        public DateTime? enddate { get; set; }
     
         /// <summary>
         /// 创建时间

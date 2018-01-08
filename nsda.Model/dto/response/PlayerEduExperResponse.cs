@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.response
 {
-    public class MemberEduExperResponse
+    public class PlayerEduExperResponse
     {
         public int Id { get; set; }
         public int SchoolId { get; set; }

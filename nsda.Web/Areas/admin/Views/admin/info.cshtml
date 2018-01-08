@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "个人中心";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@section styles
+{
+    <link href="/asset/css/file.css" rel="stylesheet" />
+}
+<div class="fg-layout" id="fglayout" style="height: 100%; width: 100%;">
+    <div class="fg-layout-west">
+        <div class="west-Panel">
+            <div class="left-nav">
+                <ul style="padding-top: 20px;">
+                    <li class="active" data-attr="baseinfo">基本信息</li>
+                    <li data-attr="updatepwd">编辑密码</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="fg-layout-center">
+        <div class="center-Panel">
+            <div class="nav-content" style="background: #fff;">
+                <div id="baseinfo" class="fgshow">
+                    <table class="fgtable" id="updatebaseinfo" style="margin-top: 20px;">
+                        <tr>
+                            <td class="fgkey">姓名</td>
+                            <td class="fgval">
+                                <input id="Name" type="text" class="fg-control input-profile" value="@Model.Name" ischeck=yes regular="notnull" />
+                                <div style="width: 300px; float: left"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fgkey">手机</td>
+                            <td class="fgval">
+                                <input id="Mobile" type="text" class="fg-control input-profile" value="@Model.Mobile" ischeck=yes regular="mobile" />
+                                <div style="width: 300px; float: left"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fgkey"></td>
+                            <td class="fgval">
+                                <br />
+                                <a class="btn btn-primary" onclick="savebaseinfo()"><i class="fa fa-save"></i>&nbsp;保&nbsp;存</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="updatepwd" class="fgshow" style="display: none;">
+                    <table class="fgtable" id="updatepwdtable" style="margin-top: 20px;">
+                        <tr>
+                            <td class="fgkey" style="height: 20px;"></td>
+                            <td>
+                                <p style="color: #959393; padding-left: 8px;">为了保护您的帐号安全，操作前请您进行安全验证</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fgkey">原密码<span>*</span></td>
+                            <td class="fgval">
+                                <input id="oldpwd" type="password" class="fg-control input-profile" placeholder="请输入原密码" style="float:left;" ischeck=yes regular="notnull" />
+                                <div style="width: 300px; float: left"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fgkey">新密码<span>*</span></td>
+                            <td class="fgval">
+                                <input id="newpwd" type="password" class="fg-control input-profile" placeholder="请输入新密码" style="float: left;" maxlength="16" ischeck=yes regular="pwd" />
+                                <div style="width: 300px; float: left"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fgkey">确认密码<span>*</span></td>
+                            <td class="fgval">
+                                <input id="againpwd" type="password" class="fg-control input-profile" placeholder="请确认新密码" style="float: left;" maxlength="16" ischeck=yes regular="pwd" />
+                                <div style="width: 300px; float: left"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fgkey"></td>
+                            <td class="fgval">
+                                <br />
+                                <a id="btnresetpwd" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;提&nbsp;交</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(function () {
+            init();
+        });
+
+        function init() {
+            $('#fglayout').layout({
+                applyDemoStyles: true,
+                onresize: function () {
+                    $(window).resize()
+                }
+            });
+
+            initresize();
+
+            $(window).resize(function (e) {
+                initresize();
+                e.stopPropagation();
+            });
+        }
+
+        $(".left-nav li").click(function () {
+            $(".nav-content").find('.fgshow').hide();
+            $("#" + $(this).attr("data-attr")).toggle();
+            $(".poptip").remove();
+        });
+
+        $("#btnresetpwd").click(function () {
+            if (!$('#updatepwdtable').IsSuccess()) {
+                return false;
+            }
+
+            var oldpwd = $("#oldpwd").val();
+            var newpwd = $("#newpwd").val();
+            var againpwd = $("#againpwd").val();
+
+            if (newpwd == oldpwd) {
+                layermsg('新密码不能与原密码相同！', 0);
+                return false;
+            }
+
+            if (newpwd != againpwd) {
+                layermsg('两次输入的密码不一致！', 0);
+                return false;
+            }
+
+            $.confirm({
+                url: "/admin/admin/editpwd",
+                param: {
+                    oldPwd: oldpwd,
+                    newPwd: newpwd,
+                },
+                msg: "注：请牢记当前设置密码，您确认要重置密码",
+                callback: function (data) {
+                    $newpwd.val("");
+                    $oldpwd.val("");
+                    $againpwd.val("");
+                }
+            });
+        });
+
+        function savebaseinfo() {
+            if (!$('#updatebaseinfo').IsSuccess()) {
+                return false;
+            }
+
+            $.post({
+                url: "/admin/admin/edit",
+                param: {
+                    name: $("#Name").val(),
+                    mobile: $("#Mobile").val()
+                }
+            });
+        }
+    </script>
+}

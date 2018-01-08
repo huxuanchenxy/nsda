@@ -11,6 +11,7 @@ using nsda.Utilities.Orm;
 using nsda.Repository;
 using nsda.Models;
 using Dapper;
+using nsda.Services.admin;
 
 namespace nsda.Services.Implement.admin
 {
@@ -18,10 +19,12 @@ namespace nsda.Services.Implement.admin
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public SchoolService(IDBContext dbContext, IDataRepository dataRepository)
+        ISysOperLogService _sysOperLogService;
+        public SchoolService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _sysOperLogService = sysOperLogService;
         }
         //删除学校
         public bool Delete(int id, out string msg)

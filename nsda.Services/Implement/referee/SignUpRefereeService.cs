@@ -1,4 +1,5 @@
 ﻿using nsda.Repository;
+using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
 using nsda.Utilities.Orm;
 using System;
@@ -13,10 +14,12 @@ namespace nsda.Services.Implement.referee
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public SignUpRefereeService(IDBContext dbContext, IDataRepository dataRepository)
+        IMemberOperLogService _memberOperLogService;
+        public SignUpRefereeService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _memberOperLogService = memberOperLogService;
         }
     }
 }

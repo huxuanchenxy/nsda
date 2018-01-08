@@ -20,7 +20,7 @@ namespace nsda.unittest
         {
             var request = new LoginLogRequest {
                 Account = "shangguanlei@163.com",
-                DataType = Model.enums.DataTypeEm.会员,
+                DataType = Model.enums.DataTypeEm.选手,
                 LoginResult = "OK"
             };
             service.Insert(request);

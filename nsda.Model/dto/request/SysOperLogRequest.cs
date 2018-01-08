@@ -16,10 +16,6 @@ namespace nsda.Model.dto.request
     public class SysOperLogQueryRequest : PagedQuery
     {
         /// <summary>
-        /// 操作人
-        /// </summary>
-        public string OperUserName { get; set; }
-        /// <summary>
         /// 操作数据
         /// </summary>
         public string OperData { get; set; }

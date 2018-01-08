@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Services.admin;
 
 namespace nsda.Services.Implement.admin
 {
@@ -20,10 +21,12 @@ namespace nsda.Services.Implement.admin
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public DataSourceService(IDBContext dbContext, IDataRepository dataRepository)
+        ISysOperLogService _sysOperLogService;
+        public DataSourceService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _sysOperLogService = sysOperLogService;
         }
 
         //删除资料

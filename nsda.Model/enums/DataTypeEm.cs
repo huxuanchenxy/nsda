@@ -8,9 +8,10 @@ namespace nsda.Model.enums
 {
     public  enum DataTypeEm
     {
-        会员 = 1,
-        裁判 = 2,
-        赛事管理员=3,
-        平台管理员=4
+        选手 = 1,
+        教练 = 2,
+        裁判 = 3,
+        赛事管理员 =4,
+        平台管理员=5
     }
 }

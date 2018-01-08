@@ -1,5 +1,6 @@
 ﻿using nsda.Models;
 using nsda.Repository;
+using nsda.Services.Contract.member;
 using nsda.Services.Contract.trainer;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
@@ -18,10 +19,12 @@ namespace nsda.Services.trainer
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public TrainerService(IDBContext dbContext, IDataRepository dataRepository)
+        IMemberOperLogService _memberOperLogService;
+        public TrainerService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _memberOperLogService = memberOperLogService;
         }
     }
 }

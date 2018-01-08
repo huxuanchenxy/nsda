@@ -18,10 +18,12 @@ namespace nsda.Services.admin
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public SysUserService(IDBContext dbContext, IDataRepository dataRepository)
+        ISysOperLogService _sysOperLogService;
+        public SysUserService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _sysOperLogService = sysOperLogService;
         }
 
         //1.0 添加系统用户
@@ -74,12 +76,6 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                if (account.IsEmpty() || pwd.IsEmpty())
-                {
-                    msg = "账号或密码不能为空";
-                    return flag;
-                }
-
                 var detail = _dbContext.QueryFirstOrDefault<t_sysuser>(@"select * from t_sysuser where account=@account and pwd=@pwd ",
                               new
                               {
@@ -125,7 +121,7 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                if (request.Account.IsEmpty())
+                if (request.Name.IsEmpty())
                 {
                     msg = "账号不能为空";
                     return flag;

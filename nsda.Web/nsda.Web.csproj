@@ -116,27 +116,28 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
     <Compile Include="Areas\admin\Controllers\baseController.cs" />
-    <Compile Include="Areas\admin\Controllers\homeController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminController.cs" />
     <Compile Include="Areas\admin\Controllers\loginController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\baseController.cs" />
-    <Compile Include="Areas\eventmanage\Controllers\homeController.cs" />
+    <Compile Include="Areas\eventmanage\Controllers\eventmanageController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
     <Compile Include="Areas\player\Controllers\baseController.cs" />
-    <Compile Include="Areas\player\Controllers\homeController.cs" />
+    <Compile Include="Areas\player\Controllers\eduexperController.cs" />
+    <Compile Include="Areas\player\Controllers\playerController.cs" />
+    <Compile Include="Areas\player\Controllers\playertrainerController.cs" />
     <Compile Include="Areas\player\playerAreaRegistration.cs" />
     <Compile Include="Areas\referee\Controllers\baseController.cs" />
-    <Compile Include="Areas\referee\Controllers\homeController.cs" />
+    <Compile Include="Areas\referee\Controllers\refereeController.cs" />
     <Compile Include="Areas\referee\refereeAreaRegistration.cs" />
     <Compile Include="Areas\trainer\Controllers\baseController.cs" />
-    <Compile Include="Areas\trainer\Controllers\homeController.cs" />
+    <Compile Include="Areas\trainer\Controllers\trainerController.cs" />
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
     <Compile Include="Controllers\aboutController.cs" />
     <Compile Include="Controllers\errorController.cs" />
-    <Compile Include="Controllers\findpwdController.cs" />
     <Compile Include="Controllers\homeController.cs" />
     <Compile Include="Controllers\loginController.cs" />
-    <Compile Include="Controllers\registerController.cs" />
     <Compile Include="Filter\AdminLoginAttribute.cs" />
+    <Compile Include="Filter\AjaxOnlyAttribute.cs" />
     <Compile Include="Filter\CommonExceptionFilter.cs" />
     <Compile Include="Filter\RefereeLoginAttribute.cs" />
     <Compile Include="Filter\EventManageLoginAttribute.cs" />
@@ -395,10 +396,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Models\" />
-    <Folder Include="Areas\admin\Views\Shared\" />
     <Folder Include="Areas\eventmanage\Models\" />
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />
+    <Folder Include="Areas\player\Views\eduexper\" />
+    <Folder Include="Areas\player\Views\playertrainer\" />
     <Folder Include="Areas\player\Views\Shared\" />
     <Folder Include="Areas\referee\Models\" />
     <Folder Include="Areas\referee\Views\Shared\" />
@@ -407,9 +409,7 @@
     <Folder Include="asset\fonts\" />
     <Folder Include="asset\img\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\findpwd\" />
     <Folder Include="Views\login\" />
-    <Folder Include="Views\register\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appSettings.config" />
@@ -463,7 +463,7 @@
     <Content Include="Areas\admin\Views\login\login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\admin\Views\home\index.cshtml" />
+    <Content Include="Areas\admin\Views\admin\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\admin\asset\bootstrap\fonts\glyphicons-halflings-regular.eot" />
@@ -487,13 +487,23 @@
     <Content Include="Areas\eventmanage\Views\home\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\player\Views\home\index.cshtml" />
+    <Content Include="Areas\player\Views\player\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\referee\Views\home\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\trainer\Views\home\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\admin\Views\admin\home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\admin\Views\admin\info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\admin\Views\Shared\_LayoutBase.cshtml" />
+    <Content Include="Areas\admin\Views\Shared\_LayoutForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

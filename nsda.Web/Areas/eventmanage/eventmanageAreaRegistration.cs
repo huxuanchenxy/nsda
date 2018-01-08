@@ -17,7 +17,7 @@ namespace nsda.Web.Areas.eventmanage
             context.MapRoute(
                 "eventmanage_default",
                 "eventmanage/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "index", id = UrlParameter.Optional }
             );
         }
     }

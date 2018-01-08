@@ -10,6 +10,7 @@ using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Utilities;
 using nsda.Models;
+using nsda.Services.admin;
 
 namespace nsda.Services.Implement.admin
 {
@@ -20,10 +21,12 @@ namespace nsda.Services.Implement.admin
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public EventScoreService(IDBContext dbContext, IDataRepository dataRepository)
+        ISysOperLogService _sysOperLogService;
+        public EventScoreService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _sysOperLogService = sysOperLogService;
         }
 
         public bool Insert(EventScoreRequest request, out string msg)

@@ -32,7 +32,6 @@ namespace nsda.Services.admin
             {
                 _dbContext.Insert(new t_emaillog {
                     account = request.Account,
-                    dataType = request.DataType,
                     content = request.Content
                 });
             }
@@ -53,10 +52,6 @@ namespace nsda.Services.admin
                 {
                     request.Account = "%" + request.Account + "%";
                     sb.Append(" and account like @Account");
-                }
-                if (request.DataType > 0)
-                {
-                    sb.Append(" and dataType = @DataType");
                 }
                 if (request.CreateStart.HasValue)
                 {

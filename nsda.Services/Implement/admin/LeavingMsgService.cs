@@ -20,10 +20,12 @@ namespace nsda.Services.admin
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        public LeavingMsgService(IDBContext dbContext, IDataRepository dataRepository)
+        ISysOperLogService _sysOperLogService;
+        public LeavingMsgService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
+            _sysOperLogService = sysOperLogService;
         }
 
         //1.0 留言

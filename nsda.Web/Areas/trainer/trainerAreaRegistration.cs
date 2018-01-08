@@ -17,7 +17,7 @@ namespace nsda.Web.Areas.trainer
             context.MapRoute(
                 "trainer_default",
                 "trainer/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "index", id = UrlParameter.Optional }
             );
         }
     }

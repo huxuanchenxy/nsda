@@ -17,7 +17,7 @@ namespace nsda.Web.Areas.referee
             context.MapRoute(
                 "referee_default",
                 "referee/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "index", id = UrlParameter.Optional }
             );
         }
     }

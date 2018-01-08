@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.request
 {
-    public class MemberTrainerRequest
+    public class PlayerTrainerRequest
     {
         public int Id { get; set; }
         public int MemberId { get; set; }
         public int ObjMemberId { get; set; }
-        public bool Flag { get; set; }
+        public bool IsPositive { get; set; }
+        public bool IsTrainer { get; set; }
         public MemberTrainerStatusEm memberTrainerStatus { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -20,7 +21,7 @@ namespace nsda.Model.dto.request
         public DateTime? EndDate { get; set; }
     }
 
-    public class MemberTrainerQueryRequest:PagedQuery
+    public class PlayerTrainerQueryRequest:PagedQuery
     {
 
     }

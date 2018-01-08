@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_signupform_member_detail")]
-    public class t_signupform_member_detail
+	[Table("t_playereduexper")]
+    public class t_playereduexper
     {
 	   //默认构造函数
-	   public t_signupform_member_detail()
+	   public t_playereduexper()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -35,29 +35,21 @@ namespace nsda.Models
         public int memberId { get; set; }
     
         /// <summary>
-        /// 赛事id
+        /// 开始时间
         /// </summary>
-        public int eventId { get; set; }
+        public DateTime startdate { get; set; }
     
         /// <summary>
-        /// 赛事组别
+        /// 结束时间
         /// </summary>
-        public int groupId { get; set; }
+        public DateTime? enddate { get; set; }
+    
+        public string reserveName { get; set; }
     
         /// <summary>
-        /// 报名表id
+        /// 学校id
         /// </summary>
-        public int signUpId { get; set; }
-    
-        /// <summary>
-        /// 报名状态
-        /// </summary>
-        public SignUpStatusEm signUpStatus { get; set; }
-    
-        /// <summary>
-        /// 报名者/被邀请者
-        /// </summary>
-        public SignUpTypeEm signUpType { get; set; }
+        public int schoolId { get; set; }
     
         /// <summary>
         /// 创建时间

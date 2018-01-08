@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <link href="~/Areas/admin/asset/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/admin/asset/bootstrap/css/bootstrap.extension.css" rel="stylesheet" />
+    <link href="~/Areas/admin/asset/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Areas/admin/asset/js/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Areas/admin/asset/js/plugins/tree/tree.css" rel="stylesheet" />
+    <link href="~/Areas/admin/asset/css/base.css" rel="stylesheet" />
+    @RenderSection("styles", false)
+</head>
+<body>
+    <form id="fgform">
+        @RenderBody()
+        @Html.AntiForgeryToken()
+    </form>
+    <script src="~/Areas/admin/asset/jquery/jquery-1.11.1.min.js"></script>
+    <script src="~/Areas/admin/asset/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Areas/admin/asset/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Areas/admin/asset/js/plugins/tree/tree.js"></script>
+    <script src="~/Areas/admin/asset/jquery/jquery.validate.js"></script>
+    <script src="~/Areas/admin/asset/js/plugins/datepicker/WdatePicker.js"></script>
+    <script src="~/Areas/admin/asset/js/core.js"></script>
+    <script src="~/Areas/admin/asset/js/httputility.js"></script>
+    @RenderSection("scripts", false)
+</body>
+</html>

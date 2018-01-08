@@ -57,11 +57,6 @@ namespace nsda.Services.admin
                     request.OperData = "%" + request.OperData + "%";
                     sb.Append(" and a.operdata like @OperData");
                 }
-                if (request.OperUserName.IsNotEmpty())
-                {
-                    request.OperUserName = "%" + request.OperUserName + "%";
-                    sb.Append(" and b.name like @OperUserName");
-                }
                 if (request.CreateStart.HasValue)
                 {
                     sb.Append(" and a.createtime >= @CreateStart");

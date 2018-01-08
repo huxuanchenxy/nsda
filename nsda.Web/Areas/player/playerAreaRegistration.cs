@@ -17,7 +17,7 @@ namespace nsda.Web.Areas.player
             context.MapRoute(
                 "player_default",
                 "player/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "index", id = UrlParameter.Optional }
             );
         }
     }
