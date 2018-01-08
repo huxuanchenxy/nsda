@@ -53,6 +53,7 @@ namespace nsda.Services.Implement.admin
                       remark=request.Remark,
                       title=request.Title
                  });
+                flag = true;
             }
             catch (Exception ex)
             {

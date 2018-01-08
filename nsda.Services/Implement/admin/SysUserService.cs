@@ -27,7 +27,7 @@ namespace nsda.Services.admin
         }
 
         //1.0 添加系统用户
-        public bool Insert(SysUserRequest request, out string msg)
+        public bool Insert(SysUserRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -115,7 +115,7 @@ namespace nsda.Services.admin
             return flag;
         }
         //1.2 修改
-        public bool Edit(SysUserRequest request, out string msg)
+        public bool Edit(SysUserRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -244,7 +244,7 @@ namespace nsda.Services.admin
             return list;
         }
         //1.5 删除系统用户信息
-        public bool Delete(int id, out string msg)
+        public bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -272,7 +272,7 @@ namespace nsda.Services.admin
             return flag;
         }
         //1.6 重置密码
-        public bool Reset(int id, out string msg)
+        public bool Reset(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -327,7 +327,7 @@ namespace nsda.Services.admin
             return detail;
         }
         //1.8 启/禁用账号
-        public bool IsEnable(int id, bool isEnable, out string msg)
+        public bool IsEnable(int id, int sysUserId, bool isEnable, out string msg)
         {
             bool flag = false;
             msg = string.Empty;

@@ -52,7 +52,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.*,b.name OperUserName from t_memberoperlog a 
+                sb.Append(@"select a.*,b.completename OperUserName from t_memberoperlog a 
                             inner join  t_member b on a.memberId=b.id
                             where isdelete=0");
                 if (request.OperData.IsNotEmpty())

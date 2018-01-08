@@ -35,7 +35,7 @@ namespace nsda.Models
     
         public string remark { get; set; }
     
-        public MemberExtendStatusEm? memberExtendStatus { get; set; }
+        public MemberExtendStatusEm memberExtendStatus { get; set; }
     
         /// <summary>
         /// 创建时间

@@ -18,11 +18,11 @@ namespace nsda.Services.admin
         //1.0 留言
         bool Insert(LeavingMsgRequest request, out string msg);
         //1.1 处理留言
-        bool Process(int id, out string msg);
+        bool Process(int id,int sysUserId, out string msg);
         //1.3 留言列表
         PagedList<LeavingMsgResponse> List(LeavingMsgQueryRequest requset);
         //1.3 删除留言
-        bool Delete(int id, out string msg);
+        bool Delete(int id, int sysUserId, out string msg);
         //1.4 留言详情
         LeavingMsgResponse Detail(int id);
     }

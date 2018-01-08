@@ -27,7 +27,7 @@ namespace nsda.Services.Implement.admin
         }
 
         //删除辩题
-        public bool Delete(int id, out string msg)
+        public bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -95,7 +95,7 @@ namespace nsda.Services.Implement.admin
         }
 
         // 新增辩题
-        public bool Insert(VoteRequest request, out string msg)
+        public bool Insert(VoteRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -162,7 +162,7 @@ namespace nsda.Services.Implement.admin
         }
 
         //修改辩题
-        public bool Update(VoteRequest request, out string msg)
+        public bool Update(VoteRequest request, int sysUserId, out string msg)
         {
             msg = string.Empty;
             bool flag = false;

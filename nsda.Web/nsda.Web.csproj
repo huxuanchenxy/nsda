@@ -117,7 +117,13 @@
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
     <Compile Include="Areas\admin\Controllers\baseController.cs" />
     <Compile Include="Areas\admin\Controllers\adminController.cs" />
+    <Compile Include="Areas\admin\Controllers\basedataController.cs" />
+    <Compile Include="Areas\admin\Controllers\eventmgController.cs" />
+    <Compile Include="Areas\admin\Controllers\logController.cs" />
     <Compile Include="Areas\admin\Controllers\loginController.cs" />
+    <Compile Include="Areas\admin\Controllers\memberController.cs" />
+    <Compile Include="Areas\admin\Controllers\sysuserController.cs" />
+    <Compile Include="Areas\admin\Controllers\voteController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\baseController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\eventmanageController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
@@ -396,6 +402,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\admin\Models\" />
+    <Folder Include="Areas\admin\Views\basedata\" />
+    <Folder Include="Areas\admin\Views\eventmg\" />
+    <Folder Include="Areas\admin\Views\log\" />
+    <Folder Include="Areas\admin\Views\member\" />
+    <Folder Include="Areas\admin\Views\sysuser\" />
+    <Folder Include="Areas\admin\Views\vote\" />
     <Folder Include="Areas\eventmanage\Models\" />
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />

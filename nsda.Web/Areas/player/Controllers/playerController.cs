@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Services.Contract.member;
 using nsda.Services.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -14,9 +15,11 @@ namespace nsda.Web.Areas.player.Controllers
     public class playerController : baseController
     {
         IMemberService _memberService;
-        public playerController(IMemberService memberService)
+        IMemberExtendService _memberExtendService;
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService)
         {
             _memberService = memberService;
+            _memberExtendService = memberExtendService;
         }
 
         #region ajax
@@ -41,6 +44,22 @@ namespace nsda.Web.Areas.player.Controllers
             var flag = _memberService.EditPwd(UserContext.WebUserContext.Id,oldPwd,newPwd, out msg);
             return Result<string>(flag, msg);
         }
+
+        #region 申请做裁判 或者教练
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult apply(MemberExtendRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _memberExtendService.Apply(request,out msg);
+            return Result<string>(flag, msg);
+        }
+        #endregion 
+
+
         #endregion
 
         #region view

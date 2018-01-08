@@ -53,6 +53,7 @@
     <Compile Include="dto\request\EventScoreRequest.cs" />
     <Compile Include="dto\request\LeavingMsgRequest.cs" />
     <Compile Include="dto\request\LoginLogRequest.cs" />
+    <Compile Include="dto\request\MemberExtendRequest.cs" />
     <Compile Include="dto\request\MemberOperLogRequest.cs" />
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
     <Compile Include="dto\request\PlayerTrainerRequest.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="dto\request\SchoolRequest.cs" />
     <Compile Include="dto\request\SysOperLogRequest.cs" />
     <Compile Include="dto\request\SysUserRequest.cs" />
-    <Compile Include="dto\request\TempMemberRequest.cs" />
+    <Compile Include="dto\request\TempPlayerRequest.cs" />
     <Compile Include="dto\request\VoteRequest.cs" />
     <Compile Include="dto\response\BaseDataResponse.cs" />
     <Compile Include="dto\response\CityResponse.cs" />
@@ -71,12 +72,15 @@
     <Compile Include="dto\response\EventScoreResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
+    <Compile Include="dto\response\MemberExtendResponse.cs" />
     <Compile Include="dto\response\MemberOperLogResponse.cs" />
+    <Compile Include="dto\response\MemberTempResponse.cs" />
     <Compile Include="dto\response\MenuData.cs" />
     <Compile Include="dto\response\PlayerEduExperResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
     <Compile Include="dto\response\PlayerTrainerResponse.cs" />
     <Compile Include="dto\response\ProvinceResponse.cs" />
+    <Compile Include="dto\response\RoleEm.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\response\SysUserResponse.cs" />

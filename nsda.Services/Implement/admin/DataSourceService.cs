@@ -30,7 +30,7 @@ namespace nsda.Services.Implement.admin
         }
 
         //删除资料
-        public bool Delete(int id, out string msg)
+        public bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -58,7 +58,7 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
 
-        public bool Insert(DataSourceRequest request, out string msg)
+        public bool Insert(DataSourceRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -93,7 +93,7 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
 
-        public bool Edit(DataSourceRequest request, out string msg)
+        public bool Edit(DataSourceRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;

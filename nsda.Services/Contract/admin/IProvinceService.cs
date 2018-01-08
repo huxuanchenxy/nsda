@@ -12,9 +12,11 @@ namespace nsda.Services.Contract.admin
     //省份 国家管理
     public interface IProvinceService: IDependency
     {
-        bool Insert(ProvinceRequest request, out string msg);
+        bool Insert(ProvinceRequest request,int sysUserId,out string msg);
+        bool Edit(ProvinceRequest request, int sysUserId, out string msg);
         PagedList<ProvinceResponse> List(ProvinceQueryRequest request);
-        bool Delete(int id, out string msg);
+        bool Delete(int id, int sysUserId, out string msg);
         ProvinceResponse Detail(int id);
+        List<BaseDataResponse> Province();
     }
 }

@@ -33,7 +33,7 @@ namespace nsda.unittest
         public void Process()
         {
             string msg = string.Empty;
-            service.Process(1, out msg);
+            service.Process(1,1, out msg);
         }
 
 
@@ -41,7 +41,7 @@ namespace nsda.unittest
         public void Delete()
         {
             string msg = string.Empty;
-            service.Delete(1, out msg);
+            service.Delete(1,1, out msg);
         }
 
         [TestMethod]

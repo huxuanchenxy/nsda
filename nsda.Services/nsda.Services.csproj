@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contract\admin\IBaseService.cs" />
     <Compile Include="Contract\admin\ICityService.cs" />
     <Compile Include="Contract\admin\IDataSourceService.cs" />
     <Compile Include="Contract\admin\IEmailLogService.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="Contract\referee\IRefereeService.cs" />
     <Compile Include="Contract\referee\ISignUpRefereeService.cs" />
     <Compile Include="Contract\trainer\ITrainerService.cs" />
-    <Compile Include="Implement\admin\BaseService.cs" />
     <Compile Include="Implement\admin\CityService.cs" />
     <Compile Include="Implement\admin\DataSourceService.cs" />
     <Compile Include="Implement\admin\EmailLogService.cs" />

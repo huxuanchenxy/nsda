@@ -12,13 +12,13 @@ namespace nsda.Services.Contract.admin
     public interface IVoteService : IDependency
     {
         //新增投票辩题
-        bool Insert(VoteRequest request,out string msg);
+        bool Insert(VoteRequest request, int sysUserId, out string msg);
         //更新投票辩题
-        bool Update(VoteRequest request, out string msg);
+        bool Update(VoteRequest request, int sysUserId, out string msg);
         //投票辩题详情
         VoteResponse Detail(int id);
         //删除投票辩题
-        bool Delete(int id,out string msg);
+        bool Delete(int id,int sysUserId,out string msg);
         //投票辩题列表
         PagedList<VoteResponse> List(VoteQueryRequest request);
         //投票

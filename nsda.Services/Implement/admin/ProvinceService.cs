@@ -26,7 +26,7 @@ namespace nsda.Services.Implement.admin
             _sysOperLogService = sysOperLogService;
         }
 
-        public bool Insert(ProvinceRequest request, out string msg)
+        public bool Insert(ProvinceRequest request,int sysUserId,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -42,12 +42,46 @@ namespace nsda.Services.Implement.admin
                 {
                     name = request.Name,
                 });
+                flag = true;
             }
             catch (Exception ex)
             {
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("ProvinceService.Insert", ex);
+            }
+            return flag;
+        }
+
+        public bool Edit(ProvinceRequest request, int sysUserId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                if (request.Name.IsEmpty())
+                {
+                    msg = "名称不能为空";
+                    return flag;
+                }
+                t_province province = _dbContext.Get<t_province>(request.Id);
+                if (province != null)
+                {
+                    province.name = request.Name;
+                    province.updatetime = DateTime.Now;
+                    _dbContext.Update(province);
+                    flag = true;
+                }
+                else
+                {
+                    msg = "数据信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("ProvinceService.Edit", ex);
             }
             return flag;
         }
@@ -73,7 +107,7 @@ namespace nsda.Services.Implement.admin
             return list;
         }
 
-        public bool Delete(int id, out string msg)
+        public bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -121,6 +155,28 @@ namespace nsda.Services.Implement.admin
                 LogUtils.LogError("ProvinceService.Detail", ex);
             }
             return response;
+        }
+
+        public List<BaseDataResponse> Province()
+        {
+            List<BaseDataResponse> list = new List<BaseDataResponse>();
+            try
+            {
+                var data = _dbContext.Select<t_province>(c => true).ToList();
+                if (data != null && data.Count > 0)
+                {
+                    list = data.Select(c => new BaseDataResponse
+                    {
+                        Id = c.id,
+                        Name = c.name
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("ProvinceService.Province", ex);
+            }
+            return list;
         }
     }
 }

@@ -77,13 +77,13 @@ namespace nsda.Web.Areas.admin.Controllers
         [AjaxOnly]
         public ContentResult edit(string name, string mobile)
         {
+            int id = UserContext.SysUserContext.Id;
             string msg = string.Empty;
             var flag = _sysUserService.Edit(new Model.dto.request.SysUserRequest {
-                 Id= UserContext.SysUserContext.Id,
-                  Mobile=mobile,
-                  Name=name
-                  
-            }, out msg);
+                 Id= id,
+                 Mobile=mobile,
+                 Name=name
+            },id, out msg);
             return Result<string>(flag, msg);
         }
     }

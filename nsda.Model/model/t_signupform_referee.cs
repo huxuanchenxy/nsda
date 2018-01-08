@@ -46,6 +46,8 @@ namespace nsda.Models
     
         public RefereeSignUpStatusEm refereeSignUpStatus { get; set; }
     
+        public bool isTemp { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

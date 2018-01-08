@@ -27,7 +27,7 @@ namespace nsda.Services.Implement.admin
             _sysOperLogService = sysOperLogService;
         }
         //删除学校
-        public bool Delete(int id, out string msg)
+        public bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -83,7 +83,7 @@ namespace nsda.Services.Implement.admin
             return response;
         }
         // 编辑学校
-        public bool Edit(SchoolRequest request, out string msg)
+        public bool Edit(SchoolRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -132,7 +132,7 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
         //新增学校
-        public bool Insert(SchoolRequest request, out string msg)
+        public bool Insert(SchoolRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;

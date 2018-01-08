@@ -26,7 +26,7 @@ namespace nsda.Services.Implement.admin
             _sysOperLogService = sysOperLogService;
         }
 
-        public bool Insert(CityRequest request, out string msg)
+        public bool Insert(CityRequest request,int sysUserId,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -49,6 +49,7 @@ namespace nsda.Services.Implement.admin
                     provinceId=request.ProvinceId,
                     name = request.Name
                 });
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -84,7 +85,7 @@ namespace nsda.Services.Implement.admin
             return list;
         }
 
-        public bool Delete(int id, out string msg)
+        public bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -133,6 +134,70 @@ namespace nsda.Services.Implement.admin
                 LogUtils.LogError("CityService.Detail", ex);
             }
             return response;
+        }
+
+        public List<BaseDataResponse> City(int provinceId)
+        {
+            List<BaseDataResponse> list = new List<BaseDataResponse>();
+            try
+            {
+                if (provinceId <= 0)
+                    return list;
+                var data = _dbContext.Select<t_city>(c => c.provinceId == provinceId).ToList();
+                if (data != null && data.Count > 0)
+                {
+                    list = data.Select(c => new BaseDataResponse
+                    {
+                        Id = c.id,
+                        Name = c.name
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("CityService.City", ex);
+            }
+            return list;
+        }
+
+        public bool Edit(CityRequest request, int sysUserId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                if (request.ProvinceId <= 0)
+                {
+                    msg = "父级不能为空";
+                    return flag;
+                }
+
+                if (request.Name.IsEmpty())
+                {
+                    msg = "名称不能为空";
+                    return flag;
+                }
+
+                t_city city = _dbContext.Get<t_city>(request.Id);
+                if (city != null)
+                {
+                    city.name = request.Name;
+                    city.provinceId = request.ProvinceId;
+                    _dbContext.Update(city);
+                    flag = true;
+                }
+                else
+                {
+                    msg = "数据信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("CityService.Edit", ex);
+            }
+            return flag;
         }
     }
 }

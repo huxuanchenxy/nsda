@@ -42,9 +42,14 @@ namespace nsda.Models
         public int? tomemberId { get; set; }
     
         /// <summary>
-        /// 创建时间
+        /// 临时会员状态
         /// </summary>
         public TempStatusEm tempStatus { get; set; }
+    
+        /// <summary>
+        /// 具体赛事添加的临时会员
+        /// </summary>
+        public int eventId { get; set; }
     
         /// <summary>
         /// 创建时间

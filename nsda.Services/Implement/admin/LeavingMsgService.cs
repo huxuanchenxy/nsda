@@ -58,6 +58,7 @@ namespace nsda.Services.admin
                     leavingStatus =LeavingStatusEm.待处理
                 };
                 _dbContext.Insert(model);
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -69,7 +70,7 @@ namespace nsda.Services.admin
         }
 
         //1.1 处理留言
-        public  bool Process(int id,out string msg)
+        public  bool Process(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -138,7 +139,7 @@ namespace nsda.Services.admin
         }
 
         //1.3 删除留言
-        public  bool Delete(int id,out string msg)
+        public  bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
