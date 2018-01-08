@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace nsda.Services.Implement.referee
 {
-    public class SignUpRefereeService: ISignUpRefereeService
+    public class RefereeSignUpService: IRefereeSignUpService
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
-        public SignUpRefereeService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        public RefereeSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;

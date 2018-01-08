@@ -10,7 +10,7 @@ namespace nsda.Services.Contract.referee
     /// <summary>
     /// 裁判报名管理
     /// </summary>
-    public interface ISignUpRefereeService : IDependency
+    public interface IRefereeSignUpService : IDependency
     {
     }
 }

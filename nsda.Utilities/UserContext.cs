@@ -16,7 +16,7 @@ namespace nsda.Utilities
             }
         }
 
-        public  static SysUserContext GetSysUser()
+        private  static SysUserContext GetSysUser()
         {
             SysUserContext sysContext = null;
             try
@@ -49,7 +49,7 @@ namespace nsda.Utilities
         }
 
 
-        public static WebUserContext GetWebUser()
+        private static WebUserContext GetWebUser()
         {
             WebUserContext webContext = null;
             try

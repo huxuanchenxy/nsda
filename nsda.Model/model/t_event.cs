@@ -33,6 +33,8 @@ namespace nsda.Models
     
         public string name { get; set; }
     
+        public decimal signfee { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

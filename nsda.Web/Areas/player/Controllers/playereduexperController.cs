@@ -10,10 +10,10 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.player.Controllers
 {
-    public class eduexperController : baseController
+    public class playereduexperController : baseController
     {
         IPlayerEduExperService _playerEduExperService;
-        public eduexperController(PlayerEduExperService playerEduExperService)
+        public playereduexperController(PlayerEduExperService playerEduExperService)
         {
             _playerEduExperService = playerEduExperService;
         }

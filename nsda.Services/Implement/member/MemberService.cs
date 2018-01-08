@@ -25,7 +25,7 @@ namespace nsda.Services.member
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
         ISysOperLogService _sysOperLogService;
-        public MemberService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,ISysOperLogService sysOperLogService)
+        public MemberService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
@@ -60,7 +60,7 @@ namespace nsda.Services.member
                     gender = request.Gender,
                     grade = request.Grade,
                     lastlogintime = DateTime.Now,
-                    memberStatus = request.MemberType != MemberTypeEm.选手 ? MemberStatusEm.已认证 : MemberStatusEm.待认证,
+                    memberStatus = (request.MemberType != MemberTypeEm.选手 || request.MemberType != MemberTypeEm.赛事管理员) ? MemberStatusEm.已认证 : MemberStatusEm.待认证,
                     name = request.Name,
                     memberType = request.MemberType,
                     pinyinname = request.PinYinName,
@@ -84,8 +84,8 @@ namespace nsda.Services.member
                     Account = request.Account,
                     Role = ((int)request.MemberType).ToString(),
                     MemberType = (int)request.MemberType,
-                    Id=id,
-                    Status=(request.MemberType==MemberTypeEm.赛事管理员||request.MemberType==MemberTypeEm.选手)?(int)MemberStatusEm.待认证:(int)MemberStatusEm.已认证
+                    Id = id,
+                    Status = (request.MemberType == MemberTypeEm.赛事管理员 || request.MemberType == MemberTypeEm.选手) ? (int)MemberStatusEm.待认证 : (int)MemberStatusEm.已认证
                 };
                 SaveCurrentUser(userContext);
             }
@@ -134,7 +134,7 @@ namespace nsda.Services.member
                         Account = detail.account,
                         Role = role,
                         MemberType = (int)detail.memberType,
-                        Status=(int)detail.memberStatus
+                        Status = (int)detail.memberStatus
                     };
                     SaveCurrentUser(userContext);
                 }
@@ -175,6 +175,7 @@ namespace nsda.Services.member
                 member.pinyinname = request.PinYinName;
                 member.pinyinsurname = request.PinYinSurName;
                 member.surname = request.SurName;
+                member.updatetime = DateTime.Now;
                 _dbContext.Update(member);
             }
             catch (Exception ex)
@@ -309,7 +310,35 @@ namespace nsda.Services.member
             PagedList<MemberResponse> list = new PagedList<MemberResponse>();
             try
             {
+                StringBuilder sb = new StringBuilder($"select * from t_member where isdelete=0 and memberType!={(int)MemberTypeEm.临时裁判} and memberType!={(int)MemberTypeEm.临时选手} ");
+                if (request.Account.IsNotEmpty())
+                {
+                    request.Account = "%" + request.Account + "%";
+                    sb.Append(" and account like @Account");
+                }
+                if (request.Name.IsNotEmpty())
+                {
+                    request.Name = "%" + request.Name + "%";
+                    sb.Append(" and completename like @Name");
+                }
 
+                if (request.Mobile.IsNotEmpty())
+                {
+                    request.Mobile = "%" + request.Mobile + "%";
+                    sb.Append(" and contactmobile like @Mobile");
+                }
+
+                if (request.MemberStatus.HasValue)
+                {
+                    sb.Append(" and memberStatus=@MemberStatus");
+                }
+
+                if (request.MemberType.HasValue)
+                {
+                    sb.Append(" and memberType=@MemberType");
+                }
+
+                list = _dbContext.Page<MemberResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
             }
             catch (Exception ex)
             {
@@ -318,7 +347,7 @@ namespace nsda.Services.member
             return list;
         }
         //删除会员信息
-        public bool Delete(int id,int sysUserId,out string msg)
+        public bool Delete(int id, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -489,10 +518,10 @@ namespace nsda.Services.member
             try
             {
                 var detail = _dbContext.Get<t_member>(id);
-                if (detail != null&&detail.memberType==MemberTypeEm.赛事管理员)
+                if (detail != null && detail.memberType == MemberTypeEm.赛事管理员)
                 {
                     detail.updatetime = DateTime.Now;
-                    detail.memberStatus =isAppro?MemberStatusEm.已认证:MemberStatusEm.认证失败;
+                    detail.memberStatus = isAppro ? MemberStatusEm.已认证 : MemberStatusEm.认证失败;
                     _dbContext.Update(detail);
                     DeleteCurrentUser(id);//清除用户缓存 使其重新登录
                     flag = true;
@@ -524,7 +553,8 @@ namespace nsda.Services.member
                     DeleteCurrentUser(id);//清除用户缓存 使其重新登录
                     flag = true;
                 }
-                else {
+                else
+                {
                     msg = "会员信息不存在";
                 }
             }
@@ -560,6 +590,30 @@ namespace nsda.Services.member
             {
                 SessionCookieUtility.RemoveSession($"webusersession_{id}");
             }
+        }
+
+        public List<PlayerResponse> ListPlayer(string key)
+        {
+            List<PlayerResponse> list = new List<PlayerResponse>();
+            try
+            {
+                if (key.IsEmpty())
+                {
+                    return list;
+                }
+
+                StringBuilder sb = new StringBuilder($"select Id,Code,completename as Name from t_member where isdelete=0 and memberType={(int)MemberTypeEm.选手} and  memberStatus={MemberStatusEm.已认证}");
+
+                sb.Append(" and (code like @key or completename like @key) ");
+                var dy = new DynamicParameters();
+                dy.Add("key","%"+key+"%");
+                list = _dbContext.Query<PlayerResponse>(sb.ToString(), dy).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.ListPlayer", ex);
+            }
+            return list;
         }
     }
 }

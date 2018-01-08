@@ -97,10 +97,17 @@ namespace nsda.Model.dto.request
         /// 联系地址
         /// </summary>
         public string ContactAddress { get; set; }
+
+        //学校信息
+        public PlayerEduExperRequest PlayerEdu { get; set; }
     }
 
     public class MemberQueryRequest : PagedQuery
     {
-        public MemberStatusEm? MemberType { get; set; }
+        public string Mobile { get; set; }
+        public string Account { get; set; }
+        public string Name { get; set; }
+        public MemberTypeEm? MemberType { get; set; }
+        public MemberStatusEm? MemberStatus { get; set; }
     }
 }

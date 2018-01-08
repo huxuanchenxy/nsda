@@ -174,5 +174,20 @@ namespace nsda.Services.Implement.admin
             }
             return list;
         }
+
+        public PagedList<EventScoreResponse> PlayerList(PlayerEventScoreQueryRequest request)
+        {
+            PagedList<EventScoreResponse> list = new PagedList<EventScoreResponse>();
+            try
+            {
+                var sql = "select * from t_event_score where isdelete=0 and eventId=@EventId";
+                list = _dbContext.Page<EventScoreResponse>(sql, request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventScoreService.PlayerList", ex);
+            }
+            return list;
+        }
     }
 }

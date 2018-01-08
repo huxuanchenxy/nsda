@@ -128,8 +128,9 @@
     <Compile Include="Areas\eventmanage\Controllers\eventmanageController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
     <Compile Include="Areas\player\Controllers\baseController.cs" />
-    <Compile Include="Areas\player\Controllers\eduexperController.cs" />
+    <Compile Include="Areas\player\Controllers\playereduexperController.cs" />
     <Compile Include="Areas\player\Controllers\playerController.cs" />
+    <Compile Include="Areas\player\Controllers\playersignupController.cs" />
     <Compile Include="Areas\player\Controllers\playertrainerController.cs" />
     <Compile Include="Areas\player\playerAreaRegistration.cs" />
     <Compile Include="Areas\referee\Controllers\baseController.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Areas\trainer\Controllers\trainerController.cs" />
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
     <Compile Include="Controllers\aboutController.cs" />
+    <Compile Include="Controllers\callbackController.cs" />
     <Compile Include="Controllers\errorController.cs" />
     <Compile Include="Controllers\homeController.cs" />
     <Compile Include="Controllers\loginController.cs" />
@@ -412,6 +414,7 @@
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />
     <Folder Include="Areas\player\Views\eduexper\" />
+    <Folder Include="Areas\player\Views\playersignup\" />
     <Folder Include="Areas\player\Views\playertrainer\" />
     <Folder Include="Areas\player\Views\Shared\" />
     <Folder Include="Areas\referee\Models\" />
@@ -421,6 +424,7 @@
     <Folder Include="asset\fonts\" />
     <Folder Include="asset\img\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\callback\" />
     <Folder Include="Views\login\" />
   </ItemGroup>
   <ItemGroup>

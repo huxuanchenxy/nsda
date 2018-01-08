@@ -61,6 +61,7 @@
     <Compile Include="dto\request\ProvinceRequest.cs" />
     <Compile Include="dto\request\MemberRequest.cs" />
     <Compile Include="dto\request\SchoolRequest.cs" />
+    <Compile Include="dto\request\PlayerSignUpRequest.cs" />
     <Compile Include="dto\request\SysOperLogRequest.cs" />
     <Compile Include="dto\request\SysUserRequest.cs" />
     <Compile Include="dto\request\TempPlayerRequest.cs" />
@@ -78,10 +79,12 @@
     <Compile Include="dto\response\MenuData.cs" />
     <Compile Include="dto\response\PlayerEduExperResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
+    <Compile Include="dto\response\PlayerResponse.cs" />
     <Compile Include="dto\response\PlayerTrainerResponse.cs" />
     <Compile Include="dto\response\ProvinceResponse.cs" />
     <Compile Include="dto\response\RoleEm.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />
+    <Compile Include="dto\response\PlayerSignUpResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\response\SysUserResponse.cs" />
     <Compile Include="dto\response\VoteResponse.cs" />
@@ -157,6 +160,9 @@
     <Compile Include="model\t_playereduexper.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_player_signup.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_player_trainer.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
@@ -166,16 +172,10 @@
     <Compile Include="model\t_province.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_referee_signup.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_school.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_signupform_player.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_signupform_player_detail.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_signupform_referee.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_sysoperlog.cs">

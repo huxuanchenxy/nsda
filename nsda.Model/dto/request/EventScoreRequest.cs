@@ -23,4 +23,9 @@ namespace nsda.Model.dto.request
     {
         public int EventId { get; set; }
     }
+
+    public class PlayerEventScoreQueryRequest:PagedQuery
+    {
+        public int MemberId { get; set; }
+    }
 }

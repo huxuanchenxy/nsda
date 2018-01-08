@@ -94,6 +94,15 @@ namespace nsda.Web.Areas.admin.Controllers
             var flag = _memberService.Check(id, UserContext.SysUserContext.Id,remark,isAppro, out msg);
             return Result<string>(flag, msg);
         }
+
+        //会员列表
+        [HttpGet]
+        public ContentResult listmember(MemberQueryRequest request)
+        {
+            var data = _memberService.List(request);
+            return Result<string>(true, string.Empty);
+        }
+
         #endregion
     }
 }

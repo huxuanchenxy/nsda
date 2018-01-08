@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_signupform_referee")]
-    public class t_signupform_referee
+	[Table("t_player_signup")]
+    public class t_player_signup
     {
 	   //默认构造函数
-	   public t_signupform_referee()
+	   public t_player_signup()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -30,7 +30,7 @@ namespace nsda.Models
 	    public int id { get; set; }
     
         /// <summary>
-        /// 裁判id
+        /// 会员id
         /// </summary>
         public int memberId { get; set; }
     
@@ -40,13 +40,23 @@ namespace nsda.Models
         public int eventId { get; set; }
     
         /// <summary>
-        /// 赛事组别id
+        /// 赛事组别
         /// </summary>
         public int groupId { get; set; }
     
-        public RefereeSignUpStatusEm refereeSignUpStatus { get; set; }
+        public decimal signfee { get; set; }
     
-        public bool isTemp { get; set; }
+        public string groupnum { get; set; }
+    
+        /// <summary>
+        /// 报名状态
+        /// </summary>
+        public SignUpStatusEm signUpStatus { get; set; }
+    
+        /// <summary>
+        /// 报名者/被邀请者
+        /// </summary>
+        public SignUpTypeEm signUpType { get; set; }
     
         /// <summary>
         /// 创建时间

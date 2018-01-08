@@ -41,5 +41,7 @@ namespace nsda.Services.member
         bool Force(int id, int sysUserId, out string msg);
         // 会员详情
         MemberResponse Detail(int id);
+        // 模糊查找选手
+        List<PlayerResponse> ListPlayer(string key);
     }
 }

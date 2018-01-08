@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Services.Contract.admin;
 using nsda.Services.Contract.member;
 using nsda.Services.member;
 using nsda.Utilities;
@@ -16,10 +17,14 @@ namespace nsda.Web.Areas.player.Controllers
     {
         IMemberService _memberService;
         IMemberExtendService _memberExtendService;
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService)
+        IDataSourceService _dataSourceService;
+        IEventScoreService _eventScoreService;
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
+            _dataSourceService = dataSourceService;
+            _eventScoreService = eventScoreService;
         }
 
         #region ajax
@@ -45,7 +50,7 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
 
-        #region 申请做裁判 或者教练
+        // 申请做裁判 或者教练
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
@@ -57,9 +62,30 @@ namespace nsda.Web.Areas.player.Controllers
             var flag = _memberExtendService.Apply(request,out msg);
             return Result<string>(flag, msg);
         }
-        #endregion 
 
+        //资料下载
+        [HttpGet]
+        public ContentResult datasource()
+        {
+            var data = _dataSourceService.List(new DataSourceQueryRequest { });
+            return Result<string>(true, string.Empty);
+        }
+        
+        //评分列表
+        [HttpGet]
+        public ContentResult eventscorelist()
+        {
+            var data = _eventScoreService.PlayerList(new PlayerEventScoreQueryRequest { MemberId=UserContext.WebUserContext.Id});
+            return Result<string>(true, string.Empty);
+        }
 
+        //模糊查询选手
+        [HttpGet]
+        public ContentResult listplayer(string key)
+        {
+            var data = _memberService.ListPlayer(key);
+            return Result<string>(true, string.Empty);
+        }
         #endregion
 
         #region view
