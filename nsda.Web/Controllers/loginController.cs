@@ -234,7 +234,7 @@ namespace nsda.Web.Controllers
         #region view
         public ActionResult logout()
         {
-            UserContext.RemoveWebCookie();
+            UserContext.RemoveWebUserInfo();
             return RedirectToAction("login");
         }
 

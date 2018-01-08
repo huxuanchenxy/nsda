@@ -12,7 +12,7 @@ namespace nsda.Model.enums
     public enum MemberStatusEm
     {
         待认证 = 1,
-        启用 = 2,
-        禁用=3
+        已认证 = 2,
+        认证失败=3
     }
 }

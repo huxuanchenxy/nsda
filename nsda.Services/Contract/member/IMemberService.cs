@@ -31,12 +31,14 @@ namespace nsda.Services.member
         bool Delete(int id, int sysUserId, out string msg);
         //重置密码
         bool Reset(int id, int sysUserId, out string msg);
-        //启用、禁用账号
-        bool IsEnable(int id, int sysUserId, bool isEnable, out string msg);
         //找回密码
         bool FindPwd(int memberId,string pwd, out string msg);
         // 验证邮箱是否有效 并返回用户id
         int SendEmail(string email, out string msg);
+        // 审核赛事管理员账号
+        bool Check(int id, int sysUserId, string remark, bool isAppro, out string msg);
+        // 强制认证选手信息
+        bool Force(int id, int sysUserId, out string msg);
         // 会员详情
         MemberResponse Detail(int id);
     }

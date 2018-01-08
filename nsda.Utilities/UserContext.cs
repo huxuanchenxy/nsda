@@ -29,7 +29,7 @@ namespace nsda.Utilities
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("UserContext.SysUserContext", ex);
+                LogUtils.LogError("UserContext.GetSysUser", ex);
             }
             return sysContext;
         }
@@ -54,22 +54,41 @@ namespace nsda.Utilities
             WebUserContext webContext = null;
             try
             {
-                string key = SessionCookieUtility.GetCookie(Constant.WebCookieKey).ToString();
-                if (key.IsNotEmpty())
+                string value = SessionCookieUtility.GetCookie(Constant.WebCookieKey).ToString();
+                if (value.IsNotEmpty())
                 {
-                    webContext = MemberEncoderAndDecoder.decrypt(key).Deserialize<WebUserContext>();
+                    string sessionKey= MemberEncoderAndDecoder.decrypt(value);
+                    string sessionData = SessionCookieUtility.GetSession(sessionKey);
+                    if (sessionData.IsNotEmpty())
+                    {
+                        webContext = MemberEncoderAndDecoder.decrypt(sessionData).Deserialize<WebUserContext>();
+                    }
+                    else
+                    {
+                        SessionCookieUtility.RemoveCookie(Constant.WebCookieKey);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("UserContext.webContext", ex);
+                LogUtils.LogError("UserContext.GetWebUser", ex);
             }
             return webContext;
         }
 
-        public static void RemoveWebCookie()
+        public static void RemoveWebUserInfo()
         {
-            SessionCookieUtility.RemoveCookie(Constant.WebCookieKey);
+            var data = SessionCookieUtility.GetCookie(Constant.WebCookieKey);
+            if (data.IsNotEmpty())
+            {
+                string sessionKey = MemberEncoderAndDecoder.decrypt(data);
+                string sessionData = SessionCookieUtility.GetSession(sessionKey);
+                if (sessionData.IsNotEmpty())
+                {
+                    SessionCookieUtility.RemoveSession(sessionKey);
+                }
+                SessionCookieUtility.RemoveCookie(Constant.WebCookieKey);
+            }
         }
     }
 }

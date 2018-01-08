@@ -60,7 +60,7 @@ namespace nsda.Services.member
                     gender = request.Gender,
                     grade = request.Grade,
                     lastlogintime = DateTime.Now,
-                    memberStatus = request.MemberType != MemberTypeEm.选手 ? MemberStatusEm.启用 : MemberStatusEm.待认证,
+                    memberStatus = request.MemberType != MemberTypeEm.选手 ? MemberStatusEm.已认证 : MemberStatusEm.待认证,
                     name = request.Name,
                     memberType = request.MemberType,
                     pinyinname = request.PinYinName,
@@ -83,7 +83,9 @@ namespace nsda.Services.member
                     Name = request.Name,
                     Account = request.Account,
                     Role = ((int)request.MemberType).ToString(),
-                    MemberType = (int)request.MemberType
+                    MemberType = (int)request.MemberType,
+                    Id=id,
+                    Status=(request.MemberType==MemberTypeEm.赛事管理员||request.MemberType==MemberTypeEm.选手)?(int)MemberStatusEm.待认证:(int)MemberStatusEm.已认证
                 };
                 SaveCurrentUser(userContext);
             }
@@ -102,12 +104,12 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.QueryFirstOrDefault<t_member>(@"select * from t_member where account=@account and pwd=@pwd ",
-                         new
-                         {
-                             account = account,
-                             pwd = pwd
-                         });
+                var detail = _dbContext.QueryFirstOrDefault<t_member>(@"select * from t_member where account=@account and pwd=@pwd and IsDelete=0",
+                                                                        new
+                                                                        {
+                                                                            account = account,
+                                                                            pwd = pwd
+                                                                        });
                 if (detail == null)
                 {
                     msg = "账号或密码错误";
@@ -131,7 +133,8 @@ namespace nsda.Services.member
                         Name = detail.name,
                         Account = detail.account,
                         Role = role,
-                        MemberType = (int)detail.memberType
+                        MemberType = (int)detail.memberType,
+                        Status=(int)detail.memberStatus
                     };
                     SaveCurrentUser(userContext);
                 }
@@ -187,10 +190,23 @@ namespace nsda.Services.member
         {
             bool flag = false;
             msg = string.Empty;
-
+            switch (request.MemberType)
+            {
+                case MemberTypeEm.选手:
+                    //默认 待认证
+                    break;
+                case MemberTypeEm.教练:
+                    //正常
+                    break;
+                case MemberTypeEm.裁判:
+                    //正常
+                    break;
+                case MemberTypeEm.赛事管理员:
+                    //待认证
+                    break;
+            }
             return flag;
         }
-
         //修改密码
         public bool EditPwd(int memberId, string oldPwd, string newPwd, out string msg)
         {
@@ -253,7 +269,33 @@ namespace nsda.Services.member
                 if (member != null)
                 {
                     member.updatetime = DateTime.Now;
-                    member.memberStatus = MemberStatusEm.启用;
+                    member.memberStatus = MemberStatusEm.已认证;
+
+                    string data = SessionCookieUtility.GetSession($"webusersession_{id}");
+                    if (data.IsNotEmpty())
+                    {
+                        //读取已经认证的
+                        string role = ((int)member.memberType).ToString();
+                        var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == member.id && c.memberExtendStatus == MemberExtendStatusEm.通过).ToList();
+                        if (memberextend != null && memberextend.Count > 0)
+                        {
+                            foreach (var item in memberextend)
+                            {
+                                role += $",{((int)item.role).ToString()}";
+                            }
+                        }
+                        //记录缓存
+                        var userContext = new WebUserContext
+                        {
+                            Id = member.id,
+                            Name = member.name,
+                            Account = member.account,
+                            Role = role,
+                            MemberType = (int)member.memberType,
+                            Status = (int)member.memberStatus
+                        };
+                        SessionCookieUtility.WriteSession($"webusersession_{id}", MemberEncoderAndDecoder.encrypt(userContext.Serialize()));
+                    }
                 }
             }
             catch (Exception ex)
@@ -288,6 +330,7 @@ namespace nsda.Services.member
                     member.isdelete = true;
                     member.updatetime = DateTime.Now;
                     _dbContext.Update(member);
+                    DeleteCurrentUser(id);//清除用户缓存
                     flag = true;
                 }
                 else
@@ -327,33 +370,6 @@ namespace nsda.Services.member
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("MemberService.Reset", ex);
-            }
-            return flag;
-        }
-        //启用禁用账号
-        public bool IsEnable(int id, int sysUserId, bool isEnable, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                var member = _dbContext.Get<t_member>(id);
-                if (member != null)
-                {
-                    member.memberStatus = isEnable ? MemberStatusEm.启用 : MemberStatusEm.禁用;
-                    member.updatetime = DateTime.Now;
-                    _dbContext.Update(member);
-                }
-                else
-                {
-                    msg = "会员信息不存在";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("MemberService.IsEnable", ex);
             }
             return flag;
         }
@@ -407,7 +423,7 @@ namespace nsda.Services.member
                     msg = "邮箱有误";
                     return memberId;
                 }
-                var member = _dbContext.Select<t_member>(c => c.account == email && c.memberStatus != MemberStatusEm.禁用 && c.memberType != MemberTypeEm.临时裁判 && c.memberType != MemberTypeEm.临时选手).FirstOrDefault();
+                var member = _dbContext.Select<t_member>(c => c.account == email && c.memberStatus != MemberStatusEm.认证失败 && c.memberType != MemberTypeEm.临时裁判 && c.memberType != MemberTypeEm.临时选手).FirstOrDefault();
                 if (member != null)
                 {
                     memberId = member.id;
@@ -465,6 +481,60 @@ namespace nsda.Services.member
             return repsonse;
         }
 
+        //审核赛事管理员账号
+        public bool Check(int id, int sysUserId, string remark, bool isAppro, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                var detail = _dbContext.Get<t_member>(id);
+                if (detail != null&&detail.memberType==MemberTypeEm.赛事管理员)
+                {
+                    detail.updatetime = DateTime.Now;
+                    detail.memberStatus =isAppro?MemberStatusEm.已认证:MemberStatusEm.认证失败;
+                    _dbContext.Update(detail);
+                    DeleteCurrentUser(id);//清除用户缓存 使其重新登录
+                    flag = true;
+                }
+                else
+                {
+                    msg = "会员信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.Force", ex);
+            }
+            return flag;
+        }
+        //强制认证选手账号
+        public bool Force(int id, int sysUserId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                var detail = _dbContext.Get<t_member>(id);
+                if (detail != null && detail.memberType == MemberTypeEm.选手)
+                {
+                    detail.updatetime = DateTime.Now;
+                    detail.memberStatus = MemberStatusEm.已认证;
+                    _dbContext.Update(detail);
+                    DeleteCurrentUser(id);//清除用户缓存 使其重新登录
+                    flag = true;
+                }
+                else {
+                    msg = "会员信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.Force", ex);
+            }
+            return flag;
+        }
+
         /// <summary>
         /// 保存用户缓存
         /// </summary>
@@ -473,11 +543,22 @@ namespace nsda.Services.member
             try
             {
                 DateTime expireTime = DateTime.Now.AddHours(12);
-                SessionCookieUtility.WriteCookie(Constant.WebCookieKey, MemberEncoderAndDecoder.encrypt(context.Serialize()), expireTime);
+                SessionCookieUtility.WriteCookie(Constant.WebCookieKey, MemberEncoderAndDecoder.encrypt($"webusersession_{context.Id}"), expireTime);
+                string data = MemberEncoderAndDecoder.encrypt(context.Serialize());
+                SessionCookieUtility.WriteSession($"webusersession_{context.Id}", data);
             }
             catch (Exception ex)
             {
                 LogUtils.LogError("MemberService.SaveCurrentUser", ex);
+            }
+        }
+
+        private void DeleteCurrentUser(int id)
+        {
+            string data = SessionCookieUtility.GetSession($"webusersession_{id}");
+            if (data.IsNotEmpty())
+            {
+                SessionCookieUtility.RemoveSession($"webusersession_{id}");
             }
         }
     }

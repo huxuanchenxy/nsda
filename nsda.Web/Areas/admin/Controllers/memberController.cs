@@ -31,6 +31,7 @@ namespace nsda.Web.Areas.admin.Controllers
         #endregion
 
         #region ajax
+        //会员扩展
         [HttpGet]
         public ContentResult listmemberextend(MemberExtendQueryRequest request)
         {
@@ -38,6 +39,7 @@ namespace nsda.Web.Areas.admin.Controllers
             return Result<string>(true, string.Empty);
         }
 
+        //处理会员扩展
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
@@ -48,6 +50,50 @@ namespace nsda.Web.Areas.admin.Controllers
             return Result<string>(flag, msg);
         }
 
+
+        //重置密码
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult reset(int id)
+        {
+            var msg = string.Empty;
+            var flag = _memberService.Reset(id, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //删除会员
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult delete(int id)
+        {
+            var msg = string.Empty;
+            var flag = _memberService.Delete(id, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //强制认证选手
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult force(int id)
+        {
+            var msg = string.Empty;
+            var flag = _memberService.Force(id, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //审核赛事管理员账号
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult check(int id,string remark,bool isAppro)
+        {
+            var msg = string.Empty;
+            var flag = _memberService.Check(id, UserContext.SysUserContext.Id,remark,isAppro, out msg);
+            return Result<string>(flag, msg);
+        }
         #endregion
     }
 }

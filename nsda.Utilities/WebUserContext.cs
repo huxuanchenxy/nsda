@@ -12,6 +12,7 @@ namespace nsda.Utilities
         public string Account { get; set; }
         public string Name { get; set; }
         public int MemberType  { get; set; }
+        public int Status { get; set; }
         public string Role { get; set; }
     }
 }
