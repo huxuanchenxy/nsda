@@ -66,7 +66,7 @@ namespace nsda.Services.Implement.member
                 if (detail != null)
                 {
                     detail.remark = remark;
-                    detail.memberExtendStatus = isAppro ? MemberExtendStatusEm.通过 : MemberExtendStatusEm.待审核;
+                    detail.memberExtendStatus = isAppro ? MemberExtendStatusEm.申请通过 : MemberExtendStatusEm.待审核;
                     detail.updatetime = DateTime.Now;
                     _dbContext.Update(detail);
                     flag = true;

@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.enums;
 using nsda.Services.Contract.admin;
 using nsda.Services.Contract.member;
 using nsda.Services.member;
@@ -19,12 +20,14 @@ namespace nsda.Web.Areas.player.Controllers
         IMemberExtendService _memberExtendService;
         IDataSourceService _dataSourceService;
         IEventScoreService _eventScoreService;
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService)
+        IMemberTempService _memberTempService;
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
             _dataSourceService = dataSourceService;
             _eventScoreService = eventScoreService;
+            _memberTempService = memberTempService;
         }
 
         #region ajax
@@ -71,7 +74,7 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(true, string.Empty);
         }
         
-        //评分列表
+        //评分单下载
         [HttpGet]
         public ContentResult eventscorelist()
         {
@@ -79,12 +82,37 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(true, string.Empty);
         }
 
-        //模糊查询选手
+        //模糊查询教练
         [HttpGet]
-        public ContentResult listplayer(string key)
+        public ContentResult listtrainer(string key)
         {
-            var data = _memberService.ListPlayer(key);
+            var data = _memberService.ListPlayer(MemberTypeEm.教练,key);
             return Result<string>(true, string.Empty);
+        }
+
+        //去认证
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult gopay()
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _memberService.GoPay(UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //绑定临时账号
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult bindplayer(BindTempPlayerRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _memberTempService.BindTempPlayer(request, out msg);
+            return Result<string>(flag, msg);
         }
         #endregion
 

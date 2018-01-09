@@ -23,6 +23,7 @@ namespace nsda.Web.Areas.player.Controllers
         [HttpGet]
         public ContentResult list(PlayerTrainerQueryRequest request)
         {
+            request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerTrainerService.MemberList(request);
             return Result<string>(true, string.Empty);
         }

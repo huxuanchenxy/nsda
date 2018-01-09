@@ -66,6 +66,10 @@
     <Folder Include="Implement\trainer\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\nsda.Model\nsda.Model.csproj">
+      <Project>{155A1743-F85C-4DD1-AD59-3946F5AAE339}</Project>
+      <Name>nsda.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\nsda.Utilities\nsda.Utilities.csproj">
       <Project>{C0A8D7CC-1257-4FCC-9DFF-F4F04A0E4674}</Project>
       <Name>nsda.Utilities</Name>

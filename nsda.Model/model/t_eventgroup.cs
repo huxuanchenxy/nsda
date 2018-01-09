@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_playereduexper")]
-    public class t_playereduexper
+	[Table("t_eventgroup")]
+    public class t_eventgroup
     {
 	   //默认构造函数
-	   public t_playereduexper()
+	   public t_eventgroup()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,25 +29,47 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        /// <summary>
-        /// 会员id
-        /// </summary>
-        public int memberId { get; set; }
+        public int eventId { get; set; }
     
         /// <summary>
-        /// 开始时间
+        /// 最小年级
         /// </summary>
-        public DateTime startdate { get; set; }
+        public MingradeEm? mingrade { get; set; }
     
         /// <summary>
-        /// 结束时间
+        /// 最大年级
         /// </summary>
-        public DateTime? enddate { get; set; }
+        public MaxgradeEm? maxgrade { get; set; }
     
         /// <summary>
-        /// 学校id
+        /// 最小积分
         /// </summary>
-        public int schoolId { get; set; }
+        public decimal? minintegral { get; set; }
+    
+        /// <summary>
+        /// 最大积分
+        /// </summary>
+        public decimal? maxintegral { get; set; }
+    
+        /// <summary>
+        /// 最小比赛次数
+        /// </summary>
+        public int? mintimes { get; set; }
+    
+        /// <summary>
+        /// 最大比赛次数
+        /// </summary>
+        public int? maxtimes { get; set; }
+    
+        /// <summary>
+        /// 队伍人数
+        /// </summary>
+        public int teamnumber { get; set; }
+    
+        /// <summary>
+        /// 队伍裁判人数
+        /// </summary>
+        public int teamtrainer { get; set; }
     
         /// <summary>
         /// 创建时间

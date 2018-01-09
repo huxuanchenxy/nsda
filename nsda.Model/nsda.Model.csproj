@@ -56,6 +56,7 @@
     <Compile Include="dto\request\MemberExtendRequest.cs" />
     <Compile Include="dto\request\MemberOperLogRequest.cs" />
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
+    <Compile Include="dto\request\PlayerPointsQueryRequest.cs" />
     <Compile Include="dto\request\PlayerTrainerRequest.cs" />
     <Compile Include="dto\request\PagedQuery.cs" />
     <Compile Include="dto\request\ProvinceRequest.cs" />
@@ -75,11 +76,13 @@
     <Compile Include="dto\response\LoginLogResponse.cs" />
     <Compile Include="dto\response\MemberExtendResponse.cs" />
     <Compile Include="dto\response\MemberOperLogResponse.cs" />
+    <Compile Include="dto\response\MemberPointsModelResponse.cs" />
     <Compile Include="dto\response\MemberTempResponse.cs" />
     <Compile Include="dto\response\MenuData.cs" />
     <Compile Include="dto\response\PlayerEduExperResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
-    <Compile Include="dto\response\PlayerResponse.cs" />
+    <Compile Include="dto\response\MemberSelectResponse.cs" />
+    <Compile Include="dto\response\PlayerPointsResponse.cs" />
     <Compile Include="dto\response\PlayerTrainerResponse.cs" />
     <Compile Include="dto\response\ProvinceResponse.cs" />
     <Compile Include="dto\response\RoleEm.cs" />
@@ -91,6 +94,10 @@
     <Compile Include="dto\Result.cs" />
     <Compile Include="enums\CardTypeEm.cs" />
     <Compile Include="enums\DataTypeEm.cs" />
+    <Compile Include="enums\EventAreaEm.cs" />
+    <Compile Include="enums\EventCategoryEm.cs" />
+    <Compile Include="enums\EventLevelEm.cs" />
+    <Compile Include="enums\EventStatusEm.cs" />
     <Compile Include="enums\EventTypeEm.cs" />
     <Compile Include="enums\GenderEm.cs" />
     <Compile Include="enums\GradeEm.cs" />
@@ -99,6 +106,7 @@
     <Compile Include="enums\MemberStatusEm.cs" />
     <Compile Include="enums\MemberTrainerStatusEm.cs" />
     <Compile Include="enums\MemberTypeEm.cs" />
+    <Compile Include="enums\MenuTypeEm.cs" />
     <Compile Include="enums\OrderStatusEm.cs" />
     <Compile Include="enums\OrderTypeEm.cs" />
     <Compile Include="enums\PayStatusEm.cs" />
@@ -106,6 +114,7 @@
     <Compile Include="enums\PrizeTypeEm.cs" />
     <Compile Include="enums\RefundStatusEm.cs" />
     <Compile Include="enums\RoleEm.cs" />
+    <Compile Include="enums\RoomStatusEm.cs" />
     <Compile Include="enums\SignUpStatusEm.cs" />
     <Compile Include="enums\SignUpTypeEm.cs" />
     <Compile Include="enums\SysUserStatusEm.cs" />
@@ -124,7 +133,19 @@
     <Compile Include="model\t_event.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_eventattachment.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_eventcheck.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_eventgroup.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_eventprize.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_eventroom.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_event_score.cs">
@@ -178,7 +199,16 @@
     <Compile Include="model\t_school.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_sysmenu.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_sysoperlog.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sysright.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sysrole.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_sysuser.cs">

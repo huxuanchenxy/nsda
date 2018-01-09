@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_sysuser")]
-    public class t_sysuser
+	[Table("t_sysright")]
+    public class t_sysright
     {
 	   //默认构造函数
-	   public t_sysuser()
+	   public t_sysright()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,19 +29,9 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        public string account { get; set; }
-    
-        public string pwd { get; set; }
-    
-        public string name { get; set; }
-    
-        public string mobile { get; set; }
-    
-        public SysUserStatusEm sysUserStatus { get; set; }
-    
         public int roleId { get; set; }
     
-        public DateTime? lastlogintime { get; set; }
+        public int menuId { get; set; }
     
         /// <summary>
         /// 创建时间

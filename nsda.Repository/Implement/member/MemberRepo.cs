@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using nsda.Model.enums;
 using nsda.Repository.Contract.member;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
@@ -39,6 +40,17 @@ namespace nsda.Repository.Implement.member
                     return $"{code}{sequence}";
                 }
             }
+        }
+
+        public bool IsExist(string account)
+        {
+            var sql = $@"select coutn(1) from t_member 
+                         where isdelete=0  and account=@Account
+                         and memberType!={MemberTypeEm.临时裁判} and memberType!={MemberTypeEm.临时选手} 
+                       ";
+            var dy = new DynamicParameters();
+            dy.Add("Account",account);
+            return _dbContext.ExecuteScalar(sql, dy).ToObjInt() > 0;
         }
     }
 }

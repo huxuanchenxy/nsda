@@ -47,7 +47,8 @@ namespace nsda.Services.Implement.member
                     memberId = request.FromMemberId,
                     signfee = tevent.signfee,
                     signUpStatus = SignUpStatusEm.等待队员确认邀请,
-                    signUpType = SignUpTypeEm.邀请人
+                    signUpType = SignUpTypeEm.邀请人,
+                    isTemp=false
                 });
                 //被邀请者
                 _dbContext.Insert(new t_player_signup
@@ -58,7 +59,8 @@ namespace nsda.Services.Implement.member
                     memberId = request.ToMemberId,
                     signfee = tevent.signfee,
                     signUpStatus = SignUpStatusEm.报名邀请中,
-                    signUpType = SignUpTypeEm.被邀请人
+                    signUpType = SignUpTypeEm.被邀请人,
+                    isTemp = false
                 });
                 _dbContext.CommitChanges();
                 flag = true;

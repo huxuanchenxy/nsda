@@ -35,11 +35,15 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
+                if (request.SchoolId <= 0)
+                {
+                    msg = "请选择学校";
+                    return flag;
+                }
                 _dbContext.Insert(new t_playereduexper {
                       enddate=request.EndDate,
                       memberId=request.MemberId,
                       schoolId=request.SchoolId,
-                      reserveName = request.ReserveName,
                       startdate=request.StartDate
                 });
             }
@@ -58,13 +62,17 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
+                if (request.SchoolId <= 0)
+                {
+                    msg = "请选择学校";
+                    return flag;
+                }
                 var membereduexper = _dbContext.Get<t_playereduexper>(request.Id);
                 if (membereduexper != null)
                 {
                     membereduexper.schoolId = request.SchoolId;
                     membereduexper.startdate = request.StartDate;
                     membereduexper.enddate = request.EndDate;
-                    membereduexper.reserveName = request.ReserveName;
                     membereduexper.updatetime = DateTime.Now;
                     _dbContext.Update(membereduexper);
                 }
@@ -82,14 +90,14 @@ namespace nsda.Services.member
             return flag;
         }
         //1.2 删除教育经历
-        public  bool Delete(int id,int userId,out string msg)
+        public  bool Delete(int id,int memberId,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
                 var membereduexper = _dbContext.Get<t_playereduexper>(id);
-                if (membereduexper != null&&membereduexper.memberId== userId)
+                if (membereduexper != null&&membereduexper.memberId== memberId)
                 {
                     membereduexper.updatetime = DateTime.Now;
                     membereduexper.isdelete = true;
@@ -139,7 +147,6 @@ namespace nsda.Services.member
                     {
                         EndDate=membereduexper.enddate,
                         StartDate=membereduexper.startdate,
-                        ReserveName=membereduexper.reserveName,
                         SchoolId=membereduexper.schoolId,
                         Id=membereduexper.id
                     };

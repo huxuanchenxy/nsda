@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.enums;
 using nsda.Services.Contract.trainer;
 using nsda.Services.member;
 using nsda.Utilities;
@@ -52,7 +53,8 @@ namespace nsda.Web.Areas.trainer.Controllers
         [HttpGet]
         public ContentResult listplayer(PlayerTrainerQueryRequest request)
         {
-            var data = _playerTrainerService.MemberList(request);
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _playerTrainerService.TrainerList(request);
             return Result<string>(true, string.Empty);
         }
         //2 新增
@@ -95,6 +97,15 @@ namespace nsda.Web.Areas.trainer.Controllers
             var msg = string.Empty;
             var flag = _playerTrainerService.IsAppro(id, UserContext.WebUserContext.Id, isAppro, out msg);
             return Result<string>(flag, msg);
+        }
+
+
+        //模糊查询选手
+        [HttpGet]
+        public ContentResult listplayer(string key)
+        {
+            var data = _memberService.ListPlayer(MemberTypeEm.选手, key);
+            return Result<string>(true, string.Empty);
         }
         #endregion
 

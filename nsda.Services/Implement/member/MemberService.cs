@@ -40,42 +40,73 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                bool validateflag = Validate(request, out msg);
-                if (!validateflag)
+                if (request.Account.IsEmpty())
+                {
+                    msg = "电子邮箱不能为空";
+                    return flag;
+                }
+                if (!request.Account.IsSuccessEmail())
+                {
+                    msg = "电子邮箱格式有误";
+                    return flag;
+                }
+                if (request.Pwd.IsEmpty())
+                {
+                    msg = "密码不能为空";
+                    return flag;
+                }
+                if (request.Pwd.Length < 6)
+                {
+                    msg = "密码长度不能低于6";
+                    return flag;
+                }
+                if (request.ContactMobile.IsEmpty())
+                {
+                    msg = "联系电话不能为空";
+                    return flag;
+                }
+                if (request.ContactAddress.IsEmpty())
+                {
+                    msg = "联系地址不能为空";
+                    return flag;
+                }
+
+                t_member member = InsertValidate(request, out msg);
+                if (msg.IsNotEmpty())
                 {
                     return flag;
                 }
-                _dbContext.BeginTransaction();
-                int id = _dbContext.Insert(new t_member
+                //判断账号是否存在
+                if (_dataRepository.MemberRepo.IsExist(request.Account))
                 {
-                    account = request.Account,
-                    card = request.Card,
-                    cardType = request.CardType,
-                    code = _dataRepository.MemberRepo.RenderCode(),
-                    completename = request.Name,
-                    completepinyin = request.CompletePinYin,
-                    contactaddress = request.ContactAddress,
-                    contactmobile = request.ContactMobile,
-                    emergencycontact = request.EmergencyContact,
-                    gender = request.Gender,
-                    grade = request.Grade,
-                    lastlogintime = DateTime.Now,
-                    memberStatus = (request.MemberType != MemberTypeEm.选手 || request.MemberType != MemberTypeEm.赛事管理员) ? MemberStatusEm.已认证 : MemberStatusEm.待认证,
-                    name = request.Name,
-                    memberType = request.MemberType,
-                    pinyinname = request.PinYinName,
-                    pinyinsurname = request.PinYinSurName,
-                    pwd = request.Pwd,
-                    surname = request.SurName
-                }).ToObjInt();
+                    msg = "账号已存在";
+                    return flag;
+                }
 
+                _dbContext.BeginTransaction();
+                member.code = _dataRepository.MemberRepo.RenderCode();
+                int memberId = _dbContext.Insert(member).ToObjInt();
                 _dbContext.Insert(new t_memberpoints
                 {
                     eventPoints = 0,
-                    memberId = id,
+                    memberId = memberId,
                     points = 0,
                     servicePoints = 0,
                 });
+
+                //如果是选手  填了教育经验
+                if (request.MemberType == MemberTypeEm.选手)
+                {
+                    if (request.PlayerEdu != null && request.PlayerEdu.SchoolId > 0)
+                    {
+                        _dbContext.Insert(new t_playereduexper {
+                             enddate=request.PlayerEdu.EndDate,
+                              memberId= memberId,
+                              schoolId=request.PlayerEdu.SchoolId,
+                              startdate=request.PlayerEdu.StartDate
+                        });
+                    }
+                }
 
                 _dbContext.CommitChanges();
                 var userContext = new WebUserContext
@@ -84,8 +115,8 @@ namespace nsda.Services.member
                     Account = request.Account,
                     Role = ((int)request.MemberType).ToString(),
                     MemberType = (int)request.MemberType,
-                    Id = id,
-                    Status = (request.MemberType == MemberTypeEm.赛事管理员 || request.MemberType == MemberTypeEm.选手) ? (int)MemberStatusEm.待认证 : (int)MemberStatusEm.已认证
+                    Id = memberId,
+                    Status = (request.MemberType == MemberTypeEm.赛事管理员 && request.MemberType == MemberTypeEm.选手) ? (int)MemberStatusEm.待认证 : (int)MemberStatusEm.已认证
                 };
                 SaveCurrentUser(userContext);
             }
@@ -116,9 +147,11 @@ namespace nsda.Services.member
                 }
                 else
                 {
+                    detail.lastlogintime = DateTime.Now;
+                    _dbContext.Update(detail);
                     //读取已经认证的
                     string role = ((int)detail.memberType).ToString();
-                    var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.通过).ToList();
+                    var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
                     if (memberextend != null && memberextend.Count > 0)
                     {
                         foreach (var item in memberextend)
@@ -154,29 +187,19 @@ namespace nsda.Services.member
             try
             {
                 t_member member = _dbContext.Get<t_member>(request.Id);
-
-                bool validateflag = Validate(request, out msg);
-                if (!validateflag)
+                if (member != null)
                 {
-                    return flag;
+                    member = EditValidate(member, request, out msg);
+                    if (msg.IsNotEmpty())
+                    {
+                        return flag;
+                    }             
+                    member.updatetime = DateTime.Now;
+                    _dbContext.Update(member);
                 }
-
-                member.card = request.Card;
-                member.cardType = request.CardType;
-                member.completename = request.Name;
-                member.completepinyin = request.CompletePinYin;
-                member.contactaddress = request.ContactAddress;
-                member.contactmobile = request.ContactMobile;
-                member.emergencycontact = request.EmergencyContact;
-                member.gender = request.Gender;
-                member.grade = request.Grade;
-                member.name = request.Name;
-                member.memberType = request.MemberType;
-                member.pinyinname = request.PinYinName;
-                member.pinyinsurname = request.PinYinSurName;
-                member.surname = request.SurName;
-                member.updatetime = DateTime.Now;
-                _dbContext.Update(member);
+                else {
+                    msg = "找不到会员信息";
+                }
             }
             catch (Exception ex)
             {
@@ -187,27 +210,138 @@ namespace nsda.Services.member
             return flag;
         }
 
-        private bool Validate(MemberRequest request, out string msg)
+        private t_member InsertValidate(MemberRequest request, out string msg)
         {
-            bool flag = false;
             msg = string.Empty;
+            t_member member = new t_member
+            {
+                account = request.Account,
+                card = request.Card,
+                cardType = request.CardType,
+                completename = request.Name,
+                completepinyin = request.CompletePinYin,
+                contactaddress = request.ContactAddress,
+                contactmobile = request.ContactMobile,
+                emergencycontact = request.EmergencyContact,
+                gender = request.Gender,
+                grade = request.Grade,
+                lastlogintime = DateTime.Now,
+                name = request.Name,
+                memberType = request.MemberType,
+                pinyinname = request.PinYinName,
+                pinyinsurname = request.PinYinSurName,
+                pwd = request.Pwd,
+                surname = request.SurName
+            };
             switch (request.MemberType)
             {
                 case MemberTypeEm.选手:
-                    //默认 待认证
+                case MemberTypeEm.赛事管理员:
+                    if (request.Name.IsEmpty() || request.SurName.IsEmpty())
+                    {
+                        msg = "姓/名不能为空";
+                        return member;
+                    }
+                    if (!request.CardType.HasValue)
+                    {
+                        msg = "请选择证件类型";
+                        return member;
+                    }
+                    if (request.Card.IsEmpty())
+                    {
+                        msg = "证件号不能为空";
+                        return member;
+                    }
+                    member.completename = request.Name + request.SurName;
+                    member.completepinyin = request.PinYinName + request.PinYinSurName;
+                    member.memberStatus = MemberStatusEm.待认证;
                     break;
                 case MemberTypeEm.教练:
-                    //正常
-                    break;
                 case MemberTypeEm.裁判:
-                    //正常
-                    break;
-                case MemberTypeEm.赛事管理员:
-                    //待认证
+                    if (request.CompleteName.IsEmpty())
+                    {
+                        msg = "中文名不能为空";
+                        return member;
+                    }
+                    if (request.PinYinName.IsEmpty())
+                    {
+                        msg = "First name不能为空";
+                        return member;
+                    }
+                    if (request.PinYinSurName.IsEmpty())
+                    {
+                        msg = "Last name不能为空";
+                        return member;
+                    }
+                    member.completepinyin = request.PinYinName + request.PinYinSurName;
+                    member.memberStatus = MemberStatusEm.已认证;
                     break;
             }
-            return flag;
+            return member;
         }
+
+        private t_member EditValidate(t_member member,MemberRequest request, out string msg)
+        {
+            member.card = request.Card;
+            member.cardType = request.CardType;
+            member.completename = request.Name;
+            member.completepinyin = request.CompletePinYin;
+            member.contactaddress = request.ContactAddress;
+            member.contactmobile = request.ContactMobile;
+            member.emergencycontact = request.EmergencyContact;
+            member.gender = request.Gender;
+            member.grade = request.Grade;
+            member.name = request.Name;
+            member.memberType = request.MemberType;
+            member.pinyinname = request.PinYinName;
+            member.pinyinsurname = request.PinYinSurName;
+            member.surname = request.SurName;
+            msg = string.Empty;
+            switch (member.memberType)
+            {
+                case MemberTypeEm.选手:
+                case MemberTypeEm.赛事管理员:
+                    if (request.Name.IsEmpty() || request.SurName.IsEmpty())
+                    {
+                        msg = "姓/名不能为空";
+                        return member;
+                    }
+                    if (!request.CardType.HasValue)
+                    {
+                        msg = "请选择证件类型";
+                        return member;
+                    }
+                    if (request.Card.IsEmpty())
+                    {
+                        msg = "证件号不能为空";
+                        return member;
+                    }
+                    member.completename = request.Name + request.SurName;
+                    member.completepinyin = request.PinYinName + request.PinYinSurName;
+                    break;
+                case MemberTypeEm.教练:
+                case MemberTypeEm.裁判:
+                    if (request.CompleteName.IsEmpty())
+                    {
+                        msg = "中文名不能为空";
+                        return member;
+                    }
+                    if (request.PinYinName.IsEmpty())
+                    {
+                        msg = "First name不能为空";
+                        return member;
+                    }
+                    if (request.PinYinSurName.IsEmpty())
+                    {
+                        msg = "Last  name不能为空";
+                        return member;
+                    }
+                    member.completepinyin = request.PinYinName + request.PinYinSurName;
+                    break;
+            }
+            return member;
+        }
+
         //修改密码
         public bool EditPwd(int memberId, string oldPwd, string newPwd, out string msg)
         {
@@ -227,7 +361,13 @@ namespace nsda.Services.member
                     return flag;
                 }
 
-                if (!string.Equals(oldPwd, newPwd))
+                if (newPwd.Length<6)
+                {
+                    msg = "密码长度不能低于6";
+                    return flag;
+                }
+
+                if (string.Equals(oldPwd, newPwd))
                 {
                     msg = "新密码和原密码相同";
                     return flag;
@@ -277,7 +417,7 @@ namespace nsda.Services.member
                     {
                         //读取已经认证的
                         string role = ((int)member.memberType).ToString();
-                        var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == member.id && c.memberExtendStatus == MemberExtendStatusEm.通过).ToList();
+                        var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == member.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
                         if (memberextend != null && memberextend.Count > 0)
                         {
                             foreach (var item in memberextend)
@@ -472,13 +612,13 @@ namespace nsda.Services.member
         //会员详情
         public MemberResponse Detail(int id)
         {
-            MemberResponse repsonse = null;
+            MemberResponse response = null;
             try
             {
                 var detail = _dbContext.Get<t_member>(id);
                 if (detail != null)
                 {
-                    repsonse = new MemberResponse
+                    response = new MemberResponse
                     {
                         Account = detail.account,
                         Name = detail.name,
@@ -507,7 +647,7 @@ namespace nsda.Services.member
             {
                 LogUtils.LogError("MemberService.Detail", ex);
             }
-            return repsonse;
+            return response;
         }
 
         //审核赛事管理员账号
@@ -592,9 +732,9 @@ namespace nsda.Services.member
             }
         }
 
-        public List<PlayerResponse> ListPlayer(string key)
+        public List<MemberSelectResponse> ListPlayer(MemberTypeEm memberType,string key)
         {
-            List<PlayerResponse> list = new List<PlayerResponse>();
+            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
             {
                 if (key.IsEmpty())
@@ -602,18 +742,64 @@ namespace nsda.Services.member
                     return list;
                 }
 
-                StringBuilder sb = new StringBuilder($"select Id,Code,completename as Name from t_member where isdelete=0 and memberType={(int)MemberTypeEm.选手} and  memberStatus={MemberStatusEm.已认证}");
+                StringBuilder sb = new StringBuilder($"select Id,Code,completename as Name from t_member where isdelete=0 and memberType={memberType} and  memberStatus={MemberStatusEm.已认证}");
 
                 sb.Append(" and (code like @key or completename like @key) ");
                 var dy = new DynamicParameters();
                 dy.Add("key","%"+key+"%");
-                list = _dbContext.Query<PlayerResponse>(sb.ToString(), dy).ToList();
+                list = _dbContext.Query<MemberSelectResponse>(sb.ToString(), dy).ToList();
             }
             catch (Exception ex)
             {
                 LogUtils.LogError("MemberService.ListPlayer", ex);
             }
             return list;
+        }
+
+        // 去支付
+        public bool GoPay(int memberId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                var detail = _dbContext.Get<t_member>(memberId);
+                if (detail != null && detail.memberType == MemberTypeEm.选手)
+                {
+                    //1.0 查询订单中是否有此选手的认证订单
+                    //有 直接生成支付密钥  否则 先创建订单
+                }
+                else
+                {
+                    msg = "会员信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.Force", ex);
+            }
+            return flag;
+        }
+
+        public bool IsExist(string account)
+        {
+            bool flag = false;
+            try
+            {
+                if (account.IsEmpty())
+                {
+                    return flag;
+                }
+                if (_dataRepository.MemberRepo.IsExist(account))
+                {
+                    flag = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.IsExist", ex);
+            }
+            return flag;
         }
     }
 }

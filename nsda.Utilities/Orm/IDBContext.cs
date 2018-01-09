@@ -194,6 +194,13 @@ namespace nsda.Utilities.Orm
         /// <returns></returns>
         int Execute(string sql, object param = null);
 
+        /// <summary>
+        /// 第一行的第一列
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        object ExecuteScalar(string sql, object param = null);
         #region 分页
 
         /// <summary>

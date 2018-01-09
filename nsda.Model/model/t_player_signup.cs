@@ -58,6 +58,8 @@ namespace nsda.Models
         /// </summary>
         public SignUpTypeEm signUpType { get; set; }
     
+        public bool isTemp { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

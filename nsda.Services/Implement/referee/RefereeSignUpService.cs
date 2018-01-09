@@ -1,6 +1,8 @@
-﻿using nsda.Repository;
+﻿using nsda.Models;
+using nsda.Repository;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
+using nsda.Utilities;
 using nsda.Utilities.Orm;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,48 @@ namespace nsda.Services.Implement.referee
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
+        }
+
+        public bool Apply(int eventId, int memberId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                if (eventId <= 0)
+                {
+                    msg = "请选择赛事";
+                    return flag;
+                }
+
+                t_event t_event = _dbContext.Get<t_event>(eventId);
+                if (t_event != null)
+                {
+                    //进一步判断赛事状态
+                    var data = _dbContext.Select<t_referee_signup>(c => c.eventId == eventId && c.memberId == memberId).ToList();
+                    if (data != null && data.Count > 0)
+                    {
+                        msg = "您已提交过申请";
+                        return flag;
+                    }
+                    _dbContext.Insert(new t_referee_signup {
+                         eventId=eventId,
+                         isTemp=false,
+                         memberId=memberId,
+                         refereeSignUpStatus=Model.enums.RefereeSignUpStatusEm.待审核
+                    });
+                }
+                else
+                {
+                    msg = "赛事有误";
+                    return flag;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("RefereeSignUpService.Apply", ex);
+            }
+            return flag;
         }
     }
 }

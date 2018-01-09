@@ -94,6 +94,8 @@ namespace nsda.Services.admin
                     }
                     else
                     {
+                        detail.lastlogintime = DateTime.Now;
+                        _dbContext.Update(detail);
                         //记录缓存
                         var users = new SysUserContext
                         {

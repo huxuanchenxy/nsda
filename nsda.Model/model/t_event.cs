@@ -29,11 +29,87 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
+        /// <summary>
+        /// 赛事编码
+        /// </summary>
         public string code { get; set; }
     
+        /// <summary>
+        /// 赛事名称
+        /// </summary>
         public string name { get; set; }
     
+        /// <summary>
+        /// 赛事管理员id
+        /// </summary>
+        public int memberId { get; set; }
+    
+        /// <summary>
+        /// 赛事开始时间
+        /// </summary>
+        public DateTime starteventtime { get; set; }
+    
+        /// <summary>
+        /// 赛事结束时间
+        /// </summary>
+        public DateTime endeventtime { get; set; }
+    
+        /// <summary>
+        /// 报名开始时间
+        /// </summary>
+        public DateTime startsigntime { get; set; }
+    
+        /// <summary>
+        /// 报名结束时间
+        /// </summary>
+        public DateTime endsigntime { get; set; }
+    
+        /// <summary>
+        /// 退款截止时间
+        /// </summary>
+        public DateTime endrefundtime { get; set; }
+    
+        /// <summary>
+        /// 赛事描述
+        /// </summary>
+        public string remark { get; set; }
+    
+        /// <summary>
+        /// 赛事地址
+        /// </summary>
+        public string address { get; set; }
+    
+        public int? provinceId { get; set; }
+    
+        public int? cityId { get; set; }
+    
+        /// <summary>
+        /// 是否是国际赛事
+        /// </summary>
+        public bool isInter { get; set; }
+    
+        public EventTypeEm eventType { get; set; }
+    
+        public EventCategoryEm eventCategory { get; set; }
+    
+        public EventLevelEm? eventLevel { get; set; }
+    
+        /// <summary>
+        /// 报名费
+        /// </summary>
         public decimal signfee { get; set; }
+    
+        /// <summary>
+        /// 附件路径
+        /// </summary>
+        public string filepath { get; set; }
+    
+        public int maxnumber { get; set; }
+    
+        /// <summary>
+        /// 赛事状态
+        /// </summary>
+        public EventStatusEm eventStatus { get; set; }
     
         /// <summary>
         /// 创建时间

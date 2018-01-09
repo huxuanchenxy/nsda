@@ -23,6 +23,6 @@ namespace nsda.Model.dto.request
 
     public class PlayerTrainerQueryRequest:PagedQuery
     {
-
+        public int MemberId { get; set; }
     }
 }

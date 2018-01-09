@@ -28,7 +28,7 @@ namespace nsda.Services.member
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
         }
-
+        //绑定教练/学生
         public bool Insert(PlayerTrainerRequest request, out string msg)
         {
             bool flag = false;
@@ -37,14 +37,23 @@ namespace nsda.Services.member
             {
                 if (request.ObjMemberId <= 0)
                 {
-                    msg = "教练不能为空";
-                    return flag;
+                    if (request.IsTrainer)
+                    {
+                        msg = "教练不能为空";
+                        return flag;
+                    }
+                    else
+                    {
+                        msg = "学生不能为空";
+                        return flag;
+                    }
                 }
                 if (request.StartDate==DateTime.MinValue||request.StartDate==DateTime.MaxValue||request.StartDate>DateTime.Now)
                 {
                     msg = "开始时间有误";
                     return flag;
                 }
+
                 var memberTrainer = new t_player_trainer
                 {
                     objMemberId = request.ObjMemberId,
@@ -64,7 +73,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
+        //编辑绑定教练/学生
         public bool Edit(PlayerTrainerRequest request, out string msg)
         {
             bool flag = false;
@@ -73,8 +82,16 @@ namespace nsda.Services.member
             {
                 if (request.ObjMemberId <= 0)
                 {
-                    msg = "教练不能为空";
-                    return flag;
+                    if (request.IsTrainer)
+                    {
+                        msg = "教练不能为空";
+                        return flag;
+                    }
+                    else
+                    {
+                        msg = "学生不能为空";
+                        return flag;
+                    }
                 }
                 if (request.StartDate == DateTime.MinValue || request.StartDate == DateTime.MaxValue || request.StartDate > DateTime.Now)
                 {
@@ -104,7 +121,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
+        //删除
         public bool Delete(int id, int memberId, out string msg)
         {
             bool flag = false;
@@ -130,7 +147,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
+        //是否同意 教练或者学生的申请
         public bool IsAppro(int id, int memberId,bool isAppro, out string msg)
         {
             bool flag = false;
@@ -157,7 +174,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
+        //教练下的学生列表
         public PagedList<PlayerTrainerResponse> TrainerList(PlayerTrainerQueryRequest request)
         {
             PagedList<PlayerTrainerResponse> list = new PagedList<PlayerTrainerResponse>();
@@ -172,7 +189,7 @@ namespace nsda.Services.member
             }
             return list;
         }
-
+        //学生下的教练列表
         public PagedList<PlayerTrainerResponse> MemberList(PlayerTrainerQueryRequest request)
         {
             PagedList< PlayerTrainerResponse > list = new PagedList<PlayerTrainerResponse>();

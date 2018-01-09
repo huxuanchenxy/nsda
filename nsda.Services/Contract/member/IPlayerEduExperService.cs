@@ -19,7 +19,7 @@ namespace nsda.Services.member
         //1.1 修改教育经历
         bool Edit(PlayerEduExperRequest request, out string msg);
         //1.2 删除教育经历
-        bool Delete(int id, int userId, out string msg);
+        bool Delete(int id, int memberId, out string msg);
         //1.3 教育经历列表
         PagedList<PlayerEduExperResponse> List(PlayerEduExperQueryRequest request);
         //1.4 教育经历详情

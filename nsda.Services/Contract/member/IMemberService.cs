@@ -42,6 +42,9 @@ namespace nsda.Services.member
         // 会员详情
         MemberResponse Detail(int id);
         // 模糊查找选手
-        List<PlayerResponse> ListPlayer(string key);
+        List<MemberSelectResponse> ListPlayer(MemberTypeEm memberType, string key);
+        //去支付
+        bool GoPay(int memberId, out string msg);
+        bool IsExist(string account);
     }
 }

@@ -278,6 +278,18 @@ namespace nsda.Utilities.Orm
             return connection.Execute(sql, param, transaction: transaction);
         }
 
+
+        /// <summary>
+        /// 执行sql语句
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public object ExecuteScalar(string sql, object param = null)
+        {
+            return connection.ExecuteScalar(sql, param, transaction: transaction);
+        }
+
         /// <summary>
         /// 分页
         /// </summary>

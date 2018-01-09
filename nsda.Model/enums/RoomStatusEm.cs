@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
-    public enum RefereeSignUpStatusEm
+    public enum RoomStatusEm
     {
-        待审核 = 1,
-        申请成功 = 2,
-        申请失败=3,
-        停用=4,
-        启用=5
+        闲置=1,
+        使用中=2,
+        停用=3
     }
 }

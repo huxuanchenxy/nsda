@@ -30,10 +30,8 @@ namespace nsda.Model.dto.request
         /// 联系方式
         /// </summary>
         public string ContactMobile { get; set; }
-        /// <summary>
-        /// 报名时学校
-        /// </summary>
-        public int? SchoolId { get; set; }
+        //学校信息
+        public PlayerEduExperRequest PlayerEdu { get; set; }
     }
 
     //临时教练
@@ -49,6 +47,11 @@ namespace nsda.Model.dto.request
         public int? GroupId { get; set; }
         public string Name { get; set; }
         public string ContactMobile { get; set; }
+
+        public object FirstOrDefault()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     //绑定临时选手

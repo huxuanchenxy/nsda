@@ -15,10 +15,12 @@ namespace nsda.Web.Areas.admin.Controllers
     {
         IMemberService _memberService;
         IMemberExtendService _memberExtendService;
-        public memberController(IMemberService memberService, IMemberExtendService memberExtendService)
+        IMemberTempService _memberTempService;
+        public memberController(IMemberService memberService, IMemberExtendService memberExtendService, IMemberTempService memberTempService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
+            _memberTempService = memberTempService;
         }
 
         #region view
@@ -103,6 +105,13 @@ namespace nsda.Web.Areas.admin.Controllers
             return Result<string>(true, string.Empty);
         }
 
+        //临时会员
+        [HttpGet]
+        public ContentResult listtempmember(TempMemberQueryRequest request)
+        {
+            var data = _memberTempService.List(request);
+            return Result<string>(true, string.Empty);
+        }
         #endregion
     }
 }

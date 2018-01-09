@@ -229,7 +229,16 @@ namespace nsda.Web.Controllers
             return File(new VerifyCode().GetVerifyCode(key), @"image/Gif");
         }
 
-        #endregion 
+        //查询账号是否存在
+        [HttpPost]
+        [AjaxOnly]
+        public JsonResult isexist(string account)
+        {
+            var res = new Result<string>();
+            res.flag = _memberService.IsExist(account);
+            return Json(res, JsonRequestBehavior.DenyGet);
+        }
+        #endregion
 
         #region view
         public ActionResult logout()

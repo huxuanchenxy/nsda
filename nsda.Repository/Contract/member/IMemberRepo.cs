@@ -11,5 +11,6 @@ namespace nsda.Repository.Contract.member
     {
         //生成会员编码
         string RenderCode(string code = "nsda");
+        bool IsExist(string account);
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using nsda.Model.enums;
 
 namespace nsda.Services.Implement.eventmanage
 {
@@ -24,30 +25,46 @@ namespace nsda.Services.Implement.eventmanage
             _memberOperLogService = memberOperLogService;
         }
 
-        private static object lockObject = new object();
-
-        //生成会员Code
-        private string RenderCode()
+        public bool Insert(out string msg)
         {
-            lock (lockObject)
+            bool flag = false;
+            msg = string.Empty;
+            try
             {
-                var dy = new DynamicParameters();
-                string sql = @"select  code from t_event where code like 'nsda%' order by Id desc limit 1";
-                object obj = _dbContext.Query<object>(sql).FirstOrDefault();
-
-                if (obj == null || obj.ToString().IsEmpty())
-                {
-                    return "nsda1000001";
-                }
-                else
-                {
-                    string number = obj.ToString();
-                    number = number.Substring(4);
-                    int sequence = Convert.ToInt32(number);
-                    sequence += 1;
-                    return $"nsda{sequence}";
-                }
             }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.Insert", ex);
+            }
+            return flag;
+        }
+
+        public bool Edit(out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.Edit", ex);
+            }
+            return flag;
+        }
+
+        public bool SettingLevel(int id, EventTypeEm eventType, int sysUserId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.SettingLevel", ex);
+            }
+            return flag;
         }
     }
 }

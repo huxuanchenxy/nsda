@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_sysuser")]
-    public class t_sysuser
+	[Table("t_eventroom")]
+    public class t_eventroom
     {
 	   //默认构造函数
-	   public t_sysuser()
+	   public t_eventroom()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,19 +29,30 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        public string account { get; set; }
+        /// <summary>
+        /// 赛事id
+        /// </summary>
+        public int eventId { get; set; }
     
-        public string pwd { get; set; }
+        /// <summary>
+        /// 教室编码
+        /// </summary>
+        public string code { get; set; }
     
+        /// <summary>
+        /// 教室名称
+        /// </summary>
         public string name { get; set; }
     
-        public string mobile { get; set; }
+        /// <summary>
+        /// 赛事组别
+        /// </summary>
+        public int? eventgroupId { get; set; }
     
-        public SysUserStatusEm sysUserStatus { get; set; }
-    
-        public int roleId { get; set; }
-    
-        public DateTime? lastlogintime { get; set; }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public RoomStatusEm roomStatus { get; set; }
     
         /// <summary>
         /// 创建时间

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
-    public enum RefereeSignUpStatusEm
+    public enum EventCategoryEm
     {
-        待审核 = 1,
-        申请成功 = 2,
-        申请失败=3,
-        停用=4,
-        启用=5
+        城市和校级联赛=1,
+        区域联赛=2,
+        全国总决赛=3,
+        国际赛事=4
     }
 }
