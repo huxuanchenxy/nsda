@@ -37,34 +37,53 @@ namespace nsda.Services.Implement.member
             try
             {
                 //逻辑校验
+                //1.0 报名者是否重复报名 是否有资格报名
+                //2.0 被邀请者是否有资格报名 是否重复报名
                 _dbContext.BeginTransaction();
                 t_event tevent = _dbContext.Get<t_event>(request.EventId);
-
                 string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
-                //邀请者
-                _dbContext.Insert(new t_player_signup
+                if (request.EventType == EventTypeEm.辩论)
                 {
-                    eventId = request.EventId,
-                    groupId = request.GroupId,
-                    groupnum = groupnum,
-                    memberId = request.FromMemberId,
-                    signfee = tevent.signfee,
-                    signUpStatus = SignUpStatusEm.等待队员确认邀请,
-                    signUpType = SignUpTypeEm.邀请人,
-                    isTemp = false
-                });
-                //被邀请者
-                _dbContext.Insert(new t_player_signup
+                    //邀请者
+                    _dbContext.Insert(new t_player_signup
+                    {
+                        eventId = request.EventId,
+                        groupId = request.GroupId,
+                        groupnum = groupnum,
+                        memberId = request.FromMemberId,
+                        signfee = tevent.signfee,
+                        signUpStatus = SignUpStatusEm.等待队员确认邀请,
+                        signUpType = SignUpTypeEm.邀请人,
+                        isTemp = false
+                    });
+                    //被邀请者
+                    _dbContext.Insert(new t_player_signup
+                    {
+                        eventId = request.EventId,
+                        groupId = request.GroupId,
+                        groupnum = groupnum,
+                        memberId = request.ToMemberId,
+                        signfee = tevent.signfee,
+                        signUpStatus = SignUpStatusEm.报名邀请中,
+                        signUpType = SignUpTypeEm.被邀请人,
+                        isTemp = false
+                    });
+                }
+                else //演讲逻辑可能不同
                 {
-                    eventId = request.EventId,
-                    groupId = request.GroupId,
-                    groupnum = groupnum,
-                    memberId = request.ToMemberId,
-                    signfee = tevent.signfee,
-                    signUpStatus = SignUpStatusEm.报名邀请中,
-                    signUpType = SignUpTypeEm.被邀请人,
-                    isTemp = false
-                });
+                    //邀请者
+                    _dbContext.Insert(new t_player_signup
+                    {
+                        eventId = request.EventId,
+                        groupId = request.GroupId,
+                        groupnum = groupnum,
+                        memberId = request.FromMemberId,
+                        signfee = tevent.signfee,
+                        signUpStatus = SignUpStatusEm.报名成功,
+                        signUpType = SignUpTypeEm.邀请人,
+                        isTemp = false
+                    });
+                }
                 _dbContext.CommitChanges();
                 flag = true;
             }
@@ -98,7 +117,7 @@ namespace nsda.Services.Implement.member
                     else//拒绝组队
                     {
                         playsignup.signUpStatus = SignUpStatusEm.组队失败;
-                        otherSignUp.signUpStatus = SignUpStatusEm.队友拒绝组队;
+                        otherSignUp.signUpStatus = SignUpStatusEm.组队失败;
                     }
                     playsignup.updatetime = DateTime.Now;
                     otherSignUp.updatetime = DateTime.Now;
@@ -154,7 +173,7 @@ namespace nsda.Services.Implement.member
             msg = string.Empty;
             try
             {
-
+                //判断是否有订单 无订单则创建订单并生成支付信息
             }
             catch (Exception ex)
             {
@@ -171,7 +190,15 @@ namespace nsda.Services.Implement.member
             msg = string.Empty;
             try
             {
+                var playsignup = _dbContext.Get<t_player_signup>(id);
+                if (playsignup != null)
+                {
 
+                }
+                else
+                {
+                    msg = "报名信息不存在";
+                }
             }
             catch (Exception ex)
             {
@@ -217,7 +244,11 @@ namespace nsda.Services.Implement.member
         {
             try
             {
+                var signup = _dbContext.Get<t_player_signup>(id);
+                if (signup != null)
+                {
 
+                }
             }
             catch (Exception ex)
             {

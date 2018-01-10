@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 namespace nsda.Model.dto.request
 {
     public class PlayerSignUpRequest
-    {     
+    {
+        /// <summary>
+        /// 赛事类型
+        /// </summary>
+        public EventTypeEm EventType{ get; set; }
         /// <summary>
         /// 邀请者
         /// </summary>

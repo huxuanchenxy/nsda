@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
 using nsda.Services.member;
@@ -20,12 +21,14 @@ namespace nsda.Web.Areas.referee.Controllers
         IRefereeService _refereeService;
         IRefereeSignUpService _refereeSignUpService;
         IMemberTempService _memberTempService;
-        public refereeController(IMemberService memberService, IRefereeService refereeService, IRefereeSignUpService refereeSignUpService, IMemberTempService memberTempService)
+        IEventService _eventService;
+        public refereeController(IMemberService memberService, IRefereeService refereeService, IRefereeSignUpService refereeSignUpService, IMemberTempService memberTempService, IEventService eventService)
         {
             _memberService = memberService;
             _refereeService = refereeService;
             _refereeSignUpService = refereeSignUpService;
             _memberTempService = memberTempService;
+            _eventService = eventService;
         }
 
         #region ajax
@@ -51,6 +54,15 @@ namespace nsda.Web.Areas.referee.Controllers
             return Result<string>(flag, msg);
         }
 
+        // 赛事列表
+        [HttpGet]
+        public ContentResult listevent(PlayerOrRefereeEventQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            request.IsReferee = true;
+            var data = _eventService.PlayerOrRefereeEvent(request);
+            return Result<string>(true, string.Empty);
+        }
 
         //申请做裁判
         [HttpPost]

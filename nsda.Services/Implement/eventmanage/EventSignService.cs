@@ -14,19 +14,19 @@ namespace nsda.Services.Implement.eventmanage
     /// <summary>
     /// 赛事签到管理
     /// </summary>
-    public class EventSignUpService: IEventSignUpService
+    public class EventSignService: IEventSignService
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
-        public EventSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        public EventSignService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
         }
-
-        public bool SignUp(out string msg)
+        //裁判 选手签到
+        public bool Sign(out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -37,12 +37,12 @@ namespace nsda.Services.Implement.eventmanage
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("EventRoomService.SignUp", ex);
+                LogUtils.LogError("EventSignService.Sign", ex);
             }
             return flag;
         }
-
-        public bool BatchSignUp(out string msg)
+        //赛事管理员 批量签到
+        public bool BatchSign(out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -53,9 +53,31 @@ namespace nsda.Services.Implement.eventmanage
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("EventRoomService.SignUp", ex);
+                LogUtils.LogError("EventSignService.BatchSign", ex);
             }
             return flag;
+        }
+        //选手签到列表
+        public void PlayerSignList()
+        {
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventSignService.PlayerSignList", ex);
+            }
+        }
+        //裁判签到列表
+        public void RefereeSignList()
+        {
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventSignService.RefereeSignList", ex);
+            }
         }
     }
 }

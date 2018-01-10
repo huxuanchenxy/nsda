@@ -57,6 +57,7 @@
     <Compile Include="dto\request\MemberExtendRequest.cs" />
     <Compile Include="dto\request\MemberOperLogRequest.cs" />
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
+    <Compile Include="dto\request\PlayerOrRefereeEventQueryRequest.cs" />
     <Compile Include="dto\request\PlayerPointsRecordQueryRequest.cs" />
     <Compile Include="dto\request\PlayerTrainerRequest.cs" />
     <Compile Include="dto\request\PagedQuery.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="dto\response\CityResponse.cs" />
     <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
+    <Compile Include="dto\response\EventResponse.cs" />
     <Compile Include="dto\response\EventScoreResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="dto\response\PlayerEduExperResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
     <Compile Include="dto\response\MemberSelectResponse.cs" />
+    <Compile Include="dto\response\PlayerOrRefereeEventResponse.cs" />
     <Compile Include="dto\response\PlayerPointsRecordResponse.cs" />
     <Compile Include="dto\response\PlayerTrainerResponse.cs" />
     <Compile Include="dto\response\ProvinceResponse.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="enums\EventAreaEm.cs" />
     <Compile Include="enums\EventCategoryEm.cs" />
     <Compile Include="enums\EventLevelEm.cs" />
+    <Compile Include="enums\EventSignStatusEm.cs" />
     <Compile Include="enums\EventStatusEm.cs" />
     <Compile Include="enums\EventTypeEm.cs" />
     <Compile Include="enums\GenderEm.cs" />
@@ -153,6 +157,9 @@
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_eventroomspec.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_eventsign.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_event_score.cs">
