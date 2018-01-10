@@ -30,14 +30,19 @@ namespace nsda.Models
 	    public int id { get; set; }
     
         /// <summary>
-        /// 会员id
-        /// </summary>
-        public int memberId { get; set; }
-    
-        /// <summary>
         /// 赛事id
         /// </summary>
         public int eventId { get; set; }
+    
+        /// <summary>
+        /// 赛事组别id
+        /// </summary>
+        public int groupId { get; set; }
+    
+        /// <summary>
+        /// 会员id
+        /// </summary>
+        public int memberId { get; set; }
     
         /// <summary>
         /// 积分

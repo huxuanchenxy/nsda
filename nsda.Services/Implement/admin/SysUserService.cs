@@ -12,7 +12,7 @@ using System.Text;
 namespace nsda.Services.admin
 {
     /// <summary>
-    /// 系统管理员
+    /// 系统用户管理
     /// </summary>
     public class SysUserService : ISysUserService
     {

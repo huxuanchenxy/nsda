@@ -15,7 +15,7 @@ using nsda.Services.Contract.member;
 namespace nsda.Services.member
 {
     /// <summary>
-    /// 选手教练管理
+    /// 选手教练绑定管理
     /// </summary>
     public class PlayerTrainerService: IPlayerTrainerService
     {

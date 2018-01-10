@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_memberpointsdetail")]
-    public class t_memberpointsdetail
+	[Table("t_mail")]
+    public class t_mail
     {
 	   //默认构造函数
-	   public t_memberpointsdetail()
+	   public t_mail()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -35,34 +35,24 @@ namespace nsda.Models
         public int memberId { get; set; }
     
         /// <summary>
-        /// 积分记录id
+        /// 站内信类型
         /// </summary>
-        public int recordId { get; set; }
+        public MailTypeEm mailType { get; set; }
     
         /// <summary>
-        /// 赛事id
+        /// 站内信标题
         /// </summary>
-        public int eventId { get; set; }
+        public string title { get; set; }
     
         /// <summary>
-        /// 赛事组别
+        /// 站内信内容
         /// </summary>
-        public int groupId { get; set; }
+        public string content { get; set; }
     
         /// <summary>
-        /// 赛事类型
+        /// 是否已读
         /// </summary>
-        public EventTypeEm eventType { get; set; }
-    
-        /// <summary>
-        /// 积分
-        /// </summary>
-        public decimal points { get; set; }
-    
-        /// <summary>
-        /// 获取积分备注
-        /// </summary>
-        public string remark { get; set; }
+        public bool isRead { get; set; }
     
         /// <summary>
         /// 创建时间

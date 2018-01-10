@@ -14,6 +14,9 @@ using nsda.Model.enums;
 
 namespace nsda.Services.Implement.member
 {
+    /// <summary>
+    /// 选手报名管理
+    /// </summary>
     public class PlayerSignUpService : IPlayerSignUpService
     {
         IDBContext _dbContext;
@@ -48,7 +51,7 @@ namespace nsda.Services.Implement.member
                     signfee = tevent.signfee,
                     signUpStatus = SignUpStatusEm.等待队员确认邀请,
                     signUpType = SignUpTypeEm.邀请人,
-                    isTemp=false
+                    isTemp = false
                 });
                 //被邀请者
                 _dbContext.Insert(new t_player_signup
@@ -81,10 +84,35 @@ namespace nsda.Services.Implement.member
             msg = string.Empty;
             try
             {
+                _dbContext.BeginTransaction();
+                var playsignup = _dbContext.Get<t_player_signup>(id);
+                if (playsignup != null)
+                {
+                    var otherSignUp = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.memberId != memberId).FirstOrDefault();
 
+                    if (isAgree)//确认组队
+                    {
+                        playsignup.signUpStatus = SignUpStatusEm.确认组队;
+                        otherSignUp.signUpStatus = SignUpStatusEm.确认组队;
+                    }
+                    else//拒绝组队
+                    {
+                        playsignup.signUpStatus = SignUpStatusEm.组队失败;
+                        otherSignUp.signUpStatus = SignUpStatusEm.队友拒绝组队;
+                    }
+                    playsignup.updatetime = DateTime.Now;
+                    otherSignUp.updatetime = DateTime.Now;
+                    _dbContext.Update(playsignup);
+                    _dbContext.Update(otherSignUp);
+                }
+                else
+                {
+                    msg = "队伍信息不存在";
+                }
             }
             catch (Exception ex)
             {
+                _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("SignUpPlayerService.IsAcceptTeam", ex);
@@ -92,13 +120,24 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //替换队友
-        public bool ReplaceTeammate(int id, int memberId,int newMemberId, out string msg)
+        public bool ReplaceTeammate(int id, int memberId, int newMemberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-
+                var playsignup = _dbContext.Get<t_player_signup>(id);
+                if (playsignup != null)
+                {
+                   var otherSignUp = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.memberId != memberId).FirstOrDefault();
+                    otherSignUp.updatetime = DateTime.Now;
+                    otherSignUp.memberId = newMemberId;
+                   _dbContext.Update(otherSignUp);
+                }
+                else
+                {
+                    msg = "队伍信息不存在";
+                }
             }
             catch (Exception ex)
             {

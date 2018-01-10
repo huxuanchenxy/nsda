@@ -14,6 +14,9 @@ using nsda.Services.admin;
 
 namespace nsda.Services.Implement.admin
 {
+    /// <summary>
+    /// 城市信息管理
+    /// </summary>
     public class CityService:ICityService
     {
         IDBContext _dbContext;

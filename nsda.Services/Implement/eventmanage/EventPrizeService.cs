@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Services.Implement.eventmanage
 {
+    /// <summary>
+    /// 赛事奖项设置
+    /// </summary>
     public class EventPrizeService: IEventPrizeService
     {
         IDBContext _dbContext;

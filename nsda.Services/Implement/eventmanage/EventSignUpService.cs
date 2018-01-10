@@ -1,6 +1,7 @@
 ﻿using nsda.Repository;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
+using nsda.Utilities;
 using nsda.Utilities.Orm;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,38 @@ namespace nsda.Services.Implement.eventmanage
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
+        }
+
+        public bool SignUp(out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventRoomService.SignUp", ex);
+            }
+            return flag;
+        }
+
+        public bool BatchSignUp(out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventRoomService.SignUp", ex);
+            }
+            return flag;
         }
     }
 }

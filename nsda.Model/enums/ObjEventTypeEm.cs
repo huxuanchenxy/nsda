@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
-    /// <summary>
-    /// 具体赛事
-    /// </summary>
-    public enum EventTypeEm
+    public enum ObjEventTypeEm
     {
-        辩论 = 1,
-        演讲 = 2
+        循环赛=1,
+        淘汰赛=2
     }
 }

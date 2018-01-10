@@ -14,6 +14,9 @@ using nsda.Services.admin;
 
 namespace nsda.Services.Implement.admin
 {
+    /// <summary>
+    /// 身份管理
+    /// </summary>
     public class ProvinceService:IProvinceService
     {
         IDBContext _dbContext;

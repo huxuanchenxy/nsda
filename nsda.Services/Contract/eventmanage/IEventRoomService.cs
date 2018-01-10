@@ -12,5 +12,8 @@ namespace nsda.Services.Contract.eventmanage
     /// </summary>
     public interface IEventRoomService : IDependency
     {
+        bool Insert(out string msg);
+        bool Update(out string msg);
+        bool Delete(int id,string msg);
     }
 }

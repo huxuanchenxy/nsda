@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Services.Implement.referee
 {
+    /// <summary>
+    /// 裁判报名管理
+    /// </summary>
     public class RefereeSignUpService: IRefereeSignUpService
     {
         IDBContext _dbContext;

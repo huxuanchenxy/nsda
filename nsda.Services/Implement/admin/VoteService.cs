@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Services.Implement.admin
 {
+    /// <summary>
+    /// 议题投票管理
+    /// </summary>
     public class VoteService : IVoteService
     {
         IDBContext _dbContext;

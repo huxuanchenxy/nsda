@@ -12,5 +12,9 @@ namespace nsda.Services.Contract.eventmanage
     /// </summary>
     public interface IEventSignUpService: IDependency
     {
+        //选手 教练签到
+        bool SignUp(out string msg);
+        //赛事管理员批量签到
+        bool BatchSignUp(out string msg);
     }
 }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace nsda.Services.member
 {
     /// <summary>
-    /// 会员教育经历
+    /// 选手教育经历
     /// </summary>
     public class PlayerEduExperService: IPlayerEduExperService
     {

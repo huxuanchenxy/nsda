@@ -53,10 +53,11 @@
     <Compile Include="dto\request\EventScoreRequest.cs" />
     <Compile Include="dto\request\LeavingMsgRequest.cs" />
     <Compile Include="dto\request\LoginLogRequest.cs" />
+    <Compile Include="dto\request\MailRequest.cs" />
     <Compile Include="dto\request\MemberExtendRequest.cs" />
     <Compile Include="dto\request\MemberOperLogRequest.cs" />
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
-    <Compile Include="dto\request\PlayerPointsQueryRequest.cs" />
+    <Compile Include="dto\request\PlayerPointsRecordQueryRequest.cs" />
     <Compile Include="dto\request\PlayerTrainerRequest.cs" />
     <Compile Include="dto\request\PagedQuery.cs" />
     <Compile Include="dto\request\ProvinceRequest.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="dto\response\EventScoreResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
+    <Compile Include="dto\response\MailResponse.cs" />
     <Compile Include="dto\response\MemberExtendResponse.cs" />
     <Compile Include="dto\response\MemberOperLogResponse.cs" />
     <Compile Include="dto\response\MemberPointsModelResponse.cs" />
@@ -82,7 +84,7 @@
     <Compile Include="dto\response\PlayerEduExperResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
     <Compile Include="dto\response\MemberSelectResponse.cs" />
-    <Compile Include="dto\response\PlayerPointsResponse.cs" />
+    <Compile Include="dto\response\PlayerPointsRecordResponse.cs" />
     <Compile Include="dto\response\PlayerTrainerResponse.cs" />
     <Compile Include="dto\response\ProvinceResponse.cs" />
     <Compile Include="dto\response\RoleEm.cs" />
@@ -102,11 +104,13 @@
     <Compile Include="enums\GenderEm.cs" />
     <Compile Include="enums\GradeEm.cs" />
     <Compile Include="enums\LeavingStatusEm.cs" />
+    <Compile Include="enums\MailTypeEm.cs" />
     <Compile Include="enums\MemberExtendStatusEm.cs" />
     <Compile Include="enums\MemberStatusEm.cs" />
     <Compile Include="enums\MemberTrainerStatusEm.cs" />
     <Compile Include="enums\MemberTypeEm.cs" />
     <Compile Include="enums\MenuTypeEm.cs" />
+    <Compile Include="enums\ObjEventTypeEm.cs" />
     <Compile Include="enums\OrderStatusEm.cs" />
     <Compile Include="enums\OrderTypeEm.cs" />
     <Compile Include="enums\PayStatusEm.cs" />
@@ -148,6 +152,9 @@
     <Compile Include="model\t_eventroom.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_eventroomspec.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_event_score.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
@@ -155,6 +162,9 @@
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_loginlog.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_mail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_member.cs">
@@ -169,10 +179,10 @@
     <Compile Include="model\t_memberpoints.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_memberpointsdetail.cs">
+    <Compile Include="model\t_memberpointsrecord.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_memberpointsrecord.cs">
+    <Compile Include="model\t_memberpointsrecorddetail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_membertemp.cs">

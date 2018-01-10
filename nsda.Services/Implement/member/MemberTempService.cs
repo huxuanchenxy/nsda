@@ -14,6 +14,9 @@ using nsda.Model.enums;
 
 namespace nsda.Services.Implement.member
 {
+    /// <summary>
+    /// 临时会员管理
+    /// </summary>
     public class MemberTempService: IMemberTempService
     {
         IDBContext _dbContext;

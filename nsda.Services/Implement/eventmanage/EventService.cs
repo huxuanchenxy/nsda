@@ -13,6 +13,9 @@ using nsda.Model.enums;
 
 namespace nsda.Services.Implement.eventmanage
 {
+    /// <summary>
+    /// 赛事管理
+    /// </summary>
     public class EventService: IEventService
     {
         IDBContext _dbContext;
@@ -31,9 +34,16 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                _dbContext.BeginTransaction();
+
+
+                _dbContext.CommitChanges();
+                flag = true;
             }
             catch (Exception ex)
             {
+                flag = false;
+                msg = "服务异常";
                 LogUtils.LogError("EventService.Insert", ex);
             }
             return flag;
@@ -48,12 +58,14 @@ namespace nsda.Services.Implement.eventmanage
             }
             catch (Exception ex)
             {
+                flag = false;
+                msg = "服务异常";
                 LogUtils.LogError("EventService.Edit", ex);
             }
             return flag;
         }
 
-        public bool SettingLevel(int id, EventTypeEm eventType, int sysUserId, out string msg)
+        public bool SettingLevel(int id, EventLevelEm eventLevel, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -62,6 +74,8 @@ namespace nsda.Services.Implement.eventmanage
             }
             catch (Exception ex)
             {
+                flag = false;
+                msg = "服务异常";
                 LogUtils.LogError("EventService.SettingLevel", ex);
             }
             return flag;

@@ -21,13 +21,17 @@ namespace nsda.Web.Areas.player.Controllers
         IDataSourceService _dataSourceService;
         IEventScoreService _eventScoreService;
         IMemberTempService _memberTempService;
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService)
+        IMemberPointsService _memberPointsService;
+        IMailService _mailService;
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService,IMailService mailService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
             _dataSourceService = dataSourceService;
             _eventScoreService = eventScoreService;
             _memberTempService = memberTempService;
+            _memberPointsService = memberPointsService;
+            _mailService = mailService;
         }
 
         #region ajax
@@ -114,6 +118,59 @@ namespace nsda.Web.Areas.player.Controllers
             var flag = _memberTempService.BindTempPlayer(request, out msg);
             return Result<string>(flag, msg);
         }
+
+
+        //积分记录查询
+        [HttpGet]
+        public ContentResult pointsrecord(PlayerPointsRecordQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            decimal totalPoints = 0m;
+            var data = _memberPointsService.PlayerPointsRecord(request, out totalPoints);
+            return Result<string>(true, string.Empty);
+        }
+
+        //积分记录详情
+        [HttpGet]
+        public ContentResult pointsrecorddetail(int recordId)
+        {
+            var data = _memberPointsService.PointsRecordDetail(recordId, UserContext.WebUserContext.Id);
+            return Result<string>(true, string.Empty);
+        }
+
+        //站内信列表
+        [HttpGet]
+        public ContentResult mail(MailQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _mailService.List(request);
+            return Result<string>(true, string.Empty);
+        }
+
+        //删除站内信
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult deletemail(int id)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _mailService.Delete(id, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //标记为已读
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult mark(List<int> ids)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _mailService.Mark(ids, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
         #endregion
 
         #region view

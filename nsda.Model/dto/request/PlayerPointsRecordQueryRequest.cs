@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.request
 {
-    public class PlayerPointsQueryRequest:PagedQuery
+    public class PlayerPointsRecordQueryRequest:PagedQuery
     {
+        public int MemberId { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }

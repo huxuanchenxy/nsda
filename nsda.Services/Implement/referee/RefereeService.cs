@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Services.Implement.referee
 {
+    /// <summary>
+    /// 裁判管理
+    /// </summary>
     public class RefereeService: IRefereeService
     {
         IDBContext _dbContext;

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Services.Implement.eventmanage
 {
+    /// <summary>
+    /// 淘汰赛管理
+    /// </summary>
     public class EventknockoutService: IEventknockoutService
     {
         IDBContext _dbContext;

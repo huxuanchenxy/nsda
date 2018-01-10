@@ -14,6 +14,9 @@ using nsda.Model.enums;
 
 namespace nsda.Services.Implement.member
 {
+    /// <summary>
+    /// 会员扩展 
+    /// </summary>
     public class MemberExtendService: IMemberExtendService
     {
         IDBContext _dbContext;

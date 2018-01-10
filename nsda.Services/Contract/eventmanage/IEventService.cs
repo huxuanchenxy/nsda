@@ -17,6 +17,6 @@ namespace nsda.Services.Contract.eventmanage
 
 
         //设定赛事级别
-        bool SettingLevel(int id, EventTypeEm eventType, int sysUserId, out string msg);
+        bool SettingLevel(int id, EventLevelEm eventLevel, int sysUserId, out string msg);
     }
 }

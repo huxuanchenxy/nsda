@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_eventgroup")]
-    public class t_eventgroup
+	[Table("t_eventroomspec")]
+    public class t_eventroomspec
     {
 	   //默认构造函数
-	   public t_eventgroup()
+	   public t_eventroomspec()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,49 +29,20 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
+        /// <summary>
+        /// 赛事id
+        /// </summary>
         public int eventId { get; set; }
     
-        public string name { get; set; }
+        /// <summary>
+        /// 选手id
+        /// </summary>
+        public int memberId { get; set; }
     
         /// <summary>
-        /// 最小年级
+        /// 教室id
         /// </summary>
-        public MingradeEm? mingrade { get; set; }
-    
-        /// <summary>
-        /// 最大年级
-        /// </summary>
-        public MaxgradeEm? maxgrade { get; set; }
-    
-        /// <summary>
-        /// 最小积分
-        /// </summary>
-        public decimal? minintegral { get; set; }
-    
-        /// <summary>
-        /// 最大积分
-        /// </summary>
-        public decimal? maxintegral { get; set; }
-    
-        /// <summary>
-        /// 最小比赛次数
-        /// </summary>
-        public int? mintimes { get; set; }
-    
-        /// <summary>
-        /// 最大比赛次数
-        /// </summary>
-        public int? maxtimes { get; set; }
-    
-        /// <summary>
-        /// 队伍人数
-        /// </summary>
-        public int teamnumber { get; set; }
-    
-        /// <summary>
-        /// 队伍裁判人数
-        /// </summary>
-        public int teamtrainer { get; set; }
+        public int roomId { get; set; }
     
         /// <summary>
         /// 创建时间

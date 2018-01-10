@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
+    /// <summary>
+    /// 赛事种类
+    /// </summary>
     public enum EventCategoryEm
     {
         城市和校级联赛=1,

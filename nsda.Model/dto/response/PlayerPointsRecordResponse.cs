@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.response
 {
-    public class PlayerPointsResponse
+    public class PlayerPointsRecordResponse
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -18,12 +18,13 @@ namespace nsda.Model.dto.response
         public int Id { get; set; }
     }
 
-    public class PlayerPointsRecordResponse
+    public class PlayerPointsRecordDetailResponse
     {
         public string EventName { get; set; }
         public string GroupName { get; set; }
-        public EventTypeEm EventType { get; set; }
+        public ObjEventTypeEm ObjEventType { get; set; }
         public decimal Points { get; set; }
         public string Remark { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 }

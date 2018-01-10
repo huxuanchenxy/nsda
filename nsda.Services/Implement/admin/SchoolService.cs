@@ -15,6 +15,9 @@ using nsda.Services.admin;
 
 namespace nsda.Services.Implement.admin
 {
+    /// <summary>
+    /// 学校信息管理
+    /// </summary>
     public class SchoolService : ISchoolService
     {
         IDBContext _dbContext;
