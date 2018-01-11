@@ -11,6 +11,7 @@ using nsda.Model.dto.response;
 using nsda.Utilities;
 using nsda.Models;
 using nsda.Services.admin;
+using nsda.Model;
 
 namespace nsda.Services.Implement.admin
 {
@@ -49,6 +50,7 @@ namespace nsda.Services.Implement.admin
 
                 _dbContext.Insert(new t_event_score {
                       eventid=request.EventId,
+                      groupId=request.GroupId,
                       filepath=request.FilePath,
                       remark=request.Remark,
                       title=request.Title
@@ -147,6 +149,7 @@ namespace nsda.Services.Implement.admin
                         FilePath = detail.filepath,
                         Id = detail.id,
                         EventId=detail.eventid,
+                        GroupId=detail.groupId,
                         Remark = detail.remark,
                         Title = detail.title,
                         UpdateTime = detail.updatetime
@@ -180,7 +183,8 @@ namespace nsda.Services.Implement.admin
             PagedList<EventScoreResponse> list = new PagedList<EventScoreResponse>();
             try
             {
-                var sql = "select * from t_event_score where isdelete=0 and eventId=@EventId";
+                var sql = $@"select * from t_event_score where isdelete=0 and 
+                             groupId in (select groupId from t_player_signup where memberId=@MemberId and signUpStatus in ({ParamsConfig._signup_in}))";
                 list = _dbContext.Page<EventScoreResponse>(sql, request, pageindex: request.PageIndex, pagesize: request.PagesSize);
             }
             catch (Exception ex)

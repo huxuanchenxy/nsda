@@ -1,4 +1,6 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.dto.request;
+using nsda.Model.dto.response;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,6 @@ namespace nsda.Services.Contract.referee
     {
         // 申请当裁判
         bool Apply(int eventId, int memberId, out string msg);
+        PagedList<RefereeSignUpResponse> List(RefereeSignUpQueryRequest request);
     }
 }

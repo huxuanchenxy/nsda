@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.request
 {
-    public class ProvinceRequest
+    public class CountryRequest
     {
-        public int Id { get; set; }
-        public int CountryId { get; set; }
         public string Name { get; set; }
+        public int Id { get; set; }
     }
 
-    public class ProvinceQueryRequest:PagedQuery
+    public class CountryQueryRequest:PagedQuery
     {
-        public int? CountryId { get; set; }
         public string Name { get; set; }
     }
 }

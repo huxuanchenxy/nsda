@@ -225,7 +225,7 @@ namespace nsda.Services.Implement.member
             }
             return flag;
         }
-        //比赛列表
+        //选手报名列表
         public PagedList<PlayerSignUpResponse> List(PlayerSignUpQueryRequest request)
         {
             PagedList<PlayerSignUpResponse> list = new PagedList<PlayerSignUpResponse>();

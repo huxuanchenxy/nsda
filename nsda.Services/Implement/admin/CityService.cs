@@ -37,7 +37,7 @@ namespace nsda.Services.Implement.admin
             {
                 if (request.ProvinceId<=0)
                 {
-                    msg = "父级不能为空";
+                    msg = "省份不能为空";
                     return flag;
                 }
 
@@ -171,7 +171,7 @@ namespace nsda.Services.Implement.admin
             {
                 if (request.ProvinceId <= 0)
                 {
-                    msg = "父级不能为空";
+                    msg = "省份不能为空";
                     return flag;
                 }
 

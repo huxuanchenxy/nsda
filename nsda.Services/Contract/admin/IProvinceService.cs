@@ -17,6 +17,6 @@ namespace nsda.Services.Contract.admin
         PagedList<ProvinceResponse> List(ProvinceQueryRequest request);
         bool Delete(int id, int sysUserId, out string msg);
         ProvinceResponse Detail(int id);
-        List<BaseDataResponse> Province();
+        List<BaseDataResponse> Province(int countryId);
     }
 }

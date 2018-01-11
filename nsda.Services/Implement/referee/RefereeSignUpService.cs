@@ -1,4 +1,6 @@
-﻿using nsda.Models;
+﻿using nsda.Model.dto.request;
+using nsda.Model.dto.response;
+using nsda.Models;
 using nsda.Repository;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
@@ -67,6 +69,20 @@ namespace nsda.Services.Implement.referee
                 LogUtils.LogError("RefereeSignUpService.Apply", ex);
             }
             return flag;
+        }
+
+        //裁判报名列表
+        public PagedList<RefereeSignUpResponse> List(RefereeSignUpQueryRequest request)
+        {
+            PagedList<RefereeSignUpResponse> list = new PagedList<RefereeSignUpResponse>();
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("RefereeSignUpService.List", ex);
+            }
+            return list;
         }
     }
 }

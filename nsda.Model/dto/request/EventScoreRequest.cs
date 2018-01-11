@@ -11,6 +11,7 @@ namespace nsda.Model.dto.request
         public int Id { get; set; }
 
         public int EventId { get; set; }
+        public int GroupId { get; set; }
 
         public string Title { get; set; }
 
@@ -22,6 +23,7 @@ namespace nsda.Model.dto.request
     public class EventScoreQueryRequest:PagedQuery
     {
         public int EventId { get; set; }
+        public int GroupId { get; set; }
     }
 
     public class PlayerEventScoreQueryRequest:PagedQuery

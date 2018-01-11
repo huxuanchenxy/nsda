@@ -19,17 +19,75 @@ namespace nsda.Web.Areas.admin.Controllers
         IDataSourceService _dataSourceService;
         ISchoolService _schoolService;
         ILeavingMsgService _leavingMsgService;
-        public basedataController(IProvinceService provinceService, ICityService cityService, IDataSourceService dataSourceService, ISchoolService schoolService, ILeavingMsgService leavingMsgService)
+        ICountryService _countryService;
+        public basedataController(IProvinceService provinceService, ICityService cityService, IDataSourceService dataSourceService, ISchoolService schoolService, ILeavingMsgService leavingMsgService, ICountryService countryService)
         {
             _provinceService = provinceService;
             _cityService = cityService;
             _dataSourceService = dataSourceService;
             _schoolService = schoolService;
             _leavingMsgService = leavingMsgService;
+            _countryService = countryService;
         }
 
+        #region 国家
+        public ActionResult indexcountry()
+        {
+            return View();
+        }
 
-        #region 省/地区
+        public ActionResult addcountry()
+        {
+            return View();
+        }
+
+        public ActionResult updatecountry(int id)
+        {
+            var detail = _countryService.Detail(id);
+            if (detail == null)
+                Response.Redirect("/error/error", true);
+            return View(detail);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult deletecountry(int id)
+        {
+            var msg = string.Empty;
+            var flag = _countryService.Delete(id, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult insertcountry(CountryRequest request)
+        {
+            var msg = string.Empty;
+            var flag = _countryService.Insert(request, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult editcountry(CountryRequest request)
+        {
+            var msg = string.Empty;
+            var flag = _countryService.Edit(request, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpGet]
+        public ContentResult listcountry(CountryQueryRequest request)
+        {
+            var data = _countryService.List(request);
+            return Result<string>(true, string.Empty);
+        }
+
+        #endregion
+        #region 省
         public ActionResult indexprovince()
         {
             return View();

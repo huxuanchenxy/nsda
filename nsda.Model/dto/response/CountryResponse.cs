@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.response
 {
-    public class EventScoreResponse
+    public class CountryResponse
     {
         public int Id { get; set; }
-        public int EventId { get; set; }
-        public int GroupId { get; set; }
-        public string Title { get; set; }
-        public string Remark { get; set; }
-        public string FilePath { get; set; }
+        public string Name { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
     }

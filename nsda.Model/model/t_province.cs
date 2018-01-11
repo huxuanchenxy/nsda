@@ -29,6 +29,8 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
+        public int countryId { get; set; }
+    
         /// <summary>
         /// 省份名称
         /// </summary>

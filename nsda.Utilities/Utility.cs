@@ -11,6 +11,15 @@ namespace nsda.Utilities
 {
     public static class Utility
     {
+        public static string Splice<T>(this IEnumerable<T> list, string quotes = "", string separator = ",")
+        {
+            if (list == null || list.Count() == 0) { return string.Empty; }
+            var result = new StringBuilder();
+            foreach (var each in list)
+                result.AppendFormat("{0}{1}{0}{2}", quotes, each, separator);
+            return result.ToString().TrimEnd(separator.ToCharArray());
+        }
+
         public static bool IsInt(this int? id)
         {
             if (id != null && id > 0)

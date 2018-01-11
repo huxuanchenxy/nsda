@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_event_score")]
-    public class t_event_score
+	[Table("t_country")]
+    public class t_country
     {
 	   //默认构造函数
-	   public t_event_score()
+	   public t_country()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,18 +29,10 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        public int eventid { get; set; }
-    
         /// <summary>
-        /// 赛事组别id
+        /// 国家名称
         /// </summary>
-        public int groupId { get; set; }
-    
-        public string title { get; set; }
-    
-        public string remark { get; set; }
-    
-        public string filepath { get; set; }
+        public string name { get; set; }
     
         /// <summary>
         /// 创建时间

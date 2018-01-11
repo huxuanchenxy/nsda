@@ -1,4 +1,5 @@
 ﻿using nsda.Repository;
+using nsda.Services.admin;
 using nsda.Services.Contract.admin;
 using nsda.Utilities.Orm;
 using System;
@@ -10,26 +11,25 @@ using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Utilities;
 using nsda.Models;
-using nsda.Services.admin;
 
 namespace nsda.Services.Implement.admin
 {
     /// <summary>
-    /// 身份管理
+    /// 国家信息管理
     /// </summary>
-    public class ProvinceService:IProvinceService
+    public class CountryService: ICountryService
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         ISysOperLogService _sysOperLogService;
-        public ProvinceService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
+        public CountryService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _sysOperLogService = sysOperLogService;
         }
 
-        public bool Insert(ProvinceRequest request,int sysUserId,out string msg)
+        public bool Insert(CountryRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -41,16 +41,9 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                if (request.CountryId <= 0)
+                _dbContext.Insert(new t_country
                 {
-                    msg = "请选择国家信息";
-                    return flag;
-                }
-
-                _dbContext.Insert(new t_province
-                {
-                    name = request.Name,
-                    countryId = request.CountryId
+                    name = request.Name
                 });
                 flag = true;
             }
@@ -58,12 +51,12 @@ namespace nsda.Services.Implement.admin
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("ProvinceService.Insert", ex);
+                LogUtils.LogError("CountryService.Insert", ex);
             }
             return flag;
         }
 
-        public bool Edit(ProvinceRequest request, int sysUserId, out string msg)
+        public bool Edit(CountryRequest request, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -75,19 +68,11 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                if (request.CountryId <= 0)
+                t_country country = _dbContext.Get<t_country>(request.Id);
+                if (country != null)
                 {
-                    msg = "请选择国家信息";
-                    return flag;
-                }
-
-                t_province province = _dbContext.Get<t_province>(request.Id);
-                if (province != null)
-                {
-                    province.name = request.Name;
-                    province.countryId = request.CountryId;
-                    province.updatetime = DateTime.Now;
-                    _dbContext.Update(province);
+                    country.name = request.Name;
+                    _dbContext.Update(country);
                     flag = true;
                 }
                 else
@@ -99,32 +84,28 @@ namespace nsda.Services.Implement.admin
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("ProvinceService.Edit", ex);
+                LogUtils.LogError("CountryService.Edit", ex);
             }
             return flag;
         }
 
-        public PagedList<ProvinceResponse> List(ProvinceQueryRequest request)
+        public PagedList<CountryResponse> List(CountryQueryRequest request)
         {
-            PagedList<ProvinceResponse> list = new PagedList<ProvinceResponse>();
+            PagedList<CountryResponse> list = new PagedList<CountryResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.* from t_province a inner join t_country b on a.countryId=b.id  where isdelete=0");
+                sb.Append(@"select *  from t_country  where isdelete=0");
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";
-                    sb.Append(" and a.name like @Name");
+                    sb.Append(" and name like @Name");
                 }
-                if (request.CountryId != null && request.CountryId > 0)
-                {
-                    sb.Append(" and a.countryId=@CountryId ");
-                }
-                list = _dbContext.Page<ProvinceResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                list = _dbContext.Page<CountryResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("ProvinceService.List", ex);
+                LogUtils.LogError("CountryService.List", ex);
             }
             return list;
         }
@@ -135,7 +116,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_province>(id);
+                var detail = _dbContext.Get<t_country>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;
@@ -152,40 +133,39 @@ namespace nsda.Services.Implement.admin
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("ProvinceService.Delete", ex);
+                LogUtils.LogError("CountryService.Delete", ex);
             }
             return flag;
         }
 
-        public ProvinceResponse Detail(int id)
+        public CountryResponse Detail(int id)
         {
-            ProvinceResponse response = null;
+            CountryResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_province>(id);
+                var detail = _dbContext.Get<t_country>(id);
                 if (detail != null)
                 {
-                    response = new ProvinceResponse
+                    response = new CountryResponse
                     {
                         Id = detail.id,
-                        Name = detail.name,
-                        CountryId=detail.countryId
+                        Name = detail.name
                     };
                 }
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("ProvinceService.Detail", ex);
+                LogUtils.LogError("CountryService.Detail", ex);
             }
             return response;
         }
 
-        public List<BaseDataResponse> Province(int countryId)
+        public List<BaseDataResponse> Country()
         {
             List<BaseDataResponse> list = new List<BaseDataResponse>();
             try
             {
-                var data = _dbContext.Select<t_province>(c => c.countryId==countryId).ToList();
+                var data = _dbContext.Select<t_country>(c=>true).ToList();
                 if (data != null && data.Count > 0)
                 {
                     list = data.Select(c => new BaseDataResponse
@@ -197,7 +177,7 @@ namespace nsda.Services.Implement.admin
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("ProvinceService.Province", ex);
+                LogUtils.LogError("CountryService.Country", ex);
             }
             return list;
         }
