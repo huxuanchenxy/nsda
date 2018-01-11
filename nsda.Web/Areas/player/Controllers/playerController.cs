@@ -35,28 +35,6 @@ namespace nsda.Web.Areas.player.Controllers
         }
 
         #region ajax
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult edit(MemberRequest request)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _memberService.Edit(request, out msg);
-            return Result<string>(flag, msg);
-        }
-
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult editpwd(string oldPwd,string newPwd)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _memberService.EditPwd(UserContext.WebUserContext.Id,oldPwd,newPwd, out msg);
-            return Result<string>(flag, msg);
-        }
-
         // 申请做裁判 或者教练
         [HttpPost]
         [AjaxOnly]
@@ -137,40 +115,6 @@ namespace nsda.Web.Areas.player.Controllers
             var data = _memberPointsService.PointsRecordDetail(recordId, UserContext.WebUserContext.Id);
             return Result<string>(true, string.Empty);
         }
-
-        //站内信列表
-        [HttpGet]
-        public ContentResult mail(MailQueryRequest request)
-        {
-            request.MemberId = UserContext.WebUserContext.Id;
-            var data = _mailService.List(request);
-            return Result<string>(true, string.Empty);
-        }
-
-        //删除站内信
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult deletemail(int id)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _mailService.Delete(id, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
-        //标记为已读
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult mark(List<int> ids)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _mailService.Mark(ids, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
         #endregion
 
         #region view

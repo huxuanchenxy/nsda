@@ -142,6 +142,7 @@
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
     <Compile Include="Controllers\aboutController.cs" />
     <Compile Include="Controllers\callbackController.cs" />
+    <Compile Include="Controllers\commondataController.cs" />
     <Compile Include="Controllers\errorController.cs" />
     <Compile Include="Controllers\homeController.cs" />
     <Compile Include="Controllers\loginController.cs" />
@@ -427,6 +428,7 @@
     <Folder Include="asset\img\" />
     <Folder Include="Models\" />
     <Folder Include="Views\callback\" />
+    <Folder Include="Views\commondata\" />
     <Folder Include="Views\login\" />
   </ItemGroup>
   <ItemGroup>

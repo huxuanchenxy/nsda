@@ -28,28 +28,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
 
         #region ajax
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult edit(MemberRequest request)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _memberService.Edit(request, out msg);
-            return Result<string>(flag, msg);
-        }
-
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult editpwd(string oldPwd, string newPwd)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _memberService.EditPwd(UserContext.WebUserContext.Id, oldPwd, newPwd, out msg);
-            return Result<string>(flag, msg);
-        }
-   
         //新增临时选手
         [HttpPost]
         [AjaxOnly]

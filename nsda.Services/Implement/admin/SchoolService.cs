@@ -214,33 +214,19 @@ namespace nsda.Services.Implement.admin
             return list;
         }
         //学校下拉框
-        public List<BaseDataResponse> Select(int? provinceId, int? cityId, string name)
+        public List<BaseDataResponse> School(int cityId)
         {
             List<BaseDataResponse> list = new List<BaseDataResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder("select id,chinessname as Name from t_school where 1=1 ");
+                StringBuilder sb = new StringBuilder("select id,chinessname as Name from t_school where cityId=@cityId ");
                 var dy = new DynamicParameters();
-                if (provinceId != null && provinceId > 0)
-                {
-                    sb.Append(" and provinceId=@provinceId ");
-                    dy.Add("provinceId", provinceId);
-                }
-                if (cityId != null && cityId > 0)
-                {
-                    sb.Append(" and cityId=@cityId ");
-                    dy.Add("cityId", cityId);
-                }
-                if (name.IsNotEmpty())
-                {
-                    sb.Append(" and chinessname like @ChinessName");
-                    dy.Add("ChinessName", "%" + name + "%");
-                }
+                dy.Add("cityId", cityId);
                 list = _dbContext.Query<BaseDataResponse>(sb.ToString(),dy).ToList();
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("SchoolService.Select", ex);
+                LogUtils.LogError("SchoolService.School", ex);
             }
             return list;
         }

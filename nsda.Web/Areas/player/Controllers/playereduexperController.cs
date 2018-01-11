@@ -62,13 +62,6 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(true, string.Empty);
         }
 
-        //学校下拉框
-        [HttpGet]
-        public ContentResult listschool(int? provinceId, int? cityId, string name)
-        {
-            var data = _schoolService.Select(provinceId,cityId,name);
-            return Result<string>(true, string.Empty);
-        }
         #endregion
 
         #region view
