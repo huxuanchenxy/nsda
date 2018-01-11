@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_eventroom")]
-    public class t_eventroom
+	[Table("t_order")]
+    public class t_order
     {
 	   //默认构造函数
-	   public t_eventroom()
+	   public t_order()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -30,34 +30,59 @@ namespace nsda.Models
 	    public int id { get; set; }
     
         /// <summary>
-        /// 赛事id
+        /// 会员id
         /// </summary>
-        public int eventId { get; set; }
+        public int memberId { get; set; }
     
         /// <summary>
-        /// 教室编码
+        /// 主订单id
         /// </summary>
-        public string code { get; set; }
+        public int? mainOrderId { get; set; }
     
         /// <summary>
-        /// 教室名称
+        /// 订单类型
         /// </summary>
-        public string name { get; set; }
+        public OrderTypeEm orderType { get; set; }
     
         /// <summary>
-        /// 赛事组别
+        /// 订单金额
         /// </summary>
-        public int? eventgroupId { get; set; }
+        public decimal money { get; set; }
     
         /// <summary>
-        /// 特殊选手
+        /// 订单状态
         /// </summary>
-        public int? memberId { get; set; }
+        public OrderStatusEm orderStatus { get; set; }
     
         /// <summary>
-        /// 状态
+        /// 最晚支付时间
         /// </summary>
-        public RoomStatusEm roomStatus { get; set; }
+        public DateTime payExpiryDate { get; set; }
+    
+        /// <summary>
+        /// 总折扣金额
+        /// </summary>
+        public decimal? totaldiscount { get; set; }
+    
+        /// <summary>
+        /// 总优惠金额
+        /// </summary>
+        public decimal? totalcoupon { get; set; }
+    
+        /// <summary>
+        /// 是否需要发票
+        /// </summary>
+        public bool? isNeedInvoice { get; set; }
+    
+        /// <summary>
+        /// 订单备注
+        /// </summary>
+        public string remark { get; set; }
+    
+        /// <summary>
+        /// 订单来源id
+        /// </summary>
+        public int sourceId { get; set; }
     
         /// <summary>
         /// 创建时间

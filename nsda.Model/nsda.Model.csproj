@@ -77,6 +77,7 @@
     <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
     <Compile Include="dto\response\EventResponse.cs" />
+    <Compile Include="dto\response\EventRoomResponse.cs" />
     <Compile Include="dto\response\EventScoreResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="enums\EventTypeEm.cs" />
     <Compile Include="enums\GenderEm.cs" />
     <Compile Include="enums\GradeEm.cs" />
+    <Compile Include="enums\InvoiceTypeEm.cs" />
     <Compile Include="enums\LeavingStatusEm.cs" />
     <Compile Include="enums\MailTypeEm.cs" />
     <Compile Include="enums\MemberExtendStatusEm.cs" />
@@ -119,6 +121,8 @@
     <Compile Include="enums\MemberTypeEm.cs" />
     <Compile Include="enums\MenuTypeEm.cs" />
     <Compile Include="enums\ObjEventTypeEm.cs" />
+    <Compile Include="enums\OperationStatusEm.cs" />
+    <Compile Include="enums\OrderOperTypeEm.cs" />
     <Compile Include="enums\OrderStatusEm.cs" />
     <Compile Include="enums\OrderTypeEm.cs" />
     <Compile Include="enums\PayStatusEm.cs" />
@@ -163,9 +167,6 @@
     <Compile Include="model\t_eventroom.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventroomspec.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
     <Compile Include="model\t_eventsign.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
@@ -200,6 +201,33 @@
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_membertemp.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_orderdetail.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_carry.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_invoiceinfo.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_operation.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_operationitem.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_operationremark.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_receivinginfo.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_shoopingcart.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_playereduexper.cs">

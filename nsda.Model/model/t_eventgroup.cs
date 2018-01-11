@@ -36,12 +36,12 @@ namespace nsda.Models
         /// <summary>
         /// 最小年级
         /// </summary>
-        public MingradeEm? mingrade { get; set; }
+        public int? mingrade { get; set; }
     
         /// <summary>
         /// 最大年级
         /// </summary>
-        public MaxgradeEm? maxgrade { get; set; }
+        public int? maxgrade { get; set; }
     
         /// <summary>
         /// 最小积分
@@ -67,11 +67,6 @@ namespace nsda.Models
         /// 队伍人数
         /// </summary>
         public int teamnumber { get; set; }
-    
-        /// <summary>
-        /// 队伍裁判人数
-        /// </summary>
-        public int teamtrainer { get; set; }
     
         /// <summary>
         /// 创建时间

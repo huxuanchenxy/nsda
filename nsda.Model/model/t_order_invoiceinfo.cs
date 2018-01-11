@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_eventroomspec")]
-    public class t_eventroomspec
+	[Table("t_order_invoiceinfo")]
+    public class t_order_invoiceinfo
     {
 	   //默认构造函数
-	   public t_eventroomspec()
+	   public t_order_invoiceinfo()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,20 +29,13 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        /// <summary>
-        /// 赛事id
-        /// </summary>
-        public int eventId { get; set; }
+        public int orderId { get; set; }
     
-        /// <summary>
-        /// 选手id
-        /// </summary>
-        public int memberId { get; set; }
+        public InvoiceTypeEm invoiceType { get; set; }
     
-        /// <summary>
-        /// 教室id
-        /// </summary>
-        public int roomId { get; set; }
+        public string invoiceContent { get; set; }
+    
+        public string invoiceTitle { get; set; }
     
         /// <summary>
         /// 创建时间

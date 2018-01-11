@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using nsda.Model;
 using nsda.Model.enums;
 using nsda.Repository.Contract.member;
 using nsda.Utilities;
@@ -19,6 +20,8 @@ namespace nsda.Repository.Implement.member
         {
             _dbContext = dbContext;
         }
+
+        // 生成会员编码
         public string RenderCode(string code = "nsda")
         {
             lock (lockObject)
@@ -42,11 +45,12 @@ namespace nsda.Repository.Implement.member
             }
         }
 
+        //查看账号是否存在
         public bool IsExist(string account)
         {
             var sql = $@"select coutn(1) from t_member 
                          where isdelete=0  and account=@Account
-                         and memberType!={MemberTypeEm.临时裁判} and memberType!={MemberTypeEm.临时选手} 
+                         and memberType in ({ParamsConfig._membertype})
                        ";
             var dy = new DynamicParameters();
             dy.Add("Account",account);

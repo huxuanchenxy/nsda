@@ -1,4 +1,5 @@
-﻿using nsda.Models;
+﻿using nsda.Model.dto.request;
+using nsda.Models;
 using nsda.Repository;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using nsda.Model.dto.response;
 
 namespace nsda.Services.Implement.eventmanage
 {
@@ -27,39 +29,57 @@ namespace nsda.Services.Implement.eventmanage
             _memberOperLogService = memberOperLogService;
         }
 
-        public bool Insert(out string msg)
+        //新增n间教室
+        public bool Insert(int eventId,int num,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
+                if (num <= 0)
+                {
+                    msg = "教室数量有误";
+                    return flag;
+                }
+
+                if (eventId <= 0)
+                {
+                    msg = "需要赛事信息";
+                    return flag;
+                }
+
+                //教练赛事
+                t_event t_event = _dbContext.Get<t_event>(eventId);
+                if (t_event == null)
+                {
+                    msg = "赛事信息有误";
+                    return flag;
+                }
+
+                _dbContext.BeginTransaction();
+                for (int i = 0; i < num; i++)
+                {
+                    _dbContext.Insert(new t_eventroom {
+                         eventgroupId=0,
+                         code=_dataRepository.EventRoomRepo.RenderCode(eventId),
+                         eventId=eventId,
+                         roomStatus=Model.enums.RoomStatusEm.闲置                      
+                    });
+                }
+                _dbContext.CommitChanges();
+                flag = true;
             }
             catch (Exception ex)
             {
+                _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("EventRoomService.Insert", ex);
             }
             return flag;
         }
-
-        public bool Update(out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("EventRoomService.Update", ex);
-            }
-            return flag;
-        }
-
-        public bool Delete(int id, string msg)
+        //修改教室名称
+        public bool Eidt(int id, string name, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -68,9 +88,76 @@ namespace nsda.Services.Implement.eventmanage
                 t_eventroom room = _dbContext.Get<t_eventroom>(id);
                 if (room != null)
                 {
+                    room.name = name;
+                    room.updatetime = DateTime.Now;
+                    _dbContext.Update(room);
+                }
+                else
+                {
+                    msg = "未找到教室信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventRoomService.Eidt", ex);
+            }
+            return flag;
+        }
+        //修改设置
+        public bool EidtSettings(int id,int statusOrGroup, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_eventroom room = _dbContext.Get<t_eventroom>(id);
+                if (room != null)
+                {
+                    if (statusOrGroup == 0)
+                    {
+                        room.roomStatus = Model.enums.RoomStatusEm.停用;
+                    }
+                    else if (statusOrGroup == 0)
+                    {
+                        room.roomStatus = Model.enums.RoomStatusEm.闲置;
+                    }
+                    else {
+                        room.eventgroupId = statusOrGroup;
+                    }
+                    room.updatetime = DateTime.Now;
+                    _dbContext.Update(room);
+                }
+                else
+                {
+                    msg = "未找到教室信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventRoomService.Eidt", ex);
+            }
+            return flag;
+        }
+        //清除教室特殊人员设定
+        public bool ClearSpec(int id, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_eventroom room = _dbContext.Get<t_eventroom>(id);
+                if (room != null)
+                {
+                    room.memberId = 0;
+                    room.updatetime = DateTime.Now;
+                    _dbContext.Update(room);
                 }
                 else {
-
+                    msg = "未找到教室信息";
                 }
             }
             catch (Exception ex)
@@ -80,6 +167,67 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventRoomService.Delete", ex);
             }
             return flag;
+        }
+        //教室指定选手
+        public bool SettingSpec(int id, int memberId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_eventroom room = _dbContext.Get<t_eventroom>(id);
+                if (room != null)
+                {
+                    if (memberId == room.memberId)
+                    {
+                        msg = "已指定此选手";
+                        return flag;
+                    }
+                    //判断此选手是否是这场比赛的
+                    //在判断此用户是否已经在其他教室
+                    var vali = _dbContext.Select<t_eventroom>(c => c.memberId == memberId).ToList();
+                    if (vali != null && vali.Count > 0)
+                    {
+                        msg = "此选手已指定到其他教室";
+                    }
+                    else
+                    {
+                        room.memberId = memberId;
+                        room.updatetime = DateTime.Now;
+                        _dbContext.Update(room);
+                        flag = true;
+                    }
+                }
+                else
+                {
+                    msg = "未找到教室信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventRoomService.Delete", ex);
+            }
+            return flag;
+        }
+        // 教室列表
+        public List<EventRoomResponse> List(int eventId)
+        {
+            List<EventRoomResponse> list = new List<EventRoomResponse>();
+            try
+            {
+                var sql = $@"select a.*,b.name MemberName,c.name EventGroupName from t_eventroom a
+                            left join t_member b on a.memberId=b.id
+                            left join t_eventgroup c on a.eventgroupId=c.id
+                            where eventId={eventId}";
+                list = _dbContext.Query<EventRoomResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventRoomService.List", ex);
+            }
+            return list;
         }
     }
 }

@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_eventroom")]
-    public class t_eventroom
+	[Table("t_order_carry")]
+    public class t_order_carry
     {
 	   //默认构造函数
-	   public t_eventroom()
+	   public t_order_carry()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,35 +29,13 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        /// <summary>
-        /// 赛事id
-        /// </summary>
-        public int eventId { get; set; }
+        public int orderId { get; set; }
     
-        /// <summary>
-        /// 教室编码
-        /// </summary>
-        public string code { get; set; }
+        public string carryName { get; set; }
     
-        /// <summary>
-        /// 教室名称
-        /// </summary>
-        public string name { get; set; }
+        public string queryNo { get; set; }
     
-        /// <summary>
-        /// 赛事组别
-        /// </summary>
-        public int? eventgroupId { get; set; }
-    
-        /// <summary>
-        /// 特殊选手
-        /// </summary>
-        public int? memberId { get; set; }
-    
-        /// <summary>
-        /// 状态
-        /// </summary>
-        public RoomStatusEm roomStatus { get; set; }
+        public string queryAddress { get; set; }
     
         /// <summary>
         /// 创建时间

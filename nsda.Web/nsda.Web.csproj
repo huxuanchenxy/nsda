@@ -126,6 +126,7 @@
     <Compile Include="Areas\admin\Controllers\voteController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\baseController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\eventmanageController.cs" />
+    <Compile Include="Areas\eventmanage\Controllers\eventroomController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
     <Compile Include="Areas\player\Controllers\baseController.cs" />
     <Compile Include="Areas\player\Controllers\playereduexperController.cs" />
@@ -411,6 +412,7 @@
     <Folder Include="Areas\admin\Views\sysuser\" />
     <Folder Include="Areas\admin\Views\vote\" />
     <Folder Include="Areas\eventmanage\Models\" />
+    <Folder Include="Areas\eventmanage\Views\eventromm\" />
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />
     <Folder Include="Areas\player\Views\eduexper\" />

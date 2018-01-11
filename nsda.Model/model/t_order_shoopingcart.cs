@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_eventroom")]
-    public class t_eventroom
+	[Table("t_order_shoopingcart")]
+    public class t_order_shoopingcart
     {
 	   //默认构造函数
-	   public t_eventroom()
+	   public t_order_shoopingcart()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -30,34 +30,23 @@ namespace nsda.Models
 	    public int id { get; set; }
     
         /// <summary>
-        /// 赛事id
-        /// </summary>
-        public int eventId { get; set; }
-    
-        /// <summary>
-        /// 教室编码
-        /// </summary>
-        public string code { get; set; }
-    
-        /// <summary>
-        /// 教室名称
-        /// </summary>
-        public string name { get; set; }
-    
-        /// <summary>
-        /// 赛事组别
-        /// </summary>
-        public int? eventgroupId { get; set; }
-    
-        /// <summary>
-        /// 特殊选手
+        /// 会员id
         /// </summary>
         public int? memberId { get; set; }
     
-        /// <summary>
-        /// 状态
-        /// </summary>
-        public RoomStatusEm roomStatus { get; set; }
+        public string sessionId { get; set; }
+    
+        public int productId { get; set; }
+    
+        public int stockId { get; set; }
+    
+        public int priceId { get; set; }
+    
+        public string productAttribute { get; set; }
+    
+        public int number { get; set; }
+    
+        public bool isSelect { get; set; }
     
         /// <summary>
         /// 创建时间

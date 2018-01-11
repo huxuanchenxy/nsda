@@ -79,7 +79,7 @@ namespace nsda.Services.Implement.member
                 foreach (var item in request)
                 {
                     //创建账号
-                    string code = _dataRepository.MemberRepo.RenderCode();
+                    string code = _dataRepository.MemberRepo.RenderCode("tnsda");
                     t_member member = new t_member
                     {
                         code = code,
@@ -165,7 +165,7 @@ namespace nsda.Services.Implement.member
                 }
 
                 _dbContext.BeginTransaction();
-                string code = _dataRepository.MemberRepo.RenderCode();
+                string code = _dataRepository.MemberRepo.RenderCode("tnsda");
                 t_member member = new t_member {
                     code = code,
                     account=code,
@@ -208,7 +208,7 @@ namespace nsda.Services.Implement.member
             }
             return flag;
         }
-        //临时选手绑定
+        //临时选手绑定 生成支付订单
         public bool BindTempPlayer(BindTempPlayerRequest request, out string msg)
         {
             bool flag = false;
@@ -238,14 +238,19 @@ namespace nsda.Services.Implement.member
                     msg = "数据不存在，请核对后再操作";
                     return flag;
                 }
+
+                t_event t_event = _dbContext.Get<t_event>(data.eventId);
+                if (t_event.eventStatus != EventStatusEm.比赛完成)
+                {
+                    msg = "赛事未完成不能进行绑定";
+                    return flag;
+                }
+
                 _dbContext.BeginTransaction();
                 //执行数据
-                t_memberpoints points = _dbContext.Select<t_memberpoints>(c => c.memberId == data.memberId).FirstOrDefault();
-                _dbContext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={request.MemberId}");
-                _dbContext.Execute($"update t_membertemp set tomemberId={request.MemberId},updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={data.id}");
-                _dbContext.Execute($"update t_memberpointsrecord set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                _dbContext.Execute($"update t_memberpointsdetail set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                _dbContext.Execute($"update t_player_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");               
+                data.tomemberId = request.MemberId;
+                data.updatetime = DateTime.Now;
+                _dbContext.Update(data);
                 _dbContext.CommitChanges();
                 flag = true;
             }
@@ -326,6 +331,29 @@ namespace nsda.Services.Implement.member
                 LogUtils.LogError("MemberTempService.List", ex);
             }
             return list;
+        }
+        // 支付回调 进行数据迁移
+        public void CallBack(int id)
+        {
+            try
+            {
+                t_membertemp temp = _dbContext.Get<t_membertemp>(id);
+
+                _dbContext.BeginTransaction();
+                t_memberpoints points = _dbContext.Select<t_memberpoints>(c => c.memberId == temp.memberId).FirstOrDefault();
+                _dbContext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
+                _dbContext.Execute($"update t_membertemp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
+                _dbContext.Execute($"update t_memberpointsrecord set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                _dbContext.Execute($"update t_memberpointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                _dbContext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.tomemberId} and isdelete=0");
+                //对垒表也要修改
+                _dbContext.CommitChanges();
+            }
+            catch (Exception ex)
+            {
+                _dbContext.Rollback();
+                LogUtils.LogError("MemberTempService.BindTempPlayer", ex);
+            }
         }
     }
 }

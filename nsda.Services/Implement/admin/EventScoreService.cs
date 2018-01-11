@@ -168,7 +168,7 @@ namespace nsda.Services.Implement.admin
             PagedList<EventScoreResponse> list = new PagedList<EventScoreResponse>();
             try
             {
-                var sql = "select * from t_event_score where isdelete=0 and eventId=@EventId";
+                var sql = "select * from t_event_score where isdelete=0 and eventId=@EventId and groupId=@GroupId";
                 list = _dbContext.Page<EventScoreResponse>(sql, request, pageindex: request.PageIndex, pagesize: request.PagesSize);
             }
             catch (Exception ex)

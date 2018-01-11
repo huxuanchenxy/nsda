@@ -24,5 +24,7 @@ namespace nsda.Services.Contract.member
         bool BindTempReferee(BindTempRefereeRequest request,out string msg);
         //5.0 临时会员数据列表
         PagedList<MemberTempResponse> List(TempMemberQueryRequest request);
+        //6.0 临时会员绑定 支付回调
+        void CallBack(int id);
     }
 }
