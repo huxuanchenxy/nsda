@@ -127,12 +127,24 @@ namespace nsda.Services.Implement.member
                              schoolId=item.PlayerEdu.SchoolId 
                         });
                     }
+
+                    //插入签到信息
+                    _dbContext.Insert(new t_eventsign {
+                        eventId = item.EventId,
+                        eventSignStatus = EventSignStatusEm.已签到,
+                        eventSignType = EventSignTypeEm.选手,
+                        memberId = memberId,
+                        signdate = t_event.starteventtime,
+                        signtime = DateTime.Now
+                    });
                 }
                 _dbContext.CommitChanges();
                 flag = true;
             }
             catch (Exception ex)
             {
+                flag = false;
+                msg = "服务异常";
                 _dbContext.Rollback();
                 LogUtils.LogError("MemberTempService.InsertTempPlayer", ex);
             }
@@ -198,11 +210,23 @@ namespace nsda.Services.Implement.member
                     memberId=memberId,
                     refereeSignUpStatus=RefereeSignUpStatusEm.申请成功
                 });
+
+                _dbContext.Insert(new t_eventsign {
+                      eventId=request.EventId,
+                      eventSignStatus=EventSignStatusEm.已签到,
+                      eventSignType=EventSignTypeEm.裁判,
+                      memberId=memberId,
+                      signdate=t_event.starteventtime,
+                      signtime=DateTime.Now
+                });
+
                 _dbContext.CommitChanges();
                 flag = true;
             }
             catch (Exception ex)
             {
+                flag = false;
+                msg = "服务异常";
                 _dbContext.Rollback();
                 LogUtils.LogError("MemberTempService.InsertTempReferee", ex);
             }
@@ -246,17 +270,49 @@ namespace nsda.Services.Implement.member
                     return flag;
                 }
 
-                _dbContext.BeginTransaction();
-                //执行数据
-                data.tomemberId = request.MemberId;
-                data.updatetime = DateTime.Now;
-                _dbContext.Update(data);
-                _dbContext.CommitChanges();
-                flag = true;
+                if (data.tomemberId != null && data.tomemberId > 0)
+                {
+                    if (data.tomemberId != request.MemberId)
+                    {
+                        msg = "此信息已绑定过";
+                        return flag;
+                    }
+                }
+
+                t_order order = _dbContext.Select<t_order>(c=>c.memberId==data.memberId&&c.orderType==OrderTypeEm.临时选手绑定&&c.sourceId==data.id).FirstOrDefault();
+                if (order == null)//没创建过订单 
+                {
+                    try
+                    {
+                        _dbContext.BeginTransaction();
+                        //创建订单
+                        _dbContext.Insert(new t_order { });
+                        _dbContext.Insert(new t_orderdetail { });
+                        //生成支付链接
+                        data.tomemberId = request.MemberId;
+                        data.updatetime = DateTime.Now;
+                        _dbContext.Update(data);
+                        _dbContext.CommitChanges();
+                        flag = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        flag = false;
+                        msg = "服务异常";
+                        _dbContext.Rollback();
+                        LogUtils.LogError("MemberTempService.BindTempPlayerTran", ex);
+                    }
+                }
+                else//创建过订单
+                {
+                    //通过订单生成支付链接
+                }
+               
             }
             catch (Exception ex)
             {
-                _dbContext.Rollback();
+                flag = false;
+                msg = "服务异常";
                 LogUtils.LogError("MemberTempService.BindTempPlayer", ex);
             }
             return flag;
@@ -333,12 +389,11 @@ namespace nsda.Services.Implement.member
             return list;
         }
         // 支付回调 进行数据迁移
-        public void CallBack(int id)
+        public void Callback(int id)
         {
             try
             {
                 t_membertemp temp = _dbContext.Get<t_membertemp>(id);
-
                 _dbContext.BeginTransaction();
                 t_memberpoints points = _dbContext.Select<t_memberpoints>(c => c.memberId == temp.memberId).FirstOrDefault();
                 _dbContext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
@@ -352,7 +407,7 @@ namespace nsda.Services.Implement.member
             catch (Exception ex)
             {
                 _dbContext.Rollback();
-                LogUtils.LogError("MemberTempService.BindTempPlayer", ex);
+                LogUtils.LogError("MemberTempService.Callback", ex);
             }
         }
     }

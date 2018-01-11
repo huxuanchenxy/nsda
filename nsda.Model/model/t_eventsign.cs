@@ -35,7 +35,9 @@ namespace nsda.Models
     
         public int memberId { get; set; }
     
-        public DateTime? signuptime { get; set; }
+        public DateTime? signtime { get; set; }
+    
+        public DateTime signdate { get; set; }
     
         public EventSignStatusEm eventSignStatus { get; set; }
     

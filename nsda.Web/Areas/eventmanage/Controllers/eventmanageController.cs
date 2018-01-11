@@ -18,11 +18,13 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         IMemberService _memberService;
         IEventService _eventService;
         IMemberTempService _memberTempService;
-        public eventmanageController(IMemberService memberService, IEventService eventService, IMemberTempService memberTempService)
+        IEventSignService _eventSignService;
+        public eventmanageController(IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService)
         {
             _memberService = memberService;
             _eventService = eventService;
             _memberTempService = memberTempService;
+            _eventSignService = eventSignService;
         }
 
         #region ajax
@@ -72,6 +74,33 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result<string>(flag, msg);
         }
 
+        //批量签到
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult sign(List<int> id,int eventId,bool isNormal)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventSignService.BatchSign(id,eventId,isNormal,out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //选手签到列表
+        [HttpGet]
+        public ContentResult playersignlist(int eventId, string key)
+        {
+            _eventSignService.PlayerSignList(eventId,key);
+            return Result<string>(true, string.Empty);
+        }
+
+        //裁判签到列表
+        [HttpGet]
+        public ContentResult refereesignlist(int eventId, string key)
+        {
+             _eventSignService.RefereeSignList(eventId, key);
+            return Result<string>(true, string.Empty);
+        }
         #endregion
 
         #region view

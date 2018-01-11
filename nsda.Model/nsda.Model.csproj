@@ -98,6 +98,7 @@
     <Compile Include="dto\response\RoleEm.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />
     <Compile Include="dto\response\PlayerSignUpResponse.cs" />
+    <Compile Include="dto\response\SignResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\response\SysUserResponse.cs" />
     <Compile Include="dto\response\VoteResponse.cs" />

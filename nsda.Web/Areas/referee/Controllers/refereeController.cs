@@ -22,13 +22,22 @@ namespace nsda.Web.Areas.referee.Controllers
         IRefereeSignUpService _refereeSignUpService;
         IMemberTempService _memberTempService;
         IEventService _eventService;
-        public refereeController(IMemberService memberService, IRefereeService refereeService, IRefereeSignUpService refereeSignUpService, IMemberTempService memberTempService, IEventService eventService)
+        IEventSignService _eventSignService;
+        public refereeController(IMemberService memberService, IRefereeService refereeService, IRefereeSignUpService refereeSignUpService, IMemberTempService memberTempService, IEventService eventService,IEventSignService eventSignService)
         {
             _memberService = memberService;
             _refereeService = refereeService;
             _refereeSignUpService = refereeSignUpService;
             _memberTempService = memberTempService;
             _eventService = eventService;
+            _eventSignService = eventSignService;
+        }
+
+        //签到页面
+        public ActionResult signview(int eventId)
+        {
+            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id);
+            return View(detail);
         }
 
         #region ajax
@@ -86,6 +95,19 @@ namespace nsda.Web.Areas.referee.Controllers
             var res = new Result<string>();
             string msg = string.Empty;
             var flag = _memberTempService.BindTempReferee(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
+
+        //签到
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult sign(int id)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventSignService.Sign(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
         #endregion

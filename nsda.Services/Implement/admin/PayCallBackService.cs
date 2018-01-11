@@ -23,13 +23,15 @@ namespace nsda.Services.Implement.admin
         ISysOperLogService _sysOperLogService;
         IPlayerSignUpService _playerSignUpService;
         IMemberService _memberService;
-        public PayCallBackService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService, IPlayerSignUpService playerSignUpService,IMemberService memberService)
+        IMemberTempService _memberTempService;
+        public PayCallBackService(IDBContext dbContext, IDataRepository dataRepository, ISysOperLogService sysOperLogService, IPlayerSignUpService playerSignUpService,IMemberService memberService, IMemberTempService memberTempService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _sysOperLogService = sysOperLogService;
             _playerSignUpService = playerSignUpService;
             _memberService = memberService;
+            _memberTempService = memberTempService;
         }
 
         public void Callback(string json)
@@ -41,6 +43,7 @@ namespace nsda.Services.Implement.admin
                 //3.0 根据订单类型不同回调 认证回调 报名回调 
                 _memberService.CallBack(1);
                 _playerSignUpService.Callback(1);
+                _memberTempService.Callback(1);
             }
             catch (Exception ex)
             {

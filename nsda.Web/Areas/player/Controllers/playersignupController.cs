@@ -16,10 +16,19 @@ namespace nsda.Web.Areas.player.Controllers
     {
         IPlayerSignUpService _playerSignUpService;
         IEventService _eventService;
-        public playersignupController(IPlayerSignUpService playerSignUpService, IEventService eventService)
+        IEventSignService _eventSignService;
+        public playersignupController(IPlayerSignUpService playerSignUpService, IEventService eventService, IEventSignService eventSignService)
         {
             _playerSignUpService = playerSignUpService;
             _eventService = eventService;
+            _eventSignService = eventSignService;
+        }
+
+        //签到页面
+        public ActionResult signview(int eventId)
+        {
+            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id);
+            return View(detail);
         }
 
         #region ajax
@@ -81,6 +90,20 @@ namespace nsda.Web.Areas.player.Controllers
             var flag = _playerSignUpService.GoPay(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
+
+        //签到
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult sign(int id)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventSignService.Sign(id, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+
         #endregion 
     }
 }
