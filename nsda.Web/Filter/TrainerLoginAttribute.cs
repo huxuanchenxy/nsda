@@ -12,7 +12,7 @@ namespace nsda.Web.Filter
         private LoginModeEnum _customMode;
 
         public TrainerLoginAttribute(LoginModeEnum Mode)
-        {
+        { 
             _customMode = Mode;
         }
 
