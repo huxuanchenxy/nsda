@@ -47,27 +47,27 @@ namespace nsda.Models
         /// <summary>
         /// 赛事开始时间
         /// </summary>
-        public DateTime starteventtime { get; set; }
+        public DateTime starteventdate { get; set; }
     
         /// <summary>
         /// 赛事结束时间
         /// </summary>
-        public DateTime endeventtime { get; set; }
+        public DateTime endeventdate { get; set; }
     
         /// <summary>
         /// 报名开始时间
         /// </summary>
-        public DateTime startsigntime { get; set; }
+        public DateTime startsigndate { get; set; }
     
         /// <summary>
         /// 报名结束时间
         /// </summary>
-        public DateTime endsigntime { get; set; }
+        public DateTime endsigndate { get; set; }
     
         /// <summary>
         /// 退款截止时间
         /// </summary>
-        public DateTime endrefundtime { get; set; }
+        public DateTime endrefunddate { get; set; }
     
         /// <summary>
         /// 赛事描述
@@ -79,9 +79,11 @@ namespace nsda.Models
         /// </summary>
         public string address { get; set; }
     
-        public int? provinceId { get; set; }
+        public int countryId { get; set; }
     
-        public int? cityId { get; set; }
+        public int provinceId { get; set; }
+    
+        public int cityId { get; set; }
     
         /// <summary>
         /// 是否是国际赛事

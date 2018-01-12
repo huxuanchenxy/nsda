@@ -12,9 +12,10 @@ namespace nsda.Model.enums
     public enum EventStatusEm
     {
         待审核=1,
-        报名中=2,
-        停止报名=3,
-        比赛中=4,
-        比赛完成=5
+        拒绝=2,
+        报名中=3,
+        停止报名=4,
+        比赛中=5,
+        比赛完成=6
     }
 }

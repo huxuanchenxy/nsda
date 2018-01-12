@@ -23,9 +23,9 @@ namespace nsda.Services.Contract.member
         // 去支付
         bool GoPay(int id,int memberId,out string msg);
         // 申请退赛
-        bool Cancel(int id, int memberId, out string msg);
+        bool ApplyRetire(int id, int memberId, out string msg);
         // 确认退赛
-        bool ConfirmCancel(int id, int memberId, out string msg);
+        bool ConfirmRetire(int id, int memberId, out string msg);
         // 比赛列表
         PagedList<PlayerSignUpResponse> List(PlayerSignUpQueryRequest request);
         // 支付成功回调

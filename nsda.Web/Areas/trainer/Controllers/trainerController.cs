@@ -81,7 +81,7 @@ namespace nsda.Web.Areas.trainer.Controllers
         [HttpGet]
         public ContentResult listplayer(string key)
         {
-            var data = _memberService.ListPlayer(MemberTypeEm.选手, key);
+            var data = _memberService.ListMember(MemberTypeEm.选手, key);
             return Result<string>(true, string.Empty);
         }
         #endregion

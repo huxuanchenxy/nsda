@@ -50,6 +50,19 @@ namespace nsda.Services.Implement.member
                     return flag;
                 }
 
+                t_eventgroup t_group = _dbContext.Get<t_eventgroup>(request.FirstOrDefault().GroupId);
+                if (t_group == null)
+                {
+                    msg = "赛事组别信息有误";
+                    return flag;
+                }
+
+                if (t_group.teamnumber != request.Count)
+                {
+                    msg = "队伍人数有误";
+                    return flag;
+                }
+
                 foreach (var item in request)
                 {
                     if (item.Name.IsEmpty())
@@ -134,7 +147,7 @@ namespace nsda.Services.Implement.member
                         eventSignStatus = EventSignStatusEm.已签到,
                         eventSignType = EventSignTypeEm.选手,
                         memberId = memberId,
-                        signdate = t_event.starteventtime,
+                        signdate = t_event.starteventdate,
                         signtime = DateTime.Now
                     });
                 }
@@ -216,10 +229,9 @@ namespace nsda.Services.Implement.member
                       eventSignStatus=EventSignStatusEm.已签到,
                       eventSignType=EventSignTypeEm.裁判,
                       memberId=memberId,
-                      signdate=t_event.starteventtime,
+                      signdate=t_event.starteventdate,
                       signtime=DateTime.Now
                 });
-
                 _dbContext.CommitChanges();
                 flag = true;
             }

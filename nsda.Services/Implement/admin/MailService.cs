@@ -36,6 +36,7 @@ namespace nsda.Services.Implement.admin
                     memberId = request.MemberId,
                     isRead = false,
                     mailType = request.MailType,
+                    url = request.Url,
                     title = request.Title
                 });
             }

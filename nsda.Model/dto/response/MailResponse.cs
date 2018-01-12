@@ -30,5 +30,9 @@ namespace nsda.Model.dto.response
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+        /// <summary>
+        /// 跳转url
+        /// </summary>
+        public string Url { get; set; }
     }
 }

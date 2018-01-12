@@ -49,6 +49,8 @@ namespace nsda.Models
         /// </summary>
         public string content { get; set; }
     
+        public string url { get; set; }
+    
         /// <summary>
         /// 是否已读
         /// </summary>

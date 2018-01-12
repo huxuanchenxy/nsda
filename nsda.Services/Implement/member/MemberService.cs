@@ -732,7 +732,7 @@ namespace nsda.Services.member
             }
         }
 
-        public List<MemberSelectResponse> ListPlayer(MemberTypeEm memberType,string key)
+        public List<MemberSelectResponse> ListMember(MemberTypeEm memberType,string key)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
@@ -751,7 +751,7 @@ namespace nsda.Services.member
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("MemberService.ListPlayer", ex);
+                LogUtils.LogError("MemberService.ListMember", ex);
             }
             return list;
         }

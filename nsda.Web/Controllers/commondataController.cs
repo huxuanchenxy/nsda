@@ -35,7 +35,7 @@ namespace nsda.Web.Controllers
             _memberService = memberService;
             _mailService = mailService;
         }
-
+        //国家
         [HttpGet]
         public ContentResult listcountry()
         {
@@ -43,6 +43,7 @@ namespace nsda.Web.Controllers
             return Content((new Result<List<BaseDataResponse>> { flag = true,msg=string.Empty, data = data }).Serialize());
         }
 
+        //省份
         [HttpGet]
         public ContentResult listprovince(int countryId)
         {
@@ -50,6 +51,7 @@ namespace nsda.Web.Controllers
             return Content((new Result<List<BaseDataResponse>> { flag = true, msg = string.Empty, data = data }).Serialize());
         }
 
+        //城市
         [HttpGet]
         public ContentResult listcity(int provinceId)
         {
@@ -57,7 +59,7 @@ namespace nsda.Web.Controllers
             return Content((new Result<List<BaseDataResponse>> { flag = true, msg = string.Empty, data = data }).Serialize());
         }
 
-
+        //学校
         [HttpGet]
         public ContentResult listschool(int cityId)
         {
@@ -65,6 +67,7 @@ namespace nsda.Web.Controllers
             return Content((new Result<List<BaseDataResponse>> { flag = true, msg = string.Empty, data = data }).Serialize());
         }
 
+        //留言
         [HttpPost]
         [AjaxOnly]
         public ContentResult leaving(LeavingMsgRequest request)
@@ -74,7 +77,7 @@ namespace nsda.Web.Controllers
             return Content((new Result<string> { flag = flag, msg = msg }).Serialize());
         }
 
-
+        //投票
         [HttpPost]
         [AjaxOnly]
         public ContentResult vote(int voteId, List<int> detailId)
@@ -84,6 +87,7 @@ namespace nsda.Web.Controllers
             return Content((new Result<string> { flag = flag, msg = msg }).Serialize());
         }
 
+        //修改个人信息
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
@@ -105,6 +109,7 @@ namespace nsda.Web.Controllers
             return Content(res.Serialize());
         }
 
+        //修改密码
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
@@ -125,7 +130,6 @@ namespace nsda.Web.Controllers
             }
             return Content(res.Serialize());
         }
-
 
         //站内信标记为已读
         [HttpPost]

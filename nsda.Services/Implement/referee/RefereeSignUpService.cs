@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Model.enums;
 using nsda.Models;
 using nsda.Repository;
 using nsda.Services.Contract.member;
@@ -29,6 +30,7 @@ namespace nsda.Services.Implement.referee
             _memberOperLogService = memberOperLogService;
         }
 
+        //申请当裁判
         public bool Apply(int eventId, int memberId, out string msg)
         {
             bool flag = false;
@@ -55,7 +57,7 @@ namespace nsda.Services.Implement.referee
                          eventId=eventId,
                          isTemp=false,
                          memberId=memberId,
-                         refereeSignUpStatus=Model.enums.RefereeSignUpStatusEm.待审核
+                         refereeSignUpStatus=RefereeSignUpStatusEm.待审核
                     });
                 }
                 else
@@ -77,6 +79,35 @@ namespace nsda.Services.Implement.referee
             PagedList<RefereeSignUpResponse> list = new PagedList<RefereeSignUpResponse>();
             try
             {
+                StringBuilder sb = new StringBuilder(@"select a.id Id,b.id EventId,b.name EventName,b.starteventdate StartEventDate,c.name CityName,
+                                                        endeventdate EndEventDate,eventType EventType,eventStatus EventStatus,a.refereeSignUpStatus SignUpStatus
+                                                        from t_referee_signup a
+                                                        inner join t_event b on a.eventId=b.id
+                                                        inner join t_city  c on b.cityId=c.id
+                                                        where a.isdelete=0 and a.memberId=@MemberId");
+                if (request.EventStartDate.HasValue)
+                {
+                    sb.Append(" and b.starteventdate>@EventStartDate ");
+                }
+                if (request.EventEndDate.HasValue)
+                {
+                    request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
+                    sb.Append(" and b.endeventdate<@EventEndDate ");
+                }
+                if (request.CountryId.HasValue)
+                {
+                    sb.Append(" and b.countryId=@CountryId ");
+                }
+                if (request.ProvinceId.HasValue)
+                {
+                    sb.Append(" and b.provinceId=@ProvinceId ");
+                }
+                if (request.CityId.HasValue)
+                {
+                    sb.Append(" and b.cityId=@CityId ");
+                }
+
+                list = _dbContext.Page<RefereeSignUpResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
             }
             catch (Exception ex)
             {

@@ -29,6 +29,8 @@ namespace nsda.Services.Implement.member
             _memberOperLogService = memberOperLogService;
         }
 
+        //所有方法考虑 辩论和演讲
+
         //发起组队
         public bool Insert(PlayerSignUpRequest request, out string msg)
         {
@@ -39,8 +41,10 @@ namespace nsda.Services.Implement.member
                 //逻辑校验
                 //1.0 报名者是否重复报名 是否有资格报名
                 //2.0 被邀请者是否有资格报名 是否重复报名
-                _dbContext.BeginTransaction();
+                //3.0 报名队伍数是否达到上限
                 t_event tevent = _dbContext.Get<t_event>(request.EventId);
+
+                _dbContext.BeginTransaction();
                 string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
                 if (request.EventType == EventTypeEm.辩论)
                 {
@@ -111,8 +115,8 @@ namespace nsda.Services.Implement.member
 
                     if (isAgree)//确认组队
                     {
-                        playsignup.signUpStatus = SignUpStatusEm.确认组队;
-                        otherSignUp.signUpStatus = SignUpStatusEm.确认组队;
+                        playsignup.signUpStatus = SignUpStatusEm.组队成功;
+                        otherSignUp.signUpStatus = SignUpStatusEm.组队成功;
                     }
                     else//拒绝组队
                     {
@@ -184,7 +188,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //申请退赛
-        public bool Cancel(int id, int memberId, out string msg)
+        public bool ApplyRetire(int id, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -193,7 +197,32 @@ namespace nsda.Services.Implement.member
                 var playsignup = _dbContext.Get<t_player_signup>(id);
                 if (playsignup != null)
                 {
-
+                    //获取赛事信息
+                    t_event t_event = _dbContext.Get<t_event>(playsignup.eventId);
+                    if (playsignup.signUpStatus == SignUpStatusEm.组队成功)//未支付
+                    {
+                        playsignup.signUpStatus = SignUpStatusEm.等待队友确认退赛;
+                        playsignup.updatetime = DateTime.Now;
+                        _dbContext.Update(playsignup);
+                    }
+                    else if (playsignup.signUpStatus == SignUpStatusEm.报名成功)//已支付
+                    {
+                        var data = _dbContext.Select<t_player_signup>(c=>c.groupnum==playsignup.groupnum&&c.memberId!=memberId).ToList();
+                        if (data == null || data.Count == 0)
+                        {
+                            playsignup.signUpStatus = SignUpStatusEm.退费申请中;
+                            playsignup.updatetime = DateTime.Now;
+                            _dbContext.Update(playsignup);
+                        }
+                        else {
+                            playsignup.signUpStatus = SignUpStatusEm.等待队友确认退赛;
+                            playsignup.updatetime = DateTime.Now;
+                            _dbContext.Update(playsignup);
+                        }
+                    }
+                    else {
+                        msg = "状态已改变 请刷新页面后重试";
+                    }
                 }
                 else
                 {
@@ -204,12 +233,12 @@ namespace nsda.Services.Implement.member
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("SignUpPlayerService.Cancel", ex);
+                LogUtils.LogError("SignUpPlayerService.ApplyRetire", ex);
             }
             return flag;
         }
         //确认退赛
-        public bool ConfirmCancel(int id, int memberId, out string msg)
+        public bool ConfirmRetire(int id, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -221,7 +250,7 @@ namespace nsda.Services.Implement.member
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("SignUpPlayerService.ConfirmCancel", ex);
+                LogUtils.LogError("SignUpPlayerService.ConfirmRetire", ex);
             }
             return flag;
         }
@@ -231,7 +260,30 @@ namespace nsda.Services.Implement.member
             PagedList<PlayerSignUpResponse> list = new PagedList<PlayerSignUpResponse>();
             try
             {
+                StringBuilder sb = new StringBuilder();
 
+                if (request.EventStartDate.HasValue)
+                {
+                    sb.Append(" and b.starteventdate>@EventStartDate ");
+                }
+                if (request.EventEndDate.HasValue)
+                {
+                    request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
+                    sb.Append(" and b.endeventdate<@EventEndDate ");
+                }
+                if (request.CountryId.HasValue)
+                {
+                    sb.Append(" and b.countryId=@CountryId ");
+                }
+                if (request.ProvinceId.HasValue)
+                {
+                    sb.Append(" and b.provinceId=@ProvinceId ");
+                }
+                if (request.CityId.HasValue)
+                {
+                    sb.Append(" and b.cityId=@CityId ");
+                }
+                list = _dbContext.Page<PlayerSignUpResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
             }
             catch (Exception ex)
             {

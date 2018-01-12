@@ -48,19 +48,20 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
 
-        //资料下载
+        //辩题资料下载
         [HttpGet]
-        public ContentResult datasource()
+        public ContentResult datasource(DataSourceQueryRequest request)
         {
-            var data = _dataSourceService.List(new DataSourceQueryRequest { });
+            var data = _dataSourceService.List(request);
             return Result<string>(true, string.Empty);
         }
         
         //评分单下载
         [HttpGet]
-        public ContentResult eventscorelist()
+        public ContentResult eventscorelist(PlayerEventScoreQueryRequest request)
         {
-            var data = _eventScoreService.PlayerList(new PlayerEventScoreQueryRequest { MemberId=UserContext.WebUserContext.Id});
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _eventScoreService.PlayerList(request);
             return Result<string>(true, string.Empty);
         }
 
@@ -68,7 +69,7 @@ namespace nsda.Web.Areas.player.Controllers
         [HttpGet]
         public ContentResult listtrainer(string key)
         {
-            var data = _memberService.ListPlayer(MemberTypeEm.教练,key);
+            var data = _memberService.ListMember(MemberTypeEm.教练,key);
             return Result<string>(true, string.Empty);
         }
 
