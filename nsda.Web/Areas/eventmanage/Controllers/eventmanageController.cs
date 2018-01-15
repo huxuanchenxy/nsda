@@ -70,7 +70,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventService.IsOpen(id, UserContext.WebUserContext.Id, isOpen, out msg);
+            var flag = _eventService.IsOpen(id, isOpen, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -160,7 +160,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         //选手报名列表
         [HttpGet]
-        public ContentResult listplayersignup(PlayerSignUpListQueryRequest request)
+        public ContentResult listplayersignup(PlayerSignUpQueryRequest request)
         {
             var data = _playerSignUpService.EventPlayerList(request);
             var res = new ResultDto<PlayerSignUpListResponse>
@@ -175,7 +175,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         //裁判报名列表
         [HttpGet]
-        public ContentResult listrefereesignup(RefereeSignUpListQueryRequest request)
+        public ContentResult listrefereesignup(RefereeSignUpQueryRequest request)
         {
             var data = _refereeSignUpService.EventRefereeList(request);
             var res = new ResultDto<RefereeSignUpListResponse>

@@ -49,6 +49,14 @@ namespace nsda.Web.Areas.referee.Controllers
             return View(detail);
         }
 
+        //报名页面
+        public ActionResult signup()
+        {
+            var data = _eventService.EventCondition();
+            ViewBag.Condition = data;
+            return View();
+        }
+
         #region ajax
         //申请做裁判
         [HttpPost]

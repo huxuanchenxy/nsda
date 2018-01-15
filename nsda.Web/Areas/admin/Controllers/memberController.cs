@@ -57,7 +57,7 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult processmemberextend(int id,string remark, bool isAppro)
         {
             var msg = string.Empty;
-            var flag = _memberExtendService.Process(id, UserContext.SysUserContext.Id, remark,isAppro, out msg);
+            var flag = _memberExtendService.Process(id, remark,isAppro, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -102,7 +102,7 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult check(int id,string remark,bool isAppro)
         {
             var msg = string.Empty;
-            var flag = _memberService.Check(id, UserContext.SysUserContext.Id,remark,isAppro, out msg);
+            var flag = _memberService.Check(id,remark,isAppro, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 

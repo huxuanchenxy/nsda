@@ -36,7 +36,7 @@ namespace nsda.Services.member
         // 验证邮箱是否有效 并返回用户id
         int SendEmail(string email, out string msg);
         // 审核赛事管理员账号
-        bool Check(int id, int sysUserId, string remark, bool isAppro, out string msg);
+        bool Check(int id, string remark, bool isAppro, int sysUserId, out string msg);
         // 强制认证选手信息
         bool Force(int id, int sysUserId, out string msg);
         // 会员详情

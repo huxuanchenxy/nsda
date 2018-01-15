@@ -42,7 +42,7 @@ namespace nsda.Web.Areas.admin.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventService.Check(id, UserContext.SysUserContext.Id, isAppro, out msg);
+            var flag = _eventService.Check(id, isAppro, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 

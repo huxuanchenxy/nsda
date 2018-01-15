@@ -31,7 +31,23 @@ namespace nsda.Web.Areas.player.Controllers
             return View(detail);
         }
 
+        //报名页面
+        public ActionResult signup()
+        {
+            var data = _eventService.EventCondition();
+            ViewBag.Condition = data;
+            return View();
+        }
+
         #region ajax
+        //邀请组队成员
+        [HttpGet]
+        public ContentResult invitation(string keyvalue,int eventId)
+        {
+            var data = _playerSignUpService.Invitation(keyvalue, eventId, UserContext.WebUserContext.Id);
+            return Result(true, "", data);
+        }
+
         //当前比赛列表
         [HttpGet]
         public ContentResult current()
@@ -61,7 +77,7 @@ namespace nsda.Web.Areas.player.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _playerSignUpService.IsAcceptTeam(id, UserContext.WebUserContext.Id,isAgree, out msg);
+            var flag = _playerSignUpService.IsAcceptTeam(id,isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -73,7 +89,7 @@ namespace nsda.Web.Areas.player.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _playerSignUpService.ReplaceTeammate(id, UserContext.WebUserContext.Id, newMemberId, out msg);
+            var flag = _playerSignUpService.ReplaceTeammate(id, newMemberId, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 

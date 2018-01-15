@@ -46,7 +46,14 @@ namespace nsda.Web.Controllers
         public ContentResult listevent(PlayerOrRefereeEventQueryRequest request)
         {
             var data = _eventService.PlayerOrRefereeEvent(request);
-            return Result(true,string.Empty,data);
+            var res = new ResultDto<PlayerOrRefereeEventResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         //国家

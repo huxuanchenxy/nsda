@@ -60,7 +60,7 @@ namespace nsda.Services.admin
                 if (request.CreateEnd.HasValue)
                 {
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and createTime<=@CreateEnd");
+                    sb.Append("  and createtime<=@CreateEnd");
                 }
                 int totalCount = 0;
                 list = _dbContext.Page<EmailLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);

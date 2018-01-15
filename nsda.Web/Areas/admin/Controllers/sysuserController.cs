@@ -88,7 +88,7 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult isenable(int id,bool isEnable)
         {
             var msg = string.Empty;
-            var flag = _sysUserService.IsEnable(id, UserContext.SysUserContext.Id, isEnable, out msg);
+            var flag = _sysUserService.IsEnable(id, isEnable,UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 

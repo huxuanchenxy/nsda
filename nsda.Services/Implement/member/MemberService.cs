@@ -71,6 +71,14 @@ namespace nsda.Services.member
                     return flag;
                 }
 
+                if (request.MemberType == MemberTypeEm.选手)
+                {
+                    if (request.PlayerEdu == null || request.PlayerEdu.SchoolId <= 0)
+                    {
+                        msg = "请新增教育经历";
+                        return flag;
+                    }
+                }
                 t_member member = InsertValidate(request, out msg);
                 if (msg.IsNotEmpty())
                 {
@@ -97,14 +105,25 @@ namespace nsda.Services.member
                 //如果是选手  填了教育经验
                 if (request.MemberType == MemberTypeEm.选手)
                 {
-                    if (request.PlayerEdu != null && request.PlayerEdu.SchoolId > 0)
+                    _dbContext.Insert(new t_playereduexper
                     {
-                        _dbContext.Insert(new t_playereduexper
+                        enddate = request.PlayerEdu.EndDate,
+                        memberId = memberId,
+                        schoolId = request.PlayerEdu.SchoolId,
+                        startdate = request.PlayerEdu.StartDate
+                    });  
+                }
+
+                if (request.MemberType == MemberTypeEm.裁判)
+                {
+                    if (request.EventId != null && request.EventId > 0)
+                    {
+                        _dbContext.Insert(new t_referee_signup
                         {
-                            enddate = request.PlayerEdu.EndDate,
-                            memberId = memberId,
-                            schoolId = request.PlayerEdu.SchoolId,
-                            startdate = request.PlayerEdu.StartDate
+                           eventId=(int)request.EventId,
+                           isTemp=false,
+                           memberId =memberId,
+                           refereeSignUpStatus=RefereeSignUpStatusEm.待审核  
                         });
                     }
                 }
@@ -244,7 +263,7 @@ namespace nsda.Services.member
                         msg = "姓/名不能为空";
                         return member;
                     }
-                    if (!request.CardType.HasValue)
+                    if (request.CardType==null)
                     {
                         msg = "请选择证件类型";
                         return member;
@@ -654,7 +673,7 @@ namespace nsda.Services.member
         }
 
         //审核赛事管理员账号
-        public bool Check(int id, int sysUserId, string remark, bool isAppro, out string msg)
+        public bool Check(int id, string remark, bool isAppro, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -734,12 +753,7 @@ namespace nsda.Services.member
                 SessionCookieUtility.RemoveSession($"webusersession_{id}");
             }
         }
-        /// <summary>
-        /// 选手或教练下拉框
-        /// </summary>
-        /// <param name="memberType"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        // 教练下拉框
         public List<MemberSelectResponse> Select(MemberTypeEm memberType, string key)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();

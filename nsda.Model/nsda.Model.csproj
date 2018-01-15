@@ -63,11 +63,9 @@
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
     <Compile Include="dto\request\PlayerOrRefereeEventQueryRequest.cs" />
     <Compile Include="dto\request\PlayerPointsRecordQueryRequest.cs" />
-    <Compile Include="dto\request\PlayerSignUpListQueryRequest.cs" />
     <Compile Include="dto\request\PlayerTrainerRequest.cs" />
     <Compile Include="dto\request\ProvinceRequest.cs" />
     <Compile Include="dto\request\MemberRequest.cs" />
-    <Compile Include="dto\request\RefereeSignUpListQueryRequest.cs" />
     <Compile Include="dto\request\RefereeSignUpQueryRequest.cs" />
     <Compile Include="dto\request\SchoolRequest.cs" />
     <Compile Include="dto\request\PlayerSignUpRequest.cs" />
@@ -81,6 +79,7 @@
     <Compile Include="dto\response\CurrentEventResponse.cs" />
     <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
+    <Compile Include="dto\response\EventConditionResponse.cs" />
     <Compile Include="dto\response\EventResponse.cs" />
     <Compile Include="dto\response\EventRoomResponse.cs" />
     <Compile Include="dto\response\EventScoreResponse.cs" />

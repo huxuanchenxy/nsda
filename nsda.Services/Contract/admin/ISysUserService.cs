@@ -31,6 +31,6 @@ namespace nsda.Services.admin
         //1.7 系统用户详情
         SysUserResponse Detail(int id);
         //1.8 启/禁用账号
-        bool IsEnable(int id, int sysUserId, bool isEnable, out string msg);
+        bool IsEnable(int id, bool isEnable, int sysUserId, out string msg);
     }
 }

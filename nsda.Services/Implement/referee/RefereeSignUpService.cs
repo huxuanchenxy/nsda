@@ -77,49 +77,6 @@ namespace nsda.Services.Implement.referee
             return flag;
         }
 
-        //裁判报名列表
-        public List<RefereeSignUpResponse> List(RefereeSignUpQueryRequest request)
-        {
-            List<RefereeSignUpResponse> list = new List<RefereeSignUpResponse>();
-            try
-            {
-                StringBuilder sb = new StringBuilder(@"select a.id Id,b.id EventId,b.name EventName,b.starteventdate StartEventDate,c.name CityName,
-                                                        endeventdate EndEventDate,eventType EventType,eventStatus EventStatus,a.refereeSignUpStatus SignUpStatus
-                                                        from t_referee_signup a
-                                                        inner join t_event b on a.eventId=b.id
-                                                        inner join t_city  c on b.cityId=c.id
-                                                        where a.isdelete=0 and a.memberId=@MemberId");
-                if (request.EventStartDate.HasValue)
-                {
-                    sb.Append(" and b.starteventdate>@EventStartDate ");
-                }
-                if (request.EventEndDate.HasValue)
-                {
-                    request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append(" and b.endeventdate<@EventEndDate ");
-                }
-                if (request.CountryId.HasValue)
-                {
-                    sb.Append(" and b.countryId=@CountryId ");
-                }
-                if (request.ProvinceId.HasValue)
-                {
-                    sb.Append(" and b.provinceId=@ProvinceId ");
-                }
-                if (request.CityId.HasValue)
-                {
-                    sb.Append(" and b.cityId=@CityId ");
-                }
-                int totalCount = 0;
-                list = _dbContext.Page<RefereeSignUpResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("RefereeSignUpService.List", ex);
-            }
-            return list;
-        }
         //当前裁判比赛列表
         public List<CurrentEventResponse> CurrentRefereeEvent(int memberId)
         {
@@ -138,7 +95,7 @@ namespace nsda.Services.Implement.referee
             return list;
         }
 
-        public List<RefereeSignUpListResponse> EventRefereeList(RefereeSignUpListQueryRequest request)
+        public List<RefereeSignUpListResponse> EventRefereeList(RefereeSignUpQueryRequest request)
         {
             List<RefereeSignUpListResponse> list = new List<RefereeSignUpListResponse>();
             try

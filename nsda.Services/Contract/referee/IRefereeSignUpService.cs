@@ -16,10 +16,9 @@ namespace nsda.Services.Contract.referee
     {
         // 申请当裁判
         bool Apply(int eventId, int memberId, out string msg);
-        List<RefereeSignUpResponse> List(RefereeSignUpQueryRequest request);
         //裁判获取当天比赛信息
         List<CurrentEventResponse> CurrentRefereeEvent(int memberId);
         //赛事裁判报名列表
-        List<RefereeSignUpListResponse> EventRefereeList(RefereeSignUpListQueryRequest request);
+        List<RefereeSignUpListResponse> EventRefereeList(RefereeSignUpQueryRequest request);
     }
 }

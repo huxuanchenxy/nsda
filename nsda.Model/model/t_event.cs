@@ -92,8 +92,6 @@ namespace nsda.Models
     
         public EventTypeEm eventType { get; set; }
     
-        public EventCategoryEm eventCategory { get; set; }
-    
         public EventLevelEm? eventLevel { get; set; }
     
         /// <summary>

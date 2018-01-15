@@ -10,6 +10,7 @@ namespace nsda.Model.dto.request
 {
     public class PlayerOrRefereeEventQueryRequest:PageQuery
     {
+        public int? CountryId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         /// <summary>
@@ -20,7 +21,6 @@ namespace nsda.Model.dto.request
         /// 比赛时间区间
         /// </summary>
         public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
         /// <summary>
         /// 比赛编码或名称
         /// </summary>

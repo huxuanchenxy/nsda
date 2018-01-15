@@ -61,7 +61,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //2.0 管理员审核处理
-        public bool Process(int id, int sysUserId, string remark, bool isAppro, out string msg)
+        public bool Process(int id, string remark, bool isAppro, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -97,11 +97,11 @@ namespace nsda.Services.Implement.member
                 sb.Append(@"select a.*,b.completename OperUserName from t_memberextend a 
                             inner join  t_member b on a.memberId=b.id
                             where isdelete=0");
-                if (request.RoleType.HasValue)
+                if (request.RoleType.HasValue&&request.RoleType>0)
                 {
                     sb.Append(" and a.roleType = @RoleType");
                 }
-                if (request.Status.HasValue)
+                if (request.Status.HasValue&&request.Status>0)
                 {
                     sb.Append(" and a.memberExtendStatus = @Status");
                 }

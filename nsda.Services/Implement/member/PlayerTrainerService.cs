@@ -151,7 +151,7 @@ namespace nsda.Services.member
             return flag;
         }
         //是否同意 教练或者学生的申请
-        public bool IsAppro(int id, int memberId,bool isAppro, out string msg)
+        public bool IsAppro(int id,bool isAppro, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;

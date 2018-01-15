@@ -51,7 +51,6 @@ namespace nsda.Services.Implement.eventmanage
                         endeventdate = request.EndEventDate,
                         endrefunddate = request.EndRefundDate,
                         endsigndate = request.EndSignDate,
-                        eventCategory = request.EventCategory,
                         remark = request.Remark,
                         eventStatus = EventStatusEm.待审核,
                         eventType = request.EventType,
@@ -155,7 +154,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         // 审核赛事
-        public bool Check(int id, int sysUserId, bool isAppro, out string msg)
+        public bool Check(int id, bool isAppro, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -182,7 +181,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //停止报名
-        public bool IsOpen(int id, int memberId, bool isOpen, out string msg)
+        public bool IsOpen(int id, bool isOpen, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -227,7 +226,6 @@ namespace nsda.Services.Implement.eventmanage
                         EndEventDate = tevent.endeventdate,
                         EndRefundDate = tevent.endrefunddate,
                         EndSignDate = tevent.endsigndate,
-                        EventCategory = tevent.eventCategory,
                         EventLevel = tevent.eventLevel,
                         Filepath = tevent.filepath,
                         EventStatus = tevent.eventStatus,
@@ -276,15 +274,19 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 StringBuilder sb = new StringBuilder($@"select * from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) ");
-                if (request.ProvinceId.HasValue)
+                if (request.CountryId.HasValue&&request.CountryId>0)
                 {
-                    sb.Append(" and provinceId=@provinceId ");
+                    sb.Append(" and countryId=@CountryId ");
                 }
-                if (request.CityId.HasValue)
+                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
+                {
+                    sb.Append(" and provinceId=@ProvinceId ");
+                }
+                if (request.CityId.HasValue && request.CityId > 0)
                 {
                     sb.Append(" and cityId=@CityId ");
                 }
-                if (request.EventLevel.HasValue)
+                if (request.EventLevel.HasValue && request.EventLevel > 0)
                 {
                     sb.Append(" and eventLevel=@EventLevel ");
                 }
@@ -295,12 +297,9 @@ namespace nsda.Services.Implement.eventmanage
                 }
                 if (request.StartDate.HasValue)
                 {
-                    sb.Append(" and starteventtime >= @StartDate");
-                }
-                if (request.EndDate.HasValue)
-                {
-                    request.EndDate = request.EndDate.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and starteventtime <= @EndDate");
+                    DateTime dt = Convert.ToDateTime(request.StartDate);
+                    ;
+                    sb.Append($" and starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerOrRefereeEventResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
@@ -364,12 +363,12 @@ namespace nsda.Services.Implement.eventmanage
                 }
                 if (request.EventStartDate.HasValue)
                 {
-                    sb.Append(" and starteventtime >= @EventStartDate");
+                    sb.Append(" and starteventdate >= @EventStartDate");
                 }
                 if (request.EventEndDate.HasValue)
                 {
                     request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and starteventtime <= @EventEndDate");
+                    sb.Append("  and starteventdate <= @EventEndDate");
                 }
                 int totalCount = 0;
                 list = _dbContext.Page<EventResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
@@ -378,6 +377,27 @@ namespace nsda.Services.Implement.eventmanage
             catch (Exception ex)
             {
                 LogUtils.LogError("EventService.ManageEventList", ex);
+            }
+            return list;
+        }
+        //赛事查询条件
+        public List<EventConditionResponse> EventCondition()
+        {
+            List<EventConditionResponse> list = new List<EventConditionResponse>();
+            try
+            {
+                var sql = $@"select a.isInter IsInter,a.countryId CountryId,a.provinceId ProvinceId,a.cityId CityId,
+                            b.name CountryName,c.name ProvinceName,d.name CityName
+                            from t_event a
+                            inner join t_country b on a.countryId=b.id
+                            left join  t_province c on a.provinceId=b.id
+                            left join  t_city     d on a.cityId=d.id
+                            where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventnoquerystatus})";
+                list = _dbContext.Query<EventConditionResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.EventCondition", ex);
             }
             return list;
         }

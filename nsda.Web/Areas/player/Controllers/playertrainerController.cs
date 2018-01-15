@@ -74,7 +74,7 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult appro(int id, bool isAppro)
         {
             var msg = string.Empty;
-            var flag = _playerTrainerService.IsAppro(id, UserContext.WebUserContext.Id, isAppro, out msg);
+            var flag = _playerTrainerService.IsAppro(id, isAppro, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
         #endregion

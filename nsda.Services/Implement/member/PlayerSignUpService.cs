@@ -102,7 +102,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //是否接受组队
-        public bool IsAcceptTeam(int id, int memberId, bool isAgree, out string msg)
+        public bool IsAcceptTeam(int id, bool isAgree, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -153,7 +153,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //替换队友
-        public bool ReplaceTeammate(int id, int memberId, int newMemberId, out string msg)
+        public bool ReplaceTeammate(int id, int newMemberId, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -346,45 +346,6 @@ namespace nsda.Services.Implement.member
             }
             return flag;
         }
-        //选手报名列表
-        public List<PlayerSignUpResponse> List(PlayerSignUpQueryRequest request)
-        {
-            List<PlayerSignUpResponse> list = new List<PlayerSignUpResponse>();
-            try
-            {
-                StringBuilder sb = new StringBuilder();
-
-                if (request.EventStartDate.HasValue)
-                {
-                    sb.Append(" and b.starteventdate>@EventStartDate ");
-                }
-                if (request.EventEndDate.HasValue)
-                {
-                    request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append(" and b.endeventdate<@EventEndDate ");
-                }
-                if (request.CountryId.HasValue)
-                {
-                    sb.Append(" and b.countryId=@CountryId ");
-                }
-                if (request.ProvinceId.HasValue)
-                {
-                    sb.Append(" and b.provinceId=@ProvinceId ");
-                }
-                if (request.CityId.HasValue)
-                {
-                    sb.Append(" and b.cityId=@CityId ");
-                }
-                int totalCount = 0;
-                list = _dbContext.Page<PlayerSignUpResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("SignUpPlayerService.List", ex);
-            }
-            return list;
-        }
         //支付回调
         public void Callback(int memberId,int sourceId)
         {
@@ -404,7 +365,7 @@ namespace nsda.Services.Implement.member
             }
         }
         //审核退赛
-        public bool CheckRetire(int id,bool isAppro,out string msg)
+        public bool CheckRetire(int id,bool isAppro,int memberId,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -448,7 +409,7 @@ namespace nsda.Services.Implement.member
             return list;
         }
         //选手报名列表
-        public List<PlayerSignUpListResponse> EventPlayerList(PlayerSignUpListQueryRequest request)
+        public List<PlayerSignUpListResponse> EventPlayerList(PlayerSignUpQueryRequest request)
         {
             List<PlayerSignUpListResponse> list = new List<PlayerSignUpListResponse>();
             try
@@ -472,6 +433,21 @@ namespace nsda.Services.Implement.member
             catch (Exception ex)
             {
                 LogUtils.LogError("SignUpPlayerService.EventPlayerList", ex);
+            }
+            return list;
+        }
+
+        public List<MemberSelectResponse> Invitation(string keyvalue, int eventId, int memberId)
+        {
+            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
+            try
+            {
+                var sql= $@"";
+                list = _dbContext.Query<MemberSelectResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.Invitation", ex);
             }
             return list;
         }

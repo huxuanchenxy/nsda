@@ -197,11 +197,11 @@ namespace nsda.Services.Implement.admin
                     request.ChinessName = "%" + request.ChinessName + "%";
                     sb.Append(" and chinessname like @ChinessName");
                 }
-                if (request.ProvinceId.HasValue)
+                if (request.ProvinceId.HasValue&&request.ProvinceId > 0)
                 {
                     sb.Append(" and provinceId = @ProvinceId");
                 }
-                if (request.CityId.HasValue)
+                if (request.CityId.HasValue&&request.CityId > 0)
                 {
                     sb.Append(" and cityId = @CityId");
                 }

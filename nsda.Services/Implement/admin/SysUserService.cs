@@ -332,7 +332,7 @@ namespace nsda.Services.admin
             return detail;
         }
         //1.8 启/禁用账号
-        public bool IsEnable(int id, int sysUserId, bool isEnable, out string msg)
+        public bool IsEnable(int id, bool isEnable, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -358,7 +358,6 @@ namespace nsda.Services.admin
             }
             return flag;
         }
-
         /// <summary>
         /// 保存用户缓存
         /// </summary>
@@ -374,6 +373,5 @@ namespace nsda.Services.admin
                 LogUtils.LogError("SysUserService.SaveCurrentUser", ex);
             }
         }
-
     }
 }

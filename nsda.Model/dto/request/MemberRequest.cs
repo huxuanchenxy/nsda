@@ -101,6 +101,11 @@ namespace nsda.Model.dto.request
 
         //学校信息
         public PlayerEduExperRequest PlayerEdu { get; set; }
+
+        /// <summary>
+        /// 赛事id
+        /// </summary>
+        public int? EventId { get; set; }
     }
 
     public class MemberQueryRequest : PageQuery

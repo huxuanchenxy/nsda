@@ -25,5 +25,17 @@ namespace nsda.unittest
             };
             service.Insert(request);
         }
+
+        [TestMethod]
+        public void List()
+        {
+            var request = new LoginLogQueryRequest
+            {
+                PageSize = 1,
+                PageIndex = 1
+            };
+           var list= service.List(request);
+           Assert.Equals(request.Records, 3);
+        }
     }
 }
