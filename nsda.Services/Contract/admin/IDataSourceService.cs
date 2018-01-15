@@ -20,6 +20,6 @@ namespace nsda.Services.Contract.admin
         //4.0 资料详情
         DataSourceResponse Detail(int id);
         //5.0 资料列表
-        PagedList<DataSourceResponse> List(DataSourceQueryRequest request);
+        List<DataSourceResponse> List(DataSourceQueryRequest request);
     }
 }

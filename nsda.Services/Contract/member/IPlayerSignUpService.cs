@@ -27,8 +27,14 @@ namespace nsda.Services.Contract.member
         // 确认退赛
         bool ConfirmRetire(int id, int memberId, out string msg);
         // 比赛列表
-        PagedList<PlayerSignUpResponse> List(PlayerSignUpQueryRequest request);
+        List<PlayerSignUpResponse> List(PlayerSignUpQueryRequest request);
         // 支付成功回调
-        void Callback(int id);
+        void Callback(int memberId,int sourceId);
+        // 审核退赛
+        bool CheckRetire(int id, bool isAppro, out string msg);
+        //选手获取当天比赛信息
+        List<CurrentEventResponse> CurrentPlayerEvent(int memberId);
+        //选手报名列表
+        List<PlayerSignUpListResponse> EventPlayerList(PlayerSignUpListQueryRequest request);
     }
 }

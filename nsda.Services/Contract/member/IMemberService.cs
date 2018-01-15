@@ -26,7 +26,7 @@ namespace nsda.Services.member
         //实名认证回调 修改用户状态
         void CallBack(int id);
         //会员列表 
-        PagedList<MemberResponse> List(MemberQueryRequest request);
+        List<MemberResponse> List(MemberQueryRequest request);
         //删除会员信息
         bool Delete(int id, int sysUserId, out string msg);
         //重置密码
@@ -42,7 +42,7 @@ namespace nsda.Services.member
         // 会员详情
         MemberResponse Detail(int id);
         // 模糊查找选手
-        List<MemberSelectResponse> ListMember(MemberTypeEm memberType, string key);
+        List<MemberSelectResponse> Select(MemberTypeEm memberType, string key);
         //去支付
         bool GoPay(int memberId, out string msg);
         bool IsExist(string account);

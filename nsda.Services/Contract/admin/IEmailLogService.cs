@@ -18,6 +18,6 @@ namespace nsda.Services.admin
         //1.0 新增
         void Insert(EmailLogRequest request);
         //1.1 邮件日志列表
-        PagedList<EmailLogResponse> List(EmailLogQueryRequest request);
+        List<EmailLogResponse> List(EmailLogQueryRequest request);
     }
 }

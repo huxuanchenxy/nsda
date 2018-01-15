@@ -1,7 +1,9 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.member;
+using nsda.Utilities;
 using nsda.Web.Filter;
 using System;
 using System.Collections.Generic;
@@ -49,7 +51,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult edit(int id, int status)
+        public ContentResult editsettings(int id, int status)
         {
             var res = new Result<string>();
             string msg = string.Empty;
@@ -81,10 +83,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         // 赛事列表
         [HttpGet]
-        public ContentResult list(int eventId)
+        public ContentResult list(EventRoomQueryRequest request)
         {
-            var data = _eventRoomService.List(eventId);
-            return Result<string>(true, string.Empty);
+            var data = _eventRoomService.List(request);
+            var res = new ResultDto<EventRoomResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion 
     }

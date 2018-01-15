@@ -20,8 +20,8 @@ namespace nsda.Services.member
         bool Delete(int id, int memberId,out string msg);
         bool IsAppro(int id, int memberId, bool isAppro, out string msg);
         //3.0 教练查询 学生列表
-        PagedList<PlayerTrainerResponse> TrainerList(PlayerTrainerQueryRequest request);
+        List<PlayerTrainerResponse> TrainerList(PlayerTrainerQueryRequest request);
         //4.0 会员查询 教练列表
-        PagedList<PlayerTrainerResponse> MemberList(PlayerTrainerQueryRequest request);
+        List<PlayerTrainerResponse> MemberList(PlayerTrainerQueryRequest request);
     }
 }

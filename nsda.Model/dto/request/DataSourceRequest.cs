@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace nsda.Model.dto.request
         public string Remark { get; set; }
         public string FilePath { get; set; }
     }
-    public class DataSourceQueryRequest : PagedQuery
+    public class DataSourceQueryRequest : PageQuery
     {
         public string Title { get; set; }
         public string Remark { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace nsda.Model.dto.request
         public string Title { get; set; }
     }
 
-    public class VoteQueryRequest : PagedQuery
+    public class VoteQueryRequest : PageQuery
     {
         public string Title { get; set; }
         public string Remark { get; set; }

@@ -54,10 +54,10 @@ namespace nsda.Services.Implement.member
             return response;
         }
         //选手积分列表
-        public PagedList<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request, out decimal totalPoints)
+        public List<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request, out decimal totalPoints)
         {
             totalPoints = 0m;
-            PagedList<PlayerPointsRecordResponse> list = new PagedList<PlayerPointsRecordResponse>();
+            List<PlayerPointsRecordResponse> list = new List<PlayerPointsRecordResponse>();
             try
             {
                 StringBuilder sqljoin = new StringBuilder();
@@ -81,7 +81,9 @@ namespace nsda.Services.Implement.member
                                                                 left join t_province c on b.provinceId=c.id
                                                                 left join t_city d on b.cityId = d.id
                                                                 where a.isdelete=0 and a.memberId=@memberId ");
-                    list = _dbContext.Page<PlayerPointsRecordResponse>(sqlquery.Append(sqljoin).ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                    int totalCount = 0;
+                    list = _dbContext.Page<PlayerPointsRecordResponse>(sqlquery.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                    request.Records = totalCount;
                 }
             }
             catch (Exception ex)

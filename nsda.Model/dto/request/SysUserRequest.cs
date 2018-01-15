@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace nsda.Model.dto.request
         public string Mobile { get; set; }
     }
 
-    public class SysUserQueryRequest : PagedQuery
+    public class SysUserQueryRequest : PageQuery
     {
         public string Name { get; set; }
         public string Mobile { get; set; }

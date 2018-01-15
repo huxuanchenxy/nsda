@@ -13,7 +13,7 @@ namespace nsda.Services.Contract.admin
     {
         bool Insert(CityRequest request,int sysUserId,out string msg);
         bool Edit(CityRequest request, int sysUserId, out string msg);
-        PagedList<CityResponse> List(CityQueryRequest request);
+        List<CityResponse> List(CityQueryRequest request);
         bool Delete(int id, int sysUserId, out string msg);
         CityResponse Detail(int id);
         List<BaseDataResponse> City(int provinceId);

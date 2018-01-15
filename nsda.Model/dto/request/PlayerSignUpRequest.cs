@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace nsda.Model.dto.request
         public string GroupNum { get; set; }
     }
 
-    public class PlayerSignUpQueryRequest : PagedQuery
+    public class PlayerSignUpQueryRequest : PageQuery
     {
         public DateTime? EventStartDate { get; set; }
         public DateTime? EventEndDate { get; set; }

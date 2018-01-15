@@ -43,9 +43,9 @@ namespace nsda.Services.admin
             }
         }
         //1.1 系统操作日志列表
-        public  PagedList<SysOperLogResponse> List(SysOperLogQueryRequest request)
+        public  List<SysOperLogResponse> List(SysOperLogQueryRequest request)
         {
-            PagedList<SysOperLogResponse> list = new PagedList<SysOperLogResponse>();
+            List<SysOperLogResponse> list = new List<SysOperLogResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -66,7 +66,9 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     sb.Append("  and a.createTime<=@CreateEnd");
                 }
-                list = _dbContext.Page<SysOperLogResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<SysOperLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

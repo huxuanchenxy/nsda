@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace nsda.Model.dto.request
         public int MemberId { get; set; }
     }
 
-    public class PlayerEduExperQueryRequest : PagedQuery
+    public class PlayerEduExperQueryRequest : PageQuery
     {
         public int MemberId { get; set; }
     }

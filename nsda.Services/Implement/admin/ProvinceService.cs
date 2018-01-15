@@ -104,9 +104,9 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
 
-        public PagedList<ProvinceResponse> List(ProvinceQueryRequest request)
+        public List<ProvinceResponse> List(ProvinceQueryRequest request)
         {
-            PagedList<ProvinceResponse> list = new PagedList<ProvinceResponse>();
+            List<ProvinceResponse> list = new List<ProvinceResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -120,7 +120,9 @@ namespace nsda.Services.Implement.admin
                 {
                     sb.Append(" and a.countryId=@CountryId ");
                 }
-                list = _dbContext.Page<ProvinceResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<ProvinceResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,6 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -25,7 +27,14 @@ namespace nsda.Web.Areas.player.Controllers
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerTrainerService.MemberList(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<PlayerTrainerResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         //2 新增
         [HttpPost]

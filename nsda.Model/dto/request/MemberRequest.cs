@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,7 +103,7 @@ namespace nsda.Model.dto.request
         public PlayerEduExperRequest PlayerEdu { get; set; }
     }
 
-    public class MemberQueryRequest : PagedQuery
+    public class MemberQueryRequest : PageQuery
     {
         public string Mobile { get; set; }
         public string Account { get; set; }

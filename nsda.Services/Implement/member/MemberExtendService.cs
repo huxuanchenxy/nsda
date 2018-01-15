@@ -35,10 +35,12 @@ namespace nsda.Services.Implement.member
             msg = string.Empty;
             try
             {
-                var extend = _dbContext.Select<t_memberextend>(c => c.memberId == request.MemberId && c.memberExtendStatus != MemberExtendStatusEm.拒绝 && c.role == request.RoleType).ToList();
-                if (extend != null && extend.Count > 0)
+                var extend = _dbContext.Select<t_memberextend>(c => c.memberId == request.MemberId  && c.role == request.RoleType).FirstOrDefault();
+                if (extend != null)
                 {
-                    msg = "已有您的申请，请等待管理员的审核";
+                    extend.updatetime = DateTime.Now;
+                    extend.memberExtendStatus = MemberExtendStatusEm.待审核;
+                    _dbContext.Update(extend);
                 }
                 else
                 {
@@ -86,9 +88,9 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //3.0 申请列表
-        public PagedList<MemberExtendResponse> List(MemberExtendQueryRequest request)
+        public List<MemberExtendResponse> List(MemberExtendQueryRequest request)
         {
-            PagedList<MemberExtendResponse> list = new PagedList<MemberExtendResponse>();
+            List<MemberExtendResponse> list = new List<MemberExtendResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -103,7 +105,24 @@ namespace nsda.Services.Implement.member
                 {
                     sb.Append(" and a.memberExtendStatus = @Status");
                 }
-                list = _dbContext.Page<MemberExtendResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<MemberExtendResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberExtendService.List", ex);
+            }
+            return list;
+        }
+
+        public List<RoleEm> List(int memberId)
+        {
+            List<RoleEm> list = new List<RoleEm>();
+            try
+            {
+                var sql = $" select role from t_memberextend  where isdelete=0 and memberId={memberId}";
+                list = _dbContext.Query<RoleEm>(sql).ToList();
             }
             catch (Exception ex)
             {

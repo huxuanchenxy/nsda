@@ -20,8 +20,8 @@ namespace nsda.Services.Contract.admin
         //4.0 赛事评分表详情
         EventScoreResponse Detail(int id);
         //5.0 赛事评分表列表
-        PagedList<EventScoreResponse> List(EventScoreQueryRequest request);
+        List<EventScoreResponse> List(EventScoreQueryRequest request);
         //6.0 选手查询评分liebiao 
-        PagedList<EventScoreResponse> PlayerList(PlayerEventScoreQueryRequest request);
+        List<EventScoreResponse> PlayerList(PlayerEventScoreQueryRequest request);
     }
 }

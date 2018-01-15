@@ -1,4 +1,6 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.Contract.admin;
 using nsda.Services.member;
 using nsda.Utilities;
@@ -58,8 +60,16 @@ namespace nsda.Web.Areas.player.Controllers
         [HttpGet]
         public ContentResult list(PlayerEduExperQueryRequest request)
         {
+            request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerEduExperService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<PlayerEduExperResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         #endregion

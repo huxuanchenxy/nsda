@@ -19,6 +19,6 @@ namespace nsda.Services.admin
         //1.0 新增
         void Insert(LoginLogRequest request);
         //1.1 登录日志列表
-        PagedList<LoginLogResponse> List(LoginLogQueryRequest request);
+        List<LoginLogResponse> List(LoginLogQueryRequest request);
     }
 }

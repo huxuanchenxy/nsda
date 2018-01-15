@@ -160,9 +160,9 @@ namespace nsda.Services.Implement.admin
             return response;
         }
 
-        public PagedList<DataSourceResponse> List(DataSourceQueryRequest request)
+        public List<DataSourceResponse> List(DataSourceQueryRequest request)
         {
-            PagedList<DataSourceResponse> list = new PagedList<DataSourceResponse>();
+            List<DataSourceResponse> list = new List<DataSourceResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -177,7 +177,9 @@ namespace nsda.Services.Implement.admin
                     request.Remark = "%" + request.Remark + "%";
                     sb.Append(" and remark like @Remark");
                 }
-                list = _dbContext.Page<DataSourceResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<DataSourceResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

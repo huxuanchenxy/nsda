@@ -1,6 +1,9 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.admin;
 using nsda.Services.Contract.member;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +63,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult emailloglist(EmailLogQueryRequest request)
         {
             var data = _emailLogService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<EmailLogResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion
     }

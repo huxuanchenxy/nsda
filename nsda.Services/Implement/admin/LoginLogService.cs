@@ -43,9 +43,9 @@ namespace nsda.Services.admin
             }
         }
         //1.1 登录日志列表
-        public PagedList<LoginLogResponse> List(LoginLogQueryRequest request)
+        public List<LoginLogResponse> List(LoginLogQueryRequest request)
         {
-            PagedList<LoginLogResponse> list = new PagedList<LoginLogResponse>();
+            List<LoginLogResponse> list = new List<LoginLogResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -68,7 +68,9 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     sb.Append("  and createTime<=@CreateEnd");
                 }
-                list = _dbContext.Page<LoginLogResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<LoginLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
@@ -33,6 +34,14 @@ namespace nsda.Web.Areas.referee.Controllers
             _eventSignService = eventSignService;
         }
 
+        //当前比赛列表
+        [HttpGet]
+        public ContentResult current()
+        {
+            var data = _refereeSignUpService.CurrentRefereeEvent(UserContext.WebUserContext.Id);
+            return Result(true,"",data);
+        }
+
         //签到页面
         public ActionResult signview(int eventId)
         {
@@ -41,16 +50,6 @@ namespace nsda.Web.Areas.referee.Controllers
         }
 
         #region ajax
-        // 赛事列表
-        [HttpGet]
-        public ContentResult listevent(PlayerOrRefereeEventQueryRequest request)
-        {
-            request.MemberId = UserContext.WebUserContext.Id;
-            request.IsReferee = true;
-            var data = _eventService.PlayerOrRefereeEvent(request);
-            return Result<string>(true, string.Empty);
-        }
-
         //申请做裁判
         [HttpPost]
         [AjaxOnly]

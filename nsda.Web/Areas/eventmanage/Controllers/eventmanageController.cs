@@ -1,7 +1,9 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
+using nsda.Services.Contract.referee;
 using nsda.Services.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -19,15 +21,75 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         IEventService _eventService;
         IMemberTempService _memberTempService;
         IEventSignService _eventSignService;
-        public eventmanageController(IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService)
+        IPlayerSignUpService _playerSignUpService;
+        IRefereeSignUpService _refereeSignUpService;
+        public eventmanageController(IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
         {
             _memberService = memberService;
             _eventService = eventService;
             _memberTempService = memberTempService;
             _eventSignService = eventSignService;
+            _playerSignUpService = playerSignUpService;
+            _refereeSignUpService = refereeSignUpService;
         }
 
         #region ajax
+        //新增赛事
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ContentResult insertevent(EventRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventService.Insert(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //编辑赛事
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ContentResult editevent(EventRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventService.Edit(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //是否开启报名
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult isopen(int id,bool isOpen)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventService.IsOpen(id, UserContext.WebUserContext.Id, isOpen, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //赛事列表
+        [HttpGet]
+        public ContentResult listevent(EventQueryRequest request)
+        {
+            var data = _eventService.EventList(request);
+            var res = new ResultDto<EventResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+
         //新增临时选手
         [HttpPost]
         [AjaxOnly]
@@ -36,7 +98,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _memberTempService.InsertTempPlayer(request, out msg);
+            var flag = _memberTempService.InsertTempPlayer(request, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -48,7 +110,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _memberTempService.InsertTempReferee(request, out msg);
+            var flag = _memberTempService.InsertTempReferee(request, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -66,18 +128,64 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         //选手签到列表
         [HttpGet]
-        public ContentResult playersignlist(int eventId, string key)
+        public ContentResult playersignlist(MemberSignQueryRequest request)
         {
-            _eventSignService.PlayerSignList(eventId,key);
-            return Result<string>(true, string.Empty);
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data=_eventSignService.PlayerSignList(request);
+            var res = new ResultDto<MemberSignResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         //裁判签到列表
         [HttpGet]
-        public ContentResult refereesignlist(int eventId, string key)
+        public ContentResult refereesignlist(MemberSignQueryRequest request)
         {
-             _eventSignService.RefereeSignList(eventId, key);
-            return Result<string>(true, string.Empty);
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data=_eventSignService.RefereeSignList(request);
+            var res = new ResultDto<MemberSignResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        //选手报名列表
+        [HttpGet]
+        public ContentResult listplayersignup(PlayerSignUpListQueryRequest request)
+        {
+            var data = _playerSignUpService.EventPlayerList(request);
+            var res = new ResultDto<PlayerSignUpListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        //裁判报名列表
+        [HttpGet]
+        public ContentResult listrefereesignup(RefereeSignUpListQueryRequest request)
+        {
+            var data = _refereeSignUpService.EventRefereeList(request);
+            var res = new ResultDto<RefereeSignUpListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion
 

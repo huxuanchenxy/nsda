@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using nsda.Model.dto.response;
 using Dapper;
+using nsda.Model.dto.request;
 
 namespace nsda.Services.Implement.eventmanage
 {
@@ -56,7 +57,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-        //赛事管理员 批量签到/味道
+        //赛事管理员 批量签到/未到
         public bool BatchSign(List<int> id,int eventId,bool isNormal,out string msg)
         {
             bool flag = false;
@@ -80,26 +81,58 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //选手签到列表
-        public void PlayerSignList(int eventId, string key)
+        public List<MemberSignResponse> PlayerSignList(MemberSignQueryRequest request)
         {
+            List<MemberSignResponse> list = new List<MemberSignResponse>();
             try
             {
+                StringBuilder sb = new StringBuilder($@"select * from t_eventsign a 
+                                                       inner join t_member b on a.memberId=b.id
+                                                       inner join t_eventId c on a.eventId=c.id
+                                                       where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
+                                                       and a.eventId=@EventId and a.groupId=@GroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
+                                                    ");
+                if (request.KeyValue.IsNotEmpty())
+                {
+                    request.KeyValue = "%" + request.KeyValue + "%";
+                    sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
+                }
+                int totalCount = 0;
+                list = _dbContext.Page<MemberSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {
                 LogUtils.LogError("EventSignService.PlayerSignList", ex);
             }
+            return list;
         }
         //裁判签到列表
-        public void RefereeSignList(int eventId, string key)
+        public List<MemberSignResponse> RefereeSignList(MemberSignQueryRequest request)
         {
+            List<MemberSignResponse> list = new List<MemberSignResponse>();
             try
             {
+                StringBuilder sb = new StringBuilder($@"select * from t_eventsign a 
+                                                       inner join t_member b on a.memberId=b.id
+                                                       inner join t_eventId c on a.eventId=c.id
+                                                       where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
+                                                       and a.eventId=@EventId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.裁判}
+                                                    ");
+                if (request.KeyValue.IsNotEmpty())
+                {
+                    request.KeyValue = "%" +request.KeyValue +"%";
+                    sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
+                }
+                int totalCount = 0;
+                list = _dbContext.Page<MemberSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {
                 LogUtils.LogError("EventSignService.RefereeSignList", ex);
             }
+            return list;
         }
 
         public SignResponse GetSign(int eventId, int memberId)

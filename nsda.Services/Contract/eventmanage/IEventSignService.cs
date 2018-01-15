@@ -1,4 +1,5 @@
-﻿using nsda.Model.dto.response;
+﻿using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Utilities;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace nsda.Services.Contract.eventmanage
         //赛事管理员批量签到
         bool BatchSign(List<int> id,int eventId,bool isNormal,out string msg);
         //选手签到列表
-        void PlayerSignList(int eventId,string key);
+        List<MemberSignResponse> PlayerSignList(MemberSignQueryRequest request);
         //裁判签到列表
-        void RefereeSignList(int eventId, string key);
+        List<MemberSignResponse> RefereeSignList(MemberSignQueryRequest request);
         //选手 裁判获取签到信息
         SignResponse GetSign(int eventId,int memberId);
     }

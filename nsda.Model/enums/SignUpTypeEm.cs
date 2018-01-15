@@ -9,6 +9,7 @@ namespace nsda.Model.enums
     public enum SignUpTypeEm
     {
         邀请人 = 1,
-        被邀请人 = 2
+        被邀请人 = 2,
+        临时添加=3
     }
 }

@@ -177,9 +177,9 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
         //学校列表
-        public PagedList<SchoolResponse> List(SchoolQueryRequest request)
+        public List<SchoolResponse> List(SchoolQueryRequest request)
         {
-            PagedList<SchoolResponse> list = new PagedList<SchoolResponse>();
+            List<SchoolResponse> list = new List<SchoolResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -205,7 +205,9 @@ namespace nsda.Services.Implement.admin
                 {
                     sb.Append(" and cityId = @CityId");
                 }
-                list = _dbContext.Page<SchoolResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<SchoolResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

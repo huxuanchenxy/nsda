@@ -17,7 +17,7 @@ namespace nsda.Services.Implement.member
     /// <summary>
     /// 临时会员管理
     /// </summary>
-    public class MemberTempService: IMemberTempService
+    public class MemberTempService : IMemberTempService
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
@@ -30,7 +30,7 @@ namespace nsda.Services.Implement.member
         }
 
         //新增临时选手
-        public bool InsertTempPlayer(List<TempPlayerRequest> request, out string msg)
+        public bool InsertTempPlayer(List<TempPlayerRequest> request, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -103,50 +103,55 @@ namespace nsda.Services.Implement.member
                         completename = item.Name,
                         memberType = MemberTypeEm.临时选手
                     };
-                    int memberId=_dbContext.Insert(member).ToObjInt();
-                    _dbContext.Insert(new t_memberpoints {
-                         memberId=memberId,
-                         points=0,
-                         eventPoints=0,
-                         servicePoints=0
+                    int memberInsertId = _dbContext.Insert(member).ToObjInt();
+                    _dbContext.Insert(new t_memberpoints
+                    {
+                        memberId = memberId,
+                        points = 0,
+                        eventPoints = 0,
+                        servicePoints = 0
                     });
-                    _dbContext.Insert(new t_membertemp {
+                    _dbContext.Insert(new t_membertemp
+                    {
                         code = groupnum,
                         contactmobile = item.ContactMobile,
                         email = item.Email,
                         eventId = item.EventId,
-                        memberId = memberId,
+                        memberId = memberInsertId,
                         tempStatus = TempStatusEm.待绑定,
-                        tempType = TempTypeEm.临时裁判
+                        tempType = TempTypeEm.临时选手
                     });
                     //组队表
-                    _dbContext.Insert(new t_player_signup {
-                         groupnum=groupnum,
-                         eventId=item.EventId,
-                         groupId=item.GroupId,
-                         isTemp=true,
-                         memberId=memberId,
-                         signfee= t_event.signfee,
-                         signUpStatus=SignUpStatusEm.组队成功,
-                         signUpType=SignUpTypeEm.被邀请人
+                    _dbContext.Insert(new t_player_signup
+                    {
+                        groupnum = groupnum,
+                        eventId = item.EventId,
+                        groupId = item.GroupId,
+                        isTemp = true,
+                        memberId = memberInsertId,
+                        signfee = t_event.signfee,
+                        signUpStatus = SignUpStatusEm.报名成功,
+                        signUpType = SignUpTypeEm.临时添加
                     });
 
                     if (item.PlayerEdu != null && item.PlayerEdu.SchoolId > 0)
                     {
-                        _dbContext.Insert(new t_playereduexper {
-                             startdate=item.PlayerEdu.StartDate,
-                             enddate=item.PlayerEdu.EndDate,
-                             memberId=memberId,
-                             schoolId=item.PlayerEdu.SchoolId 
+                        _dbContext.Insert(new t_playereduexper
+                        {
+                            startdate = item.PlayerEdu.StartDate,
+                            enddate = item.PlayerEdu.EndDate,
+                            memberId = memberInsertId,
+                            schoolId = item.PlayerEdu.SchoolId
                         });
                     }
 
                     //插入签到信息
-                    _dbContext.Insert(new t_eventsign {
+                    _dbContext.Insert(new t_eventsign
+                    {
                         eventId = item.EventId,
                         eventSignStatus = EventSignStatusEm.已签到,
                         eventSignType = EventSignTypeEm.选手,
-                        memberId = memberId,
+                        memberId = memberInsertId,
                         signdate = t_event.starteventdate,
                         signtime = DateTime.Now
                     });
@@ -164,7 +169,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //新增临时裁判
-        public bool InsertTempReferee(TempRefereeRequest request, out string msg)
+        public bool InsertTempReferee(TempRefereeRequest request, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -191,46 +196,50 @@ namespace nsda.Services.Implement.member
 
                 _dbContext.BeginTransaction();
                 string code = _dataRepository.MemberRepo.RenderCode("tnsda");
-                t_member member = new t_member {
+                t_member member = new t_member
+                {
                     code = code,
-                    account=code,
-                    name=request.Name,
-                    pwd=request.ContactMobile,
-                    memberStatus=MemberStatusEm.已认证,
-                    completename=request.Name,
-                    memberType=MemberTypeEm.临时裁判
+                    account = code,
+                    name = request.Name,
+                    pwd = request.ContactMobile,
+                    memberStatus = MemberStatusEm.已认证,
+                    completename = request.Name,
+                    memberType = MemberTypeEm.临时裁判
                 };
-                int memberId = _dbContext.Insert(member).ToObjInt();
+                int memberInsertId = _dbContext.Insert(member).ToObjInt();
                 _dbContext.Insert(new t_memberpoints
                 {
-                    memberId = memberId,
+                    memberId = memberInsertId,
                     points = 0,
                     eventPoints = 0,
                     servicePoints = 0
                 });
-                _dbContext.Insert(new t_membertemp {
-                      code= member.code,
-                      contactmobile=request.ContactMobile,
-                      email=string.Empty,
-                      eventId=request.EventId,
-                      memberId=memberId,
-                      tempStatus=TempStatusEm.待绑定,
-                      tempType=TempTypeEm.临时裁判                            
+                _dbContext.Insert(new t_membertemp
+                {
+                    code = member.code,
+                    contactmobile = request.ContactMobile,
+                    email = string.Empty,
+                    eventId = request.EventId,
+                    memberId = memberInsertId,
+                    tempStatus = TempStatusEm.待绑定,
+                    tempType = TempTypeEm.临时裁判
                 });
-                _dbContext.Insert(new t_referee_signup {
-                    isTemp=true,
-                    eventId=request.EventId,
-                    memberId=memberId,
-                    refereeSignUpStatus=RefereeSignUpStatusEm.申请成功
+                _dbContext.Insert(new t_referee_signup
+                {
+                    isTemp = true,
+                    eventId = request.EventId,
+                    memberId = memberInsertId,
+                    refereeSignUpStatus = RefereeSignUpStatusEm.申请成功
                 });
 
-                _dbContext.Insert(new t_eventsign {
-                      eventId=request.EventId,
-                      eventSignStatus=EventSignStatusEm.已签到,
-                      eventSignType=EventSignTypeEm.裁判,
-                      memberId=memberId,
-                      signdate=t_event.starteventdate,
-                      signtime=DateTime.Now
+                _dbContext.Insert(new t_eventsign
+                {
+                    eventId = request.EventId,
+                    eventSignStatus = EventSignStatusEm.已签到,
+                    eventSignType = EventSignTypeEm.裁判,
+                    memberId = memberInsertId,
+                    signdate = t_event.starteventdate,
+                    signtime = DateTime.Now
                 });
                 _dbContext.CommitChanges();
                 flag = true;
@@ -268,7 +277,7 @@ namespace nsda.Services.Implement.member
                     return flag;
                 }
 
-                var data = _dbContext.Select<t_membertemp>(c => c.email == request.Email && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == Model.enums.TempTypeEm.临时选手 && c.tempStatus == Model.enums.TempStatusEm.待绑定).FirstOrDefault();
+                var data = _dbContext.Select<t_membertemp>(c => c.email == request.Email && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
                 if (data == null)
                 {
                     msg = "数据不存在，请核对后再操作";
@@ -291,15 +300,39 @@ namespace nsda.Services.Implement.member
                     }
                 }
 
-                t_order order = _dbContext.Select<t_order>(c=>c.memberId==data.memberId&&c.orderType==OrderTypeEm.临时选手绑定&&c.sourceId==data.id).FirstOrDefault();
+                t_order order = _dbContext.Select<t_order>(c => c.memberId == data.memberId && c.orderType == OrderTypeEm.临时选手绑定 && c.sourceId == data.id).FirstOrDefault();
                 if (order == null)//没创建过订单 
                 {
                     try
                     {
                         _dbContext.BeginTransaction();
                         //创建订单
-                        _dbContext.Insert(new t_order { });
-                        _dbContext.Insert(new t_orderdetail { });
+                        var orderid = _dbContext.Insert(new t_order
+                        {
+                            isNeedInvoice = false,
+                            mainOrderId = null,
+                            memberId = data.memberId,
+                            money = t_event.signfee,
+                            orderStatus = OrderStatusEm.等待支付,
+                            orderType = OrderTypeEm.临时选手绑定,
+                            payExpiryDate = DateTime.Now.AddYears(3),
+                            remark = "临时选手绑定",
+                            sourceId = data.id,
+                            totalcoupon = 0,
+                            totaldiscount = 0
+                        }).ToObjInt();
+                        _dbContext.Insert(new t_orderdetail
+                        {
+                            memberId = data.memberId,
+                            orderId = orderid,
+                            coupon = 0,
+                            discountprice = 0,
+                            money = t_event.signfee,
+                            productId = 0,
+                            name = $"{t_event.name}报名费",
+                            number = 1,
+                            unitprice = t_event.signfee
+                        });
                         //生成支付链接
                         data.tomemberId = request.MemberId;
                         data.updatetime = DateTime.Now;
@@ -318,8 +351,16 @@ namespace nsda.Services.Implement.member
                 else//创建过订单
                 {
                     //通过订单生成支付链接
+                    if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
+                    {
+
+                    }
+                    else
+                    {
+                        msg = "状态已改变";
+                    }
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -373,9 +414,9 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //临时会员数据列表
-        public PagedList<MemberTempResponse> List(TempMemberQueryRequest request)
+        public List<MemberTempResponse> List(TempMemberQueryRequest request)
         {
-            PagedList<MemberTempResponse> list = new PagedList<MemberTempResponse>();
+            List<MemberTempResponse> list = new List<MemberTempResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder(@"select a.*,b.completename  MemberName,c.completename  ToMemberName,d.name EventName  from t_membertemp a 
@@ -392,7 +433,9 @@ namespace nsda.Services.Implement.member
                 {
                     sb.Append(" and a.tempType=@TempType");
                 }
-                list = _dbContext.Page<MemberTempResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<MemberTempResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {
@@ -401,24 +444,34 @@ namespace nsda.Services.Implement.member
             return list;
         }
         // 支付回调 进行数据迁移
-        public void Callback(int id)
+        public void Callback(int memberId,int sourceId)
         {
             try
             {
-                t_membertemp temp = _dbContext.Get<t_membertemp>(id);
-                _dbContext.BeginTransaction();
-                t_memberpoints points = _dbContext.Select<t_memberpoints>(c => c.memberId == temp.memberId).FirstOrDefault();
-                _dbContext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
-                _dbContext.Execute($"update t_membertemp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
-                _dbContext.Execute($"update t_memberpointsrecord set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                _dbContext.Execute($"update t_memberpointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                _dbContext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.tomemberId} and isdelete=0");
-                //对垒表也要修改
-                _dbContext.CommitChanges();
+                t_membertemp temp = _dbContext.Get<t_membertemp>(sourceId);
+                if (temp != null&&temp.memberId==memberId)
+                {
+                    try
+                    {
+                        _dbContext.BeginTransaction();
+                        t_memberpoints points = _dbContext.Select<t_memberpoints>(c => c.memberId == temp.memberId).FirstOrDefault();
+                        _dbContext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
+                        _dbContext.Execute($"update t_membertemp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
+                        _dbContext.Execute($"update t_memberpointsrecord set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                        _dbContext.Execute($"update t_memberpointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                        _dbContext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.tomemberId} and isdelete=0");
+                        //对垒表也要修改
+                        _dbContext.CommitChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        _dbContext.Rollback();
+                        LogUtils.LogError("MemberTempService.CallbackTran", ex);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                _dbContext.Rollback();
                 LogUtils.LogError("MemberTempService.Callback", ex);
             }
         }

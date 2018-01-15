@@ -1,4 +1,5 @@
-﻿using nsda.Repository;
+﻿using nsda.Models;
+using nsda.Repository;
 using nsda.Services.admin;
 using nsda.Services.Contract.admin;
 using nsda.Services.Contract.member;
@@ -34,16 +35,30 @@ namespace nsda.Services.Implement.admin
             _memberTempService = memberTempService;
         }
 
+        // 支付回调
         public void Callback(string json)
         {
             try
             {
-                //1.0 解析查出订单号
-                //2.0 查询订单详情
-                //3.0 根据订单类型不同回调 认证回调 报名回调 
-                _memberService.CallBack(1);
-                _playerSignUpService.Callback(1);
-                _memberTempService.Callback(1);
+                int id = 0;
+                var order = _dbContext.Get<t_order>(id);
+                if (order != null)
+                {
+                    switch (order.orderType)
+                    {
+                        case Model.enums.OrderTypeEm.实名认证:
+                            _memberService.CallBack(order.memberId);
+                            break;
+                        case Model.enums.OrderTypeEm.临时选手绑定:
+                            _memberTempService.Callback(order.memberId,order.sourceId);
+                            break;
+                        case Model.enums.OrderTypeEm.赛事报名:
+                            _playerSignUpService.Callback(order.memberId,order.sourceId);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             catch (Exception ex)
             {

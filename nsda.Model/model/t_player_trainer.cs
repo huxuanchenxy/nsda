@@ -37,22 +37,22 @@ namespace nsda.Models
         /// <summary>
         /// 教练id
         /// </summary>
-        public int objMemberId { get; set; }
+        public int toMemberId { get; set; }
     
         /// <summary>
         /// 状态
         /// </summary>
-        public MemberTrainerStatusEm memberTrainerStatus { get; set; }
+        public PlayerTrainerStatusEm playerTrainerStatus { get; set; }
     
         /// <summary>
         /// 是否正面 1 选手绑定教练 2. 教练绑定选手
         /// </summary>
-        public bool IsPositive { get; set; }
+        public bool isPositive { get; set; }
     
         /// <summary>
         /// 是否是教练
         /// </summary>
-        public bool IsTrainer { get; set; }
+        public bool isTrainer { get; set; }
     
         public DateTime startdate { get; set; }
     

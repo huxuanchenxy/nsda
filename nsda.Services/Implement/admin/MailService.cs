@@ -46,13 +46,15 @@ namespace nsda.Services.Implement.admin
             }
         }
         // 站内信列表
-        public PagedList<MailResponse> List(MailQueryRequest request)
+        public List<MailResponse> List(MailQueryRequest request)
         {
-            PagedList<MailResponse> list = new PagedList<MailResponse>();
+            List<MailResponse> list = new List<MailResponse>();
             try
             {
                 var sql = $"select * from t_mail where isdelete=0 and memberId={request.MemberId}";
-                list = _dbContext.Page<MailResponse>(sql, request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<MailResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

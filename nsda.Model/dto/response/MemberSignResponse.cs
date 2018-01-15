@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nsda.Model.enums
+namespace nsda.Model.dto.response
 {
-    public enum MemberTrainerStatusEm
+    public class MemberSignResponse
     {
-        待确认 = 0,
-        已确认 = 1,
-        拒绝 = 2
     }
 }

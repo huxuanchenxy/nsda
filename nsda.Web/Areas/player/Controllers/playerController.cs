@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Services.Contract.admin;
 using nsda.Services.Contract.member;
@@ -35,25 +36,19 @@ namespace nsda.Web.Areas.player.Controllers
         }
 
         #region ajax
-        // 申请做裁判 或者教练
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult apply(MemberExtendRequest request)
-        {
-            request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _memberExtendService.Apply(request,out msg);
-            return Result<string>(flag, msg);
-        }
-
         //辩题资料下载
         [HttpGet]
         public ContentResult datasource(DataSourceQueryRequest request)
         {
             var data = _dataSourceService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<DataSourceResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         
         //评分单下载
@@ -62,15 +57,22 @@ namespace nsda.Web.Areas.player.Controllers
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var data = _eventScoreService.PlayerList(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<EventScoreResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         //模糊查询教练
         [HttpGet]
         public ContentResult listtrainer(string key)
         {
-            var data = _memberService.ListMember(MemberTypeEm.教练,key);
-            return Result<string>(true, string.Empty);
+            var data = _memberService.Select(MemberTypeEm.教练,key);
+            return Result(true, string.Empty,data);
         }
 
         //去认证
@@ -106,7 +108,14 @@ namespace nsda.Web.Areas.player.Controllers
             request.MemberId = UserContext.WebUserContext.Id;
             decimal totalPoints = 0m;
             var data = _memberPointsService.PlayerPointsRecord(request, out totalPoints);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<PlayerPointsRecordResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         //积分记录详情
@@ -114,7 +123,7 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult pointsrecorddetail(int recordId)
         {
             var data = _memberPointsService.PointsRecordDetail(recordId, UserContext.WebUserContext.Id);
-            return Result<string>(true, string.Empty);
+            return Result(true, string.Empty,data);
         }
         #endregion
 

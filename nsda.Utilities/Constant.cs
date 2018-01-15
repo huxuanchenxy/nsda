@@ -32,7 +32,9 @@ namespace nsda.Utilities
 
         public static readonly string EmailAccount = ConfigurationManager.AppSettings["fromaccount"];//邮件发送账号
         public static readonly string EmailPwd = ConfigurationManager.AppSettings["frompwd"];//邮件发送账号密码
-        public static readonly string email_smtp = ConfigurationManager.AppSettings["email_smtp"];
-        public static readonly string email_port = ConfigurationManager.AppSettings["email_port"];
+        public static readonly string Email_smtp = ConfigurationManager.AppSettings["email_smtp"];
+        public static readonly string Email_port = ConfigurationManager.AppSettings["email_port"];
+
+        public static readonly decimal AuthMoney = ConfigurationManager.AppSettings["authmoney"].ToObjDecimal();//实名认证金额
     }
 }

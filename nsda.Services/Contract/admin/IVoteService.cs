@@ -20,7 +20,7 @@ namespace nsda.Services.Contract.admin
         //删除投票辩题
         bool Delete(int id,int sysUserId,out string msg);
         //投票辩题列表
-        PagedList<VoteResponse> List(VoteQueryRequest request);
+        List<VoteResponse> List(VoteQueryRequest request);
         //投票
         bool Vote(int voteId, List<int> detailId, out string msg);
     }

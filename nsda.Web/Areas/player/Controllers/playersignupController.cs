@@ -32,14 +32,12 @@ namespace nsda.Web.Areas.player.Controllers
         }
 
         #region ajax
-        // 赛事列表
+        //当前比赛列表
         [HttpGet]
-        public ContentResult listevent(PlayerOrRefereeEventQueryRequest request)
+        public ContentResult current()
         {
-            request.MemberId = UserContext.WebUserContext.Id;
-            request.IsReferee = false;
-            var data = _eventService.PlayerOrRefereeEvent(request);
-            return Result<string>(true, string.Empty);
+            var data = _playerSignUpService.CurrentPlayerEvent(UserContext.WebUserContext.Id);
+            return Result(true, "", data);
         }
 
         //比赛报名
@@ -102,8 +100,6 @@ namespace nsda.Web.Areas.player.Controllers
             var flag = _eventSignService.Sign(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
-
-
         #endregion 
     }
 }

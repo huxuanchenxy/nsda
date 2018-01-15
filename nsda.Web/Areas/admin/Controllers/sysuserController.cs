@@ -1,4 +1,6 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.admin;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -94,7 +96,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult list(SysUserQueryRequest request)
         {
             var data = _sysUserService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<SysUserResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion
     }

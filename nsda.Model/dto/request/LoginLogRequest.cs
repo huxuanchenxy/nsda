@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace nsda.Model.dto.request
         public string LoginResult { get; set; }
     }
 
-    public class LoginLogQueryRequest:PagedQuery
+    public class LoginLogQueryRequest:PageQuery
     {
         public string Account { get; set; }
         public DataTypeEm DataType { get; set; }

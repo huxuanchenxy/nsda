@@ -294,9 +294,9 @@ namespace nsda.Services.Implement.admin
         }
 
         //分页查询辩题
-        public PagedList<VoteResponse> List(VoteQueryRequest request)
+        public List<VoteResponse> List(VoteQueryRequest request)
         {
-            PagedList<VoteResponse> list = new PagedList<VoteResponse>();
+            List<VoteResponse> list = new List<VoteResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -329,7 +329,9 @@ namespace nsda.Services.Implement.admin
                     request.VoteEndTime1 = request.VoteEndTime1.Value.AddDays(1).AddSeconds(-1);
                     sb.Append("  and voteEndTime<=@VoteEndTime2");
                 }
-                list = _dbContext.Page<VoteResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<VoteResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

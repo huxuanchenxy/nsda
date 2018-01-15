@@ -1,4 +1,6 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.Contract.member;
 using nsda.Services.member;
 using nsda.Utilities;
@@ -38,7 +40,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listmemberextend(MemberExtendQueryRequest request)
         {
             var data = _memberExtendService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<MemberExtendResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         //处理会员扩展
@@ -102,7 +111,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listmember(MemberQueryRequest request)
         {
             var data = _memberService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<MemberResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         //临时会员
@@ -110,7 +126,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listtempmember(TempMemberQueryRequest request)
         {
             var data = _memberTempService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<MemberTempResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion
     }

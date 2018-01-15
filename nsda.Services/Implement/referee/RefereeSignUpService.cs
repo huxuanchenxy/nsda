@@ -1,8 +1,10 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model;
+using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Models;
 using nsda.Repository;
+using nsda.Services.Contract.admin;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
 using nsda.Utilities;
@@ -23,11 +25,13 @@ namespace nsda.Services.Implement.referee
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
-        public RefereeSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        IMailService _mailService;
+        public RefereeSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,IMailService mailService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
+            _mailService = mailService;
         }
 
         //申请当裁判
@@ -74,9 +78,9 @@ namespace nsda.Services.Implement.referee
         }
 
         //裁判报名列表
-        public PagedList<RefereeSignUpResponse> List(RefereeSignUpQueryRequest request)
+        public List<RefereeSignUpResponse> List(RefereeSignUpQueryRequest request)
         {
-            PagedList<RefereeSignUpResponse> list = new PagedList<RefereeSignUpResponse>();
+            List<RefereeSignUpResponse> list = new List<RefereeSignUpResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder(@"select a.id Id,b.id EventId,b.name EventName,b.starteventdate StartEventDate,c.name CityName,
@@ -106,12 +110,58 @@ namespace nsda.Services.Implement.referee
                 {
                     sb.Append(" and b.cityId=@CityId ");
                 }
-
-                list = _dbContext.Page<RefereeSignUpResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<RefereeSignUpResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {
                 LogUtils.LogError("RefereeSignUpService.List", ex);
+            }
+            return list;
+        }
+        //当前裁判比赛列表
+        public List<CurrentEventResponse> CurrentRefereeEvent(int memberId)
+        {
+            List<CurrentEventResponse> list = new List<CurrentEventResponse>();
+            try
+            {
+                var sql = $@"select b.id EventId,b.name EventName,b.code EventCode from t_referee_signup a
+                             inner join t_event b on a.eventId=b.id
+                             where a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()}) and a.refereeSignUpStatus in ({ParamsConfig._refereestatus}) and  a.memberId={memberId}";
+                return _dbContext.Query<CurrentEventResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("RefereeSignUpService.CurrentRefereeEvent", ex);
+            }
+            return list;
+        }
+
+        public List<RefereeSignUpListResponse> EventRefereeList(RefereeSignUpListQueryRequest request)
+        {
+            List<RefereeSignUpListResponse> list = new List<RefereeSignUpListResponse>();
+            try
+            {
+                StringBuilder sb = new StringBuilder($@"select a.*,b.code MemberCode,b.completename MemberName from t_referee_signup a 
+                                                      inner join t_member b on a.memberId=b.id
+                                                      inner join t_event c on a.eventId=c.id
+                                                      where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
+                                                      and c.memberId=@MemberId and a.eventId=@EventId 
+                                                     ");
+
+                if (request.KeyValue.IsEmpty())
+                {
+                    request.KeyValue = "%" + request.KeyValue + "%";
+                    sb.Append(" and (code like @KeyValue or completename like @KeyValue)");
+                }
+                int totalCount = 0;
+                list = _dbContext.Page<RefereeSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("RefereeSignUpService.EventRefereeList", ex);
             }
             return list;
         }

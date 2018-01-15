@@ -163,13 +163,15 @@ namespace nsda.Services.Implement.admin
             return response;
         }
 
-        public PagedList<EventScoreResponse> List(EventScoreQueryRequest request)
+        public List<EventScoreResponse> List(EventScoreQueryRequest request)
         {
-            PagedList<EventScoreResponse> list = new PagedList<EventScoreResponse>();
+            List<EventScoreResponse> list = new List<EventScoreResponse>();
             try
             {
                 var sql = "select * from t_event_score where isdelete=0 and eventId=@EventId and groupId=@GroupId";
-                list = _dbContext.Page<EventScoreResponse>(sql, request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<EventScoreResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {
@@ -178,14 +180,16 @@ namespace nsda.Services.Implement.admin
             return list;
         }
 
-        public PagedList<EventScoreResponse> PlayerList(PlayerEventScoreQueryRequest request)
+        public List<EventScoreResponse> PlayerList(PlayerEventScoreQueryRequest request)
         {
-            PagedList<EventScoreResponse> list = new PagedList<EventScoreResponse>();
+            List<EventScoreResponse> list = new List<EventScoreResponse>();
             try
             {
                 var sql = $@"select * from t_event_score where isdelete=0 and 
                              groupId in (select groupId from t_player_signup where memberId=@MemberId and signUpStatus in ({ParamsConfig._signup_in}))";
-                list = _dbContext.Page<EventScoreResponse>(sql, request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<EventScoreResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

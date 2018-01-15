@@ -99,11 +99,12 @@ namespace nsda.Services.member
                 {
                     if (request.PlayerEdu != null && request.PlayerEdu.SchoolId > 0)
                     {
-                        _dbContext.Insert(new t_playereduexper {
-                             enddate=request.PlayerEdu.EndDate,
-                              memberId= memberId,
-                              schoolId=request.PlayerEdu.SchoolId,
-                              startdate=request.PlayerEdu.StartDate
+                        _dbContext.Insert(new t_playereduexper
+                        {
+                            enddate = request.PlayerEdu.EndDate,
+                            memberId = memberId,
+                            schoolId = request.PlayerEdu.SchoolId,
+                            startdate = request.PlayerEdu.StartDate
                         });
                     }
                 }
@@ -193,11 +194,12 @@ namespace nsda.Services.member
                     if (msg.IsNotEmpty())
                     {
                         return flag;
-                    }             
+                    }
                     member.updatetime = DateTime.Now;
                     _dbContext.Update(member);
                 }
-                else {
+                else
+                {
                     msg = "找不到会员信息";
                 }
             }
@@ -280,7 +282,7 @@ namespace nsda.Services.member
             return member;
         }
 
-        private t_member EditValidate(t_member member,MemberRequest request, out string msg)
+        private t_member EditValidate(t_member member, MemberRequest request, out string msg)
         {
             member.card = request.Card;
             member.cardType = request.CardType;
@@ -361,7 +363,7 @@ namespace nsda.Services.member
                     return flag;
                 }
 
-                if (newPwd.Length<6)
+                if (newPwd.Length < 6)
                 {
                     msg = "密码长度不能低于6";
                     return flag;
@@ -445,9 +447,9 @@ namespace nsda.Services.member
             }
         }
         //会员列表 
-        public PagedList<MemberResponse> List(MemberQueryRequest request)
+        public List<MemberResponse> List(MemberQueryRequest request)
         {
-            PagedList<MemberResponse> list = new PagedList<MemberResponse>();
+            List<MemberResponse> list = new List<MemberResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder($"select * from t_member where isdelete=0 and memberType!={(int)MemberTypeEm.临时裁判} and memberType!={(int)MemberTypeEm.临时选手} ");
@@ -477,8 +479,9 @@ namespace nsda.Services.member
                 {
                     sb.Append(" and memberType=@MemberType");
                 }
-
-                list = _dbContext.Page<MemberResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<MemberResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {
@@ -731,8 +734,13 @@ namespace nsda.Services.member
                 SessionCookieUtility.RemoveSession($"webusersession_{id}");
             }
         }
-
-        public List<MemberSelectResponse> ListMember(MemberTypeEm memberType,string key)
+        /// <summary>
+        /// 选手或教练下拉框
+        /// </summary>
+        /// <param name="memberType"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public List<MemberSelectResponse> Select(MemberTypeEm memberType, string key)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
@@ -746,7 +754,7 @@ namespace nsda.Services.member
 
                 sb.Append(" and (code like @key or completename like @key) ");
                 var dy = new DynamicParameters();
-                dy.Add("key","%"+key+"%");
+                dy.Add("key", "%" + key + "%");
                 list = _dbContext.Query<MemberSelectResponse>(sb.ToString(), dy).ToList();
             }
             catch (Exception ex)
@@ -755,7 +763,6 @@ namespace nsda.Services.member
             }
             return list;
         }
-
         // 去支付
         public bool GoPay(int memberId, out string msg)
         {
@@ -767,7 +774,46 @@ namespace nsda.Services.member
                 if (detail != null && detail.memberType == MemberTypeEm.选手)
                 {
                     //1.0 查询订单中是否有此选手的认证订单
-                    //有 直接生成支付密钥  否则 先创建订单
+                    t_order order = _dbContext.Select<t_order>(c => c.memberId == memberId && c.orderType == OrderTypeEm.实名认证).FirstOrDefault();
+                    if (order!=null)
+                    {
+                        if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
+                        {
+
+                        }
+                        else {
+                            msg = "状态已改变";
+                        }
+                    }
+                    else
+                    {
+                        var orderid = _dbContext.Insert(new t_order {
+                            isNeedInvoice = false,
+                            mainOrderId = null,
+                            memberId = memberId,
+                            money = Constant.AuthMoney,
+                            orderStatus =OrderStatusEm.等待支付,
+                            orderType=OrderTypeEm.实名认证,
+                            payExpiryDate=DateTime.Now.AddYears(3),
+                            remark="实名认证",
+                            sourceId=memberId,
+                            totalcoupon=0,
+                            totaldiscount=0   
+                        }).ToObjInt();
+                        _dbContext.Insert(new t_orderdetail
+                        {
+                            memberId = memberId,
+                            orderId = orderid,
+                            coupon = 0,
+                            discountprice = 0,
+                            money = Constant.AuthMoney,
+                            productId = 0,
+                            name = "会员认证",
+                            number = 1,
+                            unitprice = Constant.AuthMoney
+                        });
+                        //生成支付链接
+                    }
                 }
                 else
                 {
@@ -780,7 +826,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
+        //检测账号是否存在
         public bool IsExist(string account)
         {
             bool flag = false;

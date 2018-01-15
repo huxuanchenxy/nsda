@@ -25,6 +25,6 @@ namespace nsda.Services.Contract.eventmanage
         //新增教室特殊限制
         bool ClearSpec(int id,out string msg);
         //赛事教室列表
-        List<EventRoomResponse> List(int eventId);
+        List<EventRoomResponse> List(EventRoomQueryRequest request);
     }
 }

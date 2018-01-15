@@ -14,7 +14,7 @@ namespace nsda.Services.Contract.admin
         bool Insert(SchoolRequest request, int sysUserId, out string msg);
         bool Edit(SchoolRequest request,int sysUserId, out string msg);
         bool Delete(int id, int sysUserId, out string msg);
-        PagedList<SchoolResponse> List(SchoolQueryRequest request);
+        List<SchoolResponse> List(SchoolQueryRequest request);
         SchoolResponse Detail(int id);
         List<BaseDataResponse> School(int cityId);
     }

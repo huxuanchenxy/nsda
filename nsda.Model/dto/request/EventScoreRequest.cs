@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,13 +21,13 @@ namespace nsda.Model.dto.request
         public string FilePath { get; set; }
     }
 
-    public class EventScoreQueryRequest:PagedQuery
+    public class EventScoreQueryRequest:PageQuery
     {
         public int EventId { get; set; }
         public int GroupId { get; set; }
     }
 
-    public class PlayerEventScoreQueryRequest:PagedQuery
+    public class PlayerEventScoreQueryRequest:PageQuery
     {
         public int MemberId { get; set; }
     }

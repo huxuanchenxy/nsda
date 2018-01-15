@@ -1,4 +1,6 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.admin;
 using nsda.Services.Contract.admin;
 using nsda.Utilities;
@@ -83,10 +85,18 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listcountry(CountryQueryRequest request)
         {
             var data = _countryService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<CountryResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         #endregion
+
         #region 省
         public ActionResult indexprovince()
         {
@@ -140,7 +150,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listprovince(ProvinceQueryRequest request)
         {
             var data = _provinceService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<ProvinceResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         #endregion
@@ -198,7 +215,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listcity(CityQueryRequest request)
         {
             var data = _cityService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<CityResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         #endregion
@@ -256,7 +280,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listschool(SchoolQueryRequest request)
         {
             var data = _schoolService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<SchoolResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion
 
@@ -313,7 +344,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listdatasource(DataSourceQueryRequest request)
         {
             var data = _dataSourceService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<DataSourceResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion
 
@@ -330,7 +368,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult listleavingmsg(LeavingMsgQueryRequest request)
         {
             var data = _leavingMsgService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<LeavingMsgResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
         [HttpPost]

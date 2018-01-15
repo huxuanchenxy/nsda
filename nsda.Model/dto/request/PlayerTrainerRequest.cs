@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,11 @@ namespace nsda.Model.dto.request
         public int ObjMemberId { get; set; }
         public bool IsPositive { get; set; }
         public bool IsTrainer { get; set; }
-        public MemberTrainerStatusEm memberTrainerStatus { get; set; }
-
         public DateTime StartDate { get; set; }
-
         public DateTime? EndDate { get; set; }
     }
 
-    public class PlayerTrainerQueryRequest:PagedQuery
+    public class PlayerTrainerQueryRequest:PageQuery
     {
         public int MemberId { get; set; }
     }

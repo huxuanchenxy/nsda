@@ -2,6 +2,7 @@
 using nsda.Model.dto.response;
 using nsda.Models;
 using nsda.Repository;
+using nsda.Services.Contract.admin;
 using nsda.Services.Contract.member;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
@@ -21,11 +22,13 @@ namespace nsda.Services.member
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
-        public PlayerEduExperService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        IMailService _mailService;
+        public PlayerEduExperService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,IMailService mailService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
+            _mailService = mailService;
         }
 
         //1.0 添加教育经历
@@ -117,16 +120,18 @@ namespace nsda.Services.member
             return flag;
         }
         //1.3 教育经历列表
-        public PagedList<PlayerEduExperResponse> List(PlayerEduExperQueryRequest request)
+        public List<PlayerEduExperResponse> List(PlayerEduExperQueryRequest request)
         {
-            PagedList<PlayerEduExperResponse> list = new PagedList<PlayerEduExperResponse>();
+            List<PlayerEduExperResponse> list = new List<PlayerEduExperResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(@"select a.*,b.chinessname as SchoolName from t_playereduexper a
                             left join t_school b on a.schoolId=b.id
                             where isdelete=0 and memberId=@MemberId");
-                list = _dbContext.Page<PlayerEduExperResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<PlayerEduExperResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

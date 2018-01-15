@@ -98,9 +98,9 @@ namespace nsda.Services.admin
         }
 
         //1.3 留言列表
-        public PagedList<LeavingMsgResponse> List(LeavingMsgQueryRequest request)
+        public List<LeavingMsgResponse> List(LeavingMsgQueryRequest request)
         {
-            PagedList<LeavingMsgResponse> list = new PagedList<LeavingMsgResponse>();
+            List<LeavingMsgResponse> list = new List<LeavingMsgResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -129,7 +129,9 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     sb.Append("  and createTime<=@CreateEnd");
                 }
-                list = _dbContext.Page<LeavingMsgResponse>(sb.ToString(), request, pageindex: request.PageIndex,pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<LeavingMsgResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

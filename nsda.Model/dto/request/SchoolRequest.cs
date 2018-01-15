@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace nsda.Model.dto.request
         public bool IsInter { get; set; }
     }
 
-    public class SchoolQueryRequest:PagedQuery
+    public class SchoolQueryRequest:PageQuery
     {
         public int? CityId { get; set; }
         public int? ProvinceId { get; set; }

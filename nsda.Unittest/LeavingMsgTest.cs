@@ -56,7 +56,7 @@ namespace nsda.unittest
         {
             LeavingMsgQueryRequest request = new LeavingMsgQueryRequest {
                  PageIndex=1,
-                 PagesSize=10
+                 PageSize=10
             };
             var list=service.List(request);
         }

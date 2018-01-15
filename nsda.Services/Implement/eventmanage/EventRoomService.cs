@@ -185,7 +185,7 @@ namespace nsda.Services.Implement.eventmanage
                     }
                     //判断此选手是否是这场比赛的
                     //在判断此用户是否已经在其他教室
-                    var vali = _dbContext.Select<t_eventroom>(c => c.memberId == memberId).ToList();
+                    var vali = _dbContext.Select<t_eventroom>(c => c.memberId == memberId&&c.eventId==room.eventId).ToList();
                     if (vali != null && vali.Count > 0)
                     {
                         msg = "此选手已指定到其他教室";
@@ -212,16 +212,23 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         // 教室列表
-        public List<EventRoomResponse> List(int eventId)
+        public List<EventRoomResponse> List(EventRoomQueryRequest request)
         {
             List<EventRoomResponse> list = new List<EventRoomResponse>();
             try
             {
-                var sql = $@"select a.*,b.name MemberName,c.name EventGroupName from t_eventroom a
+                StringBuilder sb=new StringBuilder($@"select a.*,b.name MemberName,c.name EventGroupName from t_eventroom a
                             left join t_member b on a.memberId=b.id
                             left join t_eventgroup c on a.eventgroupId=c.id
-                            where eventId={eventId}";
-                list = _dbContext.Query<EventRoomResponse>(sql).ToList();
+                            where eventId=@EventId and isdelete=0 ");
+                if (request.KeyValue.IsNotEmpty())
+                {
+                    request.KeyValue = "%"+request.KeyValue+"%";
+                    sb.Append(" and (a.code like @KeyValue or a.name like @KeyValue)");
+                }
+                int totalCount = 0;
+                list = _dbContext.Page<EventRoomResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

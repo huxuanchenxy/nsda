@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,8 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.request
 {
-    public class PlayerOrRefereeEventQueryRequest:PagedQuery
+    public class PlayerOrRefereeEventQueryRequest:PageQuery
     {
-        /// <summary>
-        /// 会员id
-        /// </summary>
-        public int MemberId { get; set; }
-        /// <summary>
-        /// 是否是裁判
-        /// </summary>
-        public bool IsReferee { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         /// <summary>

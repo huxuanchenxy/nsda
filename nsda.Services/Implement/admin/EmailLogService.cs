@@ -41,9 +41,9 @@ namespace nsda.Services.admin
             }
         }
         //1.1 邮件日志列表
-        public  PagedList<EmailLogResponse> List(EmailLogQueryRequest request)
+        public  List<EmailLogResponse> List(EmailLogQueryRequest request)
         {
-            PagedList<EmailLogResponse> list = new PagedList<EmailLogResponse>();
+            List<EmailLogResponse> list = new List<EmailLogResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -62,7 +62,9 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     sb.Append("  and createTime<=@CreateEnd");
                 }
-                list = _dbContext.Page<EmailLogResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<EmailLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

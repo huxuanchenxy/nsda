@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Services.Contract.trainer;
 using nsda.Services.member;
@@ -32,7 +33,14 @@ namespace nsda.Web.Areas.trainer.Controllers
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerTrainerService.TrainerList(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<PlayerTrainerResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         //2 新增
         [HttpPost]
@@ -81,8 +89,8 @@ namespace nsda.Web.Areas.trainer.Controllers
         [HttpGet]
         public ContentResult listplayer(string key)
         {
-            var data = _memberService.ListMember(MemberTypeEm.选手, key);
-            return Result<string>(true, string.Empty);
+            var data = _memberService.Select(MemberTypeEm.选手, key);
+            return Result(true,string.Empty,data);
         }
         #endregion
 

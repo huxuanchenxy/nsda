@@ -20,7 +20,7 @@ namespace nsda.Services.admin
         //1.1 处理留言
         bool Process(int id,int sysUserId, out string msg);
         //1.3 留言列表
-        PagedList<LeavingMsgResponse> List(LeavingMsgQueryRequest requset);
+        List<LeavingMsgResponse> List(LeavingMsgQueryRequest requset);
         //1.3 删除留言
         bool Delete(int id, int sysUserId, out string msg);
         //1.4 留言详情

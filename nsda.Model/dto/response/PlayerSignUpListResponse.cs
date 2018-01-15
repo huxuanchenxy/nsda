@@ -1,0 +1,25 @@
+﻿using nsda.Model.enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace nsda.Model.dto.response
+{
+    public class PlayerSignUpListResponse
+    {
+        public string MemberCode { get; set; }
+        public string MemberName { get; set; }
+        public int Id { get; set; }
+        public int EventId { get; set; }
+        public SignUpStatusEm SignUpStatus { get; set; }
+        public int GroupId { get; set; }
+        public bool IsTemp { get; set; }
+        public int MemberId { get; set; }
+        public string GroupNum { get; set; }
+        public GenderEm Gender { get; set; }
+        public string ContactMobile { get; set; }
+        public GradeEm Grade { get; set; }
+    }
+}

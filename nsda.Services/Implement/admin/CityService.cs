@@ -63,9 +63,9 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
 
-        public PagedList<CityResponse> List(CityQueryRequest request)
+        public List<CityResponse> List(CityQueryRequest request)
         {
-            PagedList<CityResponse> list = new PagedList<CityResponse>();
+            List<CityResponse> list = new List<CityResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -79,7 +79,9 @@ namespace nsda.Services.Implement.admin
                 {
                     sb.Append(" and a.provinceId=@ProvinceId ");
                 }
-                list = _dbContext.Page<CityResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<CityResponse>(sb.ToString(),out totalCount,request.PageIndex,request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {
@@ -115,7 +117,6 @@ namespace nsda.Services.Implement.admin
             }
             return flag;
         }
-
         public CityResponse Detail(int id)
         {
             CityResponse response = null;

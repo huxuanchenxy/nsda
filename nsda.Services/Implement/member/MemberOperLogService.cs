@@ -46,9 +46,9 @@ namespace nsda.Services.Implement.member
             }
         }
 
-        public PagedList<MemberOperLogResponse> List(MemberOperLogQueryRequest request)
+        public List<MemberOperLogResponse> List(MemberOperLogQueryRequest request)
         {
-            PagedList<MemberOperLogResponse> list = new PagedList<MemberOperLogResponse>();
+            List<MemberOperLogResponse> list = new List<MemberOperLogResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -69,7 +69,9 @@ namespace nsda.Services.Implement.member
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     sb.Append("  and a.createTime<=@CreateEnd");
                 }
-                list = _dbContext.Page<MemberOperLogResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<MemberOperLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

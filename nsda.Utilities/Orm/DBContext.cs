@@ -278,7 +278,6 @@ namespace nsda.Utilities.Orm
             return connection.Execute(sql, param, transaction: transaction);
         }
 
-
         /// <summary>
         /// 执行sql语句
         /// </summary>
@@ -299,61 +298,10 @@ namespace nsda.Utilities.Orm
         /// <param name="pageindex"></param>
         /// <param name="pagesize"></param>
         /// <returns></returns>
-        public PagedList<T> Page<T>(string sql, object param = null, int pageindex = 1, int pagesize = 20)
+        public List<T> Page<T>(string sql, out int totalCount, int pageIndex=1,int pageSize=20,object param = null)
         {
-            return connection.Page<T>(sql, param, pageindex, pagesize);
+            return connection.Page<T>(sql, out totalCount, pageIndex,pageSize, param);
         }
-
-        /// <summary>
-        /// 分页
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="param"></param>
-        /// <param name="pageindex"></param>
-        /// <param name="pagesize"></param>
-        /// <returns></returns>
-        public PagedList<dynamic> Page(string sql, object param = null, int pageindex = 1, int pagesize = 20)
-        {
-            return connection.Page(sql, param, pageindex, pagesize);
-        }
-
-        /// <summary>
-        /// 分页
-        /// </summary>
-        /// <typeparam name="TFirst"></typeparam>
-        /// <typeparam name="TSecond"></typeparam>
-        /// <typeparam name="TReturn"></typeparam>
-        /// <param name="sql"></param>
-        /// <param name="map"></param>
-        /// <param name="param"></param>
-        /// <param name="pageindex"></param>
-        /// <param name="pagesize"></param>
-        /// <param name="splitOn"></param>
-        /// <returns></returns>
-        public PagedList<TReturn> Page<TFirst, TSecond, TReturn>(string sql, Func<TFirst, TSecond, TReturn> map, object param = null, int pageindex = 1, int pagesize = 20, string splitOn = "Id")
-        {
-            return connection.Page(sql, map, param, pageindex, pagesize, splitOn);
-        }
-
-        /// <summary>
-        /// 分页
-        /// </summary>
-        /// <typeparam name="TFirst"></typeparam>
-        /// <typeparam name="TSecond"></typeparam>
-        /// <typeparam name="TThird"></typeparam>
-        /// <typeparam name="TReturn"></typeparam>
-        /// <param name="sql"></param>
-        /// <param name="map"></param>
-        /// <param name="param"></param>
-        /// <param name="pageindex"></param>
-        /// <param name="pagesize"></param>
-        /// <param name="splitOn"></param>
-        /// <returns></returns>
-        public PagedList<TReturn> Page<TFirst, TSecond, TThird, TReturn>(string sql, Func<TFirst, TSecond, TThird, TReturn> map, object param = null, int pageindex = 1, int pagesize = 20, string splitOn = "Id")
-        {
-            return connection.Page(sql, map, param, pageindex, pagesize, splitOn);
-        }
-
         #endregion 公开方法
     }
 }

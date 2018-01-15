@@ -142,7 +142,7 @@ namespace nsda.Web.Controllers
                 string code = VerifyCode.GetVerifyCode(6);
                 Session[email] = code;
                 //发送邮件
-                var send = new EmailUtility(Constant.EmailAccount,Constant.EmailPwd,Constant.email_smtp,Constant.email_port);
+                var send = new EmailUtility(Constant.EmailAccount,Constant.EmailPwd,Constant.Email_smtp,Constant.Email_port);
                 Task.Factory.StartNew(()=> {
                     send.Send("nsda", email, "找回密码", $"您的验证码是{code}");
                     _emailLogService.Insert(new EmailLogRequest {

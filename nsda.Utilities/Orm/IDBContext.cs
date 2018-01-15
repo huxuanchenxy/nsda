@@ -206,55 +206,7 @@ namespace nsda.Utilities.Orm
         /// <summary>
         /// 分页查询
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sql"></param>
-        /// <param name="param"></param>
-        /// <param name="pageindex"></param>
-        /// <param name="pagesize"></param>
-        /// <returns></returns>
-        PagedList<T> Page<T>(string sql, object param = null, int pageindex = 1, int pagesize = 20);
-
-        /// <summary>
-        /// 分页查询
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="param"></param>
-        /// <param name="pageindex"></param>
-        /// <param name="pagesize"></param>
-        /// <returns></returns>
-        PagedList<dynamic> Page(string sql, object param = null, int pageindex = 1, int pagesize = 20);
-
-        /// <summary>
-        /// 分页查询
-        /// </summary>
-        /// <typeparam name="TFirst"></typeparam>
-        /// <typeparam name="TSecond"></typeparam>
-        /// <typeparam name="TReturn"></typeparam>
-        /// <param name="sql"></param>
-        /// <param name="map"></param>
-        /// <param name="param"></param>
-        /// <param name="pageindex"></param>
-        /// <param name="pagesize"></param>
-        /// <param name="splitOn"></param>
-        /// <returns></returns>
-        PagedList<TReturn> Page<TFirst, TSecond, TReturn>(string sql, Func<TFirst, TSecond, TReturn> map, object param = null, int pageindex = 1, int pagesize = 20, string splitOn = "Id");
-
-
-        /// <summary>
-        /// 分页查询
-        /// </summary>
-        /// <typeparam name="TFirst"></typeparam>
-        /// <typeparam name="TSecond"></typeparam>
-        /// <typeparam name="TThird"></typeparam>
-        /// <typeparam name="TReturn"></typeparam>
-        /// <param name="sql"></param>
-        /// <param name="map"></param>
-        /// <param name="param"></param>
-        /// <param name="pageindex"></param>
-        /// <param name="pagesize"></param>
-        /// <param name="splitOn"></param>
-        /// <returns></returns>
-        PagedList<TReturn> Page<TFirst, TSecond, TThird, TReturn>(string sql, Func<TFirst, TSecond, TThird, TReturn> map, object param = null, int pageindex = 1, int pagesize = 20, string splitOn = "Id");
+        List<T> Page<T>(string sql, out int totalCount, int pageIndex = 1, int pageSize = 20, object param = null);
         #endregion
     }
 }

@@ -18,6 +18,6 @@ namespace nsda.Services.admin
         //1.0 新增
         void Insert(SysOperLogRequest request);
         //1.1 系统操作日志列表
-        PagedList<SysOperLogResponse> List(SysOperLogQueryRequest request);
+        List<SysOperLogResponse> List(SysOperLogQueryRequest request);
     }
 }

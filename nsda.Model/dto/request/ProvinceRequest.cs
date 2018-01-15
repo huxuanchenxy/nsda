@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace nsda.Model.dto.request
         public string Name { get; set; }
     }
 
-    public class ProvinceQueryRequest:PagedQuery
+    public class ProvinceQueryRequest:PageQuery
     {
         public int? CountryId { get; set; }
         public string Name { get; set; }

@@ -14,6 +14,6 @@ namespace nsda.Services.Contract.member
         //1.0 新增
         void Insert(MemberOperLogRequest request);
         //1.1 操作日志列表
-        PagedList<MemberOperLogResponse> List(MemberOperLogQueryRequest request);
+        List<MemberOperLogResponse> List(MemberOperLogQueryRequest request);
     }
 }

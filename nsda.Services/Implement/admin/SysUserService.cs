@@ -6,6 +6,7 @@ using nsda.Repository;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -211,9 +212,9 @@ namespace nsda.Services.admin
             return flag;
         }
         //1.4 系统用户列表 
-        public PagedList<SysUserResponse> List(SysUserQueryRequest request)
+        public List<SysUserResponse> List(SysUserQueryRequest request)
         {
-            PagedList<SysUserResponse> list = new PagedList<SysUserResponse>();
+            List<SysUserResponse> list = new List<SysUserResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -237,7 +238,9 @@ namespace nsda.Services.admin
                     request.LastLoginTime2 = request.LastLoginTime2.Value.AddDays(1).AddSeconds(-1);
                     sb.Append("  and lastlogintime<=@LastLoginTime2");
                 }
-                list = _dbContext.Page<SysUserResponse>(sb.ToString(), request, pageindex: request.PageIndex, pagesize: request.PagesSize);
+                int totalCount = 0;
+                list = _dbContext.Page<SysUserResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
             }
             catch (Exception ex)
             {

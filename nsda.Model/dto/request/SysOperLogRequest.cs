@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nsda.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace nsda.Model.dto.request
         public string OperRemark { get; set; }
     }
 
-    public class SysOperLogQueryRequest : PagedQuery
+    public class SysOperLogQueryRequest : PageQuery
     {
         /// <summary>
         /// 操作数据

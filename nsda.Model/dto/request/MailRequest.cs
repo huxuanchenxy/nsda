@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace nsda.Model.dto.request
         /// </summary>
         public string Url { get; set; }
     }
-    public class MailQueryRequest : PagedQuery
+    public class MailQueryRequest : PageQuery
     {
         public int MemberId { get; set; }
     }

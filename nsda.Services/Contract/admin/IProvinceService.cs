@@ -14,7 +14,7 @@ namespace nsda.Services.Contract.admin
     {
         bool Insert(ProvinceRequest request,int sysUserId,out string msg);
         bool Edit(ProvinceRequest request, int sysUserId, out string msg);
-        PagedList<ProvinceResponse> List(ProvinceQueryRequest request);
+        List<ProvinceResponse> List(ProvinceQueryRequest request);
         bool Delete(int id, int sysUserId, out string msg);
         ProvinceResponse Detail(int id);
         List<BaseDataResponse> Province(int countryId);

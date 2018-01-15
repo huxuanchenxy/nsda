@@ -1,4 +1,6 @@
-﻿using nsda.Model.dto.request;
+﻿using nsda.Model.dto;
+using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.Contract.admin;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -73,7 +75,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult list(VoteQueryRequest request)
         {
             var data = _voteService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<VoteResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion
     }

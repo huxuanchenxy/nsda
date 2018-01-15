@@ -13,7 +13,7 @@ namespace nsda.Services.Contract.admin
     {
         bool Insert(CountryRequest request, int sysUserId, out string msg);
         bool Edit(CountryRequest request, int sysUserId, out string msg);
-        PagedList<CountryResponse> List(CountryQueryRequest request);
+        List<CountryResponse> List(CountryQueryRequest request);
         bool Delete(int id, int sysUserId, out string msg);
         CountryResponse Detail(int id);
         List<BaseDataResponse> Country();

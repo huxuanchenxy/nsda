@@ -18,6 +18,6 @@ namespace nsda.Services.Contract.admin
         //1.2 删除站内信
         bool Delete(int id, int memeberId, out string msg);
         //1.3 站内信列表
-        PagedList<MailResponse> List(MailQueryRequest request);
+        List<MailResponse> List(MailQueryRequest request);
     }
 }

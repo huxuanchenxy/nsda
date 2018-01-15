@@ -1,4 +1,5 @@
 ﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,7 +88,7 @@ namespace nsda.Model.dto.request
     }
 
     //临时会员数据查询
-    public class TempMemberQueryRequest:PagedQuery
+    public class TempMemberQueryRequest:PageQuery
     {
         public TempTypeEm? TempType { get; set; }
         public TempStatusEm? TempStatus { get; set; }
