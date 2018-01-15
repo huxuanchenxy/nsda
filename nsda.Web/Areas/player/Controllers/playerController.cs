@@ -69,9 +69,9 @@ namespace nsda.Web.Areas.player.Controllers
 
         //模糊查询教练
         [HttpGet]
-        public ContentResult listtrainer(string key)
+        public ContentResult listtrainer(string keyvalue)
         {
-            var data = _memberService.Select(MemberTypeEm.教练,key);
+            var data = _memberService.SelectTrainer(keyvalue,UserContext.WebUserContext.Id);
             return Result(true, string.Empty,data);
         }
 

@@ -111,7 +111,7 @@ namespace nsda.Services.member
                         memberId = memberId,
                         schoolId = request.PlayerEdu.SchoolId,
                         startdate = request.PlayerEdu.StartDate
-                    });  
+                    });
                 }
 
                 if (request.MemberType == MemberTypeEm.裁判)
@@ -120,10 +120,10 @@ namespace nsda.Services.member
                     {
                         _dbContext.Insert(new t_referee_signup
                         {
-                           eventId=(int)request.EventId,
-                           isTemp=false,
-                           memberId =memberId,
-                           refereeSignUpStatus=RefereeSignUpStatusEm.待审核  
+                            eventId = (int)request.EventId,
+                            isTemp = false,
+                            memberId = memberId,
+                            refereeSignUpStatus = RefereeSignUpStatusEm.待审核
                         });
                     }
                 }
@@ -136,7 +136,7 @@ namespace nsda.Services.member
                     Role = ((int)request.MemberType).ToString(),
                     MemberType = (int)request.MemberType,
                     Id = memberId,
-                    Status = (request.MemberType == MemberTypeEm.赛事管理员 && request.MemberType == MemberTypeEm.选手) ? (int)MemberStatusEm.待认证 : (int)MemberStatusEm.已认证
+                    Status = request.MemberType == MemberTypeEm.选手 ? (int)MemberStatusEm.待认证 : request.MemberType == MemberTypeEm.赛事管理员 ? (int)MemberStatusEm.待审核 : (int)MemberStatusEm.通过
                 };
                 SaveCurrentUser(userContext);
             }
@@ -263,7 +263,7 @@ namespace nsda.Services.member
                         msg = "姓/名不能为空";
                         return member;
                     }
-                    if (request.CardType==null)
+                    if (request.CardType == null)
                     {
                         msg = "请选择证件类型";
                         return member;
@@ -275,7 +275,7 @@ namespace nsda.Services.member
                     }
                     member.completename = request.Name + request.SurName;
                     member.completepinyin = request.PinYinName + request.PinYinSurName;
-                    member.memberStatus = MemberStatusEm.待认证;
+                    member.memberStatus = request.MemberType == MemberTypeEm.赛事管理员 ? MemberStatusEm.待审核 : MemberStatusEm.待认证;
                     break;
                 case MemberTypeEm.教练:
                 case MemberTypeEm.裁判:
@@ -295,7 +295,7 @@ namespace nsda.Services.member
                         return member;
                     }
                     member.completepinyin = request.PinYinName + request.PinYinSurName;
-                    member.memberStatus = MemberStatusEm.已认证;
+                    member.memberStatus = MemberStatusEm.通过;
                     break;
             }
             return member;
@@ -614,7 +614,7 @@ namespace nsda.Services.member
                     msg = "邮箱有误";
                     return memberId;
                 }
-                var member = _dbContext.Select<t_member>(c => c.account == email && c.memberStatus != MemberStatusEm.认证失败 && c.memberType != MemberTypeEm.临时裁判 && c.memberType != MemberTypeEm.临时选手).FirstOrDefault();
+                var member = _dbContext.Select<t_member>(c => c.account == email && c.memberType != MemberTypeEm.临时裁判 && c.memberType != MemberTypeEm.临时选手).FirstOrDefault();
                 if (member != null)
                 {
                     memberId = member.id;
@@ -683,7 +683,7 @@ namespace nsda.Services.member
                 if (detail != null && detail.memberType == MemberTypeEm.赛事管理员)
                 {
                     detail.updatetime = DateTime.Now;
-                    detail.memberStatus = isAppro ? MemberStatusEm.已认证 : MemberStatusEm.认证失败;
+                    detail.memberStatus = isAppro ? MemberStatusEm.通过 : MemberStatusEm.拒绝;
                     _dbContext.Update(detail);
                     DeleteCurrentUser(id);//清除用户缓存 使其重新登录
                     flag = true;
@@ -707,7 +707,7 @@ namespace nsda.Services.member
             try
             {
                 var detail = _dbContext.Get<t_member>(id);
-                if (detail != null && detail.memberType == MemberTypeEm.选手)
+                if (detail != null && detail.memberStatus == MemberStatusEm.待认证)
                 {
                     detail.updatetime = DateTime.Now;
                     detail.memberStatus = MemberStatusEm.已认证;
@@ -726,7 +726,6 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
         /// <summary>
         /// 保存用户缓存
         /// </summary>
@@ -753,27 +752,65 @@ namespace nsda.Services.member
                 SessionCookieUtility.RemoveSession($"webusersession_{id}");
             }
         }
-        // 教练下拉框
-        public List<MemberSelectResponse> Select(MemberTypeEm memberType, string key)
+        // 选手下拉框
+        public List<MemberSelectResponse> SelectPlayer(string keyvalue, int memberId)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
             {
-                if (key.IsEmpty())
+                if (keyvalue.IsEmpty())
                 {
                     return list;
                 }
-
-                StringBuilder sb = new StringBuilder($"select Id,Code,completename as Name from t_member where isdelete=0 and memberType={memberType} and  memberStatus={MemberStatusEm.已认证}");
-
-                sb.Append(" and (code like @key or completename like @key) ");
+                //查询注册号 为选手号 或者扩展有选手的会员
+                var sql = $@"
+                            select Id,Code,completename as Name from t_member where (isdelete=0 
+                            and memberType={MemberTypeEm.选手} and id!={memberId} and (code like @key or completename like @key)) or id in
+                            (
+	                            select a.memberId from t_memberextend a
+	                            inner join t_member b on a.memberId=b.id
+	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手} 
+                                and (b.code like @key or b.completename like @key)
+                            )
+                         ";
                 var dy = new DynamicParameters();
-                dy.Add("key", "%" + key + "%");
-                list = _dbContext.Query<MemberSelectResponse>(sb.ToString(), dy).ToList();
+                dy.Add("key", "%" + keyvalue + "%");
+                list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("MemberService.ListMember", ex);
+                LogUtils.LogError("MemberService.SelectPlayer", ex);
+            }
+            return list;
+        }
+        // 教练下拉框
+        public List<MemberSelectResponse> SelectTrainer(string keyvalue, int memberId)
+        {
+            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
+            try
+            {
+                if (keyvalue.IsEmpty())
+                {
+                    return list;
+                }
+                //查询注册号 为教练号 或者扩展有教练的会员
+                var sql = $@"
+                            select Id,Code,completename as Name from t_member where (isdelete=0 
+                            and memberType={MemberTypeEm.教练} and id!={memberId} and (code like @key or completename like @key)) or id in
+                            (
+	                            select a.memberId from t_memberextend a
+	                            inner join t_member b on a.memberId=b.id
+	                            where and a.memberId!={memberId} a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.教练} 
+                                and (b.code like @key or b.completename like @key)
+                            )
+                         ";
+                var dy = new DynamicParameters();
+                dy.Add("key", "%" + keyvalue + "%");
+                list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.SelectTrainer", ex);
             }
             return list;
         }
@@ -784,35 +821,36 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_member>(memberId);
-                if (detail != null && detail.memberType == MemberTypeEm.选手)
+                t_member member = _dbContext.Get<t_member>(memberId);
+                if (member != null && member.memberStatus == MemberStatusEm.待认证)
                 {
-                    //1.0 查询订单中是否有此选手的认证订单
                     t_order order = _dbContext.Select<t_order>(c => c.memberId == memberId && c.orderType == OrderTypeEm.实名认证).FirstOrDefault();
-                    if (order!=null)
+                    if (order != null)
                     {
                         if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
                         {
 
                         }
-                        else {
+                        else
+                        {
                             msg = "状态已改变";
                         }
                     }
                     else
                     {
-                        var orderid = _dbContext.Insert(new t_order {
+                        var orderid = _dbContext.Insert(new t_order
+                        {
                             isNeedInvoice = false,
                             mainOrderId = null,
                             memberId = memberId,
                             money = Constant.AuthMoney,
-                            orderStatus =OrderStatusEm.等待支付,
-                            orderType=OrderTypeEm.实名认证,
-                            payExpiryDate=DateTime.Now.AddYears(3),
-                            remark="实名认证",
-                            sourceId=memberId,
-                            totalcoupon=0,
-                            totaldiscount=0   
+                            orderStatus = OrderStatusEm.等待支付,
+                            orderType = OrderTypeEm.实名认证,
+                            payExpiryDate = DateTime.Now.AddYears(3),
+                            remark = "实名认证",
+                            sourceId = memberId,
+                            totalcoupon = 0,
+                            totaldiscount = 0
                         }).ToObjInt();
                         _dbContext.Insert(new t_orderdetail
                         {
@@ -828,10 +866,6 @@ namespace nsda.Services.member
                         });
                         //生成支付链接
                     }
-                }
-                else
-                {
-                    msg = "会员信息不存在";
                 }
             }
             catch (Exception ex)

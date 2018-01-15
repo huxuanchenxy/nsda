@@ -42,9 +42,9 @@ namespace nsda.Web.Areas.player.Controllers
         #region ajax
         //邀请组队成员
         [HttpGet]
-        public ContentResult invitation(string keyvalue,int eventId)
+        public ContentResult invitation(string keyvalue,int eventId,int groupId)
         {
-            var data = _playerSignUpService.Invitation(keyvalue, eventId, UserContext.WebUserContext.Id);
+            var data = _playerSignUpService.Invitation(keyvalue, eventId, groupId, UserContext.WebUserContext.Id);
             return Result(true, "", data);
         }
 

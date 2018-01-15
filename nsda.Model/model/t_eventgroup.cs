@@ -46,12 +46,12 @@ namespace nsda.Models
         /// <summary>
         /// 最小积分
         /// </summary>
-        public decimal? minintegral { get; set; }
+        public decimal? minPoints { get; set; }
     
         /// <summary>
         /// 最大积分
         /// </summary>
-        public decimal? maxintegral { get; set; }
+        public decimal? maxPoints { get; set; }
     
         /// <summary>
         /// 最小比赛次数

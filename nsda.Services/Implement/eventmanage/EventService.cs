@@ -70,10 +70,10 @@ namespace nsda.Services.Implement.eventmanage
                         {
                             eventId = eventId,
                             maxgrade = item.MaxGrade,
-                            maxintegral = item.MaxIntegral,
+                            maxPoints = item.MaxPoints,
                             maxtimes = item.MaxTimes,
                             mingrade = item.MinGrade,
-                            minintegral = item.MinIntegral,
+                            minPoints = item.MinPoints,
                             mintimes = item.MinTimes,
                             name = item.Name,
                             teamnumber = item.TeamNumber
@@ -249,10 +249,10 @@ namespace nsda.Services.Implement.eventmanage
                                 EventId = item.eventId,
                                 Id = item.id,
                                 MaxGrade = item.maxgrade,
-                                MaxIntegral = item.maxintegral,
+                                MaxPoints = item.maxPoints,
                                 MaxTimes = item.maxtimes,
                                 MinGrade = item.mingrade,
-                                MinIntegral = item.minintegral,
+                                MinPoints = item.minPoints,
                                 MinTimes = item.mintimes,
                                 Name = item.name,
                                 TeamNumber = item.teamnumber
@@ -298,7 +298,6 @@ namespace nsda.Services.Implement.eventmanage
                 if (request.StartDate.HasValue)
                 {
                     DateTime dt = Convert.ToDateTime(request.StartDate);
-                    ;
                     sb.Append($" and starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
                 int totalCount = 0;
@@ -398,6 +397,25 @@ namespace nsda.Services.Implement.eventmanage
             catch (Exception ex)
             {
                 LogUtils.LogError("EventService.EventCondition", ex);
+            }
+            return list;
+        }
+        //裁判注册时 可报名赛事
+        public List<EventSelectResponse> RefereeRegisterEvent()
+        {
+            List<EventSelectResponse> list = new List<EventSelectResponse>();
+            try
+            {
+                var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) and starteventdate>={DateTime.Now.ToShortDateString()}";
+                list = _dbContext.Query<EventSelectResponse>(sql).ToList();
+                list.Insert(0,new EventSelectResponse {
+                    EventId=-1,
+                    EventName="暂时不确定"
+                });
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.RefereeRegisterEvent", ex);
             }
             return list;
         }

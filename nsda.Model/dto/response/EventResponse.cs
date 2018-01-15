@@ -127,12 +127,12 @@ namespace nsda.Model.dto.response
         /// <summary>
         /// 最小积分
         /// </summary>
-        public decimal? MinIntegral { get; set; }
+        public decimal? MinPoints { get; set; }
 
         /// <summary>
         /// 最大积分
         /// </summary>
-        public decimal? MaxIntegral { get; set; }
+        public decimal? MaxPoints { get; set; }
 
         /// <summary>
         /// 最小比赛次数

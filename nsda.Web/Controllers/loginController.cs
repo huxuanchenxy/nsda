@@ -2,6 +2,7 @@
 using nsda.Model.dto.request;
 using nsda.Model.enums;
 using nsda.Services.admin;
+using nsda.Services.Contract.eventmanage;
 using nsda.Services.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -19,11 +20,13 @@ namespace nsda.Web.Controllers
         IMemberService _memberService;
         ILoginLogService _loginLogService;
         IEmailLogService _emailLogService;
-        public loginController(IMemberService memberService, ILoginLogService loginLogService, IEmailLogService emailLogService)
+        IEventService _eventService;
+        public loginController(IMemberService memberService, ILoginLogService loginLogService, IEmailLogService emailLogService, IEventService eventService)
         {
             _memberService = memberService;
             _loginLogService = loginLogService;
             _emailLogService = emailLogService;
+            _eventService = eventService;
         }
 
         #region ajax
@@ -279,6 +282,8 @@ namespace nsda.Web.Controllers
         //赛事管理员
         public ActionResult eventmanage()
         {
+            var data = _eventService.RefereeRegisterEvent();
+            ViewBag.EventData = data;
             return View();
         }
         //裁判

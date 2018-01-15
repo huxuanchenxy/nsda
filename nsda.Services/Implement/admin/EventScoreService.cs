@@ -180,6 +180,7 @@ namespace nsda.Services.Implement.admin
             return list;
         }
 
+        //评分单下载
         public List<EventScoreResponse> PlayerList(PlayerEventScoreQueryRequest request)
         {
             List<EventScoreResponse> list = new List<EventScoreResponse>();

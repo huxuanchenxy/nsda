@@ -36,6 +36,12 @@ namespace nsda.Services.Implement.member
             try
             {
                 var extend = _dbContext.Select<t_memberextend>(c => c.memberId == request.MemberId  && c.role == request.RoleType).FirstOrDefault();
+                if (extend != null && extend.memberExtendStatus == MemberExtendStatusEm.申请通过)
+                {
+                    msg = "您的申请已经通过，请刷新页面后重试";
+                    return flag;
+                }
+
                 if (extend != null)
                 {
                     extend.updatetime = DateTime.Now;
@@ -74,6 +80,10 @@ namespace nsda.Services.Implement.member
                     detail.memberExtendStatus = isAppro ? MemberExtendStatusEm.申请通过 : MemberExtendStatusEm.待审核;
                     detail.updatetime = DateTime.Now;
                     _dbContext.Update(detail);
+                    if (detail.role == RoleEm.选手&&isAppro)
+                    {
+                       _dbContext.Execute($"update t_member set memberStatus={MemberStatusEm.待认证} where id={detail.memberId}");
+                    }
                     flag = true;
                 }
                 else
@@ -99,7 +109,7 @@ namespace nsda.Services.Implement.member
                             where isdelete=0");
                 if (request.RoleType.HasValue&&request.RoleType>0)
                 {
-                    sb.Append(" and a.roleType = @RoleType");
+                    sb.Append(" and a.role = @RoleType");
                 }
                 if (request.Status.HasValue&&request.Status>0)
                 {

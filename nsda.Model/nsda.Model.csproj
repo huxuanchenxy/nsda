@@ -83,6 +83,7 @@
     <Compile Include="dto\response\EventResponse.cs" />
     <Compile Include="dto\response\EventRoomResponse.cs" />
     <Compile Include="dto\response\EventScoreResponse.cs" />
+    <Compile Include="dto\response\EventSelectResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
     <Compile Include="dto\response\MailResponse.cs" />

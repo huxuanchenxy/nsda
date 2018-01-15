@@ -12,6 +12,8 @@ using nsda.Utilities;
 using nsda.Models;
 using nsda.Model.enums;
 using nsda.Services.Contract.admin;
+using Dapper;
+using nsda.Model;
 
 namespace nsda.Services.Implement.member
 {
@@ -24,7 +26,7 @@ namespace nsda.Services.Implement.member
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
         IMailService _mailService;
-        public PlayerSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,IMailService mailService)
+        public PlayerSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService, IMailService mailService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
@@ -40,12 +42,57 @@ namespace nsda.Services.Implement.member
             try
             {
                 t_event tevent = _dbContext.Get<t_event>(request.EventId);
+                if (tevent==null)
+                {
+                    msg = "赛事信息有误";
+                    return flag;
+                }
+
+                if (tevent.eventStatus != EventStatusEm.报名中)
+                {
+                    msg = "当前不允许选手报名";
+                    return flag;
+                }
+
                 if (tevent.eventType == EventTypeEm.辩论)
                 {
-                    //逻辑校验
-                    //1.0 报名者是否重复报名 是否有资格报名
-                    //2.0 被邀请者是否有资格报名 是否重复报名
-                    //3.0 报名队伍数是否达到上限
+                    //1.0 报名者是否重复报名 
+                    var from = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and memberId={request.FromMemberId} and eventId={request.EventId} and signUpStatus not in ({ParamsConfig._signup_notin})").ToObjInt();
+                    if (from > 0)
+                    {
+                        msg = "您已申请过此次赛事";
+                        return flag;
+                    }
+                    var to = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and memberId={request.ToMemberId} and eventId={request.EventId} and signUpStatus not in ({ParamsConfig._signup_notin})").ToObjInt();
+                    if (to > 0)
+                    {
+                        msg = "您邀请的队友已申请过此次赛事";
+                        return flag;
+                    }
+                    //2.0 报名队伍数是否达到上限
+                    var teamcount = _dbContext.Select<t_player_signup>(c => c.eventId == request.EventId).ToList();
+                    if (teamcount != null && teamcount.Count > 0)
+                    {
+                        if (tevent.maxnumber < teamcount.Count + 1)
+                        {
+                            msg = "达到报名人数上限无法继续报名";
+                            return flag;
+                        }
+                    }
+                    t_eventgroup eventGroup = _dbContext.Get<t_eventgroup>(request.GroupId);
+                    //3.0 是否有资格报名
+                    if (!IsValid(eventGroup, request.FromMemberId))
+                    {
+                        msg = "您不符合此赛事报名规则";
+                        return flag;
+                    }
+
+                    if (!IsValid(eventGroup, request.ToMemberId))
+                    {
+                        msg = "您队友不符合此赛事报名规则";
+                        return flag;
+                    }
+
                     _dbContext.BeginTransaction();
                     string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
                     //邀请者
@@ -75,6 +122,12 @@ namespace nsda.Services.Implement.member
                 }
                 else //演讲逻辑可能不同
                 {
+                    var listfrom = _dbContext.Select<t_player_signup>(c => c.memberId == request.FromMemberId && c.eventId == request.EventId).ToList();
+                    if (listfrom != null && listfrom.Count > 0)
+                    {
+                        msg = "您已申请过此次赛事";
+                        return flag;
+                    }
                     string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
                     //邀请者
                     _dbContext.Insert(new t_player_signup
@@ -197,7 +250,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 t_player_signup signup = _dbContext.Get<t_player_signup>(id);
-                if (signup != null)
+                if (signup != null&&signup.memberId==memberId)
                 {
                     //判断是否有订单 无订单则创建订单并生成支付信息
                     t_order order = _dbContext.Select<t_order>(c => c.orderType == OrderTypeEm.赛事报名 && c.memberId == memberId && c.sourceId == id).FirstOrDefault();
@@ -217,7 +270,7 @@ namespace nsda.Services.Implement.member
                                 orderStatus = OrderStatusEm.等待支付,
                                 orderType = OrderTypeEm.赛事报名,
                                 payExpiryDate = t_event.starteventdate,
-                                remark = "赛事报名",
+                                remark = $"{t_event.name}赛事报名",
                                 sourceId = signup.id,
                                 totalcoupon = 0,
                                 totaldiscount = 0
@@ -249,7 +302,8 @@ namespace nsda.Services.Implement.member
                         //获取支付信息
                     }
                 }
-                else {
+                else
+                {
                     msg = "报名信息有误";
                 }
             }
@@ -302,7 +356,8 @@ namespace nsda.Services.Implement.member
                             msg = "状态已改变 请刷新页面后重试";
                         }
                     }
-                    else {
+                    else
+                    {
                         playsignup.signUpStatus = SignUpStatusEm.退费申请中;
                         playsignup.updatetime = DateTime.Now;
                         _dbContext.Update(playsignup);
@@ -347,7 +402,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //支付回调
-        public void Callback(int memberId,int sourceId)
+        public void Callback(int memberId, int sourceId)
         {
             try
             {
@@ -365,7 +420,7 @@ namespace nsda.Services.Implement.member
             }
         }
         //审核退赛
-        public bool CheckRetire(int id,bool isAppro,int memberId,out string msg)
+        public bool CheckRetire(int id, bool isAppro, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -436,20 +491,159 @@ namespace nsda.Services.Implement.member
             }
             return list;
         }
-
-        public List<MemberSelectResponse> Invitation(string keyvalue, int eventId, int memberId)
+        //邀请队友
+        public List<MemberSelectResponse> Invitation(string keyvalue, int eventId, int groupId, int memberId)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
             {
-                var sql= $@"";
-                list = _dbContext.Query<MemberSelectResponse>(sql).ToList();
+                //需要过滤已经报名的选手
+                var sql = $@"
+                            select * from t_member where ((isdelete=0 
+                            and memberType={MemberTypeEm.选手} and id!={memberId} and memberStatus={MemberStatusEm.已认证} and (code like @key or completename like @key)) or id in
+                            (
+	                            select a.memberId from t_memberextend a
+	                            inner join t_member b on a.memberId=b.id
+	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手}  and b.memberStatus={MemberStatusEm.已认证}
+                                and (b.code like @key or b.completename like @key)
+                            )) and id not in (select memberId from t_player_signup where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin}))
+                         ";
+                var dy = new DynamicParameters();
+                dy.Add("key", "%" + keyvalue + "%");
+                var data = _dbContext.Query<t_member>(sql).ToList();
+                if (data != null && data.Count > 0)
+                {
+                    t_eventgroup group = _dbContext.Get<t_eventgroup>(groupId);
+                    foreach (var item in data)
+                    {
+                        //需要判断选手是否满足条件
+                        if (IsValid(group, item.id))
+                        {
+                            list.Add(new MemberSelectResponse {
+                                  Id=item.id,
+                                  Code=item.code,
+                                  Name=item.completename  
+                            });
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
                 LogUtils.LogError("SignUpPlayerService.Invitation", ex);
             }
             return list;
+        }
+        //获取用户可报名的组别
+        public List<EventGroupResponse> EventGroup(int eventId, int memberId)
+        {
+            List<EventGroupResponse> list = new List<EventGroupResponse>();
+            try
+            {
+                List<t_eventgroup> listgroup = _dbContext.Select<t_eventgroup>(c => c.eventId == eventId).ToList();
+                foreach (var item in listgroup)
+                {
+                    if (IsValid(item, memberId))
+                    {
+                        list.Add(new EventGroupResponse
+                        {
+                            EventId = eventId,
+                            Id = item.id,
+                            MaxGrade = item.maxgrade,
+                            MaxPoints = item.maxPoints,
+                            MaxTimes = item.maxtimes,
+                            MinGrade = item.mingrade,
+                            MinPoints = item.minPoints,
+                            MinTimes = item.mintimes,
+                            Name = item.name,
+                            TeamNumber = item.teamnumber
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.Invitation", ex);
+            }
+            return list;
+        }
+        //判断选手是否可以报名
+        private bool IsValid(t_eventgroup group, int memberId)
+        {
+            bool flag = true;
+            try
+            {
+                //第一步判断年级
+                if (group.mingrade.HasValue || group.maxgrade.HasValue)
+                {
+                    t_member member = _dbContext.Get<t_member>(memberId);
+                    if (group.mingrade != (int)GradeEm.unlimited)
+                    {
+                        if (member.grade.HasValue)
+                        {
+                            if ((int)member.grade < (int)group.mingrade)
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                    if (group.maxgrade != (int)GradeEm.unlimited)
+                    {
+                        if (member.grade.HasValue)
+                        {
+                            if ((int)member.grade > (int)group.maxgrade)
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }          
+                //第二步判断积分
+                if (group.minPoints.HasValue || group.maxPoints.HasValue)
+                {
+                    t_memberpoints memberpoints = _dbContext.Select<t_memberpoints>(c => c.memberId == memberId).FirstOrDefault();
+                    if (group.minPoints > 0)
+                    {
+                        if (group.minPoints > memberpoints.points)
+                            return false;
+                    }
+                    if (group.maxPoints > 0)
+                    {
+                        if(memberpoints.points>group.maxPoints)
+                            return false; 
+                    }
+                }
+                //第三步判断参赛次数
+                if (group.mintimes.HasValue || group.maxtimes.HasValue)
+                {
+                    List<t_player_signup> list = _dbContext.Select<t_player_signup>(c => c.memberId == memberId).ToList();
+                    if (group.mintimes > 0)
+                    {
+                        if (group.mintimes > list.Count)
+                            return false;
+                    }
+                    if (group.maxtimes > 0)
+                    {
+                        if (list.Count > group.maxtimes)
+                            return false;
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.IsValid", ex);
+            }
+            return flag;
         }
     }
 }
