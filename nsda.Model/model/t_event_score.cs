@@ -34,7 +34,7 @@ namespace nsda.Models
         /// <summary>
         /// 赛事组别id
         /// </summary>
-        public int groupId { get; set; }
+        public int eventGroupId { get; set; }
     
         public string title { get; set; }
     

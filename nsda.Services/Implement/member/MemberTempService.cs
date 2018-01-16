@@ -49,7 +49,7 @@ namespace nsda.Services.Implement.member
                     msg = "赛事信息有误";
                     return flag;
                 }
-                t_eventgroup t_group = _dbContext.Get<t_eventgroup>(tempplayer.GroupId);
+                t_eventgroup t_group = _dbContext.Get<t_eventgroup>(tempplayer.EventGroupId);
                 if (t_group == null)
                 {
                     msg = "赛事组别信息有误";
@@ -126,7 +126,7 @@ namespace nsda.Services.Implement.member
                         {
                             groupnum = groupnum,
                             eventId = item.EventId,
-                            groupId = item.GroupId,
+                            eventGroupId = item.EventGroupId,
                             isTemp = true,
                             memberId = memberInsertId,
                             signfee = t_event.signfee,
@@ -154,7 +154,7 @@ namespace nsda.Services.Implement.member
                             memberId = memberInsertId,
                             signdate = t_event.starteventdate,
                             signtime = DateTime.Now,
-                            eventGroupId = item.GroupId
+                            eventGroupId = item.EventGroupId
                         });
 
                         if (t_event.starteventdate != t_event.endeventdate)
@@ -166,7 +166,7 @@ namespace nsda.Services.Implement.member
                                 eventSignType = EventSignTypeEm.选手,
                                 memberId = memberInsertId,
                                 signdate = t_event.endeventdate,
-                                eventGroupId = item.GroupId
+                                eventGroupId = item.EventGroupId
                             });
                         }
                     }

@@ -42,7 +42,7 @@ namespace nsda.Models
         /// <summary>
         /// 赛事组别
         /// </summary>
-        public int groupId { get; set; }
+        public int eventGroupId { get; set; }
     
         public decimal signfee { get; set; }
     

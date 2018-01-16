@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.response
 {
-    public class PlayerSignUpListResponse
+    public class EventPlayerSignUpListResponse
     {
         public string MemberCode { get; set; }
         public string MemberName { get; set; }
@@ -22,4 +22,17 @@ namespace nsda.Model.dto.response
         public string ContactMobile { get; set; }
         public GradeEm Grade { get; set; }
     }
+
+    public class PlayerSignUpListResponse
+    {
+        public string MemberCode { get; set; }
+        public string MemberName { get; set; }
+        public int Id { get; set; }
+        public int EventId { get; set; }
+        public SignUpStatusEm SignUpStatus { get; set; }
+        public int EventGroupId { get; set; }
+        public int MemberId { get; set; }
+        public string GroupNum { get; set; }
+    }
+
 }

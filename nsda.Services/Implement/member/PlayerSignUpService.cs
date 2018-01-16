@@ -79,7 +79,7 @@ namespace nsda.Services.Implement.member
                             return flag;
                         }
                     }
-                    t_eventgroup eventGroup = _dbContext.Get<t_eventgroup>(request.GroupId);
+                    t_eventgroup eventGroup = _dbContext.Get<t_eventgroup>(request.EventGroupId);
                     //3.0 是否有资格报名
                     if (!IsValid(eventGroup, request.FromMemberId))
                     {
@@ -101,7 +101,7 @@ namespace nsda.Services.Implement.member
                         _dbContext.Insert(new t_player_signup
                         {
                             eventId = request.EventId,
-                            groupId = request.GroupId,
+                            eventGroupId = request.EventGroupId,
                             groupnum = groupnum,
                             memberId = request.FromMemberId,
                             signfee = tevent.signfee,
@@ -113,7 +113,7 @@ namespace nsda.Services.Implement.member
                         _dbContext.Insert(new t_player_signup
                         {
                             eventId = request.EventId,
-                            groupId = request.GroupId,
+                            eventGroupId = request.EventGroupId,
                             groupnum = groupnum,
                             memberId = request.ToMemberId,
                             signfee = tevent.signfee,
@@ -148,7 +148,7 @@ namespace nsda.Services.Implement.member
                         _dbContext.Insert(new t_player_signup
                         {
                             eventId = request.EventId,
-                            groupId = request.GroupId,
+                            eventGroupId = request.EventGroupId,
                             groupnum = groupnum,
                             memberId = request.FromMemberId,
                             signfee = tevent.signfee,
@@ -487,9 +487,9 @@ namespace nsda.Services.Implement.member
             return list;
         }
         //选手报名列表
-        public List<PlayerSignUpListResponse> EventPlayerList(PlayerSignUpQueryRequest request)
+        public List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request)
         {
-            List<PlayerSignUpListResponse> list = new List<PlayerSignUpListResponse>();
+            List<EventPlayerSignUpListResponse> list = new List<EventPlayerSignUpListResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder($@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
@@ -505,7 +505,7 @@ namespace nsda.Services.Implement.member
                     sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
                 }
                 int totalCount = 0;
-                list = _dbContext.Page<PlayerSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<EventPlayerSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -668,6 +668,46 @@ namespace nsda.Services.Implement.member
                 LogUtils.LogError("SignUpPlayerService.IsValid", ex);
             }
             return flag;
+        }
+        //选手报名列表
+        public List<PlayerSignUpListResponse> PlayerSignUpList(PlayerSignUpQueryRequest request)
+        {
+            List<PlayerSignUpListResponse> list = new List<PlayerSignUpListResponse>();
+            try
+            {
+                StringBuilder sb = new StringBuilder($@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
+                                                      inner join t_member b on a.memberId=b.id
+                                                      inner join t_event c on a.eventId=c.id
+                                                      where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
+                                                      and c.memberId=@MemberId and a.eventId=@EventId 
+                                                     ");
+
+                if (request.CountryId.HasValue && request.CountryId > 0)
+                {
+                    sb.Append(" and c.countryId=@CountryId ");
+                }
+                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
+                {
+                    sb.Append(" and c.provinceId=@ProvinceId ");
+                }
+                if (request.CityId.HasValue && request.CityId > 0)
+                {
+                    sb.Append(" and c.cityId=@CityId ");
+                }
+                if (request.StartDate.HasValue)
+                {
+                    DateTime dt = Convert.ToDateTime(request.StartDate);
+                    sb.Append($" and c.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and c.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
+                }
+                int totalCount = 0;
+                list = _dbContext.Page<PlayerSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.PlayerSignUpList", ex);
+            }
+            return list;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace nsda.Model.dto.request
         public int Id { get; set; }
 
         public int EventId { get; set; }
-        public int GroupId { get; set; }
+        public int EventGroupId { get; set; }
 
         public string Title { get; set; }
 

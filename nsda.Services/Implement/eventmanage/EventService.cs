@@ -330,7 +330,10 @@ namespace nsda.Services.Implement.eventmanage
                     foreach (var item in list)
                     {
                         //计算报名人数或者队伍
-                        item.SignUpCount = 9;
+                        if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
+                        {
+                            item.SignUpCount = _dbContext.ExecuteScalar($"select distinct(groupnum) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
+                        }
                     }
                 }
                 request.Records = totalCount;
@@ -373,6 +376,17 @@ namespace nsda.Services.Implement.eventmanage
                 int totalCount = 0;
                 list = _dbContext.Page<EventResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        //计算报名人数或者队伍
+                        if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
+                        {
+                            item.SignUpCount = _dbContext.ExecuteScalar($"select distinct(groupnum) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

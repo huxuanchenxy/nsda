@@ -33,11 +33,13 @@ namespace nsda.Services.Contract.member
         bool CheckRetire(int id, bool isAppro,int memberId,out string msg);
         //选手获取当天比赛信息
         List<CurrentEventResponse> CurrentPlayerEvent(int memberId);
-        //选手报名列表
-        List<PlayerSignUpListResponse> EventPlayerList(PlayerSignUpQueryRequest request);
+        //赛事管理员 选手报名列表
+        List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request);
         //邀请队友下拉框
         List<MemberSelectResponse> Invitation(string keyvalue, int eventId,int groupId,int memberId);
         //跟据赛事id 以及会员 找出适合他的赛事组别
         List<EventGroupResponse> EventGroup(int eventId, int memberId);
+        //选手报名列表
+        List<PlayerSignUpListResponse> PlayerSignUpList(PlayerSignUpQueryRequest request);
     }
 }

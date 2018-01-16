@@ -18,7 +18,7 @@ namespace nsda.Model.dto.request
         /// <summary>
         /// 赛事组别id
         /// </summary>
-        public int GroupId { get; set; }
+        public int EventGroupId { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>

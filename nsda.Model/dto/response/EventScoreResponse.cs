@@ -10,7 +10,7 @@ namespace nsda.Model.dto.response
     {
         public int Id { get; set; }
         public int EventId { get; set; }
-        public int GroupId { get; set; }
+        public int EventGroupId { get; set; }
         public string Title { get; set; }
         public string Remark { get; set; }
         public string FilePath { get; set; }

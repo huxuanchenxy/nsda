@@ -31,17 +31,29 @@ namespace nsda.Model.dto.request
         /// <summary>
         /// 赛事组别
         /// </summary>
-        public int GroupId { get; set; }
+        public int EventGroupId { get; set; }
 
         public decimal SignFee { get; set; }
 
         public string GroupNum { get; set; }
     }
 
-    public class PlayerSignUpQueryRequest : PageQuery
+    public class EventPlayerSignUpQueryRequest : PageQuery
     {
         public int MemberId { get; set; }
         public int EventId { get; set; }
         public string KeyValue { get; set; }
+    }
+
+    public class PlayerSignUpQueryRequest : PageQuery
+    {
+        public int MemberId { get; set; }
+        public int? CountryId { get; set; }
+        public int? ProvinceId { get; set; }
+        public int? CityId { get; set; }
+        /// <summary>
+        /// 比赛时间区间
+        /// </summary>
+        public DateTime? StartDate { get; set; }
     }
 }

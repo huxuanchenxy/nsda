@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
+using nsda.Model.dto.response;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Utilities;
@@ -115,6 +116,22 @@ namespace nsda.Web.Areas.player.Controllers
             string msg = string.Empty;
             var flag = _eventSignService.Sign(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
+        }
+
+        //报名列表
+        [HttpGet]
+        public ContentResult signuplist(PlayerSignUpQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _playerSignUpService.PlayerSignUpList(request);
+            var res = new ResultDto<PlayerSignUpListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
         #endregion 
     }

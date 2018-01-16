@@ -171,10 +171,10 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         //选手报名列表
         [HttpGet]
-        public ContentResult listplayersignup(PlayerSignUpQueryRequest request)
+        public ContentResult listplayersignup(EventPlayerSignUpQueryRequest request)
         {
             var data = _playerSignUpService.EventPlayerList(request);
-            var res = new ResultDto<PlayerSignUpListResponse>
+            var res = new ResultDto<EventPlayerSignUpListResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,
@@ -186,10 +186,10 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         //裁判报名列表
         [HttpGet]
-        public ContentResult listrefereesignup(RefereeSignUpQueryRequest request)
+        public ContentResult listrefereesignup(EventRefereeSignUpQueryRequest request)
         {
             var data = _refereeSignUpService.EventRefereeList(request);
-            var res = new ResultDto<RefereeSignUpListResponse>
+            var res = new ResultDto<EventRefereeSignUpListResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,

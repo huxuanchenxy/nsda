@@ -95,6 +95,22 @@ namespace nsda.Web.Areas.referee.Controllers
             var flag = _eventSignService.Sign(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
+
+        //报名列表
+        [HttpGet]
+        public ContentResult signuplist(RefereeSignUpQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _refereeSignUpService.RefereeSignUpList(request);
+            var res = new ResultDto<RefereeSignUpListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
         #endregion
 
         #region view
