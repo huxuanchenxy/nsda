@@ -51,26 +51,26 @@ namespace nsda.Services.Implement.member
             List<MemberOperLogResponse> list = new List<MemberOperLogResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.*,b.completename OperUserName from t_memberoperlog a 
-                            inner join  t_member b on a.memberId=b.id
-                            where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.OperData.IsNotEmpty())
                 {
                     request.OperData = "%" + request.OperData + "%";
-                    sb.Append(" and a.operdata like @OperData");
+                    join.Append(" and a.operdata like @OperData");
                 }
                 if (request.CreateStart.HasValue)
                 {
-                    sb.Append(" and a.createtime >= @CreateStart");
+                    join.Append(" and a.createtime >= @CreateStart");
                 }
                 if (request.CreateEnd.HasValue)
                 {
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and a.createtime<=@CreateEnd");
+                    join.Append("  and a.createtime<=@CreateEnd");
                 }
+                var sql=$@"select a.*,b.completename OperUserName from t_memberoperlog a 
+                            inner join  t_member b on a.memberId=b.id
+                            where isdelete=0 {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<MemberOperLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<MemberOperLogResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

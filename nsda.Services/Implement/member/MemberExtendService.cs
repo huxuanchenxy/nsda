@@ -103,20 +103,21 @@ namespace nsda.Services.Implement.member
             List<MemberExtendResponse> list = new List<MemberExtendResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.*,b.completename OperUserName from t_memberextend a 
+                StringBuilder join = new StringBuilder();
+                if (request.RoleType.HasValue && request.RoleType > 0)
+                {
+                    join.Append(" and a.role = @RoleType");
+                }
+                if (request.Status.HasValue && request.Status > 0)
+                {
+                    join.Append(" and a.memberExtendStatus = @Status");
+                }
+                var sql=$@" select a.*,b.completename OperUserName from t_memberextend a 
                             inner join  t_member b on a.memberId=b.id
-                            where isdelete=0");
-                if (request.RoleType.HasValue&&request.RoleType>0)
-                {
-                    sb.Append(" and a.role = @RoleType");
-                }
-                if (request.Status.HasValue&&request.Status>0)
-                {
-                    sb.Append(" and a.memberExtendStatus = @Status");
-                }
+                            where isdelete=0 {join.ToString()} order by a.createtime desc";
+
                 int totalCount = 0;
-                list = _dbContext.Page<MemberExtendResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<MemberExtendResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

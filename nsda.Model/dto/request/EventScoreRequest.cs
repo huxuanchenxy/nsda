@@ -21,12 +21,6 @@ namespace nsda.Model.dto.request
         public string FilePath { get; set; }
     }
 
-    public class EventScoreQueryRequest:PageQuery
-    {
-        public int EventId { get; set; }
-        public int GroupId { get; set; }
-    }
-
     public class PlayerEventScoreQueryRequest:PageQuery
     {
         public int MemberId { get; set; }

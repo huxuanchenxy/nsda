@@ -217,29 +217,29 @@ namespace nsda.Services.admin
             List<SysUserResponse> list = new List<SysUserResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select * from t_sysuser where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";
-                    sb.Append(" and name like @Name");
+                    join.Append(" and name like @Name");
                 }
                 if (request.Mobile.IsNotEmpty())
                 {
                     request.Mobile = "%" + request.Mobile + "%";
-                    sb.Append(" and mobile like @Mobile");
+                    join.Append(" and mobile like @Mobile");
                 }
                 if (request.LastLoginTime1.HasValue)
                 {
-                    sb.Append(" and lastlogintime >= @LastLoginTime1");
+                    join.Append(" and lastlogintime >= @LastLoginTime1");
                 }
                 if (request.LastLoginTime2.HasValue)
                 {
                     request.LastLoginTime2 = request.LastLoginTime2.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and lastlogintime<=@LastLoginTime2");
+                    join.Append("  and lastlogintime<=@LastLoginTime2");
                 }
+                var sql=$@"select * from t_sysuser where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<SysUserResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<SysUserResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

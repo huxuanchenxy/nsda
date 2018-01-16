@@ -482,35 +482,39 @@ namespace nsda.Services.member
             List<MemberResponse> list = new List<MemberResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($"select * from t_member where isdelete=0 and memberType!={(int)MemberTypeEm.临时裁判} and memberType!={(int)MemberTypeEm.临时选手} ");
+                StringBuilder join = new StringBuilder();
                 if (request.Account.IsNotEmpty())
                 {
                     request.Account = "%" + request.Account + "%";
-                    sb.Append(" and account like @Account");
+                    join.Append(" and account like @Account");
                 }
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";
-                    sb.Append(" and completename like @Name");
+                    join.Append(" and completename like @Name");
                 }
 
                 if (request.Mobile.IsNotEmpty())
                 {
                     request.Mobile = "%" + request.Mobile + "%";
-                    sb.Append(" and contactmobile like @Mobile");
+                    join.Append(" and contactmobile like @Mobile");
                 }
 
                 if (request.MemberStatus.HasValue)
                 {
-                    sb.Append(" and memberStatus=@MemberStatus");
+                    join.Append(" and memberStatus=@MemberStatus");
                 }
 
                 if (request.MemberType.HasValue)
                 {
-                    sb.Append(" and memberType=@MemberType");
+                    join.Append(" and memberType=@MemberType");
                 }
+                var sql=$@"select * from t_member where isdelete=0 
+                           and memberType!={(int)MemberTypeEm.临时裁判} and memberType!={(int)MemberTypeEm.临时选手} 
+                           {join.ToString()} order by creatime desc
+                         ";               
                 int totalCount = 0;
-                list = _dbContext.Page<MemberResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<MemberResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

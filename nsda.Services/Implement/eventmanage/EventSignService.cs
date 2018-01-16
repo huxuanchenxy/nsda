@@ -87,19 +87,21 @@ namespace nsda.Services.Implement.eventmanage
             List<PlayerSignResponse> list = new List<PlayerSignResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select * from t_eventsign a 
-                                                       inner join t_member b on a.memberId=b.id
-                                                       inner join t_event c on a.eventId=c.id
-                                                       where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
-                                                       and a.eventId=@EventId and a.groupId=@GroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
-                                                    ");
+                StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
-                    sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
+                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
+                var sql=$@" select * from t_eventsign a 
+                            inner join t_member b on a.memberId=b.id
+                            inner join t_event c on a.eventId=c.id
+                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
+                            and a.eventId=@EventId and a.groupId=@GroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
+                            {join.ToString()} order by a.createtime desc
+                        ";
                 int totalCount = 0;
-                list = _dbContext.Page<PlayerSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<PlayerSignResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -114,19 +116,21 @@ namespace nsda.Services.Implement.eventmanage
             List<RefereeSignResponse> list = new List<RefereeSignResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select * from t_eventsign a 
-                                                       inner join t_member b on a.memberId=b.id
-                                                       inner join t_event c on a.eventId=c.id
-                                                       where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
-                                                       and a.eventId=@EventId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.裁判}
-                                                    ");
+                StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" +request.KeyValue +"%";
-                    sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
+                    request.KeyValue = "%" + request.KeyValue + "%";
+                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
+                var sql=$@" select * from t_eventsign a 
+                            inner join t_member b on a.memberId=b.id
+                            inner join t_event c on a.eventId=c.id
+                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
+                            and a.eventId=@EventId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.裁判}
+                            {join.ToString()} order by createtime desc
+                        ";
                 int totalCount = 0;
-                list = _dbContext.Page<RefereeSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<RefereeSignResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

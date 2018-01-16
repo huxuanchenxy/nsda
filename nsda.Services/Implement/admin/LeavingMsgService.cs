@@ -103,34 +103,34 @@ namespace nsda.Services.admin
             List<LeavingMsgResponse> list = new List<LeavingMsgResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select * from t_leavingmsg where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";
-                    sb.Append(" and name like @Name");
+                    join.Append(" and name like @Name");
                 }
                 if (request.Mobile.IsNotEmpty())
                 {
                     request.Mobile = "%" + request.Mobile + "%";
-                    sb.Append(" and mobile like @Mobile");
+                    join.Append(" and mobile like @Mobile");
                 }
                 if (request.Email.IsNotEmpty())
                 {
                     request.Email = "%" + request.Email + "%";
-                    sb.Append(" and email like @Email");
+                    join.Append(" and email like @Email");
                 }
                 if (request.CreateStart.HasValue)
                 {
-                    sb.Append(" and createtime >= @CreateStart");
+                    join.Append(" and createtime >= @CreateStart");
                 }
                 if (request.CreateEnd.HasValue)
                 {
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and createtime<=@CreateEnd");
+                    join.Append("  and createtime<=@CreateEnd");
                 }
+                var sql = $"select * from t_leavingmsg where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<LeavingMsgResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<LeavingMsgResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

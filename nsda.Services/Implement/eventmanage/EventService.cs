@@ -274,35 +274,36 @@ namespace nsda.Services.Implement.eventmanage
             List<PlayerOrRefereeEventResponse> list = new List<PlayerOrRefereeEventResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select * from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) ");
-                if (request.CountryId.HasValue&&request.CountryId>0)
+                StringBuilder join = new StringBuilder();
+                if (request.CountryId.HasValue && request.CountryId > 0)
                 {
-                    sb.Append(" and countryId=@CountryId ");
+                    join.Append(" and countryId=@CountryId ");
                 }
                 if (request.ProvinceId.HasValue && request.ProvinceId > 0)
                 {
-                    sb.Append(" and provinceId=@ProvinceId ");
+                    join.Append(" and provinceId=@ProvinceId ");
                 }
                 if (request.CityId.HasValue && request.CityId > 0)
                 {
-                    sb.Append(" and cityId=@CityId ");
+                    join.Append(" and cityId=@CityId ");
                 }
                 if (request.EventLevel.HasValue && request.EventLevel > 0)
                 {
-                    sb.Append(" and eventLevel=@EventLevel ");
+                    join.Append(" and eventLevel=@EventLevel ");
                 }
                 if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
-                    sb.Append(" and (code like @KeyValue or name like @KeyValue)");
+                    join.Append(" and (code like @KeyValue or name like @KeyValue)");
                 }
                 if (request.StartDate.HasValue)
                 {
                     DateTime dt = Convert.ToDateTime(request.StartDate);
-                    sb.Append($" and starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
+                    join.Append($" and starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
+                var sql=$@"select * from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<PlayerOrRefereeEventResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<PlayerOrRefereeEventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -317,14 +318,16 @@ namespace nsda.Services.Implement.eventmanage
             List<EventResponse> list = new List<EventResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select * from t_event where isdelete=0 and memberId=@MemberId ");
+                StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
-                    sb.Append(" and (code like @KeyValue or name like @KeyValue)");
+                    join.Append(" and (code like @KeyValue or name like @KeyValue)");
                 }
+                var sql=$@"select * from t_event where isdelete=0 and memberId=@MemberId {join.ToString()} order by createtime desc ";
+                
                 int totalCount = 0;
-                list = _dbContext.Page<EventResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<EventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 if (list != null && list.Count > 0)
                 {
                     foreach (var item in list)
@@ -350,31 +353,32 @@ namespace nsda.Services.Implement.eventmanage
             List<EventResponse> list = new List<EventResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select * from t_event where isdelete=0 ");
+                StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
-                    sb.Append(" and (code like @KeyValue or name like @KeyValue)");
+                    join.Append(" and (code like @KeyValue or name like @KeyValue)");
                 }
                 if (request.EventStatus.HasValue && request.EventStatus > 0)
                 {
-                    sb.Append(" and eventStatus >= @EventStatus");
+                    join.Append(" and eventStatus >= @EventStatus");
                 }
                 if (request.EventType.HasValue && request.EventType > 0)
                 {
-                    sb.Append(" and eventType >= @EventType");
+                    join.Append(" and eventType >= @EventType");
                 }
                 if (request.EventStartDate.HasValue)
                 {
-                    sb.Append(" and starteventdate >= @EventStartDate");
+                    join.Append(" and starteventdate >= @EventStartDate");
                 }
                 if (request.EventEndDate.HasValue)
                 {
                     request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and starteventdate <= @EventEndDate");
+                    join.Append("  and starteventdate <= @EventEndDate");
                 }
+                var sql = $@"select * from t_event where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<EventResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<EventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
                 if (list != null && list.Count > 0)
                 {

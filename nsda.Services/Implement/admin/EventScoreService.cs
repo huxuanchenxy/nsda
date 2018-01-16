@@ -163,15 +163,13 @@ namespace nsda.Services.Implement.admin
             return response;
         }
 
-        public List<EventScoreResponse> List(EventScoreQueryRequest request)
+        public List<EventScoreResponse> List(int eventId,int eventGroupId)
         {
             List<EventScoreResponse> list = new List<EventScoreResponse>();
             try
             {
-                var sql = "select * from t_event_score where isdelete=0 and eventId=@EventId and groupId=@GroupId";
-                int totalCount = 0;
-                list = _dbContext.Page<EventScoreResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
+                var sql = $"select * from t_event_score where isdelete=0 and eventId={eventId} and groupId={eventGroupId} order by createtime desc";
+                list = _dbContext.Query<EventScoreResponse>(sql).ToList();
             }
             catch (Exception ex)
             {
@@ -187,7 +185,7 @@ namespace nsda.Services.Implement.admin
             try
             {
                 var sql = $@"select * from t_event_score where isdelete=0 and 
-                             groupId in (select groupId from t_player_signup where memberId=@MemberId and signUpStatus in ({ParamsConfig._signup_in}))";
+                             groupId in (select groupId from t_player_signup where memberId=@MemberId and signUpStatus in ({ParamsConfig._signup_in})) order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<EventScoreResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

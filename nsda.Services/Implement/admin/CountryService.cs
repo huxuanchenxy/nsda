@@ -94,15 +94,15 @@ namespace nsda.Services.Implement.admin
             List<CountryResponse> list = new List<CountryResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select *  from t_country  where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";
-                    sb.Append(" and name like @Name");
+                    join.Append(" and name like @Name");
                 }
+                var sql=$@"select *  from t_country  where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<CountryResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<CountryResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

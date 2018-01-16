@@ -21,6 +21,8 @@ namespace nsda.Model.dto.response
         public GenderEm Gender { get; set; }
         public string ContactMobile { get; set; }
         public GradeEm Grade { get; set; }
+        public string SchoolName { get; set; }
+        public string CityName { get; set; }
     }
 
     public class PlayerSignUpListResponse

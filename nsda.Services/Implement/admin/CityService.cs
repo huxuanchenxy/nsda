@@ -68,19 +68,19 @@ namespace nsda.Services.Implement.admin
             List<CityResponse> list = new List<CityResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.*,b.name  ProvinceName from t_city a left join t_province b on a.provinceId=b.Id where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";
-                    sb.Append(" and a.name like @Name");
+                    join.Append(" and a.name like @Name");
                 }
                 if (request.ProvinceId != null && request.ProvinceId > 0)
                 {
-                    sb.Append(" and a.provinceId=@ProvinceId ");
+                    join.Append(" and a.provinceId=@ProvinceId ");
                 }
+                var sql=$@"select a.*,b.name  ProvinceName from t_city a left join t_province b on a.provinceId=b.Id where isdelete=0 {join.ToString()}";
                 int totalCount = 0;
-                list = _dbContext.Page<CityResponse>(sb.ToString(),out totalCount,request.PageIndex,request.PageSize, request);
+                list = _dbContext.Page<CityResponse>(sql,out totalCount,request.PageIndex,request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

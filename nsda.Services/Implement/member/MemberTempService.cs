@@ -469,22 +469,23 @@ namespace nsda.Services.Implement.member
             List<MemberTempResponse> list = new List<MemberTempResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder(@"select a.*,b.completename  MemberName,c.completename  ToMemberName,d.name EventName  from t_membertemp a 
-                                                        inner join t_member b on a.memberId=b.Id 
-                                                        left  join t_member c on a.tomemberId=c.Id 
-                                                        inner join t_event  d on a.eventId=d.Id
-                                                        where a.IsDelete=0
-                                                     ");
+                StringBuilder join = new StringBuilder();
                 if (request.TempStatus.HasValue)
                 {
-                    sb.Append(" and a.tempStatus=@TempStatus");
+                    join.Append(" and a.tempStatus=@TempStatus");
                 }
                 if (request.TempType.HasValue)
                 {
-                    sb.Append(" and a.tempType=@TempType");
+                    join.Append(" and a.tempType=@TempType");
                 }
+                var sql=$@"select a.*,b.completename  MemberName,c.completename  ToMemberName,d.name EventName  from t_membertemp a 
+                            inner join t_member b on a.memberId=b.Id 
+                            left  join t_member c on a.tomemberId=c.Id 
+                            inner join t_event  d on a.eventId=d.Id
+                            where a.isdelete=0 {join.ToString()} order by a.createtime
+                        ";
                 int totalCount = 0;
-                list = _dbContext.Page<MemberTempResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<MemberTempResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

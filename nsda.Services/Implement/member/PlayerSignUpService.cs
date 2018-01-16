@@ -492,20 +492,30 @@ namespace nsda.Services.Implement.member
             List<EventPlayerSignUpListResponse> list = new List<EventPlayerSignUpListResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
-                                                      inner join t_member b on a.memberId=b.id
-                                                      inner join t_event c on a.eventId=c.id
-                                                      where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
-                                                      and c.memberId=@MemberId and a.eventId=@EventId 
-                                                     ");
-
+                StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
-                    sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
+                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
                 }
+                var sql=$@" select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
+                            inner join t_member b on a.memberId=b.id
+                            inner join t_event c on a.eventId=c.id
+                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
+                            and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
+                            order by c.createtime desc 
+                         ";
                 int totalCount = 0;
-                list = _dbContext.Page<EventPlayerSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                foreach (var item in list)
+                {
+                    var data=_dbContext.Query<dynamic>($"select b.chinessname,c.name from t_playereduexper  a inner join t_school b on a.schoolId=b.id inner join t_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by startdate desc limit 1").FirstOrDefault();
+                    if (data != null)
+                    {
+                        item.SchoolName = data.chinessname;
+                        item.CityName = data.name;
+                    }
+                }
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -675,32 +685,33 @@ namespace nsda.Services.Implement.member
             List<PlayerSignUpListResponse> list = new List<PlayerSignUpListResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
-                                                      inner join t_member b on a.memberId=b.id
-                                                      inner join t_event c on a.eventId=c.id
-                                                      where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
-                                                      and c.memberId=@MemberId and a.eventId=@EventId 
-                                                     ");
-
+                StringBuilder join = new StringBuilder();
                 if (request.CountryId.HasValue && request.CountryId > 0)
                 {
-                    sb.Append(" and c.countryId=@CountryId ");
+                    join.Append(" and c.countryId=@CountryId ");
                 }
                 if (request.ProvinceId.HasValue && request.ProvinceId > 0)
                 {
-                    sb.Append(" and c.provinceId=@ProvinceId ");
+                    join.Append(" and c.provinceId=@ProvinceId ");
                 }
                 if (request.CityId.HasValue && request.CityId > 0)
                 {
-                    sb.Append(" and c.cityId=@CityId ");
+                    join.Append(" and c.cityId=@CityId ");
                 }
                 if (request.StartDate.HasValue)
                 {
                     DateTime dt = Convert.ToDateTime(request.StartDate);
-                    sb.Append($" and c.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and c.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
+                    join.Append($" and c.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and c.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
+
+                var sql=$@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
+                                                      inner join t_member b on a.memberId=b.id
+                                                      inner join t_event c on a.eventId=c.id
+                                                      where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
+                                                      and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()} order by  a.creatTime desc
+                                                     ";
                 int totalCount = 0;
-                list = _dbContext.Page<PlayerSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<PlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

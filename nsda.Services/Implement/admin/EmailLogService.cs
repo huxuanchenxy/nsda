@@ -46,24 +46,24 @@ namespace nsda.Services.admin
             List<EmailLogResponse> list = new List<EmailLogResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select * from t_emaillog where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Account.IsNotEmpty())
                 {
                     request.Account = "%" + request.Account + "%";
-                    sb.Append(" and account like @Account");
+                    join.Append(" and account like @Account");
                 }
                 if (request.CreateStart.HasValue)
                 {
-                    sb.Append(" and createtime >= @CreateStart");
+                    join.Append(" and createtime >= @CreateStart");
                 }
                 if (request.CreateEnd.HasValue)
                 {
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and createtime<=@CreateEnd");
+                    join.Append("  and createtime<=@CreateEnd");
                 }
+                var  sql=$@"select * from t_emaillog where isdelete=0 {join.ToString()} order by createtime desc";            
                 int totalCount = 0;
-                list = _dbContext.Page<EmailLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<EmailLogResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

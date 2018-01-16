@@ -109,19 +109,19 @@ namespace nsda.Services.Implement.admin
             List<ProvinceResponse> list = new List<ProvinceResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.* from t_province a inner join t_country b on a.countryId=b.id  where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = "%" + request.Name + "%";
-                    sb.Append(" and a.name like @Name");
+                    join.Append(" and a.name like @Name");
                 }
                 if (request.CountryId != null && request.CountryId > 0)
                 {
-                    sb.Append(" and a.countryId=@CountryId ");
+                    join.Append(" and a.countryId=@CountryId ");
                 }
+                var sql=$@"select a.* from t_province a inner join t_country b on a.countryId=b.id  where isdelete=0 {join.ToString()} order by a.createtime desc";              
                 int totalCount = 0;
-                list = _dbContext.Page<ProvinceResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<ProvinceResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

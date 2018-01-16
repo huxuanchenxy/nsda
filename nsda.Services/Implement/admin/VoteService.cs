@@ -316,38 +316,38 @@ namespace nsda.Services.Implement.admin
             List<VoteResponse> list = new List<VoteResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select * from t_vote where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Title.IsNotEmpty())
                 {
                     request.Title = "%" + request.Title + "%";
-                    sb.Append(" and title like @Title");
+                    join.Append(" and title like @Title");
                 }
                 if (request.Remark.IsNotEmpty())
                 {
                     request.Remark = "%" + request.Remark + "%";
-                    sb.Append(" and remark like @Remark");
+                    join.Append(" and remark like @Remark");
                 }
                 if (request.VoteStartTime1.HasValue)
                 {
-                    sb.Append(" and voteStartTime >= @VoteStartTime1");
+                    join.Append(" and voteStartTime >= @VoteStartTime1");
                 }
                 if (request.VoteStartTime2.HasValue)
                 {
                     request.VoteStartTime2 = request.VoteStartTime2.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and voteStartTime<=@VoteStartTime2");
+                    join.Append("  and voteStartTime<=@VoteStartTime2");
                 }
                 if (request.VoteEndTime1.HasValue)
                 {
-                    sb.Append(" and voteEndTime >= @VoteEndTime1");
+                    join.Append(" and voteEndTime >= @VoteEndTime1");
                 }
                 if (request.VoteStartTime2.HasValue)
                 {
                     request.VoteEndTime1 = request.VoteEndTime1.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and voteEndTime<=@VoteEndTime2");
+                    join.Append("  and voteEndTime<=@VoteEndTime2");
                 }
+                var sql=$@"select * from t_vote where isdelete=0 {join.ToString()} order by createtime";                
                 int totalCount = 0;
-                list = _dbContext.Page<VoteResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<VoteResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

@@ -101,20 +101,21 @@ namespace nsda.Services.Implement.referee
             List<EventRefereeSignUpListResponse> list = new List<EventRefereeSignUpListResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select a.*,b.code MemberCode,b.completename MemberName from t_referee_signup a 
-                                                      inner join t_member b on a.memberId=b.id
-                                                      inner join t_event c on a.eventId=c.id
-                                                      where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
-                                                      and c.memberId=@MemberId and a.eventId=@EventId 
-                                                     ");
-
+                StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
-                    sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
+                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
+                var sql= $@"select a.*,b.code MemberCode,b.completename MemberName from t_referee_signup a 
+                            inner join t_member b on a.memberId=b.id
+                            inner join t_event c on a.eventId=c.id
+                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
+                            and c.memberId=@MemberId and a.eventId=@EventId 
+                            {join.ToString()} order by a.createtime desc
+                          ";
                 int totalCount = 0;
-                list = _dbContext.Page<EventRefereeSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<EventRefereeSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -219,7 +220,25 @@ namespace nsda.Services.Implement.referee
             List<RefereeSignUpListResponse> list = new List<RefereeSignUpListResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder($@"select a.id Id,b.id EventId,b.name EventName,b.code EventCode,refereeSignUpStatus,
+                StringBuilder join = new StringBuilder();
+                if (request.CountryId.HasValue && request.CountryId > 0)
+                {
+                    join.Append(" and b.countryId=@CountryId ");
+                }
+                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
+                {
+                    join.Append(" and b.provinceId=@ProvinceId ");
+                }
+                if (request.CityId.HasValue && request.CityId > 0)
+                {
+                    join.Append(" and b.cityId=@CityId ");
+                }
+                if (request.StartDate.HasValue)
+                {
+                    DateTime dt = Convert.ToDateTime(request.StartDate);
+                    join.Append($" and b.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and b.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
+                }
+                var sql= $@"select a.id Id,b.id EventId,b.name EventName,b.code EventCode,refereeSignUpStatus,
                                                       b.EventType,c.name CountryName,d.name ProvinceName,e.name CityName
                                                       from t_referee_signup a 
                                                       inner join t_event b on a.eventId=b.id
@@ -227,28 +246,10 @@ namespace nsda.Services.Implement.referee
                                                       left  join t_province d on b.provinceId=d.id
                                                       left  join t_city e on e.id=b.cityId
                                                       where a.isdelete=0 and b.isdelete=0 
-                                                      and a.memberId=@MemberId
-                                                     ");
-
-                if (request.CountryId.HasValue && request.CountryId > 0)
-                {
-                    sb.Append(" and b.countryId=@CountryId ");
-                }
-                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
-                {
-                    sb.Append(" and b.provinceId=@ProvinceId ");
-                }
-                if (request.CityId.HasValue && request.CityId > 0)
-                {
-                    sb.Append(" and b.cityId=@CityId ");
-                }
-                if (request.StartDate.HasValue)
-                {
-                    DateTime dt = Convert.ToDateTime(request.StartDate);
-                    sb.Append($" and b.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and b.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
-                }
+                                                      and a.memberId=@MemberId {join.ToString()}  order by a.createtime desc
+                                                     ";
                 int totalCount = 0;
-                list = _dbContext.Page<RefereeSignUpListResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<RefereeSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

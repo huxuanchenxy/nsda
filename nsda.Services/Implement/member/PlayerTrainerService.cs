@@ -189,7 +189,7 @@ namespace nsda.Services.member
                             inner join t_member c on a.toMemberId=c.id
                             inner join t_memberpoints d on a.memberId=d.memberId
                             inner join t_memberpoints e on a.toMemberId=e.memberId
-                            where (isTrainer=1 and isPositive=0 and memberId=@MemberId) or (isTrainer=0 and isPositive=1 and toMemberId=@MemberId)";
+                            where (isTrainer=1 and isPositive=0 and memberId=@MemberId) or (isTrainer=0 and isPositive=1 and toMemberId=@MemberId) order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<TrainerPlayerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -227,7 +227,7 @@ namespace nsda.Services.member
                 var sql = @"select a.*,b.name MemberName,b.code MemberCode,c.name ToMemberName,c.code ToMemberCode from t_player_trainer a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_member c on a.toMemberId=c.id
-                            where  (isTrainer=0 and isPositive=1 and memberId=@MemberId) or (isTrainer=1 and isPositive=0 and toMemberId=@MemberId)";
+                            where  (isTrainer=0 and isPositive=1 and memberId=@MemberId) or (isTrainer=1 and isPositive=0 and toMemberId=@MemberId) order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerTrainerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

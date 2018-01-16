@@ -230,17 +230,18 @@ namespace nsda.Services.Implement.eventmanage
             List<EventRoomResponse> list = new List<EventRoomResponse>();
             try
             {
-                StringBuilder sb=new StringBuilder($@"select a.*,b.name MemberName,c.name EventGroupName from t_eventroom a
-                            left join t_member b on a.memberId=b.id
-                            left join t_eventgroup c on a.eventgroupId=c.id
-                            where eventId=@EventId and isdelete=0 ");
+                StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%"+request.KeyValue+"%";
-                    sb.Append(" and (a.code like @KeyValue or a.name like @KeyValue)");
+                    request.KeyValue = "%" + request.KeyValue + "%";
+                    join.Append(" and (a.code like @KeyValue or a.name like @KeyValue)");
                 }
+                var sql=$@"select a.*,b.name MemberName,c.name EventGroupName from t_eventroom a
+                            left join t_member b on a.memberId=b.id
+                            left join t_eventgroup c on a.eventgroupId=c.id
+                            where eventId=@EventId and isdelete=0 {join.ToString()} order by a.createtime desc ";
                 int totalCount = 0;
-                list = _dbContext.Page<EventRoomResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<EventRoomResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

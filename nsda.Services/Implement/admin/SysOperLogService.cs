@@ -48,26 +48,26 @@ namespace nsda.Services.admin
             List<SysOperLogResponse> list = new List<SysOperLogResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.*,b.name OperUserName from t_sysoperlog a 
-                            inner join  t_sysuser b on a.sysuserId=b.id
-                            where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.OperData.IsNotEmpty())
                 {
                     request.OperData = "%" + request.OperData + "%";
-                    sb.Append(" and a.operdata like @OperData");
+                    join.Append(" and a.operdata like @OperData");
                 }
                 if (request.CreateStart.HasValue)
                 {
-                    sb.Append(" and a.createtime >= @CreateStart");
+                    join.Append(" and a.createtime >= @CreateStart");
                 }
                 if (request.CreateEnd.HasValue)
                 {
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
-                    sb.Append("  and a.createtime<=@CreateEnd");
+                    join.Append("  and a.createtime<=@CreateEnd");
                 }
+                var sql=$@"select a.*,b.name OperUserName from t_sysoperlog a 
+                            inner join  t_sysuser b on a.sysuserId=b.id
+                            where isdelete=0 {join.ToString()} order by a.createtime desc ";
                 int totalCount = 0;
-                list = _dbContext.Page<SysOperLogResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<SysOperLogResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

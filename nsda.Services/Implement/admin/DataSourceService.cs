@@ -165,20 +165,20 @@ namespace nsda.Services.Implement.admin
             List<DataSourceResponse> list = new List<DataSourceResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select * from t_datasource where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.Title.IsNotEmpty())
                 {
                     request.Title = "%" + request.Title + "%";
-                    sb.Append(" and title like @Title");
+                    join.Append(" and title like @Title");
                 }
                 if (request.Remark.IsNotEmpty())
                 {
                     request.Remark = "%" + request.Remark + "%";
-                    sb.Append(" and remark like @Remark");
+                    join.Append(" and remark like @Remark");
                 }
+                var sql=$@"select * from t_datasource where isdelete=0 {join.ToString()} order by createtime desc";            
                 int totalCount = 0;
-                list = _dbContext.Page<DataSourceResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<DataSourceResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

@@ -182,31 +182,32 @@ namespace nsda.Services.Implement.admin
             List<SchoolResponse> list = new List<SchoolResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.*,b.name as ProvinceName,c.name as CityName from t_school a 
-                            left join t_province b on a.provinceId=b.id
-                            left join t_city c on a.cityId=c.id
-                            where isdelete=0");
+                StringBuilder join = new StringBuilder();
                 if (request.EnglishName.IsNotEmpty())
                 {
                     request.EnglishName = "%" + request.EnglishName + "%";
-                    sb.Append(" and englishname like @EnglishName");
+                    join.Append(" and englishname like @EnglishName");
                 }
                 if (request.ChinessName.IsNotEmpty())
                 {
                     request.ChinessName = "%" + request.ChinessName + "%";
-                    sb.Append(" and chinessname like @ChinessName");
+                    join.Append(" and chinessname like @ChinessName");
                 }
-                if (request.ProvinceId.HasValue&&request.ProvinceId > 0)
+                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
                 {
-                    sb.Append(" and provinceId = @ProvinceId");
+                    join.Append(" and provinceId = @ProvinceId");
                 }
-                if (request.CityId.HasValue&&request.CityId > 0)
+                if (request.CityId.HasValue && request.CityId > 0)
                 {
-                    sb.Append(" and cityId = @CityId");
+                    join.Append(" and cityId = @CityId");
                 }
+                var sql= $@"select a.*,b.name as ProvinceName,c.name as CityName from t_school a 
+                            left join t_province b on a.provinceId=b.id
+                            left join t_city c on a.cityId=c.id
+                            where isdelete=0 {join.ToString()} order by a.createtime desc ";
+                
                 int totalCount = 0;
-                list = _dbContext.Page<SchoolResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<SchoolResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -221,10 +222,10 @@ namespace nsda.Services.Implement.admin
             List<BaseDataResponse> list = new List<BaseDataResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder("select id,chinessname as Name from t_school where cityId=@cityId ");
+                var sql="select id,chinessname as Name from t_school where isdelete=0 and cityId=@cityId ";
                 var dy = new DynamicParameters();
                 dy.Add("cityId", cityId);
-                list = _dbContext.Query<BaseDataResponse>(sb.ToString(),dy).ToList();
+                list = _dbContext.Query<BaseDataResponse>(sql,dy).ToList();
             }
             catch (Exception ex)
             {

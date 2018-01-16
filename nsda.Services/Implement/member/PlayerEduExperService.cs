@@ -125,12 +125,11 @@ namespace nsda.Services.member
             List<PlayerEduExperResponse> list = new List<PlayerEduExperResponse>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(@"select a.*,b.chinessname as SchoolName from t_playereduexper a
+                var sql= @"select a.*,b.chinessname as SchoolName from t_playereduexper a
                             left join t_school b on a.schoolId=b.id
-                            where isdelete=0 and memberId=@MemberId");
+                            where isdelete=0 and memberId=@MemberId order by a.createtime desc ";
                 int totalCount = 0;
-                list = _dbContext.Page<PlayerEduExperResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<PlayerEduExperResponse>(sql,out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)

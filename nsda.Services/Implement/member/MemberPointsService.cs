@@ -82,7 +82,7 @@ namespace nsda.Services.Implement.member
                                                                 left join t_city d on b.cityId = d.id
                                                                 where a.isdelete=0 and a.memberId=@memberId ");
                     int totalCount = 0;
-                    list = _dbContext.Page<PlayerPointsRecordResponse>(sqlquery.Append(sqljoin).ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                    list = _dbContext.Page<PlayerPointsRecordResponse>(sqlquery.Append(sqljoin).Append(" order by a.createtime desc").ToString(), out totalCount, request.PageIndex, request.PageSize, request);
                     request.Records = totalCount;
                 }
             }
