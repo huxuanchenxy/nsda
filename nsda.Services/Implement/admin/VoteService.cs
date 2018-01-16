@@ -132,31 +132,39 @@ namespace nsda.Services.Implement.admin
                 {
                     msg = "投票辩题不能为空";
                 }
-
-                _dbContext.BeginTransaction();
-                request.VoteId = _dbContext.Insert(new t_vote
+                try
                 {
-                    remark = request.Remark,
-                    title = request.Title,
-                    voteEndTime = request.VoteEndTime,
-                    voteStartTime = request.VoteStartTime
-                }).ToObjInt();
-
-                foreach (var item in request.VoteDetail)
-                {
-                    _dbContext.Insert(new t_votedetail
+                    _dbContext.BeginTransaction();
+                    request.VoteId = _dbContext.Insert(new t_vote
                     {
-                        numberOfVotes = 0,
-                        title = item.Title,
-                        voteId = request.VoteId
-                    });
+                        remark = request.Remark,
+                        title = request.Title,
+                        voteEndTime = request.VoteEndTime,
+                        voteStartTime = request.VoteStartTime
+                    }).ToObjInt();
+
+                    foreach (var item in request.VoteDetail)
+                    {
+                        _dbContext.Insert(new t_votedetail
+                        {
+                            numberOfVotes = 0,
+                            title = item.Title,
+                            voteId = request.VoteId
+                        });
+                    }
+                    _dbContext.CommitChanges();
+                    flag = true;
                 }
-                _dbContext.CommitChanges();
-                flag = true;
+                catch (Exception ex)
+                {
+                    _dbContext.Rollback();
+                    flag = false;
+                    msg = "服务异常";
+                    LogUtils.LogError("VoteService.InsertTran", ex);
+                }
             }
             catch (Exception ex)
             {
-                _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("VoteService.Insert", ex);
@@ -207,45 +215,54 @@ namespace nsda.Services.Implement.admin
                 model.title = request.Title;
                 model.remark = request.Remark;
                 var voteDetail = _dbContext.Select<t_votedetail>(c => c.voteId == request.VoteId).ToList();
-                _dbContext.BeginTransaction();
-                if (voteDetail != null && voteDetail.Count > 0)
+                try
                 {
-                    foreach (var item in voteDetail)
+                    _dbContext.BeginTransaction();
+                    if (voteDetail != null && voteDetail.Count > 0)
                     {
-                        var detail = request.VoteDetail.FirstOrDefault(c => c.Id == item.id);
-                        if (detail == null)
+                        foreach (var item in voteDetail)
                         {
-                            _dbContext.Delete<t_votedetail>(item);
-                        }
-                        else
-                        {
-                            item.title = detail.Title;
-                            _dbContext.Update<t_votedetail>(item);
+                            var detail = request.VoteDetail.FirstOrDefault(c => c.Id == item.id);
+                            if (detail == null)
+                            {
+                                _dbContext.Delete<t_votedetail>(item);
+                            }
+                            else
+                            {
+                                item.title = detail.Title;
+                                _dbContext.Update<t_votedetail>(item);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    foreach (var item in request.VoteDetail)
+                    else
                     {
-                        _dbContext.Insert(new t_votedetail
+                        foreach (var item in request.VoteDetail)
                         {
-                            numberOfVotes = 0,
-                            title = item.Title,
-                            voteId = request.VoteId
-                        });
+                            _dbContext.Insert(new t_votedetail
+                            {
+                                numberOfVotes = 0,
+                                title = item.Title,
+                                voteId = request.VoteId
+                            });
+                        }
                     }
+                    _dbContext.Update(model);
+                    _dbContext.CommitChanges();
+                    flag = true;
                 }
-                _dbContext.Update(model);
-                _dbContext.CommitChanges();
-                flag = true;
+                catch (Exception ex)
+                {
+                    _dbContext.Rollback();
+                    flag = false;
+                    msg = "服务异常";
+                    LogUtils.LogError("VoteService.UpdateTran", ex);
+                }
             }
             catch (Exception ex)
             {
-                _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("VoteService.Insert", ex);
+                LogUtils.LogError("VoteService.Update", ex);
             }
             return flag;
         }

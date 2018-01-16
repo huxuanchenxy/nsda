@@ -55,23 +55,32 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "赛事信息有误";
                     return flag;
                 }
-
-                _dbContext.BeginTransaction();
-                for (int i = 0; i < num; i++)
+                try
                 {
-                    _dbContext.Insert(new t_eventroom {
-                         eventgroupId=0,
-                         code=_dataRepository.EventRoomRepo.RenderCode(eventId),
-                         eventId=eventId,
-                         roomStatus=Model.enums.RoomStatusEm.闲置                      
-                    });
+                    _dbContext.BeginTransaction();
+                    for (int i = 0; i < num; i++)
+                    {
+                        _dbContext.Insert(new t_eventroom
+                        {
+                            eventgroupId = 0,
+                            code = _dataRepository.EventRoomRepo.RenderCode(eventId),
+                            eventId = eventId,
+                            roomStatus = Model.enums.RoomStatusEm.闲置
+                        });
+                    }
+                    _dbContext.CommitChanges();
+                    flag = true;
                 }
-                _dbContext.CommitChanges();
-                flag = true;
+                catch(Exception ex)
+                {
+                    _dbContext.Rollback();
+                    flag = false;
+                    msg = "服务异常";
+                    LogUtils.LogError("EventRoomService.InsertTran", ex);
+                }
             }
             catch (Exception ex)
             {
-                _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("EventRoomService.Insert", ex);

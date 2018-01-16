@@ -42,7 +42,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 t_event tevent = _dbContext.Get<t_event>(request.EventId);
-                if (tevent==null)
+                if (tevent == null)
                 {
                     msg = "赛事信息有误";
                     return flag;
@@ -93,32 +93,44 @@ namespace nsda.Services.Implement.member
                         return flag;
                     }
 
-                    _dbContext.BeginTransaction();
-                    string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
-                    //邀请者
-                    _dbContext.Insert(new t_player_signup
+                    try
                     {
-                        eventId = request.EventId,
-                        groupId = request.GroupId,
-                        groupnum = groupnum,
-                        memberId = request.FromMemberId,
-                        signfee = tevent.signfee,
-                        signUpStatus = SignUpStatusEm.等待队员确认邀请,
-                        signUpType = SignUpTypeEm.邀请人,
-                        isTemp = false
-                    });
-                    //被邀请者
-                    _dbContext.Insert(new t_player_signup
+                        _dbContext.BeginTransaction();
+                        string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
+                        //邀请者
+                        _dbContext.Insert(new t_player_signup
+                        {
+                            eventId = request.EventId,
+                            groupId = request.GroupId,
+                            groupnum = groupnum,
+                            memberId = request.FromMemberId,
+                            signfee = tevent.signfee,
+                            signUpStatus = SignUpStatusEm.等待队员确认邀请,
+                            signUpType = SignUpTypeEm.邀请人,
+                            isTemp = false
+                        });
+                        //被邀请者
+                        _dbContext.Insert(new t_player_signup
+                        {
+                            eventId = request.EventId,
+                            groupId = request.GroupId,
+                            groupnum = groupnum,
+                            memberId = request.ToMemberId,
+                            signfee = tevent.signfee,
+                            signUpStatus = SignUpStatusEm.报名邀请中,
+                            signUpType = SignUpTypeEm.被邀请人,
+                            isTemp = false
+                        });
+                        _dbContext.CommitChanges();
+                        flag = true;
+                    }
+                    catch (Exception ex)
                     {
-                        eventId = request.EventId,
-                        groupId = request.GroupId,
-                        groupnum = groupnum,
-                        memberId = request.ToMemberId,
-                        signfee = tevent.signfee,
-                        signUpStatus = SignUpStatusEm.报名邀请中,
-                        signUpType = SignUpTypeEm.被邀请人,
-                        isTemp = false
-                    });
+                        _dbContext.Rollback();
+                        flag = false;
+                        msg = "服务异常";
+                        LogUtils.LogError("SignUpPlayerService.InsertTran", ex);
+                    }
                 }
                 else //演讲逻辑可能不同
                 {
@@ -128,26 +140,37 @@ namespace nsda.Services.Implement.member
                         msg = "您已申请过此次赛事";
                         return flag;
                     }
-                    string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
-                    //邀请者
-                    _dbContext.Insert(new t_player_signup
+                    try
                     {
-                        eventId = request.EventId,
-                        groupId = request.GroupId,
-                        groupnum = groupnum,
-                        memberId = request.FromMemberId,
-                        signfee = tevent.signfee,
-                        signUpStatus = tevent.signfee <= 0 ? SignUpStatusEm.报名成功 : SignUpStatusEm.组队成功,
-                        signUpType = SignUpTypeEm.邀请人,
-                        isTemp = false
-                    });
+                        _dbContext.BeginTransaction();
+                        string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
+                        //邀请者
+                        _dbContext.Insert(new t_player_signup
+                        {
+                            eventId = request.EventId,
+                            groupId = request.GroupId,
+                            groupnum = groupnum,
+                            memberId = request.FromMemberId,
+                            signfee = tevent.signfee,
+                            signUpStatus = tevent.signfee <= 0 ? SignUpStatusEm.报名成功 : SignUpStatusEm.组队成功,
+                            signUpType = SignUpTypeEm.邀请人,
+                            isTemp = false
+                        });
+                        _dbContext.CommitChanges();
+                        flag = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _dbContext.Rollback();
+                        flag = false;
+                        msg = "服务异常";
+                        LogUtils.LogError("SignUpPlayerService.InsertTran", ex);
+                    }
                 }
-                _dbContext.CommitChanges();
-                flag = true;
+
             }
             catch (Exception ex)
             {
-                _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("SignUpPlayerService.Insert", ex);
@@ -250,7 +273,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 t_player_signup signup = _dbContext.Get<t_player_signup>(id);
-                if (signup != null&&signup.memberId==memberId)
+                if (signup != null && signup.memberId == memberId)
                 {
                     //判断是否有订单 无订单则创建订单并生成支付信息
                     t_order order = _dbContext.Select<t_order>(c => c.orderType == OrderTypeEm.赛事报名 && c.memberId == memberId && c.sourceId == id).FirstOrDefault();
@@ -519,10 +542,11 @@ namespace nsda.Services.Implement.member
                         //需要判断选手是否满足条件
                         if (IsValid(group, item.id))
                         {
-                            list.Add(new MemberSelectResponse {
-                                  Id=item.id,
-                                  Code=item.code,
-                                  Name=item.completename  
+                            list.Add(new MemberSelectResponse
+                            {
+                                Id = item.id,
+                                Code = item.code,
+                                Name = item.completename
                             });
                         }
                     }
@@ -606,7 +630,7 @@ namespace nsda.Services.Implement.member
                             return false;
                         }
                     }
-                }          
+                }
                 //第二步判断积分
                 if (group.minPoints.HasValue || group.maxPoints.HasValue)
                 {
@@ -618,14 +642,14 @@ namespace nsda.Services.Implement.member
                     }
                     if (group.maxPoints > 0)
                     {
-                        if(memberpoints.points>group.maxPoints)
-                            return false; 
+                        if (memberpoints.points > group.maxPoints)
+                            return false;
                     }
                 }
                 //第三步判断参赛次数
                 if (group.mintimes.HasValue || group.maxtimes.HasValue)
                 {
-                    var times=_dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                    var times = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                     if (group.mintimes > 0)
                     {
                         if (group.mintimes > times)
@@ -637,7 +661,7 @@ namespace nsda.Services.Implement.member
                             return false;
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {

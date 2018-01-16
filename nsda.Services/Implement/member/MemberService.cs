@@ -91,58 +91,69 @@ namespace nsda.Services.member
                     return flag;
                 }
 
-                _dbContext.BeginTransaction();
-                member.code = _dataRepository.MemberRepo.RenderCode();
-                int memberId = _dbContext.Insert(member).ToObjInt();
-                _dbContext.Insert(new t_memberpoints
+                try
                 {
-                    eventPoints = 0,
-                    memberId = memberId,
-                    points = 0,
-                    servicePoints = 0,
-                });
-
-                //如果是选手  填了教育经验
-                if (request.MemberType == MemberTypeEm.选手)
-                {
-                    _dbContext.Insert(new t_playereduexper
+                    _dbContext.BeginTransaction();
+                    member.code = _dataRepository.MemberRepo.RenderCode();
+                    int memberId = _dbContext.Insert(member).ToObjInt();
+                    _dbContext.Insert(new t_memberpoints
                     {
-                        enddate = request.PlayerEdu.EndDate,
+                        eventPoints = 0,
                         memberId = memberId,
-                        schoolId = request.PlayerEdu.SchoolId,
-                        startdate = request.PlayerEdu.StartDate
+                        points = 0,
+                        servicePoints = 0,
                     });
-                }
 
-                if (request.MemberType == MemberTypeEm.裁判)
-                {
-                    if (request.EventId != null && request.EventId > 0)
+                    //如果是选手  填了教育经验
+                    if (request.MemberType == MemberTypeEm.选手)
                     {
-                        _dbContext.Insert(new t_referee_signup
+                        _dbContext.Insert(new t_playereduexper
                         {
-                            eventId = (int)request.EventId,
-                            isTemp = false,
+                            enddate = request.PlayerEdu.EndDate,
                             memberId = memberId,
-                            refereeSignUpStatus = RefereeSignUpStatusEm.待审核
+                            schoolId = request.PlayerEdu.SchoolId,
+                            startdate = request.PlayerEdu.StartDate
                         });
                     }
-                }
 
-                _dbContext.CommitChanges();
-                var userContext = new WebUserContext
+                    if (request.MemberType == MemberTypeEm.裁判)
+                    {
+                        if (request.EventId != null && request.EventId > 0)
+                        {
+                            _dbContext.Insert(new t_referee_signup
+                            {
+                                eventId = (int)request.EventId,
+                                isTemp = false,
+                                memberId = memberId,
+                                refereeSignUpStatus = RefereeSignUpStatusEm.待审核
+                            });
+                        }
+                    }
+
+                    _dbContext.CommitChanges();
+                    flag = true;
+                    var userContext = new WebUserContext
+                    {
+                        Name = request.Name,
+                        Account = request.Account,
+                        Role = ((int)request.MemberType).ToString(),
+                        MemberType = (int)request.MemberType,
+                        Id = memberId,
+                        Status = request.MemberType == MemberTypeEm.选手 ? (int)MemberStatusEm.待认证 : request.MemberType == MemberTypeEm.赛事管理员 ? (int)MemberStatusEm.待审核 : (int)MemberStatusEm.通过
+                    };
+                    SaveCurrentUser(userContext);
+                }
+                catch (Exception ex)
                 {
-                    Name = request.Name,
-                    Account = request.Account,
-                    Role = ((int)request.MemberType).ToString(),
-                    MemberType = (int)request.MemberType,
-                    Id = memberId,
-                    Status = request.MemberType == MemberTypeEm.选手 ? (int)MemberStatusEm.待认证 : request.MemberType == MemberTypeEm.赛事管理员 ? (int)MemberStatusEm.待审核 : (int)MemberStatusEm.通过
-                };
-                SaveCurrentUser(userContext);
+                    _dbContext.Rollback();
+                    flag = false;
+                    msg = "服务异常";
+                    LogUtils.LogError("MemberService.RegisterTran", ex);
+                }
             }
             catch (Exception ex)
             {
-                _dbContext.Rollback();
+                flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("MemberService.Register", ex);
             }
