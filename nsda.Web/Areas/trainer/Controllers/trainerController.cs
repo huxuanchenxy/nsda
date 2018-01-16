@@ -33,7 +33,7 @@ namespace nsda.Web.Areas.trainer.Controllers
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerTrainerService.TrainerList(request);
-            var res = new ResultDto<PlayerTrainerResponse>
+            var res = new ResultDto<TrainerPlayerResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,

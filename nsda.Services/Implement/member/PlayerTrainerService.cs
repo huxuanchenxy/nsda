@@ -12,6 +12,7 @@ using nsda.Models;
 using nsda.Model.enums;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.admin;
+using nsda.Model;
 
 namespace nsda.Services.member
 {
@@ -178,19 +179,20 @@ namespace nsda.Services.member
             return flag;
         }
         //教练下的学生列表
-        public List<PlayerTrainerResponse> TrainerList(PlayerTrainerQueryRequest request)
+        public List<TrainerPlayerResponse> TrainerList(PlayerTrainerQueryRequest request)
         {
-            List<PlayerTrainerResponse> list = new List<PlayerTrainerResponse>();
+            List<TrainerPlayerResponse> list = new List<TrainerPlayerResponse>();
             try
             {
-                var sql = @"select a.*,b.name MemberName,c.name ToMemberName  from t_player_trainer a 
+                var sql = @"select a.*,b.name MemberName,b.code MemberCode,d.points MemberPoints,e.points ToMemberPoints,c.name ToMemberName,c.code ToMemberCode  from t_player_trainer a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_member c on a.toMemberId=c.id
+                            inner join t_memberpoints d on a.memberId=d.memberId
+                            inner join t_memberpoints e on a.toMemberId=e.memberId
                             where (isTrainer=1 and isPositive=0 and memberId=@MemberId) or (isTrainer=0 and isPositive=1 and toMemberId=@MemberId)";
                 int totalCount = 0;
-                list = _dbContext.Page<PlayerTrainerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<TrainerPlayerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
-                //要查询执教期间所获的积分数
                 if (list != null && list.Count>0)
                 {
                     foreach (var item in list)
@@ -201,7 +203,11 @@ namespace nsda.Services.member
                         }
                         if (item.PlayerTrainerStatus == PlayerTrainerStatusEm.已确认)
                         {
-
+                            //所在学校
+                            item.School=_dbContext.ExecuteScalar($"select b.chinessname from t_playereduexper  a inner join t_school b on a.schoolId=b.id where a.memberid={(item.Flag?item.ToMemberId:item.MemberId)} and a.isdelete=0 order by startdate desc limit 1").ToObjStr();
+                            //参与比赛次数
+                            item.Times = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                            //指教期间获胜次数
                         }
                     }
                 }
@@ -218,7 +224,7 @@ namespace nsda.Services.member
             List< PlayerTrainerResponse > list = new List<PlayerTrainerResponse>();
             try
             {
-                var sql = @"select a.*,b.name MemberName,c.name ToMemberName from t_player_trainer a 
+                var sql = @"select a.*,b.name MemberName,b.code MemberCode,c.name ToMemberName,c.code ToMemberCode from t_player_trainer a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_member c on a.toMemberId=c.id
                             where  (isTrainer=0 and isPositive=1 and memberId=@MemberId) or (isTrainer=1 and isPositive=0 and toMemberId=@MemberId)";

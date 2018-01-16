@@ -625,15 +625,15 @@ namespace nsda.Services.Implement.member
                 //第三步判断参赛次数
                 if (group.mintimes.HasValue || group.maxtimes.HasValue)
                 {
-                    List<t_player_signup> list = _dbContext.Select<t_player_signup>(c => c.memberId == memberId).ToList();
+                    var times=_dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                     if (group.mintimes > 0)
                     {
-                        if (group.mintimes > list.Count)
+                        if (group.mintimes > times)
                             return false;
                     }
                     if (group.maxtimes > 0)
                     {
-                        if (list.Count > group.maxtimes)
+                        if (times > group.maxtimes)
                             return false;
                     }
                 }
