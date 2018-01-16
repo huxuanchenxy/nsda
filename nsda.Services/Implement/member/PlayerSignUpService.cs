@@ -522,14 +522,14 @@ namespace nsda.Services.Implement.member
             {
                 //需要过滤已经报名的选手
                 var sql = $@"
-                            select * from t_member where ((isdelete=0 
+                            select * from t_member where (isdelete=0 
                             and memberType={MemberTypeEm.选手} and id!={memberId} and memberStatus={MemberStatusEm.已认证} and (code like @key or completename like @key)) or id in
                             (
 	                            select a.memberId from t_memberextend a
 	                            inner join t_member b on a.memberId=b.id
 	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手}  and b.memberStatus={MemberStatusEm.已认证}
                                 and (b.code like @key or b.completename like @key)
-                            )) and id not in (select memberId from t_player_signup where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin}))
+                            )) and id not in (select memberId from t_player_signup where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})) limit 30
                          ";
                 var dy = new DynamicParameters();
                 dy.Add("key", "%" + keyvalue + "%");

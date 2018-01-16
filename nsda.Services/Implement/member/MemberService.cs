@@ -782,7 +782,7 @@ namespace nsda.Services.member
 	                            inner join t_member b on a.memberId=b.id
 	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手} 
                                 and (b.code like @key or b.completename like @key)
-                            )
+                            ) limit 30
                          ";
                 var dy = new DynamicParameters();
                 dy.Add("key", "%" + keyvalue + "%");
@@ -813,7 +813,7 @@ namespace nsda.Services.member
 	                            inner join t_member b on a.memberId=b.id
 	                            where and a.memberId!={memberId} a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.教练} 
                                 and (b.code like @key or b.completename like @key)
-                            )
+                            ) limit 30
                          ";
                 var dy = new DynamicParameters();
                 dy.Add("key", "%" + keyvalue + "%");
