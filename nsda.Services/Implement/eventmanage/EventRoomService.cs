@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using nsda.Model.dto.response;
+using nsda.Model.enums;
 
 namespace nsda.Services.Implement.eventmanage
 {
@@ -124,16 +125,19 @@ namespace nsda.Services.Implement.eventmanage
                 t_eventroom room = _dbContext.Get<t_eventroom>(id);
                 if (room != null)
                 {
-                    if (statusOrGroup == 0)
+                    if (statusOrGroup == 0)//停用
                     {
-                        room.roomStatus = Model.enums.RoomStatusEm.停用;
+                        room.roomStatus = RoomStatusEm.停用;
+                        room.eventgroupId = 0;
                     }
-                    else if (statusOrGroup == 0)
+                    else if (statusOrGroup == 1)//随机
                     {
-                        room.roomStatus = Model.enums.RoomStatusEm.闲置;
+                        room.roomStatus = RoomStatusEm.使用中;
+                        room.eventgroupId = 0;
                     }
-                    else {
+                    else {//组别
                         room.eventgroupId = statusOrGroup;
+                        room.roomStatus = RoomStatusEm.使用中;
                     }
                     room.updatetime = DateTime.Now;
                     _dbContext.Update(room);
@@ -147,7 +151,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("EventRoomService.Eidt", ex);
+                LogUtils.LogError("EventRoomService.EidtSettings", ex);
             }
             return flag;
         }

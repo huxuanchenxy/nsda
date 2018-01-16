@@ -47,6 +47,7 @@ namespace nsda.Services.Implement.eventmanage
                     eventsign.signtime = DateTime.Now;
                     eventsign.eventSignStatus = EventSignStatusEm.已签到;
                     _dbContext.Update(eventsign);
+                    flag = true;
                 }
             }
             catch (Exception ex)
@@ -81,14 +82,14 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //选手签到列表
-        public List<MemberSignResponse> PlayerSignList(MemberSignQueryRequest request)
+        public List<PlayerSignResponse> PlayerSignList(PlayerSignQueryRequest request)
         {
-            List<MemberSignResponse> list = new List<MemberSignResponse>();
+            List<PlayerSignResponse> list = new List<PlayerSignResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder($@"select * from t_eventsign a 
                                                        inner join t_member b on a.memberId=b.id
-                                                       inner join t_eventId c on a.eventId=c.id
+                                                       inner join t_event c on a.eventId=c.id
                                                        where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
                                                        and a.eventId=@EventId and a.groupId=@GroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
                                                     ");
@@ -98,7 +99,7 @@ namespace nsda.Services.Implement.eventmanage
                     sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
                 int totalCount = 0;
-                list = _dbContext.Page<MemberSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<PlayerSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -108,14 +109,14 @@ namespace nsda.Services.Implement.eventmanage
             return list;
         }
         //裁判签到列表
-        public List<MemberSignResponse> RefereeSignList(MemberSignQueryRequest request)
+        public List<RefereeSignResponse> RefereeSignList(RefereeSignQueryRequest request)
         {
-            List<MemberSignResponse> list = new List<MemberSignResponse>();
+            List<RefereeSignResponse> list = new List<RefereeSignResponse>();
             try
             {
                 StringBuilder sb = new StringBuilder($@"select * from t_eventsign a 
                                                        inner join t_member b on a.memberId=b.id
-                                                       inner join t_eventId c on a.eventId=c.id
+                                                       inner join t_event c on a.eventId=c.id
                                                        where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
                                                        and a.eventId=@EventId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.裁判}
                                                     ");
@@ -125,7 +126,7 @@ namespace nsda.Services.Implement.eventmanage
                     sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
                 int totalCount = 0;
-                list = _dbContext.Page<MemberSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<RefereeSignResponse>(sb.ToString(), out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -134,7 +135,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             return list;
         }
-
+        //选手/裁判获取签到信息
         public SignResponse GetSign(int eventId, int memberId)
         {
             SignResponse response = null;

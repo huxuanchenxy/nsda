@@ -89,7 +89,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Content(res.Serialize());
         }
 
-
         //新增临时选手
         [HttpPost]
         [AjaxOnly]
@@ -114,6 +113,18 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result<string>(flag, msg);
         }
 
+        //裁判审核
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult checkreferee(int id, bool isAppro)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _refereeSignUpService.Check(id, isAppro, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
         //批量签到
         [HttpPost]
         [AjaxOnly]
@@ -128,11 +139,11 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         //选手签到列表
         [HttpGet]
-        public ContentResult playersignlist(MemberSignQueryRequest request)
+        public ContentResult playersignlist(PlayerSignQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var data=_eventSignService.PlayerSignList(request);
-            var res = new ResultDto<MemberSignResponse>
+            var res = new ResultDto<PlayerSignResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,
@@ -144,11 +155,11 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         //裁判签到列表
         [HttpGet]
-        public ContentResult refereesignlist(MemberSignQueryRequest request)
+        public ContentResult refereesignlist(RefereeSignQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var data=_eventSignService.RefereeSignList(request);
-            var res = new ResultDto<MemberSignResponse>
+            var res = new ResultDto<RefereeSignResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,

@@ -35,6 +35,8 @@ namespace nsda.Models
     
         public int memberId { get; set; }
     
+        public int? eventGroupId { get; set; }
+    
         public DateTime? signtime { get; set; }
     
         public DateTime signdate { get; set; }

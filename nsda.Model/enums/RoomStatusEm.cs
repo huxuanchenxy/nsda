@@ -9,7 +9,7 @@ namespace nsda.Model.enums
     public enum RoomStatusEm
     {
         闲置=1,
-        使用中=2,
-        停用=3
+        停用=2,
+        使用中=3
     }
 }

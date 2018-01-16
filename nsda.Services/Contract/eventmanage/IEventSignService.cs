@@ -19,9 +19,9 @@ namespace nsda.Services.Contract.eventmanage
         //赛事管理员批量签到
         bool BatchSign(List<int> id,int eventId,bool isNormal,out string msg);
         //选手签到列表
-        List<MemberSignResponse> PlayerSignList(MemberSignQueryRequest request);
+        List<PlayerSignResponse> PlayerSignList(PlayerSignQueryRequest request);
         //裁判签到列表
-        List<MemberSignResponse> RefereeSignList(MemberSignQueryRequest request);
+        List<RefereeSignResponse> RefereeSignList(RefereeSignQueryRequest request);
         //选手 裁判获取签到信息
         SignResponse GetSign(int eventId,int memberId);
     }

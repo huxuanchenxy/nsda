@@ -38,7 +38,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                //参数校验
+                //参数信息校验
                 try
                 {
                     _dbContext.BeginTransaction();
