@@ -93,15 +93,33 @@ namespace nsda.Services.Implement.eventmanage
                     request.KeyValue = "%" + request.KeyValue + "%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
-                var sql=$@" select * from t_eventsign a 
+                var sql=$@" select d.groupnum GroupNum,a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss from t_eventsign a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
+                            inner join t_player_signup d on d.eventId=a.eventId and d.eventGroupId=a.eventGroupId and a.memberId=d.memberId
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
-                            and a.eventId=@EventId and a.groupId=@GroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
-                            {join.ToString()} order by a.createtime desc
+                            and a.eventId=@EventId and a.eventGroupId=@EventGroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
+                            {join.ToString()} group by a.memberId order by a.createtime desc
                         ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerSignResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        List<string> ltId = item.Ids.Split(',').ToList();
+                        List<string> ltSignDate= item.SignDates.Split(',').ToList();
+                        List<string> ltSignStatus = item.EventSignStatuss.Split(',').ToList();
+                        for (int i = 0; i < ltId.Count; i++)
+                        {
+                            item.List.Add(new PlayerSignSplitResponse {
+                                 Id=ltId[i].ToInt32(),
+                                 SignDate=ltSignDate[i].ToDateTime(),
+                                 EventSignStatus=(EventSignStatusEm)ltSignStatus[0].ToInt32()
+                            });
+                        }
+                    }
+                }
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -122,15 +140,33 @@ namespace nsda.Services.Implement.eventmanage
                     request.KeyValue = "%" + request.KeyValue + "%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
-                var sql=$@" select * from t_eventsign a 
+                var sql=$@" select a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss from t_eventsign a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
                             and a.eventId=@EventId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.裁判}
-                            {join.ToString()} order by createtime desc
+                            {join.ToString()} group by a.memberId order by a.createtime desc
                         ";
                 int totalCount = 0;
                 list = _dbContext.Page<RefereeSignResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        List<string> ltId = item.Ids.Split(',').ToList();
+                        List<string> ltSignDate = item.SignDates.Split(',').ToList();
+                        List<string> ltSignStatus = item.EventSignStatuss.Split(',').ToList();
+                        for (int i = 0; i < ltId.Count; i++)
+                        {
+                            item.List.Add(new RefereeSignSplitResponse
+                            {
+                                Id = ltId[i].ToInt32(),
+                                SignDate = ltSignDate[i].ToDateTime(),
+                                EventSignStatus = (EventSignStatusEm)ltSignStatus[0].ToInt32()
+                            });
+                        }
+                    }
+                }
                 request.Records = totalCount;
             }
             catch (Exception ex)
