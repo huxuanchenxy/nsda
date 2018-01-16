@@ -124,7 +124,7 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                if (request.Name.IsEmpty())
+                if (request.Account.IsEmpty())
                 {
                     msg = "账号不能为空";
                     return flag;

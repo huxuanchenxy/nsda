@@ -62,7 +62,8 @@ namespace nsda.Services.Implement.eventmanage
                         name = request.Name,
                         provinceId = request.ProvinceId,
                         signfee = request.Signfee,
-                        startsigndate = request.StartSignDate
+                        startsigndate = request.StartSignDate,
+                        eventTypeName=request.EventTypeName
                     }).ToObjInt();
                     foreach (var item in request.EventGroup)
                     {
@@ -290,7 +291,7 @@ namespace nsda.Services.Implement.eventmanage
                 {
                     sb.Append(" and eventLevel=@EventLevel ");
                 }
-                if (request.KeyValue.IsEmpty())
+                if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
                     sb.Append(" and (code like @KeyValue or name like @KeyValue)");
@@ -317,7 +318,7 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 StringBuilder sb = new StringBuilder($@"select * from t_event where isdelete=0 and memberId=@MemberId ");
-                if (request.KeyValue.IsEmpty())
+                if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
                     sb.Append(" and (code like @KeyValue or name like @KeyValue)");
@@ -347,7 +348,7 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 StringBuilder sb = new StringBuilder($@"select * from t_event where isdelete=0 ");
-                if (request.KeyValue.IsEmpty())
+                if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
                     sb.Append(" and (code like @KeyValue or name like @KeyValue)");

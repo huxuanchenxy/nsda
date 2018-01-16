@@ -108,7 +108,7 @@ namespace nsda.Services.Implement.referee
                                                       and c.memberId=@MemberId and a.eventId=@EventId 
                                                      ");
 
-                if (request.KeyValue.IsEmpty())
+                if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
                     sb.Append(" and (code like @KeyValue or completename like @KeyValue)");

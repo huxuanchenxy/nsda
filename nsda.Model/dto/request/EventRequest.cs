@@ -75,6 +75,8 @@ namespace nsda.Model.dto.request
 
         public EventTypeEm EventType { get; set; }
 
+        public EventTypeNameEm EventTypeName { get; set; }
+
         public EventLevelEm? EventLevel { get; set; }
 
         /// <summary>

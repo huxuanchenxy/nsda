@@ -499,7 +499,7 @@ namespace nsda.Services.Implement.member
                                                       and c.memberId=@MemberId and a.eventId=@EventId 
                                                      ");
 
-                if (request.KeyValue.IsEmpty())
+                if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";
                     sb.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");

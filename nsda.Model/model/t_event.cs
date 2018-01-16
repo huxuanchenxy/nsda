@@ -39,6 +39,10 @@ namespace nsda.Models
         /// </summary>
         public string name { get; set; }
     
+        public EventTypeEm eventType { get; set; }
+    
+        public EventTypeNameEm eventTypeName { get; set; }
+    
         /// <summary>
         /// 赛事管理员id
         /// </summary>
@@ -89,8 +93,6 @@ namespace nsda.Models
         /// 是否是国际赛事
         /// </summary>
         public bool isInter { get; set; }
-    
-        public EventTypeEm eventType { get; set; }
     
         public EventLevelEm? eventLevel { get; set; }
     
