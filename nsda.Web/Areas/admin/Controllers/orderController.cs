@@ -3,6 +3,7 @@ using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Services.Contract.admin;
 using nsda.Utilities;
+using nsda.Web.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,17 @@ namespace nsda.Web.Areas.admin.Controllers
                 rows = data
             };
             return Content(res.Serialize());
+        }
+
+        //处理退款
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult process(int id)
+        {
+            var msg = string.Empty;
+            var flag =_orderService.Process(id, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
         }
         #endregion
 

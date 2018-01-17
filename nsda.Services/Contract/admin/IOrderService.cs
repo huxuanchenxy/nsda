@@ -19,5 +19,7 @@ namespace nsda.Services.Contract.admin
         List<RefundOrderListResponse> RefundList(RefundOrderListQueryRequest request);
         //退单详情
         RefundOrderDetailResponse RedundDetail(int id);
+        //处理退款
+        bool Process(int id, int sysUserId, out string msg);
     }
 }

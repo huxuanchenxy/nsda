@@ -60,20 +60,16 @@ namespace nsda.Model.enums
         /// </summary>
         换货完成 = 11,
         /// <summary>
-        /// 退款
-        /// </summary>
-        退款 = 12,
-        /// <summary>
         /// 退款中
         /// </summary>
-        退款中 = 13,
+        退款中 = 12,
         /// <summary>
         /// 退款失败
         /// </summary>
-        退款失败 = 14,
+        退款失败 = 13,
         /// <summary>
         /// 退款成功
         /// </summary>
-        退款成功 = 15
+        退款成功 = 14
     }
 }
