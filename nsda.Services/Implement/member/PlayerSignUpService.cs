@@ -56,6 +56,7 @@ namespace nsda.Services.Implement.member
 
                 if (tevent.eventType == EventTypeEm.辩论)
                 {
+                    #region 辩论
                     //1.0 报名者是否重复报名 
                     var from = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and memberId={request.FromMemberId} and eventId={request.EventId} and signUpStatus not in ({ParamsConfig._signup_notin})").ToObjInt();
                     if (from > 0)
@@ -70,15 +71,13 @@ namespace nsda.Services.Implement.member
                         return flag;
                     }
                     //2.0 报名队伍数是否达到上限
-                    var teamcount = _dbContext.Select<t_player_signup>(c => c.eventId == request.EventId).ToList();
-                    if (teamcount != null && teamcount.Count > 0)
+                    var teamcount = _dbContext.ExecuteScalar($"select distinct(groupnum) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={request.EventId}").ToObjInt();
+                    if (tevent.maxnumber < teamcount + 1)
                     {
-                        if (tevent.maxnumber < teamcount.Count + 1)
-                        {
-                            msg = "达到报名人数上限无法继续报名";
-                            return flag;
-                        }
+                        msg = "达到报名人数上限无法继续报名";
+                        return flag;
                     }
+
                     t_eventgroup eventGroup = _dbContext.Get<t_eventgroup>(request.EventGroupId);
                     //3.0 是否有资格报名
                     if (!IsValid(eventGroup, request.FromMemberId))
@@ -131,9 +130,11 @@ namespace nsda.Services.Implement.member
                         msg = "服务异常";
                         LogUtils.LogError("SignUpPlayerService.InsertTran", ex);
                     }
+                    #endregion
                 }
                 else //演讲逻辑可能不同
                 {
+                    #region 演讲
                     var listfrom = _dbContext.Select<t_player_signup>(c => c.memberId == request.FromMemberId && c.eventId == request.EventId).ToList();
                     if (listfrom != null && listfrom.Count > 0)
                     {
@@ -156,6 +157,32 @@ namespace nsda.Services.Implement.member
                             signUpType = SignUpTypeEm.邀请人,
                             isTemp = false
                         });
+                        if (tevent.signfee <= 0)
+                        {
+                            _dbContext.Insert(new t_eventsign
+                            {
+                                eventId = tevent.id,
+                                eventSignStatus = EventSignStatusEm.待签到,
+                                eventSignType = EventSignTypeEm.选手,
+                                memberId = request.FromMemberId,
+                                signdate = tevent.starteventdate,
+                                signtime = DateTime.Now,
+                                eventGroupId = request.EventGroupId
+                            });
+
+                            if (tevent.starteventdate != tevent.endeventdate)
+                            {
+                                _dbContext.Insert(new t_eventsign
+                                {
+                                    eventId = tevent.id,
+                                    eventSignStatus = EventSignStatusEm.待签到,
+                                    eventSignType = EventSignTypeEm.选手,
+                                    memberId = request.FromMemberId,
+                                    signdate = tevent.endeventdate,
+                                    eventGroupId = request.EventGroupId
+                                });
+                            }
+                        }
                         _dbContext.CommitChanges();
                         flag = true;
                     }
@@ -166,6 +193,7 @@ namespace nsda.Services.Implement.member
                         msg = "服务异常";
                         LogUtils.LogError("SignUpPlayerService.InsertTran", ex);
                     }
+                    #endregion 
                 }
 
             }
@@ -192,8 +220,6 @@ namespace nsda.Services.Implement.member
                     if (tevent.eventType == EventTypeEm.辩论)
                     {
                         var otherSignUp = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.memberId != memberId).FirstOrDefault();
-
-                        //确认组队时 需要判断两位用户原有状态
                         if (isAgree)//确认组队
                         {
                             playsignup.signUpStatus = tevent.signfee > 0 ? SignUpStatusEm.组队成功 : SignUpStatusEm.报名成功;
@@ -208,6 +234,60 @@ namespace nsda.Services.Implement.member
                         otherSignUp.updatetime = DateTime.Now;
                         _dbContext.Update(playsignup);
                         _dbContext.Update(otherSignUp);
+                        if (isAgree && tevent.signfee <= 0)//报名成功 插入签到信息
+                        {
+                            #region 签到信息
+                            _dbContext.Insert(new t_eventsign
+                            {
+                                eventId = tevent.id,
+                                eventSignStatus = EventSignStatusEm.待签到,
+                                eventSignType = EventSignTypeEm.选手,
+                                memberId = playsignup.memberId,
+                                signdate = tevent.starteventdate,
+                                signtime = DateTime.Now,
+                                eventGroupId = playsignup.eventGroupId
+                            });
+
+                            if (tevent.starteventdate != tevent.endeventdate)
+                            {
+                                _dbContext.Insert(new t_eventsign
+                                {
+                                    eventId = tevent.id,
+                                    eventSignStatus = EventSignStatusEm.待签到,
+                                    eventSignType = EventSignTypeEm.选手,
+                                    memberId = playsignup.memberId,
+                                    signdate = tevent.endeventdate,
+                                    eventGroupId = playsignup.eventGroupId
+                                });
+                            }
+
+                            //插入签到信息
+                            _dbContext.Insert(new t_eventsign
+                            {
+                                eventId = tevent.id,
+                                eventSignStatus = EventSignStatusEm.待签到,
+                                eventSignType = EventSignTypeEm.选手,
+                                memberId = otherSignUp.memberId,
+                                signdate = tevent.starteventdate,
+                                signtime = DateTime.Now,
+                                eventGroupId = otherSignUp.eventGroupId
+                            });
+
+                            if (tevent.starteventdate != tevent.endeventdate)
+                            {
+                                _dbContext.Insert(new t_eventsign
+                                {
+                                    eventId = tevent.id,
+                                    eventSignStatus = EventSignStatusEm.待签到,
+                                    eventSignType = EventSignTypeEm.选手,
+                                    memberId = otherSignUp.memberId,
+                                    signdate = tevent.endeventdate,
+                                    eventGroupId = otherSignUp.eventGroupId
+                                });
+                            }
+                            #endregion
+                        }
+                        _dbContext.CommitChanges();
                     }
                     else
                     {
@@ -241,15 +321,30 @@ namespace nsda.Services.Implement.member
                     var tevent = _dbContext.Get<t_event>(playsignup.eventId);
                     if (tevent.eventType == EventTypeEm.辩论)
                     {
-                        //新增队伍
-                        //var otherSignUp = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.memberId != memberId).FirstOrDefault();
-                        //otherSignUp.updatetime = DateTime.Now;
-                        //otherSignUp.memberId = newMemberId;
-                        //_dbContext.Update(otherSignUp);
-                    }
-                    else
-                    {
-                        msg = "操作有误";
+                        try
+                        {
+                            playsignup.groupnum = "";
+                            playsignup.updatetime = DateTime.Now;
+                            playsignup.signUpStatus = SignUpStatusEm.被替换;
+                            _dbContext.Update(playsignup);
+                            _dbContext.Insert(new t_player_signup
+                            {
+                                eventGroupId = playsignup.eventGroupId,
+                                eventId = playsignup.eventId,
+                                groupnum = playsignup.groupnum,
+                                isTemp = false,
+                                memberId = newMemberId,
+                                signfee = playsignup.signfee,
+                                signUpStatus = SignUpStatusEm.报名邀请中,
+                                signUpType = SignUpTypeEm.被邀请人
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            flag = false;
+                            msg = "服务异常";
+                            LogUtils.LogError("SignUpPlayerService.ReplaceTeammateTran", ex);
+                        }
                     }
                 }
                 else
@@ -352,6 +447,7 @@ namespace nsda.Services.Implement.member
                     t_event tevent = _dbContext.Get<t_event>(playsignup.eventId);
                     if (tevent.eventType == EventTypeEm.辩论)
                     {
+                        #region 辩论
                         if (playsignup.signUpStatus == SignUpStatusEm.组队成功)//未支付
                         {
                             playsignup.signUpStatus = SignUpStatusEm.等待队友确认退赛;
@@ -360,8 +456,8 @@ namespace nsda.Services.Implement.member
                         }
                         else if (playsignup.signUpStatus == SignUpStatusEm.报名成功)//已支付
                         {
-                            var data = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.memberId != memberId).ToList();
-                            if (data == null || data.Count == 0)
+                            var data = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.memberId != memberId).FirstOrDefault();
+                            if (data == null)
                             {
                                 playsignup.signUpStatus = SignUpStatusEm.退费申请中;
                                 playsignup.updatetime = DateTime.Now;
@@ -378,12 +474,15 @@ namespace nsda.Services.Implement.member
                         {
                             msg = "状态已改变 请刷新页面后重试";
                         }
+                        #endregion 
                     }
                     else
                     {
+                        #region 演讲
                         playsignup.signUpStatus = SignUpStatusEm.退费申请中;
                         playsignup.updatetime = DateTime.Now;
                         _dbContext.Update(playsignup);
+                        #endregion 
                     }
                 }
                 else
@@ -409,7 +508,11 @@ namespace nsda.Services.Implement.member
                 t_player_signup signup = _dbContext.Get<t_player_signup>(id);
                 if (signup != null)
                 {
-
+                    // 如果原来状态为 报名成功 则现在改为退费申请中
+                    // 如果是组队成功  则现在改为已退赛
+                    signup.signUpStatus = SignUpStatusEm.已退赛;
+                    signup.updatetime = DateTime.Now;
+                    _dbContext.Update(signup);
                 }
                 else
                 {
@@ -429,16 +532,46 @@ namespace nsda.Services.Implement.member
         {
             try
             {
+                _dbContext.BeginTransaction();
                 var signup = _dbContext.Get<t_player_signup>(sourceId);
                 if (signup != null)
                 {
+
+                    t_event t_event = _dbContext.Get<t_event>(signup.eventId);
                     signup.updatetime = DateTime.Now;
                     signup.signUpStatus = SignUpStatusEm.报名成功;
                     _dbContext.Update(signup);
+
+                    //插入签到信息
+                    _dbContext.Insert(new t_eventsign
+                    {
+                        eventId = t_event.id,
+                        eventSignStatus = EventSignStatusEm.待签到,
+                        eventSignType = EventSignTypeEm.选手,
+                        memberId = signup.memberId,
+                        signdate = t_event.starteventdate,
+                        signtime = DateTime.Now,
+                        eventGroupId = signup.eventGroupId
+                    });
+
+                    if (t_event.starteventdate != t_event.endeventdate)
+                    {
+                        _dbContext.Insert(new t_eventsign
+                        {
+                            eventId = t_event.id,
+                            eventSignStatus = EventSignStatusEm.待签到,
+                            eventSignType = EventSignTypeEm.选手,
+                            memberId = signup.memberId,
+                            signdate = t_event.endeventdate,
+                            eventGroupId = signup.eventGroupId
+                        });
+                    }
+                    _dbContext.CommitChanges();
                 }
             }
             catch (Exception ex)
             {
+                _dbContext.Rollback();
                 LogUtils.LogError("SignUpPlayerService.Callback", ex);
             }
         }
@@ -453,8 +586,24 @@ namespace nsda.Services.Implement.member
                 if (signup != null)
                 {
                     signup.updatetime = DateTime.Now;
-                    signup.signUpStatus = isAppro ? SignUpStatusEm.退费中 : SignUpStatusEm.拒绝退赛;
+                    if (isAppro)
+                    {
+                        if (signup.signfee > 0)
+                        {
+                            signup.signUpStatus = SignUpStatusEm.退费中;
+                            //需要发起退款流程  插入一条申请退款记录
+                        }
+                        else
+                        {
+                            signup.signUpStatus = SignUpStatusEm.已退赛;
+                        }
+                    }
+                    else
+                    {
+                        signup.signUpStatus = SignUpStatusEm.拒绝退赛;
+                    }
                     _dbContext.Update(signup);
+                    flag = true;
                 }
                 else
                 {
@@ -498,7 +647,7 @@ namespace nsda.Services.Implement.member
                     request.KeyValue = "%" + request.KeyValue + "%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
                 }
-                var sql=$@" select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
+                var sql = $@" select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
@@ -509,7 +658,7 @@ namespace nsda.Services.Implement.member
                 list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 foreach (var item in list)
                 {
-                    var data=_dbContext.Query<dynamic>($"select b.chinessname,c.name from t_playereduexper  a inner join t_school b on a.schoolId=b.id inner join t_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by startdate desc limit 1").FirstOrDefault();
+                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_playereduexper  a inner join t_school b on a.schoolId=b.id inner join t_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by startdate desc limit 1").FirstOrDefault();
                     if (data != null)
                     {
                         item.SchoolName = data.chinessname;
@@ -704,7 +853,7 @@ namespace nsda.Services.Implement.member
                     join.Append($" and c.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and c.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
 
-                var sql=$@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
+                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
                                                       inner join t_member b on a.memberId=b.id
                                                       inner join t_event c on a.eventId=c.id
                                                       where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
