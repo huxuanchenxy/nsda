@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\ReferenceDLL\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -46,19 +46,19 @@
       <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\NLog.dll</HintPath>
+      <HintPath>..\ReferenceDLL\NLog.dll</HintPath>
     </Reference>
     <Reference Include="NPOI">
-      <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\NPOI.dll</HintPath>
+      <HintPath>..\ReferenceDLL\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OOXML">
-      <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\NPOI.OOXML.dll</HintPath>
+      <HintPath>..\ReferenceDLL\NPOI.OOXML.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXml4Net">
-      <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\NPOI.OpenXml4Net.dll</HintPath>
+      <HintPath>..\ReferenceDLL\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats">
-      <HintPath>..\..\..\..\..\..\..\code\nsda\ReferenceDLL\NPOI.OpenXmlFormats.dll</HintPath>
+      <HintPath>..\ReferenceDLL\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
