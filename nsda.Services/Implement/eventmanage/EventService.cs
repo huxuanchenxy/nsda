@@ -371,6 +371,11 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 StringBuilder join = new StringBuilder();
+                if (request.EventType != null&&request.EventType>0)
+                {
+                    join.Append(" and eventtype=@EventType");
+                }
+
                 if (request.KeyValue.IsNotEmpty())
                 {
                     request.KeyValue = "%" + request.KeyValue + "%";

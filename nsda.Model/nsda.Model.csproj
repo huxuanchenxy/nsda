@@ -60,6 +60,7 @@
     <Compile Include="dto\request\MailRequest.cs" />
     <Compile Include="dto\request\MemberExtendRequest.cs" />
     <Compile Include="dto\request\MemberOperLogRequest.cs" />
+    <Compile Include="dto\request\OrderListQueryRequest.cs" />
     <Compile Include="dto\request\PlayerSignQueryRequest.cs" />
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
     <Compile Include="dto\request\PlayerOrRefereeEventQueryRequest.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="dto\response\MemberExtendResponse.cs" />
     <Compile Include="dto\response\MemberOperLogResponse.cs" />
     <Compile Include="dto\response\MemberPointsModelResponse.cs" />
+    <Compile Include="dto\response\OrderListResponse.cs" />
     <Compile Include="dto\response\PlayerSignResponse.cs" />
     <Compile Include="dto\response\MemberTempResponse.cs" />
     <Compile Include="dto\response\MenuData.cs" />

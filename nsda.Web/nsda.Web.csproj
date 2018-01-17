@@ -122,6 +122,7 @@
     <Compile Include="Areas\admin\Controllers\logController.cs" />
     <Compile Include="Areas\admin\Controllers\loginController.cs" />
     <Compile Include="Areas\admin\Controllers\memberController.cs" />
+    <Compile Include="Areas\admin\Controllers\orderController.cs" />
     <Compile Include="Areas\admin\Controllers\sysuserController.cs" />
     <Compile Include="Areas\admin\Controllers\voteController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\baseController.cs" />
@@ -411,6 +412,7 @@
     <Folder Include="Areas\admin\Views\eventmg\" />
     <Folder Include="Areas\admin\Views\log\" />
     <Folder Include="Areas\admin\Views\member\" />
+    <Folder Include="Areas\admin\Views\order\" />
     <Folder Include="Areas\admin\Views\sysuser\" />
     <Folder Include="Areas\admin\Views\vote\" />
     <Folder Include="Areas\eventmanage\Models\" />

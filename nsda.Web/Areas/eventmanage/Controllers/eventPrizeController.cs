@@ -11,6 +11,9 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.eventmanage.Controllers
 {
+    /// <summary>
+    /// 奖项设置
+    /// </summary>
     public class eventprizeController : baseController
     {
         IEventPrizeService _eventPrizeService;

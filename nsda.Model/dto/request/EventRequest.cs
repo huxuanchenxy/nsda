@@ -147,6 +147,7 @@ namespace nsda.Model.dto.request
 
     public class EventQueryRequest:PageQuery
     {
+        public EventTypeEm? EventType { get; set; }
         public string KeyValue { get; set; }
         public int MemberId { get; set; }
     }

@@ -49,6 +49,7 @@
     <Compile Include="Contract\admin\ILeavingMsgService.cs" />
     <Compile Include="Contract\admin\ILoginLogService.cs" />
     <Compile Include="Contract\admin\IMailService.cs" />
+    <Compile Include="Contract\admin\IOrderService.cs" />
     <Compile Include="Contract\admin\IPayCallBackService.cs" />
     <Compile Include="Contract\admin\ISchoolService.cs" />
     <Compile Include="Contract\admin\ISysOperLogService.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Implement\admin\LeavingMsgService.cs" />
     <Compile Include="Implement\admin\LoginLogService.cs" />
     <Compile Include="Implement\admin\MailService.cs" />
+    <Compile Include="Implement\admin\OrderService.cs" />
     <Compile Include="Implement\admin\PayCallBackService.cs" />
     <Compile Include="Implement\admin\ProvinceService.cs" />
     <Compile Include="Implement\admin\SchoolService.cs" />
