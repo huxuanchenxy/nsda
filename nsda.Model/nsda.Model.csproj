@@ -51,6 +51,7 @@
     <Compile Include="dto\request\CountryRequest.cs" />
     <Compile Include="dto\request\DataSourceRequest.cs" />
     <Compile Include="dto\request\EmailLogRequest.cs" />
+    <Compile Include="dto\request\EventPrizeRequest.cs" />
     <Compile Include="dto\request\EventRequest.cs" />
     <Compile Include="dto\request\EventRoomQueryRequest.cs" />
     <Compile Include="dto\request\EventScoreRequest.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
     <Compile Include="dto\response\EventConditionResponse.cs" />
+    <Compile Include="dto\response\EventPrizeResponse.cs" />
     <Compile Include="dto\response\EventResponse.cs" />
     <Compile Include="dto\response\EventRoomResponse.cs" />
     <Compile Include="dto\response\EventScoreResponse.cs" />
@@ -245,9 +247,6 @@
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_player_trainer.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_prize.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_province.cs">

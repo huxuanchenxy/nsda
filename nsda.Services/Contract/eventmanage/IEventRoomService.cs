@@ -17,7 +17,7 @@ namespace nsda.Services.Contract.eventmanage
         //循环插入教室
         bool Insert(int eventId,int num,out string msg);
         //更新教室信息
-        bool Eidt(int id, string name, out string msg);
+        bool Edit(int id, string name, out string msg);
         //修改教室设置
         bool EidtSettings(int id, int statusOrGroup, out string msg);
         //更新教室信息

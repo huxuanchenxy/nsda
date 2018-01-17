@@ -32,5 +32,7 @@ namespace nsda.Services.Contract.eventmanage
         List<EventConditionResponse> EventCondition();
         //裁判注册时 可报名赛事
         List<EventSelectResponse> RefereeRegisterEvent();
+        //赛事组别信息
+        List<EventGroupResponse> SelectEventGroup(int eventId,int memberId);
     }
 }

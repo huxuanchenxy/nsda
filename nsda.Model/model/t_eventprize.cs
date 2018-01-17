@@ -31,11 +31,13 @@ namespace nsda.Models
     
         public int eventId { get; set; }
     
+        public int eventGroupId { get; set; }
+    
         public PrizeTypeEm prizeType { get; set; }
     
         public string name { get; set; }
     
-        public int objId { get; set; }
+        public string num { get; set; }
     
         public string remark { get; set; }
     

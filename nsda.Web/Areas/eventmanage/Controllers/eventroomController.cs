@@ -15,13 +15,9 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 {
     public class eventroomController : baseController
     {
-        IMemberService _memberService;
-        IEventService _eventService;
         IEventRoomService _eventRoomService;
-        public eventroomController(IMemberService memberService, IEventService eventService, IEventRoomService eventRoomService)
+        public eventroomController(IEventRoomService eventRoomService)
         {
-            _memberService = memberService;
-            _eventService = eventService;
             _eventRoomService = eventRoomService;
         }
 
@@ -44,7 +40,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventRoomService.Eidt(id,name, out msg);
+            var flag = _eventRoomService.Edit(id,name, out msg);
             return Result<string>(flag, msg);
         }
 

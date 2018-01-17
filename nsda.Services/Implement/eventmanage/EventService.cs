@@ -39,6 +39,58 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 //参数信息校验
+                if (request.Name.IsEmpty())
+                {
+                    msg = "赛事名不能为空";
+                    return flag;
+                }
+
+                if (request.StartEventDate == DateTime.MinValue || request.StartEventDate == DateTime.MaxValue)
+                {
+                    msg = "赛事开始时间有误";
+                    return flag;
+                }
+
+                if (request.EndEventDate == DateTime.MinValue || request.EndEventDate == DateTime.MaxValue)
+                {
+                    msg = "赛事结束时间有误";
+                    return flag;
+                }
+
+                if (request.StartEventDate > request.EndEventDate)
+                {
+                    msg = "赛事结束时间不能早于开始时间";
+                    return flag;
+                }
+
+                //报名截止日期 退费截止日期
+
+                if (request.Maxnumber <= 0)
+                {
+                    msg = "报名队伍上限有误";
+                    return flag;
+                }
+
+                if (request.EventGroup == null || request.EventGroup.Count == 0)
+                {
+                    msg = "赛事组别信息不能为空";
+                    return flag;
+                }
+
+                foreach (var item in request.EventGroup)
+                {
+                    if (item.Name.IsEmpty())
+                    {
+                        msg = "赛事组别名称不能为空";
+                        break;
+                    }
+                }
+
+                if (msg.IsNotEmpty())
+                {
+                    return flag;
+                }
+
                 try
                 {
                     _dbContext.BeginTransaction();
@@ -435,6 +487,21 @@ namespace nsda.Services.Implement.eventmanage
             catch (Exception ex)
             {
                 LogUtils.LogError("EventService.RefereeRegisterEvent", ex);
+            }
+            return list;
+        }
+        //赛事组别信息
+        public List<EventGroupResponse> SelectEventGroup(int eventId, int memberId)
+        {
+            List<EventGroupResponse> list = new List<EventGroupResponse>();
+            try
+            {
+                var sql = $"select * from t_eventgroup where isdelete=0 and eventId={eventId}";
+                list = _dbContext.Query<EventGroupResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.SelectEventGroup", ex);
             }
             return list;
         }

@@ -89,7 +89,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //修改教室名称
-        public bool Eidt(int id, string name, out string msg)
+        public bool Edit(int id, string name, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -111,7 +111,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("EventRoomService.Eidt", ex);
+                LogUtils.LogError("EventRoomService.Edit", ex);
             }
             return flag;
         }

@@ -198,6 +198,15 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             };
             return Content(res.Serialize());
         }
+
+        //赛事组别信息
+        [HttpGet]
+        public ContentResult listeventgroup(int eventId)
+        {
+            var data = _eventService.SelectEventGroup(eventId,UserContext.WebUserContext.Id);
+            return Result(true, string.Empty, data);
+        }
+
         #endregion
 
         #region view
