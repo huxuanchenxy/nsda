@@ -17,9 +17,11 @@ namespace nsda.Web.Areas.admin.Controllers
     public class eventmgController : baseController
     {
         IEventService _eventService;
-        public eventmgController(IEventService eventService)
+        IEventRuleService _eventRuleService;
+        public eventmgController(IEventService eventService, IEventRuleService eventRuleService)
         {
             _eventService = eventService;
+            _eventRuleService = eventRuleService;
         }
 
         //设定赛事等级
@@ -60,5 +62,45 @@ namespace nsda.Web.Areas.admin.Controllers
             };
             return Content(res.Serialize());
         }
+
+        #region 赛事规则
+      
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult editcyclingracerule(CyclingRaceRuleRequest request)
+        {
+            request.SysUserId=UserContext.SysUserContext.Id;
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventRuleService.EditCyclingRaceRule(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
+
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult editknockoutrule(KnockoutRuleRequest request)
+        {
+            request.SysUserId = UserContext.SysUserContext.Id;
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventRuleService.EditKnockoutRule(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        public ActionResult knockoutrule(int eventId)
+        {
+            var data = _eventRuleService.KnockoutRuleDetail(eventId);
+            return View(data);
+        }
+
+        public ActionResult cyclingracerule(int eventId)
+        {
+            var data = _eventRuleService.CyclingRaceRuleDetail(eventId);
+            return View(data);
+        }
+        #endregion 
     }
 }

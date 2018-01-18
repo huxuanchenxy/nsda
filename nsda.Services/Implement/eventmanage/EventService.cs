@@ -94,6 +94,8 @@ namespace nsda.Services.Implement.eventmanage
                 try
                 {
                     _dbContext.BeginTransaction();
+
+                    #region 赛事
                     int eventId = _dbContext.Insert(new t_event
                     {
                         address = request.Address,
@@ -117,6 +119,9 @@ namespace nsda.Services.Implement.eventmanage
                         startsigndate = request.StartSignDate,
                         eventTypeName=request.EventTypeName
                     }).ToObjInt();
+                    #endregion
+
+                    #region 赛事组别
                     foreach (var item in request.EventGroup)
                     {
                         _dbContext.Insert(new t_eventgroup
@@ -132,6 +137,10 @@ namespace nsda.Services.Implement.eventmanage
                             teamnumber = item.TeamNumber
                         });
                     }
+                    #endregion
+
+                    InsertEventRule(eventId);
+
                     _dbContext.CommitChanges();
                     flag = true;
                     _dbContext.Rollback();
@@ -150,6 +159,117 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventService.Insert", ex);
             }
             return flag;
+        }
+        private void InsertEventRule(int eventId)
+        {
+            #region 循环赛设置
+            _dbContext.Insert(new t_eventteamscoringrule
+            {
+                eventId = eventId,
+                teamScoringRules = TeamScoringRulesEm.获胜场数,
+                viewindex = 1
+            });
+            _dbContext.Insert(new t_eventteamscoringrule
+            {
+                eventId = eventId,
+                teamScoringRules = TeamScoringRulesEm.对方获胜场数,
+                viewindex =2
+            });
+            _dbContext.Insert(new t_eventteamscoringrule
+            {
+                eventId = eventId,
+                teamScoringRules = TeamScoringRulesEm.队伍选手总分,
+                viewindex = 3
+            });
+            _dbContext.Insert(new t_eventteamscoringrule
+            {
+                eventId = eventId,
+                teamScoringRules = TeamScoringRulesEm.对方队伍选手总分,
+                viewindex = 4
+            });
+            _dbContext.Insert(new t_eventteamscoringrule
+            {
+                eventId = eventId,
+                teamScoringRules = TeamScoringRulesEm.队伍选手排名总和,
+                viewindex = 5
+            });
+
+            _dbContext.Insert(new t_eventplayerscoringrule
+            {
+                eventId = eventId,
+                scoringRules = ScoringRulesEm.获胜场数,
+                viewindex = 1
+            });
+            _dbContext.Insert(new t_eventplayerscoringrule
+            {
+                eventId = eventId,
+                scoringRules = ScoringRulesEm.对方获胜场数,
+                viewindex = 2
+            });
+            _dbContext.Insert(new t_eventplayerscoringrule
+            {
+                eventId = eventId,
+                scoringRules = ScoringRulesEm.选手排名总和,
+                viewindex = 3
+            });
+            _dbContext.Insert(new t_eventplayerscoringrule
+            {
+                eventId = eventId,
+                scoringRules = ScoringRulesEm.对方选手排名,
+                viewindex = 4
+            });
+            _dbContext.Insert(new t_eventplayerscoringrule
+            {
+                eventId = eventId,
+                scoringRules = ScoringRulesEm.随机数值,
+                viewindex = 5
+            });
+
+            _dbContext.Insert(new t_eventavoidrule
+            {
+                avoidRules = AvoidRulesEm.尽量规避同教练,
+                eventId = eventId,
+                viewindex = 1
+            });
+            _dbContext.Insert(new t_eventavoidrule
+            {
+                avoidRules = AvoidRulesEm.尽量规避同校,
+                eventId = eventId,
+                viewindex = 2
+            });
+
+            _dbContext.Insert(new t_eventrefereeavoidrule
+            {
+                eventId = eventId,
+                objEventType = ObjEventTypeEm.循环赛,
+                refereeAvoidRules = RefereeAvoidRulesEm.尽量规避自己已经裁判过的学生,
+                viewindex = 1
+            });
+            _dbContext.Insert(new t_eventrefereeavoidrule
+            {
+                eventId = eventId,
+                objEventType = ObjEventTypeEm.循环赛,
+                refereeAvoidRules = RefereeAvoidRulesEm.尽量规避自己的学生,
+                viewindex = 2
+            });
+            #endregion
+
+            #region 淘汰赛设置
+            _dbContext.Insert(new t_eventrefereeavoidrule
+            {
+                eventId = eventId,
+                objEventType = ObjEventTypeEm.淘汰赛,
+                refereeAvoidRules = RefereeAvoidRulesEm.尽量规避自己已经裁判过的学生,
+                viewindex = 1
+            });
+            _dbContext.Insert(new t_eventrefereeavoidrule
+            {
+                eventId = eventId,
+                objEventType = ObjEventTypeEm.淘汰赛,
+                refereeAvoidRules = RefereeAvoidRulesEm.尽量规避自己的学生,
+                viewindex = 2
+            });
+            #endregion
         }
         //编辑赛事
         public bool Edit(EventRequest request, out string msg)
