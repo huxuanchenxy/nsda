@@ -22,8 +22,6 @@ namespace nsda.Services.Contract.eventmanage
         bool SettingLevel(int id, EventLevelEm eventLevel, int sysUserId, out string msg);
         //审核赛事
         bool Check(int id, bool isAppro, int sysUserId, out string msg);
-        //停止或开启报名
-        bool IsOpen(int id, bool isOpen,int memberId, out string msg);
         //赛事列表查询
         List<PlayerOrRefereeEventResponse> PlayerOrRefereeEvent(PlayerOrRefereeEventQueryRequest request);
         List<EventResponse> EventList(EventQueryRequest request);
@@ -34,5 +32,7 @@ namespace nsda.Services.Contract.eventmanage
         List<EventSelectResponse> RefereeRegisterEvent();
         //赛事组别信息
         List<EventGroupResponse> SelectEventGroup(int eventId,int memberId);
+        //修改赛事状态
+        bool EditEventStatus(int eventId,EventStatusEm eventStatus,int memberId, out string msg);
     }
 }

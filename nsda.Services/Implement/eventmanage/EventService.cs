@@ -351,33 +351,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-        //停止报名
-        public bool IsOpen(int id, bool isOpen, int memberId, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                t_event tevent = _dbContext.Get<t_event>(id);
-                if (tevent != null && (tevent.eventStatus == EventStatusEm.报名中 || tevent.eventStatus == EventStatusEm.停止报名))
-                {
-                    tevent.updatetime = DateTime.Now;
-                    tevent.eventStatus = isOpen ? EventStatusEm.报名中 : EventStatusEm.停止报名;
-                    _dbContext.Update(tevent);
-                }
-                else
-                {
-                    msg = "未找到赛事信息";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("EventService.IsOpen", ex);
-            }
-            return flag;
-        }
         //赛事详情
         public EventResponse Detail(int id)
         {
@@ -626,5 +599,33 @@ namespace nsda.Services.Implement.eventmanage
             }
             return list;
         }
-    }
+        //修改赛事状态
+        public bool EditEventStatus(int eventId, EventStatusEm eventStatus, int memberId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_event tevent = _dbContext.Get<t_event>(eventId);
+                if (tevent != null)
+                {
+                    tevent.updatetime = DateTime.Now;
+                    tevent.eventStatus = eventStatus;
+                    _dbContext.Update(tevent);
+                }
+                else
+                {
+                    msg = "未找到赛事信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventService.EditEventStatus", ex);
+            }
+            return flag;
+        }
+
+     }
 }

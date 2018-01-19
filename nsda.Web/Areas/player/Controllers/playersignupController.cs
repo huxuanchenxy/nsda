@@ -82,6 +82,28 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
 
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult applyretire(int id)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _playerSignUpService.ApplyRetire(id, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult confirmretire(int id,bool isAgree)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _playerSignUpService.ConfirmRetire(id, isAgree, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
         //去支付
         [HttpPost]
         [AjaxOnly]
