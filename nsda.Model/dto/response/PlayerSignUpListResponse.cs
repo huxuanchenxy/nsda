@@ -27,6 +27,8 @@ namespace nsda.Model.dto.response
 
     public class PlayerSignUpListResponse
     {
+        public string EventName { get; set; }
+        public string EventCode { get; set; }
         public string MemberCode { get; set; }
         public string MemberName { get; set; }
         public int Id { get; set; }
@@ -35,18 +37,16 @@ namespace nsda.Model.dto.response
         public int EventGroupId { get; set; }
         public int MemberId { get; set; }
         public string GroupNum { get; set; }
+        public string EventGroupName { get; set; }
     }
 
 
     public class PlayerRefundListResponse
     {
-        public string MemberCode { get; set; }
-        public string MemberName { get; set; }
-        public int Id { get; set; }
-        public int EventId { get; set; }
-        public SignUpStatusEm SignUpStatus { get; set; }
-        public int EventGroupId { get; set; }
-        public int MemberId { get; set; }
-        public string GroupNum { get; set; }
+        public string EventName { get; set; }
+        public string EventCode { get; set; }
+        public EventTypeEm  EventType{ get; set; }
+        public string EventGroupName { get; set; }
+        public OrderStatusEm OrderStatus{ get; set; }
     }
 }

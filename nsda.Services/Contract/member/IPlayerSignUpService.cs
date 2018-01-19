@@ -23,7 +23,7 @@ namespace nsda.Services.Contract.member
         // 申请退赛
         bool ApplyRetire(int id, int memberId, out string msg);
         // 确认退赛
-        bool ConfirmRetire(int id, int memberId, out string msg);
+        bool ConfirmRetire(int id, bool isAgree, int memberId, out string msg);
         // 比赛列表
         // 支付成功回调
         void Callback(int memberId,int sourceId);

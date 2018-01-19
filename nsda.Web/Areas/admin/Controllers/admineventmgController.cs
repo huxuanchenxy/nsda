@@ -3,6 +3,7 @@ using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Services.Contract.eventmanage;
+using nsda.Services.Contract.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
 using System;
@@ -18,10 +19,12 @@ namespace nsda.Web.Areas.admin.Controllers
     {
         IEventService _eventService;
         IEventRuleService _eventRuleService;
-        public admineventmgController(IEventService eventService, IEventRuleService eventRuleService)
+        IPlayerSignUpService _playerSignUpService;
+        public admineventmgController(IEventService eventService, IEventRuleService eventRuleService, IPlayerSignUpService playerSignUpService)
         {
             _eventService = eventService;
             _eventRuleService = eventRuleService;
+            _playerSignUpService = playerSignUpService;
         }
 
         //设定赛事等级
@@ -63,8 +66,20 @@ namespace nsda.Web.Areas.admin.Controllers
             return Content(res.Serialize());
         }
 
+        //审核赛事
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult applyrefund(int eventId)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _playerSignUpService.ApplyRefund(eventId, UserContext.SysUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
         #region 赛事规则
-      
+
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]

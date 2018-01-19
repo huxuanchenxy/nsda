@@ -424,11 +424,11 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.TempStatus.HasValue)
+                if (request.TempStatus.HasValue&&request.TempStatus>0)
                 {
                     join.Append(" and a.tempStatus=@TempStatus");
                 }
-                if (request.TempType.HasValue)
+                if (request.TempType.HasValue&&request.TempType>0)
                 {
                     join.Append(" and a.tempType=@TempType");
                 }

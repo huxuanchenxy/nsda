@@ -121,6 +121,22 @@ namespace nsda.Web.Areas.player.Controllers
             };
             return Content(res.Serialize());
         }
+
+        //退费列表
+        [HttpGet]
+        public ContentResult refundlist(PlayerSignUpQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _playerSignUpService.PlayerRefundList(request);
+            var res = new ResultDto<PlayerRefundListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
         #endregion 
     }
 }

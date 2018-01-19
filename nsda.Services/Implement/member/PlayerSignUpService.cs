@@ -198,12 +198,12 @@ namespace nsda.Services.Implement.member
                             signStatus = SignUpStatusEm.组队失败;
                         }
                         var sql = $"update t_player_signup set signUpStatus={signStatus},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
-                        flag = true;
                         _dbContext.Execute(sql);
+                        flag = true;
                     }
-                    else
+                    else if(tevent.eventType==EventTypeEm.演讲)
                     {
-                        msg = "操作有误";
+                       //演讲流程
                     }
                 }
                 else
@@ -265,6 +265,8 @@ namespace nsda.Services.Implement.member
                                 unitprice = t_event.signfee
                             });
                             _dbContext.CommitChanges();
+                            flag = true;
+                            //生成支付信息
                         }
                         catch (Exception ex)
                         {
@@ -307,40 +309,116 @@ namespace nsda.Services.Implement.member
                     if (tevent.eventType == EventTypeEm.辩论)
                     {
                         #region 辩论
-                        //if (playsignup.signUpStatus == SignUpStatusEm.组队成功)//未支付
-                        //{
-                        //    playsignup.signUpStatus = SignUpStatusEm.等待队友确认退赛;
-                        //    playsignup.updatetime = DateTime.Now;
-                        //    _dbContext.Update(playsignup);
-                        //}
-                        //else if (playsignup.signUpStatus == SignUpStatusEm.报名成功)//已支付
-                        //{
-                        var data = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.memberId != memberId).FirstOrDefault();
-                        if (data == null)
+                        if (playsignup.signUpStatus == SignUpStatusEm.报名邀请中)//对方还未同意邀请
                         {
-                            //playsignup.signUpStatus = SignUpStatusEm.退费申请中;
+                            var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                            _dbContext.Execute(sql);
+                            flag = true;
+                        }
+                        else if (playsignup.signUpStatus == SignUpStatusEm.待付款)
+                        {
+                            var otherplaysignup = _dbContext.Select<t_player_signup>(c => c.groupnum == playsignup.groupnum && c.eventId == playsignup.eventId && c.memberId != memberId).FirstOrDefault();
+                            if (otherplaysignup.signUpStatus == SignUpStatusEm.待付款)
+                            {
+                                var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                                _dbContext.Execute(sql);
+                                flag = true;
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    _dbContext.BeginTransaction();
+                                    var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                    _dbContext.Insert(new t_order_operation
+                                    {
+                                        content = "组队失败申请退费",
+                                        title = "申请退费",
+                                        operationStatus = OperationStatusEm.待处理,
+                                        orderOperType = OrderOperTypeEm.取消订单,
+                                        orderId = t_order.id,
+                                        memberId = otherplaysignup.memberId
+                                    });
+                                    t_order.orderStatus = OrderStatusEm.退款中;
+                                    t_order.updatetime = DateTime.Now;
+                                    _dbContext.Update(t_order);
+
+                                    _dbContext.Execute(sql);
+                                    _dbContext.CommitChanges();
+                                    flag = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    _dbContext.Rollback();
+                                    flag = false;
+                                    msg = "服务异常";
+                                    LogUtils.LogError("SignUpPlayerService.ApplyRetire2Tran", ex);
+                                }
+
+                            }
+                        }
+                        else if (playsignup.signUpStatus == SignUpStatusEm.已付款)
+                        {
+                            try
+                            {
+                                _dbContext.BeginTransaction();
+                                var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                _dbContext.Insert(new t_order_operation
+                                {
+                                    content = "组队失败申请退费",
+                                    title = "申请退费",
+                                    operationStatus = OperationStatusEm.待处理,
+                                    orderOperType = OrderOperTypeEm.取消订单,
+                                    orderId = t_order.id,
+                                    memberId = memberId
+                                });
+                                t_order.orderStatus = OrderStatusEm.退款中;
+                                t_order.updatetime = DateTime.Now;
+                                _dbContext.Update(t_order);
+                                
+                                _dbContext.Execute(sql);
+                                _dbContext.CommitChanges();
+                                flag = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                _dbContext.Rollback();
+                                flag = false;
+                                msg = "服务异常";
+                                LogUtils.LogError("SignUpPlayerService.ApplyRetire2Tran", ex);
+                            }
+                        }
+                        else if (playsignup.signUpStatus == SignUpStatusEm.报名成功)
+                        {
                             playsignup.updatetime = DateTime.Now;
+                            playsignup.signUpStatus = SignUpStatusEm.退赛申请中;
                             _dbContext.Update(playsignup);
                         }
                         else
                         {
-                            //playsignup.signUpStatus = SignUpStatusEm.等待队友确认退赛;
-                            playsignup.updatetime = DateTime.Now;
-                            _dbContext.Update(playsignup);
+                            msg = "状态已改变 请刷新页面后重试";
                         }
-                        //}
-                        //else
-                        //{
-                        //    msg = "状态已改变 请刷新页面后重试";
-                        //}
                         #endregion 
                     }
                     else
                     {
                         #region 演讲
-                        //playsignup.signUpStatus = SignUpStatusEm.退费申请中;
-                        playsignup.updatetime = DateTime.Now;
-                        _dbContext.Update(playsignup);
+                        if (playsignup.signUpStatus == SignUpStatusEm.报名成功)
+                        {
+                            if (tevent.endrefunddate > DateTime.Now)
+                            {
+                                //发起退款
+                            }
+                            else
+                            {
+                                playsignup.signUpStatus = SignUpStatusEm.已退赛;
+                                playsignup.updatetime = DateTime.Now;
+                                _dbContext.Update(playsignup);
+                            }
+                        }
+
                         #endregion 
                     }
                 }
@@ -358,20 +436,82 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //确认退赛
-        public bool ConfirmRetire(int id, int memberId, out string msg)
+        public bool ConfirmRetire(int id, bool isAgree, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
                 t_player_signup signup = _dbContext.Get<t_player_signup>(id);
-                if (signup != null)
+                if (signup != null&&signup.signUpStatus==SignUpStatusEm.退赛申请中)
                 {
-                    // 如果原来状态为 报名成功 则现在改为退费申请中
-                    // 如果是组队成功  则现在改为已退赛
-                    signup.signUpStatus = SignUpStatusEm.已退赛;
-                    signup.updatetime = DateTime.Now;
-                    _dbContext.Update(signup);
+                    try
+                    {
+                        _dbContext.Rollback();
+                        if (isAgree)
+                        {
+                            t_event tevent = _dbContext.Get<t_event>(signup.eventId);
+                            if (tevent.endrefunddate > DateTime.Now)//可以退费
+                            {
+                                #region 队友退赛信息
+                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                _dbContext.Insert(new t_order_operation
+                                {
+                                    content = "组队失败申请退费",
+                                    title = "申请退费",
+                                    operationStatus = OperationStatusEm.待处理,
+                                    orderOperType = OrderOperTypeEm.取消订单,
+                                    orderId = t_order.id,
+                                    memberId = signup.memberId
+                                });
+                                t_order.orderStatus = OrderStatusEm.退款中;
+                                t_order.updatetime = DateTime.Now;
+                                _dbContext.Update(t_order);
+                                #endregion
+
+                                #region 自己退赛信息
+                                var otherplaysignup = _dbContext.Select<t_player_signup>(c => c.groupnum == signup.groupnum && c.eventId == signup.eventId && c.memberId == memberId).FirstOrDefault();
+                                t_order t_orderother = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                _dbContext.Insert(new t_order_operation
+                                {
+                                    content = "组队失败申请退费",
+                                    title = "申请退费",
+                                    operationStatus = OperationStatusEm.待处理,
+                                    orderOperType = OrderOperTypeEm.取消订单,
+                                    orderId = t_orderother.id,
+                                    memberId = otherplaysignup.memberId
+                                });
+                                t_orderother.orderStatus = OrderStatusEm.退款中;
+                                t_orderother.updatetime = DateTime.Now;
+                                _dbContext.Update(t_orderother);
+                                #endregion
+
+                                var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.已退赛},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                                _dbContext.Execute(sql);
+                                _dbContext.CommitChanges();
+                                flag = true;
+                            }
+                            else
+                            {
+                                var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.已退赛},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                                _dbContext.Execute(sql);
+                            }
+                        }
+                        else
+                        {
+                            var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                            _dbContext.Execute(sql);
+                        }
+                        _dbContext.CommitChanges();
+                        flag = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _dbContext.Rollback();
+                        flag = false;
+                        msg = "服务异常";
+                        LogUtils.LogError("SignUpPlayerService.ConfirmRetireTran", ex);
+                    }
                 }
                 else
                 {
@@ -615,30 +755,14 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.CountryId.HasValue && request.CountryId > 0)
-                {
-                    join.Append(" and c.countryId=@CountryId ");
-                }
-                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
-                {
-                    join.Append(" and c.provinceId=@ProvinceId ");
-                }
-                if (request.CityId.HasValue && request.CityId > 0)
-                {
-                    join.Append(" and c.cityId=@CityId ");
-                }
-                if (request.StartDate.HasValue)
-                {
-                    DateTime dt = Convert.ToDateTime(request.StartDate);
-                    join.Append($" and c.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and c.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
-                }
-
-                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
-                                                      inner join t_member b on a.memberId=b.id
-                                                      inner join t_event c on a.eventId=c.id
-                                                      where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
-                                                      and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()} order by  a.creatTime desc
-                                                     ";
+                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,c.code EventCode,c.name EventName,d.name EventGroupName
+                             from  t_player_signup a 
+                             inner join t_member b on a.memberId=b.id
+                             inner join t_event c on a.eventId=c.id
+                             inner join t_eventgroup d on a.eventGroupId=d.id
+                             where a.isdelete=0  and groupnum in (select groupnum  from t_player_signup where memberId=@MemberId)
+                            {join.ToString()} order by  a.creatTime desc
+                         ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -649,7 +773,6 @@ namespace nsda.Services.Implement.member
             }
             return list;
         }
-
         // 生成签到信息
         public bool RenderSign(int eventId, out string msg)
         {
@@ -739,7 +862,6 @@ namespace nsda.Services.Implement.member
             }
             return flag;
         }
-
         //选手退费列表
         public List<PlayerRefundListResponse> PlayerRefundList(PlayerSignUpQueryRequest request)
         {
@@ -747,24 +869,14 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.CountryId.HasValue && request.CountryId > 0)
-                {
-                    join.Append(" and c.countryId=@CountryId ");
-                }
-                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
-                {
-                    join.Append(" and c.provinceId=@ProvinceId ");
-                }
-                if (request.CityId.HasValue && request.CityId > 0)
-                {
-                    join.Append(" and c.cityId=@CityId ");
-                }
-                if (request.StartDate.HasValue)
-                {
-                    DateTime dt = Convert.ToDateTime(request.StartDate);
-                    join.Append($" and c.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and c.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
-                }
-                var sql = $"select * from t_order_operation where isdelete=0 and memberId=@MemberId {join.ToString()} order by a.createtime desc";
+                var sql = $@"select d.code EventCode,d.name EventName,d.eventType EventType,e.name EventGroupName,b.orderStatus OrderStatus 
+                             from t_order_operation a
+                             inner join t_order b on a.orderId=b.id
+                             inner join t_player_signup c on b.sourceId=c.id
+                             inner join t_event d on d.id=c.eventId
+                             inner join t_eventgroup e on e.id=c.eventGroupId
+                             where a.isdelete=0 and a.memberId=@MemberId  and b.orderType={OrderTypeEm.赛事报名}
+                             {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerRefundListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -775,7 +887,6 @@ namespace nsda.Services.Implement.member
             }
             return list;
         }
-
         //未报名成功的队伍 系统申请退费
         public bool ApplyRefund(int eventId, int operUserId, out string msg)
         {

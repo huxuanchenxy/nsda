@@ -13,7 +13,7 @@ namespace nsda.Model
         /// <summary>
         /// 参与比赛了的选手
         /// </summary>
-        public static string _signup_notin = new int[] { (int)SignUpStatusEm.退赛申请中,(int)SignUpStatusEm.组队失败, (int)SignUpStatusEm.已退赛}.Splice();
+        public static string _signup_notin = new int[] { (int)SignUpStatusEm.组队失败, (int)SignUpStatusEm.已退赛}.Splice();
         /// <summary>
         /// 会员类型
         /// </summary>
