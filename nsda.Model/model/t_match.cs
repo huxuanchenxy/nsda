@@ -45,6 +45,8 @@ namespace nsda.Models
     
         public bool isBye { get; set; }
     
+        public bool isConfirm { get; set; }
+    
         /// <summary>
         /// 修改时间
         /// </summary>
