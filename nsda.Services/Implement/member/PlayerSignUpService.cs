@@ -229,6 +229,13 @@ namespace nsda.Services.Implement.member
                 t_player_signup signup = _dbContext.Get<t_player_signup>(id);
                 if (signup != null && signup.memberId == memberId)
                 {
+                    t_event tevent = _dbContext.Get<t_event>(signup.eventId);
+                    var teamcount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={signup.eventId}").ToObjInt();
+                    if (tevent.maxnumber < teamcount + 1)
+                    {
+                        msg = "达到报名人数上限无法继续去支付";
+                        return flag;
+                    }
                     //判断是否有订单 无订单则创建订单并生成支付信息
                     t_order order = _dbContext.Select<t_order>(c => c.orderType == OrderTypeEm.赛事报名 && c.memberId == memberId && c.sourceId == id).FirstOrDefault();
                     if (order == null)
@@ -395,6 +402,7 @@ namespace nsda.Services.Implement.member
                             playsignup.updatetime = DateTime.Now;
                             playsignup.signUpStatus = SignUpStatusEm.退赛申请中;
                             _dbContext.Update(playsignup);
+                            flag = true;
                         }
                         else
                         {
@@ -410,12 +418,14 @@ namespace nsda.Services.Implement.member
                             if (tevent.endrefunddate > DateTime.Now)
                             {
                                 //发起退款
+                                flag = true;
                             }
                             else
                             {
                                 playsignup.signUpStatus = SignUpStatusEm.已退赛;
                                 playsignup.updatetime = DateTime.Now;
                                 _dbContext.Update(playsignup);
+                                flag = true;
                             }
                         }
 
@@ -485,17 +495,9 @@ namespace nsda.Services.Implement.member
                                 t_orderother.updatetime = DateTime.Now;
                                 _dbContext.Update(t_orderother);
                                 #endregion
-
-                                var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.已退赛},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
-                                _dbContext.Execute(sql);
-                                _dbContext.CommitChanges();
-                                flag = true;
                             }
-                            else
-                            {
-                                var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.已退赛},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
-                                _dbContext.Execute(sql);
-                            }
+                            var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.已退赛},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                            _dbContext.Execute(sql);
                         }
                         else
                         {
@@ -542,7 +544,7 @@ namespace nsda.Services.Implement.member
                         signup.signUpStatus = SignUpStatusEm.已付款;
                         _dbContext.Update(signup);
                     }
-                    else
+                    else if (other_signup.signUpStatus == SignUpStatusEm.已付款)
                     {
                         var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
                         _dbContext.Execute(sql);
