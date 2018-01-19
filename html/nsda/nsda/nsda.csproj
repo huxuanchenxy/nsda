@@ -231,6 +231,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\info.js" />
     <Content Include="Scripts\jquery.tabslet.min.js" />
     <Content Include="Scripts\tabs.js" />
     <Content Include="Scripts\_references.js" />
