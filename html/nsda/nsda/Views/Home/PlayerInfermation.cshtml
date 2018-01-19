@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "修改个人信息";
+}
+
+<link href="@Url.Content("~/Content/membercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/compesign.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/score.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/infermation.css?1.1.0")" rel="stylesheet" type="text/css" />
+
+<div class="mec-ban">
+    <div class="container player">
+        <div class="player-info">
+            <a href="/Home/PlayerMembercenter"><img src="~/Content/img/teacher.png" alt="" /></a>
+            <div class="player-num">
+                <p>NSDA CHINA 注册会员：</p>
+                <p>目前 NSDA 积分：</p>
+                <p>NSDA 会员编号：</p>
+            </div>
+            <a href="#" class="player-code">
+                <i class="iconfont icon-erweima"></i>
+                我的二维码
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="container player-compe player-score">
+    <div class="info-lists">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <div class="panel-title">
+                        <p>My tournaments</p>
+                        <h3>
+                            我的比赛&nbsp;&nbsp;&nbsp;
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                v
+                            </a>
+                        </h3>
+
+                    </div>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <ul>
+                            <li><a href="/Home/PlayerCompeSign" class="compe">比赛报名</a></li>
+                            <li><a href="/Home/PlayerHadCompe" class="compe">已参加比赛</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <div class="panel-title">
+                        <p>Activity management</p>
+                        <h3>
+                            活动管理&nbsp;&nbsp;&nbsp;
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                v
+                            </a>
+                        </h3>
+
+                    </div>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        dfgfgf
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                    <div class="panel-title">
+                        <p>Personal information</p>
+                        <h3>
+                            会员信息&nbsp;&nbsp;&nbsp;
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                v
+                            </a>
+                        </h3>
+
+                    </div>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        <ul>
+                            <li><a href="/Home/PlayerScore" class="compe">会员积分查询</a></li>
+                            <li class="compebaoming"><a href="/Home/PlayerInfermation" class="compe baoming">修改个人资料</a></li>
+                            <li><a href="#" class="compe">绑定教练</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFour">
+                    <div class="panel-title">
+                        <p> Member Resources</p>
+                        <h3>
+                            会员资源&nbsp;&nbsp;&nbsp;
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                v
+                            </a>
+                        </h3>
+
+                    </div>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                    <div class="panel-body">
+                        dfgh
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="score-con">
+        <div class="score-top">
+            <img class="integral" src="~/Content/img/score_03.jpg" alt="...">
+            <p class="scorecheck">修改个人资料</p>
+        </div>
+        <div class="per-con">
+            <div class="person-title"></div>
+            <form action="" method="post" class="modifyinfo">
+                <div class="form-group">
+                    <label>注册邮箱</label>
+                    <div class="form-con"><p>admin@enreachedu.com</p></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">联系电话</label>
+                    <div class="form-con">
+                        <input type="text" id="phone">
+                    </div>
+                </div>
+                <div class="form-group two-label">
+                    <div>
+                        <label for="emrcontact">紧急联系人</label>
+                        <div class="form-con">
+                            <input type="text" id="emrcontact">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="emrphone">紧急电话</label>
+                        <div class="form-con">
+                            <input type="text" id="emrphone">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group current-coach">
+                    <label>目前教练</label>
+                    <div class="form-con"><p class="coach">Eric</p><a href="#" class="modifycoach">修改</a></div>
+                </div>
+                <div class="form-group education">
+                    <label>教育经历</label>
+                    <div class="form-con">
+                        <ul class="edulists">
+                            <li>
+                                <a href="#" class="addedu">添加</a>
+                            </li>
+                            <li>
+                                <p>1999 / 09 - 2001 / 07</p>
+                                <p>上海</p>
+                                <p>上海</p>
+                                <p>西南位育中学国际部</p>
+                                <a href="#" class="editedu">编辑</a>
+                                <a href="#" class="deledu">删除</a>
+                            </li>
+                            <li>
+                                <p>1999 / 09 - 2001 / 07</p>
+                                <p>上海</p>
+                                <p>上海</p>
+                                <p>西南位育中学国际部</p>
+                                <a href="#" class="editedu">编辑</a>
+                                <a href="#" class="deledu">删除</a>
+                            </li>
+                            <li>
+                                <p>1999 / 09 - 2001 / 07</p>
+                                <p>上海</p>
+                                <p>上海</p>
+                                <p>西南位育中学国际部</p>
+                                <a href="#" class="editedu">编辑</a>
+                                <a href="#" class="deledu">删除</a>
+                            </li>
+                            <li>
+                                <p>1999 / 09 - 2001 / 07</p>
+                                <p>上海</p>
+                                <p>上海</p>
+                                <p>西南位育中学国际部</p>
+                                <a href="#" class="editedu">编辑</a>
+                                <a href="#" class="deledu">删除</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <input type="button" value="修改个人资料" class="submit">
+            </form>
+            <div class="modifypassword">
+                <img src="~/Content/img/password_03.jpg" alt="" />
+                <div class="modifypanel">
+                    <form action="" method="post">
+                        <input type="password" placeholder="输入新密码">
+                        <input type="password" placeholder="再次输入新密码">
+                        <input type="button" value="确认新密码" class="confirmnewpassword">
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

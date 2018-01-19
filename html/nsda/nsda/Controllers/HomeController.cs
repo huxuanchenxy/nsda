@@ -47,5 +47,33 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "会员注册";
             return View();
         }
+       
+        public ActionResult PlayerMembercenter()
+        {
+            ViewBag.Message = "会员中心";
+            return View();
+        }
+        public ActionResult PlayerCompeSign()
+        {
+            ViewBag.Message = "比赛报名";
+            return View();
+        }
+        
+        public ActionResult PlayerHadCompe()
+        {
+            ViewBag.Message = "比赛报名";
+            return View();
+        }
+        public ActionResult PlayerScore()
+        {
+            ViewBag.Message = "会员积分查询";
+            return View();
+        }
+
+        public ActionResult PlayerInfermation()
+        {
+            ViewBag.Message = "修改个人资料";
+            return View();
+        }
     }
 }
