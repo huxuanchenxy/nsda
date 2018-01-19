@@ -131,54 +131,58 @@ function change(type = 'r'){
 
 
 
-    var cwidths = $(".course-list .cour").innerWidth();
-    $(".course-list .cour").css('left',cwidths+'px').eq(0).css('left',0);
-    var now=0;
-    var next=0;
-    var flag=true;
-    function cove(type='r') {
-        if(!flag){
-            return;
-        }
-        flag=false;
-        if(type=='r'){
-            next++;
-            if(next>=$(".course-list .cour").length){
-                next=0;
+        var cwidths = $(".course-list .cour").innerWidth();
+        $(".course-list .cour").css('left',cwidths+'px').eq(0).css('left',0);
+        var now=0;
+        var next=0;
+        var flag=true;
+        function cove(type='r') {
+            if(!flag){
+                return;
             }
-            $(".course-list .cour").eq(next).css('left',cwidths);
-            $(".course-list .cour").eq(now).animate({'left':-cwidths},1000);
-        }
-        if(type=='l'){
-            next--;
-            if(next<0){
-                next=$(".course-list .cour").length-1;
+            flag=false;
+            if(type=='r'){
+                next++;
+                if(next>=$(".course-list .cour").length){
+                    next=0;
+                }
+                $(".course-list .cour").eq(next).css('left',cwidths);
+                $(".course-list .cour").eq(now).animate({'left':-cwidths},1000);
             }
-            $(".course-list .cour").eq(next).css('left',-cwidths);
-            $(".course-list .cour").eq(now).animate({'left':cwidths},1000);
-        }
-        $(".course-list .cour").eq(next).animate({'left':0},1000,function () {
-            flag=true;
-        });
+            if(type=='l'){
+                next--;
+                if(next<0){
+                    next=$(".course-list .cour").length-1;
+                }
+                $(".course-list .cour").eq(next).css('left',-cwidths);
+                $(".course-list .cour").eq(now).animate({'left':cwidths},1000);
+            }
+            $(".course-list .cour").eq(next).animate({'left':0},1000,function () {
+                flag=true;
+            });
 
-        $(".course-dot>li").eq(now).removeClass('act');
-        $(".course-dot>li").eq(next).addClass('act');
-        now=next;
-    }
-        var t=setInterval(cove('r'),2000);
-        $('.course-list').mouseenter(function () {
-            clearInterval(t);
-        }).mouseleave(function () {
-            t=setInterval(cove('r'),2000);
-        })
-        $('.course-dot>li').mouseenter(function () {
-            var index=$(this).index();
-            if(index>next){
-                next=index-1;
-                cove('r');
-            }
-            if(index<next){
-                next=index+1;
-                cove('l');
-            }
-        })
+            $(".course-dot>li").eq(now).removeClass('act');
+            $(".course-dot>li").eq(next).addClass('act');
+            now=next;
+        }
+            var t=setInterval(cove('r'),2000);
+            $('.course-list').mouseenter(function () {
+                clearInterval(t);
+            }).mouseleave(function () {
+                t=setInterval(cove('r'),2000);
+            })
+            $('.course-dot>li').mouseenter(function () {
+                var index=$(this).index();
+                if(index>next){
+                    next=index-1;
+                    cove('r');
+                }
+                if(index<next){
+                    next=index+1;
+                    cove('l');
+                }
+            })
+
+
+
+        }}}
