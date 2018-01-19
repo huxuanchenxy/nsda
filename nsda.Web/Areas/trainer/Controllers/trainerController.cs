@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.trainer.Controllers
 {
-    public class trainerController : baseController
+    public class trainerController : trainerbaseController
     {
         IPlayerTrainerService _playerTrainerService;
         IMemberService _memberService;

@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.eventmanage.Controllers
 {
-    public class eventroomController : baseController
+    public class eventroomController : eventbaseController
     {
         IEventRoomService _eventRoomService;
         public eventroomController(IEventRoomService eventRoomService)

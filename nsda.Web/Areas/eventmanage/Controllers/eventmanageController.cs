@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.eventmanage.Controllers
 {
-    public class eventmanageController : baseController
+    public class eventmanageController : eventbaseController
     {
         IMemberService _memberService;
         IEventService _eventService;
@@ -207,6 +207,18 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result(true, string.Empty, data);
         }
 
+
+        //生成签到信息
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult rendersign(int eventId)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _playerSignUpService.RenderSign(eventId, out msg);
+            return Result<string>(flag, msg);
+        }
         #endregion
 
         #region view

@@ -119,16 +119,6 @@ namespace nsda.Model.dto.request
         public int? MaxGrade { get; set; }
 
         /// <summary>
-        /// 最小积分
-        /// </summary>
-        public decimal? MinPoints { get; set; }
-
-        /// <summary>
-        /// 最大积分
-        /// </summary>
-        public decimal? MaxPoints { get; set; }
-
-        /// <summary>
         /// 最小比赛次数
         /// </summary>
         public int? MinTimes { get; set; }
@@ -147,6 +137,7 @@ namespace nsda.Model.dto.request
 
     public class EventQueryRequest:PageQuery
     {
+        public EventTypeEm? EventType { get; set; }
         public string KeyValue { get; set; }
         public int MemberId { get; set; }
     }

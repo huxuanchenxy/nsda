@@ -16,7 +16,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.referee.Controllers
 {
-    public class refereeController : baseController
+    public class refereeController : refereebaseController
     {
         IMemberService _memberService;
         IRefereeService _refereeService;

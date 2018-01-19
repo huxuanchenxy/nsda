@@ -13,12 +13,12 @@ using System.Web.Mvc;
 namespace nsda.Web.Areas.admin.Controllers
 {
     //日志管理
-    public class logController : baseController
+    public class adminlogController : adminbaseController
     {
         IMemberOperLogService _memberOperLogService;
         ISysOperLogService _sysOperLogService;
         IEmailLogService _emailLogService;
-        public logController(ISysOperLogService sysOperLogService, IMemberOperLogService memberOperLogService, IEmailLogService emailLogService)
+        public adminlogController(ISysOperLogService sysOperLogService, IMemberOperLogService memberOperLogService, IEmailLogService emailLogService)
         {
             _sysOperLogService = sysOperLogService;
             _memberOperLogService = memberOperLogService;
@@ -47,7 +47,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult memberoperloglist(MemberOperLogQueryRequest request)
         {
             var data = _memberOperLogService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<MemberOperLogResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
 
@@ -55,7 +62,14 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult sysoperloglist(SysOperLogQueryRequest request)
         {
             var data = _sysOperLogService.List(request);
-            return Result<string>(true, string.Empty);
+            var res = new ResultDto<SysOperLogResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
         }
 
 

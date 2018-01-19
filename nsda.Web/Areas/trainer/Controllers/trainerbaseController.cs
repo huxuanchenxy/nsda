@@ -7,10 +7,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace nsda.Web.Areas.player.Controllers
+namespace nsda.Web.Areas.trainer.Controllers
 {
-    [PlayerLogin(LoginModeEnum.Enforce)]
-    public class baseController : Controller
+    [TrainerLogin(LoginModeEnum.Enforce)]
+    public class trainerbaseController : Controller
     {
         protected virtual ContentResult Result<T>(bool flag, string message = "", T data = default(T))
         {

@@ -91,7 +91,7 @@ namespace nsda.Web.Controllers
 
         //注册
         [HttpPost]
-        [AjaxOnly]
+        //[AjaxOnly]
         public JsonResult register(MemberRequest request)
         {
             var res = new Result<string>();

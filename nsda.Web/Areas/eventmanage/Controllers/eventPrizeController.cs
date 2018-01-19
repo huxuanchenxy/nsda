@@ -11,7 +11,10 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.eventmanage.Controllers
 {
-    public class eventprizeController : baseController
+    /// <summary>
+    /// 奖项设置
+    /// </summary>
+    public class eventprizeController : eventbaseController
     {
         IEventPrizeService _eventPrizeService;
         public eventprizeController(IEventPrizeService eventPrizeService)

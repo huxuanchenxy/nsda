@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="dto\request\CityRequest.cs" />
     <Compile Include="dto\request\CountryRequest.cs" />
+    <Compile Include="dto\request\CyclingRaceRuleRequest.cs" />
     <Compile Include="dto\request\DataSourceRequest.cs" />
     <Compile Include="dto\request\EmailLogRequest.cs" />
     <Compile Include="dto\request\EventPrizeRequest.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="dto\request\MailRequest.cs" />
     <Compile Include="dto\request\MemberExtendRequest.cs" />
     <Compile Include="dto\request\MemberOperLogRequest.cs" />
+    <Compile Include="dto\request\OrderListQueryRequest.cs" />
     <Compile Include="dto\request\PlayerSignQueryRequest.cs" />
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
     <Compile Include="dto\request\PlayerOrRefereeEventQueryRequest.cs" />
@@ -86,12 +88,14 @@
     <Compile Include="dto\response\EventRoomResponse.cs" />
     <Compile Include="dto\response\EventScoreResponse.cs" />
     <Compile Include="dto\response\EventSelectResponse.cs" />
+    <Compile Include="dto\response\KnockoutRuleResponse.cs" />
     <Compile Include="dto\response\LeavingMsgResponse.cs" />
     <Compile Include="dto\response\LoginLogResponse.cs" />
     <Compile Include="dto\response\MailResponse.cs" />
     <Compile Include="dto\response\MemberExtendResponse.cs" />
     <Compile Include="dto\response\MemberOperLogResponse.cs" />
     <Compile Include="dto\response\MemberPointsModelResponse.cs" />
+    <Compile Include="dto\response\OrderListResponse.cs" />
     <Compile Include="dto\response\PlayerSignResponse.cs" />
     <Compile Include="dto\response\MemberTempResponse.cs" />
     <Compile Include="dto\response\MenuData.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="dto\response\SysUserResponse.cs" />
     <Compile Include="dto\response\VoteResponse.cs" />
     <Compile Include="dto\Result.cs" />
+    <Compile Include="enums\AvoidRulesEm.cs" />
     <Compile Include="enums\CardTypeEm.cs" />
     <Compile Include="enums\DataTypeEm.cs" />
     <Compile Include="enums\EventAreaEm.cs" />
@@ -141,6 +146,7 @@
     <Compile Include="enums\RefundStatusEm.cs" />
     <Compile Include="enums\RoleEm.cs" />
     <Compile Include="enums\RoomStatusEm.cs" />
+    <Compile Include="enums\TeamScoringRulesEm.cs" />
     <Compile Include="enums\SignUpStatusEm.cs" />
     <Compile Include="enums\SignUpTypeEm.cs" />
     <Compile Include="enums\SysUserStatusEm.cs" />
@@ -165,19 +171,31 @@
     <Compile Include="model\t_eventattachment.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_eventavoidrule.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_eventcheck.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_eventgroup.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_eventplayerscoringrule.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_eventprize.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_eventrefereeavoidrule.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_eventroom.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_eventsign.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_eventteamscoringrule.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_event_score.cs">

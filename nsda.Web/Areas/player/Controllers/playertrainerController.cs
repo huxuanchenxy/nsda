@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.player.Controllers
 {
-    public class playertrainerController : baseController
+    public class playertrainerController : playerbaseController
     {
         IPlayerTrainerService _playerTrainerService;
         public playertrainerController(IPlayerTrainerService playerTrainerService)

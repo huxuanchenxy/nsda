@@ -72,7 +72,7 @@ namespace nsda.Models
         /// <summary>
         /// 是否需要发票
         /// </summary>
-        public bool? isNeedInvoice { get; set; }
+        public bool isNeedInvoice { get; set; }
     
         /// <summary>
         /// 订单备注

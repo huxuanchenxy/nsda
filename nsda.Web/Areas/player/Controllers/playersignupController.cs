@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.player.Controllers
 {
-    public class playersignupController : baseController
+    public class playersignupController : playerbaseController
     {
         IPlayerSignUpService _playerSignUpService;
         IEventService _eventService;
@@ -82,18 +82,6 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
 
-        //替换队友
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult replaceteammate(int id, int newMemberId)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _playerSignUpService.ReplaceTeammate(id, newMemberId, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
         //去支付
         [HttpPost]
         [AjaxOnly]
@@ -125,6 +113,22 @@ namespace nsda.Web.Areas.player.Controllers
             request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerSignUpService.PlayerSignUpList(request);
             var res = new ResultDto<PlayerSignUpListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        //退费列表
+        [HttpGet]
+        public ContentResult refundlist(PlayerSignUpQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _playerSignUpService.PlayerRefundList(request);
+            var res = new ResultDto<PlayerRefundListResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,

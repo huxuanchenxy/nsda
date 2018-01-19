@@ -31,6 +31,8 @@ namespace nsda.Models
     
         public int orderId { get; set; }
     
+        public int memberId { get; set; }
+    
         public OrderOperTypeEm orderOperType { get; set; }
     
         public string title { get; set; }

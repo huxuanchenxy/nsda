@@ -49,6 +49,7 @@
     <Compile Include="Contract\admin\ILeavingMsgService.cs" />
     <Compile Include="Contract\admin\ILoginLogService.cs" />
     <Compile Include="Contract\admin\IMailService.cs" />
+    <Compile Include="Contract\admin\IOrderService.cs" />
     <Compile Include="Contract\admin\IPayCallBackService.cs" />
     <Compile Include="Contract\admin\ISchoolService.cs" />
     <Compile Include="Contract\admin\ISysOperLogService.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Contract\eventmanage\IEventknockoutSettingsService.cs" />
     <Compile Include="Contract\eventmanage\IEventPrizeService.cs" />
     <Compile Include="Contract\eventmanage\IEventRoomService.cs" />
+    <Compile Include="Contract\eventmanage\IEventRuleService.cs" />
     <Compile Include="Contract\eventmanage\IEventService.cs" />
     <Compile Include="Contract\eventmanage\IEventSignService.cs" />
     <Compile Include="Contract\member\IMemberOperLogService.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Implement\admin\LeavingMsgService.cs" />
     <Compile Include="Implement\admin\LoginLogService.cs" />
     <Compile Include="Implement\admin\MailService.cs" />
+    <Compile Include="Implement\admin\OrderService.cs" />
     <Compile Include="Implement\admin\PayCallBackService.cs" />
     <Compile Include="Implement\admin\ProvinceService.cs" />
     <Compile Include="Implement\admin\SchoolService.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Implement\eventmanage\EventknockoutSettingsService.cs" />
     <Compile Include="Implement\eventmanage\EventPrizeService.cs" />
     <Compile Include="Implement\eventmanage\EventRoomService.cs" />
+    <Compile Include="Implement\eventmanage\EventRuleService.cs" />
     <Compile Include="Implement\eventmanage\EventService.cs" />
     <Compile Include="Implement\eventmanage\EventSignService.cs" />
     <Compile Include="Implement\member\MemberOperLogService.cs" />
