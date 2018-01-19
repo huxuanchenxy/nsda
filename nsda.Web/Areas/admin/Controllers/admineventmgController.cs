@@ -14,11 +14,11 @@ using System.Web.Mvc;
 namespace nsda.Web.Areas.admin.Controllers
 {
     //赛事管理
-    public class eventmgController : baseController
+    public class admineventmgController : adminbaseController
     {
         IEventService _eventService;
         IEventRuleService _eventRuleService;
-        public eventmgController(IEventService eventService, IEventRuleService eventRuleService)
+        public admineventmgController(IEventService eventService, IEventRuleService eventRuleService)
         {
             _eventService = eventService;
             _eventRuleService = eventRuleService;

@@ -7,10 +7,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace nsda.Web.Areas.admin.Controllers
+namespace nsda.Web.Areas.eventmanage.Controllers
 {
-    [AdminLogin(LoginModeEnum.Enforce)]
-    public class baseController : Controller
+    [EventManageLogin(LoginModeEnum.Enforce)]
+    public class eventbaseController : Controller
     {
         protected virtual ContentResult Result<T>(bool flag, string message = "", T data = default(T))
         {

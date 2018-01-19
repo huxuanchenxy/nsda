@@ -12,10 +12,10 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.admin.Controllers
 {
-    public class sysuserController : baseController
+    public class adminuserController : adminbaseController
     {
         ISysUserService _sysUserService;
-        public sysuserController(ISysUserService sysUserService)
+        public adminuserController(ISysUserService sysUserService)
         {
             _sysUserService = sysUserService;
         }

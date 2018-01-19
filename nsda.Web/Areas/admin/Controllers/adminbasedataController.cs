@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace nsda.Web.Areas.admin.Controllers
 {
     //基础数据维护
-    public class basedataController : baseController
+    public class adminbasedataController : adminbaseController
     {
         IProvinceService _provinceService;
         ICityService _cityService;
@@ -22,7 +22,7 @@ namespace nsda.Web.Areas.admin.Controllers
         ISchoolService _schoolService;
         ILeavingMsgService _leavingMsgService;
         ICountryService _countryService;
-        public basedataController(IProvinceService provinceService, ICityService cityService, IDataSourceService dataSourceService, ISchoolService schoolService, ILeavingMsgService leavingMsgService, ICountryService countryService)
+        public adminbasedataController(IProvinceService provinceService, ICityService cityService, IDataSourceService dataSourceService, ISchoolService schoolService, ILeavingMsgService leavingMsgService, ICountryService countryService)
         {
             _provinceService = provinceService;
             _cityService = cityService;

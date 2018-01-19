@@ -12,10 +12,10 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.admin.Controllers
 {
-    public class orderController : baseController
+    public class adminorderController : adminbaseController
     {
         IOrderService _orderService;
-        public orderController(IOrderService orderService)
+        public adminorderController(IOrderService orderService)
         {
             _orderService = orderService;
         }

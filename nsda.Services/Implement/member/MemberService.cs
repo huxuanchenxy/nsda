@@ -500,18 +500,18 @@ namespace nsda.Services.member
                     join.Append(" and contactmobile like @Mobile");
                 }
 
-                if (request.MemberStatus.HasValue)
+                if (request.MemberStatus.HasValue&&request.MemberStatus>0)
                 {
                     join.Append(" and memberStatus=@MemberStatus");
                 }
 
-                if (request.MemberType.HasValue)
+                if (request.MemberType.HasValue && request.MemberType > 0)
                 {
                     join.Append(" and memberType=@MemberType");
                 }
                 var sql=$@"select * from t_member where isdelete=0 
                            and memberType!={(int)MemberTypeEm.临时裁判} and memberType!={(int)MemberTypeEm.临时选手} 
-                           {join.ToString()} order by creatime desc
+                           {join.ToString()} order by createtime desc
                          ";               
                 int totalCount = 0;
                 list = _dbContext.Page<MemberResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);

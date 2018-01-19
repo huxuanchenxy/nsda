@@ -12,10 +12,10 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.admin.Controllers
 {
-    public class voteController : baseController
+    public class adminvoteController : adminbaseController
     {
         IVoteService _voteService;
-        public voteController(IVoteService voteService)
+        public adminvoteController(IVoteService voteService)
         {
             _voteService = voteService;
         }

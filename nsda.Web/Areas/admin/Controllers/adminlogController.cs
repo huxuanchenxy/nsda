@@ -13,12 +13,12 @@ using System.Web.Mvc;
 namespace nsda.Web.Areas.admin.Controllers
 {
     //日志管理
-    public class logController : baseController
+    public class adminlogController : adminbaseController
     {
         IMemberOperLogService _memberOperLogService;
         ISysOperLogService _sysOperLogService;
         IEmailLogService _emailLogService;
-        public logController(ISysOperLogService sysOperLogService, IMemberOperLogService memberOperLogService, IEmailLogService emailLogService)
+        public adminlogController(ISysOperLogService sysOperLogService, IMemberOperLogService memberOperLogService, IEmailLogService emailLogService)
         {
             _sysOperLogService = sysOperLogService;
             _memberOperLogService = memberOperLogService;

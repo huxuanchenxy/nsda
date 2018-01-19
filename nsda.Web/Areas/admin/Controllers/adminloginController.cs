@@ -12,11 +12,11 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.admin.Controllers
 {
-    public class loginController : Controller
+    public class adminloginController : Controller
     {
         ISysUserService _sysUserService;
         ILoginLogService _loginLogService;
-        public loginController(ISysUserService sysUserService, ILoginLogService loginLogService)
+        public adminloginController(ISysUserService sysUserService, ILoginLogService loginLogService)
         {
             _sysUserService = sysUserService;
             _loginLogService = loginLogService;

@@ -115,31 +115,31 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\admin\adminAreaRegistration.cs" />
-    <Compile Include="Areas\admin\Controllers\baseController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminbaseController.cs" />
     <Compile Include="Areas\admin\Controllers\adminController.cs" />
-    <Compile Include="Areas\admin\Controllers\basedataController.cs" />
-    <Compile Include="Areas\admin\Controllers\eventmgController.cs" />
-    <Compile Include="Areas\admin\Controllers\logController.cs" />
-    <Compile Include="Areas\admin\Controllers\loginController.cs" />
-    <Compile Include="Areas\admin\Controllers\memberController.cs" />
-    <Compile Include="Areas\admin\Controllers\orderController.cs" />
-    <Compile Include="Areas\admin\Controllers\sysuserController.cs" />
-    <Compile Include="Areas\admin\Controllers\voteController.cs" />
-    <Compile Include="Areas\eventmanage\Controllers\baseController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminbasedataController.cs" />
+    <Compile Include="Areas\admin\Controllers\admineventmgController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminlogController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminloginController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminmemberController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminorderController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminuserController.cs" />
+    <Compile Include="Areas\admin\Controllers\adminvoteController.cs" />
+    <Compile Include="Areas\eventmanage\Controllers\eventbaseController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\eventmanageController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\eventprizeController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\eventroomController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
-    <Compile Include="Areas\player\Controllers\baseController.cs" />
+    <Compile Include="Areas\player\Controllers\playerbaseController.cs" />
     <Compile Include="Areas\player\Controllers\playereduexperController.cs" />
     <Compile Include="Areas\player\Controllers\playerController.cs" />
     <Compile Include="Areas\player\Controllers\playersignupController.cs" />
     <Compile Include="Areas\player\Controllers\playertrainerController.cs" />
     <Compile Include="Areas\player\playerAreaRegistration.cs" />
-    <Compile Include="Areas\referee\Controllers\baseController.cs" />
+    <Compile Include="Areas\referee\Controllers\refereebaseController.cs" />
     <Compile Include="Areas\referee\Controllers\refereeController.cs" />
     <Compile Include="Areas\referee\refereeAreaRegistration.cs" />
-    <Compile Include="Areas\trainer\Controllers\baseController.cs" />
+    <Compile Include="Areas\trainer\Controllers\trainerbaseController.cs" />
     <Compile Include="Areas\trainer\Controllers\trainerController.cs" />
     <Compile Include="Areas\trainer\trainerAreaRegistration.cs" />
     <Compile Include="Controllers\aboutController.cs" />
@@ -433,7 +433,6 @@
     <Folder Include="Models\" />
     <Folder Include="Views\callback\" />
     <Folder Include="Views\commondata\" />
-    <Folder Include="Views\login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appSettings.config" />
@@ -528,6 +527,9 @@
   <ItemGroup>
     <Content Include="Areas\admin\Views\Shared\_LayoutBase.cshtml" />
     <Content Include="Areas\admin\Views\Shared\_LayoutForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\login\player.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

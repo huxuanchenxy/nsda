@@ -20,12 +20,10 @@ namespace nsda.Services.Implement.member
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
-        IMemberOperLogService _memberOperLogService;
-        public MemberOperLogService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        public MemberOperLogService(IDBContext dbContext, IDataRepository dataRepository)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
-            _memberOperLogService = memberOperLogService;
         }
 
         public void Insert(MemberOperLogRequest request)

@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.player.Controllers
 {
-    public class playerController : baseController
+    public class playerController : playerbaseController
     {
         IMemberService _memberService;
         IMemberExtendService _memberExtendService;

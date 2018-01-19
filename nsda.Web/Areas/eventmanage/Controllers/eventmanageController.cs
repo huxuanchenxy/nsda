@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.eventmanage.Controllers
 {
-    public class eventmanageController : baseController
+    public class eventmanageController : eventbaseController
     {
         IMemberService _memberService;
         IEventService _eventService;

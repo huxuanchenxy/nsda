@@ -14,7 +14,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
     /// <summary>
     /// 奖项设置
     /// </summary>
-    public class eventprizeController : baseController
+    public class eventprizeController : eventbaseController
     {
         IEventPrizeService _eventPrizeService;
         public eventprizeController(IEventPrizeService eventPrizeService)

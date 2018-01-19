@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace nsda.Web.Areas.referee.Controllers
 {
     [RefereeLogin(LoginModeEnum.Enforce)]
-    public class baseController : Controller
+    public class refereebaseController : Controller
     {
         protected virtual ContentResult Result<T>(bool flag, string message = "", T data = default(T))
         {

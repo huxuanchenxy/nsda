@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.player.Controllers
 {
-    public class playersignupController : baseController
+    public class playersignupController : playerbaseController
     {
         IPlayerSignUpService _playerSignUpService;
         IEventService _eventService;

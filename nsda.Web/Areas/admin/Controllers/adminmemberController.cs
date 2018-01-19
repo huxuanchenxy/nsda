@@ -13,12 +13,12 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.admin.Controllers
 {
-    public class memberController : baseController
+    public class adminmemberController : adminbaseController
     {
         IMemberService _memberService;
         IMemberExtendService _memberExtendService;
         IMemberTempService _memberTempService;
-        public memberController(IMemberService memberService, IMemberExtendService memberExtendService, IMemberTempService memberTempService)
+        public adminmemberController(IMemberService memberService, IMemberExtendService memberExtendService, IMemberTempService memberTempService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;

@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.player.Controllers
 {
-    public class playereduexperController : baseController
+    public class playereduexperController : playerbaseController
     {
         IPlayerEduExperService _playerEduExperService;
         ISchoolService _schoolService;
