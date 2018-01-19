@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Model.enums;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
@@ -62,15 +63,15 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result<string>(flag, msg);
         }
 
-        //是否开启报名
+        //修改赛事状态
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult isopen(int id,bool isOpen)
+        public ContentResult editeventstatus(int id,EventStatusEm eventStatus)
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventService.IsOpen(id, isOpen, UserContext.WebUserContext.Id, out msg);
+            var flag = _eventService.EditEventStatus(id, eventStatus, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
