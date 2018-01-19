@@ -214,7 +214,9 @@
     <Content Include="Content\hascompe.css" />
     <Content Include="Content\iconfont.css" />
     <Content Include="Content\img\integral.svg" />
+    <Content Include="Content\img\password_03.jpg" />
     <Content Include="Content\img\score_03.jpg" />
+    <Content Include="Content\infermation.css" />
     <Content Include="Content\membercenter.css" />
     <Content Include="Content\img\mecban_03.jpg" />
     <Content Include="Content\img\more.gif" />
@@ -245,24 +247,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Home\Registered.cshtml" />
     <Content Include="Views\Home\Regform.cshtml" />
     <Content Include="Views\Home\PlayerMembercenter.cshtml" />
@@ -280,6 +264,8 @@
     <Content Include="Views\Home\PlayerCompeSign.cshtml" />
     <Content Include="Views\Home\PlayerHadCompe.cshtml" />
     <Content Include="Views\Home\PlayerScore.cshtml" />
+    <Content Include="Views\Shared\PlayerShare.cshtml" />
+    <Content Include="Views\Home\PlayerInfermation.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

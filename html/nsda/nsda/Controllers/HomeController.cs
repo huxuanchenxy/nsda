@@ -69,5 +69,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "会员积分查询";
             return View();
         }
+
+        public ActionResult PlayerInfermation()
+        {
+            ViewBag.Message = "修改个人资料";
+            return View();
+        }
     }
 }

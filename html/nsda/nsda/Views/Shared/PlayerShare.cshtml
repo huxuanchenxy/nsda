@@ -1,10 +1,4 @@
 ﻿
-@{
-    ViewBag.Title = "会员中心";
-}
-
-<link href="@Url.Content("~/Content/membercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
-
 <div class="mec-ban">
     <div class="container player">
         <div class="player-info">
@@ -83,7 +77,7 @@
                     <div class="panel-body">
                         <ul>
                             <li><a href="/Home/PlayerScore" class="compe">会员积分查询</a></li>
-                            <li><a href="/Home/PlayerInfermation" class="compe">修改个人资料</a></li>
+                            <li><a href="#" class="compe">修改个人资料</a></li>
                             <li><a href="#" class="compe">绑定教练</a></li>
                         </ul>
                     </div>
@@ -110,82 +104,6 @@
             </div>
         </div>
     </div>
-    <div class="info-con">
-        <table>
-            <thead>
-                <tr>
-                    <th width="13%">比赛编码</th>
-                    <th width="22%">比赛名称</th>
-                    <th width="7%">类别</th>
-                    <th width="15%">比赛日期</th>
-                    <th width="13%">会员编码</th>
-                    <th width="15%">队员</th>
-                    <th width="15%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="4">01</td>
-                    <td rowspan="4">02</td>
-                    <td rowspan="4">03</td>
-                    <td rowspan="4">04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td rowspan="4"><a href="#" class="enter">进入比赛</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                </tr>
-                <tr></tr>
-                <tr></tr>
-                <tr class="pink">
-                    <td rowspan="4">01</td>
-                    <td rowspan="4">02</td>
-                    <td rowspan="4">03</td>
-                    <td rowspan="4">04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td rowspan="4">即将开始</td>
-                </tr>
-                <tr class="pink">
-                    <td>01</td>
-                    <td>02</td>
-                </tr>
-                <tr class="pink"></tr>
-                <tr class="pink"></tr>
-                <tr>
-                    <td rowspan="4">01</td>
-                    <td rowspan="4">02</td>
-                    <td rowspan="4">03</td>
-                    <td rowspan="4">04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td rowspan="4"><a href="#" class="check">查看赛果</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                </tr>
-                <tr></tr>
-                <tr></tr>
-            </tbody>
-        </table>
-        <div class="msg-box">
-            <p>消息盒子 Message Box</p>
-            <a href="#"><img src="~/Content/img/more.gif" alt="..." class="msg-more"></a>
-        </div>
-        <div class="msgbox-con">
-            <div class="msgimg">
-                <img src="~/Content/img/teacher.png" alt="...">
-                <p>通知</p><p>01/04</p><p>13:42</p>
-            </div>
-            <div class="msgc">
-                <p class="msgteam">周星驰 向您发出组队申请</p>
-                <p class="teamcon">周星驰 想您发出组队申请。邀请您一同参加<a href="#">“2017-2018全国中学生学术辩论与演讲联赛第一轮（济南赛区辩论）”</a>新手组组别比赛。请尽快前往处理。</p>
-            </div>
-            <a href="#" class="cmore">查看详情</a>
-        </div>
-    </div>
-    
+    @RenderBody()
+
 </div>
