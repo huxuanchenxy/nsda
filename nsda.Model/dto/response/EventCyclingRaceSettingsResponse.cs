@@ -10,6 +10,7 @@ namespace nsda.Model.dto.response
     public class EventCyclingRaceSettingsResponse
     {
         public int Id { get; set; }
+        public string EventGroupName { get; set; }
 
         public int EventId { get; set; }
 

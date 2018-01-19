@@ -15,8 +15,8 @@ namespace nsda.Services.Contract.eventmanage
     public interface IEventCyclingRaceSettingsService : IDependency
     {
         //新增循环赛设置
-        bool Settints(EventCyclingRaceSettingsRequest request,out string msg);
+        bool Settints(List<EventCyclingRaceSettingsRequest> request,out string msg);
         //循环赛详情
-        EventCyclingRaceSettingsResponse Detail(int eventId);
+        List<EventCyclingRaceSettingsResponse> ListCyclingRaceSettings(int eventId);
     }
 }

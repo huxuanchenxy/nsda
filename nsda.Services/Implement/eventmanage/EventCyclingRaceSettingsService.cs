@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Utilities;
+using nsda.Models;
 
 namespace nsda.Services.Implement.eventmanage
 {
@@ -28,7 +29,7 @@ namespace nsda.Services.Implement.eventmanage
             _memberOperLogService = memberOperLogService;
         }
         //设置循环赛
-        public bool Settints(EventCyclingRaceSettingsRequest request, out string msg)
+        public bool Settints(List<EventCyclingRaceSettingsRequest> request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -45,18 +46,64 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //循环赛详情
-        public EventCyclingRaceSettingsResponse Detail(int eventId)
+        public List<EventCyclingRaceSettingsResponse> ListCyclingRaceSettings(int eventId)
         {
-            EventCyclingRaceSettingsResponse response = null;
+            List<EventCyclingRaceSettingsResponse> list = new List<EventCyclingRaceSettingsResponse>();
             try
             {
-
+                var sql = $@"select a.*,b.name EventGroupName from t_eventcyclingracesettings a
+                            inner join t_eventgroup b on a.eventGroupId=b.id
+                            where a.isdelete=0 and a.eventId={eventId}";
+                var data = _dbContext.Query<EventCyclingRaceSettingsResponse>(sql).ToList();
+                if (data != null && data.Count > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        var itemdata = _dbContext.Select<t_eventcyclingrace>(c => c.settingsId == item.Id).ToList();
+                        if (itemdata != null && itemdata.Count > 0)
+                        {
+                            foreach (var items in itemdata)
+                            {
+                                EventCyclingRaceResponse response = new EventCyclingRaceResponse
+                                {
+                                  CurrentRound=items.currentround,
+                                  CyclingRaceStatus=items.cyclingRaceStatus,
+                                  EventGroupId=items.eventGroupId,
+                                  EventId=items.eventId,
+                                  NextRound=items.nextround,
+                                  PairRule=items.pairRule,
+                                  Id=items.id,
+                                  SettingsId=items.settingsId 
+                                };
+                                var itemsdata = _dbContext.Select<t_eventcyclingracedetail>(c => c.cyclingraceId == items.id).ToList();
+                                if (itemsdata != null && itemsdata.Count > 0)
+                                {
+                                    foreach (var itemss in itemsdata)
+                                    {
+                                        EventCyclingRaceDetailResponse responses = new EventCyclingRaceDetailResponse
+                                        {
+                                             CyclingRaceId=itemss.cyclingraceId,
+                                             EndTime=itemss.endtime,
+                                             Screenings=itemss.screenings,
+                                             EventGroupId=itemss.eventGroupId,
+                                             EventId=itemss.eventId,
+                                             Id=itemss.id,
+                                             StartTime=itemss.starttime
+                                        };
+                                        response.ListCyclingRaceDetail.Add(responses);
+                                    }
+                                 }
+                                item.ListCyclingRace.Add(response);
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("EventCyclingRaceSettingsService.Detail", ex);
+                LogUtils.LogError("EventCyclingRaceSettingsService.ListCyclingRaceSettings", ex);
             }
-            return response;
+            return list;
         }
     }
 }

@@ -15,8 +15,8 @@ namespace nsda.Services.Contract.eventmanage
     public interface IEventknockoutSettingsService : IDependency
     {
         //新增循环赛设置
-        bool Settints(EventknockoutSettingsRequest request, out string msg);
+        bool Settints(List<EventknockoutSettingsRequest> request, out string msg);
         //循环赛详情
-        EventknockoutSettingsResponse Detail(int eventId);
+        List<EventknockoutSettingsResponse> ListKnockoutSettings(int eventId);
     }
 }
