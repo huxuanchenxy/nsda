@@ -237,6 +237,21 @@
     <Compile Include="model\t_mail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_match.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_matchplayerresult.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_matchplayerresultdetail.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_matchteamresult.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_match_trainer.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_member.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
