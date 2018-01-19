@@ -82,18 +82,6 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
 
-        //替换队友
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult replaceteammate(int id, int newMemberId)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            var flag = _playerSignUpService.ReplaceTeammate(id, newMemberId, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
         //去支付
         [HttpPost]
         [AjaxOnly]

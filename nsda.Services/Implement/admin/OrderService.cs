@@ -240,15 +240,7 @@ namespace nsda.Services.Implement.admin
                         t_order torder = _dbContext.Get<t_order>(order_operation.orderId);
                         torder.updatetime = DateTime.Now;
                         torder.orderStatus = OrderStatusEm.退款成功;
-                        _dbContext.Update(torder);
-
-                        if (torder.orderType == OrderTypeEm.赛事报名)
-                        {
-                            var player_signup=_dbContext.Get<t_player_signup>(torder.sourceId);
-                            player_signup.updatetime = DateTime.Now;
-                            player_signup.signUpStatus = SignUpStatusEm.已退费;
-                            _dbContext.Update(player_signup);
-                        }        
+                        _dbContext.Update(torder);     
                         _dbContext.CommitChanges();
                         flag = true;
                     }

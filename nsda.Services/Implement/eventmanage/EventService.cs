@@ -128,10 +128,8 @@ namespace nsda.Services.Implement.eventmanage
                         {
                             eventId = eventId,
                             maxgrade = item.MaxGrade,
-                            maxPoints = item.MaxPoints,
                             maxtimes = item.MaxTimes,
                             mingrade = item.MinGrade,
-                            minPoints = item.MinPoints,
                             mintimes = item.MinTimes,
                             name = item.Name,
                             teamnumber = item.TeamNumber
@@ -422,10 +420,8 @@ namespace nsda.Services.Implement.eventmanage
                                 EventId = item.eventId,
                                 Id = item.id,
                                 MaxGrade = item.maxgrade,
-                                MaxPoints = item.maxPoints,
                                 MaxTimes = item.maxtimes,
                                 MinGrade = item.mingrade,
-                                MinPoints = item.minPoints,
                                 MinTimes = item.mintimes,
                                 Name = item.name,
                                 TeamNumber = item.teamnumber

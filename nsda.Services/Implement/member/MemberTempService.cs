@@ -144,31 +144,6 @@ namespace nsda.Services.Implement.member
                                 schoolId = item.PlayerEdu.SchoolId
                             });
                         }
-
-                        //插入签到信息
-                        _dbContext.Insert(new t_eventsign
-                        {
-                            eventId = item.EventId,
-                            eventSignStatus = EventSignStatusEm.已签到,
-                            eventSignType = EventSignTypeEm.选手,
-                            memberId = memberInsertId,
-                            signdate = t_event.starteventdate,
-                            signtime = DateTime.Now,
-                            eventGroupId = item.EventGroupId
-                        });
-
-                        if (t_event.starteventdate != t_event.endeventdate)
-                        {
-                            _dbContext.Insert(new t_eventsign
-                            {
-                                eventId = item.EventId,
-                                eventSignStatus = EventSignStatusEm.待签到,
-                                eventSignType = EventSignTypeEm.选手,
-                                memberId = memberInsertId,
-                                signdate = t_event.endeventdate,
-                                eventGroupId = item.EventGroupId
-                            });
-                        }
                     }
                     _dbContext.CommitChanges();
                     flag = true;
@@ -256,27 +231,6 @@ namespace nsda.Services.Implement.member
                         memberId = memberInsertId,
                         refereeSignUpStatus = RefereeSignUpStatusEm.申请成功
                     });
-                    //签到表
-                    _dbContext.Insert(new t_eventsign
-                    {
-                        eventId = request.EventId,
-                        eventSignStatus = EventSignStatusEm.已签到,
-                        eventSignType = EventSignTypeEm.裁判,
-                        memberId = memberInsertId,
-                        signdate = t_event.starteventdate,
-                        signtime = DateTime.Now
-                    });
-                    if (t_event.starteventdate != t_event.endeventdate)
-                    {
-                        _dbContext.Insert(new t_eventsign
-                        {
-                            eventId = request.EventId,
-                            eventSignStatus = EventSignStatusEm.待签到,
-                            eventSignType = EventSignTypeEm.裁判,
-                            memberId = memberInsertId,
-                            signdate = t_event.endeventdate
-                        });
-                    }
                     _dbContext.CommitChanges();
                     flag = true;
                 }

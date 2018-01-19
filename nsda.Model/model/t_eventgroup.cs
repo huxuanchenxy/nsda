@@ -44,16 +44,6 @@ namespace nsda.Models
         public int? maxgrade { get; set; }
     
         /// <summary>
-        /// 最小积分
-        /// </summary>
-        public decimal? minPoints { get; set; }
-    
-        /// <summary>
-        /// 最大积分
-        /// </summary>
-        public decimal? maxPoints { get; set; }
-    
-        /// <summary>
         /// 最小比赛次数
         /// </summary>
         public int? mintimes { get; set; }

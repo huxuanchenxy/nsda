@@ -18,8 +18,6 @@ namespace nsda.Services.Contract.member
         bool Insert(PlayerSignUpRequest request,out string msg);
         //是否接受组队
         bool IsAcceptTeam(int id, bool isAgree, int memberId, out string msg);
-        //替换队友
-        bool ReplaceTeammate(int id, int newMemberId, int memberId, out string msg);
         // 去支付
         bool GoPay(int id,int memberId,out string msg);
         // 申请退赛
@@ -29,8 +27,6 @@ namespace nsda.Services.Contract.member
         // 比赛列表
         // 支付成功回调
         void Callback(int memberId,int sourceId);
-        // 审核退赛
-        bool CheckRetire(int id, bool isAppro,int memberId,out string msg);
         //选手获取当天比赛信息
         List<CurrentEventResponse> CurrentPlayerEvent(int memberId);
         //赛事管理员 选手报名列表
@@ -41,5 +37,11 @@ namespace nsda.Services.Contract.member
         List<EventGroupResponse> EventGroup(int eventId, int memberId);
         //选手报名列表
         List<PlayerSignUpListResponse> PlayerSignUpList(PlayerSignUpQueryRequest request);
+        //生成签到表
+        bool RenderSign(int eventId, out string msg);
+        //选手退赛列表
+        List<PlayerRefundListResponse> PlayerRefundList(PlayerSignUpQueryRequest request);
+        //未报名成功的队伍 申请退费
+        bool ApplyRefund(int eventId, int operUserId, out string msg);
     }
 }
