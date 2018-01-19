@@ -192,6 +192,9 @@
     <Compile Include="model\t_eventcyclingracedetail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_eventcyclingraceresult.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_eventcyclingracesettings.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
@@ -214,6 +217,9 @@
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_eventrefereeavoidrule.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_eventresult.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_eventroom.cs">
