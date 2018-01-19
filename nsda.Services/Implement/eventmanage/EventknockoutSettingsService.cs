@@ -36,7 +36,72 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                if (request == null || request.Count == 0)
+                {
+                    msg = "请核对参数后再保存";
+                    return flag;
+                }
+                //循环遍历判断参数合法性
+                foreach (var item in request)
+                {
 
+                }
+
+                var eventId = request.FirstOrDefault().EventId;
+                try
+                {
+                    _dbContext.BeginTransaction();
+                    _dbContext.Execute($"delete from t_eventknockoutsettings where eventId={eventId}");
+                    _dbContext.Execute($"delete from t_eventknockout where eventId={eventId}");
+                    _dbContext.Execute($"delete from t_eventknockoutdetail where eventId={eventId}");
+
+                    foreach (var item in request)
+                    {
+                        //淘汰赛设置表
+                        int settingsId = _dbContext.Insert(new t_eventknockoutsettings
+                        {
+                            eventGroupId = item.EventGroupId,
+                            eventId = item.EventId,
+                            teamnumber=item.Teamnumber
+                        }).ToObjInt();
+                        //淘汰赛表
+                        foreach (var items in item.ListKnockout)
+                        {
+                            int knockoutId = _dbContext.Insert(new t_eventknockout
+                            {
+                                knockoutStatus=items.KnockoutStatus,
+                                knockoutType=items.KnockoutType,
+                                trainerCount=items.TrainerCount,
+                                eventGroupId = items.EventGroupId,
+                                eventId = items.EventId,
+                                settingsId = settingsId
+                            }).ToObjInt();
+
+                            foreach (var itemss in items.ListKnockoutDetail)
+                            {
+                                _dbContext.Insert(new t_eventknockoutdetail
+                                {
+                                    knockoutId= knockoutId,
+                                    endtime = itemss.EndTime,
+                                    eventGroupId = itemss.EventGroupId,
+                                    eventId = itemss.EventId,
+                                    screenings = itemss.Screenings,
+                                    starttime = itemss.StartTime
+                                });
+                            }
+                        }
+                    }
+
+                    _dbContext.CommitChanges();
+                    flag = true;
+                }
+                catch (Exception ex)
+                {
+                    _dbContext.Rollback();
+                    flag = false;
+                    msg = "服务异常";
+                    LogUtils.LogError("EventknockoutSettingsService.InsertTran", ex);
+                }
             }
             catch (Exception ex)
             {
