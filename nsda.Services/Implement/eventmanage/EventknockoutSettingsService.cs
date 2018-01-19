@@ -49,7 +49,7 @@ namespace nsda.Services.Implement.eventmanage
 
                 var eventId = request.FirstOrDefault().EventId;
                 try
-                {
+                { 
                     _dbContext.BeginTransaction();
                     _dbContext.Execute($"delete from t_eventknockoutsettings where eventId={eventId}");
                     _dbContext.Execute($"delete from t_eventknockout where eventId={eventId}");
