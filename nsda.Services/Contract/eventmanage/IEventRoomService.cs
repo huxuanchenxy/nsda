@@ -15,9 +15,9 @@ namespace nsda.Services.Contract.eventmanage
     public interface IEventRoomService : IDependency
     {
         //循环插入教室
-        bool Insert(int eventId,int num,out string msg);
+        bool Insert(EventRoomRequest request, out string msg);
         //更新教室信息
-        bool Edit(int id, string name, out string msg);
+        bool Edit(EventRoomRequest request, out string msg);
         //修改教室设置
         bool EidtSettings(int id, int statusOrGroup, out string msg);
         //更新教室信息

@@ -12,9 +12,9 @@ namespace nsda.Services.Contract.eventmanage
     public interface IEventRuleService: IDependency
     {
         //编辑循环赛规则
-        bool EditCyclingRaceRule(CyclingRaceRuleRequest request,out string msg);
+        bool CyclingRaceRule(CyclingRaceRuleRequest request,out string msg);
         //编辑淘汰赛规则
-        bool EditKnockoutRule(KnockoutRuleRequest request,out string msg);
+        bool KnockoutRule(KnockoutRuleRequest request,out string msg);
         //淘汰赛规则详情
         KnockoutRuleResponse KnockoutRuleDetail(int eventId);
         //循环赛规则详情

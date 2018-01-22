@@ -2,6 +2,7 @@
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
+using nsda.Services;
 using nsda.Services.Contract.trainer;
 using nsda.Services.member;
 using nsda.Utilities;
@@ -32,7 +33,7 @@ namespace nsda.Web.Areas.trainer.Controllers
         public ContentResult listplayer(PlayerTrainerQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var data = _playerTrainerService.TrainerList(request);
+            var data = _playerTrainerService.Trainer_PlayerList(request);
             var res = new ResultDto<TrainerPlayerResponse>
             {
                 page = request.PageIndex,
@@ -77,10 +78,10 @@ namespace nsda.Web.Areas.trainer.Controllers
             return Result<string>(flag, msg);
         }
         //5 审核
-        public ContentResult approplayer(int id, bool isAppro)
+        public ContentResult checkplayer(int id, bool isAgree)
         {
             var msg = string.Empty;
-            var flag = _playerTrainerService.IsAppro(id, isAppro, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerTrainerService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 

@@ -138,7 +138,14 @@ namespace nsda.Model.dto.response
         /// 队伍成员数
         /// </summary>
         public int TeamNumber { get; set; }
-
+        /// <summary>
+        /// 报名数
+        /// </summary>
+        public int SignUpCount { get; set; }
+        /// <summary>
+        /// 报名成功数
+        /// </summary>
+        public int SignUpSuccessCount { get; set; }
     }
 
 }

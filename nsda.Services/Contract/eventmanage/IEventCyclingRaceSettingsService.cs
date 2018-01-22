@@ -17,6 +17,6 @@ namespace nsda.Services.Contract.eventmanage
         //新增循环赛设置
         bool Settints(List<EventCyclingRaceSettingsRequest> request,out string msg);
         //循环赛详情
-        List<EventCyclingRaceSettingsResponse> ListCyclingRaceSettings(int eventId);
+        List<EventCyclingRaceSettingsResponse> CyclingRaceSettings(int eventId);
     }
 }

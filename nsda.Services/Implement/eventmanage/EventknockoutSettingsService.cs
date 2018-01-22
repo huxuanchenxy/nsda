@@ -36,6 +36,13 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                var model = request.FirstOrDefault();
+                if (model.EventId <= 0)
+                {
+                    msg = "赛事信息有误";
+                    return flag;
+                }
+
                 if (request == null || request.Count == 0)
                 {
                     msg = "请核对参数后再保存";
@@ -44,16 +51,76 @@ namespace nsda.Services.Implement.eventmanage
                 //循环遍历判断参数合法性
                 foreach (var item in request)
                 {
+                    if (item.Teamnumber <= 0)
+                    {
+                        msg = "晋级队伍数有误";
+                        return flag;
+                    }
 
+                    string message = string.Empty;
+                    foreach (var items in item.ListKnockout)
+                    {
+                        if (items.TrainerCount <= 0)
+                        {
+                            message = "裁判数量有误";
+                            break;
+                        }
+
+                        if (items.Screenings <= 0)
+                        {
+                            message = "场次有误";
+                            break;
+                        }
+
+                        if (items.Screenings != items.ListKnockoutDetail.Count)
+                        {
+                            message = "场次对应信息有误";
+                            break;
+                        }
+
+                        string messages = string.Empty;
+                        foreach (var itemss in items.ListKnockoutDetail)
+                        {
+                            if (itemss.StartTime == DateTime.MaxValue || itemss.StartTime == DateTime.MinValue)
+                            {
+                                messages = "Flight开始时间有误";
+                                break;
+                            }
+                            if (itemss.EndTime == DateTime.MaxValue || itemss.EndTime == DateTime.MinValue)
+                            {
+                                messages = "Flight结束时间有误";
+                                break;
+                            }
+                            if (itemss.EndTime <= itemss.StartTime)
+                            {
+                                messages = "Flight结束时间必须大于开始时间";
+                                break;
+                            }
+                        }
+
+                        if (messages.IsNotEmpty())
+                        {
+                            message = messages;
+                            break;
+                        }
+                    }
+
+                    if (message.IsNotEmpty())
+                    {
+                        msg = message;
+                        break;
+                    }
                 }
-
-                var eventId = request.FirstOrDefault().EventId;
+                if (msg.IsNotEmpty())
+                {
+                    return flag;
+                }
                 try
                 { 
                     _dbContext.BeginTransaction();
-                    _dbContext.Execute($"delete from t_eventknockoutsettings where eventId={eventId}");
-                    _dbContext.Execute($"delete from t_eventknockout where eventId={eventId}");
-                    _dbContext.Execute($"delete from t_eventknockoutdetail where eventId={eventId}");
+                    _dbContext.Execute($"delete from t_eventknockoutsettings where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_eventknockout where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_eventknockoutdetail where eventId={model.EventId}");
 
                     foreach (var item in request)
                     {
@@ -73,6 +140,7 @@ namespace nsda.Services.Implement.eventmanage
                                 knockoutType=items.KnockoutType,
                                 trainerCount=items.TrainerCount,
                                 eventGroupId = items.EventGroupId,
+                                screenings=items.Screenings,
                                 eventId = items.EventId,
                                 settingsId = settingsId
                             }).ToObjInt();
@@ -112,7 +180,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //淘汰赛设置详情
-        public List<EventknockoutSettingsResponse> ListKnockoutSettings(int eventId)
+        public List<EventknockoutSettingsResponse> KnockoutSettings(int eventId)
         {
             List<EventknockoutSettingsResponse> list = new List<EventknockoutSettingsResponse>();
             try
@@ -166,7 +234,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("EventknockoutSettingsService.ListKnockoutSettings", ex);
+                LogUtils.LogError("EventknockoutSettingsService.KnockoutSettings", ex);
             }
             return list;
         }

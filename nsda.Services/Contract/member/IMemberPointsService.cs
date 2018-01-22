@@ -18,7 +18,8 @@ namespace nsda.Services.Contract.member
         MemberPointsModelResponse Detail(int memberId);
         //选手积分列表
         List<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request,out decimal totalPoints);
+        List<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request);
         //选手积分详情
-        List<PlayerPointsRecordDetailResponse> PointsRecordDetail(int recordId,int memberId);
+       List<PlayerPointsRecordDetailResponse> PointsRecordDetail(int recordId,int memberId);
     }
 }

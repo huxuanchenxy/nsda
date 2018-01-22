@@ -142,7 +142,7 @@ namespace nsda.Model.dto.request
         public int MemberId { get; set; }
     }
 
-    public class EventManageQueryRequest : PageQuery
+    public class EventAdminQueryRequest : PageQuery
     {
         public EventStatusEm? EventStatus { get; set; }
         public EventTypeEm? EventType { get; set; }

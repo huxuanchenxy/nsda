@@ -57,9 +57,11 @@
     <Compile Include="dto\request\EventPrizeRequest.cs" />
     <Compile Include="dto\request\EventRequest.cs" />
     <Compile Include="dto\request\EventRoomQueryRequest.cs" />
+    <Compile Include="dto\request\EventRoomRequest.cs" />
     <Compile Include="dto\request\EventScoreRequest.cs" />
     <Compile Include="dto\request\LeavingMsgRequest.cs" />
     <Compile Include="dto\request\LoginLogRequest.cs" />
+    <Compile Include="dto\request\LoginRequest.cs" />
     <Compile Include="dto\request\MailRequest.cs" />
     <Compile Include="dto\request\MemberExtendRequest.cs" />
     <Compile Include="dto\request\MemberOperLogRequest.cs" />

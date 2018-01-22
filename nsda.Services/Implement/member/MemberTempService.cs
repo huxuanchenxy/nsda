@@ -43,7 +43,6 @@ namespace nsda.Services.Implement.member
                 }
                 TempPlayerRequest tempplayer = request.FirstOrDefault();
                 t_event t_event = _dbContext.Get<t_event>(tempplayer.EventId);
-                //数据校验
                 if (t_event == null)
                 {
                     msg = "赛事信息有误";
@@ -183,7 +182,6 @@ namespace nsda.Services.Implement.member
                     return flag;
                 }
                 t_event t_event = _dbContext.Get<t_event>(request.EventId);
-                //数据校验
                 if (t_event == null)
                 {
                     msg = "赛事信息有误";
@@ -402,6 +400,8 @@ namespace nsda.Services.Implement.member
                     _dbContext.Execute($"update t_memberpointsrecord set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_memberpointsdetail set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_match_trainer set memberId={request.MemberId}  memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_matchplayerresultdetail set trainerId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.CommitChanges();
                     flag = true;
                 }
@@ -464,8 +464,10 @@ namespace nsda.Services.Implement.member
                         _dbContext.Execute($"update t_membertemp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
                         _dbContext.Execute($"update t_memberpointsrecord set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                         _dbContext.Execute($"update t_memberpointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                        _dbContext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.tomemberId} and isdelete=0");
+                        _dbContext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                         //对垒表也要修改
+                        _dbContext.Execute($"update t_matchplayerresult set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                        _dbContext.Execute($"update t_matchplayerresultdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                         _dbContext.CommitChanges();
                     }
                     catch (Exception ex)

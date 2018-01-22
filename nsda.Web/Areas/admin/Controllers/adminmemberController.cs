@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Services;
 using nsda.Services.Contract.member;
 using nsda.Services.member;
 using nsda.Utilities;
@@ -54,10 +55,10 @@ namespace nsda.Web.Areas.admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult processmemberextend(int id,string remark, bool isAppro)
+        public ContentResult checkmemberextend(int id,string remark, bool isAgree)
         {
             var msg = string.Empty;
-            var flag = _memberExtendService.Process(id, remark,isAppro, UserContext.SysUserContext.Id, out msg);
+            var flag = _memberExtendService.Check(id, remark, isAgree, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -99,10 +100,10 @@ namespace nsda.Web.Areas.admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult check(int id,string remark,bool isAppro)
+        public ContentResult check(int id,string remark,bool isAgree)
         {
             var msg = string.Empty;
-            var flag = _memberService.Check(id,remark,isAppro, UserContext.SysUserContext.Id, out msg);
+            var flag = _memberService.Check(id,remark, isAgree, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 

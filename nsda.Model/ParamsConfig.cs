@@ -19,6 +19,10 @@ namespace nsda.Model
         /// </summary>
         public static string _membertype = new int[] { (int)MemberTypeEm.教练, (int)MemberTypeEm.裁判, (int)MemberTypeEm.选手, (int)MemberTypeEm.赛事管理员 }.Splice();
         /// <summary>
+        /// 临时会员类型
+        /// </summary>
+        public static string _tempmembertype = new int[] { (int)MemberTypeEm.临时裁判, (int)MemberTypeEm.临时选手}.Splice();
+        /// <summary>
         /// 实际比赛的状态
         /// </summary>
         public static string _signup_in = new int[] { (int)SignUpStatusEm.报名成功 }.Splice();
@@ -29,7 +33,7 @@ namespace nsda.Model
         /// <summary>
         /// 裁判可查询当日比赛的状态
         /// </summary>
-        public static string _refereestatus = new int[] { (int)RefereeSignUpStatusEm.申请成功, (int)RefereeSignUpStatusEm.启用}.Splice();  
+        public static string _refereestatus = new int[] { (int)RefereeSignUpStatusEm.申请成功, (int)RefereeSignUpStatusEm.停用, (int)RefereeSignUpStatusEm.启用}.Splice();  
         /// <summary>
         /// 赛事不可查询状态
         /// </summary>

@@ -17,7 +17,7 @@ namespace nsda.Services.Contract.referee
         // 申请当裁判
         bool Apply(int eventId, int memberId, out string msg);
         //裁判审核
-        bool Check(int id, bool isAppro, int memberId, out string msg);
+        bool Check(int id, bool isAgree, int memberId, out string msg);
         //裁判获取当天比赛信息
         List<CurrentEventResponse> CurrentRefereeEvent(int memberId);
         //赛事管理员 裁判报名列表

@@ -1,7 +1,9 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Services;
 using nsda.Services.Contract.eventmanage;
+using nsda.Services.Contract.member;
 using nsda.Services.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -16,31 +18,35 @@ namespace nsda.Web.Areas.eventmanage.Controllers
     public class eventroomController : eventbaseController
     {
         IEventRoomService _eventRoomService;
-        public eventroomController(IEventRoomService eventRoomService)
+        IPlayerSignUpService _playerSignUpService;
+        public eventroomController(IEventRoomService eventRoomService, IPlayerSignUpService playerSignUpService)
         {
             _eventRoomService = eventRoomService;
+            _playerSignUpService = playerSignUpService;
         }
 
         #region ajax
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult insert(int eventId,int num)
+        public ContentResult insert(EventRoomRequest request)
         {
+            request.MemberId = UserContext.WebUserContext.Id;
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag =_eventRoomService.Insert(eventId,num,out msg);
+            var flag =_eventRoomService.Insert(request, out msg);
             return Result<string>(flag, msg);
         }
 
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult edit(int id,string name)
+        public ContentResult edit(EventRoomRequest request)
         {
+            request.MemberId = UserContext.WebUserContext.Id;
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventRoomService.Edit(id,name, out msg);
+            var flag = _eventRoomService.Edit(request, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -90,6 +96,13 @@ namespace nsda.Web.Areas.eventmanage.Controllers
                 rows = data
             };
             return Content(res.Serialize());
+        }
+
+        [HttpGet]
+        public ContentResult selectplayer(int eventId,string keyvalue)
+        {
+            var data = _playerSignUpService.SelectPlayer(eventId,keyvalue);
+            return Result(true, string.Empty, data);
         }
         #endregion 
     }

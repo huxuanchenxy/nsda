@@ -23,7 +23,7 @@ namespace nsda.Services.Contract.member
         // 申请退赛
         bool ApplyRetire(int id, int memberId, out string msg);
         // 确认退赛
-        bool ConfirmRetire(int id, bool isAgree, int memberId, out string msg);
+        bool IsConfirmRetire(int id, bool isConfirm, int memberId, out string msg);
         // 比赛列表
         // 支付成功回调
         void Callback(int memberId,int sourceId);
@@ -43,5 +43,7 @@ namespace nsda.Services.Contract.member
         List<PlayerRefundListResponse> PlayerRefundList(PlayerSignUpQueryRequest request);
         //未报名成功的队伍 申请退费
         bool ApplyRefund(int eventId, int operUserId, out string msg);
+        // 教室设定特殊学员
+        List<MemberSelectResponse> SelectPlayer(int eventId, string keyvalue);
     }
 }

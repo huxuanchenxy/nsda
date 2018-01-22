@@ -38,7 +38,6 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                //参数信息校验
                 if (request.Name.IsEmpty())
                 {
                     msg = "赛事名不能为空";
@@ -63,7 +62,10 @@ namespace nsda.Services.Implement.eventmanage
                     return flag;
                 }
 
-                //报名截止日期 退费截止日期
+                if (request.EndRefundDate > request.EndEventDate)
+                {
+                    msg = "退费截止日期不能超过赛事结束日期";
+                }
 
                 if (request.Maxnumber <= 0)
                 {
@@ -74,6 +76,18 @@ namespace nsda.Services.Implement.eventmanage
                 if (request.EventGroup == null || request.EventGroup.Count == 0)
                 {
                     msg = "赛事组别信息不能为空";
+                    return flag;
+                }
+
+                if (request.EventType <= 0 || request.EventTypeName <= 0)
+                {
+                    msg = "请选择赛事类型";
+                    return flag;
+                }
+
+                if (request.Address.IsEmpty())
+                {
+                    msg = "赛事地址不能为空";
                     return flag;
                 }
 
@@ -117,7 +131,7 @@ namespace nsda.Services.Implement.eventmanage
                         provinceId = request.ProvinceId,
                         signfee = request.Signfee,
                         startsigndate = request.StartSignDate,
-                        eventTypeName=request.EventTypeName
+                        eventTypeName = request.EventTypeName
                     }).ToObjInt();
                     #endregion
 
@@ -141,12 +155,12 @@ namespace nsda.Services.Implement.eventmanage
 
                     _dbContext.CommitChanges();
                     flag = true;
-                    _dbContext.Rollback();
                 }
                 catch (Exception ex)
                 {
                     flag = false;
                     msg = "服务异常";
+                    _dbContext.Rollback();
                     LogUtils.LogError("EventService.InsertTran", ex);
                 }
             }
@@ -171,7 +185,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 eventId = eventId,
                 teamScoringRules = TeamScoringRulesEm.对方获胜场数,
-                viewindex =2
+                viewindex = 2
             });
             _dbContext.Insert(new t_eventteamscoringrule
             {
@@ -276,13 +290,77 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                if (request.Name.IsEmpty())
+                {
+                    msg = "赛事名不能为空";
+                    return flag;
+                }
+
+                if (request.StartEventDate == DateTime.MinValue || request.StartEventDate == DateTime.MaxValue)
+                {
+                    msg = "赛事开始时间有误";
+                    return flag;
+                }
+
+                if (request.EndEventDate == DateTime.MinValue || request.EndEventDate == DateTime.MaxValue)
+                {
+                    msg = "赛事结束时间有误";
+                    return flag;
+                }
+
+                if (request.StartEventDate > request.EndEventDate)
+                {
+                    msg = "赛事结束时间不能早于开始时间";
+                    return flag;
+                }
+
+                if (request.EndRefundDate > request.EndEventDate)
+                {
+                    msg = "退费截止日期不能超过赛事结束日期";
+                }
+
+                if (request.Maxnumber <= 0)
+                {
+                    msg = "报名队伍上限有误";
+                    return flag;
+                }
+
+                if (request.EventType <= 0 || request.EventTypeName <= 0)
+                {
+                    msg = "请选择赛事类型";
+                    return flag;
+                }
+
+                if (request.Address.IsEmpty())
+                {
+                    msg = "赛事地址不能为空";
+                    return flag;
+                }
                 t_event tevent = _dbContext.Get<t_event>(request.Id);
                 if (tevent != null && tevent.memberId == request.MemberId)
                 {
-                    //看具体能修改什么信息
-                    tevent.updatetime = DateTime.Now;
+                    tevent.address = request.Address;
+                    tevent.cityId = request.CityId;
+                    tevent.countryId = request.CountryId;
+                    tevent.endeventdate = request.EndEventDate;
+                    tevent.endrefunddate = request.EndRefundDate;
+                    tevent.endsigndate = request.EndSignDate;
+                    tevent.remark = request.Remark;
                     tevent.eventStatus = tevent.eventStatus == EventStatusEm.拒绝 ? EventStatusEm.待审核 : tevent.eventStatus;
+                    tevent.eventType = request.EventType;
+                    tevent.filepath = request.Filepath;
+                    tevent.isInter = request.IsInter;
+                    tevent.maxnumber = request.Maxnumber;
+                    tevent.starteventdate = request.StartEventDate;
+                    tevent.memberId = request.MemberId;
+                    tevent.name = request.Name;
+                    tevent.provinceId = request.ProvinceId;
+                    tevent.signfee = request.Signfee;
+                    tevent.startsigndate = request.StartSignDate;
+                    tevent.eventTypeName = request.EventTypeName;
+                    tevent.updatetime = DateTime.Now;
                     _dbContext.Update(tevent);
+                    flag = true;
                 }
                 else
                 {
@@ -294,6 +372,44 @@ namespace nsda.Services.Implement.eventmanage
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("EventService.Edit", ex);
+            }
+            return flag;
+        }
+        //修改组别信息
+        public bool EditGroup(EventGroupRequest request, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                if (request.Name.IsEmpty())
+                {
+                    msg = "赛事组别名称不能为空";
+                    return flag;
+                }
+                t_eventgroup eventgroup = _dbContext.Get<t_eventgroup>(request.Id);
+                if (eventgroup != null)
+                {
+                    eventgroup.name = request.Name;
+                    eventgroup.maxgrade = request.MaxGrade;
+                    eventgroup.mingrade = request.MinGrade;
+                    eventgroup.mintimes = request.MinTimes;
+                    eventgroup.maxtimes = request.MaxTimes;
+                    eventgroup.teamnumber = request.TeamNumber;
+                    eventgroup.updatetime = DateTime.Now;
+                    _dbContext.Update(eventgroup);
+                    flag = true;
+                }
+                else
+                {
+                    msg = "未找到赛事组别信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventService.EditGroup", ex);
             }
             return flag;
         }
@@ -310,6 +426,7 @@ namespace nsda.Services.Implement.eventmanage
                     tevent.updatetime = DateTime.Now;
                     tevent.eventLevel = eventLevel;
                     _dbContext.Update(tevent);
+                    flag = true;
                 }
                 else
                 {
@@ -325,7 +442,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         // 审核赛事
-        public bool Check(int id, bool isAppro, int sysUserId, out string msg)
+        public bool Check(int id, bool isAgree, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -335,8 +452,9 @@ namespace nsda.Services.Implement.eventmanage
                 if (tevent != null && tevent.eventStatus == EventStatusEm.待审核)
                 {
                     tevent.updatetime = DateTime.Now;
-                    tevent.eventStatus = isAppro ? EventStatusEm.报名中 : EventStatusEm.拒绝;
+                    tevent.eventStatus = isAgree ? EventStatusEm.报名中 : EventStatusEm.拒绝;
                     _dbContext.Update(tevent);
+                    flag = true;
                 }
                 else
                 {
@@ -442,7 +560,7 @@ namespace nsda.Services.Implement.eventmanage
                     DateTime dt = Convert.ToDateTime(request.StartDate);
                     join.Append($" and starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
-                var sql=$@"select * from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by createtime desc";
+                var sql = $@"select * from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerOrRefereeEventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -460,7 +578,7 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.EventType != null&&request.EventType>0)
+                if (request.EventType != null && request.EventType > 0)
                 {
                     join.Append(" and eventtype=@EventType");
                 }
@@ -470,8 +588,8 @@ namespace nsda.Services.Implement.eventmanage
                     request.KeyValue = "%" + request.KeyValue + "%";
                     join.Append(" and (code like @KeyValue or name like @KeyValue)");
                 }
-                var sql=$@"select * from t_event where isdelete=0 and memberId=@MemberId {join.ToString()} order by createtime desc ";
-                
+                var sql = $@"select * from t_event where isdelete=0 and memberId=@MemberId {join.ToString()} order by createtime desc ";
+
                 int totalCount = 0;
                 list = _dbContext.Page<EventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 if (list != null && list.Count > 0)
@@ -481,7 +599,7 @@ namespace nsda.Services.Implement.eventmanage
                         //计算报名人数或者队伍
                         if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
                         {
-                            item.SignUpCount = _dbContext.ExecuteScalar($"select distinct(groupnum) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
+                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
                         }
                     }
                 }
@@ -494,7 +612,7 @@ namespace nsda.Services.Implement.eventmanage
             return list;
         }
         //管理平台赛事列表
-        public List<EventResponse> ManageEventList(EventManageQueryRequest request)
+        public List<EventResponse> AdminEventList(EventAdminQueryRequest request)
         {
             List<EventResponse> list = new List<EventResponse>();
             try
@@ -533,14 +651,14 @@ namespace nsda.Services.Implement.eventmanage
                         //计算报名人数或者队伍
                         if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
                         {
-                            item.SignUpCount = _dbContext.ExecuteScalar($"select distinct(groupnum) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
+                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("EventService.ManageEventList", ex);
+                LogUtils.LogError("EventService.AdminEventList", ex);
             }
             return list;
         }
@@ -554,7 +672,7 @@ namespace nsda.Services.Implement.eventmanage
                             b.name CountryName,c.name ProvinceName,d.name CityName
                             from t_event a
                             inner join t_country b on a.countryId=b.id
-                            left join  t_province c on a.provinceId=b.id
+                            left join  t_province c on a.provinceId=c.id
                             left join  t_city     d on a.cityId=d.id
                             where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventnoquerystatus})";
                 list = _dbContext.Query<EventConditionResponse>(sql).ToList();
@@ -573,9 +691,10 @@ namespace nsda.Services.Implement.eventmanage
             {
                 var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) and starteventdate>={DateTime.Now.ToShortDateString()}";
                 list = _dbContext.Query<EventSelectResponse>(sql).ToList();
-                list.Insert(0,new EventSelectResponse {
-                    EventId=-1,
-                    EventName="暂时不确定"
+                list.Insert(0, new EventSelectResponse
+                {
+                    EventId = 0,
+                    EventName = "暂时不确定"
                 });
             }
             catch (Exception ex)
@@ -612,6 +731,7 @@ namespace nsda.Services.Implement.eventmanage
                     tevent.updatetime = DateTime.Now;
                     tevent.eventStatus = eventStatus;
                     _dbContext.Update(tevent);
+                    flag = true;
                 }
                 else
                 {
@@ -626,6 +746,56 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-
-     }
+        // 赛事组别列表
+        public List<EventGroupResponse> ListEventGroup(int eventId, int memberId)
+        {
+            List<EventGroupResponse> list = new List<EventGroupResponse>();
+            try
+            {
+                var sql = $"select * from t_eventgroup where isdelete=0 and eventId={eventId}";
+                list = _dbContext.Query<EventGroupResponse>(sql).ToList();
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where eventId={item.EventId} and eventGroupId={item.Id} ").ToObjInt();
+                        item.SignUpSuccessCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where eventId={item.EventId} and eventGroupId={item.Id} and signUpStatus={SignUpStatusEm.报名成功}").ToObjInt();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.ListEventGroup", ex);
+            }
+            return list;
+        }
+        //赛事组别详情
+        public EventGroupResponse EventGroupDetail(int eventGroupId)
+        {
+            EventGroupResponse response = null;
+            try
+            {
+                var detail = _dbContext.Get<t_eventgroup>(eventGroupId);
+                if (detail != null)
+                {
+                    response = new EventGroupResponse
+                    {
+                        EventId = detail.eventId,
+                        Id = detail.id,
+                        MaxGrade = detail.maxgrade,
+                        MinGrade = detail.mingrade,
+                        MaxTimes = detail.maxtimes,
+                        MinTimes = detail.mintimes,
+                        Name = detail.name,
+                        TeamNumber = detail.teamnumber
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.EventGroupDetail", ex);
+            }
+            return response;
+        }
+    }
 }

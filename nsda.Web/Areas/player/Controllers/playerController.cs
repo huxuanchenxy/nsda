@@ -2,6 +2,7 @@
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
+using nsda.Services;
 using nsda.Services.Contract.admin;
 using nsda.Services.Contract.member;
 using nsda.Services.member;

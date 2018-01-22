@@ -30,7 +30,7 @@ namespace nsda.Services.Implement.admin
         {
             try
             {
-                _dbContext.Insert<t_mail>(new t_mail
+                _dbContext.Insert(new t_mail
                 {
                     content = request.Content,
                     memberId = request.MemberId,

@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Services;
 using nsda.Services.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -26,7 +27,7 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult list(PlayerTrainerQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var data = _playerTrainerService.MemberList(request);
+            var data = _playerTrainerService.Player_TrainerList(request);
             var res = new ResultDto<PlayerTrainerResponse>
             {
                 page = request.PageIndex,
@@ -71,10 +72,10 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
         //5 审核
-        public ContentResult appro(int id, bool isAppro)
+        public ContentResult checktrainer(int id, bool isAgree)
         {
             var msg = string.Empty;
-            var flag = _playerTrainerService.IsAppro(id, isAppro, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerTrainerService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
         #endregion

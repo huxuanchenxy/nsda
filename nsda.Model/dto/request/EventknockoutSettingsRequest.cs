@@ -33,6 +33,7 @@ namespace nsda.Model.dto.request
         public int EventGroupId { get; set; }
 
         public int SettingsId { get; set; }
+        public int Screenings { get; set; }
 
         public KnockoutTypeEm KnockoutType { get; set; }
 

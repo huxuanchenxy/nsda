@@ -48,7 +48,7 @@ namespace nsda.Repository.Implement.member
         //查看账号是否存在
         public bool IsExist(string account)
         {
-            var sql = $@"select coutn(1) from t_member 
+            var sql = $@"select count(1) from t_member 
                          where isdelete=0  and account=@Account
                          and memberType in ({ParamsConfig._membertype})
                        ";

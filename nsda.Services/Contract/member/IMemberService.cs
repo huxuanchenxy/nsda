@@ -18,7 +18,7 @@ namespace nsda.Services.member
         //1.0 注册
         bool Register(MemberRequest request,out string msg);
         //登录
-        WebUserContext Login(string account, string pwd,out string msg);
+        WebUserContext Login(LoginRequest request, out string msg);
         //修改
         bool Edit(MemberRequest request, out string msg);
         //修改密码
@@ -36,7 +36,7 @@ namespace nsda.Services.member
         // 验证邮箱是否有效 并返回用户id
         int SendEmail(string email, out string msg);
         // 审核赛事管理员账号
-        bool Check(int id, string remark, bool isAppro, int sysUserId, out string msg);
+        bool Check(int id, string remark, bool isAgree, int sysUserId, out string msg);
         // 强制认证选手信息
         bool Force(int id, int sysUserId, out string msg);
         // 会员详情

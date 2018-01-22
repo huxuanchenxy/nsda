@@ -114,6 +114,7 @@
     <Compile Include="Implement\referee\RefereeSignUpService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implement\trainer\TrainerService.cs" />
+    <Compile Include="UserContext.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

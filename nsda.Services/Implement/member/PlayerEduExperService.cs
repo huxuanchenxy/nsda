@@ -43,12 +43,18 @@ namespace nsda.Services.member
                     msg = "请选择学校";
                     return flag;
                 }
+                if (request.StartDate == DateTime.MinValue || request.EndDate == DateTime.MaxValue)
+                {
+                    msg = "时间有误";
+                    return flag;
+                }
                 _dbContext.Insert(new t_playereduexper {
                       enddate=request.EndDate,
                       memberId=request.MemberId,
                       schoolId=request.SchoolId,
                       startdate=request.StartDate
                 });
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -70,6 +76,11 @@ namespace nsda.Services.member
                     msg = "请选择学校";
                     return flag;
                 }
+                if (request.StartDate == DateTime.MinValue || request.EndDate == DateTime.MaxValue)
+                {
+                    msg = "时间有误";
+                    return flag;
+                }
                 var membereduexper = _dbContext.Get<t_playereduexper>(request.Id);
                 if (membereduexper != null)
                 {
@@ -78,6 +89,7 @@ namespace nsda.Services.member
                     membereduexper.enddate = request.EndDate;
                     membereduexper.updatetime = DateTime.Now;
                     _dbContext.Update(membereduexper);
+                    flag = true;
                 }
                 else
                 {
@@ -105,6 +117,7 @@ namespace nsda.Services.member
                     membereduexper.updatetime = DateTime.Now;
                     membereduexper.isdelete = true;
                     _dbContext.Update(membereduexper);
+                    flag = true;
                 }
                 else
                 {
@@ -126,8 +139,8 @@ namespace nsda.Services.member
             try
             {
                 var sql= @"select a.*,b.chinessname as SchoolName from t_playereduexper a
-                            left join t_school b on a.schoolId=b.id
-                            where isdelete=0 and memberId=@MemberId order by a.createtime desc ";
+                            inner  join t_school b on a.schoolId=b.id
+                            where a.isdelete=0 and a.memberId=@MemberId order by a.createtime desc ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerEduExperResponse>(sql,out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

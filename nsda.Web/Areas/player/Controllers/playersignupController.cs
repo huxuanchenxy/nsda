@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Services;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Utilities;
@@ -96,11 +97,11 @@ namespace nsda.Web.Areas.player.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult confirmretire(int id,bool isAgree)
+        public ContentResult isconfirmretire(int id,bool isAgree)
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _playerSignUpService.ConfirmRetire(id, isAgree, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerSignUpService.IsConfirmRetire(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 

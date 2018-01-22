@@ -56,6 +56,7 @@ namespace nsda.Services.Implement.eventmanage
                     prizeType = request.PrizeType,
                     remark = request.Remark
                 });
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -93,6 +94,7 @@ namespace nsda.Services.Implement.eventmanage
                     eventPrize.num = request.Num;
                     eventPrize.updatetime = DateTime.Now;
                     _dbContext.Update(eventPrize);
+                    flag = true;
                 }
                 else
                 {
@@ -120,6 +122,7 @@ namespace nsda.Services.Implement.eventmanage
                     eventPrize.updatetime = DateTime.Now;
                     eventPrize.isdelete = true;
                     _dbContext.Update(eventPrize);
+                    flag = true;
                 }
                 else
                 {

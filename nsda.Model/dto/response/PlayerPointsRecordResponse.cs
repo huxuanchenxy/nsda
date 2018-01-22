@@ -14,6 +14,7 @@ namespace nsda.Model.dto.response
         public string EventName { get; set; }
         public string CityName { get; set; }
         public string ProvinceName { get; set; }
+        public string CountryName { get; set; }
         public decimal Points { get; set; }
         public int Id { get; set; }
     }

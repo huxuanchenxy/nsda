@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Services;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;

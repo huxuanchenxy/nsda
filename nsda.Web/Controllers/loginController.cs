@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.enums;
+using nsda.Services;
 using nsda.Services.admin;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.member;
@@ -33,37 +34,37 @@ namespace nsda.Web.Controllers
         //登陆
         [HttpPost]
         [AjaxOnly]
-        public JsonResult login(string account, string pwd)
+        public JsonResult login(LoginRequest request)
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            if (account.IsEmpty() || pwd.IsEmpty())
+            if (request.Account.IsEmpty() || request.Pwd.IsEmpty())
             {
                 res.flag = false;
                 res.msg = "账号或密码不能为空";
                 return Json(res, JsonRequestBehavior.DenyGet);
             }
             DataTypeEm datatype = DataTypeEm.选手;
-            var userContetxt =_memberService.Login(account, pwd, out msg);
+            var userContetxt =_memberService.Login(request, out msg);
             if (userContetxt != null)
             {
                 res.flag = true;
-                if (userContetxt.MemberType == (int)MemberTypeEm.选手)
+                if (request.MemberType == MemberTypeEm.选手)
                 {
                     res.msg = "/player/home/index";
                     datatype = DataTypeEm.选手;
                 }
-                else if (userContetxt.MemberType == (int)MemberTypeEm.教练)
+                else if (request.MemberType == MemberTypeEm.教练)
                 {
                     res.msg = "/trainer/home/index";
                     datatype = DataTypeEm.教练;
                 }
-                else if (userContetxt.MemberType == (int)MemberTypeEm.裁判)
+                else if (request.MemberType == MemberTypeEm.裁判)
                 {
                     res.msg = "/referee/home/index";
                     datatype = DataTypeEm.裁判;
                 }
-                else if (userContetxt.MemberType == (int)MemberTypeEm.赛事管理员)
+                else if (request.MemberType == MemberTypeEm.赛事管理员)
                 {
                     res.msg = "/eventmanage/home/index";
                     datatype = DataTypeEm.赛事管理员;
@@ -81,7 +82,7 @@ namespace nsda.Web.Controllers
             Task.Factory.StartNew(() => {
                 _loginLogService.Insert(new LoginLogRequest
                 {
-                    Account = account,
+                    Account = request.Account,
                     LoginResult = userContetxt != null ? "ok" : msg,
                     DataType = datatype
                 });

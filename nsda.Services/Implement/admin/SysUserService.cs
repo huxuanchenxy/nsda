@@ -61,6 +61,7 @@ namespace nsda.Services.admin
                     mobile = request.Mobile,
                     sysUserStatus = SysUserStatusEm.正常
                 });
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -289,6 +290,7 @@ namespace nsda.Services.admin
                     sysuser.pwd = "159357";
                     sysuser.updatetime = DateTime.Now;
                     _dbContext.Update(sysuser);
+                    flag = true;
                 }
                 else
                 {
@@ -344,6 +346,7 @@ namespace nsda.Services.admin
                     sysuser.sysUserStatus = isEnable ? SysUserStatusEm.正常 : SysUserStatusEm.禁用;
                     sysuser.updatetime = DateTime.Now;
                     _dbContext.Update(sysuser);
+                    flag = true;
                 }
                 else
                 {

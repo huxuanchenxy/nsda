@@ -185,7 +185,7 @@ namespace nsda.Services.Implement.admin
             try
             {
                 var sql = $@"select * from t_event_score where isdelete=0 and 
-                             groupId in (select groupId from t_player_signup where memberId=@MemberId and signUpStatus in ({ParamsConfig._signup_in})) order by createtime desc";
+                             eventGroupId in (select eventGroupId from t_player_signup where memberId=@MemberId and signUpStatus in ({ParamsConfig._signup_in})) order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<EventScoreResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

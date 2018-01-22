@@ -33,7 +33,81 @@ namespace nsda.Services.Implement.member
             _memberOperLogService = memberOperLogService;
             _mailService = mailService;
         }
-
+        //获取用户可报名的组别
+        public List<EventGroupResponse> EventGroup(int eventId, int memberId)
+        {
+            List<EventGroupResponse> list = new List<EventGroupResponse>();
+            try
+            {
+                List<t_eventgroup> listgroup = _dbContext.Select<t_eventgroup>(c => c.eventId == eventId).ToList();
+                foreach (var item in listgroup)
+                {
+                    if (IsValid(item, memberId))
+                    {
+                        list.Add(new EventGroupResponse
+                        {
+                            EventId = eventId,
+                            Id = item.id,
+                            MaxGrade = item.maxgrade,
+                            MaxTimes = item.maxtimes,
+                            MinGrade = item.mingrade,
+                            MinTimes = item.mintimes,
+                            Name = item.name,
+                            TeamNumber = item.teamnumber
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.Invitation", ex);
+            }
+            return list;
+        }
+        //邀请队友
+        public List<MemberSelectResponse> Invitation(string keyvalue, int eventId, int groupId, int memberId)
+        {
+            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
+            try
+            {
+                //需要过滤已经报名的选手
+                var sql = $@"
+                            select * from t_member where (isdelete=0 
+                            and memberType={MemberTypeEm.选手} and id!={memberId} and memberStatus={MemberStatusEm.已认证} and (code=@key or completename=@key)) or id in
+                            (
+	                            select a.memberId from t_memberextend a
+	                            inner join t_member b on a.memberId=b.id
+	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手}  and b.memberStatus={MemberStatusEm.已认证}
+                                and (b.code=@key or b.completename=@key)
+                            )) and id not in (select memberId from t_player_signup where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})) limit 30
+                         ";
+                var dy = new DynamicParameters();
+                dy.Add("key", keyvalue);
+                var data = _dbContext.Query<t_member>(sql).ToList();
+                if (data != null && data.Count > 0)
+                {
+                    t_eventgroup group = _dbContext.Get<t_eventgroup>(groupId);
+                    foreach (var item in data)
+                    {
+                        //需要判断选手是否满足条件
+                        if (IsValid(group, item.id))
+                        {
+                            list.Add(new MemberSelectResponse
+                            {
+                                Id = item.id,
+                                MemberCode = item.code,
+                                MemberName = item.completename
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.Invitation", ex);
+            }
+            return list;
+        }
         //发起组队
         public bool Insert(PlayerSignUpRequest request, out string msg)
         {
@@ -64,12 +138,14 @@ namespace nsda.Services.Implement.member
                         msg = "您已申请过此次赛事";
                         return flag;
                     }
+
                     var to = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and memberId={request.ToMemberId} and eventId={request.EventId} and signUpStatus not in ({ParamsConfig._signup_notin})").ToObjInt();
                     if (to > 0)
                     {
                         msg = "您邀请的队友已申请过此次赛事";
                         return flag;
                     }
+
                     //2.0 报名队伍数是否达到上限
                     var teamcount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={request.EventId}").ToObjInt();
                     if (tevent.maxnumber < teamcount + 1)
@@ -79,6 +155,21 @@ namespace nsda.Services.Implement.member
                     }
 
                     t_eventgroup eventGroup = _dbContext.Get<t_eventgroup>(request.EventGroupId);
+                    if (eventGroup == null)
+                    {
+                        msg = "赛事组别信息有误";
+                        return flag;
+                    }
+
+                    if (eventGroup.teamnumber > 1)
+                    {
+                        if (request.ToMemberId <= 0)
+                        {
+                            msg = "请选择您的队友";
+                            return flag;
+                        }
+                    }
+
                     //3.0 是否有资格报名
                     if (!IsValid(eventGroup, request.FromMemberId))
                     {
@@ -227,7 +318,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 t_player_signup signup = _dbContext.Get<t_player_signup>(id);
-                if (signup != null && signup.memberId == memberId)
+                if (signup != null && signup.memberId == memberId && signup.signUpStatus == SignUpStatusEm.待付款)
                 {
                     t_event tevent = _dbContext.Get<t_event>(signup.eventId);
                     var teamcount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={signup.eventId}").ToObjInt();
@@ -240,7 +331,6 @@ namespace nsda.Services.Implement.member
                     t_order order = _dbContext.Select<t_order>(c => c.orderType == OrderTypeEm.赛事报名 && c.memberId == memberId && c.sourceId == id).FirstOrDefault();
                     if (order == null)
                     {
-                        t_event t_event = _dbContext.Get<t_event>(signup.eventId);
                         try
                         {
                             _dbContext.BeginTransaction();
@@ -250,11 +340,11 @@ namespace nsda.Services.Implement.member
                                 isNeedInvoice = false,
                                 mainOrderId = null,
                                 memberId = memberId,
-                                money = t_event.signfee,
+                                money = tevent.signfee,
                                 orderStatus = OrderStatusEm.等待支付,
                                 orderType = OrderTypeEm.赛事报名,
-                                payExpiryDate = t_event.starteventdate,
-                                remark = $"{t_event.name}赛事报名",
+                                payExpiryDate = tevent.starteventdate,
+                                remark = $"{tevent.name}赛事报名",
                                 sourceId = signup.id,
                                 totalcoupon = 0,
                                 totaldiscount = 0
@@ -265,11 +355,11 @@ namespace nsda.Services.Implement.member
                                 orderId = orderid,
                                 coupon = 0,
                                 discountprice = 0,
-                                money = t_event.signfee,
+                                money = tevent.signfee,
                                 productId = 0,
-                                name = $"{t_event.name}报名费",
+                                name = $"{tevent.name}报名费",
                                 number = 1,
-                                unitprice = t_event.signfee
+                                unitprice = tevent.signfee
                             });
                             _dbContext.CommitChanges();
                             flag = true;
@@ -337,7 +427,7 @@ namespace nsda.Services.Implement.member
                                 {
                                     _dbContext.BeginTransaction();
                                     var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
-                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id&&c.memberId== otherplaysignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                     _dbContext.Insert(new t_order_operation
                                     {
                                         content = "组队失败申请退费",
@@ -371,7 +461,7 @@ namespace nsda.Services.Implement.member
                             {
                                 _dbContext.BeginTransaction();
                                 var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
-                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id&&c.memberId== playsignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                 _dbContext.Insert(new t_order_operation
                                 {
                                     content = "组队失败申请退费",
@@ -446,7 +536,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //确认退赛
-        public bool ConfirmRetire(int id, bool isAgree, int memberId, out string msg)
+        public bool IsConfirmRetire(int id, bool isConfirm, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -458,13 +548,13 @@ namespace nsda.Services.Implement.member
                     try
                     {
                         _dbContext.Rollback();
-                        if (isAgree)
+                        if (isConfirm)
                         {
                             t_event tevent = _dbContext.Get<t_event>(signup.eventId);
                             if (tevent.endrefunddate > DateTime.Now)//可以退费
                             {
                                 #region 队友退赛信息
-                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id&&c.memberId== signup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                 _dbContext.Insert(new t_order_operation
                                 {
                                     content = "组队失败申请退费",
@@ -481,7 +571,7 @@ namespace nsda.Services.Implement.member
 
                                 #region 自己退赛信息
                                 var otherplaysignup = _dbContext.Select<t_player_signup>(c => c.groupnum == signup.groupnum && c.eventId == signup.eventId && c.memberId == memberId).FirstOrDefault();
-                                t_order t_orderother = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                t_order t_orderother = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id &&c.memberId==memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                 _dbContext.Insert(new t_order_operation
                                 {
                                     content = "组队失败申请退费",
@@ -489,7 +579,7 @@ namespace nsda.Services.Implement.member
                                     operationStatus = OperationStatusEm.待处理,
                                     orderOperType = OrderOperTypeEm.取消订单,
                                     orderId = t_orderother.id,
-                                    memberId = otherplaysignup.memberId
+                                    memberId = memberId
                                 });
                                 t_orderother.orderStatus = OrderStatusEm.退款中;
                                 t_orderother.updatetime = DateTime.Now;
@@ -512,7 +602,7 @@ namespace nsda.Services.Implement.member
                         _dbContext.Rollback();
                         flag = false;
                         msg = "服务异常";
-                        LogUtils.LogError("SignUpPlayerService.ConfirmRetireTran", ex);
+                        LogUtils.LogError("SignUpPlayerService.IsConfirmRetireTran", ex);
                     }
                 }
                 else
@@ -524,7 +614,7 @@ namespace nsda.Services.Implement.member
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("SignUpPlayerService.ConfirmRetire", ex);
+                LogUtils.LogError("SignUpPlayerService.IsConfirmRetire", ex);
             }
             return flag;
         }
@@ -590,7 +680,7 @@ namespace nsda.Services.Implement.member
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
                             and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
-                            order by c.createtime desc 
+                            order by a.createtime desc 
                          ";
                 int totalCount = 0;
                 list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
@@ -611,81 +701,6 @@ namespace nsda.Services.Implement.member
             }
             return list;
         }
-        //邀请队友
-        public List<MemberSelectResponse> Invitation(string keyvalue, int eventId, int groupId, int memberId)
-        {
-            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
-            try
-            {
-                //需要过滤已经报名的选手
-                var sql = $@"
-                            select * from t_member where (isdelete=0 
-                            and memberType={MemberTypeEm.选手} and id!={memberId} and memberStatus={MemberStatusEm.已认证} and (code=@key or completename=@key)) or id in
-                            (
-	                            select a.memberId from t_memberextend a
-	                            inner join t_member b on a.memberId=b.id
-	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手}  and b.memberStatus={MemberStatusEm.已认证}
-                                and (b.code=@key or b.completename=@key)
-                            )) and id not in (select memberId from t_player_signup where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})) limit 30
-                         ";
-                var dy = new DynamicParameters();
-                dy.Add("key", keyvalue);
-                var data = _dbContext.Query<t_member>(sql).ToList();
-                if (data != null && data.Count > 0)
-                {
-                    t_eventgroup group = _dbContext.Get<t_eventgroup>(groupId);
-                    foreach (var item in data)
-                    {
-                        //需要判断选手是否满足条件
-                        if (IsValid(group, item.id))
-                        {
-                            list.Add(new MemberSelectResponse
-                            {
-                                Id = item.id,
-                                Code = item.code,
-                                Name = item.completename
-                            });
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("SignUpPlayerService.Invitation", ex);
-            }
-            return list;
-        }
-        //获取用户可报名的组别
-        public List<EventGroupResponse> EventGroup(int eventId, int memberId)
-        {
-            List<EventGroupResponse> list = new List<EventGroupResponse>();
-            try
-            {
-                List<t_eventgroup> listgroup = _dbContext.Select<t_eventgroup>(c => c.eventId == eventId).ToList();
-                foreach (var item in listgroup)
-                {
-                    if (IsValid(item, memberId))
-                    {
-                        list.Add(new EventGroupResponse
-                        {
-                            EventId = eventId,
-                            Id = item.id,
-                            MaxGrade = item.maxgrade,
-                            MaxTimes = item.maxtimes,
-                            MinGrade = item.mingrade,
-                            MinTimes = item.mintimes,
-                            Name = item.name,
-                            TeamNumber = item.teamnumber
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("SignUpPlayerService.Invitation", ex);
-            }
-            return list;
-        }
         //判断选手是否可以报名
         private bool IsValid(t_eventgroup group, int memberId)
         {
@@ -700,7 +715,7 @@ namespace nsda.Services.Implement.member
                     {
                         if (member.grade.HasValue)
                         {
-                            if ((int)member.grade < (int)group.mingrade)
+                            if ((int)member.grade < group.mingrade)
                             {
                                 return false;
                             }
@@ -715,7 +730,7 @@ namespace nsda.Services.Implement.member
                     {
                         if (member.grade.HasValue)
                         {
-                            if ((int)member.grade > (int)group.maxgrade)
+                            if ((int)member.grade > group.maxgrade)
                             {
                                 return false;
                             }
@@ -792,6 +807,7 @@ namespace nsda.Services.Implement.member
                         return flag;
                     }
 
+                    #region 教练
                     var list_referee_signup = _dbContext.Select<t_referee_signup>(c =>c.eventId==eventId&&c.refereeSignUpStatus != RefereeSignUpStatusEm.申请失败 && c.refereeSignUpStatus != RefereeSignUpStatusEm.待审核).ToList();
                     if (list_referee_signup != null && list_referee_signup.Count > 0)
                     {
@@ -820,13 +836,14 @@ namespace nsda.Services.Implement.member
                             }
                         }
                     }
+                    #endregion
 
+                    #region 选手
                     var list_playsignup = _dbContext.Select<t_player_signup>(c => c.eventId == eventId && c.signUpStatus == SignUpStatusEm.报名成功).ToList();
                     if (list_playsignup != null && list_playsignup.Count > 0)
                     {
                         foreach (var item in list_playsignup)
                         {
-
                             //生成签到表
                             _dbContext.Insert(new t_eventsign
                             {
@@ -852,10 +869,11 @@ namespace nsda.Services.Implement.member
                             }
                         }
                     }
+                    #endregion 
                 }
                 else
                 {
-
+                    msg = "赛事信息有误";
                 }
             }
             catch (Exception ex)
@@ -871,12 +889,16 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder join = new StringBuilder();
+                if (request.OperationStatus != null && request.OperationStatus > 0)
+                {
+                    join.Append(" and a.operationStatus=@OperationStatus ");
+                }
                 var sql = $@"select d.code EventCode,d.name EventName,d.eventType EventType,e.name EventGroupName,b.orderStatus OrderStatus 
                              from t_order_operation a
                              inner join t_order b on a.orderId=b.id
                              inner join t_player_signup c on b.sourceId=c.id
-                             inner join t_event d on d.id=c.eventId
-                             inner join t_eventgroup e on e.id=c.eventGroupId
+                             inner join t_event d on c.eventId=d.id
+                             inner join t_eventgroup e on c.eventGroupId=e.id
                              where a.isdelete=0 and a.memberId=@MemberId  and b.orderType={OrderTypeEm.赛事报名}
                              {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
@@ -899,7 +921,7 @@ namespace nsda.Services.Implement.member
                 var t_event = _dbContext.Get<t_event>(eventId);
                 if (t_event != null)
                 {
-                    var playersignup = _dbContext.Select<t_player_signup>(c => c.eventId == eventId && c.signUpStatus != SignUpStatusEm.已退赛 && c.signUpStatus == SignUpStatusEm.报名成功 && c.signUpStatus == SignUpStatusEm.组队失败 && c.signUpStatus == SignUpStatusEm.退赛申请中).ToList();
+                    var playersignup = _dbContext.Select<t_player_signup>(c => c.eventId == eventId && c.signUpStatus != SignUpStatusEm.已退赛 && c.signUpStatus != SignUpStatusEm.报名成功 && c.signUpStatus != SignUpStatusEm.组队失败 && c.signUpStatus != SignUpStatusEm.退赛申请中).ToList();
                     if (playersignup != null && playersignup.Count > 0)
                     {
                         try
@@ -909,8 +931,7 @@ namespace nsda.Services.Implement.member
                             {
                                 if (item.signUpStatus == SignUpStatusEm.已付款)
                                 {
-                                    //创建一条
-                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == item.id && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == item.id&&c.memberId==item.memberId&& c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                     if (t_order != null)
                                     {
                                         _dbContext.Insert(new t_order_operation
@@ -952,6 +973,32 @@ namespace nsda.Services.Implement.member
                 LogUtils.LogError("SignUpPlayerService.ApplyRefund", ex);
             }
             return flag;
+        }
+        //报名成功的学员
+        public List<MemberSelectResponse> SelectPlayer(int eventId,string keyvalue)
+        {
+            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
+            try
+            {
+                if (keyvalue.IsEmpty())
+                {
+                    return list;
+                }
+                var dy = new DynamicParameters();
+                dy.Add("KeyValue", "%" + keyvalue + "%");
+                var sql = $@"select b.id Id,b.code MemberCode,b.completename MemberName
+                             from  t_player_signup a 
+                             inner join t_member b on a.memberId=b.id
+                             where a.isdelete=0  and signUpStatus={SignUpStatusEm.报名成功}
+                             and (b.code like @KeyValue or b.completename like @KeyValue)
+                           ";
+                _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.SelectPlayer", ex);
+            }
+            return list;
         }
     }
 }

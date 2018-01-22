@@ -54,14 +54,12 @@ namespace nsda.Services.Implement.member
             return response;
         }
         //选手积分列表
-        public List<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request, out decimal totalPoints)
+        public List<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request)
         {
-            totalPoints = 0m;
             List<PlayerPointsRecordResponse> list = new List<PlayerPointsRecordResponse>();
             try
             {
                 StringBuilder sqljoin = new StringBuilder();
-                StringBuilder sqlcount = new StringBuilder("select IFNULL(sum(points),0) from t_memberpointsrecord where  memberId=@MemberId and isdelete=0 ");
                 if (request.StartDate != null)
                 {
                     sqljoin.Append(" and createtime>=@StartDate ");
@@ -71,18 +69,59 @@ namespace nsda.Services.Implement.member
                     request.EndDate = request.EndDate.Value.AddDays(1).AddSeconds(-1);
                     sqljoin.Append(" and createtime<=@EndDate ");
                 }
-                totalPoints = _dbContext.ExecuteScalar(sqlcount.Append(sqljoin).ToString(), request).ToObjDecimal();
+                var sql= $@"select b.starteventtime StartDate,b.endeventtime EndDate,b.name EventName, 
+                            a.points,c.name ProvinceName,d.name CityName,a.Id,c.name CountryName
+                            from t_memberpointsrecord a
+                            inner join t_event b on a.eventId=b.id
+                            left join  t_country c on b.countryId=c.id
+                            left join t_province d on b.provinceId=d.id
+                            left join t_city e on b.cityId = e.id
+                            where a.isdelete=0 and a.memberId=@memberId {sqljoin.ToString()}
+                            order by a.createtime desc
+                        ";
+                int totalCount = 0;
+                list = _dbContext.Page<PlayerPointsRecordResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberPointsService.PlayerPointsRecord", ex);
+            }
+            return list;
+        }
+
+        public List<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request, out decimal totalPoints)
+        {
+            totalPoints = 0m;
+            List<PlayerPointsRecordResponse> list = new List<PlayerPointsRecordResponse>();
+            try
+            {
+                StringBuilder sqljoin = new StringBuilder();
+                if (request.StartDate != null)
+                {
+                    sqljoin.Append(" and createtime>=@StartDate ");
+                }
+                if (request.EndDate != null)
+                {
+                    request.EndDate = request.EndDate.Value.AddDays(1).AddSeconds(-1);
+                    sqljoin.Append(" and createtime<=@EndDate ");
+                }
+                var sqlTotalPoints = $@"select IFNULL(sum(points),0) from t_memberpointsrecord where  memberId=@MemberId and isdelete=0 {sqljoin.ToString()}";
+                totalPoints = _dbContext.ExecuteScalar(sqlTotalPoints, request).ToObjDecimal();
                 if (totalPoints > 0)//有积分再查询列表
                 {
-                    StringBuilder sqlquery = new StringBuilder($@"select b.starteventtime StartDate,b.endeventtime EndDate,b.name EventName 
-                                                                ,a.points,c.name ProvinceName,d.name CityName,a.Id
-                                                                from t_memberpointsrecord a
-                                                                inner join t_event b on a.eventId=b.id
-                                                                left join t_province c on b.provinceId=c.id
-                                                                left join t_city d on b.cityId = d.id
-                                                                where a.isdelete=0 and a.memberId=@memberId ");
+                    var sql=$@"select b.starteventtime StartDate,b.endeventtime EndDate,b.name EventName, 
+                            a.points,c.name ProvinceName,d.name CityName,a.Id,c.name CountryName
+                            from t_memberpointsrecord a
+                            inner join t_event b on a.eventId=b.id
+                            left join  t_country c on b.countryId=c.id
+                            left join t_province d on b.provinceId=d.id
+                            left join t_city e on b.cityId = e.id
+                            where a.isdelete=0 and a.memberId=@memberId {sqljoin.ToString()}
+                            order by a.createtime desc
+                            ";
                     int totalCount = 0;
-                    list = _dbContext.Page<PlayerPointsRecordResponse>(sqlquery.Append(sqljoin).Append(" order by a.createtime desc").ToString(), out totalCount, request.PageIndex, request.PageSize, request);
+                    list = _dbContext.Page<PlayerPointsRecordResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                     request.Records = totalCount;
                 }
             }
@@ -98,8 +137,9 @@ namespace nsda.Services.Implement.member
             List<PlayerPointsRecordDetailResponse> list = new List<PlayerPointsRecordDetailResponse>();
             try
             {
-                var sql = $@"select a.points,a.objEventType,c.name EventName,d.name GroupName,a.remark,a.createtime from t_memberpointsrecordetail a
-                            left join  t_memberpointsrecord b on a.recordId=b.id
+                var sql = $@"select a.points,a.objEventType,c.name EventName,d.name GroupName,a.remark,a.createtime 
+                            from t_memberpointsrecordetail a
+                            inner join t_memberpointsrecord b on a.recordId=b.id
                             inner join t_event c on c.id=b.eventId
                             inner join t_eventgroup d on b.groupId=d.id
                             where b.isdelete=0 and a.isdelete=0 and a.memberId={memberId} and a.recordId={recordId}";

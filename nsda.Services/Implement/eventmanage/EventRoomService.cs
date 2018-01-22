@@ -31,26 +31,26 @@ namespace nsda.Services.Implement.eventmanage
         }
 
         //新增n间教室
-        public bool Insert(int eventId,int num,out string msg)
+        public bool Insert(EventRoomRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                if (num <= 0)
+                if (request.Num <= 0)
                 {
                     msg = "教室数量有误";
                     return flag;
                 }
 
-                if (eventId <= 0)
+                if (request.EventId <= 0)
                 {
                     msg = "需要赛事信息";
                     return flag;
                 }
 
                 //教练赛事
-                t_event t_event = _dbContext.Get<t_event>(eventId);
+                t_event t_event = _dbContext.Get<t_event>(request.EventId);
                 if (t_event == null)
                 {
                     msg = "赛事信息有误";
@@ -59,14 +59,14 @@ namespace nsda.Services.Implement.eventmanage
                 try
                 {
                     _dbContext.BeginTransaction();
-                    for (int i = 0; i < num; i++)
+                    for (int i = 0; i < request.Num; i++)
                     {
                         _dbContext.Insert(new t_eventroom
                         {
-                            eventgroupId = 0,
-                            code = _dataRepository.EventRoomRepo.RenderCode(eventId),
-                            eventId = eventId,
-                            roomStatus = Model.enums.RoomStatusEm.闲置
+                            eventgroupId = request.EventGroupId,
+                            code = _dataRepository.EventRoomRepo.RenderCode(request.EventId),
+                            eventId = request.EventId,
+                            roomStatus = RoomStatusEm.闲置
                         });
                     }
                     _dbContext.CommitChanges();
@@ -89,18 +89,19 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //修改教室名称
-        public bool Edit(int id, string name, out string msg)
+        public bool Edit(EventRoomRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                t_eventroom room = _dbContext.Get<t_eventroom>(id);
+                t_eventroom room = _dbContext.Get<t_eventroom>(request.Id);
                 if (room != null)
                 {
-                    room.name = name;
+                    room.name = request.Name;
                     room.updatetime = DateTime.Now;
                     _dbContext.Update(room);
+                    flag = true;
                 }
                 else
                 {
@@ -128,19 +129,17 @@ namespace nsda.Services.Implement.eventmanage
                     if (statusOrGroup == 0)//停用
                     {
                         room.roomStatus = RoomStatusEm.停用;
-                        room.eventgroupId = 0;
                     }
-                    else if (statusOrGroup == 1)//随机
+                    else if (statusOrGroup == 1)//启用
                     {
-                        room.roomStatus = RoomStatusEm.使用中;
-                        room.eventgroupId = 0;
+                        room.roomStatus = RoomStatusEm.闲置;
                     }
                     else {//组别
                         room.eventgroupId = statusOrGroup;
-                        room.roomStatus = RoomStatusEm.使用中;
                     }
                     room.updatetime = DateTime.Now;
                     _dbContext.Update(room);
+                    flag = true;
                 }
                 else
                 {
@@ -168,6 +167,7 @@ namespace nsda.Services.Implement.eventmanage
                     room.memberId = 0;
                     room.updatetime = DateTime.Now;
                     _dbContext.Update(room);
+                    flag = true;
                 }
                 else {
                     msg = "未找到教室信息";
@@ -197,6 +197,12 @@ namespace nsda.Services.Implement.eventmanage
                         return flag;
                     }
                     //判断此选手是否是这场比赛的
+                    var validate = _dbContext.Select<t_player_signup>(c => c.eventId == room.eventId && c.signUpStatus == SignUpStatusEm.报名成功 && c.memberId == memberId).ToList();
+                    if (validate == null || validate.Count == 0)
+                    {
+                        msg = "重新选择选手";
+                        return flag;
+                    }
                     //在判断此用户是否已经在其他教室
                     var vali = _dbContext.Select<t_eventroom>(c => c.memberId == memberId&&c.eventId==room.eventId).ToList();
                     if (vali != null && vali.Count > 0)
@@ -230,16 +236,11 @@ namespace nsda.Services.Implement.eventmanage
             List<EventRoomResponse> list = new List<EventRoomResponse>();
             try
             {
-                StringBuilder join = new StringBuilder();
-                if (request.KeyValue.IsNotEmpty())
-                {
-                    request.KeyValue = "%" + request.KeyValue + "%";
-                    join.Append(" and (a.code like @KeyValue or a.name like @KeyValue)");
-                }
-                var sql=$@"select a.*,b.name MemberName,c.name EventGroupName from t_eventroom a
+                var sql=$@"select a.*,b.completename MemberName,c.name EventGroupName 
+                            from t_eventroom a
                             left join t_member b on a.memberId=b.id
                             left join t_eventgroup c on a.eventgroupId=c.id
-                            where eventId=@EventId and isdelete=0 {join.ToString()} order by a.createtime desc ";
+                            where a.eventId=@EventId and a.isdelete=0  order by a.createtime desc ";
                 int totalCount = 0;
                 list = _dbContext.Page<EventRoomResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

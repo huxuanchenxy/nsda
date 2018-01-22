@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using nsda.Model;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
@@ -103,7 +104,6 @@ namespace nsda.Services.member
                         points = 0,
                         servicePoints = 0,
                     });
-
                     //如果是选手  填了教育经验
                     if (request.MemberType == MemberTypeEm.选手)
                     {
@@ -116,7 +116,7 @@ namespace nsda.Services.member
                         });
                     }
 
-                    if (request.MemberType == MemberTypeEm.裁判)
+                    if (request.MemberType == MemberTypeEm.赛事管理员)
                     {
                         if (request.EventId != null && request.EventId > 0)
                         {
@@ -160,7 +160,7 @@ namespace nsda.Services.member
             return flag;
         }
         //登录
-        public WebUserContext Login(string account, string pwd, out string msg)
+        public WebUserContext Login(LoginRequest request, out string msg)
         {
             WebUserContext userContext = null;
             msg = string.Empty;
@@ -169,8 +169,8 @@ namespace nsda.Services.member
                 var detail = _dbContext.QueryFirstOrDefault<t_member>(@"select * from t_member where account=@account and pwd=@pwd and IsDelete=0",
                                                                         new
                                                                         {
-                                                                            account = account,
-                                                                            pwd = pwd
+                                                                            account = request.Account,
+                                                                            pwd = request.Pwd
                                                                         });
                 if (detail == null)
                 {
@@ -227,6 +227,7 @@ namespace nsda.Services.member
                     }
                     member.updatetime = DateTime.Now;
                     _dbContext.Update(member);
+                    flag = true;
                 }
                 else
                 {
@@ -241,7 +242,6 @@ namespace nsda.Services.member
             }
             return flag;
         }
-
         private t_member InsertValidate(MemberRequest request, out string msg)
         {
             msg = string.Empty;
@@ -311,7 +311,6 @@ namespace nsda.Services.member
             }
             return member;
         }
-
         private t_member EditValidate(t_member member, MemberRequest request, out string msg)
         {
             member.card = request.Card;
@@ -373,7 +372,6 @@ namespace nsda.Services.member
             }
             return member;
         }
-
         //修改密码
         public bool EditPwd(int memberId, string oldPwd, string newPwd, out string msg)
         {
@@ -408,7 +406,7 @@ namespace nsda.Services.member
                 var member = _dbContext.Get<t_member>(memberId);
                 if (member != null)
                 {
-                    if (!string.Equals(oldPwd, member.pwd, StringComparison.OrdinalIgnoreCase))
+                    if (!string.Equals(oldPwd, member.pwd))
                     {
                         msg = "原密码有误";
                     }
@@ -443,32 +441,7 @@ namespace nsda.Services.member
                 {
                     member.updatetime = DateTime.Now;
                     member.memberStatus = MemberStatusEm.已认证;
-
-                    string data = SessionCookieUtility.GetSession($"webusersession_{id}");
-                    if (data.IsNotEmpty())
-                    {
-                        //读取已经认证的
-                        string role = ((int)member.memberType).ToString();
-                        var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == member.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
-                        if (memberextend != null && memberextend.Count > 0)
-                        {
-                            foreach (var item in memberextend)
-                            {
-                                role += $",{((int)item.role).ToString()}";
-                            }
-                        }
-                        //记录缓存
-                        var userContext = new WebUserContext
-                        {
-                            Id = member.id,
-                            Name = member.name,
-                            Account = member.account,
-                            Role = role,
-                            MemberType = (int)member.memberType,
-                            Status = (int)member.memberStatus
-                        };
-                        SessionCookieUtility.WriteSession($"webusersession_{id}", MemberEncoderAndDecoder.encrypt(userContext.Serialize()));
-                    }
+                    _dbContext.Update(member);
                 }
             }
             catch (Exception ex)
@@ -510,7 +483,7 @@ namespace nsda.Services.member
                     join.Append(" and memberType=@MemberType");
                 }
                 var sql=$@"select * from t_member where isdelete=0 
-                           and memberType!={(int)MemberTypeEm.临时裁判} and memberType!={(int)MemberTypeEm.临时选手} 
+                           and memberType not in ({ParamsConfig._tempmembertype}) 
                            {join.ToString()} order by createtime desc
                          ";               
                 int totalCount = 0;
@@ -536,7 +509,6 @@ namespace nsda.Services.member
                     member.isdelete = true;
                     member.updatetime = DateTime.Now;
                     _dbContext.Update(member);
-                    DeleteCurrentUser(id);//清除用户缓存
                     flag = true;
                 }
                 else
@@ -565,6 +537,7 @@ namespace nsda.Services.member
                     member.pwd = "159357";
                     member.updatetime = DateTime.Now;
                     _dbContext.Update(member);
+                    flag = true;
                 }
                 else
                 {
@@ -597,6 +570,7 @@ namespace nsda.Services.member
                     member.pwd = pwd;
                     member.updatetime = DateTime.Now;
                     _dbContext.Update(member);
+                    flag = true;
                 }
                 else
                 {
@@ -675,8 +649,7 @@ namespace nsda.Services.member
                         MemberType = detail.memberType,
                         PinYinName = detail.pinyinname,
                         PinYinSurName = detail.pinyinsurname,
-                        SurName = detail.surname,
-                        UpdateTime = detail.updatetime
+                        SurName = detail.surname
                     };
                 }
             }
@@ -686,9 +659,8 @@ namespace nsda.Services.member
             }
             return response;
         }
-
         //审核赛事管理员账号
-        public bool Check(int id, string remark, bool isAppro, int sysUserId, out string msg)
+        public bool Check(int id, string remark, bool isAgree, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -698,9 +670,8 @@ namespace nsda.Services.member
                 if (detail != null && detail.memberType == MemberTypeEm.赛事管理员)
                 {
                     detail.updatetime = DateTime.Now;
-                    detail.memberStatus = isAppro ? MemberStatusEm.通过 : MemberStatusEm.拒绝;
+                    detail.memberStatus = isAgree ? MemberStatusEm.通过 : MemberStatusEm.拒绝;
                     _dbContext.Update(detail);
-                    DeleteCurrentUser(id);//清除用户缓存 使其重新登录
                     flag = true;
                 }
                 else
@@ -727,7 +698,6 @@ namespace nsda.Services.member
                     detail.updatetime = DateTime.Now;
                     detail.memberStatus = MemberStatusEm.已认证;
                     _dbContext.Update(detail);
-                    DeleteCurrentUser(id);//清除用户缓存 使其重新登录
                     flag = true;
                 }
                 else
@@ -748,23 +718,14 @@ namespace nsda.Services.member
         {
             try
             {
-                DateTime expireTime = DateTime.Now.AddHours(12);
-                SessionCookieUtility.WriteCookie(Constant.WebCookieKey, MemberEncoderAndDecoder.encrypt($"webusersession_{context.Id}"), expireTime);
+                DateTime expireTime = DateTime.Now.AddHours(24);
+                SessionCookieUtility.WriteCookie(Constant.WebCookieKey, MemberEncoderAndDecoder.encrypt($"{context.Id}"), expireTime);
                 string data = MemberEncoderAndDecoder.encrypt(context.Serialize());
                 SessionCookieUtility.WriteSession($"webusersession_{context.Id}", data);
             }
             catch (Exception ex)
             {
                 LogUtils.LogError("MemberService.SaveCurrentUser", ex);
-            }
-        }
-
-        private void DeleteCurrentUser(int id)
-        {
-            string data = SessionCookieUtility.GetSession($"webusersession_{id}");
-            if (data.IsNotEmpty())
-            {
-                SessionCookieUtility.RemoveSession($"webusersession_{id}");
             }
         }
         // 选手下拉框
@@ -779,7 +740,7 @@ namespace nsda.Services.member
                 }
                 //查询注册号 为选手号 或者扩展有选手的会员
                 var sql = $@"
-                            select Id,Code,completename as Name from t_member where (isdelete=0 
+                            select Id,code MemberCode,completename MemberName from t_member where (isdelete=0 
                             and memberType={MemberTypeEm.选手} and id!={memberId} and (code like @key or completename like @key)) or id in
                             (
 	                            select a.memberId from t_memberextend a
@@ -810,12 +771,12 @@ namespace nsda.Services.member
                 }
                 //查询注册号 为教练号 或者扩展有教练的会员
                 var sql = $@"
-                            select Id,Code,completename as Name from t_member where (isdelete=0 
+                            select Id,code MemberCode,completename MemberName from t_member where (isdelete=0 
                             and memberType={MemberTypeEm.教练} and id!={memberId} and (code like @key or completename like @key)) or id in
                             (
 	                            select a.memberId from t_memberextend a
 	                            inner join t_member b on a.memberId=b.id
-	                            where and a.memberId!={memberId} a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.教练} 
+	                            where  a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.教练} 
                                 and (b.code like @key or b.completename like @key)
                             ) limit 30
                          ";
@@ -844,7 +805,7 @@ namespace nsda.Services.member
                     {
                         if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
                         {
-
+                            //获取支付连接
                         }
                         else
                         {

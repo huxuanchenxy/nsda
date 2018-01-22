@@ -145,7 +145,6 @@
     <Compile Include="SessionCookieUtility.cs" />
     <Compile Include="SysUserContext.cs" />
     <Compile Include="UploadFileRequest.cs" />
-    <Compile Include="UserContext.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="VerifyCode.cs" />
     <Compile Include="WebUserContext.cs" />

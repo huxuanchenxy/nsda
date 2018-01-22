@@ -17,6 +17,6 @@ namespace nsda.Services.Contract.eventmanage
         //新增循环赛设置
         bool Settints(List<EventknockoutSettingsRequest> request, out string msg);
         //循环赛详情
-        List<EventknockoutSettingsResponse> ListKnockoutSettings(int eventId);
+        List<EventknockoutSettingsResponse> KnockoutSettings(int eventId);
     }
 }

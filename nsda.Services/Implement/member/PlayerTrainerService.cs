@@ -69,6 +69,7 @@ namespace nsda.Services.member
                     playerTrainerStatus = PlayerTrainerStatusEm.待确认,
                 };
                 _dbContext.Insert(playerTrainer);
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -111,6 +112,7 @@ namespace nsda.Services.member
                     playerTrainer.playerTrainerStatus =  PlayerTrainerStatusEm.待确认;
                     playerTrainer.updatetime = DateTime.Now;
                     _dbContext.Update(playerTrainer);
+                    flag = true;
                 }
                 else
                 {
@@ -138,6 +140,7 @@ namespace nsda.Services.member
                     playerTrainer.isdelete = true;
                     playerTrainer.updatetime = DateTime.Now;
                     _dbContext.Update(playerTrainer);
+                    flag = true;
                 }
                 else {
                     msg = "数据不存在";
@@ -152,7 +155,7 @@ namespace nsda.Services.member
             return flag;
         }
         //是否同意 教练或者学生的申请
-        public bool IsAppro(int id,bool isAppro, int memberId, out string msg)
+        public bool Check(int id,bool isAgree, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -161,9 +164,10 @@ namespace nsda.Services.member
                 var playerTrainer = _dbContext.Get<t_player_trainer>(id);
                 if (playerTrainer != null&& playerTrainer.toMemberId==memberId)
                 {
-                    playerTrainer.playerTrainerStatus = isAppro ? PlayerTrainerStatusEm.已确认 : PlayerTrainerStatusEm.拒绝;
+                    playerTrainer.playerTrainerStatus = isAgree ? PlayerTrainerStatusEm.已确认 : PlayerTrainerStatusEm.拒绝;
                     playerTrainer.updatetime = DateTime.Now;
                     _dbContext.Update(playerTrainer);
+                    flag = true;
                 }
                 else
                 {
@@ -174,12 +178,12 @@ namespace nsda.Services.member
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("PlayerTrainerService.IsAppro", ex);
+                LogUtils.LogError("PlayerTrainerService.Check", ex);
             }
             return flag;
         }
         //教练下的学生列表
-        public List<TrainerPlayerResponse> TrainerList(PlayerTrainerQueryRequest request)
+        public List<TrainerPlayerResponse> Trainer_PlayerList(PlayerTrainerQueryRequest request)
         {
             List<TrainerPlayerResponse> list = new List<TrainerPlayerResponse>();
             try
@@ -208,18 +212,19 @@ namespace nsda.Services.member
                             //参与比赛次数
                             item.Times = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                             //指教期间获胜次数
+                            item.WinTimes = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("PlayerTrainerService.TrainerList", ex);
+                LogUtils.LogError("PlayerTrainerService.Trainer_PlayerList", ex);
             }
             return list;
         }
         //学生下的教练列表
-        public List<PlayerTrainerResponse> MemberList(PlayerTrainerQueryRequest request)
+        public List<PlayerTrainerResponse> Player_TrainerList(PlayerTrainerQueryRequest request)
         {
             List< PlayerTrainerResponse > list = new List<PlayerTrainerResponse>();
             try
@@ -244,7 +249,7 @@ namespace nsda.Services.member
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("PlayerTrainerService.TrainerList", ex);
+                LogUtils.LogError("PlayerTrainerService.Player_TrainerList", ex);
             }
             return list;
         }

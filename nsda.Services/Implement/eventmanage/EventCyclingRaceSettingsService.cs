@@ -35,6 +35,12 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                var model = request.FirstOrDefault();
+                if (model.EventId <= 0)
+                {
+                    msg = "赛事信息有误";
+                    return flag;
+                }
                 if (request == null || request.Count == 0)
                 {
                     msg = "请核对参数后再保存";
@@ -43,15 +49,75 @@ namespace nsda.Services.Implement.eventmanage
                 //循环遍历判断参数合法性
                 foreach (var item in request)
                 {
+                    if (item.EndRange < item.StartRange)
+                    {
+                        msg = "打分区间有误";
+                        break;
+                    }
 
+                    if (item.TotalRound <= 0)
+                    {
+                        msg = "循环赛总轮次有误";
+                        break;
+                    }
+
+                    if (item.TotalRound != item.ListCyclingRace.Count)
+                    {
+                        msg = "循环赛轮次有误";
+                        break;
+                    }
+
+                    string message = string.Empty;
+                    foreach (var items in item.ListCyclingRace)
+                    {
+                        if (item.Screenings != items.ListCyclingRaceDetail.Count)
+                        {
+                            message = "Flight信息有误";
+                            break;
+                        }
+                        string messages = string.Empty;
+                        foreach (var itemss in items.ListCyclingRaceDetail)
+                        {
+                            if (itemss.StartTime == DateTime.MaxValue || itemss.StartTime == DateTime.MinValue)
+                            {
+                                messages = "Flight开始时间有误";
+                                break;
+                            }
+                            if (itemss.EndTime == DateTime.MaxValue || itemss.EndTime == DateTime.MinValue)
+                            {
+                                messages = "Flight结束时间有误";
+                                break;
+                            }
+                            if (itemss.EndTime<=itemss.StartTime)
+                            {
+                                messages = "Flight结束时间必须大于开始时间";
+                                break;
+                            }
+                        }
+                        if (messages.IsNotEmpty())
+                        {
+                            message = messages;
+                            break;
+                        }
+                    }
+
+                    if (message.IsNotEmpty())
+                    {
+                        msg = message;
+                        break;
+                    }
                 }
-                var eventId = request.FirstOrDefault().EventId;
+
+                if (msg.IsNotEmpty())
+                {
+                    return flag;
+                }
                 try
                 {
                     _dbContext.BeginTransaction();
-                    _dbContext.Execute($"delete from t_eventcyclingracesettings where eventId={eventId}");
-                    _dbContext.Execute($"delete from t_eventcyclingrace where eventId={eventId}");
-                    _dbContext.Execute($"delete from t_eventcyclingracedetail where eventId={eventId}");
+                    _dbContext.Execute($"delete from t_eventcyclingracesettings where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_eventcyclingrace where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_eventcyclingracedetail where eventId={model.EventId}");
 
                     foreach (var item in request)
                     {
@@ -115,7 +181,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //循环赛详情
-        public List<EventCyclingRaceSettingsResponse> ListCyclingRaceSettings(int eventId)
+        public List<EventCyclingRaceSettingsResponse> CyclingRaceSettings(int eventId)
         {
             List<EventCyclingRaceSettingsResponse> list = new List<EventCyclingRaceSettingsResponse>();
             try
@@ -170,7 +236,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("EventCyclingRaceSettingsService.ListCyclingRaceSettings", ex);
+                LogUtils.LogError("EventCyclingRaceSettingsService.CyclingRaceSettings", ex);
             }
             return list;
         }

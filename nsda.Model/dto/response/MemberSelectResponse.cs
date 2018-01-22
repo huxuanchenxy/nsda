@@ -9,7 +9,7 @@ namespace nsda.Model.dto.response
     public class MemberSelectResponse
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
+        public string MemberName { get; set; }
+        public string MemberCode { get; set; }
     }
 }

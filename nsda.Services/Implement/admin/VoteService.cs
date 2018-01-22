@@ -225,12 +225,12 @@ namespace nsda.Services.Implement.admin
                             var detail = request.VoteDetail.FirstOrDefault(c => c.Id == item.id);
                             if (detail == null)
                             {
-                                _dbContext.Delete<t_votedetail>(item);
+                                _dbContext.Delete(item);
                             }
                             else
                             {
                                 item.title = detail.Title;
-                                _dbContext.Update<t_votedetail>(item);
+                                _dbContext.Update(item);
                             }
                         }
                     }

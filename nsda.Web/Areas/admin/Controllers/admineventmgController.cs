@@ -2,6 +2,7 @@
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
+using nsda.Services;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Utilities;
@@ -43,19 +44,19 @@ namespace nsda.Web.Areas.admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult check(int id,bool isAppro)
+        public ContentResult check(int id,bool isAgree)
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventService.Check(id, isAppro, UserContext.SysUserContext.Id, out msg);
+            var flag = _eventService.Check(id, isAgree, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
         //赛事列表
         [HttpGet]
-        public ContentResult listevent(EventManageQueryRequest request)
+        public ContentResult listevent(EventAdminQueryRequest request)
         {
-            var data = _eventService.ManageEventList(request);
+            var data = _eventService.AdminEventList(request);
             var res = new ResultDto<EventResponse>
             {
                 page = request.PageIndex,
@@ -83,12 +84,12 @@ namespace nsda.Web.Areas.admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult editcyclingracerule(CyclingRaceRuleRequest request)
+        public ContentResult cyclingracerule(CyclingRaceRuleRequest request)
         {
             request.SysUserId=UserContext.SysUserContext.Id;
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventRuleService.EditCyclingRaceRule(request, out msg);
+            var flag = _eventRuleService.CyclingRaceRule(request, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -96,12 +97,12 @@ namespace nsda.Web.Areas.admin.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult editknockoutrule(KnockoutRuleRequest request)
+        public ContentResult knockoutrule(KnockoutRuleRequest request)
         {
             request.SysUserId = UserContext.SysUserContext.Id;
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _eventRuleService.EditKnockoutRule(request, out msg);
+            var flag = _eventRuleService.KnockoutRule(request, out msg);
             return Result<string>(flag, msg);
         }
 

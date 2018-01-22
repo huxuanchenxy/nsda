@@ -57,8 +57,8 @@ namespace nsda.Services.Implement.member
                         role = request.RoleType,
                         remark = string.Empty
                     });
-                    flag = true;
                 }
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //2.0 管理员审核处理
-        public bool Process(int id, string remark, bool isAppro, int sysUserId, out string msg)
+        public bool Check(int id, string remark, bool isAgree, int sysUserId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -77,10 +77,10 @@ namespace nsda.Services.Implement.member
                 if (detail != null)
                 {
                     detail.remark = remark;
-                    detail.memberExtendStatus = isAppro ? MemberExtendStatusEm.申请通过 : MemberExtendStatusEm.待审核;
+                    detail.memberExtendStatus = isAgree ? MemberExtendStatusEm.申请通过 : MemberExtendStatusEm.拒绝;
                     detail.updatetime = DateTime.Now;
                     _dbContext.Update(detail);
-                    if (detail.role == RoleEm.选手&&isAppro)
+                    if (detail.role == RoleEm.选手&& isAgree)
                     {
                        _dbContext.Execute($"update t_member set memberStatus={MemberStatusEm.待认证} where id={detail.memberId}");
                     }
@@ -93,7 +93,7 @@ namespace nsda.Services.Implement.member
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("MemberExtendService.Process", ex);
+                LogUtils.LogError("MemberExtendService.Check", ex);
             }
             return flag;
         }
@@ -112,7 +112,7 @@ namespace nsda.Services.Implement.member
                 {
                     join.Append(" and a.memberExtendStatus = @Status");
                 }
-                var sql=$@" select a.*,b.completename OperUserName from t_memberextend a 
+                var sql=$@" select a.*,b.completename MemberName from t_memberextend a 
                             inner join  t_member b on a.memberId=b.id
                             where isdelete=0 {join.ToString()} order by a.createtime desc";
 

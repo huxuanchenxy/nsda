@@ -46,11 +46,9 @@ namespace nsda.Services.Implement.referee
                     msg = "请选择赛事";
                     return flag;
                 }
-
                 t_event t_event = _dbContext.Get<t_event>(eventId);
-                if (t_event != null)
+                if (t_event != null &&t_event.eventStatus!=EventStatusEm.待审核&&t_event.eventStatus!=EventStatusEm.拒绝&& t_event.endsigndate>DateTime.Now)
                 {
-                    //进一步判断赛事状态
                     var data = _dbContext.Select<t_referee_signup>(c => c.eventId == eventId && c.memberId == memberId&&c.refereeSignUpStatus!=RefereeSignUpStatusEm.申请失败).ToList();
                     if (data != null && data.Count > 0)
                     {
@@ -61,6 +59,7 @@ namespace nsda.Services.Implement.referee
                          eventId=eventId,
                          isTemp=false,
                          memberId=memberId,
+                         eventGroupId=0,
                          refereeSignUpStatus=RefereeSignUpStatusEm.待审核
                     });
                     flag = true;
@@ -72,6 +71,8 @@ namespace nsda.Services.Implement.referee
             }
             catch (Exception ex)
             {
+                flag = false;
+                msg = "服务异常";
                 LogUtils.LogError("RefereeSignUpService.Apply", ex);
             }
             return flag;
@@ -126,7 +127,7 @@ namespace nsda.Services.Implement.referee
         }
 
         //裁判审核
-        public bool Check(int id,bool isAppro,int memberId, out string msg)
+        public bool Check(int id,bool isAgree,int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -135,31 +136,9 @@ namespace nsda.Services.Implement.referee
                 t_referee_signup referee_signup = _dbContext.Get<t_referee_signup>(id);
                 if (referee_signup != null)
                 {
-                    t_event t_event = _dbContext.Get<t_event>(referee_signup.eventId);
                     referee_signup.updatetime = DateTime.Now;
-                    referee_signup.refereeSignUpStatus = isAppro ? RefereeSignUpStatusEm.申请成功 : RefereeSignUpStatusEm.申请失败;
+                    referee_signup.refereeSignUpStatus = isAgree ? RefereeSignUpStatusEm.申请成功 : RefereeSignUpStatusEm.申请失败;
                     _dbContext.Update(referee_signup);
-                    if (isAppro)
-                    {
-                        _dbContext.Insert(new t_eventsign {
-                            eventId = referee_signup.eventId,
-                            eventSignStatus = EventSignStatusEm.待签到,
-                            eventSignType = EventSignTypeEm.裁判,
-                            memberId = referee_signup.memberId,
-                            signdate = t_event.starteventdate
-                        });
-                        if (t_event.starteventdate != t_event.endeventdate)
-                        {
-                            _dbContext.Insert(new t_eventsign
-                            {
-                                eventId = referee_signup.eventId,
-                                eventSignStatus = EventSignStatusEm.待签到,
-                                eventSignType = EventSignTypeEm.裁判,
-                                memberId = referee_signup.memberId,
-                                signdate = t_event.endeventdate
-                            });
-                        }
-                    }
                     flag = true;
                 }
                 else
@@ -169,6 +148,8 @@ namespace nsda.Services.Implement.referee
             }
             catch (Exception ex)
             {
+                flag = false;
+                msg = "服务异常";
                 LogUtils.LogError("RefereeSignUpService.Check", ex);
             }
             return flag;
@@ -190,16 +171,19 @@ namespace nsda.Services.Implement.referee
                     }
                     else if (statusOrGroup == 1)
                     {
-                        referee_signup.groupId = 0;
                         referee_signup.refereeSignUpStatus = RefereeSignUpStatusEm.启用;
                     }
-                    else
+                    else if (statusOrGroup == 2)//随机
                     {
-                        referee_signup.groupId = statusOrGroup;
-                        referee_signup.refereeSignUpStatus = RefereeSignUpStatusEm.启用;
+                        referee_signup.eventGroupId = 0;
+                    }
+                    else//设定组别
+                    {
+                        referee_signup.eventGroupId = statusOrGroup;
                     }
                     referee_signup.updatetime = DateTime.Now;
                     _dbContext.Update(referee_signup);
+                    flag = true;
                 }
                 else
                 {
@@ -244,7 +228,7 @@ namespace nsda.Services.Implement.referee
                                                       inner join t_event b on a.eventId=b.id
                                                       left  join t_country c on b.countryId=c.id
                                                       left  join t_province d on b.provinceId=d.id
-                                                      left  join t_city e on e.id=b.cityId
+                                                      left  join t_city e on b.cityId=e.id
                                                       where a.isdelete=0 and b.isdelete=0 
                                                       and a.memberId=@MemberId {join.ToString()}  order by a.createtime desc
                                                      ";

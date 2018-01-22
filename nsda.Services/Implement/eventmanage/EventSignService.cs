@@ -72,6 +72,7 @@ namespace nsda.Services.Implement.eventmanage
                 dy.Add("EventSignStatus",isNormal? EventSignStatusEm.已签到:EventSignStatusEm.未到);
                 dy.Add("SignTime", DateTime.Now);
                 _dbContext.Execute(sql, dy);
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -93,7 +94,8 @@ namespace nsda.Services.Implement.eventmanage
                     request.KeyValue = "%" + request.KeyValue + "%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
-                var sql=$@" select d.groupnum GroupNum,a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss from t_eventsign a 
+                var sql=$@" select d.groupnum GroupNum,a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss
+                            from t_eventsign a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             inner join t_player_signup d on d.eventId=a.eventId and d.eventGroupId=a.eventGroupId and a.memberId=d.memberId
@@ -140,7 +142,8 @@ namespace nsda.Services.Implement.eventmanage
                     request.KeyValue = "%" + request.KeyValue + "%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
-                var sql=$@" select a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss from t_eventsign a 
+                var sql=$@" select a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss
+                            from t_eventsign a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0

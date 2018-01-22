@@ -18,10 +18,10 @@ namespace nsda.Services.member
         bool Insert(PlayerTrainerRequest request,out string msg);
         bool Edit(PlayerTrainerRequest request,out string msg);
         bool Delete(int id, int memberId,out string msg);
-        bool IsAppro(int id, bool isAppro, int memberId, out string msg);
+        bool Check(int id, bool isAgree, int memberId, out string msg);
         //3.0 教练查询 学生列表
-        List<TrainerPlayerResponse> TrainerList(PlayerTrainerQueryRequest request);
+        List<TrainerPlayerResponse> Trainer_PlayerList(PlayerTrainerQueryRequest request);
         //4.0 会员查询 教练列表
-        List<PlayerTrainerResponse> MemberList(PlayerTrainerQueryRequest request);
+        List<PlayerTrainerResponse> Player_TrainerList(PlayerTrainerQueryRequest request);
     }
 }

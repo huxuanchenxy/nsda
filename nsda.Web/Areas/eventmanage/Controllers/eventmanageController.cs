@@ -2,6 +2,7 @@
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
+using nsda.Services;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
@@ -63,6 +64,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result<string>(flag, msg);
         }
 
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult editeventgroup(EventGroupRequest request)
+        {
+            var res = new Result<string>();
+            string msg = string.Empty;
+            var flag = _eventService.EditGroup(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
         //修改赛事状态
         [HttpPost]
         [AjaxOnly]
@@ -118,11 +130,11 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult checkreferee(int id, bool isAppro)
+        public ContentResult checkreferee(int id, bool isAgree)
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _refereeSignUpService.Check(id, isAppro, UserContext.WebUserContext.Id, out msg);
+            var flag = _refereeSignUpService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -225,6 +237,12 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #region view
         public ActionResult index()
         {
+            return View();
+        }
+
+        public ActionResult eventgroup(int eventGroupId)
+        {
+            var detail = _eventService.EventGroupDetail(eventGroupId);
             return View();
         }
         #endregion 

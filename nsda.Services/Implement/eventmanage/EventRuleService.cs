@@ -31,7 +31,7 @@ namespace nsda.Services.Implement.eventmanage
         }
 
         //编辑循环赛规则
-        public bool EditCyclingRaceRule(CyclingRaceRuleRequest request, out string msg)
+        public bool CyclingRaceRule(CyclingRaceRuleRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -69,13 +69,13 @@ namespace nsda.Services.Implement.eventmanage
                 _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("EventRuleService.EditCyclingRaceRule", ex);
+                LogUtils.LogError("EventRuleService.CyclingRaceRule", ex);
             }
             return flag;
         }
 
         //编辑淘汰赛规则
-        public bool EditKnockoutRule(KnockoutRuleRequest request, out string msg)
+        public bool KnockoutRule(KnockoutRuleRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -95,7 +95,7 @@ namespace nsda.Services.Implement.eventmanage
                 _dbContext.Rollback();
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("EventRuleService.EditKnockoutRule", ex);
+                LogUtils.LogError("EventRuleService.KnockoutRule", ex);
             }
             return flag;
         }
