@@ -35,7 +35,6 @@ namespace nsda.Utilities.Alipay
             prestr = prestr + key;
 
             Alipay.Core.LogResult("\r\nprestr=" + prestr + "       time=" + DateTime.Now.ToString(), key);
-
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] t = md5.ComputeHash(Encoding.GetEncoding(_input_charset).GetBytes(prestr));
             for (int i = 0; i < t.Length; i++)

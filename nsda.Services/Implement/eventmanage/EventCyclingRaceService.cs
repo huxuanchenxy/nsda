@@ -1,6 +1,7 @@
 ﻿using nsda.Repository;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
+using nsda.Utilities;
 using nsda.Utilities.Orm;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,41 @@ namespace nsda.Services.Implement.eventmanage
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
+        }
+
+        //开始循环赛  生成循环赛对垒表
+        public bool Start(int eventId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventCyclingRaceService.Start", ex);
+            }
+            return flag;
+        }
+        //开始下一轮
+        public bool Next(int eventId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventCyclingRaceService.Next", ex);
+            }
+            return flag;
         }
     }
 }

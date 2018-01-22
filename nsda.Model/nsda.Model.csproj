@@ -60,6 +60,7 @@
     <Compile Include="dto\request\EventRoomRequest.cs" />
     <Compile Include="dto\request\EventScoreRequest.cs" />
     <Compile Include="dto\request\LeavingMsgRequest.cs" />
+    <Compile Include="dto\request\ListMatchRequest.cs" />
     <Compile Include="dto\request\LoginLogRequest.cs" />
     <Compile Include="dto\request\LoginRequest.cs" />
     <Compile Include="dto\request\MailRequest.cs" />

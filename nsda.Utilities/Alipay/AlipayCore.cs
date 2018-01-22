@@ -89,7 +89,7 @@ namespace nsda.Utilities.Alipay
         /// <param name="sWord">要写入日志里的文本内容</param>
         public static void LogResult(string sWord, string name)
         {
-            string strPath = HttpContext.Current.Server.MapPath("~/log");
+            string strPath = HttpContext.Current.Server.MapPath("~/paylog");
             strPath = strPath + "\\" + DateTime.Now.ToString("yyMMdd") + "\\";
             DirectoryInfo dir = new DirectoryInfo(strPath);
             if (!dir.Exists)

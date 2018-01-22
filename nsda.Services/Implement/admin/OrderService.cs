@@ -332,7 +332,6 @@ namespace nsda.Services.Implement.admin
             }
             return response;
         }
-
         //支付记录
         public bool PayLog(int orderId, decimal orderMoney, PayTypeEm payType, int memberId, out string msg)
         {
