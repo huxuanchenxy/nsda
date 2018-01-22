@@ -210,9 +210,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\boundcoach.css" />
     <Content Include="Content\compesign.css" />
     <Content Include="Content\hascompe.css" />
     <Content Include="Content\iconfont.css" />
+    <Content Include="Content\img\bound_03.png" />
     <Content Include="Content\img\integral.svg" />
     <Content Include="Content\img\password_03.jpg" />
     <Content Include="Content\img\score_03.jpg" />
@@ -267,6 +269,7 @@
     <Content Include="Views\Home\PlayerScore.cshtml" />
     <Content Include="Views\Shared\PlayerShare.cshtml" />
     <Content Include="Views\Home\PlayerInfermation.cshtml" />
+    <Content Include="Views\Home\PlayerBoundCoach.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
