@@ -12,7 +12,7 @@ namespace nsda.Services.Contract.eventmanage
     /// </summary>
     public interface IEventknockoutService : IDependency
     {
-        bool Start(int eventId, out string msg);
-        bool Next(int eventId, out string msg);
+        bool Start(int eventId, int eventGroupId, out string msg);
+        bool Next(int eventId, int eventGroupId, int current, out string msg);
     }
 }

@@ -1,4 +1,5 @@
-﻿using nsda.Repository;
+﻿using nsda.Models;
+using nsda.Repository;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Utilities;
@@ -27,13 +28,19 @@ namespace nsda.Services.Implement.eventmanage
         }
 
         //开始淘汰赛  生成淘汰赛对垒表
-        public bool Start(int eventId, out string msg)
+        public bool Start(int eventId, int eventGroupId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-
+                var knockoutsettings = _dbContext.Select<t_eventknockoutsettings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
+                var knockout = _dbContext.Select<t_eventknockout>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
+                var knockoutdetail = _dbContext.Select<t_eventknockoutdetail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.knockoutId == knockout.id).FirstOrDefault();
+                //获取报名队伍信息
+                //获取裁判信息
+                //教室信息
+                //排对垒
             }
             catch (Exception ex)
             {
@@ -44,7 +51,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //开始下一轮
-        public bool Next(int eventId, out string msg)
+        public bool Next(int eventId, int eventGroupId, int current, out string msg)
         {
             bool flag = false;
             msg = string.Empty;

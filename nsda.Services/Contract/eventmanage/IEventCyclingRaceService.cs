@@ -13,8 +13,8 @@ namespace nsda.Services.Contract.eventmanage
     public interface IEventCyclingRaceService : IDependency
     {
         //开始循环赛  生成循环赛对垒表
-        bool Start(int eventId, out string msg);
+        bool Start(int eventId, int eventGroupId, out string msg);
         //开始下一轮
-        bool Next(int eventId, out string msg);
+        bool Next(int eventId, int eventGroupId,int current, out string msg);
     }
 }
