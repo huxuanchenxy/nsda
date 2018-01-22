@@ -311,9 +311,9 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //去支付
-        public bool GoPay(int id, int memberId, out string msg)
+        public int GoPay(int id, int memberId, out string msg)
         {
-            bool flag = false;
+            int orderId = 0;
             msg = string.Empty;
             try
             {
@@ -325,7 +325,7 @@ namespace nsda.Services.Implement.member
                     if (tevent.maxnumber < teamcount + 1)
                     {
                         msg = "达到报名人数上限无法继续去支付";
-                        return flag;
+                        return orderId;
                     }
                     //判断是否有订单 无订单则创建订单并生成支付信息
                     t_order order = _dbContext.Select<t_order>(c => c.orderType == OrderTypeEm.赛事报名 && c.memberId == memberId && c.sourceId == id).FirstOrDefault();
@@ -362,20 +362,18 @@ namespace nsda.Services.Implement.member
                                 unitprice = tevent.signfee
                             });
                             _dbContext.CommitChanges();
-                            flag = true;
-                            //生成支付信息
+                            orderId = orderid;
                         }
                         catch (Exception ex)
                         {
                             _dbContext.Rollback();
-                            flag = false;
                             msg = "服务异常";
                             LogUtils.LogError("SignUpPlayerService.GoPayTran", ex);
                         }
                     }
                     else
                     {
-                        //获取支付信息
+                        orderId = order.id;
                     }
                 }
                 else
@@ -385,11 +383,10 @@ namespace nsda.Services.Implement.member
             }
             catch (Exception ex)
             {
-                flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("SignUpPlayerService.GoPay", ex);
             }
-            return flag;
+            return orderId;
         }
         //申请退赛
         public bool ApplyRetire(int id, int memberId, out string msg)
@@ -623,21 +620,24 @@ namespace nsda.Services.Implement.member
         {
             try
             {
-                var signup = _dbContext.Get<t_player_signup>(sourceId);
-                if (signup != null && memberId == signup.memberId)
+                using (IDBContext dbcontext = new MySqlDBContext())
                 {
-                    //查询队友状态
-                    var other_signup = _dbContext.Select<t_player_signup>(c => c.groupnum == signup.groupnum && c.eventGroupId == signup.eventGroupId && c.memberId != memberId).FirstOrDefault();
-                    if (other_signup.signUpStatus == SignUpStatusEm.待付款)
+                    var signup = dbcontext.Get<t_player_signup>(sourceId);
+                    if (signup != null && memberId == signup.memberId)
                     {
-                        signup.updatetime = DateTime.Now;
-                        signup.signUpStatus = SignUpStatusEm.已付款;
-                        _dbContext.Update(signup);
-                    }
-                    else if (other_signup.signUpStatus == SignUpStatusEm.已付款)
-                    {
-                        var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
-                        _dbContext.Execute(sql);
+                        //查询队友状态
+                        var other_signup = dbcontext.Select<t_player_signup>(c => c.groupnum == signup.groupnum && c.eventGroupId == signup.eventGroupId && c.memberId != memberId).FirstOrDefault();
+                        if (other_signup.signUpStatus == SignUpStatusEm.待付款)
+                        {
+                            signup.updatetime = DateTime.Now;
+                            signup.signUpStatus = SignUpStatusEm.已付款;
+                            dbcontext.Update(signup);
+                        }
+                        else if (other_signup.signUpStatus == SignUpStatusEm.已付款)
+                        {
+                            var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                            dbcontext.Execute(sql);
+                        }
                     }
                 }
             }
@@ -675,7 +675,15 @@ namespace nsda.Services.Implement.member
                     request.KeyValue = "%" + request.KeyValue + "%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
                 }
-                var sql = $@" select a.*,b.code MemberCode,b.completename MemberName,a.grade,a.gender,a.contactmobile from t_player_signup a 
+                if (request.EventGroupId != null && request.EventGroupId > 0)
+                {
+                    join.Append(" and a.eventGroupId=@EventGroupId");
+                }
+                if (request.SignUpStatus != null && request.SignUpStatus > 0)
+                {
+                    join.Append(" and a.signUpStatus=@SignUpStatus");
+                }
+                var sql = $@" select a.*,b.code MemberCode,b.completename MemberName,b.grade,b.gender,b.contactmobile from t_player_signup a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 

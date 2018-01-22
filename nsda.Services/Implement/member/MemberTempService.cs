@@ -249,9 +249,9 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //临时选手绑定 生成支付订单
-        public bool BindTempPlayer(BindTempPlayerRequest request, out string msg)
+        public int BindTempPlayer(BindTempPlayerRequest request, out string msg)
         {
-            bool flag = false;
+            int orderId = 0;
             msg = string.Empty;
             try
             {
@@ -259,31 +259,31 @@ namespace nsda.Services.Implement.member
                 if (request.GroupNum.IsEmpty())
                 {
                     msg = "队伍编码不能为空";
-                    return flag;
+                    return orderId;
                 }
                 if (request.Email.IsEmpty())
                 {
                     msg = "邮箱不能为空";
-                    return flag;
+                    return orderId;
                 }
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
-                    return flag;
+                    return orderId;
                 }
 
                 var data = _dbContext.Select<t_membertemp>(c => c.email == request.Email && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
                 if (data == null)
                 {
                     msg = "数据不存在，请核对后再操作";
-                    return flag;
+                    return orderId;
                 }
 
                 t_event t_event = _dbContext.Get<t_event>(data.eventId);
                 if (t_event.eventStatus != EventStatusEm.比赛完成)
                 {
                     msg = "赛事未完成不能进行绑定";
-                    return flag;
+                    return orderId;
                 }
 
                 if (data.tomemberId != null && data.tomemberId > 0)
@@ -291,7 +291,7 @@ namespace nsda.Services.Implement.member
                     if (data.tomemberId != request.MemberId)
                     {
                         msg = "此信息已绑定过";
-                        return flag;
+                        return orderId;
                     }
                 }
 
@@ -333,11 +333,10 @@ namespace nsda.Services.Implement.member
                         data.updatetime = DateTime.Now;
                         _dbContext.Update(data);
                         _dbContext.CommitChanges();
-                        flag = true;
+                        orderId = orderid;
                     }
                     catch (Exception ex)
                     {
-                        flag = false;
                         msg = "服务异常";
                         _dbContext.Rollback();
                         LogUtils.LogError("MemberTempService.BindTempPlayerTran", ex);
@@ -345,10 +344,9 @@ namespace nsda.Services.Implement.member
                 }
                 else//创建过订单
                 {
-                    //通过订单生成支付链接
                     if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
                     {
-
+                        orderId = order.id;
                     }
                     else
                     {
@@ -359,11 +357,10 @@ namespace nsda.Services.Implement.member
             }
             catch (Exception ex)
             {
-                flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("MemberTempService.BindTempPlayer", ex);
             }
-            return flag;
+            return orderId;
         }
         //临时教练绑定 
         public bool BindTempReferee(BindTempRefereeRequest request, out string msg)
@@ -453,27 +450,30 @@ namespace nsda.Services.Implement.member
         {
             try
             {
-                t_membertemp temp = _dbContext.Get<t_membertemp>(sourceId);
-                if (temp != null && temp.memberId == memberId)
+                using (IDBContext dbcontext = new MySqlDBContext())
                 {
-                    try
+                    t_membertemp temp = dbcontext.Get<t_membertemp>(sourceId);
+                    if (temp != null && temp.memberId == memberId)
                     {
-                        _dbContext.BeginTransaction();
-                        t_memberpoints points = _dbContext.Select<t_memberpoints>(c => c.memberId == temp.memberId).FirstOrDefault();
-                        _dbContext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
-                        _dbContext.Execute($"update t_membertemp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
-                        _dbContext.Execute($"update t_memberpointsrecord set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                        _dbContext.Execute($"update t_memberpointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                        _dbContext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                        //对垒表也要修改
-                        _dbContext.Execute($"update t_matchplayerresult set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                        _dbContext.Execute($"update t_matchplayerresultdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                        _dbContext.CommitChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        _dbContext.Rollback();
-                        LogUtils.LogError("MemberTempService.CallbackTran", ex);
+                        try
+                        {
+                            dbcontext.BeginTransaction();
+                            t_memberpoints points = dbcontext.Select<t_memberpoints>(c => c.memberId == temp.memberId).FirstOrDefault();
+                            dbcontext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
+                            dbcontext.Execute($"update t_membertemp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
+                            dbcontext.Execute($"update t_memberpointsrecord set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_memberpointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            //对垒表也要修改
+                            dbcontext.Execute($"update t_matchplayerresult set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_matchplayerresultdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.CommitChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            dbcontext.Rollback();
+                            LogUtils.LogError("MemberTempService.CallbackTran", ex);
+                        }
                     }
                 }
             }

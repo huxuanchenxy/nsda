@@ -308,6 +308,9 @@
     <Compile Include="model\t_order_shoopingcart.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_paylog.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_playereduexper.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>

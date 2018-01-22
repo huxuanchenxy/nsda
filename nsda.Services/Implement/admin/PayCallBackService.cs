@@ -1,4 +1,5 @@
-﻿using nsda.Models;
+﻿using nsda.Model.enums;
+using nsda.Models;
 using nsda.Repository;
 using nsda.Services.admin;
 using nsda.Services.Contract.admin;
@@ -36,27 +37,45 @@ namespace nsda.Services.Implement.admin
         }
 
         // 支付回调
-        public void Callback(string json)
+        public void Callback(string out_trade_no, string paytransaction)
         {
             try
             {
-                int id = 0;
-                var order = _dbContext.Get<t_order>(id);
-                if (order != null)
+                string[] str = DesEncoderAndDecoder.Decrypt(out_trade_no).Split('#');
+                int orderId = str[0].ToInt32();
+                var order = _dbContext.Get<t_order>(orderId);
+                if (order != null&&order.orderStatus==OrderStatusEm.等待支付)
                 {
-                    switch (order.orderType)
+                    try
                     {
-                        case Model.enums.OrderTypeEm.实名认证:
-                            _memberService.CallBack(order.memberId);
-                            break;
-                        case Model.enums.OrderTypeEm.临时选手绑定:
-                            _memberTempService.Callback(order.memberId,order.sourceId);
-                            break;
-                        case Model.enums.OrderTypeEm.赛事报名:
-                            _playerSignUpService.Callback(order.memberId,order.sourceId);
-                            break;
-                        default:
-                            break;
+                        _dbContext.BeginTransaction();
+                        //修改订单状态
+                        order.orderStatus = OrderStatusEm.支付成功;
+                        order.updatetime = DateTime.Now;
+                        _dbContext.Update(order);
+                        //修改支付流水信息
+                        _dbContext.Execute($"update t_paylog paytransaction={paytransaction},notifyTime={DateTime.Now},payStatus={PayStatusEm.支付成功}  where orderId={orderId} and isdelete=0");
+                        _dbContext.CommitChanges();
+
+                        Task.Factory.StartNew(() => {
+                            if (order.orderType == OrderTypeEm.实名认证)
+                            {
+                                _memberService.CallBack(order.memberId);
+                            }
+                            else if (order.orderType == OrderTypeEm.临时选手绑定)
+                            {
+                                _memberTempService.Callback(order.memberId, order.sourceId);
+                            }
+                            else if (order.orderType == OrderTypeEm.赛事报名)
+                            {
+                                _playerSignUpService.Callback(order.memberId, order.sourceId);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("PayCallBackService.CallbackTran", ex);
+                        _dbContext.Rollback();
                     }
                 }
             }

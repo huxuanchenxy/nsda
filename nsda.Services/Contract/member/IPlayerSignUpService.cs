@@ -19,7 +19,7 @@ namespace nsda.Services.Contract.member
         //是否接受组队
         bool IsAcceptTeam(int id, bool isAgree, int memberId, out string msg);
         // 去支付
-        bool GoPay(int id,int memberId,out string msg);
+        int GoPay(int id,int memberId,out string msg);
         // 申请退赛
         bool ApplyRetire(int id, int memberId, out string msg);
         // 确认退赛

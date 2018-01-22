@@ -36,5 +36,8 @@ namespace nsda.Utilities
         public static readonly string Email_port = ConfigurationManager.AppSettings["email_port"];
 
         public static readonly decimal AuthMoney = ConfigurationManager.AppSettings["authmoney"].ToObjDecimal();//实名认证金额
+
+
+        public static readonly string PayAccount = ConfigurationManager.AppSettings["PayAccount"];//支付宝账号
     }
 }

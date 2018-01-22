@@ -74,6 +74,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alipay\AlipayConfig.cs" />
+    <Compile Include="Alipay\AlipayCore.cs" />
+    <Compile Include="Alipay\AlipayNotify.cs" />
+    <Compile Include="Alipay\AlipaySubmit.cs" />
+    <Compile Include="Alipay\MD5.cs" />
     <Compile Include="CommonFileServer.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Constant.cs" />
@@ -86,7 +91,7 @@
     <Compile Include="JsonUtils.cs" />
     <Compile Include="LoginModeEnum.cs" />
     <Compile Include="LogUtils.cs" />
-    <Compile Include="MemberEncoderAndDecoder.cs" />
+    <Compile Include="DesEncoderAndDecoder.cs" />
     <Compile Include="nsdaRequest.cs" />
     <Compile Include="Orm\DapperExtensions.cs" />
     <Compile Include="Orm\DapperPagedList.cs" />

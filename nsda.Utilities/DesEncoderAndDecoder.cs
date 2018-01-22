@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace nsda.Utilities
 {
-    public class MemberEncoderAndDecoder
+    public class DesEncoderAndDecoder
     {
-        public static string decrypt(string message)
+        public static string Decrypt(string message)
         {
             string key = "!qax@魑魅wsnsdaz耄耋#rfc魍魉c$edv";
             byte[] inputByteArray = Convert.FromBase64String(message);
@@ -31,7 +31,7 @@ namespace nsda.Utilities
             }
         }
 
-        public static string encrypt(string message)
+        public static string Encrypt(string message)
         {
             string key = "!qax@魑魅wsnsdaz耄耋#rfc魍魉c$edv";
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())

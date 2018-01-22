@@ -19,7 +19,7 @@ namespace nsda.Services.Contract.member
         //2.0 新增临时裁判
         bool InsertTempReferee(TempRefereeRequest request,int memberId,out string msg);
         //3.0 临时选手绑定
-        bool BindTempPlayer(BindTempPlayerRequest request,out string msg);
+        int BindTempPlayer(BindTempPlayerRequest request,out string msg);
         //4.0 临时教练绑定
         bool BindTempReferee(BindTempRefereeRequest request,out string msg);
         //5.0 临时会员数据列表

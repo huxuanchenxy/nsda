@@ -113,8 +113,8 @@ namespace nsda.Web.Areas.player.Controllers
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _playerSignUpService.GoPay(id, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
+            int orderId = _playerSignUpService.GoPay(id, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(orderId>0, msg, orderId.ToString());
         }
 
         //签到

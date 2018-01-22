@@ -369,7 +369,7 @@ namespace nsda.Services.admin
             try
             {
                 DateTime expireTime = DateTime.Now.AddHours(12);
-                SessionCookieUtility.WriteCookie(Constant.SysCookieKey, MemberEncoderAndDecoder.encrypt(context.Serialize()), expireTime);
+                SessionCookieUtility.WriteCookie(Constant.SysCookieKey, DesEncoderAndDecoder.Encrypt(context.Serialize()), expireTime);
             }
             catch (Exception ex)
             {

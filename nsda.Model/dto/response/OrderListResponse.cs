@@ -289,4 +289,77 @@ namespace nsda.Model.dto.response
             OrderDetail = new List<OrderDetail>();
         }
     }
+
+    public class OrderResponse
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// 会员id
+        /// </summary>
+        public int MemberId { get; set; }
+        public string MemberName { get; set; }
+
+        /// <summary>
+        /// 主订单id
+        /// </summary>
+        public int? MainOrderId { get; set; }
+
+        /// <summary>
+        /// 订单类型
+        /// </summary>
+        public OrderTypeEm OrderType { get; set; }
+
+        /// <summary>
+        /// 订单金额
+        /// </summary>
+        public decimal Money { get; set; }
+
+        /// <summary>
+        /// 订单状态
+        /// </summary>
+        public OrderStatusEm OrderStatus { get; set; }
+
+        /// <summary>
+        /// 最晚支付时间
+        /// </summary>
+        public DateTime PayExpiryDate { get; set; }
+
+        /// <summary>
+        /// 总折扣金额
+        /// </summary>
+        public decimal? TotalDiscount { get; set; }
+
+        /// <summary>
+        /// 总优惠金额
+        /// </summary>
+        public decimal? TotalCoupon { get; set; }
+
+        /// <summary>
+        /// 是否需要发票
+        /// </summary>
+        public bool IsNeedInvoice { get; set; }
+
+        /// <summary>
+        /// 订单备注
+        /// </summary>
+        public string Remark { get; set; }
+
+        /// <summary>
+        /// 订单来源id
+        /// </summary>
+        public int SourceId { get; set; }
+
+        /// <summary>
+        /// 下单时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// 修改时间
+        /// </summary>
+        public DateTime UpdateTime { get; set; }
+
+    }
+
 }

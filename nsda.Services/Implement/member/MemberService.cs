@@ -436,12 +436,15 @@ namespace nsda.Services.member
         {
             try
             {
-                var member = _dbContext.Get<t_member>(id);
-                if (member != null)
+                using (IDBContext dbcontext = new MySqlDBContext())
                 {
-                    member.updatetime = DateTime.Now;
-                    member.memberStatus = MemberStatusEm.已认证;
-                    _dbContext.Update(member);
+                    var member = dbcontext.Get<t_member>(id);
+                    if (member != null)
+                    {
+                        member.updatetime = DateTime.Now;
+                        member.memberStatus = MemberStatusEm.已认证;
+                        dbcontext.Update(member);
+                    }
                 }
             }
             catch (Exception ex)
@@ -719,8 +722,8 @@ namespace nsda.Services.member
             try
             {
                 DateTime expireTime = DateTime.Now.AddHours(24);
-                SessionCookieUtility.WriteCookie(Constant.WebCookieKey, MemberEncoderAndDecoder.encrypt($"{context.Id}"), expireTime);
-                string data = MemberEncoderAndDecoder.encrypt(context.Serialize());
+                SessionCookieUtility.WriteCookie(Constant.WebCookieKey, DesEncoderAndDecoder.Encrypt($"{context.Id}"), expireTime);
+                string data = DesEncoderAndDecoder.Encrypt(context.Serialize());
                 SessionCookieUtility.WriteSession($"webusersession_{context.Id}", data);
             }
             catch (Exception ex)
@@ -791,9 +794,9 @@ namespace nsda.Services.member
             return list;
         }
         // 去支付
-        public bool GoPay(int memberId, out string msg)
+        public int GoAuth(int memberId, out string msg)
         {
-            bool flag = false;
+            int orderId = 0;
             msg = string.Empty;
             try
             {
@@ -805,7 +808,7 @@ namespace nsda.Services.member
                     {
                         if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
                         {
-                            //获取支付连接
+                            orderId = order.id;
                         }
                         else
                         {
@@ -814,41 +817,52 @@ namespace nsda.Services.member
                     }
                     else
                     {
-                        var orderid = _dbContext.Insert(new t_order
+                        try
                         {
-                            isNeedInvoice = false,
-                            mainOrderId = null,
-                            memberId = memberId,
-                            money = Constant.AuthMoney,
-                            orderStatus = OrderStatusEm.等待支付,
-                            orderType = OrderTypeEm.实名认证,
-                            payExpiryDate = DateTime.Now.AddYears(3),
-                            remark = "实名认证",
-                            sourceId = memberId,
-                            totalcoupon = 0,
-                            totaldiscount = 0
-                        }).ToObjInt();
-                        _dbContext.Insert(new t_orderdetail
+                            _dbContext.BeginTransaction();
+                            var orderid = _dbContext.Insert(new t_order
+                            {
+                                isNeedInvoice = false,
+                                mainOrderId = null,
+                                memberId = memberId,
+                                money = Constant.AuthMoney,
+                                orderStatus = OrderStatusEm.等待支付,
+                                orderType = OrderTypeEm.实名认证,
+                                payExpiryDate = DateTime.Now.AddYears(3),
+                                remark = "实名认证",
+                                sourceId = memberId,
+                                totalcoupon = 0,
+                                totaldiscount = 0
+                            }).ToObjInt();
+
+                            _dbContext.Insert(new t_orderdetail
+                            {
+                                memberId = memberId,
+                                orderId = orderid,
+                                coupon = 0,
+                                discountprice = 0,
+                                money = Constant.AuthMoney,
+                                productId = 0,
+                                name = "会员认证",
+                                number = 1,
+                                unitprice = Constant.AuthMoney
+                            });
+                            _dbContext.CommitChanges();
+                            orderId = orderid;
+                        }
+                        catch (Exception ex)
                         {
-                            memberId = memberId,
-                            orderId = orderid,
-                            coupon = 0,
-                            discountprice = 0,
-                            money = Constant.AuthMoney,
-                            productId = 0,
-                            name = "会员认证",
-                            number = 1,
-                            unitprice = Constant.AuthMoney
-                        });
-                        //生成支付链接
+                            _dbContext.Rollback();
+                            LogUtils.LogError("MemberService.GoAuthTran", ex);
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("MemberService.Force", ex);
+                LogUtils.LogError("MemberService.GoAuth", ex);
             }
-            return flag;
+            return orderId;
         }
         //检测账号是否存在
         public bool IsExist(string account)

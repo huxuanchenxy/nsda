@@ -49,7 +49,7 @@ namespace nsda.Services.Implement.admin
                 }
 
                 _dbContext.Insert(new t_event_score {
-                      eventid=request.EventId,
+                      eventId=request.EventId,
                       eventGroupId=request.EventGroupId,
                       filepath=request.FilePath,
                       remark=request.Remark,
@@ -148,7 +148,7 @@ namespace nsda.Services.Implement.admin
                         CreateTime = detail.createtime,
                         FilePath = detail.filepath,
                         Id = detail.id,
-                        EventId=detail.eventid,
+                        EventId=detail.eventId,
                         EventGroupId=detail.eventGroupId,
                         Remark = detail.remark,
                         Title = detail.title,

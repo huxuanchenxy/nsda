@@ -69,7 +69,6 @@ namespace nsda.Services.Implement.admin
             }
             return list;
         }
-
         //订单详情
         public OrderDetailResponse Detail(int id)
         {
@@ -126,7 +125,6 @@ namespace nsda.Services.Implement.admin
             }
             return response;
         }
-
         //退单列表
         public List<RefundOrderListResponse> RefundList(RefundOrderListQueryRequest request)
         {
@@ -168,7 +166,6 @@ namespace nsda.Services.Implement.admin
             }
             return list;
         }
-
         //退单详情
         public RefundOrderDetailResponse RedundDetail(int id)
         {
@@ -214,7 +211,6 @@ namespace nsda.Services.Implement.admin
             }
             return response;
         }
-
         //处理退款
         public bool Process(int id, int sysUserId, out string msg)
         {
@@ -261,6 +257,86 @@ namespace nsda.Services.Implement.admin
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("OrderService.Process", ex);
+            }
+            return flag;
+        }
+        //修改订单状态
+        public void UpdateStatus(int id)
+        {
+            try
+            {
+                t_order order = _dbContext.Get<t_order>(id);
+                if (order != null)
+                {
+                    order.updatetime = DateTime.Now;
+                    order.orderStatus = OrderStatusEm.支付成功;
+                    _dbContext.Update(order);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("OrderService.UpdateStatus", ex);
+            }
+        }
+        //订单主表详情
+        public OrderResponse OrderDetail(int id)
+        {
+            OrderResponse response = null;
+            try
+            {
+                t_order order = _dbContext.Get<t_order>(id);
+                if (order != null)
+                {
+                    response = new OrderResponse
+                    {
+                        CreateTime = order.createtime,
+                        Id = order.id,
+                        IsNeedInvoice = order.isNeedInvoice,
+                        MainOrderId = order.mainOrderId,
+                        MemberId = order.memberId,
+                        Money = order.money,
+                        OrderStatus = order.orderStatus,
+                        OrderType = order.orderType,
+                        PayExpiryDate = order.payExpiryDate,
+                        Remark = order.remark,
+                        TotalCoupon = order.totalcoupon,
+                        TotalDiscount = order.totaldiscount,
+                        SourceId = order.sourceId,
+                        UpdateTime = order.updatetime
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("OrderService.OrderDetail", ex);
+            }
+            return response;
+        }
+
+        //支付记录
+        public bool PayLog(int orderId,decimal orderMoney,PayTypeEm payType, int memberId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                _dbContext.BeginTransaction();
+                _dbContext.Execute($"update t_paylog set isdelete=1 where orderId={orderId} and memberId={memberId}");
+                _dbContext.Insert(new t_paylog {
+                     paymentAmount=orderMoney,
+                     memberId=memberId,
+                     orderId=orderId,
+                     payTime=DateTime.Now,
+                     payStatus=PayStatusEm.等待支付,
+                     payType=payType  
+                });
+                _dbContext.CommitChanges();
+                flag = true;
+            }
+            catch (Exception ex)
+            {
+                _dbContext.Rollback();
+                LogUtils.LogError("OrderService.PayLog", ex);
             }
             return flag;
         }

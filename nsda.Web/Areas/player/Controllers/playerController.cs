@@ -80,12 +80,12 @@ namespace nsda.Web.Areas.player.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult gopay()
+        public ContentResult goauth()
         {
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _memberService.GoPay(UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
+            var orderId = _memberService.GoAuth(UserContext.WebUserContext.Id, out msg);
+            return Result<string>(orderId>0, msg, orderId.ToString());
         }
 
         //绑定临时账号
@@ -97,8 +97,8 @@ namespace nsda.Web.Areas.player.Controllers
             request.MemberId = UserContext.WebUserContext.Id;
             var res = new Result<string>();
             string msg = string.Empty;
-            var flag = _memberTempService.BindTempPlayer(request, out msg);
-            return Result<string>(flag, msg);
+            int orderId = _memberTempService.BindTempPlayer(request, out msg);
+            return Result<string>(orderId>0, msg,orderId.ToString());
         }
 
 

@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_event_score")]
-    public class t_event_score
+	[Table("t_paylog")]
+    public class t_paylog
     {
 	   //默认构造函数
-	   public t_event_score()
+	   public t_paylog()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -29,18 +29,27 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        public int eventId { get; set; }
+        public int memberId { get; set; }
     
-        /// <summary>
-        /// 赛事组别id
-        /// </summary>
-        public int eventGroupId { get; set; }
+        public int orderId { get; set; }
     
-        public string title { get; set; }
+        public decimal paymentAmount { get; set; }
     
-        public string remark { get; set; }
+        public decimal actualAmount { get; set; }
     
-        public string filepath { get; set; }
+        public decimal? paymentFee { get; set; }
+    
+        public PayTypeEm payType { get; set; }
+    
+        public string paytransaction { get; set; }
+    
+        public PayStatusEm? payStatus { get; set; }
+    
+        public DateTime payTime { get; set; }
+    
+        public DateTime? notifyTime { get; set; }
+    
+        public string notifyExt { get; set; }
     
         /// <summary>
         /// 创建时间

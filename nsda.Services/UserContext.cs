@@ -28,7 +28,7 @@ namespace nsda.Services
                 string key = SessionCookieUtility.GetCookie(Constant.SysCookieKey).ToString();
                 if (key.IsNotEmpty())
                 {
-                    sysContext = MemberEncoderAndDecoder.decrypt(key).Deserialize<SysUserContext>();
+                    sysContext = DesEncoderAndDecoder.Decrypt(key).Deserialize<SysUserContext>();
                 }
             }
             catch (Exception ex)
@@ -60,11 +60,11 @@ namespace nsda.Services
                 string value = SessionCookieUtility.GetCookie(Constant.WebCookieKey).ToString();
                 if (value.IsNotEmpty())
                 {
-                    string memberId = MemberEncoderAndDecoder.decrypt(value);
+                    string memberId = DesEncoderAndDecoder.Decrypt(value);
                     string sessionData = SessionCookieUtility.GetSession($"webusersession_{memberId}");
                     if (sessionData.IsNotEmpty())
                     {
-                        webContext = MemberEncoderAndDecoder.decrypt(sessionData).Deserialize<WebUserContext>();
+                        webContext = DesEncoderAndDecoder.Decrypt(sessionData).Deserialize<WebUserContext>();
                     }
                     else
                     {
@@ -84,14 +84,14 @@ namespace nsda.Services
             WebUserContext userContext = null;
             try
             {
-                using (var mysql = new MySqlDBContext())
+                using (IDBContext dbcontext = new MySqlDBContext())
                 {
-                    var detail = mysql.Get<t_member>(id);
+                    var detail = dbcontext.Get<t_member>(id);
                     if (detail != null)
                     {
                         //读取已经认证的
                         string role = ((int)detail.memberType).ToString();
-                        var memberextend = mysql.Select<t_memberextend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
+                        var memberextend = dbcontext.Select<t_memberextend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
                         if (memberextend != null && memberextend.Count > 0)
                         {
                             foreach (var item in memberextend)
@@ -110,8 +110,8 @@ namespace nsda.Services
                             Status = (int)detail.memberStatus
                         };
                         DateTime expireTime = DateTime.Now.AddHours(24);
-                        SessionCookieUtility.WriteCookie(Constant.WebCookieKey, MemberEncoderAndDecoder.encrypt($"{userContext.Id}"), expireTime);
-                        string data = MemberEncoderAndDecoder.encrypt(userContext.Serialize());
+                        SessionCookieUtility.WriteCookie(Constant.WebCookieKey, DesEncoderAndDecoder.Encrypt($"{userContext.Id}"), expireTime);
+                        string data = DesEncoderAndDecoder.Encrypt(userContext.Serialize());
                         SessionCookieUtility.WriteSession($"webusersession_{userContext.Id}", data);
                     }
                 }
@@ -128,7 +128,7 @@ namespace nsda.Services
             var value = SessionCookieUtility.GetCookie(Constant.WebCookieKey);
             if (value.IsNotEmpty())
             {
-                string memberId = MemberEncoderAndDecoder.decrypt(value);
+                string memberId = DesEncoderAndDecoder.Decrypt(value);
                 string sessionData = SessionCookieUtility.GetSession($"webusersession_{memberId}");
                 if (sessionData.IsNotEmpty())
                 {

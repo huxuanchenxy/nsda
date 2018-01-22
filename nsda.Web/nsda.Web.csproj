@@ -133,6 +133,7 @@
     <Compile Include="Areas\player\Controllers\playerbaseController.cs" />
     <Compile Include="Areas\player\Controllers\playereduexperController.cs" />
     <Compile Include="Areas\player\Controllers\playerController.cs" />
+    <Compile Include="Areas\player\Controllers\playerpayController.cs" />
     <Compile Include="Areas\player\Controllers\playersignupController.cs" />
     <Compile Include="Areas\player\Controllers\playertrainerController.cs" />
     <Compile Include="Areas\player\playerAreaRegistration.cs" />
@@ -421,6 +422,7 @@
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />
     <Folder Include="Areas\player\Views\eduexper\" />
+    <Folder Include="Areas\player\Views\playerpay\" />
     <Folder Include="Areas\player\Views\playersignup\" />
     <Folder Include="Areas\player\Views\playertrainer\" />
     <Folder Include="Areas\player\Views\Shared\" />
