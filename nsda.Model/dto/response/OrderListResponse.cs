@@ -284,12 +284,38 @@ namespace nsda.Model.dto.response
         public string ContactMobile { get; set; }
 
         public List<OrderDetail> OrderDetail { get; set; }
+        public OrderPayLog OrderPayLogDetail { get; set; }
         public RefundOrderDetailResponse()
         {
             OrderDetail = new List<OrderDetail>();
         }
     }
+    public class OrderPayLog
+    {
+        public int Id { get; set; }
 
+        public int MemberId { get; set; }
+
+        public int OrderId { get; set; }
+
+        public decimal PaymentAmount { get; set; }
+
+        public decimal? ActualAmount { get; set; }
+
+        public decimal? PaymentFee { get; set; }
+
+        public PayTypeEm PayType { get; set; }
+
+        public string Paytransaction { get; set; }
+
+        public PayStatusEm PayStatus { get; set; }
+
+        public DateTime PayTime { get; set; }
+
+        public DateTime? NotifyTime { get; set; }
+
+        public string NotifyExt { get; set; }
+    }
     public class OrderResponse
     {
         public int Id { get; set; }

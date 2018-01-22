@@ -181,7 +181,7 @@ namespace nsda.Services.Implement.admin
                 response = _dbContext.QueryFirstOrDefault<RefundOrderDetailResponse>(sql);
                 if (response != null)
                 {
-                    var data = _dbContext.Select<t_orderdetail>(c=>c.orderId==response.OrderId).ToList();
+                    var data = _dbContext.Select<t_orderdetail>(c => c.orderId == response.OrderId).ToList();
                     if (data != null && data.Count > 0)
                     {
                         foreach (var item in data)
@@ -202,6 +202,26 @@ namespace nsda.Services.Implement.admin
                                 UnitPrice = item.unitprice
                             });
                         }
+                    }
+
+                    var paylog = _dbContext.QueryFirstOrDefault<t_paylog>($"select * from t_paylog where isdelete=0 and orderId={response.OrderId}");
+                    if (paylog != null)
+                    {
+                        response.OrderPayLogDetail = new OrderPayLog
+                        {
+                            Id = paylog.id,
+                            ActualAmount = paylog.actualAmount,
+                            PaymentAmount = paylog.paymentAmount,
+                            NotifyExt = paylog.notifyExt,
+                            NotifyTime = paylog.notifyTime,
+                            PaymentFee = paylog.paymentFee,
+                            PayStatus = paylog.payStatus,
+                            OrderId = paylog.orderId,
+                            Paytransaction = paylog.paytransaction,
+                            PayTime = paylog.payTime,
+                            PayType = paylog.payType,
+                            MemberId = paylog.memberId
+                        };
                     }
                 }
             }
@@ -236,7 +256,7 @@ namespace nsda.Services.Implement.admin
                         t_order torder = _dbContext.Get<t_order>(order_operation.orderId);
                         torder.updatetime = DateTime.Now;
                         torder.orderStatus = OrderStatusEm.退款成功;
-                        _dbContext.Update(torder);     
+                        _dbContext.Update(torder);
                         _dbContext.CommitChanges();
                         flag = true;
                     }
@@ -314,7 +334,7 @@ namespace nsda.Services.Implement.admin
         }
 
         //支付记录
-        public bool PayLog(int orderId,decimal orderMoney,PayTypeEm payType, int memberId, out string msg)
+        public bool PayLog(int orderId, decimal orderMoney, PayTypeEm payType, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -322,13 +342,14 @@ namespace nsda.Services.Implement.admin
             {
                 _dbContext.BeginTransaction();
                 _dbContext.Execute($"update t_paylog set isdelete=1 where orderId={orderId} and memberId={memberId}");
-                _dbContext.Insert(new t_paylog {
-                     paymentAmount=orderMoney,
-                     memberId=memberId,
-                     orderId=orderId,
-                     payTime=DateTime.Now,
-                     payStatus=PayStatusEm.等待支付,
-                     payType=payType  
+                _dbContext.Insert(new t_paylog
+                {
+                    paymentAmount = orderMoney,
+                    memberId = memberId,
+                    orderId = orderId,
+                    payTime = DateTime.Now,
+                    payStatus = PayStatusEm.等待支付,
+                    payType = payType
                 });
                 _dbContext.CommitChanges();
                 flag = true;

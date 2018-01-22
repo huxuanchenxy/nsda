@@ -35,7 +35,7 @@ namespace nsda.Models
     
         public decimal paymentAmount { get; set; }
     
-        public decimal actualAmount { get; set; }
+        public decimal? actualAmount { get; set; }
     
         public decimal? paymentFee { get; set; }
     
@@ -43,7 +43,7 @@ namespace nsda.Models
     
         public string paytransaction { get; set; }
     
-        public PayStatusEm? payStatus { get; set; }
+        public PayStatusEm payStatus { get; set; }
     
         public DateTime payTime { get; set; }
     
