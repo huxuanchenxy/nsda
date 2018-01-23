@@ -39,7 +39,7 @@ namespace nsda.Models
     
         public int memberId { get; set; }
     
-        public int trainerId { get; set; }
+        public int refereeId { get; set; }
     
         public int ranking { get; set; }
     

@@ -1,4 +1,6 @@
 ﻿using nsda.Model.dto.request;
+using nsda.Model.dto.response;
+using nsda.Model.enums;
 using nsda.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,20 +16,24 @@ namespace nsda.Services.Contract.eventmanage
     public interface IEventMatchService : IDependency
     {
         //替换教室
-        bool ReplaceRoom(out string msg);
+        bool ReplaceRoom(int matchId,int roomId,int memberId,out string msg);
         //替换裁判
-        bool ReplaceReferee(out string msg);
+        bool ReplaceReferee(int matchrefereeId, int refereeId,int memberId, out string msg);
         //替换对垒位置
-        bool ReplaceMatch(out string msg);
+        bool ReplaceMatch(int matchId, int memberId,out string msg);
         //预览评分单标签 或者打印评分单标签
-        void PreviewRatingSinglLabel();
+        List<RatingSinglLabelResponse> PreviewRatingSinglLabel(MatchCommonRequest request);
         //对垒表
-        void ListMatch(ListMatchRequest request);
+        List<ListMatchResponse> ListMatch(ListMatchRequest request);
         //录入成绩
         bool RecordOfEntry(out string msg);
         //未录入成绩的对垒 已录入成绩的对垒
-        void RecordOfList();
+        List<RecordOfListResponse> RecordOfList(MatchCommonRequest request);
         //评分队伍
-        void RecordOfDetail();
+        RecordOfDetailResponse RecordOfDetail(RecordOfDetailRequest request);
+        //闲置的裁判
+        List<BaseListResponse> ListReferee(MatchCommonRequest request);
+        //闲置的教室
+        List<BaseListResponse> ListRoom(MatchCommonRequest request);
     }
 }

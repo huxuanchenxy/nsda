@@ -41,6 +41,8 @@ namespace nsda.Models
     
         public bool isWin { get; set; }
     
+        public WinTypeEm winType { get; set; }
+    
         /// <summary>
         /// 修改时间
         /// </summary>

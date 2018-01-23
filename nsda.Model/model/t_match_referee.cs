@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_match_trainer")]
-    public class t_match_trainer
+	[Table("t_match_referee")]
+    public class t_match_referee
     {
 	   //默认构造函数
-	   public t_match_trainer()
+	   public t_match_referee()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -35,7 +35,7 @@ namespace nsda.Models
     
         public int matchId { get; set; }
     
-        public int trainerId { get; set; }
+        public int refereeId { get; set; }
     
         /// <summary>
         /// 修改时间

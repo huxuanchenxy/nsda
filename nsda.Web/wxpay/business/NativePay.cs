@@ -84,7 +84,7 @@ namespace nsda.Web.wxpay
             data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));//交易起始时间
             data.SetValue("time_expire", DateTime.Now.AddMinutes(90).ToString("yyyyMMddHHmmss"));//交易结束时间
             data.SetValue("goods_tag", response.Remark);//商品标记
-            data.SetValue("notify_url", "http://test.dipot.com/callbcak/resultnotify");//通知地址
+            data.SetValue("notify_url", "http://www.joyofdebate.org/callbcak/resultnotify");//通知地址
             data.SetValue("trade_type", "NATIVE");//交易类型
             data.SetValue("product_id", response.Id);//商品ID  
             data.SetValue("sign", data.MakeSign());//签名

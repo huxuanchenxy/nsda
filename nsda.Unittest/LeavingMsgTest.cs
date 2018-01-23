@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using nsda.Model.dto.request;
+using nsda.Models;
 using nsda.Services.admin;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,12 @@ namespace nsda.unittest
             string msg = string.Empty;
             var request = new LeavingMsgRequest
             {
-                 Email="test@163.com",
-                 Message="test",
-                 Mobile="182********",
-                 Name="shangguanlei"
+                Email = "test@163.com",
+                Message = "test",
+                Mobile = "182********",
+                Name = "shangguanlei"
             };
-            service.Insert(request,out msg);
+            service.Insert(request, out msg);
         }
 
         [TestMethod]

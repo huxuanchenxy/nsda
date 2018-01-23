@@ -32,7 +32,7 @@ namespace nsda.Web.wxpay
         //=======【支付结果通知url】===================================== 
         /* 支付结果通知回调url，用于商户接收支付结果
         */
-        public const string NOTIFY_URL = "http://test.dipot.com/callbcak/resultnotify";
+        public const string NOTIFY_URL = "http://www.joyofdebate.org/callbcak/resultnotify";
 
         //=======【商户系统后台机器IP】===================================== 
         /* 此参数可手动配置也可在程序中自动获取
