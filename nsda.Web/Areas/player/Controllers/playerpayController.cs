@@ -3,12 +3,18 @@ using nsda.Model.enums;
 using nsda.Services;
 using nsda.Services.Contract.admin;
 using nsda.Utilities;
+using nsda.Web.wxpay;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using ThoughtWorks.QRCode.Codec;
 
 namespace nsda.Web.Areas.player.Controllers
 {
@@ -35,74 +41,128 @@ namespace nsda.Web.Areas.player.Controllers
         }
 
         //跳转至支付宝支付页面
-        public ContentResult alipay(int id)
+        public ActionResult alipay(int id)
         {
             OrderResponse response = _orderService.OrderDetail(id);
             var userContext = UserContext.WebUserContext;
             if (response == null|| response.MemberId!= userContext.Id)
             {
-                Response.Redirect("/player/player/index",true);
+                return RedirectToAction("index", "player", new { area = "player" });
             }
-            string msg = string.Empty;
-            _orderService.PayLog(id, response.Money, PayTypeEm.支付宝, userContext.Id, out msg);//插入支付流水信息
+            else if (response.OrderStatus == OrderStatusEm.支付成功)
+            {
+                return RedirectToAction("paysuccess", "playerpay", new { area = "player", orderId = id });
+            }
+            else if (response.OrderStatus != OrderStatusEm.等待支付 && response.OrderStatus != OrderStatusEm.支付失败)
+            {
+                return RedirectToAction("index", "player", new { area = "player" });
+            }
+            else
+            {
+                string msg = string.Empty;
+                _orderService.PayLog(id, response.Money, PayTypeEm.支付宝, userContext.Id, out msg);//插入支付流水信息
 
-            string str = "1";
-            string str2 = "/callback/alinotifyurl";//异步回调地址
-            string str3 = "/callback/alireturnurl";//同步回调地址
-            string str4 = Constant.PayAccount;//支付宝账号
-            string str5 = DesEncoderAndDecoder.Encrypt($"{id}#nsda");
-            string pkgName = response.Remark;
-            string str7 = response.Money.ToString();
-            string info = response.Remark;
-            string str9 = "";//网站地址
-            string str10 = Submit.Query_timestamp();
-            string str11 = "";
-            SortedDictionary<string, string> sParaTemp = new SortedDictionary<string, string>();
-            sParaTemp.Add("partner", Config.Partner);
-            sParaTemp.Add("_input_charset", Config.Input_charset.ToLower());
-            sParaTemp.Add("service", "create_direct_pay_by_user");
-            sParaTemp.Add("payment_type", str);
-            sParaTemp.Add("notify_url", str2);
-            sParaTemp.Add("return_url", str3);
-            sParaTemp.Add("seller_email", str4);
-            sParaTemp.Add("out_trade_no", str5);
-            sParaTemp.Add("subject", pkgName);
-            sParaTemp.Add("total_fee", str7);
-            sParaTemp.Add("body", info);
-            sParaTemp.Add("show_url", str9);
-            sParaTemp.Add("anti_phishing_key", str10);
-            sParaTemp.Add("exter_invoke_ip", str11);
-            string content = Submit.BuildRequest(sParaTemp, "get", "确认");
-            return Content(content);
-    }
+                string str = "1";
+                string str2 = "/callback/alinotifyurl";//异步回调地址
+                string str3 = "/callback/alireturnurl";//同步回调地址
+                string str4 = Constant.PayAccount;//支付宝账号
+                string str5 = DesEncoderAndDecoder.Encrypt($"{id}#nsda");
+                string pkgName = response.Remark;
+                string str7 = response.Money.ToString();
+                string info = response.Remark;
+                string str9 = "";//网站地址
+                string str10 = Submit.Query_timestamp();
+                string str11 = "";
+                SortedDictionary<string, string> sParaTemp = new SortedDictionary<string, string>();
+                sParaTemp.Add("partner", Config.Partner);
+                sParaTemp.Add("_input_charset", Config.Input_charset.ToLower());
+                sParaTemp.Add("service", "create_direct_pay_by_user");
+                sParaTemp.Add("payment_type", str);
+                sParaTemp.Add("notify_url", str2);
+                sParaTemp.Add("return_url", str3);
+                sParaTemp.Add("seller_email", str4);
+                sParaTemp.Add("out_trade_no", str5);
+                sParaTemp.Add("subject", pkgName);
+                sParaTemp.Add("total_fee", str7);
+                sParaTemp.Add("body", info);
+                sParaTemp.Add("show_url", str9);
+                sParaTemp.Add("anti_phishing_key", str10);
+                sParaTemp.Add("exter_invoke_ip", str11);
+                string content = Submit.BuildRequest(sParaTemp, "get", "确认");
+                return Content(content);
+            }
+        }
 
         //跳转至微信支付页面
-        public ContentResult wechat(int id)
+        public ActionResult wechat(int id)
         {
             OrderResponse response = _orderService.OrderDetail(id);
             var userContext = UserContext.WebUserContext;
             if (response == null || response.MemberId != userContext.Id)
             {
-                Response.Redirect("/player/player/index", true);
+                return RedirectToAction("index", "player", new { area = "player" });
             }
-            string msg = string.Empty;
-            _orderService.PayLog(id, response.Money, PayTypeEm.微信, userContext.Id, out msg);//插入支付流水信息
-            return Content("");
-        }
-
-        //支付中转页
-        public ActionResult pay(int payType,int orderId)
-        {
-            payType = payType <= 0 ? (int)PayTypeEm.支付宝 : payType;
-            if (payType == (int)PayTypeEm.微信)
+            else if (response.OrderStatus == OrderStatusEm.支付成功)
             {
-                Response.Redirect($"/player/playerpay/alipay/{orderId}");
+                return RedirectToAction("paysuccess", "playerpay", new { area = "player", orderId=id });
+            }
+            else if (response.OrderStatus != OrderStatusEm.等待支付 && response.OrderStatus != OrderStatusEm.支付失败)
+            {
+                return RedirectToAction("index", "player",new { area = "player" });
             }
             else
             {
-                Response.Redirect($"/player/playerpay/wechat/{orderId}");
+                string msg = string.Empty;
+                _orderService.PayLog(id, response.Money, PayTypeEm.微信, userContext.Id, out msg);//插入支付流水信息
+                NativePay nativePay = new NativePay();
+                string url = nativePay.GetPayUrl(response);
+                ViewBag.QRCode = "/player/playerpay/makeqrcode?data=" + HttpUtility.UrlEncode(url);
+                ViewBag.Order = response;
+                return View();
             }
-            return View();
+        }
+
+        //支付成功页
+        public ActionResult paysuccess(int orderId)
+        {
+            var order = _orderService.OrderDetail(orderId);
+            return View(order);
+        }
+
+        //生成二维码
+        public FileResult makeqrcode(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+                throw new ArgumentException("data");
+
+            //初始化二维码生成工具
+            QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
+            qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+            qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
+            qrCodeEncoder.QRCodeVersion = 0;
+            qrCodeEncoder.QRCodeScale = 4;
+
+            //将字符串生成二维码图片
+            Bitmap image = qrCodeEncoder.Encode(data, Encoding.Default);
+
+            //保存为PNG到内存流  
+            MemoryStream ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Jpeg);
+            return File(ms.ToArray(), "image/jpeg");
+        }
+
+        //轮询订单状态是否改变
+        public ContentResult paymentresult(int orderId)
+        {
+            var response = _orderService.OrderDetail(orderId);
+            if (response.OrderStatus != OrderStatusEm.等待支付)
+            {
+                return Content("1");
+            }
+            else
+            {
+                return Content("0");
+            }
         }
     }
 }

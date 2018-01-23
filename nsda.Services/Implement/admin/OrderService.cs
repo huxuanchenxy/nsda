@@ -281,7 +281,7 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
         //修改订单状态
-        public void UpdateStatus(int id)
+        public void UpdateStatus(int id,OrderStatusEm orderStatus)
         {
             try
             {
@@ -289,7 +289,7 @@ namespace nsda.Services.Implement.admin
                 if (order != null)
                 {
                     order.updatetime = DateTime.Now;
-                    order.orderStatus = OrderStatusEm.支付成功;
+                    order.orderStatus = orderStatus;
                     _dbContext.Update(order);
                 }
             }

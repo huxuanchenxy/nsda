@@ -1,9 +1,12 @@
 ﻿using nsda.Services.Contract.admin;
 using nsda.Utilities;
+using nsda.Web.wxpay;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,9 +15,11 @@ namespace nsda.Web.Controllers
     public class callbackController : Controller
     {
         IPayCallBackService _payCallBackService;
-        public callbackController(IPayCallBackService payCallBackService)
+        IOrderService _orderService;
+        public callbackController(IPayCallBackService payCallBackService,IOrderService orderService)
         {
             _payCallBackService = payCallBackService;
+            _orderService = orderService;
         }
         //支付宝支付异步回调
         public ContentResult alinotifyurl()
@@ -39,33 +44,16 @@ namespace nsda.Web.Controllers
                     //商户订单号
                     //支付宝交易号
                     //交易状态
-                    if (trade_status == "TRADE_FINISHED")
+                    if (trade_status == "TRADE_FINISHED"|| trade_status == "TRADE_SUCCESS")
                     {
-                        //判断该笔订单是否在商户网站中已经做过处理
-                        //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                        //如果有做过处理，不执行商户的业务程序
-
-                        //注意：
-                        //该种交易状态只在两种情况下出现
-                        //1、开通了普通即时到账，买家付款成功后。
-                        //2、开通了高级即时到账，从该笔交易成功时间算起，过了签约时的可退款时限（如：三个月以内可退款、一年以内可退款等）后。
-                        //更改订单状态
-                        _payCallBackService.Callback(out_trade_no, trade_no);
-                    }
-                    else if (trade_status == "TRADE_SUCCESS")
-                    {
-                        //判断该笔订单是否在商户网站中已经做过处理
-                        //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                        //如果有做过处理，不执行商户的业务程序
-
-                        //注意：
-                        //该种交易状态只在一种情况下出现——开通了高级即时到账，买家付款成功后。
-                        //更改订单状态
                         _payCallBackService.Callback(out_trade_no, trade_no);
                     }
                     else
                     {
                         //支付失败
+                        string[] str = DesEncoderAndDecoder.Decrypt(out_trade_no).Split('#');
+                        int orderId = str[0].ToInt32();
+                        _orderService.UpdateStatus(orderId, Model.enums.OrderStatusEm.支付失败);
                         return Content(trade_status);
                     }
 
@@ -87,6 +75,7 @@ namespace nsda.Web.Controllers
         //支付宝支付异步回调
         public ActionResult alireturnurl()
         {
+            int id = 0;
             string returnmsg = string.Empty;
             SortedDictionary<string, string> sPara = GetRequestGet();
             if (sPara.Count > 0)//判断是否有带返回参数
@@ -112,7 +101,6 @@ namespace nsda.Web.Controllers
                         //如果有做过处理，不执行商户的业务程序
                         //更新订单信息
                         _payCallBackService.Callback(out_trade_no, trade_no);
-                        returnmsg=   "支付成功";
                     }
                     //打印页面
                     else
@@ -122,17 +110,8 @@ namespace nsda.Web.Controllers
                     //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 }
-                else//验证失败
-                {
-                    returnmsg = "验证失败";
-                }
             }
-            else
-            {
-                returnmsg = "无返回参数";
-            }
-            ViewBag.ReturnMsg = returnmsg;
-            return View();
+            return RedirectToAction("paysuccess","playerpay", new { area = "player",orderId = id });
         }
 
         /// <summary>
@@ -187,6 +166,94 @@ namespace nsda.Web.Controllers
             if (data.IsEmpty())
                 return "";
             return data;
+        }
+
+        public ActionResult resultnotify()
+        {
+            //接收从微信后台POST过来的数据
+            Stream s = Request.InputStream;
+            int count = 0;
+            byte[] buffer = new byte[1024];
+            StringBuilder builder = new StringBuilder();
+            while ((count = s.Read(buffer, 0, 1024)) > 0)
+            {
+                builder.Append(Encoding.UTF8.GetString(buffer, 0, count));
+            }
+            s.Flush();
+            s.Close();
+            s.Dispose();
+            //转换数据格式并验证签名
+            WxPayData data = new WxPayData();
+            try
+            {
+                data.FromXml(builder.ToString());
+            }
+            catch (WxPayException ex)
+            {
+                //若签名错误，则立即返回结果给微信支付后台
+                WxPayData res = new WxPayData();
+                res.SetValue("return_code", "FAIL");
+                res.SetValue("return_msg", ex.Message);
+                Log.Error(this.GetType().ToString(), "Sign check error : " + res.ToXml());
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+            ProcessNotify(data);
+
+            return View();
+        }
+
+        private void ProcessNotify(WxPayData data)
+        {
+            WxPayData notifyData = data;
+
+            //检查支付结果中transaction_id是否存在
+            if (!notifyData.IsSet("transaction_id"))
+            {
+                //若transaction_id不存在，则立即返回结果给微信支付后台
+                WxPayData res = new WxPayData();
+                res.SetValue("return_code", "FAIL");
+                res.SetValue("return_msg", "支付结果中微信订单号不存在");
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+            string transaction_id = notifyData.GetValue("transaction_id").ToString();
+            //查询订单，判断订单真实性
+            if (!QueryOrder(transaction_id))
+            {
+                //若订单查询失败，则立即返回结果给微信支付后台
+                WxPayData res = new WxPayData();
+                res.SetValue("return_code", "FAIL");
+                res.SetValue("return_msg", "订单查询失败");
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+            //查询订单成功
+            else
+            {
+                WxPayData res = new WxPayData();
+                res.SetValue("return_code", "SUCCESS");
+                res.SetValue("return_msg", "OK");
+                _payCallBackService.Callback(data.GetValue("out_trade_no").ToString(), data.GetValue("transaction_id").ToString());
+                Response.Write(res.ToXml());
+                Response.End();
+            }
+        }
+        //查询订单
+        private bool QueryOrder(string transaction_id)
+        {
+            WxPayData req = new WxPayData();
+            req.SetValue("transaction_id", transaction_id);
+            WxPayData res = WxPayApi.OrderQuery(req);
+            if (res.GetValue("return_code").ToString() == "SUCCESS" &&
+                res.GetValue("result_code").ToString() == "SUCCESS")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ namespace nsda.Services.Implement.admin
                 string[] str = DesEncoderAndDecoder.Decrypt(out_trade_no).Split('#');
                 int orderId = str[0].ToInt32();
                 var order = _dbContext.Get<t_order>(orderId);
-                if (order != null&&order.orderStatus==OrderStatusEm.等待支付)
+                if (order != null&&(order.orderStatus==OrderStatusEm.等待支付|| order.orderStatus == OrderStatusEm.支付失败))
                 {
                     try
                     {
