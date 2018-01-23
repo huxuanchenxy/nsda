@@ -178,62 +178,62 @@ namespace nsda.Services.Implement.eventmanage
             _dbContext.Insert(new t_eventteamscoringrule
             {
                 eventId = eventId,
-                teamScoringRules = TeamScoringRulesEm.获胜场数,
+                teamScoringRules = TeamScoringRulesEm.队伍获胜的场数,
                 viewindex = 1
             });
             _dbContext.Insert(new t_eventteamscoringrule
             {
                 eventId = eventId,
-                teamScoringRules = TeamScoringRulesEm.对方获胜场数,
+                teamScoringRules = TeamScoringRulesEm.队伍中两位辩手的个人总分,
                 viewindex = 2
             });
             _dbContext.Insert(new t_eventteamscoringrule
             {
                 eventId = eventId,
-                teamScoringRules = TeamScoringRulesEm.队伍选手总分,
+                teamScoringRules = TeamScoringRulesEm.所遇到的对手获胜的场数总和,
                 viewindex = 3
             });
             _dbContext.Insert(new t_eventteamscoringrule
             {
                 eventId = eventId,
-                teamScoringRules = TeamScoringRulesEm.对方队伍选手总分,
+                teamScoringRules = TeamScoringRulesEm.对手的个人总分,
                 viewindex = 4
             });
             _dbContext.Insert(new t_eventteamscoringrule
             {
                 eventId = eventId,
-                teamScoringRules = TeamScoringRulesEm.队伍选手排名总和,
+                teamScoringRules = TeamScoringRulesEm.队伍中两位辩手的个人排名总和,
                 viewindex = 5
             });
 
             _dbContext.Insert(new t_eventplayerscoringrule
             {
                 eventId = eventId,
-                scoringRules = ScoringRulesEm.获胜场数,
+                scoringRules = ScoringRulesEm.选手个人总分,
                 viewindex = 1
             });
             _dbContext.Insert(new t_eventplayerscoringrule
             {
                 eventId = eventId,
-                scoringRules = ScoringRulesEm.对方获胜场数,
+                scoringRules = ScoringRulesEm.个人排名总和,
                 viewindex = 2
             });
             _dbContext.Insert(new t_eventplayerscoringrule
             {
                 eventId = eventId,
-                scoringRules = ScoringRulesEm.选手排名总和,
+                scoringRules = ScoringRulesEm.队伍获胜场数总和,
                 viewindex = 3
             });
             _dbContext.Insert(new t_eventplayerscoringrule
             {
                 eventId = eventId,
-                scoringRules = ScoringRulesEm.对方选手排名,
+                scoringRules = ScoringRulesEm.所遇到的对手获胜的场数总和,
                 viewindex = 4
             });
             _dbContext.Insert(new t_eventplayerscoringrule
             {
                 eventId = eventId,
-                scoringRules = ScoringRulesEm.随机数值,
+                scoringRules = ScoringRulesEm.对手的个人总分,
                 viewindex = 5
             });
 

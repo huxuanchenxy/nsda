@@ -76,6 +76,7 @@
     <Compile Include="dto\request\MemberRequest.cs" />
     <Compile Include="dto\request\MatchCommonRequest.cs" />
     <Compile Include="dto\request\RecordOfDetailRequest.cs" />
+    <Compile Include="dto\request\RecordOfEntryRequest.cs" />
     <Compile Include="dto\request\RefereeSignUpQueryRequest.cs" />
     <Compile Include="dto\request\SchoolRequest.cs" />
     <Compile Include="dto\request\PlayerSignUpRequest.cs" />

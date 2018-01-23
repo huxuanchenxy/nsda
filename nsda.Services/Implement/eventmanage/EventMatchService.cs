@@ -154,7 +154,7 @@ namespace nsda.Services.Implement.eventmanage
             return list;
         }
         //录入成绩
-        public bool RecordOfEntry(out string msg)
+        public bool RecordOfEntry(RecordOfEntryRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;

@@ -26,7 +26,7 @@ namespace nsda.Services.Contract.eventmanage
         //对垒表
         List<ListMatchResponse> ListMatch(ListMatchRequest request);
         //录入成绩
-        bool RecordOfEntry(out string msg);
+        bool RecordOfEntry(RecordOfEntryRequest request,out string msg);
         //未录入成绩的对垒 已录入成绩的对垒
         List<RecordOfListResponse> RecordOfList(MatchCommonRequest request);
         //评分队伍

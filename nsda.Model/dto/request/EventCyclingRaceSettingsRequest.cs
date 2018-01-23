@@ -23,8 +23,6 @@ namespace nsda.Model.dto.request
 
         public int Screenings { get; set; }
 
-        public int RefereeCount { get; set; }
-
         public int TotalRound { get; set; }
         public List<EventCyclingRaceRequest> ListCyclingRace { get; set; }
         public EventCyclingRaceSettingsRequest()

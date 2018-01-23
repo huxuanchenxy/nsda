@@ -41,8 +41,6 @@ namespace nsda.Models
     
         public int screenings { get; set; }
     
-        public int refereeCount { get; set; }
-    
         public int totalround { get; set; }
     
         /// <summary>

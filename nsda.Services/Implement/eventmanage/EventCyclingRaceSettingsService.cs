@@ -129,7 +129,6 @@ namespace nsda.Services.Implement.eventmanage
                             eventGroupId = item.EventGroupId,
                             eventId = item.EventId,
                             isallow = item.IsAllow,
-                            refereeCount = item.RefereeCount,
                             screenings = item.Screenings,
                             totalround = item.TotalRound,
                         }).ToObjInt();
