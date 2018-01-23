@@ -42,9 +42,9 @@ namespace nsda.Services.member
         // 会员详情
         MemberResponse Detail(int id);
         // 模糊查找选手
-        List<MemberSelectResponse> SelectPlayer(string keyvalue, int memberId);
+        List<MemberSelectResponse> SelectPlayer(string key, string value, int memberId);
         // 模糊查找教练
-        List<MemberSelectResponse> SelectTrainer(string keyvalue, int memberId);
+        List<MemberSelectResponse> SelectTrainer(string key, string value, int memberId);
         //去认证
         int GoAuth(int memberId, out string msg);
         bool IsExist(string account);

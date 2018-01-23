@@ -88,9 +88,9 @@ namespace nsda.Web.Areas.trainer.Controllers
 
         //模糊查询选手
         [HttpGet]
-        public ContentResult listplayer(string keyvalue)
+        public ContentResult listplayer(string key,string value)
         {
-            var data = _memberService.SelectPlayer(keyvalue,UserContext.WebUserContext.Id);
+            var data = _memberService.SelectPlayer(key,value, UserContext.WebUserContext.Id);
             return Result(true,string.Empty,data);
         }
         #endregion

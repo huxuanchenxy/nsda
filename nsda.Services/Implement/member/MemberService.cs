@@ -732,28 +732,32 @@ namespace nsda.Services.member
             }
         }
         // 选手下拉框
-        public List<MemberSelectResponse> SelectPlayer(string keyvalue, int memberId)
+        public List<MemberSelectResponse> SelectPlayer(string key,string value, int memberId)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
             {
-                if (keyvalue.IsEmpty())
+                if (value.IsEmpty()||key.IsEmpty())
+                {
+                    return list;
+                }
+                if (key != "code" && key != "completename")
                 {
                     return list;
                 }
                 //查询注册号 为选手号 或者扩展有选手的会员
                 var sql = $@"
                             select Id,code MemberCode,completename MemberName from t_member where (isdelete=0 
-                            and memberType={MemberTypeEm.选手} and id!={memberId} and (code like @key or completename like @key)) or id in
+                            and memberType={MemberTypeEm.选手} and id!={memberId} and {key} like @value) or id in
                             (
 	                            select a.memberId from t_memberextend a
 	                            inner join t_member b on a.memberId=b.id
 	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手} 
-                                and (b.code like @key or b.completename like @key)
+                                and b.{key} like @value
                             ) limit 30
                          ";
                 var dy = new DynamicParameters();
-                dy.Add("key", "%" + keyvalue + "%");
+                dy.Add(key, "%" + value + "%");
                 list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
@@ -763,28 +767,32 @@ namespace nsda.Services.member
             return list;
         }
         // 教练下拉框
-        public List<MemberSelectResponse> SelectTrainer(string keyvalue, int memberId)
+        public List<MemberSelectResponse> SelectTrainer(string key, string value,int memberId)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
             {
-                if (keyvalue.IsEmpty())
+                if (value.IsEmpty() || key.IsEmpty())
+                {
+                    return list;
+                }
+                if (key != "code" && key != "completename")
                 {
                     return list;
                 }
                 //查询注册号 为教练号 或者扩展有教练的会员
                 var sql = $@"
                             select Id,code MemberCode,completename MemberName from t_member where (isdelete=0 
-                            and memberType={MemberTypeEm.教练} and id!={memberId} and (code like @key or completename like @key)) or id in
+                            and memberType={MemberTypeEm.教练} and id!={memberId} and {key} like @value) or id in
                             (
 	                            select a.memberId from t_memberextend a
 	                            inner join t_member b on a.memberId=b.id
 	                            where  a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.教练} 
-                                and (b.code like @key or b.completename like @key)
+                                and b.{key} like @value
                             ) limit 30
                          ";
                 var dy = new DynamicParameters();
-                dy.Add("key", "%" + keyvalue + "%");
+                dy.Add(key, "%" + value + "%");
                 list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
