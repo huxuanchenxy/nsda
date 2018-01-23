@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Security.Cryptography;
+using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Security.Cryptography;
 
-namespace nsda.Utilities.Alipay
+namespace nsda.Utilities
 {
     /// <summary>
     /// 类名：MD5
@@ -32,9 +34,9 @@ namespace nsda.Utilities.Alipay
         public static string Sign(string prestr, string key, string _input_charset)
         {
             StringBuilder sb = new StringBuilder(32);
+
             prestr = prestr + key;
 
-            Alipay.Core.LogResult("\r\nprestr=" + prestr + "       time=" + DateTime.Now.ToString(), key);
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] t = md5.ComputeHash(Encoding.GetEncoding(_input_charset).GetBytes(prestr));
             for (int i = 0; i < t.Length; i++)
@@ -42,7 +44,6 @@ namespace nsda.Utilities.Alipay
                 sb.Append(t[i].ToString("x").PadLeft(2, '0'));
             }
 
-            Alipay.Core.LogResult("\r\nsign=" + sb.ToString() + "       time=" + DateTime.Now.ToString(), key);
             return sb.ToString();
         }
 

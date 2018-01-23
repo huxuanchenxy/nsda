@@ -15,7 +15,7 @@ namespace nsda.Utilities.Orm
         public MySqlDBContext(string conn = "defconn")
         {
             //mysql数据库链接
-            connection = new MySqlConnection(Config.GetConnectionString(conn));
+            connection = new MySqlConnection(GetConfig.GetConnectionString(conn));
             connection.Open();
             
             //配置

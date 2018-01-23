@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
+﻿using System.Web;
 using System.Text;
-using System.Web;
+using System.Security.Cryptography;
+using System.IO;
+using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Xml;
 
-namespace nsda.Utilities.Alipay
+namespace nsda.Utilities
 {
     /// <summary>
     /// 类名：Core
@@ -19,6 +21,7 @@ namespace nsda.Utilities.Alipay
     /// </summary>
     public class Core
     {
+
         public Core()
         {
         }
@@ -57,7 +60,7 @@ namespace nsda.Utilities.Alipay
 
             //去掉最後一個&字符
             int nLen = prestr.Length;
-            prestr.Remove(nLen - 1, 1);
+            prestr.Remove(nLen-1,1);
 
             return prestr.ToString();
         }
@@ -81,27 +84,6 @@ namespace nsda.Utilities.Alipay
             prestr.Remove(nLen - 1, 1);
 
             return prestr.ToString();
-        }
-
-        /// <summary>
-        /// 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
-        /// </summary>
-        /// <param name="sWord">要写入日志里的文本内容</param>
-        public static void LogResult(string sWord, string name)
-        {
-            string strPath = HttpContext.Current.Server.MapPath("~/paylog");
-            strPath = strPath + "\\" + DateTime.Now.ToString("yyMMdd") + "\\";
-            DirectoryInfo dir = new DirectoryInfo(strPath);
-            if (!dir.Exists)
-            {
-                dir.Create();
-            }
-            string filename = strPath + name + ".txt";
-            TextWriter writer = File.AppendText(filename);
-
-            writer.WriteLine(sWord);
-
-            writer.Close();
         }
 
         /// <summary>

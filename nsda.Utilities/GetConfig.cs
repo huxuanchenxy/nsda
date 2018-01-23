@@ -7,7 +7,7 @@ using System.Configuration;
 
 namespace nsda.Utilities
 {
-    public static class Config
+    public static class GetConfig
     {
         /// <summary>
         /// 获取appSettings

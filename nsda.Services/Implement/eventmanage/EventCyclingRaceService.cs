@@ -67,6 +67,7 @@ namespace nsda.Services.Implement.eventmanage
                 //获取报名队伍信息
                 //获取裁判信息
                 //教室信息
+                var room = _dbContext.Query<t_eventroom>($"").ToList();
                 //获取教练信息
                 //排对垒 根据对垒规则 如果随机就无需查对垒规则
 

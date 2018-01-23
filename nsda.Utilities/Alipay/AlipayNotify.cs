@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Web;
+using System.Text;
 using System.IO;
 using System.Net;
-using System.Text;
+using System;
+using System.Collections.Generic;
 
-namespace nsda.Utilities.Alipay
+namespace nsda.Utilities
 {
     /// <summary>
     /// 类名：Notify
@@ -15,17 +16,22 @@ namespace nsda.Utilities.Alipay
     /// '说明：
     /// 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
     /// 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
-    ///
+    /// 
     /// //////////////////////注意/////////////////////////////
-    /// 调试通知返回时，可查看或改写log日志的写入TXT里的数据，来检查通知返回是否正常
+    /// 调试通知返回时，可查看或改写log日志的写入TXT里的数据，来检查通知返回是否正常 
     /// </summary>
     public class Notify
     {
-        private string _input_charset;
-        private string _key;
-        private string _partner;
-        private string _sign_type;
-        private string Https_veryfy_url;
+        #region 字段
+        private string _partner = "";               //合作身份者ID
+        private string _key = "";                   //商户的私钥
+        private string _input_charset = "";         //编码格式
+        private string _sign_type = "";             //签名方式
+
+        //支付宝消息验证地址
+        private string Https_veryfy_url = "https://mapi.alipay.com/gateway.do?service=notify_verify&";
+        #endregion
+
 
         /// <summary>
         /// 构造函数
@@ -35,15 +41,11 @@ namespace nsda.Utilities.Alipay
         /// <param name="notify_id">通知验证ID</param>
         public Notify()
         {
-            this._partner = "";
-            this._key = "";
-            this._input_charset = "";
-            this._sign_type = "";
-            this.Https_veryfy_url = "https://mapi.alipay.com/gateway.do?service=notify_verify&";
-            this._partner = Config.Partner.Trim();
-            this._key = Config.Key.Trim();
-            this._input_charset = Config.Input_charset.Trim().ToLower();
-            this._sign_type = Config.Sign_type.Trim().ToUpper();
+            //初始化基础配置信息
+            _partner = Config.Partner.Trim();
+            _key = Config.Key.Trim();
+            _input_charset = Config.Input_charset.Trim().ToLower();
+            _sign_type = Config.Sign_type.Trim().ToUpper();
         }
 
         /// <summary>
@@ -62,9 +64,8 @@ namespace nsda.Utilities.Alipay
             if (notify_id != null && notify_id != "") { responseTxt = GetResponseTxt(notify_id); }
 
             //写日志记录（若要调试，请取消下面两行注释）
-            //string sWord = "responseTxt=" + responseTxt + "\n isSign=" + isSign.ToString() + "\n 返回回来的参数：" + GetPreSignStr(inputPara) + "\n ";
-            //Core.LogResult(sWord);
-
+            string sWord = "responseTxt=" + responseTxt + "\n isSign=" + isSign.ToString() + "\n 返回回来的参数：" + GetPreSignStr(inputPara) + "\n ";
+            LogUtils.LogInfo(sWord);
             //判断responsetTxt是否为true，isSign是否为true
             //responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
             //isSign不是true，与安全校验码、请求时的参数格式（如：带自定义参数等）、编码格式有关
@@ -108,7 +109,7 @@ namespace nsda.Utilities.Alipay
 
             //过滤空值、sign与sign_type参数
             sPara = Core.FilterPara(inputPara);
-
+            
             //获取待签名字符串
             string preSignStr = Core.CreateLinkString(sPara);
 
@@ -121,7 +122,6 @@ namespace nsda.Utilities.Alipay
                     case "MD5":
                         isSgin = AlipayMD5.Verify(preSignStr, sign, _key, _input_charset);
                         break;
-
                     default:
                         break;
                 }
@@ -153,22 +153,28 @@ namespace nsda.Utilities.Alipay
         /// <returns>服务器ATN结果</returns>
         private string Get_Http(string strUrl, int timeout)
         {
+            string strResult;
             try
             {
-                HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(strUrl);
-                request1.Timeout = timeout;
-                StreamReader reader = new StreamReader(((HttpWebResponse)request1.GetResponse()).GetResponseStream(), Encoding.Default);
-                StringBuilder builder = new StringBuilder();
-                while (-1 != reader.Peek())
+                HttpWebRequest myReq = (HttpWebRequest)HttpWebRequest.Create(strUrl);
+                myReq.Timeout = timeout;
+                HttpWebResponse HttpWResp = (HttpWebResponse)myReq.GetResponse();
+                Stream myStream = HttpWResp.GetResponseStream();
+                StreamReader sr = new StreamReader(myStream, Encoding.Default);
+                StringBuilder strBuilder = new StringBuilder();
+                while (-1 != sr.Peek())
                 {
-                    builder.Append(reader.ReadLine());
+                    strBuilder.Append(sr.ReadLine());
                 }
-                return builder.ToString();
+
+                strResult = strBuilder.ToString();
             }
-            catch (Exception exception)
+            catch (Exception exp)
             {
-                return ("错误：" + exception.Message);
+                strResult = "错误：" + exp.Message;
             }
+
+            return strResult;
         }
     }
 }

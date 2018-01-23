@@ -1,6 +1,5 @@
 ﻿using nsda.Services.Contract.admin;
 using nsda.Utilities;
-using nsda.Utilities.Alipay;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;

@@ -55,11 +55,11 @@ namespace nsda.Web.Areas.player.Controllers
             string str7 = response.Money.ToString();
             string info = response.Remark;
             string str9 = "";//网站地址
-            string str10 = nsda.Utilities.Alipay.Submit.Query_timestamp();
+            string str10 = Submit.Query_timestamp();
             string str11 = "";
             SortedDictionary<string, string> sParaTemp = new SortedDictionary<string, string>();
-            sParaTemp.Add("partner", nsda.Utilities.Alipay.Config.Partner);
-            sParaTemp.Add("_input_charset", nsda.Utilities.Alipay.Config.Input_charset.ToLower());
+            sParaTemp.Add("partner", Config.Partner);
+            sParaTemp.Add("_input_charset", Config.Input_charset.ToLower());
             sParaTemp.Add("service", "create_direct_pay_by_user");
             sParaTemp.Add("payment_type", str);
             sParaTemp.Add("notify_url", str2);
@@ -72,7 +72,7 @@ namespace nsda.Web.Areas.player.Controllers
             sParaTemp.Add("show_url", str9);
             sParaTemp.Add("anti_phishing_key", str10);
             sParaTemp.Add("exter_invoke_ip", str11);
-            string content = nsda.Utilities.Alipay.Submit.BuildRequest(sParaTemp, "get", "确认");
+            string content = Submit.BuildRequest(sParaTemp, "get", "确认");
             return Content(content);
     }
 

@@ -76,11 +76,11 @@
   <ItemGroup>
     <Compile Include="Alipay\AlipayConfig.cs" />
     <Compile Include="Alipay\AlipayCore.cs" />
+    <Compile Include="Alipay\AlipayMD5.cs" />
     <Compile Include="Alipay\AlipayNotify.cs" />
     <Compile Include="Alipay\AlipaySubmit.cs" />
-    <Compile Include="Alipay\MD5.cs" />
     <Compile Include="CommonFileServer.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="GetConfig.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="DataTypeEnum.cs" />
     <Compile Include="EmailUtility.cs" />

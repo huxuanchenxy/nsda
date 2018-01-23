@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Web;
+using System.Text;
 using System.IO;
 using System.Net;
-using System.Text;
+using System;
+using System.Collections.Generic;
 using System.Xml;
 
-namespace nsda.Utilities.Alipay
+namespace nsda.Utilities
 {
     /// <summary>
     /// 类名：Submit
@@ -19,27 +20,23 @@ namespace nsda.Utilities.Alipay
     /// </summary>
     public class Submit
     {
-        private static string _input_charset;
-        private static string _key;
-        private static string _sign_type;
-        private static string GATEWAY_NEW;
-
-        public Submit()
-        {
-        }
+        #region 字段
+        //支付宝网关地址（新）
+        private static string GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
+        //商户的私钥
+        private static string _key = "";
+        //编码格式
+        private static string _input_charset = "";
+        //签名方式
+        private static string _sign_type = "";
+        #endregion
 
         static Submit()
         {
-            GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
-            _key = "";
-            _input_charset = "";
-            _sign_type = "";
             _key = Config.Key.Trim();
             _input_charset = Config.Input_charset.Trim().ToLower();
             _sign_type = Config.Sign_type.Trim().ToUpper();
         }
-
-
 
         /// <summary>
         /// 生成请求时的签名
@@ -58,7 +55,6 @@ namespace nsda.Utilities.Alipay
                 case "MD5":
                     mysign = AlipayMD5.Sign(prestr, _key, _input_charset);
                     break;
-
                 default:
                     mysign = "";
                     break;
@@ -125,7 +121,7 @@ namespace nsda.Utilities.Alipay
 
             StringBuilder sbHtml = new StringBuilder();
 
-            sbHtml.Append("<form id='alipaysubmit' name='alipaysubmit' action='" + GATEWAY_NEW + "_input_charset=" + _input_charset + "' method='" + strMethod.ToLower().Trim() + "'>");
+            sbHtml.Append("<form  id='alipaysubmit' name='alipaysubmit' action='" + GATEWAY_NEW + "_input_charset=" + _input_charset + "' method='" + strMethod.ToLower().Trim() + "'>");
 
             foreach (KeyValuePair<string, string> temp in dicPara)
             {
@@ -140,6 +136,7 @@ namespace nsda.Utilities.Alipay
             return sbHtml.ToString();
         }
 
+
         /// <summary>
         /// 建立请求，以模拟远程HTTP的POST请求方式构造并获取支付宝的处理结果
         /// </summary>
@@ -150,7 +147,7 @@ namespace nsda.Utilities.Alipay
             Encoding code = Encoding.GetEncoding(_input_charset);
 
             //待请求参数数组字符串
-            string strRequestData = BuildRequestParaToString(sParaTemp, code);
+            string strRequestData = BuildRequestParaToString(sParaTemp,code);
 
             //把数组转换成流中所需字节数组类型
             byte[] bytesRequestData = code.GetBytes(strRequestData);
@@ -193,7 +190,7 @@ namespace nsda.Utilities.Alipay
             }
             catch (Exception exp)
             {
-                strResult = "报错：" + exp.Message;
+                strResult = "报错："+exp.Message;
             }
 
             return strResult;
@@ -211,6 +208,7 @@ namespace nsda.Utilities.Alipay
         /// <returns>支付宝处理结果</returns>
         public static string BuildRequest(SortedDictionary<string, string> sParaTemp, string strMethod, string fileName, byte[] data, string contentType, int lengthFile)
         {
+
             //待请求参数数组
             Dictionary<string, string> dicPara = new Dictionary<string, string>();
             dicPara = BuildRequestPara(sParaTemp);
@@ -290,11 +288,16 @@ namespace nsda.Utilities.Alipay
         /// <returns>时间戳字符串</returns>
         public static string Query_timestamp()
         {
-            string[] textArray1 = new string[] { GATEWAY_NEW, "service=query_timestamp&partner=", Config.Partner, "&_input_charset=", Config.Input_charset };
-            XmlTextReader reader = new XmlTextReader(string.Concat(textArray1));
-            XmlDocument document1 = new XmlDocument();
-            document1.Load(reader);
-            return document1.SelectSingleNode("/alipay/response/timestamp/encrypt_key").InnerText;
+            string url = GATEWAY_NEW + "service=query_timestamp&partner=" + Config.Partner + "&_input_charset=" + Config.Input_charset;
+            string encrypt_key = "";
+
+            XmlTextReader Reader = new XmlTextReader(url);
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(Reader);
+
+            encrypt_key = xmlDoc.SelectSingleNode("/alipay/response/timestamp/encrypt_key").InnerText;
+
+            return encrypt_key;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace nsda.Utilities.Orm
         public SqlServerDBContext(string conn = "ssconn")
         {
             //数据库链接
-            var sb = new SqlConnectionStringBuilder(Config.GetConnectionString(conn)) { AsynchronousProcessing = true }.ToString();
+            var sb = new SqlConnectionStringBuilder(GetConfig.GetConnectionString(conn)) { AsynchronousProcessing = true }.ToString();
             connection = new SqlConnection(sb);
             connection.Open();
 
