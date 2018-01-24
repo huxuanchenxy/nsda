@@ -145,6 +145,7 @@ namespace nsda.Services.member
                     flag = true;
                     var userContext = new WebUserContext
                     {
+                        Points=0,
                         Name = request.Name,
                         Account = request.Account,
                         Role = ((int)request.MemberType).ToString(),
@@ -201,6 +202,11 @@ namespace nsda.Services.member
                             role += $",{((int)item.role).ToString()}";
                         }
                     }
+                    decimal points = 0;
+                    if (detail.memberType != MemberTypeEm.赛事管理员)
+                    {
+                       points = _dbContext.ExecuteScalar($"select points from t_memberpoints where memberId={detail.id}").ToObjDecimal();
+                    }
                     //记录缓存
                     userContext = new WebUserContext
                     {
@@ -209,7 +215,8 @@ namespace nsda.Services.member
                         Account = detail.account,
                         Role = role,
                         MemberType = (int)detail.memberType,
-                        Status = (int)detail.memberStatus
+                        Status = (int)detail.memberStatus,
+                        Points = points
                     };
                     SaveCurrentUser(userContext);
                 }

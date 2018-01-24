@@ -25,8 +25,8 @@ namespace nsda.Web.Areas.player.Controllers
         IMemberPointsService _memberPointsService;
         IPlayerSignUpService _playerSignUpService;
         IPlayerEduExperService _playerEduExperService;
-
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduExperService playerEduExperService)
+        IPlayerCoachService _playerCoachService;
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduExperService playerEduExperService, IPlayerCoachService playerCoachService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
@@ -35,6 +35,7 @@ namespace nsda.Web.Areas.player.Controllers
             _memberPointsService = memberPointsService;
             _playerSignUpService = playerSignUpService;
             _playerEduExperService = playerEduExperService;
+            _playerCoachService = playerCoachService;
         }
 
         #region ajax
@@ -187,8 +188,9 @@ namespace nsda.Web.Areas.player.Controllers
 
         public ActionResult info()
         {
-            var data = _memberService.Detail(UserContext.WebUserContext.Id);
-            ViewBag.CoachInfo = null;
+            var userContext = UserContext.WebUserContext;
+            var data = _memberService.Detail(userContext.Id);
+            ViewBag.CoachInfo = _playerCoachService.Player_CoachDetail(userContext.Id);
             return View(data);
         }
 

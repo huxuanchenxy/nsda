@@ -61,5 +61,11 @@ namespace nsda.Model.dto.response
         public string School { get; set; }
     }
 
+    public class CurrentCoachResponse
+    {
+        public int Id { get; set; }
+        public string CoachName { get; set; }
+        public int CoachId { get; set; }
+    }
 }
 

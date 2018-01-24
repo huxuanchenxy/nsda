@@ -14,5 +14,6 @@ namespace nsda.Utilities
         public int MemberType  { get; set; }
         public int Status { get; set; }
         public string Role { get; set; }
+        public decimal Points { get; set; }
     }
 }

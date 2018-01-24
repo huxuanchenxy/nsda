@@ -99,6 +99,7 @@ namespace nsda.Services
                                 role += $",{((int)item.role).ToString()}";
                             }
                         }
+                        decimal points = dbcontext.ExecuteScalar($"select points from t_memberpoints where memberId={id}").ToObjDecimal();
                         //记录缓存
                         userContext = new WebUserContext
                         {
@@ -107,7 +108,8 @@ namespace nsda.Services
                             Account = detail.account,
                             Role = role,
                             MemberType = (int)detail.memberType,
-                            Status = (int)detail.memberStatus
+                            Status = (int)detail.memberStatus,
+                            Points = points
                         };
                         DateTime expireTime = DateTime.Now.AddHours(24);
                         SessionCookieUtility.WriteCookie(Constant.WebCookieKey, DesEncoderAndDecoder.Encrypt($"{userContext.Id}"), expireTime);

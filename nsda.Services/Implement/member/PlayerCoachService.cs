@@ -248,5 +248,32 @@ namespace nsda.Services.member
             }
             return list;
         }
+        // 学生当前教练
+        public CurrentCoachResponse Player_CoachDetail(int memberId)
+        {
+            CurrentCoachResponse response = null;
+            try
+            {
+                var sql = $@"select a.*,b.completename MemberName,b.code MemberCode,c.completename ToMemberName,c.code ToMemberCode from t_player_coach a 
+                            inner join t_member b on a.memberId=b.id
+                            inner join t_member c on a.toMemberId=c.id
+                            where a.isdelete=0 and a.playerCoachStatus={PlayerCoachStatusEm.同意} and ((a.isCoach=0 and a.isPositive=1 and a.memberId={memberId}) or (a.isCoach=1 and a.isPositive=0 and a.toMemberId={memberId}))
+                            order by a.startdate desc limit 1";
+                var data = _dbContext.QueryFirstOrDefault<PlayerCoachResponse>(sql);
+                if (data != null)
+                {
+                    response = new CurrentCoachResponse {
+                        Id = data.Id,
+                        CoachId = data.MemberId == memberId ? data.ToMemberId:data.MemberId,
+                        CoachName=data.MemberId==memberId?data.ToMemberName:data.MemberName
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("PlayerCoachService.Player_CoachDetail", ex);
+            }
+            return response;
+        }
     }
 }
