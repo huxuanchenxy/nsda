@@ -31,8 +31,6 @@ namespace nsda.Models
     
         public string title { get; set; }
     
-        public string remark { get; set; }
-    
         public string filepath { get; set; }
     
         /// <summary>

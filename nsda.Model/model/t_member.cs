@@ -121,6 +121,8 @@ namespace nsda.Models
         /// </summary>
         public DateTime? lastlogintime { get; set; }
     
+        public string head { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

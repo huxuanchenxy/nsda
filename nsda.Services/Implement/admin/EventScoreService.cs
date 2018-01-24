@@ -35,24 +35,11 @@ namespace nsda.Services.Implement.admin
             bool flag = false;
             msg = string.Empty;
             try
-            {
-                if (request.Title.IsEmpty())
-                {
-                    msg = "评分单标题不能为空";
-                    return flag;
-                }
-
-                if (request.FilePath.IsEmpty())
-                {
-                    msg = "附件不能为空";
-                    return flag;
-                }
-
+            { 
                 _dbContext.Insert(new t_event_score {
                       eventId=request.EventId,
                       eventGroupId=request.EventGroupId,
                       filepath=request.FilePath,
-                      remark=request.Remark,
                       title=request.Title
                  });
                 flag = true;
@@ -66,48 +53,7 @@ namespace nsda.Services.Implement.admin
             return flag;
         }
 
-        public bool Edit(EventScoreRequest request, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                if (request.Title.IsEmpty())
-                {
-                    msg = "评分单标题不能为空";
-                    return flag;
-                }
-
-                if (request.FilePath.IsEmpty())
-                {
-                    msg = "附件不能为空";
-                    return flag;
-                }
-                var eventscore = _dbContext.Get<t_event_score>(request.Id);
-                if (eventscore != null)
-                {
-                    eventscore.filepath = request.FilePath;
-                    eventscore.title = request.Title;
-                    eventscore.remark = request.Remark;
-                    eventscore.updatetime = DateTime.Now;
-                    _dbContext.Update(eventscore);
-                    flag = true;
-                }
-                else
-                {
-                    msg = "资料信息不存在";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("EventScoreService.Edit", ex);
-            }
-            return flag;
-        }
-
-        public bool Delete(int id, out string msg)
+        public bool Delete(int id,int sysUserId,out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -133,34 +79,6 @@ namespace nsda.Services.Implement.admin
                 LogUtils.LogError("EventScoreService.Delete", ex);
             }
             return flag;
-        }
-
-        public EventScoreResponse Detail(int id)
-        {
-            EventScoreResponse response = null;
-            try
-            {
-                var detail = _dbContext.Get<t_event_score>(id);
-                if (detail != null)
-                {
-                    response = new EventScoreResponse
-                    {
-                        CreateTime = detail.createtime,
-                        FilePath = detail.filepath,
-                        Id = detail.id,
-                        EventId=detail.eventId,
-                        EventGroupId=detail.eventGroupId,
-                        Remark = detail.remark,
-                        Title = detail.title,
-                        UpdateTime = detail.updatetime
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("EventScoreService.Detail", ex);
-            }
-            return response;
         }
 
         public List<EventScoreResponse> List(int eventId,int eventGroupId)

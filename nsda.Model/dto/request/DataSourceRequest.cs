@@ -9,6 +9,7 @@ namespace nsda.Model.dto.request
 {
     public class DataSourceRequest
     {
+        public int SysUserId { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
         public string Remark { get; set; }
@@ -17,6 +18,5 @@ namespace nsda.Model.dto.request
     public class DataSourceQueryRequest : PageQuery
     {
         public string Title { get; set; }
-        public string Remark { get; set; }
     }
 }

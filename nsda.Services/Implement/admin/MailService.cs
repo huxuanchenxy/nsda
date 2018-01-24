@@ -24,7 +24,6 @@ namespace nsda.Services.Implement.admin
             _dbContext = dbContext;
             _dataRepository = dataRepository;
         }
-
         //新增站内信
         public void Insert(MailRequest request)
         {
@@ -36,7 +35,6 @@ namespace nsda.Services.Implement.admin
                     memberId = request.MemberId,
                     isRead = false,
                     mailType = request.MailType,
-                    url = request.Url,
                     title = request.Title
                 });
             }
@@ -51,7 +49,7 @@ namespace nsda.Services.Implement.admin
             List<MailResponse> list = new List<MailResponse>();
             try
             {
-                var sql = $"select * from t_mail where isdelete=0 and memberId={request.MemberId}";
+                var sql = $"select * from t_mail where isdelete=0 and memberId={request.MemberId} order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<MailResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -62,17 +60,31 @@ namespace nsda.Services.Implement.admin
             }
             return list;
         }
+        public List<MailResponse> List(int memberId)
+        {
+            List<MailResponse> list = new List<MailResponse>();
+            try
+            {
+                var sql = $"select * from t_mail where isdelete=0 and memberId={memberId} order by createtime desc  limit 5";
+                list = _dbContext.Query<MailResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MailService.List", ex);
+            }
+            return list;
+        }
         //批量处理 未读站内信
-        public bool Mark(List<int> id, int memberId, out string msg)
+        public bool Mark(int id, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                var sql = $"udpate t_mail set updatetime=@UpdateTime,isread=1 where Id in @Id and memberId=@MemberId";
+                var sql = $"udpate t_mail set updatetime=@UpdateTime,isread=1 where Id = @Id and memberId=@MemberId";
                 var dy = new DynamicParameters();
                 dy.Add("UpdateTime", DateTime.Now);
-                dy.Add("Id", id.ToArray());
+                dy.Add("Id", id);
                 dy.Add("MemberId", memberId);
                 _dbContext.Execute(sql, dy);
             }

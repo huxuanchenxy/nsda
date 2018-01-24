@@ -11,6 +11,7 @@ using nsda.Utilities;
 using nsda.Web.Filter;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -132,7 +133,7 @@ namespace nsda.Web.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult editpwd(string oldPwd, string newPwd)
+        public ContentResult editpwd(string pwd)
         {
             var userContext = UserContext.WebUserContext;
             if (userContext == null)
@@ -142,8 +143,68 @@ namespace nsda.Web.Controllers
             else
             {
                 string msg = string.Empty;
-                var flag = _memberService.EditPwd(UserContext.WebUserContext.Id, oldPwd, newPwd, out msg);
+                var flag = _memberService.EditPwd(UserContext.WebUserContext.Id, pwd, out msg);
                 return Result<string>(flag, msg);
+            }
+        }
+
+        //上传头像
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ContentResult updatehead()
+        {
+            var userContext = UserContext.WebUserContext;
+            if (userContext == null)
+            {
+                return Result<string>(false, "登录超时,请刷新页面进行登录");
+            }
+            else
+            {
+                HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
+                if (files[0].ContentLength == 0 || files[0].FileName.IsEmpty())
+                {
+                    return Result<string>(false, "没有选择图片");
+                }
+                if (files[0].ContentLength > 2 * 1024 * 1024)
+                {
+                    return Result<string>(false, "图片大小限制2M");
+                }
+                string extendName = Path.GetExtension(files[0].FileName);
+                if (extendName.Contains("exe") || extendName.Contains("bat"))
+                {
+                    return Result<string>(false, "禁止上传exe/bat文件");
+                }
+                byte[] uploadFileBytes = null;
+                uploadFileBytes = new byte[files[0].ContentLength];
+                try
+                {
+                    files[0].InputStream.Read(uploadFileBytes, 0, files[0].ContentLength);
+                }
+                catch
+                {
+                    return Result<string>(false, "上传头像失败");
+                }
+                string msg = string.Empty;
+                string headUrl=CommonFileServer.UploadFile(new UploadFileRequest
+                {
+                    ExtendName = extendName,
+                    FileBinary = uploadFileBytes,
+                    Size = 2,
+                    FileEnum = FileEnum.MemberHead,
+                    FileName = Path.GetFileName(files[0].FileName)
+                }, out msg);
+                if (msg.IsNotEmpty())
+                {
+                    return Result<string>(false, "上传头像失败");
+                }
+                else {
+                    var flag = _memberService.ReplaceHead(headUrl, userContext.Id);
+                    if (!flag)
+                    {
+                        return Result<string>(false, "上传头像失败");
+                    }
+                    return Result<string>(true, "");
+                }
             }
         }
 
@@ -151,7 +212,7 @@ namespace nsda.Web.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult mark(List<int> ids)
+        public ContentResult mark(int id)
         {
             var userContext = UserContext.WebUserContext;
             if (userContext == null)
@@ -161,7 +222,7 @@ namespace nsda.Web.Controllers
             else
             {
                 string msg = string.Empty;
-                var flag = _mailService.Mark(ids,UserContext.WebUserContext.Id, out msg);
+                var flag = _mailService.Mark(id,UserContext.WebUserContext.Id, out msg);
                 return Result<string>(flag, msg);
             }
         }

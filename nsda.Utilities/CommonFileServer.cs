@@ -31,7 +31,7 @@ namespace nsda.Utilities
 
                 string mapPath = HostingEnvironment.MapPath("~/files");
                 string pictureSpaceDir = string.Empty;
-                string fileName = GetFileName(request.FileEnum, request.ExtendName,out pictureSpaceDir);
+                string fileName = GetFileName(request.FileEnum,request.FileName,request.ExtendName,out pictureSpaceDir);
                 string directoryFolder = $"{mapPath}{pictureSpaceDir}";
 
                 CreateNewDirectory(directoryFolder);
@@ -56,7 +56,7 @@ namespace nsda.Utilities
                 Directory.CreateDirectory(newMapDirectory);
         }
 
-        private static string GetFileName(FileEnum fileEnum, string extendName,out string dir)
+        private static string GetFileName(FileEnum fileEnum,string fileName,string extendName,out string dir)
         {
             Guid guid = Guid.NewGuid();
             dir = string.Empty;
@@ -73,10 +73,14 @@ namespace nsda.Utilities
                 case FileEnum.EventScoreAttachment:
                     dir = $"\\eventscoreattachment\\";
                     break;
+                case FileEnum.MemberHead:
+                    fileName = guid.ToString().FileMd5();
+                    dir = $"\\memberhead\\";
+                    break;
                 default:
                     return "";
             }
-            return $"{guid.ToString().FileMd5()}{extendName}";
+            return $"{fileName}{extendName}";
         }
     }
 }

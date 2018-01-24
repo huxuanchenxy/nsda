@@ -64,21 +64,8 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                if (request.Title.IsEmpty())
-                {
-                    msg = "资源标题不能为空";
-                    return flag;
-                }
-
-                if (request.FilePath.IsEmpty())
-                {
-                    msg = "附件不能为空";
-                    return flag;
-                }
-
                 _dbContext.Insert(new t_datasource
                 {
-                    remark = request.Remark,
                     title = request.Title,
                     filepath=request.FilePath 
                 });
@@ -99,24 +86,11 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                if (request.Title.IsEmpty())
-                {
-                    msg = "资源标题不能为空";
-                    return flag;
-                }
-
-                if (request.FilePath.IsEmpty())
-                {
-                    msg = "附件不能为空";
-                    return flag;
-                }
-
                 var datasource = _dbContext.Get<t_datasource>(request.Id);
                 if (datasource != null)
                 {
                     datasource.filepath = request.FilePath;
                     datasource.title = request.Title;
-                    datasource.remark = request.Remark;
                     datasource.updatetime = DateTime.Now;
                     _dbContext.Update(datasource);
                     flag = true;
@@ -147,7 +121,6 @@ namespace nsda.Services.Implement.admin
                         CreateTime = detail.createtime,
                         FilePath = detail.filepath,
                         Id = detail.id,
-                        Remark = detail.remark,
                         Title = detail.title,
                         UpdateTime = detail.updatetime  
                     };
@@ -170,11 +143,6 @@ namespace nsda.Services.Implement.admin
                 {
                     request.Title = "%" + request.Title + "%";
                     join.Append(" and title like @Title");
-                }
-                if (request.Remark.IsNotEmpty())
-                {
-                    request.Remark = "%" + request.Remark + "%";
-                    join.Append(" and remark like @Remark");
                 }
                 var sql=$@"select * from t_datasource where isdelete=0 {join.ToString()} order by createtime desc";            
                 int totalCount = 0;

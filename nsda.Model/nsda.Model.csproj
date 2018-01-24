@@ -285,9 +285,6 @@
     <Compile Include="model\t_memberpointsrecord.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_memberpointsrecorddetail.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
     <Compile Include="model\t_membertemp.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>

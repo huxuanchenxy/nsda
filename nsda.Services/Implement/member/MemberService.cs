@@ -373,50 +373,31 @@ namespace nsda.Services.member
             return member;
         }
         //修改密码
-        public bool EditPwd(int memberId, string oldPwd, string newPwd, out string msg)
+        public bool EditPwd(int memberId,string pwd, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                if (oldPwd.IsEmpty())
+                if (pwd.IsEmpty())
                 {
-                    msg = "原密码不能为空";
+                    msg = "密码不能为空";
                     return flag;
                 }
 
-                if (newPwd.IsEmpty())
+                if (pwd.IsEmpty())
                 {
-                    msg = "新密码不能为空";
-                    return flag;
-                }
-
-                if (newPwd.Length < 6)
-                {
-                    msg = "密码长度不能低于6";
-                    return flag;
-                }
-
-                if (string.Equals(oldPwd, newPwd))
-                {
-                    msg = "新密码和原密码相同";
+                    msg = "密码长度不能低于6位";
                     return flag;
                 }
 
                 var member = _dbContext.Get<t_member>(memberId);
                 if (member != null)
                 {
-                    if (!string.Equals(oldPwd, member.pwd))
-                    {
-                        msg = "原密码有误";
-                    }
-                    else
-                    {
-                        member.pwd = newPwd;
-                        member.updatetime = DateTime.Now;
-                        _dbContext.Update(member);
-                        flag = true;
-                    }
+                    member.pwd = pwd;
+                    member.updatetime = DateTime.Now;
+                    _dbContext.Update(member);
+                    flag = true;
                 }
                 else
                 {
@@ -889,6 +870,32 @@ namespace nsda.Services.member
             }
             catch (Exception ex)
             {
+                LogUtils.LogError("MemberService.IsExist", ex);
+            }
+            return flag;
+        }
+        //替换头像
+        public bool ReplaceHead(string headUrl, int memberId)
+        {
+            bool flag = false;
+            try
+            {
+                if (headUrl.IsEmpty())
+                {
+                    return flag;
+                }
+                t_member member = _dbContext.Get<t_member>(memberId);
+                if (member != null)
+                {
+                    member.updatetime = DateTime.Now;
+                    member.head = headUrl;
+                    _dbContext.Update(member);
+                    flag = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
                 LogUtils.LogError("MemberService.IsExist", ex);
             }
             return flag;

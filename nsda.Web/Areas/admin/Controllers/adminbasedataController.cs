@@ -8,6 +8,7 @@ using nsda.Utilities;
 using nsda.Web.Filter;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -322,23 +323,58 @@ namespace nsda.Web.Areas.admin.Controllers
         }
 
         [HttpPost]
-        [AjaxOnly]
         [ValidateAntiForgeryToken]
         public ContentResult insertdatasource(DataSourceRequest request)
         {
-            var msg = string.Empty;
-            var flag = _dataSourceService.Insert(request, UserContext.SysUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult editdatasource(DataSourceRequest request)
-        {
-            var msg = string.Empty;
-            var flag = _dataSourceService.Edit(request, UserContext.SysUserContext.Id, out msg);
-            return Result<string>(flag, msg);
+            request.SysUserId = UserContext.SysUserContext.Id;
+            if (request.Title.IsEmpty())
+            {
+                return Result<string>(false, "请输入标题");
+            }
+            HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
+            if (files[0].ContentLength == 0 || files[0].FileName.IsEmpty())
+            {
+                return Result<string>(false, "没有选择文件");
+            }
+            if (files[0].ContentLength > 5 * 1024 * 1024)
+            {
+                return Result<string>(false, "文件大小限制5M");
+            }
+            string extendName = Path.GetExtension(files[0].FileName);
+            if (extendName.Contains("exe") || extendName.Contains("bat"))
+            {
+                return Result<string>(false, "禁止上传exe/bat文件");
+            }
+            byte[] uploadFileBytes = null;
+            uploadFileBytes = new byte[files[0].ContentLength];
+            try
+            {
+                files[0].InputStream.Read(uploadFileBytes, 0, files[0].ContentLength);
+            }
+            catch
+            {
+                return Result<string>(false, "上传文件失败");
+            }
+            string msg = string.Empty;
+            string filePath = CommonFileServer.UploadFile(new UploadFileRequest
+            {
+                ExtendName = extendName,
+                FileBinary = uploadFileBytes,
+                Size = 5,
+                FileEnum = FileEnum.MemberHead,
+                FileName = Path.GetFileName(files[0].FileName)
+            }, out msg);
+            if (msg.IsNotEmpty())
+            {
+                return Result<string>(false, "上传文件失败");
+            }
+            else
+            {
+                request.FilePath = filePath;
+                var insertmsg = string.Empty;
+                var flag = _dataSourceService.Insert(request, UserContext.SysUserContext.Id, out insertmsg);
+                return Result<string>(flag, insertmsg);
+            }
         }
 
         [HttpGet]

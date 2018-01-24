@@ -40,9 +40,10 @@ namespace nsda.Services.Implement.member
             try
             {
                 List<t_eventgroup> listgroup = _dbContext.Select<t_eventgroup>(c => c.eventId == eventId).ToList();
+                t_member member = _dbContext.Get<t_member>(memberId);
                 foreach (var item in listgroup)
                 {
-                    if (IsValid(item, memberId))
+                    if (IsValid(item, member))
                     {
                         list.Add(new EventGroupResponse
                         {
@@ -90,7 +91,7 @@ namespace nsda.Services.Implement.member
                     foreach (var item in data)
                     {
                         //需要判断选手是否满足条件
-                        if (IsValid(group, item.id))
+                        if (IsValid(group, item))
                         {
                             list.Add(new MemberSelectResponse
                             {
@@ -169,15 +170,15 @@ namespace nsda.Services.Implement.member
                             return flag;
                         }
                     }
-
+                    t_member frommember = _dbContext.Get<t_member>(request.FromMemberId);
                     //3.0 是否有资格报名
-                    if (!IsValid(eventGroup, request.FromMemberId))
+                    if (!IsValid(eventGroup, frommember))
                     {
                         msg = "您不符合此赛事报名规则";
                         return flag;
                     }
-
-                    if (!IsValid(eventGroup, request.ToMemberId))
+                    t_member tomember = _dbContext.Get<t_member>(request.ToMemberId);
+                    if (!IsValid(eventGroup, tomember))
                     {
                         msg = "您队友不符合此赛事报名规则";
                         return flag;
@@ -210,6 +211,15 @@ namespace nsda.Services.Implement.member
                             signUpStatus = SignUpStatusEm.报名邀请中,
                             signUpType = SignUpTypeEm.被邀请人,
                             isTemp = false
+                        });
+
+                        _dbContext.Insert(new t_mail
+                        {
+                            title = $"{frommember.completename} 向您发出组队申请",
+                            content = $"{frommember.completename} 向您发出组队申请。邀请您一同参加 \"{tevent.name}\" {eventGroup.name}组别比赛。请尽快前往处理",
+                            isRead = false,
+                            mailType = MailTypeEm.赛事报名邀请,
+                            memberId = request.ToMemberId
                         });
                         _dbContext.CommitChanges();
                         flag = true;
@@ -292,9 +302,9 @@ namespace nsda.Services.Implement.member
                         _dbContext.Execute(sql);
                         flag = true;
                     }
-                    else if(tevent.eventType==EventTypeEm.演讲)
+                    else if (tevent.eventType == EventTypeEm.演讲)
                     {
-                       //演讲流程
+                        //演讲流程
                     }
                 }
                 else
@@ -424,7 +434,7 @@ namespace nsda.Services.Implement.member
                                 {
                                     _dbContext.BeginTransaction();
                                     var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
-                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id&&c.memberId== otherplaysignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id && c.memberId == otherplaysignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                     _dbContext.Insert(new t_order_operation
                                     {
                                         content = "组队失败申请退费",
@@ -458,7 +468,7 @@ namespace nsda.Services.Implement.member
                             {
                                 _dbContext.BeginTransaction();
                                 var sql = $"update t_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
-                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id&&c.memberId== playsignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id && c.memberId == playsignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                 _dbContext.Insert(new t_order_operation
                                 {
                                     content = "组队失败申请退费",
@@ -471,7 +481,7 @@ namespace nsda.Services.Implement.member
                                 t_order.orderStatus = OrderStatusEm.退款中;
                                 t_order.updatetime = DateTime.Now;
                                 _dbContext.Update(t_order);
-                                
+
                                 _dbContext.Execute(sql);
                                 _dbContext.CommitChanges();
                                 flag = true;
@@ -540,7 +550,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 t_player_signup signup = _dbContext.Get<t_player_signup>(id);
-                if (signup != null&&signup.signUpStatus==SignUpStatusEm.退赛申请中)
+                if (signup != null && signup.signUpStatus == SignUpStatusEm.退赛申请中)
                 {
                     try
                     {
@@ -551,7 +561,7 @@ namespace nsda.Services.Implement.member
                             if (tevent.endrefunddate > DateTime.Now)//可以退费
                             {
                                 #region 队友退赛信息
-                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id&&c.memberId== signup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id && c.memberId == signup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                 _dbContext.Insert(new t_order_operation
                                 {
                                     content = "组队失败申请退费",
@@ -568,7 +578,7 @@ namespace nsda.Services.Implement.member
 
                                 #region 自己退赛信息
                                 var otherplaysignup = _dbContext.Select<t_player_signup>(c => c.groupnum == signup.groupnum && c.eventId == signup.eventId && c.memberId == memberId).FirstOrDefault();
-                                t_order t_orderother = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id &&c.memberId==memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                t_order t_orderother = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id && c.memberId == memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                 _dbContext.Insert(new t_order_operation
                                 {
                                     content = "组队失败申请退费",
@@ -710,7 +720,7 @@ namespace nsda.Services.Implement.member
             return list;
         }
         //判断选手是否可以报名
-        private bool IsValid(t_eventgroup group, int memberId)
+        private bool IsValid(t_eventgroup group, t_member member)
         {
             bool flag = true;
             try
@@ -718,7 +728,6 @@ namespace nsda.Services.Implement.member
                 //第一步判断年级
                 if (group.mingrade.HasValue || group.maxgrade.HasValue)
                 {
-                    t_member member = _dbContext.Get<t_member>(memberId);
                     if (group.mingrade != (int)GradeEm.unlimited)
                     {
                         if (member.grade.HasValue)
@@ -753,7 +762,7 @@ namespace nsda.Services.Implement.member
                 if (group.mintimes.HasValue || group.maxtimes.HasValue)
                 {
                     //从对垒表中查参加过的赛事
-                    var times = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                    var times = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and memberId={member.id}  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                     if (group.mintimes > 0)
                     {
                         if (group.mintimes > times)
@@ -816,7 +825,7 @@ namespace nsda.Services.Implement.member
                     }
 
                     #region 教练
-                    var list_referee_signup = _dbContext.Select<t_referee_signup>(c =>c.eventId==eventId&&c.refereeSignUpStatus != RefereeSignUpStatusEm.申请失败 && c.refereeSignUpStatus != RefereeSignUpStatusEm.待审核).ToList();
+                    var list_referee_signup = _dbContext.Select<t_referee_signup>(c => c.eventId == eventId && c.refereeSignUpStatus != RefereeSignUpStatusEm.申请失败 && c.refereeSignUpStatus != RefereeSignUpStatusEm.待审核).ToList();
                     if (list_referee_signup != null && list_referee_signup.Count > 0)
                     {
                         foreach (var item in list_referee_signup)
@@ -939,7 +948,7 @@ namespace nsda.Services.Implement.member
                             {
                                 if (item.signUpStatus == SignUpStatusEm.已付款)
                                 {
-                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == item.id&&c.memberId==item.memberId&& c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
+                                    t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == item.id && c.memberId == item.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                     if (t_order != null)
                                     {
                                         _dbContext.Insert(new t_order_operation
@@ -949,7 +958,7 @@ namespace nsda.Services.Implement.member
                                             operationStatus = OperationStatusEm.待处理,
                                             orderOperType = OrderOperTypeEm.取消订单,
                                             orderId = t_order.id,
-                                            memberId=item.memberId
+                                            memberId = item.memberId
                                         });
 
                                         t_order.orderStatus = OrderStatusEm.退款中;
@@ -983,7 +992,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //报名成功的学员
-        public List<MemberSelectResponse> SelectPlayer(int eventId,string keyvalue)
+        public List<MemberSelectResponse> SelectPlayer(int eventId, string keyvalue)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try

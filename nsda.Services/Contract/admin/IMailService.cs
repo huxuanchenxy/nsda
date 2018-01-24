@@ -14,10 +14,12 @@ namespace nsda.Services.Contract.admin
         //1.0 新增站内信
         void Insert(MailRequest request);
         //1.1 标记为已读
-        bool Mark(List<int> id,int memberId,out string msg);
+        bool Mark(int id,int memberId,out string msg);
         //1.2 删除站内信
         bool Delete(int id, int memeberId, out string msg);
         //1.3 站内信列表
         List<MailResponse> List(MailQueryRequest request);
+        //1.4 站内信
+        List<MailResponse> List(int memberId);
     }
 }

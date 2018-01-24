@@ -24,9 +24,13 @@ namespace nsda.Utilities
         /// </summary>
         public int Size { get; set; }
         /// <summary>
-        /// 扩展码
+        /// 扩展名
         /// </summary>
         public string ExtendName { get; set; }
+        /// <summary>
+        /// 文件名
+        /// </summary>
+        public string FileName { get; set; }
     }
 
     public enum FileEnum
@@ -46,7 +50,13 @@ namespace nsda.Utilities
         /// 赛事附件
         /// </summary>
         [Description("赛事附件")]
-        EventAttachment = 3
+        EventAttachment = 3,
+
+        /// <summary>
+        /// 会员头像
+        /// </summary>
+        [Description("会员头像")]
+        MemberHead = 4
     }
 
 }

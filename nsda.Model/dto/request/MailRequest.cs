@@ -28,10 +28,6 @@ namespace nsda.Model.dto.request
         /// 会员id
         /// </summary>
         public int MemberId { get; set; }
-        /// <summary>
-        /// 跳转url
-        /// </summary>
-        public string Url { get; set; }
     }
     public class MailQueryRequest : PageQuery
     {

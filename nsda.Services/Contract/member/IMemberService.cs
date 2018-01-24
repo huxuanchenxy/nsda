@@ -22,7 +22,7 @@ namespace nsda.Services.member
         //修改
         bool Edit(MemberRequest request, out string msg);
         //修改密码
-        bool EditPwd(int memberId, string oldPwd, string newPwd, out string msg);
+        bool EditPwd(int memberId,string pwd, out string msg);
         //实名认证回调 修改用户状态
         void CallBack(int id);
         //会员列表 
@@ -47,6 +47,9 @@ namespace nsda.Services.member
         List<MemberSelectResponse> SelectTrainer(string key, string value, int memberId);
         //去认证
         int GoAuth(int memberId, out string msg);
+        //账号是否存在
         bool IsExist(string account);
+        //更换头像
+        bool ReplaceHead(string headUrl, int memberId);
     }
 }

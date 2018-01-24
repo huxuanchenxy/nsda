@@ -9,6 +9,6 @@ namespace nsda.Model.enums
     public enum MailTypeEm
     {
         系统=1,
-        通知=2
+        赛事报名邀请=2
     }
 }
