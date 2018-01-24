@@ -6,7 +6,6 @@ using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
 using nsda.Services.member;
-using nsda.Services.trainer;
 using nsda.Utilities;
 using nsda.Web.Filter;
 using System;

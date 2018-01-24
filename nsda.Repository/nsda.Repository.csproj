@@ -59,11 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contract\admin\" />
+    <Folder Include="Contract\coach\" />
     <Folder Include="Contract\referee\" />
-    <Folder Include="Contract\trainer\" />
     <Folder Include="Implement\admin\" />
+    <Folder Include="Implement\coach\" />
     <Folder Include="Implement\referee\" />
-    <Folder Include="Implement\trainer\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\nsda.Model\nsda.Model.csproj">

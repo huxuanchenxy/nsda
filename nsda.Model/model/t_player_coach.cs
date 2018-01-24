@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_player_trainer")]
-    public class t_player_trainer
+	[Table("t_player_coach")]
+    public class t_player_coach
     {
 	   //默认构造函数
-	   public t_player_trainer()
+	   public t_player_coach()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -42,7 +42,7 @@ namespace nsda.Models
         /// <summary>
         /// 状态
         /// </summary>
-        public PlayerTrainerStatusEm playerTrainerStatus { get; set; }
+        public PlayerCoachStatusEm playerCoachStatus { get; set; }
     
         /// <summary>
         /// 是否正面 1 选手绑定教练 2. 教练绑定选手
@@ -52,7 +52,7 @@ namespace nsda.Models
         /// <summary>
         /// 是否是教练
         /// </summary>
-        public bool isTrainer { get; set; }
+        public bool isCoach { get; set; }
     
         public DateTime startdate { get; set; }
     

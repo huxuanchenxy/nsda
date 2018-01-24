@@ -8,11 +8,11 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Filter
 {
-    public class TrainerLoginAttribute : AuthorizeAttribute
+    public class CoachLoginAttribute : AuthorizeAttribute
     {
         private LoginModeEnum _customMode;
 
-        public TrainerLoginAttribute(LoginModeEnum Mode)
+        public CoachLoginAttribute(LoginModeEnum Mode)
         { 
             _customMode = Mode;
         }

@@ -1,6 +1,6 @@
 ﻿using nsda.Repository;
 using nsda.Services.Contract.member;
-using nsda.Services.trainer;
+using nsda.Services.Contract.referee;
 using nsda.Utilities.Orm;
 using System;
 using System.Collections.Generic;

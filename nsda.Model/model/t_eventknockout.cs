@@ -39,7 +39,7 @@ namespace nsda.Models
     
         public KnockoutTypeEm knockoutType { get; set; }
     
-        public int trainerCount { get; set; }
+        public int refereeCount { get; set; }
     
         public KnockoutStatusEm knockoutStatus { get; set; }
     

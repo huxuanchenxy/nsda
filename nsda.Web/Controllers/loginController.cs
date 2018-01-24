@@ -56,7 +56,7 @@ namespace nsda.Web.Controllers
                 }
                 else if (request.MemberType == MemberTypeEm.教练)
                 {
-                    res.msg = "/trainer/home/index";
+                    res.msg = "/coach/home/index";
                     datatype = DataTypeEm.教练;
                 }
                 else if (request.MemberType == MemberTypeEm.裁判)
@@ -103,19 +103,19 @@ namespace nsda.Web.Controllers
                 res.flag = true;
                 if (request.MemberType == MemberTypeEm.选手)
                 {
-                    res.msg = "/player/home/index";
+                    res.msg = "/player/player/index";
                 }
                 else if (request.MemberType == MemberTypeEm.教练)
                 {
-                    res.msg = "/trainer/home/index";
+                    res.msg = "/coach/coach/index";
                 }
                 else if (request.MemberType == MemberTypeEm.裁判)
                 {
-                    res.msg = "/referee/home/index";
+                    res.msg = "/referee/referee/index";
                 }
                 else if (request.MemberType == MemberTypeEm.赛事管理员)
                 {
-                    res.msg = "/eventmanage/home/index";
+                    res.msg = "/eventmanage/eventmanage/index";
                 }
                 else
                 {
@@ -258,19 +258,19 @@ namespace nsda.Web.Controllers
             {
                 if (usercontext.MemberType == (int)MemberTypeEm.选手)
                 {
-                    return RedirectToAction("index", "home", new { area = "player" });
+                    return RedirectToAction("index", "player", new { area = "player" });
                 }
                 else if (usercontext.MemberType == (int)MemberTypeEm.教练)
                 {
-                    return RedirectToAction("index", "home", new { area = "trainer" });
+                    return RedirectToAction("index", "coach", new { area = "coach" });
                 }
                 else if (usercontext.MemberType == (int)MemberTypeEm.裁判)
                 {
-                    return RedirectToAction("index", "home", new { area = "referee" });
+                    return RedirectToAction("index", "referee", new { area = "referee" });
                 }
                 else if (usercontext.MemberType == (int)MemberTypeEm.赛事管理员)
                 {
-                    return RedirectToAction("index", "home", new { area = "eventmanage" });
+                    return RedirectToAction("index", "eventmanage", new { area = "eventmanage" });
                 }
                 else
                 {
@@ -293,7 +293,7 @@ namespace nsda.Web.Controllers
             return View();
         }
         //教练
-        public ActionResult trainer()
+        public ActionResult coach()
         {
             return View();
         }

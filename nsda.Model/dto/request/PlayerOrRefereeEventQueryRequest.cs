@@ -21,9 +21,5 @@ namespace nsda.Model.dto.request
         /// 比赛时间区间
         /// </summary>
         public DateTime? StartDate { get; set; }
-        /// <summary>
-        /// 比赛编码或名称
-        /// </summary>
-        public string KeyValue { get; set; }
     }
 }

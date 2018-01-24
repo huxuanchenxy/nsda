@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nsda.Services.Contract.trainer
+namespace nsda.Services.Contract.coach
 {
-    public interface ITrainerService: IDependency
+    public interface ICoachService: IDependency
     {  
     }
 }

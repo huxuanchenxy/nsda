@@ -13,22 +13,22 @@ using System.Web.Mvc;
 
 namespace nsda.Web.Areas.player.Controllers
 {
-    public class playertrainerController : playerbaseController
+    public class playercoachController : playerbaseController
     {
-        IPlayerTrainerService _playerTrainerService;
-        public playertrainerController(IPlayerTrainerService playerTrainerService)
+        IPlayerCoachService _playerCoachService;
+        public playercoachController(IPlayerCoachService playerCoachService)
         {
-            _playerTrainerService = playerTrainerService;
+            _playerCoachService = playerCoachService;
         }
 
         #region ajax
         //1 列表
         [HttpGet]
-        public ContentResult list(PlayerTrainerQueryRequest request)
+        public ContentResult list(PlayerCoachQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var data = _playerTrainerService.Player_TrainerList(request);
-            var res = new ResultDto<PlayerTrainerResponse>
+            var data = _playerCoachService.Player_CoachList(request);
+            var res = new ResultDto<PlayerCoachResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,
@@ -41,24 +41,24 @@ namespace nsda.Web.Areas.player.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult insert(PlayerTrainerRequest request)
+        public ContentResult insert(PlayerCoachRequest request)
         {
-            request.IsTrainer = false;
+            request.IsCoach = false;
             request.IsPositive = true;
             request.MemberId = UserContext.WebUserContext.Id;
             var msg = string.Empty;
-            var flag = _playerTrainerService.Insert(request, out msg);
+            var flag = _playerCoachService.Insert(request, out msg);
             return Result<string>(flag, msg);
         }
         //3 编辑
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult edit(PlayerTrainerRequest request)
+        public ContentResult edit(PlayerCoachRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var msg = string.Empty;
-            var flag = _playerTrainerService.Edit(request, out msg);
+            var flag = _playerCoachService.Edit(request, out msg);
             return Result<string>(flag, msg);
         }
         //4 删除
@@ -68,14 +68,14 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult delete(int id)
         {
             var msg = string.Empty;
-            var flag = _playerTrainerService.Delete(id, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerCoachService.Delete(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
         //5 审核
-        public ContentResult checktrainer(int id, bool isAgree)
+        public ContentResult checkcoach(int id, bool isAgree)
         {
             var msg = string.Empty;
-            var flag = _playerTrainerService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerCoachService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
         #endregion

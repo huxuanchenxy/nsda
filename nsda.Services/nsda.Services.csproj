@@ -71,11 +71,11 @@
     <Compile Include="Contract\member\IMemberPointsService.cs" />
     <Compile Include="Contract\member\IMemberService.cs" />
     <Compile Include="Contract\member\IMemberTempService.cs" />
-    <Compile Include="Contract\member\IPlayerTrainerService.cs" />
+    <Compile Include="Contract\member\IPlayerCoachService.cs" />
     <Compile Include="Contract\member\IPlayerSignUpService.cs" />
     <Compile Include="Contract\referee\IRefereeService.cs" />
     <Compile Include="Contract\referee\IRefereeSignUpService.cs" />
-    <Compile Include="Contract\trainer\ITrainerService.cs" />
+    <Compile Include="Contract\coach\ICoachService.cs" />
     <Compile Include="Implement\admin\CityService.cs" />
     <Compile Include="Implement\admin\CountryService.cs" />
     <Compile Include="Implement\admin\DataSourceService.cs" />
@@ -108,12 +108,12 @@
     <Compile Include="Implement\member\MemberPointsService.cs" />
     <Compile Include="Implement\member\MemberService.cs" />
     <Compile Include="Implement\member\MemberTempService.cs" />
-    <Compile Include="Implement\member\PlayerTrainerService.cs" />
+    <Compile Include="Implement\member\PlayerCoachService.cs" />
     <Compile Include="Implement\member\PlayerSignUpService.cs" />
     <Compile Include="Implement\referee\RefereeService.cs" />
     <Compile Include="Implement\referee\RefereeSignUpService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Implement\trainer\TrainerService.cs" />
+    <Compile Include="Implement\coach\CoachService.cs" />
     <Compile Include="UserContext.cs" />
   </ItemGroup>
   <ItemGroup />

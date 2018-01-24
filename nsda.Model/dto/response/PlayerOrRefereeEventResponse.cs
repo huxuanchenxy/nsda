@@ -12,7 +12,7 @@ namespace nsda.Model.dto.response
         /// <summary>
         /// 赛事Id
         /// </summary>
-        public int Id { get; set; }
+        public int EventId { get; set; }
         /// <summary>
         /// 赛事编码
         /// </summary>
@@ -26,6 +26,14 @@ namespace nsda.Model.dto.response
         /// </summary>
         public EventTypeEm EventType { get; set; }
         /// <summary>
+        /// 举办国家
+        /// </summary>
+        public string CountryName { get; set; }
+        /// <summary>
+        /// 举办省份
+        /// </summary>
+        public string ProvinceName { get; set; }
+        /// <summary>
         /// 举办城市
         /// </summary>
         public string CityName { get; set; }
@@ -36,18 +44,22 @@ namespace nsda.Model.dto.response
         /// <summary>
         /// 比赛开始时间
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public DateTime EventStartDate { get; set; }
         /// <summary>
         /// 报名费
         /// </summary>
-        public decimal Price { get; set; }
+        public decimal SignFee { get; set; }
         /// <summary>
-        /// 是否展示报名
+        /// 是否显示报名
         /// </summary>
         public bool IsVisiable{ get; set; }
         /// <summary>
         /// 赛事状态
         /// </summary>
         public EventStatusEm EventStatus { get; set; }
+        /// <summary>
+        /// 比赛开始时间
+        /// </summary>
+        public DateTime EndSignDate { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace nsda.Services.Implement.eventmanage
                     string message = string.Empty;
                     foreach (var items in item.ListKnockout)
                     {
-                        if (items.TrainerCount <= 0)
+                        if (items.RefereeCount <= 0)
                         {
                             message = "裁判数量有误";
                             break;
@@ -138,7 +138,7 @@ namespace nsda.Services.Implement.eventmanage
                             {
                                 knockoutStatus=items.KnockoutStatus,
                                 knockoutType=items.KnockoutType,
-                                trainerCount=items.TrainerCount,
+                                refereeCount=items.RefereeCount,
                                 eventGroupId = items.EventGroupId,
                                 screenings=items.Screenings,
                                 eventId = items.EventId,
@@ -205,7 +205,7 @@ namespace nsda.Services.Implement.eventmanage
                                     KnockoutStatus=items.knockoutStatus,
                                     KnockoutType=items.knockoutType,
                                     SettingsId=items.settingsId,
-                                    TrainerCount=items.trainerCount,
+                                    RefereeCount=items.refereeCount,
                                     Id = items.id                                   
                                 };
                                 var itemsdata = _dbContext.Select<t_eventknockoutdetail>(c => c.knockoutId == items.id).ToList();

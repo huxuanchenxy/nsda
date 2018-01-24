@@ -44,7 +44,7 @@ namespace nsda.Services.member
         // 模糊查找选手
         List<MemberSelectResponse> SelectPlayer(string key, string value, int memberId);
         // 模糊查找教练
-        List<MemberSelectResponse> SelectTrainer(string key, string value, int memberId);
+        List<MemberSelectResponse> SelectCoach(string key, string value, int memberId);
         //去认证
         int GoAuth(int memberId, out string msg);
         //账号是否存在

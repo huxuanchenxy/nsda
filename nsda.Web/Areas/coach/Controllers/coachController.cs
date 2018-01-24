@@ -3,7 +3,7 @@ using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Services;
-using nsda.Services.Contract.trainer;
+using nsda.Services.Contract.coach;
 using nsda.Services.member;
 using nsda.Utilities;
 using nsda.Web.Filter;
@@ -13,28 +13,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace nsda.Web.Areas.trainer.Controllers
+namespace nsda.Web.Areas.coach.Controllers
 {
-    public class trainerController : trainerbaseController
+    public class coachController : coachbaseController
     {
-        IPlayerTrainerService _playerTrainerService;
+        IPlayerCoachService _playerCoachService;
         IMemberService _memberService;
-        ITrainerService _trainerService;
-        public trainerController(IMemberService memberService, ITrainerService trainerService, IPlayerTrainerService playerTrainerService)
+        ICoachService _coachService;
+        public coachController(IMemberService memberService, ICoachService coachService, IPlayerCoachService playerCoachService)
         {
             _memberService = memberService;
-            _trainerService = trainerService;
-            _playerTrainerService = playerTrainerService;
+            _coachService = coachService;
+            _playerCoachService = playerCoachService;
         }
 
         #region ajax
         //1 列表
         [HttpGet]
-        public ContentResult listplayer(PlayerTrainerQueryRequest request)
+        public ContentResult listplayer(PlayerCoachQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var data = _playerTrainerService.Trainer_PlayerList(request);
-            var res = new ResultDto<TrainerPlayerResponse>
+            var data = _playerCoachService.Coach_PlayerList(request);
+            var res = new ResultDto<CoachPlayerResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,
@@ -47,24 +47,24 @@ namespace nsda.Web.Areas.trainer.Controllers
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult insertplayer(PlayerTrainerRequest request)
+        public ContentResult insertplayer(PlayerCoachRequest request)
         {
             request.IsPositive = false;
-            request.IsTrainer = true;
+            request.IsCoach = true;
             request.MemberId = UserContext.WebUserContext.Id;
             var msg = string.Empty;
-            var flag = _playerTrainerService.Insert(request, out msg);
+            var flag = _playerCoachService.Insert(request, out msg);
             return Result<string>(flag, msg);
         }
         //3 编辑
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult editplayer(PlayerTrainerRequest request)
+        public ContentResult editplayer(PlayerCoachRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var msg = string.Empty;
-            var flag = _playerTrainerService.Edit(request, out msg);
+            var flag = _playerCoachService.Edit(request, out msg);
             return Result<string>(flag, msg);
         }
         //4 删除
@@ -74,14 +74,14 @@ namespace nsda.Web.Areas.trainer.Controllers
         public ContentResult deleteplayer(int id)
         {
             var msg = string.Empty;
-            var flag = _playerTrainerService.Delete(id, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerCoachService.Delete(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
         //5 审核
         public ContentResult checkplayer(int id, bool isAgree)
         {
             var msg = string.Empty;
-            var flag = _playerTrainerService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerCoachService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -98,7 +98,7 @@ namespace nsda.Web.Areas.trainer.Controllers
         #region view
         public ActionResult index()
         {
-            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/trainer/trainer/qrcode/{UserContext.WebUserContext.Id}");
+            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/coach/coach/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
 

@@ -28,7 +28,7 @@ namespace nsda.Services.Contract.member
         // 支付成功回调
         void Callback(int memberId,int sourceId);
         //选手获取当天比赛信息
-        List<CurrentEventResponse> CurrentPlayerEvent(int memberId);
+        List<PlayerCurrentEventResponse> CurrentPlayerEvent(int memberId);
         //赛事管理员 选手报名列表
         List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request);
         //邀请队友下拉框

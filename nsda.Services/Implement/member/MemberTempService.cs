@@ -397,8 +397,8 @@ namespace nsda.Services.Implement.member
                     _dbContext.Execute($"update t_memberpointsrecord set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_memberpointsdetail set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_match_trainer set memberId={request.MemberId}  memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_matchplayerresultdetail set trainerId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_match_referee set memberId={request.MemberId}  memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_matchplayerresultdetail set refereeId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.CommitChanges();
                     flag = true;
                 }

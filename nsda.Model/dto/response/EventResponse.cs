@@ -38,11 +38,6 @@ namespace nsda.Model.dto.response
         public DateTime EndEventDate { get; set; }
 
         /// <summary>
-        /// 报名开始时间
-        /// </summary>
-        public DateTime StartSignDate { get; set; }
-
-        /// <summary>
         /// 报名结束时间
         /// </summary>
         public DateTime EndSignDate { get; set; }

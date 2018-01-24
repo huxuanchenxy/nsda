@@ -19,13 +19,13 @@ namespace nsda.Services.member
     /// <summary>
     /// 选手教练绑定管理
     /// </summary>
-    public class PlayerTrainerService: IPlayerTrainerService
+    public class PlayerCoachService: IPlayerCoachService
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
         IMailService _mailService;
-        public PlayerTrainerService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,IMailService mailService)
+        public PlayerCoachService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,IMailService mailService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
@@ -33,7 +33,7 @@ namespace nsda.Services.member
             _mailService = mailService;
         }
         //绑定教练/学生
-        public bool Insert(PlayerTrainerRequest request, out string msg)
+        public bool Insert(PlayerCoachRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -41,7 +41,7 @@ namespace nsda.Services.member
             {
                 if (request.ObjMemberId <= 0)
                 {
-                    if (request.IsTrainer)
+                    if (request.IsCoach)
                     {
                         msg = "教练不能为空";
                         return flag;
@@ -58,29 +58,29 @@ namespace nsda.Services.member
                     return flag;
                 }
 
-                var playerTrainer = new t_player_trainer
+                var playerCoach = new t_player_coach
                 {
                     memberId = request.MemberId,
                     toMemberId = request.ObjMemberId,
                     startdate = request.StartDate,
                     enddate = request.EndDate,
                     isPositive=request.IsPositive,
-                    isTrainer=request.IsTrainer,
-                    playerTrainerStatus = PlayerTrainerStatusEm.待确认,
+                    isCoach=request.IsCoach,
+                    playerCoachStatus = PlayerCoachStatusEm.待确认,
                 };
-                _dbContext.Insert(playerTrainer);
+                _dbContext.Insert(playerCoach);
                 flag = true;
             }
             catch (Exception ex)
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("PlayerTrainerService.Insert", ex);
+                LogUtils.LogError("PlayerCoachService.Insert", ex);
             }
             return flag;
         }
         //编辑绑定教练/学生
-        public bool Edit(PlayerTrainerRequest request, out string msg)
+        public bool Edit(PlayerCoachRequest request, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -88,7 +88,7 @@ namespace nsda.Services.member
             {
                 if (request.ObjMemberId <= 0)
                 {
-                    if (request.IsTrainer)
+                    if (request.IsCoach)
                     {
                         msg = "教练不能为空";
                         return flag;
@@ -104,14 +104,14 @@ namespace nsda.Services.member
                     msg = "开始时间有误";
                     return flag;
                 }
-                var playerTrainer = _dbContext.Get<t_player_trainer>(request.Id);
-                if (playerTrainer != null&& playerTrainer.memberId==request.MemberId)
+                var playerCoach = _dbContext.Get<t_player_coach>(request.Id);
+                if (playerCoach != null&& playerCoach.memberId==request.MemberId)
                 {
-                    playerTrainer.startdate = request.StartDate;
-                    playerTrainer.enddate = request.EndDate;
-                    playerTrainer.playerTrainerStatus =  PlayerTrainerStatusEm.待确认;
-                    playerTrainer.updatetime = DateTime.Now;
-                    _dbContext.Update(playerTrainer);
+                    playerCoach.startdate = request.StartDate;
+                    playerCoach.enddate = request.EndDate;
+                    playerCoach.playerCoachStatus =  PlayerCoachStatusEm.待确认;
+                    playerCoach.updatetime = DateTime.Now;
+                    _dbContext.Update(playerCoach);
                     flag = true;
                 }
                 else
@@ -123,7 +123,7 @@ namespace nsda.Services.member
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("PlayerTrainerService.Edit", ex);
+                LogUtils.LogError("PlayerCoachService.Edit", ex);
             }
             return flag;
         }
@@ -134,12 +134,12 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                var playerTrainer = _dbContext.Get<t_player_trainer>(id);
-                if (playerTrainer != null&& playerTrainer.memberId==memberId)
+                var playerCoach = _dbContext.Get<t_player_coach>(id);
+                if (playerCoach != null&& playerCoach.memberId==memberId)
                 {
-                    playerTrainer.isdelete = true;
-                    playerTrainer.updatetime = DateTime.Now;
-                    _dbContext.Update(playerTrainer);
+                    playerCoach.isdelete = true;
+                    playerCoach.updatetime = DateTime.Now;
+                    _dbContext.Update(playerCoach);
                     flag = true;
                 }
                 else {
@@ -150,7 +150,7 @@ namespace nsda.Services.member
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("PlayerTrainerService.Delete", ex);
+                LogUtils.LogError("PlayerCoachService.Delete", ex);
             }
             return flag;
         }
@@ -161,12 +161,12 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {   
-                var playerTrainer = _dbContext.Get<t_player_trainer>(id);
-                if (playerTrainer != null&& playerTrainer.toMemberId==memberId)
+                var playerCoach = _dbContext.Get<t_player_coach>(id);
+                if (playerCoach != null&& playerCoach.toMemberId==memberId)
                 {
-                    playerTrainer.playerTrainerStatus = isAgree ? PlayerTrainerStatusEm.已确认 : PlayerTrainerStatusEm.拒绝;
-                    playerTrainer.updatetime = DateTime.Now;
-                    _dbContext.Update(playerTrainer);
+                    playerCoach.playerCoachStatus = isAgree ? PlayerCoachStatusEm.已确认 : PlayerCoachStatusEm.拒绝;
+                    playerCoach.updatetime = DateTime.Now;
+                    _dbContext.Update(playerCoach);
                     flag = true;
                 }
                 else
@@ -178,24 +178,24 @@ namespace nsda.Services.member
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("PlayerTrainerService.Check", ex);
+                LogUtils.LogError("PlayerCoachService.Check", ex);
             }
             return flag;
         }
         //教练下的学生列表
-        public List<TrainerPlayerResponse> Trainer_PlayerList(PlayerTrainerQueryRequest request)
+        public List<CoachPlayerResponse> Coach_PlayerList(PlayerCoachQueryRequest request)
         {
-            List<TrainerPlayerResponse> list = new List<TrainerPlayerResponse>();
+            List<CoachPlayerResponse> list = new List<CoachPlayerResponse>();
             try
             {
-                var sql = @"select a.*,b.name MemberName,b.code MemberCode,d.points MemberPoints,e.points ToMemberPoints,c.name ToMemberName,c.code ToMemberCode  from t_player_trainer a 
+                var sql = @"select a.*,b.name MemberName,b.code MemberCode,d.points MemberPoints,e.points ToMemberPoints,c.name ToMemberName,c.code ToMemberCode  from t_player_coach a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_member c on a.toMemberId=c.id
                             inner join t_memberpoints d on a.memberId=d.memberId
                             inner join t_memberpoints e on a.toMemberId=e.memberId
-                            where (isTrainer=1 and isPositive=0 and memberId=@MemberId) or (isTrainer=0 and isPositive=1 and toMemberId=@MemberId) order by a.createtime desc";
+                            where (isCoach=1 and isPositive=0 and memberId=@MemberId) or (isCoach=0 and isPositive=1 and toMemberId=@MemberId) order by a.createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<TrainerPlayerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<CoachPlayerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
                 if (list != null && list.Count>0)
                 {
@@ -205,7 +205,7 @@ namespace nsda.Services.member
                         {
                             item.Flag = true;
                         }
-                        if (item.PlayerTrainerStatus == PlayerTrainerStatusEm.已确认)
+                        if (item.PlayerCoachStatus == PlayerCoachStatusEm.已确认)
                         {
                             //所在学校
                             item.School=_dbContext.ExecuteScalar($"select b.chinessname from t_playereduexper  a inner join t_school b on a.schoolId=b.id where a.memberid={(item.Flag?item.ToMemberId:item.MemberId)} and a.isdelete=0 order by startdate desc limit 1").ToObjStr();
@@ -219,22 +219,22 @@ namespace nsda.Services.member
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("PlayerTrainerService.Trainer_PlayerList", ex);
+                LogUtils.LogError("PlayerCoachService.Coach_PlayerList", ex);
             }
             return list;
         }
         //学生下的教练列表
-        public List<PlayerTrainerResponse> Player_TrainerList(PlayerTrainerQueryRequest request)
+        public List<PlayerCoachResponse> Player_CoachList(PlayerCoachQueryRequest request)
         {
-            List< PlayerTrainerResponse > list = new List<PlayerTrainerResponse>();
+            List< PlayerCoachResponse > list = new List<PlayerCoachResponse>();
             try
             {
-                var sql = @"select a.*,b.name MemberName,b.code MemberCode,c.name ToMemberName,c.code ToMemberCode from t_player_trainer a 
+                var sql = @"select a.*,b.name MemberName,b.code MemberCode,c.name ToMemberName,c.code ToMemberCode from t_player_coach a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_member c on a.toMemberId=c.id
-                            where  (isTrainer=0 and isPositive=1 and memberId=@MemberId) or (isTrainer=1 and isPositive=0 and toMemberId=@MemberId) order by a.createtime desc";
+                            where  (isCoach=0 and isPositive=1 and memberId=@MemberId) or (isCoach=1 and isPositive=0 and toMemberId=@MemberId) order by a.createtime desc";
                 int totalCount = 0;
-                list = _dbContext.Page<PlayerTrainerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                list = _dbContext.Page<PlayerCoachResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
                 if (list != null && list.Count>0)
                 {
@@ -249,7 +249,7 @@ namespace nsda.Services.member
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("PlayerTrainerService.Player_TrainerList", ex);
+                LogUtils.LogError("PlayerCoachService.Player_CoachList", ex);
             }
             return list;
         }

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.request
 {
-    public class PlayerTrainerRequest
+    public class PlayerCoachRequest
     {
         public int Id { get; set; }
         public int MemberId { get; set; }
         public int ObjMemberId { get; set; }
         public bool IsPositive { get; set; }
-        public bool IsTrainer { get; set; }
+        public bool IsCoach { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
 
-    public class PlayerTrainerQueryRequest:PageQuery
+    public class PlayerCoachQueryRequest:PageQuery
     {
         public int MemberId { get; set; }
     }

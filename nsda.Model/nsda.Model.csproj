@@ -71,7 +71,7 @@
     <Compile Include="dto\request\PlayerEduExperRequest.cs" />
     <Compile Include="dto\request\PlayerOrRefereeEventQueryRequest.cs" />
     <Compile Include="dto\request\PlayerPointsRecordQueryRequest.cs" />
-    <Compile Include="dto\request\PlayerTrainerRequest.cs" />
+    <Compile Include="dto\request\PlayerCoachRequest.cs" />
     <Compile Include="dto\request\ProvinceRequest.cs" />
     <Compile Include="dto\request\MemberRequest.cs" />
     <Compile Include="dto\request\MatchCommonRequest.cs" />
@@ -88,7 +88,7 @@
     <Compile Include="dto\response\BaseListResponse.cs" />
     <Compile Include="dto\response\CityResponse.cs" />
     <Compile Include="dto\response\CountryResponse.cs" />
-    <Compile Include="dto\response\CurrentEventResponse.cs" />
+    <Compile Include="dto\response\PlayerCurrentEventResponse.cs" />
     <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
     <Compile Include="dto\response\EventConditionResponse.cs" />
@@ -117,7 +117,7 @@
     <Compile Include="dto\response\PlayerOrRefereeEventResponse.cs" />
     <Compile Include="dto\response\PlayerPointsRecordResponse.cs" />
     <Compile Include="dto\response\PlayerSignUpListResponse.cs" />
-    <Compile Include="dto\response\PlayerTrainerResponse.cs" />
+    <Compile Include="dto\response\PlayerCoachResponse.cs" />
     <Compile Include="dto\response\ProvinceResponse.cs" />
     <Compile Include="dto\response\RatingSinglLabelResponse.cs" />
     <Compile Include="dto\response\RecordOfDetailResponse.cs" />
@@ -151,7 +151,7 @@
     <Compile Include="enums\MemberExtendStatusEm.cs" />
     <Compile Include="enums\MemberStatusEm.cs" />
     <Compile Include="enums\PairRuleEm.cs" />
-    <Compile Include="enums\PlayerTrainerStatusEm.cs" />
+    <Compile Include="enums\PlayerCoachStatusEm.cs" />
     <Compile Include="enums\MemberTypeEm.cs" />
     <Compile Include="enums\MenuTypeEm.cs" />
     <Compile Include="enums\ObjEventTypeEm.cs" />
@@ -321,10 +321,10 @@
     <Compile Include="model\t_playereduexper.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_player_signup.cs">
+    <Compile Include="model\t_player_coach.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_player_trainer.cs">
+    <Compile Include="model\t_player_signup.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_province.cs">

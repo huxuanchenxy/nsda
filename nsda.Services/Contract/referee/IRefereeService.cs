@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nsda.Services.trainer
+namespace nsda.Services.Contract.referee
 {
     /// <summary>
     /// 裁判管理

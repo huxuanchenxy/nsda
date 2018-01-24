@@ -738,7 +738,7 @@ namespace nsda.Services.member
                             ) limit 30
                          ";
                 var dy = new DynamicParameters();
-                dy.Add(key, "%" + value + "%");
+                dy.Add("value", "%" + value + "%");
                 list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
@@ -748,7 +748,7 @@ namespace nsda.Services.member
             return list;
         }
         // 教练下拉框
-        public List<MemberSelectResponse> SelectTrainer(string key, string value,int memberId)
+        public List<MemberSelectResponse> SelectCoach(string key, string value,int memberId)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
@@ -773,12 +773,12 @@ namespace nsda.Services.member
                             ) limit 30
                          ";
                 var dy = new DynamicParameters();
-                dy.Add(key, "%" + value + "%");
+                dy.Add("value", "%" + value + "%");
                 list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("MemberService.SelectTrainer", ex);
+                LogUtils.LogError("MemberService.SelectCoach", ex);
             }
             return list;
         }

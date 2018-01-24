@@ -36,7 +36,7 @@ namespace nsda.Model.dto.response
 
         public KnockoutTypeEm KnockoutType { get; set; }
 
-        public int TrainerCount { get; set; }
+        public int RefereeCount { get; set; }
 
         public KnockoutStatusEm KnockoutStatus { get; set; }
 

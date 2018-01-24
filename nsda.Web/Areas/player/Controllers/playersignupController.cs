@@ -50,14 +50,6 @@ namespace nsda.Web.Areas.player.Controllers
             return Result(true, "", data);
         }
 
-        //当前比赛列表
-        [HttpGet]
-        public ContentResult current()
-        {
-            var data = _playerSignUpService.CurrentPlayerEvent(UserContext.WebUserContext.Id);
-            return Result(true, "", data);
-        }
-
         //比赛报名
         [HttpPost]
         [AjaxOnly]

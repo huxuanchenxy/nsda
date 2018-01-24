@@ -59,11 +59,6 @@ namespace nsda.Models
         public DateTime endeventdate { get; set; }
     
         /// <summary>
-        /// 报名开始时间
-        /// </summary>
-        public DateTime startsigndate { get; set; }
-    
-        /// <summary>
         /// 报名结束时间
         /// </summary>
         public DateTime endsigndate { get; set; }

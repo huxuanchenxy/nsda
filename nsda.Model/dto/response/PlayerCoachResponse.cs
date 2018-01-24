@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.response
 {
-    public class PlayerTrainerResponse
+    public class PlayerCoachResponse
     {
         public int Id { get; set; }
         public string MemberCode { get; set; }
@@ -16,7 +16,7 @@ namespace nsda.Model.dto.response
         public string ToMemberName { get; set; }
         public int MemberId { get; set; }
         public int ToMemberId { get; set; }
-        public PlayerTrainerStatusEm PlayerTrainerStatus { get; set; }
+        public PlayerCoachStatusEm PlayerCoachStatus { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime CreateTime { get; set; }
@@ -24,7 +24,7 @@ namespace nsda.Model.dto.response
         public bool Flag { get; set; }
     }
 
-    public class TrainerPlayerResponse
+    public class CoachPlayerResponse
     {
         public int Id { get; set; }
         public string MemberCode { get; set; }
@@ -33,7 +33,7 @@ namespace nsda.Model.dto.response
         public string ToMemberName { get; set; }
         public int MemberId { get; set; }
         public int ToMemberId { get; set; }
-        public PlayerTrainerStatusEm PlayerTrainerStatus { get; set; }
+        public PlayerCoachStatusEm PlayerCoachStatus { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime CreateTime { get; set; }

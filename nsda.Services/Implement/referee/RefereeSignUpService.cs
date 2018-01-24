@@ -79,15 +79,17 @@ namespace nsda.Services.Implement.referee
         }
 
         //裁判当前比赛列表
-        public List<CurrentEventResponse> CurrentRefereeEvent(int memberId)
+        public List<RefereeCurrentEventResponse> CurrentRefereeEvent(int memberId)
         {
-            List<CurrentEventResponse> list = new List<CurrentEventResponse>();
+            List<RefereeCurrentEventResponse> list = new List<RefereeCurrentEventResponse>();
             try
             {
                 var sql = $@"select b.id EventId,b.name EventName,b.code EventCode from t_referee_signup a
                              inner join t_event b on a.eventId=b.id
-                             where a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()}) and a.refereeSignUpStatus in ({ParamsConfig._refereestatus}) and  a.memberId={memberId}";
-                return _dbContext.Query<CurrentEventResponse>(sql).ToList();
+                             where a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()})
+                             and a.refereeSignUpStatus in ({ParamsConfig._refereestatus}) and  a.memberId={memberId}
+                           ";
+                return _dbContext.Query<RefereeCurrentEventResponse>(sql).ToList();
             }
             catch (Exception ex)
             {

@@ -657,15 +657,19 @@ namespace nsda.Services.Implement.member
             }
         }
         //当前赛事
-        public List<CurrentEventResponse> CurrentPlayerEvent(int memberId)
+        public List<PlayerCurrentEventResponse> CurrentPlayerEvent(int memberId)
         {
-            List<CurrentEventResponse> list = new List<CurrentEventResponse>();
+            List<PlayerCurrentEventResponse> list = new List<PlayerCurrentEventResponse>();
             try
             {
-                var sql = $@"select a.* from t_player_signup a
+                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName from 
+                             (select b.id EventId,b.code EventCode,b.name EventName,b.eventType EventType,a.memberId MemberId from t_player_signup a
                              inner join t_event b on a.eventId=b.id
-                             where  a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()}) and a.memberId={memberId}";
-                list = _dbContext.Query<CurrentEventResponse>(sql).ToList();
+                             where  a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()})
+                             and  a.groupnum in (select groupnum  from t_player_signup where memberId={memberId} and signUpStatus={SignUpStatusEm.报名成功})
+                             ) a inner join t_member b on a.MemberId=b.id
+                          ";
+                list = _dbContext.Query<PlayerCurrentEventResponse>(sql).ToList();
             }
             catch (Exception ex)
             {

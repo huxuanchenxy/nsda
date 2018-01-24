@@ -1,7 +1,7 @@
 ﻿using nsda.Models;
 using nsda.Repository;
 using nsda.Services.Contract.member;
-using nsda.Services.Contract.trainer;
+using nsda.Services.Contract.coach;
 using nsda.Utilities;
 using nsda.Utilities.Orm;
 using System;
@@ -10,17 +10,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nsda.Services.trainer
+namespace nsda.Services.coach
 {
     /// <summary>
     /// 教练管理
     /// </summary>
-    public class TrainerService: ITrainerService
+    public class CoachService: ICoachService
     {
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
-        public TrainerService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        public CoachService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.enums
 {
-    public enum PlayerTrainerStatusEm
+    public enum PlayerCoachStatusEm
     {
         待确认 = 0,
         已确认 = 1,

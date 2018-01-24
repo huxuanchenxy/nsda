@@ -19,7 +19,7 @@ namespace nsda.Services.Contract.referee
         //裁判审核
         bool Check(int id, bool isAgree, int memberId, out string msg);
         //裁判获取当天比赛信息
-        List<CurrentEventResponse> CurrentRefereeEvent(int memberId);
+        List<RefereeCurrentEventResponse> CurrentRefereeEvent(int memberId);
         //赛事管理员 裁判报名列表
         List<EventRefereeSignUpListResponse> EventRefereeList(EventRefereeSignUpQueryRequest request);
         // 修改设置

@@ -37,7 +37,7 @@ namespace nsda.Model.dto.request
 
         public KnockoutTypeEm KnockoutType { get; set; }
 
-        public int TrainerCount { get; set; }
+        public int RefereeCount { get; set; }
 
         public KnockoutStatusEm KnockoutStatus { get; set; }
 

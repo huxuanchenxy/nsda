@@ -130,7 +130,6 @@ namespace nsda.Services.Implement.eventmanage
                         name = request.Name,
                         provinceId = request.ProvinceId,
                         signfee = request.Signfee,
-                        startsigndate = request.StartSignDate,
                         eventTypeName = request.EventTypeName
                     }).ToObjInt();
                     #endregion
@@ -356,7 +355,6 @@ namespace nsda.Services.Implement.eventmanage
                     tevent.name = request.Name;
                     tevent.provinceId = request.ProvinceId;
                     tevent.signfee = request.Signfee;
-                    tevent.startsigndate = request.StartSignDate;
                     tevent.eventTypeName = request.EventTypeName;
                     tevent.updatetime = DateTime.Now;
                     _dbContext.Update(tevent);
@@ -498,8 +496,7 @@ namespace nsda.Services.Implement.eventmanage
                         ProvinceId = tevent.provinceId,
                         Remark = tevent.remark,
                         Signfee = tevent.signfee,
-                        StartEventDate = tevent.starteventdate,
-                        StartSignDate = tevent.startsigndate
+                        StartEventDate = tevent.starteventdate
                     };
                     var eventgroup = _dbContext.Select<t_eventgroup>(c => c.eventId == id).ToList();
                     if (eventgroup != null && eventgroup.Count > 0)
@@ -536,33 +533,52 @@ namespace nsda.Services.Implement.eventmanage
                 StringBuilder join = new StringBuilder();
                 if (request.CountryId.HasValue && request.CountryId > 0)
                 {
-                    join.Append(" and countryId=@CountryId ");
+                    join.Append(" and a.countryId=@CountryId ");
                 }
                 if (request.ProvinceId.HasValue && request.ProvinceId > 0)
                 {
-                    join.Append(" and provinceId=@ProvinceId ");
+                    join.Append(" and a.provinceId=@ProvinceId ");
                 }
                 if (request.CityId.HasValue && request.CityId > 0)
                 {
-                    join.Append(" and cityId=@CityId ");
+                    join.Append(" and a.cityId=@CityId ");
                 }
                 if (request.EventLevel.HasValue && request.EventLevel > 0)
                 {
-                    join.Append(" and eventLevel=@EventLevel ");
-                }
-                if (request.KeyValue.IsNotEmpty())
-                {
-                    request.KeyValue = "%" + request.KeyValue + "%";
-                    join.Append(" and (code like @KeyValue or name like @KeyValue)");
+                    join.Append(" and a.eventLevel=@EventLevel ");
                 }
                 if (request.StartDate.HasValue)
                 {
                     DateTime dt = Convert.ToDateTime(request.StartDate);
-                    join.Append($" and starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
+                    join.Append($" and a.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and a.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
-                var sql = $@"select * from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by createtime desc";
+                var sql = $@"select a.id EventId,a.code EventCode, a.name EventName,a.eventType EventType, a.eventLevel EventLevel,
+                             a.signfee SignFee, a.eventStatus EventStatus,a.starteventdate StartEventDate, a.endsigndate EndSignDate,
+                             b.name CountryName,b.name ProvinceName,c.name CityName
+                             from t_event a 
+                             left join t_country  b on a.countryId=b.id
+                             left join t_province c on a.provinceId=c.id
+                             left join t_city     d on a.cityId=d.id
+                             where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerOrRefereeEventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                if (list != null&&list.Count>0)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.EventStatus == EventStatusEm.停止报名)
+                        {
+                            item.IsVisiable = false;
+                            break;
+                        }
+                        if (DateTime.Now > item.EndSignDate)
+                        {
+                            item.IsVisiable = false;
+                            break;
+                        }
+                        item.IsVisiable = true;
+                    }
+                }
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -689,7 +705,7 @@ namespace nsda.Services.Implement.eventmanage
             List<EventSelectResponse> list = new List<EventSelectResponse>();
             try
             {
-                var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus in ({ParamsConfig._eventstatus}) and starteventdate>={DateTime.Now.ToShortDateString()}";
+                var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus ={EventStatusEm.报名中} and starteventdate>={DateTime.Now.ToShortDateString()}";
                 list = _dbContext.Query<EventSelectResponse>(sql).ToList();
                 list.Insert(0, new EventSelectResponse
                 {

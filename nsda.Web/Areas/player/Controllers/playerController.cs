@@ -24,8 +24,8 @@ namespace nsda.Web.Areas.player.Controllers
         IEventScoreService _eventScoreService;
         IMemberTempService _memberTempService;
         IMemberPointsService _memberPointsService;
-        IMailService _mailService;
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService,IMailService mailService)
+        IPlayerSignUpService _playerSignUpService;
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
@@ -33,10 +33,19 @@ namespace nsda.Web.Areas.player.Controllers
             _eventScoreService = eventScoreService;
             _memberTempService = memberTempService;
             _memberPointsService = memberPointsService;
-            _mailService = mailService;
+            _playerSignUpService = playerSignUpService;
         }
 
         #region ajax
+        //当前比赛列表
+        [HttpGet]
+        public ContentResult current()
+        {
+            var data = _playerSignUpService.CurrentPlayerEvent(UserContext.WebUserContext.Id);
+            return Result(true, "", data);
+        }
+
+
         //辩题资料下载
         [HttpGet]
         public ContentResult datasource(DataSourceQueryRequest request)
@@ -70,9 +79,9 @@ namespace nsda.Web.Areas.player.Controllers
 
         //模糊查询教练
         [HttpGet]
-        public ContentResult listtrainer(string key, string value)
+        public ContentResult listcoach(string key, string value)
         {
-            var data = _memberService.SelectTrainer(key,value, UserContext.WebUserContext.Id);
+            var data = _memberService.SelectCoach(key,value, UserContext.WebUserContext.Id);
             return Result(true, string.Empty,data);
         }
 
