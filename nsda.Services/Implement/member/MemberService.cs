@@ -79,6 +79,17 @@ namespace nsda.Services.member
                         msg = "请新增教育经历";
                         return flag;
                     }
+
+                    if (request.PlayerEdu == null || request.PlayerEdu.SchoolId == 0)
+                    {
+                        msg = "教育经历不能为空";
+                        return flag;
+                    }
+                    if (request.PlayerEdu.StartDate.IsEmpty())
+                    {
+                        msg = "教育经历开始时间不能为空";
+                        return flag;
+                    }
                 }
                 t_member member = InsertValidate(request, out msg);
                 if (msg.IsNotEmpty())
@@ -313,60 +324,59 @@ namespace nsda.Services.member
         }
         private t_member EditValidate(t_member member, MemberRequest request, out string msg)
         {
-            member.card = request.Card;
-            member.cardType = request.CardType;
-            member.completename = request.Name;
-            member.completepinyin = request.CompletePinYin;
+            //member.card = request.Card;
+            //member.cardType = request.CardType;
+            //member.completename = request.Name;
+            //member.completepinyin = request.CompletePinYin;
             member.contactaddress = request.ContactAddress;
             member.contactmobile = request.ContactMobile;
             member.emergencycontact = request.EmergencyContact;
-            member.gender = request.Gender;
-            member.grade = request.Grade;
-            member.name = request.Name;
-            member.memberType = request.MemberType;
-            member.pinyinname = request.PinYinName;
-            member.pinyinsurname = request.PinYinSurName;
-            member.surname = request.SurName;
+            //member.gender = request.Gender;
+            //member.grade = request.Grade;
+            //member.name = request.Name;
+            //member.pinyinname = request.PinYinName;
+            //member.pinyinsurname = request.PinYinSurName;
+            //member.surname = request.SurName;
             msg = string.Empty;
             switch (member.memberType)
             {
                 case MemberTypeEm.选手:
                 case MemberTypeEm.赛事管理员:
-                    if (request.Name.IsEmpty() || request.SurName.IsEmpty())
-                    {
-                        msg = "姓/名不能为空";
-                        return member;
-                    }
-                    if (!request.CardType.HasValue)
-                    {
-                        msg = "请选择证件类型";
-                        return member;
-                    }
-                    if (request.Card.IsEmpty())
-                    {
-                        msg = "证件号不能为空";
-                        return member;
-                    }
+                    //if (request.Name.IsEmpty() || request.SurName.IsEmpty())
+                    //{
+                    //    msg = "姓/名不能为空";
+                    //    return member;
+                    //}
+                    //if (!request.CardType.HasValue)
+                    //{
+                    //    msg = "请选择证件类型";
+                    //    return member;
+                    //}
+                    //if (request.Card.IsEmpty())
+                    //{
+                    //    msg = "证件号不能为空";
+                    //    return member;
+                    //}
                     member.completename = request.Name + request.SurName;
                     member.completepinyin = request.PinYinName + request.PinYinSurName;
                     break;
                 case MemberTypeEm.教练:
                 case MemberTypeEm.裁判:
-                    if (request.CompleteName.IsEmpty())
-                    {
-                        msg = "中文名不能为空";
-                        return member;
-                    }
-                    if (request.PinYinName.IsEmpty())
-                    {
-                        msg = "First name不能为空";
-                        return member;
-                    }
-                    if (request.PinYinSurName.IsEmpty())
-                    {
-                        msg = "Last  name不能为空";
-                        return member;
-                    }
+                    //if (request.CompleteName.IsEmpty())
+                    //{
+                    //    msg = "中文名不能为空";
+                    //    return member;
+                    //}
+                    //if (request.PinYinName.IsEmpty())
+                    //{
+                    //    msg = "First name不能为空";
+                    //    return member;
+                    //}
+                    //if (request.PinYinSurName.IsEmpty())
+                    //{
+                    //    msg = "Last  name不能为空";
+                    //    return member;
+                    //}
                     member.completepinyin = request.PinYinName + request.PinYinSurName;
                     break;
             }

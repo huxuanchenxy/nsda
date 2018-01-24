@@ -142,7 +142,6 @@
     <Compile Include="Areas\eventmanage\Controllers\eventroomController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
     <Compile Include="Areas\player\Controllers\playerbaseController.cs" />
-    <Compile Include="Areas\player\Controllers\playereduexperController.cs" />
     <Compile Include="Areas\player\Controllers\playerController.cs" />
     <Compile Include="Areas\player\Controllers\playerpayController.cs" />
     <Compile Include="Areas\player\Controllers\playersignupController.cs" />
@@ -456,9 +455,6 @@
     <Folder Include="Areas\eventmanage\Views\eventromm\" />
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />
-    <Folder Include="Areas\player\Views\eduexper\" />
-    <Folder Include="Areas\player\Views\playersignup\" />
-    <Folder Include="Areas\player\Views\playertrainer\" />
     <Folder Include="Areas\player\Views\Shared\" />
     <Folder Include="Areas\referee\Models\" />
     <Folder Include="Areas\referee\Views\Shared\" />
@@ -541,13 +537,13 @@
     <Content Include="Areas\admin\asset\js\plugins\simditor\css\simditor.scss" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\eventmanage\Views\home\index.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\player\Views\player\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\referee\Views\home\index.cshtml" />
+    <Content Include="Areas\referee\Views\referee\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\coach\Views\coach\index.cshtml" />
@@ -576,6 +572,54 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\player\Views\playerpay\paysuccess.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\player\datasource.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\player\eventscore.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\player\mail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\player\info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\playercoach\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\playersignup\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\playersignup\list.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\playersignup\refundlist.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\playersignup\bindtemp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\player\Views\playersignup\signview.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\coach\Views\coach\info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\coach\Views\coach\mail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\eventmanage\Views\eventmanage\info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\eventmanage\Views\eventmanage\mail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\referee\Views\referee\mail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\referee\Views\referee\info.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

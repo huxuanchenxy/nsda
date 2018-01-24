@@ -52,11 +52,6 @@ namespace nsda.Services.member
                         return flag;
                     }
                 }
-                if (request.StartDate==DateTime.MinValue||request.StartDate==DateTime.MaxValue||request.StartDate>DateTime.Now)
-                {
-                    msg = "开始时间有误";
-                    return flag;
-                }
 
                 var playerCoach = new t_player_coach
                 {
@@ -66,7 +61,7 @@ namespace nsda.Services.member
                     enddate = request.EndDate,
                     isPositive=request.IsPositive,
                     isCoach=request.IsCoach,
-                    playerCoachStatus = PlayerCoachStatusEm.待确认,
+                    playerCoachStatus = PlayerCoachStatusEm.待同意,
                 };
                 _dbContext.Insert(playerCoach);
                 flag = true;
@@ -99,17 +94,13 @@ namespace nsda.Services.member
                         return flag;
                     }
                 }
-                if (request.StartDate == DateTime.MinValue || request.StartDate == DateTime.MaxValue || request.StartDate > DateTime.Now)
-                {
-                    msg = "开始时间有误";
-                    return flag;
-                }
+
                 var playerCoach = _dbContext.Get<t_player_coach>(request.Id);
                 if (playerCoach != null&& playerCoach.memberId==request.MemberId)
                 {
                     playerCoach.startdate = request.StartDate;
                     playerCoach.enddate = request.EndDate;
-                    playerCoach.playerCoachStatus =  PlayerCoachStatusEm.待确认;
+                    playerCoach.playerCoachStatus =  PlayerCoachStatusEm.待同意;
                     playerCoach.updatetime = DateTime.Now;
                     _dbContext.Update(playerCoach);
                     flag = true;
@@ -164,7 +155,7 @@ namespace nsda.Services.member
                 var playerCoach = _dbContext.Get<t_player_coach>(id);
                 if (playerCoach != null&& playerCoach.toMemberId==memberId)
                 {
-                    playerCoach.playerCoachStatus = isAgree ? PlayerCoachStatusEm.已确认 : PlayerCoachStatusEm.拒绝;
+                    playerCoach.playerCoachStatus = isAgree ? PlayerCoachStatusEm.同意 : PlayerCoachStatusEm.拒绝;
                     playerCoach.updatetime = DateTime.Now;
                     _dbContext.Update(playerCoach);
                     flag = true;
@@ -193,7 +184,9 @@ namespace nsda.Services.member
                             inner join t_member c on a.toMemberId=c.id
                             inner join t_memberpoints d on a.memberId=d.memberId
                             inner join t_memberpoints e on a.toMemberId=e.memberId
-                            where (isCoach=1 and isPositive=0 and memberId=@MemberId) or (isCoach=0 and isPositive=1 and toMemberId=@MemberId) order by a.createtime desc";
+                            where a.isdelete=0 and ((a.isCoach=1 and a.isPositive=0 anda. memberId=@MemberId) or (a.isCoach=0 and a.isPositive=1 and a.toMemberId=@MemberId))
+                            order by a.createtime desc
+                          ";
                 int totalCount = 0;
                 list = _dbContext.Page<CoachPlayerResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -205,7 +198,7 @@ namespace nsda.Services.member
                         {
                             item.Flag = true;
                         }
-                        if (item.PlayerCoachStatus == PlayerCoachStatusEm.已确认)
+                        if (item.PlayerCoachStatus == PlayerCoachStatusEm.同意)
                         {
                             //所在学校
                             item.School=_dbContext.ExecuteScalar($"select b.chinessname from t_playereduexper  a inner join t_school b on a.schoolId=b.id where a.memberid={(item.Flag?item.ToMemberId:item.MemberId)} and a.isdelete=0 order by startdate desc limit 1").ToObjStr();
@@ -232,7 +225,9 @@ namespace nsda.Services.member
                 var sql = @"select a.*,b.name MemberName,b.code MemberCode,c.name ToMemberName,c.code ToMemberCode from t_player_coach a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_member c on a.toMemberId=c.id
-                            where  (isCoach=0 and isPositive=1 and memberId=@MemberId) or (isCoach=1 and isPositive=0 and toMemberId=@MemberId) order by a.createtime desc";
+                            where a.isdelete=0 and ((a.isCoach=0 and a.isPositive=1 and a.memberId=@MemberId) or (a.isCoach=1 and a.isPositive=0 and a.toMemberId=@MemberId))
+                            order by a.startdate desc
+                          ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerCoachResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

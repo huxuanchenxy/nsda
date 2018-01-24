@@ -78,6 +78,16 @@ namespace nsda.Services.Implement.member
                         msg = "联系方式不能为空";
                         break;
                     }
+                    if (item.PlayerEdu == null || item.PlayerEdu.SchoolId == 0)
+                    {
+                        msg = "教育经历不能为空";
+                        break;
+                    }
+                    if (item.PlayerEdu.StartDate.IsEmpty())
+                    {
+                        msg = "教育经历开始时间不能为空";
+                        break;
+                    }
                 }
 
                 if (msg.IsNotEmpty())

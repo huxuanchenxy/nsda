@@ -19,11 +19,22 @@ namespace nsda.Web.Areas.player.Controllers
         IPlayerSignUpService _playerSignUpService;
         IEventService _eventService;
         IEventSignService _eventSignService;
-        public playersignupController(IPlayerSignUpService playerSignUpService, IEventService eventService, IEventSignService eventSignService)
+        IMemberTempService _memberTempService;
+        public playersignupController(IPlayerSignUpService playerSignUpService, IEventService eventService, IEventSignService eventSignService, IMemberTempService memberTempService)
         {
             _playerSignUpService = playerSignUpService;
             _eventService = eventService;
             _eventSignService = eventSignService;
+            _memberTempService = memberTempService;
+        }
+
+        #region view
+        //报名页面
+        public ActionResult index()
+        {
+            var data = _eventService.EventCondition();
+            ViewBag.Condition = data;
+            return View();
         }
 
         //签到页面
@@ -33,15 +44,37 @@ namespace nsda.Web.Areas.player.Controllers
             return View(detail);
         }
 
-        //报名页面
-        public ActionResult signup()
+        public ActionResult bindtemp()
         {
-            var data = _eventService.EventCondition();
-            ViewBag.Condition = data;
             return View();
         }
 
+        //已报名页
+        public ActionResult list()
+        {
+            return View();
+        }
+        //退赛退费页
+        public ActionResult refundlist()
+        {
+            return View();
+        }
+        #endregion
+
         #region ajax
+        //绑定临时账号
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult bindplayer(BindTempPlayerRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var res = new Result<string>();
+            string msg = string.Empty;
+            int orderId = _memberTempService.BindTempPlayer(request, out msg);
+            return Result<string>(orderId > 0, msg, orderId.ToString());
+        }
+
         //邀请组队成员
         [HttpGet]
         public ContentResult invitation(string keyvalue,int eventId,int groupId)

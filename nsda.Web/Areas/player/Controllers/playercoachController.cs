@@ -81,7 +81,11 @@ namespace nsda.Web.Areas.player.Controllers
         #endregion
 
         #region view
-
+        //选手 教练页
+        public ActionResult index()
+        {
+            return View();
+        }
         #endregion
     }
 }

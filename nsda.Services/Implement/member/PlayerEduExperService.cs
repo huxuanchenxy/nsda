@@ -43,9 +43,9 @@ namespace nsda.Services.member
                     msg = "请选择学校";
                     return flag;
                 }
-                if (request.StartDate == DateTime.MinValue || request.EndDate == DateTime.MaxValue)
+                if (request.StartDate.IsEmpty())
                 {
-                    msg = "时间有误";
+                    msg = "请选择开始时间";
                     return flag;
                 }
                 _dbContext.Insert(new t_playereduexper {
@@ -76,9 +76,9 @@ namespace nsda.Services.member
                     msg = "请选择学校";
                     return flag;
                 }
-                if (request.StartDate == DateTime.MinValue || request.EndDate == DateTime.MaxValue)
+                if (request.StartDate.IsEmpty())
                 {
-                    msg = "时间有误";
+                    msg = "请选择开始时间";
                     return flag;
                 }
                 var membereduexper = _dbContext.Get<t_playereduexper>(request.Id);
@@ -140,7 +140,7 @@ namespace nsda.Services.member
             {
                 var sql= @"select a.*,b.chinessname as SchoolName from t_playereduexper a
                             inner  join t_school b on a.schoolId=b.id
-                            where a.isdelete=0 and a.memberId=@MemberId order by a.createtime desc ";
+                            where a.isdelete=0 and a.memberId=@MemberId order by a.startdate desc ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerEduExperResponse>(sql,out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -152,13 +152,13 @@ namespace nsda.Services.member
             return list;
         }
         //教育经历详情
-        public PlayerEduExperResponse Detail(int id, int userId)
+        public PlayerEduExperResponse Detail(int id, int memberId)
         {
             PlayerEduExperResponse response = null;
             try
             {
                 var membereduexper = _dbContext.Get<t_playereduexper>(id);
-                if (membereduexper != null&&userId== membereduexper.memberId)
+                if (membereduexper != null&& memberId == membereduexper.memberId)
                 {
                     response = new PlayerEduExperResponse
                     {

@@ -37,12 +37,12 @@ namespace nsda.Models
         /// <summary>
         /// 开始时间
         /// </summary>
-        public DateTime startdate { get; set; }
+        public string startdate { get; set; }
     
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTime? enddate { get; set; }
+        public string enddate { get; set; }
     
         /// <summary>
         /// 学校id

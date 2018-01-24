@@ -62,20 +62,16 @@ namespace nsda.Services.Implement.member
                 StringBuilder sqljoin = new StringBuilder();
                 if (request.StartDate != null)
                 {
-                    sqljoin.Append(" and createtime>=@StartDate ");
+                    sqljoin.Append(" and a.createtime>=@StartDate ");
                 }
                 if (request.EndDate != null)
                 {
                     request.EndDate = request.EndDate.Value.AddDays(1).AddSeconds(-1);
-                    sqljoin.Append(" and createtime<=@EndDate ");
+                    sqljoin.Append(" and a.createtime<=@EndDate ");
                 }
-                var sql= $@"select b.starteventtime StartDate,b.endeventtime EndDate,b.name EventName, 
-                            a.points,c.name ProvinceName,d.name CityName,a.Id,c.name CountryName
+                var sql= $@"select b.name EventName,b.code EventCode,a.points,a.Id
                             from t_memberpointsrecord a
                             inner join t_event b on a.eventId=b.id
-                            left join  t_country c on b.countryId=c.id
-                            left join t_province d on b.provinceId=d.id
-                            left join t_city e on b.cityId = e.id
                             where a.isdelete=0 and a.memberId=@memberId {sqljoin.ToString()}
                             order by a.createtime desc
                         ";
@@ -134,16 +130,15 @@ namespace nsda.Services.Implement.member
         //选手积分详情
         public List<PlayerPointsRecordDetailResponse> PointsRecordDetail(int recordId, int memberId)
         {
+            //参照赛果
             List<PlayerPointsRecordDetailResponse> list = new List<PlayerPointsRecordDetailResponse>();
             try
             {
-                var sql = $@"select a.points,a.objEventType,c.name EventName,d.name GroupName,a.remark,a.createtime 
-                            from t_memberpointsrecordetail a
-                            inner join t_memberpointsrecord b on a.recordId=b.id
-                            inner join t_event c on c.id=b.eventId
-                            inner join t_eventgroup d on b.groupId=d.id
-                            where b.isdelete=0 and a.isdelete=0 and a.memberId={memberId} and a.recordId={recordId}";
-                list = _dbContext.Query<PlayerPointsRecordDetailResponse>(sql).ToList();
+                var record = _dbContext.Get<t_memberpointsrecord>(recordId);
+                if (record != null&& memberId==record.memberId)
+                {
+                    //根据赛事 组别 选手id 查询此次比赛获奖次数
+                }
             }
             catch (Exception ex)
             {

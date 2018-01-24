@@ -54,9 +54,9 @@ namespace nsda.Models
         /// </summary>
         public bool isCoach { get; set; }
     
-        public DateTime startdate { get; set; }
+        public string startdate { get; set; }
     
-        public DateTime? enddate { get; set; }
+        public string enddate { get; set; }
     
         /// <summary>
         /// 创建时间

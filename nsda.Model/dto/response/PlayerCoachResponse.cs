@@ -17,8 +17,8 @@ namespace nsda.Model.dto.response
         public int MemberId { get; set; }
         public int ToMemberId { get; set; }
         public PlayerCoachStatusEm PlayerCoachStatus { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
         public bool Flag { get; set; }

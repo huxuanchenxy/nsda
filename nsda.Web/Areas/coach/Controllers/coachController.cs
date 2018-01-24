@@ -98,11 +98,30 @@ namespace nsda.Web.Areas.coach.Controllers
         #region view
         public ActionResult index()
         {
-            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/coach/coach/qrcode/{UserContext.WebUserContext.Id}");
+            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/coach/coach/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
 
         public ActionResult qrcode(int id)
+        {
+            return View();
+        }
+
+        //个人中心
+        public ActionResult info()
+        {
+            var data = _memberService.Detail(UserContext.WebUserContext.Id);
+            return View(data);
+        }
+
+        //站内信列表
+        public ActionResult mail()
+        {
+            return View();
+        }
+
+        //教练学生列表
+        public ActionResult list()
         {
             return View();
         }

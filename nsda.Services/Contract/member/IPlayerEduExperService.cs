@@ -23,6 +23,6 @@ namespace nsda.Services.member
         //1.3 教育经历列表
         List<PlayerEduExperResponse> List(PlayerEduExperQueryRequest request);
         //1.4 教育经历详情
-        PlayerEduExperResponse Detail(int id,int userId);
+        PlayerEduExperResponse Detail(int id,int memberId);
     }
 }

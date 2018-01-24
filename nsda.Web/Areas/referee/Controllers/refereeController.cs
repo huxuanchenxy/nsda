@@ -34,30 +34,15 @@ namespace nsda.Web.Areas.referee.Controllers
             _eventSignService = eventSignService;
         }
 
+        #region ajax
         //当前比赛列表
         [HttpGet]
         public ContentResult current()
         {
             var data = _refereeSignUpService.CurrentRefereeEvent(UserContext.WebUserContext.Id);
-            return Result(true,"",data);
+            return Result(true, "", data);
         }
 
-        //签到页面
-        public ActionResult signview(int eventId)
-        {
-            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id);
-            return View(detail);
-        }
-
-        //报名页面
-        public ActionResult signup()
-        {
-            var data = _eventService.EventCondition();
-            ViewBag.Condition = data;
-            return View();
-        }
-
-        #region ajax
         //申请做裁判
         [HttpPost]
         [AjaxOnly]
@@ -116,7 +101,7 @@ namespace nsda.Web.Areas.referee.Controllers
         #region view
         public ActionResult index()
         {
-            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/referee/referee/qrcode/{UserContext.WebUserContext.Id}");
+            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/referee/referee/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
 
@@ -124,6 +109,32 @@ namespace nsda.Web.Areas.referee.Controllers
         {
             return View();
         }
-        #endregion 
+
+        public ActionResult info()
+        {
+            var data = _memberService.Detail(UserContext.WebUserContext.Id);
+            return View(data);
+        }
+
+        public ActionResult mail()
+        {
+            return View();
+        }
+
+        //报名页面
+        public ActionResult signup()
+        {
+            var data = _eventService.EventCondition();
+            ViewBag.Condition = data;
+            return View();
+        }
+
+        //签到页面
+        public ActionResult signview(int eventId)
+        {
+            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id);
+            return View(detail);
+        }
+        #endregion
     }
 }

@@ -22,18 +22,19 @@ namespace nsda.Web.Areas.player.Controllers
         IMemberExtendService _memberExtendService;
         IDataSourceService _dataSourceService;
         IEventScoreService _eventScoreService;
-        IMemberTempService _memberTempService;
         IMemberPointsService _memberPointsService;
         IPlayerSignUpService _playerSignUpService;
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService)
+        IPlayerEduExperService _playerEduExperService;
+
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduExperService playerEduExperService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
             _dataSourceService = dataSourceService;
             _eventScoreService = eventScoreService;
-            _memberTempService = memberTempService;
             _memberPointsService = memberPointsService;
             _playerSignUpService = playerSignUpService;
+            _playerEduExperService = playerEduExperService;
         }
 
         #region ajax
@@ -45,10 +46,9 @@ namespace nsda.Web.Areas.player.Controllers
             return Result(true, "", data);
         }
 
-
         //辩题资料下载
         [HttpGet]
-        public ContentResult datasource(DataSourceQueryRequest request)
+        public ContentResult datasourcelist(DataSourceQueryRequest request)
         {
             var data = _dataSourceService.List(request);
             var res = new ResultDto<DataSourceResponse>
@@ -97,27 +97,12 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(orderId>0, msg, orderId.ToString());
         }
 
-        //绑定临时账号
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult bindplayer(BindTempPlayerRequest request)
-        {
-            request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
-            string msg = string.Empty;
-            int orderId = _memberTempService.BindTempPlayer(request, out msg);
-            return Result<string>(orderId>0, msg,orderId.ToString());
-        }
-
-
         //积分记录查询
         [HttpGet]
         public ContentResult pointsrecord(PlayerPointsRecordQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            decimal totalPoints = 0m;
-            var data = _memberPointsService.PlayerPointsRecord(request, out totalPoints);
+            var data = _memberPointsService.PlayerPointsRecord(request);
             var res = new ResultDto<PlayerPointsRecordResponse>
             {
                 page = request.PageIndex,
@@ -135,16 +120,92 @@ namespace nsda.Web.Areas.player.Controllers
             var data = _memberPointsService.PointsRecordDetail(recordId, UserContext.WebUserContext.Id);
             return Result(true, string.Empty,data);
         }
+
+        #region 教育经历
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult deleteedu(int id)
+        {
+            var msg = string.Empty;
+            var flag = _playerEduExperService.Delete(id, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult insertedu(PlayerEduExperRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var msg = string.Empty;
+            var flag = _playerEduExperService.Insert(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult editedu(PlayerEduExperRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var msg = string.Empty;
+            var flag = _playerEduExperService.Edit(request, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpGet]
+        public ContentResult listedu(PlayerEduExperQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _playerEduExperService.List(request);
+            var res = new ResultDto<PlayerEduExperResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+        #endregion 
+
         #endregion
 
         #region view
         public ActionResult index()
         {
-            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/player/player/qrcode/{UserContext.WebUserContext.Id}");
+            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/player/player/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
 
+        //处理所生成的二维码扫描回调事件
         public ActionResult qrcode(int id)
+        {
+            return View();
+        }
+
+        public ActionResult info()
+        {
+            var data = _memberService.Detail(UserContext.WebUserContext.Id);
+            ViewBag.CoachInfo = null;
+            return View(data);
+        }
+
+        //资料页面
+        public ActionResult datasource()
+        {
+            return View();
+        }
+
+        //评分单页面
+        public ActionResult eventscore()
+        {
+            return View();
+        }
+
+        //站内信页面
+        public ActionResult mail()
         {
             return View();
         }

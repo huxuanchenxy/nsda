@@ -237,7 +237,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #region view
         public ActionResult index()
         {
-            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
+            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
 
@@ -249,6 +249,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ActionResult eventgroup(int eventGroupId)
         {
             var detail = _eventService.EventGroupDetail(eventGroupId);
+            return View(detail);
+        }
+
+        public ActionResult info()
+        {
+            var data = _memberService.Detail(UserContext.WebUserContext.Id);
+            return View(data);
+        }
+
+        public ActionResult mail()
+        {
             return View();
         }
         #endregion 
