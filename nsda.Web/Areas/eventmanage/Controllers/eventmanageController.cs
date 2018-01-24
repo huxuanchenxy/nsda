@@ -237,6 +237,12 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #region view
         public ActionResult index()
         {
+            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
+            return View();
+        }
+
+        public ActionResult qrcode(int id)
+        {
             return View();
         }
 

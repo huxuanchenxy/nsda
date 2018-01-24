@@ -98,6 +98,12 @@ namespace nsda.Web.Areas.trainer.Controllers
         #region view
         public ActionResult index()
         {
+            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/trainer/trainer/qrcode/{UserContext.WebUserContext.Id}");
+            return View();
+        }
+
+        public ActionResult qrcode(int id)
+        {
             return View();
         }
         #endregion 

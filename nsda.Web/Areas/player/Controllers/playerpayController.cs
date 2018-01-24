@@ -116,7 +116,7 @@ namespace nsda.Web.Areas.player.Controllers
                 _orderService.PayLog(id, response.Money, PayTypeEm.微信, userContext.Id, out msg);//插入支付流水信息
                 NativePay nativePay = new NativePay();
                 string url = nativePay.GetPayUrl(response);
-                ViewBag.QRCode = "/player/playerpay/makeqrcode?data=" + HttpUtility.UrlEncode(url);
+                ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode(url);
                 ViewBag.Order = response;
                 return View();
             }
@@ -127,28 +127,6 @@ namespace nsda.Web.Areas.player.Controllers
         {
             var order = _orderService.OrderDetail(orderId);
             return View(order);
-        }
-
-        //生成二维码
-        public FileResult makeqrcode(string data)
-        {
-            if (string.IsNullOrEmpty(data))
-                throw new ArgumentException("data");
-
-            //初始化二维码生成工具
-            QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
-            qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
-            qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
-            qrCodeEncoder.QRCodeVersion = 0;
-            qrCodeEncoder.QRCodeScale = 4;
-
-            //将字符串生成二维码图片
-            Bitmap image = qrCodeEncoder.Encode(data, Encoding.Default);
-
-            //保存为PNG到内存流  
-            MemoryStream ms = new MemoryStream();
-            image.Save(ms, ImageFormat.Jpeg);
-            return File(ms.ToArray(), "image/jpeg");
         }
 
         //轮询订单状态是否改变

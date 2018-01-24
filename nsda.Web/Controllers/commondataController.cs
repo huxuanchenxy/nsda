@@ -11,10 +11,14 @@ using nsda.Utilities;
 using nsda.Web.Filter;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using ThoughtWorks.QRCode.Codec;
 
 namespace nsda.Web.Controllers
 {
@@ -43,6 +47,29 @@ namespace nsda.Web.Controllers
             _memberExtendService = memberExtendService;
             _eventService = eventService;
         }
+
+        //生成二维码
+        public FileResult makeqrcode(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+                throw new ArgumentException("data");
+
+            //初始化二维码生成工具
+            QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
+            qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+            qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
+            qrCodeEncoder.QRCodeVersion = 0;
+            qrCodeEncoder.QRCodeScale = 4;
+
+            //将字符串生成二维码图片
+            Bitmap image = qrCodeEncoder.Encode(data, Encoding.Default);
+
+            //保存为PNG到内存流  
+            MemoryStream ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Jpeg);
+            return File(ms.ToArray(), "image/jpeg");
+        }
+
         // 赛事列表
         [HttpGet]
         public ContentResult listevent(PlayerOrRefereeEventQueryRequest request)

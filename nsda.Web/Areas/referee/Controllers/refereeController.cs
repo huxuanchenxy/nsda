@@ -117,6 +117,12 @@ namespace nsda.Web.Areas.referee.Controllers
         #region view
         public ActionResult index()
         {
+            ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/referee/referee/qrcode/{UserContext.WebUserContext.Id}");
+            return View();
+        }
+
+        public ActionResult qrcode(int id)
+        {
             return View();
         }
         #endregion 
