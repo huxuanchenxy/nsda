@@ -30,7 +30,7 @@ namespace nsda.Services.admin
         {
             try
             {
-                t_loginlog model = new t_loginlog {
+                t_sys_loginlog model = new t_sys_loginlog {
                     loginresult=request.LoginResult,
                     account=request.Account,
                     dataType=request.DataType,  
@@ -67,7 +67,7 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and createtime<=@CreateEnd");
                 }
-                var sql = $"select * from t_loginlog where isdelete=0 {join.ToString()} order by createtime desc";
+                var sql = $"select * from t_sys_loginlog where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<LoginLogResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

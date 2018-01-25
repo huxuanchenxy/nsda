@@ -35,7 +35,7 @@ namespace nsda.Services.Implement.member
             msg = string.Empty;
             try
             {
-                var extend = _dbContext.Select<t_memberextend>(c => c.memberId == request.MemberId  && c.role == request.RoleType).FirstOrDefault();
+                var extend = _dbContext.Select<t_member_extend>(c => c.memberId == request.MemberId  && c.role == request.RoleType).FirstOrDefault();
                 if (extend != null && extend.memberExtendStatus == MemberExtendStatusEm.申请通过)
                 {
                     msg = "您的申请已经通过，请刷新页面后重试";
@@ -50,7 +50,7 @@ namespace nsda.Services.Implement.member
                 }
                 else
                 {
-                    _dbContext.Insert(new t_memberextend
+                    _dbContext.Insert(new t_member_extend
                     {
                         memberExtendStatus = MemberExtendStatusEm.待审核,
                         memberId = request.MemberId,
@@ -73,7 +73,7 @@ namespace nsda.Services.Implement.member
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_memberextend>(id);
+                var detail = _dbContext.Get<t_member_extend>(id);
                 if (detail != null)
                 {
                     detail.remark = remark;
@@ -112,7 +112,7 @@ namespace nsda.Services.Implement.member
                 {
                     join.Append(" and a.memberExtendStatus = @Status");
                 }
-                var sql=$@" select a.*,b.completename MemberName from t_memberextend a 
+                var sql=$@" select a.*,b.completename MemberName from t_member_extend a 
                             inner join  t_member b on a.memberId=b.id
                             where isdelete=0 {join.ToString()} order by a.createtime desc";
 
@@ -132,7 +132,7 @@ namespace nsda.Services.Implement.member
             List<RoleEm> list = new List<RoleEm>();
             try
             {
-                var sql = $" select role from t_memberextend  where isdelete=0 and memberId={memberId}";
+                var sql = $" select role from t_member_extend  where isdelete=0 and memberId={memberId}";
                 list = _dbContext.Query<RoleEm>(sql).ToList();
             }
             catch (Exception ex)

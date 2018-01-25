@@ -30,7 +30,7 @@ namespace nsda.Services.admin
         {
             try
             {
-                t_sysoperlog model = new t_sysoperlog {
+                t_sys_operlog model = new t_sys_operlog {
                      operdata=request.OperData,
                      operremark=request.OperRemark,
                      sysuserId=request.SysUserId
@@ -63,8 +63,8 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and a.createtime<=@CreateEnd");
                 }
-                var sql=$@"select a.*,b.name OperUserName from t_sysoperlog a 
-                            inner join  t_sysuser b on a.sysuserId=b.id
+                var sql=$@"select a.*,b.name OperUserName from t_sys_operlog a 
+                            inner join  t_sys_user b on a.sysuserId=b.id
                             where isdelete=0 {join.ToString()} order by a.createtime desc ";
                 int totalCount = 0;
                 list = _dbContext.Page<SysOperLogResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);

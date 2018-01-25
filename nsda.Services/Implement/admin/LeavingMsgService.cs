@@ -50,7 +50,7 @@ namespace nsda.Services.admin
                     msg = "邮箱格式有误";
                     return flag;
                 }
-                t_leavingmsg model = new t_leavingmsg {
+                t_sys_leavingmsg model = new t_sys_leavingmsg {
                     email = request.Email,
                     name = request.Name,
                     message = request.Message,
@@ -76,7 +76,7 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_leavingmsg>(id);
+                var detail = _dbContext.Get<t_sys_leavingmsg>(id);
                 if (detail != null)
                 {
                     detail.leavingStatus = LeavingStatusEm.已处理;
@@ -128,7 +128,7 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and createtime<=@CreateEnd");
                 }
-                var sql = $"select * from t_leavingmsg where isdelete=0 {join.ToString()} order by createtime desc";
+                var sql = $"select * from t_sys_leavingmsg where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<LeavingMsgResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -147,7 +147,7 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_leavingmsg>(id);
+                var detail = _dbContext.Get<t_sys_leavingmsg>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;
@@ -175,7 +175,7 @@ namespace nsda.Services.admin
             LeavingMsgResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_leavingmsg>(id);
+                var detail = _dbContext.Get<t_sys_leavingmsg>(id);
                 if (detail != null)
                 {
                     response = new LeavingMsgResponse {

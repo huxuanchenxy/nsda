@@ -37,7 +37,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                t_eventsign eventsign = _dbContext.Get<t_eventsign>(id);
+                t_event_sign eventsign = _dbContext.Get<t_event_sign>(id);
                 if (eventsign == null || eventsign.memberId != memberId)
                 {
                     msg = "签到信息有误";
@@ -65,7 +65,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                var sql = "update t_eventsign set eventSignStatus=@EventSignStatus,signtime=@SignTime where Id in @Id and eventId=@EventId ";
+                var sql = "update t_event_sign set eventSignStatus=@EventSignStatus,signtime=@SignTime where Id in @Id and eventId=@EventId ";
                 var dy = new DynamicParameters();
                 dy.Add("Id", id.ToArray());
                 dy.Add("EventId",eventId);
@@ -95,10 +95,10 @@ namespace nsda.Services.Implement.eventmanage
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
                 var sql=$@" select d.groupnum GroupNum,a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss
-                            from t_eventsign a 
+                            from t_event_sign a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
-                            inner join t_player_signup d on d.eventId=a.eventId and d.eventGroupId=a.eventGroupId and a.memberId=d.memberId
+                            inner join t_event_player_signup d on d.eventId=a.eventId and d.eventGroupId=a.eventGroupId and a.memberId=d.memberId
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
                             and a.eventId=@EventId and a.eventGroupId=@EventGroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
                             {join.ToString()} group by a.memberId order by a.createtime desc
@@ -143,7 +143,7 @@ namespace nsda.Services.Implement.eventmanage
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
                 var sql=$@" select a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss
-                            from t_eventsign a 
+                            from t_event_sign a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
@@ -184,7 +184,7 @@ namespace nsda.Services.Implement.eventmanage
             SignResponse response = null;
             try
             {
-                var sql = @"select a.id,b.code EventCode,b.name EventName,a.signdate,a.eventSignStatus from t_eventsign a
+                var sql = @"select a.id,b.code EventCode,b.name EventName,a.signdate,a.eventSignStatus from t_event_sign a
                             inner join t_event b on a.eventId=b.id
                             where a.isdelete=0 and a.eventId=@EventId and a.memberId=@MemberId and a.signdate=@SignDate";
                 var dy = new DynamicParameters();

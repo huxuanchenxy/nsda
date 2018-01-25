@@ -23,7 +23,7 @@ namespace nsda.Repository.Implement.eventmanage
             lock (lockObject)
             {
                 var dy = new DynamicParameters();
-                string sql = $@"select  code from t_eventroom where eventId={eventId} and  code like '{code}%' order by Id desc limit 1";
+                string sql = $@"select  code from t_event_room where eventId={eventId} and  code like '{code}%' order by Id desc limit 1";
                 object obj = _dbContext.Query<object>(sql).FirstOrDefault();
 
                 if (obj == null || obj.ToString().IsEmpty())

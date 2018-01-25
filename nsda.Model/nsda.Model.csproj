@@ -68,7 +68,7 @@
     <Compile Include="dto\request\MemberOperLogRequest.cs" />
     <Compile Include="dto\request\OrderListQueryRequest.cs" />
     <Compile Include="dto\request\PlayerSignQueryRequest.cs" />
-    <Compile Include="dto\request\PlayerEduExperRequest.cs" />
+    <Compile Include="dto\request\PlayerEduRequest.cs" />
     <Compile Include="dto\request\PlayerOrRefereeEventQueryRequest.cs" />
     <Compile Include="dto\request\PlayerPointsRecordQueryRequest.cs" />
     <Compile Include="dto\request\PlayerCoachRequest.cs" />
@@ -111,7 +111,7 @@
     <Compile Include="dto\response\PlayerSignResponse.cs" />
     <Compile Include="dto\response\MemberTempResponse.cs" />
     <Compile Include="dto\response\MenuData.cs" />
-    <Compile Include="dto\response\PlayerEduExperResponse.cs" />
+    <Compile Include="dto\response\PlayerEduResponse.cs" />
     <Compile Include="dto\response\MemberResponse.cs" />
     <Compile Include="dto\response\MemberSelectResponse.cs" />
     <Compile Include="dto\response\PlayerOrRefereeEventResponse.cs" />
@@ -174,127 +174,103 @@
     <Compile Include="enums\TempTypeEm.cs" />
     <Compile Include="enums\RefereeSignUpStatusEm.cs" />
     <Compile Include="enums\WinTypeEm.cs" />
-    <Compile Include="model\t_city.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_country.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_datasource.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_emaillog.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
     <Compile Include="model\t_event.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventattachment.cs">
+    <Compile Include="model\t_event_cycling.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventavoidrule.cs">
+    <Compile Include="model\t_event_cycling_avoidrule.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventcheck.cs">
+    <Compile Include="model\t_event_cycling_detail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventcyclingrace.cs">
+    <Compile Include="model\t_event_cycling_match.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventcyclingracedetail.cs">
+    <Compile Include="model\t_event_cycling_match_playerresult.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventcyclingraceresult.cs">
+    <Compile Include="model\t_event_cycling_match_teamresult.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventcyclingracesettings.cs">
+    <Compile Include="model\t_event_cycling_settings.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventgroup.cs">
+    <Compile Include="model\t_event_group.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventknockout.cs">
+    <Compile Include="model\t_event_knockout.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventknockoutdetail.cs">
+    <Compile Include="model\t_event_knockout_detail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventknockoutsettings.cs">
+    <Compile Include="model\t_event_knockout_match.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventplayerscoringrule.cs">
+    <Compile Include="model\t_event_knockout_referee.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventprize.cs">
+    <Compile Include="model\t_event_knockout_settings.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventrefereeavoidrule.cs">
+    <Compile Include="model\t_event_playerscoringrule.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventresult.cs">
+    <Compile Include="model\t_event_player_signup.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventroom.cs">
+    <Compile Include="model\t_event_prize.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventsign.cs">
+    <Compile Include="model\t_event_refereeavoidrule.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_eventteamscoringrule.cs">
+    <Compile Include="model\t_event_referee_signup.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_event_result.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_event_room.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_event_score.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_leavingmsg.cs">
+    <Compile Include="model\t_event_sign.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_loginlog.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_mail.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_match.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_matchplayerresult.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_matchplayerresultdetail.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_matchteamresult.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_match_referee.cs">
+    <Compile Include="model\t_event_teamscoringrule.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_member.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_memberextend.cs">
+    <Compile Include="model\t_member_extend.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_memberoperlog.cs">
+    <Compile Include="model\t_member_operlog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_memberpoints.cs">
+    <Compile Include="model\t_member_points.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_memberpointsrecord.cs">
+    <Compile Include="model\t_member_points_record.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_membertemp.cs">
+    <Compile Include="model\t_member_temp.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_order.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_orderdetail.cs">
+    <Compile Include="model\t_order_carry.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_order_carry.cs">
+    <Compile Include="model\t_order_detail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_order_invoiceinfo.cs">
@@ -309,52 +285,70 @@
     <Compile Include="model\t_order_operationremark.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_order_operlog.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_order_paylog.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_order_receivinginfo.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_order_shoopingcart.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_paylog.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
-    <Compile Include="model\t_playereduexper.cs">
-      <DependentUpon>t4_table.tt</DependentUpon>
-    </Compile>
     <Compile Include="model\t_player_coach.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_player_signup.cs">
+    <Compile Include="model\t_player_edu.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_province.cs">
+    <Compile Include="model\t_sys_city.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_referee_signup.cs">
+    <Compile Include="model\t_sys_country.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_school.cs">
+    <Compile Include="model\t_sys_datasource.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_sysmenu.cs">
+    <Compile Include="model\t_sys_emaillog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_sysoperlog.cs">
+    <Compile Include="model\t_sys_leavingmsg.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_sysright.cs">
+    <Compile Include="model\t_sys_loginlog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_sysrole.cs">
+    <Compile Include="model\t_sys_mail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_sysuser.cs">
+    <Compile Include="model\t_sys_menu.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_vote.cs">
+    <Compile Include="model\t_sys_operlog.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_votedetail.cs">
+    <Compile Include="model\t_sys_province.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sys_right.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sys_role.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sys_school.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sys_user.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sys_vote.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_sys_vote_detail.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="ParamsConfig.cs" />

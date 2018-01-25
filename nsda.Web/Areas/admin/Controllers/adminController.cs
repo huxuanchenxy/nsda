@@ -65,10 +65,10 @@ namespace nsda.Web.Areas.admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AjaxOnly]
-        public ContentResult editpwd(string oldPwd,string newPwd)
+        public ContentResult editpwd(string pwd)
         {
             string msg = string.Empty;
-            var flag = _sysUserService.UpdatePwd(UserContext.SysUserContext.Id,oldPwd,newPwd,out msg);
+            var flag = _sysUserService.UpdatePwd(UserContext.SysUserContext.Id,pwd,out msg);
             return Result<string>(flag, msg);
         }
 

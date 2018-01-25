@@ -34,9 +34,9 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                var knockoutsettings = _dbContext.Select<t_eventknockoutsettings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
-                var knockout = _dbContext.Select<t_eventknockout>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
-                var knockoutdetail = _dbContext.Select<t_eventknockoutdetail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.knockoutId == knockout.id).FirstOrDefault();
+                var knockoutsettings = _dbContext.Select<t_event_knockout_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
+                var knockout = _dbContext.Select<t_event_knockout>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
+                var knockoutdetail = _dbContext.Select<t_event_knockout_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.knockoutId == knockout.id).FirstOrDefault();
                 //获取报名队伍信息
                 //获取裁判信息
                 //教室信息

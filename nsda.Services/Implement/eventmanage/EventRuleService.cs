@@ -40,25 +40,25 @@ namespace nsda.Services.Implement.eventmanage
                 _dbContext.BeginTransaction();
                 foreach (var item in request.Teamscoringrule)
                 {
-                    var sql = $"update t_eventteamscoringrule set teamScoringRules={item.TeamScoringRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_teamscoringrule set teamScoringRules={item.TeamScoringRules},updatetime={DateTime.Now} where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
 
                 foreach (var item in request.Scoringrule)
                 {
-                    var sql = $"update t_eventplayerscoringrule set scoringRules={item.ScoringRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_playerscoringrule set scoringRules={item.ScoringRules},updatetime={DateTime.Now} where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
 
                 foreach (var item in request.Avoidrule)
                 {
-                    var sql = $"update t_eventavoidrule set avoidRules={item.AvoidRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_cycling_avoidrule set avoidRules={item.AvoidRules},updatetime={DateTime.Now} where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
 
                 foreach (var item in request.RefereeAvoidrule)
                 {
-                    var sql = $"update t_eventrefereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_refereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime={DateTime.Now} where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
                 _dbContext.CommitChanges();
@@ -84,7 +84,7 @@ namespace nsda.Services.Implement.eventmanage
                 _dbContext.BeginTransaction();
                 foreach (var item in request.RefereeAvoidrule)
                 {
-                    var sql = $"update t_eventrefereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_refereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime={DateTime.Now} where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
                 _dbContext.CommitChanges();
@@ -106,7 +106,7 @@ namespace nsda.Services.Implement.eventmanage
             KnockoutRuleResponse response = new KnockoutRuleResponse();
             try
             {
-                var list = _dbContext.Select<t_eventrefereeavoidrule>(c => c.eventId == eventId && c.objEventType == ObjEventTypeEm.淘汰赛).OrderBy(c => c.viewindex).ToList();
+                var list = _dbContext.Select<t_event_refereeavoidrule>(c => c.eventId == eventId && c.objEventType == ObjEventTypeEm.淘汰赛).OrderBy(c => c.viewindex).ToList();
                 if (list != null && list.Count > 0)
                 {
                     foreach (var item in list)
@@ -134,7 +134,7 @@ namespace nsda.Services.Implement.eventmanage
             CyclingRaceRuleResponse response = new CyclingRaceRuleResponse();
             try
             {
-                var list = _dbContext.Select<t_eventrefereeavoidrule>(c => c.eventId == eventId && c.objEventType == ObjEventTypeEm.循环赛).OrderBy(c => c.viewindex).ToList();
+                var list = _dbContext.Select<t_event_refereeavoidrule>(c => c.eventId == eventId && c.objEventType == ObjEventTypeEm.循环赛).OrderBy(c => c.viewindex).ToList();
                 if (list != null && list.Count > 0)
                 {
                     foreach (var item in list)
@@ -149,7 +149,7 @@ namespace nsda.Services.Implement.eventmanage
                     }
                 }
 
-                var avoidrule = _dbContext.Select<t_eventavoidrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
+                var avoidrule = _dbContext.Select<t_event_cycling_avoidrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
                 if (avoidrule != null && avoidrule.Count > 0)
                 {
                     foreach (var item in avoidrule)
@@ -164,7 +164,7 @@ namespace nsda.Services.Implement.eventmanage
                     }
                 }
 
-                var teamscoringrule = _dbContext.Select<t_eventteamscoringrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
+                var teamscoringrule = _dbContext.Select<t_event_teamscoringrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
                 if (teamscoringrule != null && teamscoringrule.Count > 0)
                 {
                     foreach (var item in teamscoringrule)
@@ -179,7 +179,7 @@ namespace nsda.Services.Implement.eventmanage
                     }
                 }
 
-                var playerscoringrule = _dbContext.Select<t_eventplayerscoringrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
+                var playerscoringrule = _dbContext.Select<t_event_playerscoringrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
                 if (playerscoringrule != null && playerscoringrule.Count > 0)
                 {
                     foreach (var item in playerscoringrule)

@@ -91,7 +91,7 @@ namespace nsda.Services
                     {
                         //读取已经认证的
                         string role = ((int)detail.memberType).ToString();
-                        var memberextend = dbcontext.Select<t_memberextend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
+                        var memberextend = dbcontext.Select<t_member_extend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
                         if (memberextend != null && memberextend.Count > 0)
                         {
                             foreach (var item in memberextend)
@@ -99,7 +99,7 @@ namespace nsda.Services
                                 role += $",{((int)item.role).ToString()}";
                             }
                         }
-                        decimal points = dbcontext.ExecuteScalar($"select points from t_memberpoints where memberId={id}").ToObjDecimal();
+                        decimal points = dbcontext.ExecuteScalar($"select points from t_member_points where memberId={id}").ToObjDecimal();
                         //记录缓存
                         userContext = new WebUserContext
                         {

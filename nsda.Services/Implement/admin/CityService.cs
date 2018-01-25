@@ -47,7 +47,7 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                _dbContext.Insert(new t_city
+                _dbContext.Insert(new t_sys_city
                 {
                     provinceId=request.ProvinceId,
                     name = request.Name
@@ -78,7 +78,7 @@ namespace nsda.Services.Implement.admin
                 {
                     join.Append(" and a.provinceId=@ProvinceId ");
                 }
-                var sql=$@"select a.*,b.name  ProvinceName from t_city a left join t_province b on a.provinceId=b.Id where isdelete=0 {join.ToString()}";
+                var sql=$@"select a.*,b.name  ProvinceName from t_sys_city a left join t_sys_province b on a.provinceId=b.Id where isdelete=0 {join.ToString()}";
                 int totalCount = 0;
                 list = _dbContext.Page<CityResponse>(sql,out totalCount,request.PageIndex,request.PageSize, request);
                 request.Records = totalCount;
@@ -96,7 +96,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_city>(id);
+                var detail = _dbContext.Get<t_sys_city>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;
@@ -122,7 +122,7 @@ namespace nsda.Services.Implement.admin
             CityResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_city>(id);
+                var detail = _dbContext.Get<t_sys_city>(id);
                 if (detail != null)
                 {
                     response = new CityResponse
@@ -147,7 +147,7 @@ namespace nsda.Services.Implement.admin
             {
                 if (provinceId <= 0)
                     return list;
-                var data = _dbContext.Select<t_city>(c => c.provinceId == provinceId).ToList();
+                var data = _dbContext.Select<t_sys_city>(c => c.provinceId == provinceId).ToList();
                 if (data != null && data.Count > 0)
                 {
                     list = data.Select(c => new BaseDataResponse
@@ -182,7 +182,7 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                t_city city = _dbContext.Get<t_city>(request.Id);
+                t_sys_city city = _dbContext.Get<t_sys_city>(request.Id);
                 if (city != null)
                 {
                     city.name = request.Name;

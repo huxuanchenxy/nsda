@@ -23,7 +23,7 @@ namespace nsda.Repository.Implement.member
             lock (lockObject)
             {
                 var dy = new DynamicParameters();
-                string sql = $@"select  groupnum from t_signupform_player where groupnum like '{code}%' order by Id desc limit 1";
+                string sql = $@"select  groupnum from t_event_player_signup where groupnum like '{code}%' order by Id desc limit 1";
                 object obj = _dbContext.Query<object>(sql).FirstOrDefault();
 
                 if (obj == null || obj.ToString().IsEmpty())

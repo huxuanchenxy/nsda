@@ -30,7 +30,7 @@ namespace nsda.Services.Implement.member
         {
             try
             {
-                t_memberoperlog model = new t_memberoperlog
+                t_member_operlog model = new t_member_operlog
                 {
                     operdata = request.OperData,
                     operremark = request.OperRemark,
@@ -64,7 +64,7 @@ namespace nsda.Services.Implement.member
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and a.createtime<=@CreateEnd");
                 }
-                var sql=$@"select a.*,b.completename OperUserName from t_memberoperlog a 
+                var sql=$@"select a.*,b.completename OperUserName from t_member_operlog a 
                             inner join  t_member b on a.memberId=b.id
                             where isdelete=0 {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;

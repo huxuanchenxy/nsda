@@ -52,7 +52,7 @@ namespace nsda.Services.Implement.admin
                         order.updatetime = DateTime.Now;
                         _dbContext.Update(order);
                         //修改支付流水信息
-                        _dbContext.Execute($"update t_paylog paytransaction={paytransaction},notifyTime={DateTime.Now},payStatus={PayStatusEm.支付成功}  where orderId={orderId} and isdelete=0");
+                        _dbContext.Execute($"update t_order_paylog paytransaction={paytransaction},notifyTime={DateTime.Now},payStatus={PayStatusEm.支付成功}  where orderId={orderId} and isdelete=0");
                         _dbContext.CommitChanges();
 
                         Task.Factory.StartNew(() => {

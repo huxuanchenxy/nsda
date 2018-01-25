@@ -47,7 +47,7 @@ namespace nsda.Services.Implement.eventmanage
                     return flag;
                 }
 
-                _dbContext.Insert(new t_eventprize
+                _dbContext.Insert(new t_event_prize
                 {
                     eventGroupId = request.EventGroupId,
                     eventId = request.EventId,
@@ -85,7 +85,7 @@ namespace nsda.Services.Implement.eventmanage
                     return flag;
                 }
 
-                var eventPrize = _dbContext.Get<t_eventprize>(request.Id);
+                var eventPrize = _dbContext.Get<t_event_prize>(request.Id);
                 if (eventPrize != null)
                 {
                     eventPrize.remark = request.Remark;
@@ -116,7 +116,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                var eventPrize = _dbContext.Get<t_eventprize>(id);
+                var eventPrize = _dbContext.Get<t_event_prize>(id);
                 if (eventPrize != null)
                 {
                     eventPrize.updatetime = DateTime.Now;
@@ -143,7 +143,7 @@ namespace nsda.Services.Implement.eventmanage
             List<EventPrizeResponse> list = new List<EventPrizeResponse>();
             try
             {
-                var sql = $"select * from t_eventprize where isdelete=0 and eventId={eventId} and eventGroupId={eventGroupId}";
+                var sql = $"select * from t_event_prize where isdelete=0 and eventId={eventId} and eventGroupId={eventGroupId}";
                 list = _dbContext.Query<EventPrizeResponse>(sql).ToList();
             }
             catch (Exception ex)

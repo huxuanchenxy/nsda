@@ -21,7 +21,7 @@ namespace nsda.Services.admin
         //1.2 修改
         bool Edit(SysUserRequest request, int sysUserId, out string msg);
         //1.3 修改密码
-        bool UpdatePwd(int id,string oldPwd,string newPwd,out string msg);
+        bool UpdatePwd(int id,string pwd,out string msg);
         //1.4 系统用户列表 
         List<SysUserResponse> List(SysUserQueryRequest request);
         //1.5 删除系统用户信息

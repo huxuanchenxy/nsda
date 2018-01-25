@@ -100,7 +100,7 @@ namespace nsda.Model.dto.request
         public string ContactAddress { get; set; }
 
         //学校信息
-        public PlayerEduExperRequest PlayerEdu { get; set; }
+        public PlayerEduRequest PlayerEdu { get; set; }
 
         /// <summary>
         /// 赛事id

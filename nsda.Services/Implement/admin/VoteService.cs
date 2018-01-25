@@ -36,7 +36,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_vote>(id);
+                var detail = _dbContext.Get<t_sys_vote>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;
@@ -65,12 +65,12 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_vote>(voteId);
+                var detail = _dbContext.Get<t_sys_vote>(voteId);
                 if (detail != null)
                 {
                     if (detail.voteStartTime < DateTime.Now && detail.voteEndTime > DateTime.Now)
                     {
-                        var sql = "update t_votedetail set numberOfVotes=numberOfVotes+1 where Id in @Id and VoteId=@VoteId";
+                        var sql = "update t_sys_vote_detail set numberOfVotes=numberOfVotes+1 where Id in @Id and VoteId=@VoteId";
                         _dbContext.Execute(sql, new
                         {
                             Id = detailId.ToArray(),
@@ -135,7 +135,7 @@ namespace nsda.Services.Implement.admin
                 try
                 {
                     _dbContext.BeginTransaction();
-                    request.VoteId = _dbContext.Insert(new t_vote
+                    request.VoteId = _dbContext.Insert(new t_sys_vote
                     {
                         remark = request.Remark,
                         title = request.Title,
@@ -145,7 +145,7 @@ namespace nsda.Services.Implement.admin
 
                     foreach (var item in request.VoteDetail)
                     {
-                        _dbContext.Insert(new t_votedetail
+                        _dbContext.Insert(new t_sys_vote_detail
                         {
                             numberOfVotes = 0,
                             title = item.Title,
@@ -208,13 +208,13 @@ namespace nsda.Services.Implement.admin
                     msg = "投票辩题不能为空";
                 }
 
-                var model = _dbContext.Get<t_vote>(request.VoteId);
+                var model = _dbContext.Get<t_sys_vote>(request.VoteId);
                 model.updatetime = DateTime.Now;
                 model.voteEndTime = request.VoteEndTime;
                 model.voteStartTime = request.VoteStartTime;
                 model.title = request.Title;
                 model.remark = request.Remark;
-                var voteDetail = _dbContext.Select<t_votedetail>(c => c.voteId == request.VoteId).ToList();
+                var voteDetail = _dbContext.Select<t_sys_vote_detail>(c => c.voteId == request.VoteId).ToList();
                 try
                 {
                     _dbContext.BeginTransaction();
@@ -238,7 +238,7 @@ namespace nsda.Services.Implement.admin
                     {
                         foreach (var item in request.VoteDetail)
                         {
-                            _dbContext.Insert(new t_votedetail
+                            _dbContext.Insert(new t_sys_vote_detail
                             {
                                 numberOfVotes = 0,
                                 title = item.Title,
@@ -273,7 +273,7 @@ namespace nsda.Services.Implement.admin
             VoteResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_vote>(id);
+                var detail = _dbContext.Get<t_sys_vote>(id);
                 if (detail != null)
                 {
                     response = new VoteResponse
@@ -287,7 +287,7 @@ namespace nsda.Services.Implement.admin
                         VoteStartTime = detail.voteStartTime
                     };
 
-                    var votedetail = _dbContext.Select<t_votedetail>(c => c.voteId == id).ToList();
+                    var votedetail = _dbContext.Select<t_sys_vote_detail>(c => c.voteId == id).ToList();
                     if (votedetail != null && votedetail.Count > 0)
                     {
                         foreach (var item in votedetail)
@@ -345,7 +345,7 @@ namespace nsda.Services.Implement.admin
                     request.VoteEndTime1 = request.VoteEndTime1.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and voteEndTime<=@VoteEndTime2");
                 }
-                var sql=$@"select * from t_vote where isdelete=0 {join.ToString()} order by createtime";                
+                var sql=$@"select * from t_sys_vote where isdelete=0 {join.ToString()} order by createtime";                
                 int totalCount = 0;
                 list = _dbContext.Page<VoteResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

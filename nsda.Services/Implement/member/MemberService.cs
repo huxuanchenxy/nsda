@@ -108,7 +108,7 @@ namespace nsda.Services.member
                     _dbContext.BeginTransaction();
                     member.code = _dataRepository.MemberRepo.RenderCode();
                     int memberId = _dbContext.Insert(member).ToObjInt();
-                    _dbContext.Insert(new t_memberpoints
+                    _dbContext.Insert(new t_member_points
                     {
                         eventPoints = 0,
                         memberId = memberId,
@@ -118,7 +118,7 @@ namespace nsda.Services.member
                     //如果是选手  填了教育经验
                     if (request.MemberType == MemberTypeEm.选手)
                     {
-                        _dbContext.Insert(new t_playereduexper
+                        _dbContext.Insert(new t_player_edu
                         {
                             enddate = request.PlayerEdu.EndDate,
                             memberId = memberId,
@@ -131,7 +131,7 @@ namespace nsda.Services.member
                     {
                         if (request.EventId != null && request.EventId > 0)
                         {
-                            _dbContext.Insert(new t_referee_signup
+                            _dbContext.Insert(new t_event_referee_signup
                             {
                                 eventId = (int)request.EventId,
                                 isTemp = false,
@@ -194,7 +194,7 @@ namespace nsda.Services.member
                     _dbContext.Update(detail);
                     //读取已经认证的
                     string role = ((int)detail.memberType).ToString();
-                    var memberextend = _dbContext.Select<t_memberextend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
+                    var memberextend = _dbContext.Select<t_member_extend>(c => c.memberId == detail.id && c.memberExtendStatus == MemberExtendStatusEm.申请通过).ToList();
                     if (memberextend != null && memberextend.Count > 0)
                     {
                         foreach (var item in memberextend)
@@ -205,7 +205,7 @@ namespace nsda.Services.member
                     decimal points = 0;
                     if (detail.memberType != MemberTypeEm.赛事管理员)
                     {
-                       points = _dbContext.ExecuteScalar($"select points from t_memberpoints where memberId={detail.id}").ToObjDecimal();
+                       points = _dbContext.ExecuteScalar($"select points from t_member_points where memberId={detail.id}").ToObjDecimal();
                     }
                     //记录缓存
                     userContext = new WebUserContext
@@ -748,7 +748,7 @@ namespace nsda.Services.member
                             select Id,code MemberCode,completename MemberName from t_member where (isdelete=0 
                             and memberType={MemberTypeEm.选手} and id!={memberId} and {key} like @value) or id in
                             (
-	                            select a.memberId from t_memberextend a
+	                            select a.memberId from t_member_extend a
 	                            inner join t_member b on a.memberId=b.id
 	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手} 
                                 and b.{key} like @value
@@ -783,7 +783,7 @@ namespace nsda.Services.member
                             select Id,code MemberCode,completename MemberName from t_member where (isdelete=0 
                             and memberType={MemberTypeEm.教练} and id!={memberId} and {key} like @value) or id in
                             (
-	                            select a.memberId from t_memberextend a
+	                            select a.memberId from t_member_extend a
 	                            inner join t_member b on a.memberId=b.id
 	                            where  a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.教练} 
                                 and b.{key} like @value
@@ -841,7 +841,7 @@ namespace nsda.Services.member
                                 totaldiscount = 0
                             }).ToObjInt();
 
-                            _dbContext.Insert(new t_orderdetail
+                            _dbContext.Insert(new t_order_detail
                             {
                                 memberId = memberId,
                                 orderId = orderid,

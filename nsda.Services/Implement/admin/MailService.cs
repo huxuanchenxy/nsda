@@ -29,7 +29,7 @@ namespace nsda.Services.Implement.admin
         {
             try
             {
-                _dbContext.Insert(new t_mail
+                _dbContext.Insert(new t_sys_mail
                 {
                     content = request.Content,
                     memberId = request.MemberId,
@@ -49,7 +49,7 @@ namespace nsda.Services.Implement.admin
             List<MailResponse> list = new List<MailResponse>();
             try
             {
-                var sql = $"select * from t_mail where isdelete=0 and memberId={request.MemberId} order by createtime desc";
+                var sql = $"select * from t_sys_mail where isdelete=0 and memberId={request.MemberId} order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<MailResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -65,7 +65,7 @@ namespace nsda.Services.Implement.admin
             List<MailResponse> list = new List<MailResponse>();
             try
             {
-                var sql = $"select * from t_mail where isdelete=0 and memberId={memberId} order by createtime desc  limit 5";
+                var sql = $"select * from t_sys_mail where isdelete=0 and memberId={memberId} order by createtime desc  limit 5";
                 list = _dbContext.Query<MailResponse>(sql).ToList();
             }
             catch (Exception ex)
@@ -81,7 +81,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var sql = $"udpate t_mail set updatetime=@UpdateTime,isread=1 where Id = @Id and memberId=@MemberId";
+                var sql = $"udpate t_sys_mail set updatetime=@UpdateTime,isread=1 where Id = @Id and memberId=@MemberId";
                 var dy = new DynamicParameters();
                 dy.Add("UpdateTime", DateTime.Now);
                 dy.Add("Id", id);
@@ -103,7 +103,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_mail>(id);
+                var detail = _dbContext.Get<t_sys_mail>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;

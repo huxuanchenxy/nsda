@@ -41,7 +41,7 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                _dbContext.Insert(new t_country
+                _dbContext.Insert(new t_sys_country
                 {
                     name = request.Name
                 });
@@ -68,7 +68,7 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                t_country country = _dbContext.Get<t_country>(request.Id);
+                t_sys_country country = _dbContext.Get<t_sys_country>(request.Id);
                 if (country != null)
                 {
                     country.name = request.Name;
@@ -100,7 +100,7 @@ namespace nsda.Services.Implement.admin
                     request.Name = "%" + request.Name + "%";
                     join.Append(" and name like @Name");
                 }
-                var sql=$@"select *  from t_country  where isdelete=0 {join.ToString()} order by createtime desc";
+                var sql=$@"select *  from t_sys_country  where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<CountryResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -118,7 +118,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_country>(id);
+                var detail = _dbContext.Get<t_sys_country>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;
@@ -145,7 +145,7 @@ namespace nsda.Services.Implement.admin
             CountryResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_country>(id);
+                var detail = _dbContext.Get<t_sys_country>(id);
                 if (detail != null)
                 {
                     response = new CountryResponse
@@ -167,7 +167,7 @@ namespace nsda.Services.Implement.admin
             List<BaseDataResponse> list = new List<BaseDataResponse>();
             try
             {
-                var data = _dbContext.Select<t_country>(c=>true).ToList();
+                var data = _dbContext.Select<t_sys_country>(c=>true).ToList();
                 if (data != null && data.Count > 0)
                 {
                     list = data.Select(c => new BaseDataResponse

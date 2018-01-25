@@ -48,7 +48,7 @@ namespace nsda.Services.Implement.member
                     msg = "赛事信息有误";
                     return flag;
                 }
-                t_eventgroup t_group = _dbContext.Get<t_eventgroup>(tempplayer.EventGroupId);
+                t_event_group t_group = _dbContext.Get<t_event_group>(tempplayer.EventGroupId);
                 if (t_group == null)
                 {
                     msg = "赛事组别信息有误";
@@ -113,14 +113,14 @@ namespace nsda.Services.Implement.member
                             memberType = MemberTypeEm.临时选手
                         };
                         int memberInsertId = _dbContext.Insert(member).ToObjInt();
-                        _dbContext.Insert(new t_memberpoints
+                        _dbContext.Insert(new t_member_points
                         {
                             memberId = memberId,
                             points = 0,
                             eventPoints = 0,
                             servicePoints = 0
                         });
-                        _dbContext.Insert(new t_membertemp
+                        _dbContext.Insert(new t_member_temp
                         {
                             code = groupnum,
                             contactmobile = item.ContactMobile,
@@ -131,7 +131,7 @@ namespace nsda.Services.Implement.member
                             tempType = TempTypeEm.临时选手
                         });
                         //报名表
-                        _dbContext.Insert(new t_player_signup
+                        _dbContext.Insert(new t_event_player_signup
                         {
                             groupnum = groupnum,
                             eventId = item.EventId,
@@ -145,7 +145,7 @@ namespace nsda.Services.Implement.member
 
                         if (item.PlayerEdu != null && item.PlayerEdu.SchoolId > 0)
                         {
-                            _dbContext.Insert(new t_playereduexper
+                            _dbContext.Insert(new t_player_edu
                             {
                                 startdate = item.PlayerEdu.StartDate,
                                 enddate = item.PlayerEdu.EndDate,
@@ -213,7 +213,7 @@ namespace nsda.Services.Implement.member
                     };
                     int memberInsertId = _dbContext.Insert(member).ToObjInt();
                     //积分表
-                    _dbContext.Insert(new t_memberpoints
+                    _dbContext.Insert(new t_member_points
                     {
                         memberId = memberInsertId,
                         points = 0,
@@ -221,7 +221,7 @@ namespace nsda.Services.Implement.member
                         servicePoints = 0
                     });
                     //临时会员表
-                    _dbContext.Insert(new t_membertemp
+                    _dbContext.Insert(new t_member_temp
                     {
                         code = member.code,
                         contactmobile = request.ContactMobile,
@@ -232,7 +232,7 @@ namespace nsda.Services.Implement.member
                         tempType = TempTypeEm.临时裁判
                     });
                     //报名表
-                    _dbContext.Insert(new t_referee_signup
+                    _dbContext.Insert(new t_event_referee_signup
                     {
                         isTemp = true,
                         eventId = request.EventId,
@@ -282,7 +282,7 @@ namespace nsda.Services.Implement.member
                     return orderId;
                 }
 
-                var data = _dbContext.Select<t_membertemp>(c => c.email == request.Email && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
+                var data = _dbContext.Select<t_member_temp>(c => c.email == request.Email && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
                 if (data == null)
                 {
                     msg = "数据不存在，请核对后再操作";
@@ -326,7 +326,7 @@ namespace nsda.Services.Implement.member
                             totalcoupon = 0,
                             totaldiscount = 0
                         }).ToObjInt();
-                        _dbContext.Insert(new t_orderdetail
+                        _dbContext.Insert(new t_order_detail
                         {
                             memberId = data.memberId,
                             orderId = orderid,
@@ -392,7 +392,7 @@ namespace nsda.Services.Implement.member
                     return flag;
                 }
 
-                var data = _dbContext.Select<t_membertemp>(c => c.contactmobile == request.ContactMobile && c.code == request.TempRefereeNum && c.tempType == Model.enums.TempTypeEm.临时裁判 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
+                var data = _dbContext.Select<t_member_temp>(c => c.contactmobile == request.ContactMobile && c.code == request.TempRefereeNum && c.tempType == Model.enums.TempTypeEm.临时裁判 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
                 if (data == null)
                 {
                     msg = "数据不存在，请核对后再操作";
@@ -401,14 +401,14 @@ namespace nsda.Services.Implement.member
                 try
                 {
                     _dbContext.BeginTransaction();
-                    t_memberpoints points = _dbContext.Select<t_memberpoints>(c => c.memberId == data.memberId).FirstOrDefault();
-                    _dbContext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={request.MemberId}");
-                    _dbContext.Execute($"update t_membertemp set tomemberId={request.MemberId},updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={data.id}");
-                    _dbContext.Execute($"update t_memberpointsrecord set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_memberpointsdetail set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_match_referee set memberId={request.MemberId}  memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_matchplayerresultdetail set refereeId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    t_member_points points = _dbContext.Select<t_member_points>(c => c.memberId == data.memberId).FirstOrDefault();
+                    _dbContext.Execute($"update t_member_points set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={request.MemberId}");
+                    _dbContext.Execute($"update t_member_temp set tomemberId={request.MemberId},updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={data.id}");
+                    _dbContext.Execute($"update t_member_points_record set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_member_pointsdetail set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_event_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_event_cycling_match_referee set memberId={request.MemberId}  memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_event_cycling_matchplayerresultdetail set refereeId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.CommitChanges();
                     flag = true;
                 }
@@ -439,7 +439,7 @@ namespace nsda.Services.Implement.member
                 {
                     join.Append(" and a.tempType=@TempType");
                 }
-                var sql=$@"select a.*,b.completename  MemberName,c.completename  ToMemberName,d.name EventName  from t_membertemp a 
+                var sql=$@"select a.*,b.completename  MemberName,c.completename  ToMemberName,d.name EventName  from t_member_temp a 
                             inner join t_member b on a.memberId=b.Id 
                             left  join t_member c on a.tomemberId=c.Id 
                             inner join t_event  d on a.eventId=d.Id
@@ -462,21 +462,21 @@ namespace nsda.Services.Implement.member
             {
                 using (IDBContext dbcontext = new MySqlDBContext())
                 {
-                    t_membertemp temp = dbcontext.Get<t_membertemp>(sourceId);
+                    t_member_temp temp = dbcontext.Get<t_member_temp>(sourceId);
                     if (temp != null && temp.memberId == memberId)
                     {
                         try
                         {
                             dbcontext.BeginTransaction();
-                            t_memberpoints points = dbcontext.Select<t_memberpoints>(c => c.memberId == temp.memberId).FirstOrDefault();
-                            dbcontext.Execute($"update t_memberpoints set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
-                            dbcontext.Execute($"update t_membertemp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
-                            dbcontext.Execute($"update t_memberpointsrecord set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                            dbcontext.Execute($"update t_memberpointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                            dbcontext.Execute($"update t_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            t_member_points points = dbcontext.Select<t_member_points>(c => c.memberId == temp.memberId).FirstOrDefault();
+                            dbcontext.Execute($"update t_member_points set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
+                            dbcontext.Execute($"update t_member_temp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
+                            dbcontext.Execute($"update t_member_points_record set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_member_pointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_event_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                             //对垒表也要修改
-                            dbcontext.Execute($"update t_matchplayerresult set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                            dbcontext.Execute($"update t_matchplayerresultdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_event_cycling_matchplayerresult set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_event_cycling_matchplayerresultdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                             dbcontext.CommitChanges();
                         }
                         catch (Exception ex)

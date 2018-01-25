@@ -36,7 +36,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_datasource>(id);
+                var detail = _dbContext.Get<t_sys_datasource>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;
@@ -64,7 +64,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                _dbContext.Insert(new t_datasource
+                _dbContext.Insert(new t_sys_datasource
                 {
                     title = request.Title,
                     filepath=request.FilePath 
@@ -86,7 +86,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var datasource = _dbContext.Get<t_datasource>(request.Id);
+                var datasource = _dbContext.Get<t_sys_datasource>(request.Id);
                 if (datasource != null)
                 {
                     datasource.filepath = request.FilePath;
@@ -114,7 +114,7 @@ namespace nsda.Services.Implement.admin
             DataSourceResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_datasource>(id);
+                var detail = _dbContext.Get<t_sys_datasource>(id);
                 if (detail != null)
                 {
                     response = new DataSourceResponse {
@@ -144,7 +144,7 @@ namespace nsda.Services.Implement.admin
                     request.Title = "%" + request.Title + "%";
                     join.Append(" and title like @Title");
                 }
-                var sql=$@"select * from t_datasource where isdelete=0 {join.ToString()} order by createtime desc";            
+                var sql=$@"select * from t_sys_datasource where isdelete=0 {join.ToString()} order by createtime desc";            
                 int totalCount = 0;
                 list = _dbContext.Page<DataSourceResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

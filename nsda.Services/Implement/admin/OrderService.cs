@@ -95,7 +95,7 @@ namespace nsda.Services.Implement.admin
                         SourceId = order.sourceId,
                         UpdateTime = order.updatetime
                     };
-                    var data = _dbContext.Select<t_orderdetail>(c => c.orderId == id).ToList();
+                    var data = _dbContext.Select<t_order_detail>(c => c.orderId == id).ToList();
                     if (data != null && data.Count > 0)
                     {
                         foreach (var item in data)
@@ -181,7 +181,7 @@ namespace nsda.Services.Implement.admin
                 response = _dbContext.QueryFirstOrDefault<RefundOrderDetailResponse>(sql);
                 if (response != null)
                 {
-                    var data = _dbContext.Select<t_orderdetail>(c => c.orderId == response.OrderId).ToList();
+                    var data = _dbContext.Select<t_order_detail>(c => c.orderId == response.OrderId).ToList();
                     if (data != null && data.Count > 0)
                     {
                         foreach (var item in data)
@@ -204,7 +204,7 @@ namespace nsda.Services.Implement.admin
                         }
                     }
 
-                    var paylog = _dbContext.QueryFirstOrDefault<t_paylog>($"select * from t_paylog where isdelete=0 and orderId={response.OrderId}");
+                    var paylog = _dbContext.QueryFirstOrDefault<t_order_paylog>($"select * from t_order_paylog where isdelete=0 and orderId={response.OrderId}");
                     if (paylog != null)
                     {
                         response.OrderPayLogDetail = new OrderPayLog
@@ -340,8 +340,8 @@ namespace nsda.Services.Implement.admin
             try
             {
                 _dbContext.BeginTransaction();
-                _dbContext.Execute($"update t_paylog set isdelete=1 where orderId={orderId} and memberId={memberId}");
-                _dbContext.Insert(new t_paylog
+                _dbContext.Execute($"update t_order_paylog set isdelete=1 where orderId={orderId} and memberId={memberId}");
+                _dbContext.Insert(new t_order_paylog
                 {
                     paymentAmount = orderMoney,
                     memberId = memberId,

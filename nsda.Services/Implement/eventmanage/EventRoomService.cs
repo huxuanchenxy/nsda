@@ -61,7 +61,7 @@ namespace nsda.Services.Implement.eventmanage
                     _dbContext.BeginTransaction();
                     for (int i = 0; i < request.Num; i++)
                     {
-                        _dbContext.Insert(new t_eventroom
+                        _dbContext.Insert(new t_event_room
                         {
                             eventgroupId = request.EventGroupId,
                             code = _dataRepository.EventRoomRepo.RenderCode(request.EventId),
@@ -95,7 +95,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                t_eventroom room = _dbContext.Get<t_eventroom>(request.Id);
+                t_event_room room = _dbContext.Get<t_event_room>(request.Id);
                 if (room != null)
                 {
                     room.name = request.Name;
@@ -123,7 +123,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                t_eventroom room = _dbContext.Get<t_eventroom>(id);
+                t_event_room room = _dbContext.Get<t_event_room>(id);
                 if (room != null)
                 {
                     if (statusOrGroup == 0)//停用
@@ -161,7 +161,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                t_eventroom room = _dbContext.Get<t_eventroom>(id);
+                t_event_room room = _dbContext.Get<t_event_room>(id);
                 if (room != null)
                 {
                     room.memberId = 0;
@@ -188,7 +188,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                t_eventroom room = _dbContext.Get<t_eventroom>(id);
+                t_event_room room = _dbContext.Get<t_event_room>(id);
                 if (room != null)
                 {
                     if (memberId == room.memberId)
@@ -197,14 +197,14 @@ namespace nsda.Services.Implement.eventmanage
                         return flag;
                     }
                     //判断此选手是否是这场比赛的
-                    var validate = _dbContext.Select<t_player_signup>(c => c.eventId == room.eventId && c.signUpStatus == SignUpStatusEm.报名成功 && c.memberId == memberId).ToList();
+                    var validate = _dbContext.Select<t_event_player_signup>(c => c.eventId == room.eventId && c.signUpStatus == SignUpStatusEm.报名成功 && c.memberId == memberId).ToList();
                     if (validate == null || validate.Count == 0)
                     {
                         msg = "重新选择选手";
                         return flag;
                     }
                     //在判断此用户是否已经在其他教室
-                    var vali = _dbContext.Select<t_eventroom>(c => c.memberId == memberId&&c.eventId==room.eventId).ToList();
+                    var vali = _dbContext.Select<t_event_room>(c => c.memberId == memberId&&c.eventId==room.eventId).ToList();
                     if (vali != null && vali.Count > 0)
                     {
                         msg = "此选手已指定到其他教室";
@@ -237,9 +237,9 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 var sql=$@"select a.*,b.completename MemberName,c.name EventGroupName 
-                            from t_eventroom a
+                            from t_event_room a
                             left join t_member b on a.memberId=b.id
-                            left join t_eventgroup c on a.eventgroupId=c.id
+                            left join t_event_group c on a.eventgroupId=c.id
                             where a.eventId=@EventId and a.isdelete=0  order by a.createtime desc ";
                 int totalCount = 0;
                 list = _dbContext.Page<EventRoomResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);

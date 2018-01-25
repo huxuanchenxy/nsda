@@ -30,7 +30,7 @@ namespace nsda.Services.admin
         {
             try
             {
-                _dbContext.Insert(new t_emaillog {
+                _dbContext.Insert(new t_sys_emaillog {
                     account = request.Account,
                     content = request.Content
                 });
@@ -61,7 +61,7 @@ namespace nsda.Services.admin
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and createtime<=@CreateEnd");
                 }
-                var  sql=$@"select * from t_emaillog where isdelete=0 {join.ToString()} order by createtime desc";            
+                var  sql=$@"select * from t_sys_emaillog where isdelete=0 {join.ToString()} order by createtime desc";            
                 int totalCount = 0;
                 list = _dbContext.Page<EmailLogResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;

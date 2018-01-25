@@ -47,7 +47,7 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                _dbContext.Insert(new t_province
+                _dbContext.Insert(new t_sys_province
                 {
                     name = request.Name,
                     countryId = request.CountryId
@@ -81,7 +81,7 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                t_province province = _dbContext.Get<t_province>(request.Id);
+                t_sys_province province = _dbContext.Get<t_sys_province>(request.Id);
                 if (province != null)
                 {
                     province.name = request.Name;
@@ -119,7 +119,7 @@ namespace nsda.Services.Implement.admin
                 {
                     join.Append(" and a.countryId=@CountryId ");
                 }
-                var sql=$@"select a.* from t_province a inner join t_country b on a.countryId=b.id  where isdelete=0 {join.ToString()} order by a.createtime desc";              
+                var sql=$@"select a.* from t_sys_province a inner join t_sys_country b on a.countryId=b.id  where isdelete=0 {join.ToString()} order by a.createtime desc";              
                 int totalCount = 0;
                 list = _dbContext.Page<ProvinceResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -137,7 +137,7 @@ namespace nsda.Services.Implement.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.Get<t_province>(id);
+                var detail = _dbContext.Get<t_sys_province>(id);
                 if (detail != null)
                 {
                     detail.isdelete = true;
@@ -164,7 +164,7 @@ namespace nsda.Services.Implement.admin
             ProvinceResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_province>(id);
+                var detail = _dbContext.Get<t_sys_province>(id);
                 if (detail != null)
                 {
                     response = new ProvinceResponse
@@ -187,7 +187,7 @@ namespace nsda.Services.Implement.admin
             List<BaseDataResponse> list = new List<BaseDataResponse>();
             try
             {
-                var data = _dbContext.Select<t_province>(c => c.countryId==countryId).ToList();
+                var data = _dbContext.Select<t_sys_province>(c => c.countryId==countryId).ToList();
                 if (data != null && data.Count > 0)
                 {
                     list = data.Select(c => new BaseDataResponse

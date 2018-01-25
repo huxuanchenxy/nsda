@@ -115,14 +115,14 @@ namespace nsda.Services.Implement.eventmanage
                 try
                 {
                     _dbContext.BeginTransaction();
-                    _dbContext.Execute($"delete from t_eventcyclingracesettings where eventId={model.EventId}");
-                    _dbContext.Execute($"delete from t_eventcyclingrace where eventId={model.EventId}");
-                    _dbContext.Execute($"delete from t_eventcyclingracedetail where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_event_cycling_settings where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_event_cycling where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_event_cycling_detail where eventId={model.EventId}");
 
                     foreach (var item in request)
                     {
                         //循环赛设置表
-                        int settingsId = _dbContext.Insert(new t_eventcyclingracesettings
+                        int settingsId = _dbContext.Insert(new t_event_cycling_settings
                         {
                             endrange = item.EndRange,
                             startrange = item.StartRange,
@@ -135,7 +135,7 @@ namespace nsda.Services.Implement.eventmanage
                         //循环赛表
                         foreach (var items in item.ListCyclingRace)
                         {
-                            int cyclingraceId = _dbContext.Insert(new t_eventcyclingrace {
+                            int cyclingraceId = _dbContext.Insert(new t_event_cycling {
                                     currentround=items.CurrentRound,
                                     cyclingRaceStatus=items.CyclingRaceStatus,
                                     eventGroupId=items.EventGroupId,
@@ -147,7 +147,7 @@ namespace nsda.Services.Implement.eventmanage
 
                             foreach (var itemss in items.ListCyclingRaceDetail)
                             {
-                                _dbContext.Insert(new t_eventcyclingracedetail {
+                                _dbContext.Insert(new t_event_cycling_detail {
                                     cyclingraceId=cyclingraceId,
                                     endtime=itemss.EndTime,
                                     eventGroupId=itemss.EventGroupId,
@@ -185,15 +185,15 @@ namespace nsda.Services.Implement.eventmanage
             List<EventCyclingRaceSettingsResponse> list = new List<EventCyclingRaceSettingsResponse>();
             try
             {
-                var sql = $@"select a.*,b.name EventGroupName from t_eventcyclingracesettings a
-                            inner join t_eventgroup b on a.eventGroupId=b.id
+                var sql = $@"select a.*,b.name EventGroupName from t_event_cycling_settings a
+                            inner join t_event_group b on a.eventGroupId=b.id
                             where a.isdelete=0 and a.eventId={eventId}";
                 var data = _dbContext.Query<EventCyclingRaceSettingsResponse>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
                     foreach (var item in data)
                     {
-                        var itemdata = _dbContext.Select<t_eventcyclingrace>(c => c.settingsId == item.Id).ToList();
+                        var itemdata = _dbContext.Select<t_event_cycling>(c => c.settingsId == item.Id).ToList();
                         if (itemdata != null && itemdata.Count > 0)
                         {
                             foreach (var items in itemdata)
@@ -209,7 +209,7 @@ namespace nsda.Services.Implement.eventmanage
                                     Id = items.id,
                                     SettingsId = items.settingsId
                                 };
-                                var itemsdata = _dbContext.Select<t_eventcyclingracedetail>(c => c.cyclingraceId == items.id).ToList();
+                                var itemsdata = _dbContext.Select<t_event_cycling_detail>(c => c.cyclingraceId == items.id).ToList();
                                 if (itemsdata != null && itemsdata.Count > 0)
                                 {
                                     foreach (var itemss in itemsdata)

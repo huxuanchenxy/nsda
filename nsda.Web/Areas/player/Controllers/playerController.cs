@@ -24,9 +24,9 @@ namespace nsda.Web.Areas.player.Controllers
         IEventScoreService _eventScoreService;
         IMemberPointsService _memberPointsService;
         IPlayerSignUpService _playerSignUpService;
-        IPlayerEduExperService _playerEduExperService;
+        IPlayerEduService _playerEduService;
         IPlayerCoachService _playerCoachService;
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduExperService playerEduExperService, IPlayerCoachService playerCoachService)
+        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduService playerEduService, IPlayerCoachService playerCoachService)
         {
             _memberService = memberService;
             _memberExtendService = memberExtendService;
@@ -34,7 +34,7 @@ namespace nsda.Web.Areas.player.Controllers
             _eventScoreService = eventScoreService;
             _memberPointsService = memberPointsService;
             _playerSignUpService = playerSignUpService;
-            _playerEduExperService = playerEduExperService;
+            _playerEduService = playerEduService;
             _playerCoachService = playerCoachService;
         }
 
@@ -129,29 +129,29 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult deleteedu(int id)
         {
             var msg = string.Empty;
-            var flag = _playerEduExperService.Delete(id, UserContext.WebUserContext.Id, out msg);
+            var flag = _playerEduService.Delete(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult insertedu(PlayerEduExperRequest request)
+        public ContentResult insertedu(PlayerEduRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var msg = string.Empty;
-            var flag = _playerEduExperService.Insert(request, out msg);
+            var flag = _playerEduService.Insert(request, out msg);
             return Result<string>(flag, msg);
         }
 
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
-        public ContentResult editedu(PlayerEduExperRequest request)
+        public ContentResult editedu(PlayerEduRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var msg = string.Empty;
-            var flag = _playerEduExperService.Edit(request, out msg);
+            var flag = _playerEduService.Edit(request, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -159,8 +159,8 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult listedu(PlayerEduExperQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var data = _playerEduExperService.List(request);
-            var res = new ResultDto<PlayerEduExperResponse>
+            var data = _playerEduService.List(request);
+            var res = new ResultDto<PlayerEduResponse>
             {
                 page = request.PageIndex,
                 total = request.Total,

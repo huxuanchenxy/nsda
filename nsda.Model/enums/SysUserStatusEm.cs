@@ -8,7 +8,7 @@ namespace nsda.Model.enums
 {
     public enum SysUserStatusEm
     {
-        正常 = 1,
+        启用 = 1,
         禁用 = 2
     }
 }

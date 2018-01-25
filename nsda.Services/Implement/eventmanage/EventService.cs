@@ -137,7 +137,7 @@ namespace nsda.Services.Implement.eventmanage
                     #region 赛事组别
                     foreach (var item in request.EventGroup)
                     {
-                        _dbContext.Insert(new t_eventgroup
+                        _dbContext.Insert(new t_event_group
                         {
                             eventId = eventId,
                             maxgrade = item.MaxGrade,
@@ -174,89 +174,89 @@ namespace nsda.Services.Implement.eventmanage
         private void InsertEventRule(int eventId)
         {
             #region 循环赛设置
-            _dbContext.Insert(new t_eventteamscoringrule
+            _dbContext.Insert(new t_event_teamscoringrule
             {
                 eventId = eventId,
                 teamScoringRules = TeamScoringRulesEm.队伍获胜的场数,
                 viewindex = 1
             });
-            _dbContext.Insert(new t_eventteamscoringrule
+            _dbContext.Insert(new t_event_teamscoringrule
             {
                 eventId = eventId,
                 teamScoringRules = TeamScoringRulesEm.队伍中两位辩手的个人总分,
                 viewindex = 2
             });
-            _dbContext.Insert(new t_eventteamscoringrule
+            _dbContext.Insert(new t_event_teamscoringrule
             {
                 eventId = eventId,
                 teamScoringRules = TeamScoringRulesEm.所遇到的对手获胜的场数总和,
                 viewindex = 3
             });
-            _dbContext.Insert(new t_eventteamscoringrule
+            _dbContext.Insert(new t_event_teamscoringrule
             {
                 eventId = eventId,
                 teamScoringRules = TeamScoringRulesEm.对手的个人总分,
                 viewindex = 4
             });
-            _dbContext.Insert(new t_eventteamscoringrule
+            _dbContext.Insert(new t_event_teamscoringrule
             {
                 eventId = eventId,
                 teamScoringRules = TeamScoringRulesEm.队伍中两位辩手的个人排名总和,
                 viewindex = 5
             });
 
-            _dbContext.Insert(new t_eventplayerscoringrule
+            _dbContext.Insert(new t_event_playerscoringrule
             {
                 eventId = eventId,
                 scoringRules = ScoringRulesEm.选手个人总分,
                 viewindex = 1
             });
-            _dbContext.Insert(new t_eventplayerscoringrule
+            _dbContext.Insert(new t_event_playerscoringrule
             {
                 eventId = eventId,
                 scoringRules = ScoringRulesEm.个人排名总和,
                 viewindex = 2
             });
-            _dbContext.Insert(new t_eventplayerscoringrule
+            _dbContext.Insert(new t_event_playerscoringrule
             {
                 eventId = eventId,
                 scoringRules = ScoringRulesEm.队伍获胜场数总和,
                 viewindex = 3
             });
-            _dbContext.Insert(new t_eventplayerscoringrule
+            _dbContext.Insert(new t_event_playerscoringrule
             {
                 eventId = eventId,
                 scoringRules = ScoringRulesEm.所遇到的对手获胜的场数总和,
                 viewindex = 4
             });
-            _dbContext.Insert(new t_eventplayerscoringrule
+            _dbContext.Insert(new t_event_playerscoringrule
             {
                 eventId = eventId,
                 scoringRules = ScoringRulesEm.对手的个人总分,
                 viewindex = 5
             });
 
-            _dbContext.Insert(new t_eventavoidrule
+            _dbContext.Insert(new t_event_cycling_avoidrule
             {
                 avoidRules = AvoidRulesEm.尽量规避同教练,
                 eventId = eventId,
                 viewindex = 1
             });
-            _dbContext.Insert(new t_eventavoidrule
+            _dbContext.Insert(new t_event_cycling_avoidrule
             {
                 avoidRules = AvoidRulesEm.尽量规避同校,
                 eventId = eventId,
                 viewindex = 2
             });
 
-            _dbContext.Insert(new t_eventrefereeavoidrule
+            _dbContext.Insert(new t_event_refereeavoidrule
             {
                 eventId = eventId,
                 objEventType = ObjEventTypeEm.循环赛,
                 refereeAvoidRules = RefereeAvoidRulesEm.尽量规避自己已经裁判过的学生,
                 viewindex = 1
             });
-            _dbContext.Insert(new t_eventrefereeavoidrule
+            _dbContext.Insert(new t_event_refereeavoidrule
             {
                 eventId = eventId,
                 objEventType = ObjEventTypeEm.循环赛,
@@ -266,14 +266,14 @@ namespace nsda.Services.Implement.eventmanage
             #endregion
 
             #region 淘汰赛设置
-            _dbContext.Insert(new t_eventrefereeavoidrule
+            _dbContext.Insert(new t_event_refereeavoidrule
             {
                 eventId = eventId,
                 objEventType = ObjEventTypeEm.淘汰赛,
                 refereeAvoidRules = RefereeAvoidRulesEm.尽量规避自己已经裁判过的学生,
                 viewindex = 1
             });
-            _dbContext.Insert(new t_eventrefereeavoidrule
+            _dbContext.Insert(new t_event_refereeavoidrule
             {
                 eventId = eventId,
                 objEventType = ObjEventTypeEm.淘汰赛,
@@ -385,7 +385,7 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "赛事组别名称不能为空";
                     return flag;
                 }
-                t_eventgroup eventgroup = _dbContext.Get<t_eventgroup>(request.Id);
+                t_event_group eventgroup = _dbContext.Get<t_event_group>(request.Id);
                 if (eventgroup != null)
                 {
                     eventgroup.name = request.Name;
@@ -498,7 +498,7 @@ namespace nsda.Services.Implement.eventmanage
                         Signfee = tevent.signfee,
                         StartEventDate = tevent.starteventdate
                     };
-                    var eventgroup = _dbContext.Select<t_eventgroup>(c => c.eventId == id).ToList();
+                    var eventgroup = _dbContext.Select<t_event_group>(c => c.eventId == id).ToList();
                     if (eventgroup != null && eventgroup.Count > 0)
                     {
                         foreach (var item in eventgroup)
@@ -556,9 +556,9 @@ namespace nsda.Services.Implement.eventmanage
                              a.signfee SignFee, a.eventStatus EventStatus,a.starteventdate StartEventDate, a.endsigndate EndSignDate,
                              b.name CountryName,b.name ProvinceName,c.name CityName
                              from t_event a 
-                             left join t_country  b on a.countryId=b.id
-                             left join t_province c on a.provinceId=c.id
-                             left join t_city     d on a.cityId=d.id
+                             left join t_sys_country  b on a.countryId=b.id
+                             left join t_sys_province c on a.provinceId=c.id
+                             left join t_sys_city     d on a.cityId=d.id
                              where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerOrRefereeEventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
@@ -615,7 +615,7 @@ namespace nsda.Services.Implement.eventmanage
                         //计算报名人数或者队伍
                         if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
                         {
-                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
+                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
                         }
                     }
                 }
@@ -667,7 +667,7 @@ namespace nsda.Services.Implement.eventmanage
                         //计算报名人数或者队伍
                         if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
                         {
-                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
+                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
                         }
                     }
                 }
@@ -687,9 +687,9 @@ namespace nsda.Services.Implement.eventmanage
                 var sql = $@"select a.isInter IsInter,a.countryId CountryId,a.provinceId ProvinceId,a.cityId CityId,
                             b.name CountryName,c.name ProvinceName,d.name CityName
                             from t_event a
-                            inner join t_country b on a.countryId=b.id
-                            left join  t_province c on a.provinceId=c.id
-                            left join  t_city     d on a.cityId=d.id
+                            inner join t_sys_country b on a.countryId=b.id
+                            left join  t_sys_province c on a.provinceId=c.id
+                            left join  t_sys_city     d on a.cityId=d.id
                             where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventnoquerystatus})";
                 list = _dbContext.Query<EventConditionResponse>(sql).ToList();
             }
@@ -725,7 +725,7 @@ namespace nsda.Services.Implement.eventmanage
             List<EventGroupResponse> list = new List<EventGroupResponse>();
             try
             {
-                var sql = $"select * from t_eventgroup where isdelete=0 and eventId={eventId}";
+                var sql = $"select * from t_event_group where isdelete=0 and eventId={eventId}";
                 list = _dbContext.Query<EventGroupResponse>(sql).ToList();
             }
             catch (Exception ex)
@@ -768,14 +768,14 @@ namespace nsda.Services.Implement.eventmanage
             List<EventGroupResponse> list = new List<EventGroupResponse>();
             try
             {
-                var sql = $"select * from t_eventgroup where isdelete=0 and eventId={eventId}";
+                var sql = $"select * from t_event_group where isdelete=0 and eventId={eventId}";
                 list = _dbContext.Query<EventGroupResponse>(sql).ToList();
                 if (list != null && list.Count > 0)
                 {
                     foreach (var item in list)
                     {
-                        item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where eventId={item.EventId} and eventGroupId={item.Id} ").ToObjInt();
-                        item.SignUpSuccessCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_player_signup where eventId={item.EventId} and eventGroupId={item.Id} and signUpStatus={SignUpStatusEm.报名成功}").ToObjInt();
+                        item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where eventId={item.EventId} and eventGroupId={item.Id} ").ToObjInt();
+                        item.SignUpSuccessCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where eventId={item.EventId} and eventGroupId={item.Id} and signUpStatus={SignUpStatusEm.报名成功}").ToObjInt();
                     }
                 }
             }
@@ -791,7 +791,7 @@ namespace nsda.Services.Implement.eventmanage
             EventGroupResponse response = null;
             try
             {
-                var detail = _dbContext.Get<t_eventgroup>(eventGroupId);
+                var detail = _dbContext.Get<t_event_group>(eventGroupId);
                 if (detail != null)
                 {
                     response = new EventGroupResponse

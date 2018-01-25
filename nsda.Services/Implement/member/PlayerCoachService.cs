@@ -182,8 +182,8 @@ namespace nsda.Services.member
                 var sql = @"select a.*,b.name MemberName,b.code MemberCode,d.points MemberPoints,e.points ToMemberPoints,c.name ToMemberName,c.code ToMemberCode  from t_player_coach a 
                             inner join t_member b on a.memberId=b.id
                             inner join t_member c on a.toMemberId=c.id
-                            inner join t_memberpoints d on a.memberId=d.memberId
-                            inner join t_memberpoints e on a.toMemberId=e.memberId
+                            inner join t_member_points d on a.memberId=d.memberId
+                            inner join t_member_points e on a.toMemberId=e.memberId
                             where a.isdelete=0 and ((a.isCoach=1 and a.isPositive=0 anda. memberId=@MemberId) or (a.isCoach=0 and a.isPositive=1 and a.toMemberId=@MemberId))
                             order by a.createtime desc
                           ";
@@ -201,11 +201,11 @@ namespace nsda.Services.member
                         if (item.PlayerCoachStatus == PlayerCoachStatusEm.同意)
                         {
                             //所在学校
-                            item.School=_dbContext.ExecuteScalar($"select b.chinessname from t_playereduexper  a inner join t_school b on a.schoolId=b.id where a.memberid={(item.Flag?item.ToMemberId:item.MemberId)} and a.isdelete=0 order by startdate desc limit 1").ToObjStr();
+                            item.School=_dbContext.ExecuteScalar($"select b.chinessname from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id where a.memberid={(item.Flag?item.ToMemberId:item.MemberId)} and a.isdelete=0 order by startdate desc limit 1").ToObjStr();
                             //参与比赛次数
-                            item.Times = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                            item.Times = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                             //指教期间获胜次数
-                            item.WinTimes = _dbContext.ExecuteScalar($"select count(1) from t_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                            item.WinTimes = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                         }
                     }
                 }

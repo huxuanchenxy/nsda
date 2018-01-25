@@ -39,7 +39,7 @@ namespace nsda.Services.Implement.member
             };
             try
             {
-                var detail = _dbContext.Select<t_memberpoints>(c=>c.memberId==memberId).FirstOrDefault();
+                var detail = _dbContext.Select<t_member_points>(c=>c.memberId==memberId).FirstOrDefault();
                 if (detail != null)
                 {
                     response.Points = detail.points;
@@ -70,7 +70,7 @@ namespace nsda.Services.Implement.member
                     sqljoin.Append(" and a.createtime<=@EndDate ");
                 }
                 var sql= $@"select b.name EventName,b.code EventCode,a.points,a.Id
-                            from t_memberpointsrecord a
+                            from t_member_points_record a
                             inner join t_event b on a.eventId=b.id
                             where a.isdelete=0 and a.memberId=@memberId {sqljoin.ToString()}
                             order by a.createtime desc
@@ -102,17 +102,17 @@ namespace nsda.Services.Implement.member
                     request.EndDate = request.EndDate.Value.AddDays(1).AddSeconds(-1);
                     sqljoin.Append(" and createtime<=@EndDate ");
                 }
-                var sqlTotalPoints = $@"select IFNULL(sum(points),0) from t_memberpointsrecord where  memberId=@MemberId and isdelete=0 {sqljoin.ToString()}";
+                var sqlTotalPoints = $@"select IFNULL(sum(points),0) from t_member_points_record where  memberId=@MemberId and isdelete=0 {sqljoin.ToString()}";
                 totalPoints = _dbContext.ExecuteScalar(sqlTotalPoints, request).ToObjDecimal();
                 if (totalPoints > 0)//有积分再查询列表
                 {
                     var sql=$@"select b.starteventtime StartDate,b.endeventtime EndDate,b.name EventName, 
                             a.points,c.name ProvinceName,d.name CityName,a.Id,c.name CountryName
-                            from t_memberpointsrecord a
+                            from t_member_points_record a
                             inner join t_event b on a.eventId=b.id
-                            left join  t_country c on b.countryId=c.id
-                            left join t_province d on b.provinceId=d.id
-                            left join t_city e on b.cityId = e.id
+                            left join  t_sys_country c on b.countryId=c.id
+                            left join t_sys_province d on b.provinceId=d.id
+                            left join t_sys_city e on b.cityId = e.id
                             where a.isdelete=0 and a.memberId=@memberId {sqljoin.ToString()}
                             order by a.createtime desc
                             ";
@@ -134,7 +134,7 @@ namespace nsda.Services.Implement.member
             List<PlayerPointsRecordDetailResponse> list = new List<PlayerPointsRecordDetailResponse>();
             try
             {
-                var record = _dbContext.Get<t_memberpointsrecord>(recordId);
+                var record = _dbContext.Get<t_member_points_record>(recordId);
                 if (record != null&& memberId==record.memberId)
                 {
                     //根据赛事 组别 选手id 查询此次比赛获奖次数

@@ -34,9 +34,9 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                var cyclingracesettings = _dbContext.Select<t_eventcyclingracesettings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
-                var cyclingrace = _dbContext.Select<t_eventcyclingrace>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.currentround == 1).FirstOrDefault();
-                var cyclingracedetail = _dbContext.Select<t_eventcyclingracedetail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();
+                var cyclingracesettings = _dbContext.Select<t_event_cycling_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
+                var cyclingrace = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.currentround == 1).FirstOrDefault();
+                var cyclingracedetail = _dbContext.Select<t_event_cycling_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();
 
                 //获取报名队伍信息
                 //获取裁判信息
@@ -60,14 +60,14 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                var cyclingracesettings = _dbContext.Select<t_eventcyclingracesettings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
-                var cyclingrace = _dbContext.Select<t_eventcyclingrace>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.currentround == 1).FirstOrDefault();
-                var cyclingracedetail = _dbContext.Select<t_eventcyclingracedetail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();
+                var cyclingracesettings = _dbContext.Select<t_event_cycling_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
+                var cyclingrace = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.currentround == 1).FirstOrDefault();
+                var cyclingracedetail = _dbContext.Select<t_event_cycling_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();
 
                 //获取报名队伍信息
                 //获取裁判信息
                 //教室信息
-                var room = _dbContext.Query<t_eventroom>($"").ToList();
+                var room = _dbContext.Query<t_event_room>($"").ToList();
                 //获取教练信息
                 //排对垒 根据对垒规则 如果随机就无需查对垒规则
 

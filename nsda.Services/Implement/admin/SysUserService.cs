@@ -46,20 +46,20 @@ namespace nsda.Services.admin
                     return flag;
                 }
 
-                var isexist = _dbContext.Select<t_sysuser>(c => c.name == request.Name).ToList();
+                var isexist = _dbContext.Select<t_sys_user>(c => c.name == request.Name).ToList();
                 if (isexist != null && isexist.Count > 0)
                 {
                     msg = "已存在此账号";
                     return flag;
                 }
 
-                _dbContext.Insert(new t_sysuser
+                _dbContext.Insert(new t_sys_user
                 {
                     account = request.Account,
                     name = request.Name,
                     pwd = request.Pwd,
                     mobile = request.Mobile,
-                    sysUserStatus = SysUserStatusEm.正常
+                    sysUserStatus = SysUserStatusEm.启用
                 });
                 flag = true;
             }
@@ -78,7 +78,7 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                var detail = _dbContext.QueryFirstOrDefault<t_sysuser>(@"select * from t_sysuser where account=@account and pwd=@pwd ",
+                var detail = _dbContext.QueryFirstOrDefault<t_sys_user>(@"select * from t_sys_user where account=@account and pwd=@pwd ",
                               new
                               {
                                   account = account,
@@ -137,7 +137,7 @@ namespace nsda.Services.admin
                     return flag;
                 }
 
-                var sysuser = _dbContext.Get<t_sysuser>(request.Id);
+                var sysuser = _dbContext.Get<t_sys_user>(request.Id);
                 if (sysuser != null)
                 {
                     sysuser.name = request.Name;
@@ -160,44 +160,31 @@ namespace nsda.Services.admin
             return flag;
         }
         //1.3 修改密码
-        public bool UpdatePwd(int id, string oldPwd, string newPwd, out string msg)
+        public bool UpdatePwd(int id, string pwd, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                if (oldPwd.IsEmpty())
+                if (pwd.IsEmpty())
                 {
-                    msg = "原密码不能为空";
+                    msg = "密码不能为空";
                     return flag;
                 }
 
-                if (newPwd.IsEmpty())
+                if (pwd.Length<6)
                 {
-                    msg = "新密码不能为空";
+                    msg = "密码长度不能低于6";
                     return flag;
                 }
 
-                if (!string.Equals(oldPwd, newPwd))
-                {
-                    msg = "新密码和原密码相同";
-                    return flag;
-                }
-
-                var sysuser = _dbContext.Get<t_sysuser>(id);
+                var sysuser = _dbContext.Get<t_sys_user>(id);
                 if (sysuser != null)
                 {
-                    if (!string.Equals(oldPwd, sysuser.pwd, StringComparison.OrdinalIgnoreCase))
-                    {
-                        msg = "原密码有误";
-                    }
-                    else
-                    {
-                        sysuser.pwd = newPwd;
-                        sysuser.updatetime = DateTime.Now;
-                        _dbContext.Update(sysuser);
-                        flag = true;
-                    }
+                    sysuser.pwd = pwd;
+                    sysuser.updatetime = DateTime.Now;
+                    _dbContext.Update(sysuser);
+                    flag = true;                   
                 }
                 else
                 {
@@ -238,7 +225,7 @@ namespace nsda.Services.admin
                     request.LastLoginTime2 = request.LastLoginTime2.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and lastlogintime<=@LastLoginTime2");
                 }
-                var sql=$@"select * from t_sysuser where isdelete=0 {join.ToString()} order by createtime desc";
+                var sql=$@"select * from t_sys_user where isdelete=0 {join.ToString()} order by createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<SysUserResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -256,7 +243,7 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                var sysuser = _dbContext.Get<t_sysuser>(id);
+                var sysuser = _dbContext.Get<t_sys_user>(id);
                 if (sysuser != null)
                 {
                     sysuser.isdelete = true;
@@ -284,7 +271,7 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                var sysuser = _dbContext.Get<t_sysuser>(id);
+                var sysuser = _dbContext.Get<t_sys_user>(id);
                 if (sysuser != null)
                 {
                     sysuser.pwd = "159357";
@@ -311,7 +298,7 @@ namespace nsda.Services.admin
             SysUserResponse detail = null;
             try
             {
-                var sysuser = _dbContext.Get<t_sysuser>(id);
+                var sysuser = _dbContext.Get<t_sys_user>(id);
                 if (sysuser != null)
                 {
                     detail = new SysUserResponse
@@ -340,10 +327,10 @@ namespace nsda.Services.admin
             msg = string.Empty;
             try
             {
-                var sysuser = _dbContext.Get<t_sysuser>(id);
+                var sysuser = _dbContext.Get<t_sys_user>(id);
                 if (sysuser != null)
                 {
-                    sysuser.sysUserStatus = isEnable ? SysUserStatusEm.正常 : SysUserStatusEm.禁用;
+                    sysuser.sysUserStatus = isEnable ? SysUserStatusEm.启用 : SysUserStatusEm.禁用;
                     sysuser.updatetime = DateTime.Now;
                     _dbContext.Update(sysuser);
                     flag = true;
@@ -357,7 +344,7 @@ namespace nsda.Services.admin
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("SysUserService.Reset", ex);
+                LogUtils.LogError("SysUserService.IsEnable", ex);
             }
             return flag;
         }

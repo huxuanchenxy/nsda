@@ -118,14 +118,14 @@ namespace nsda.Services.Implement.eventmanage
                 try
                 { 
                     _dbContext.BeginTransaction();
-                    _dbContext.Execute($"delete from t_eventknockoutsettings where eventId={model.EventId}");
-                    _dbContext.Execute($"delete from t_eventknockout where eventId={model.EventId}");
-                    _dbContext.Execute($"delete from t_eventknockoutdetail where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_event_knockout_settings where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_event_knockout where eventId={model.EventId}");
+                    _dbContext.Execute($"delete from t_event_knockout_detail where eventId={model.EventId}");
 
                     foreach (var item in request)
                     {
                         //淘汰赛设置表
-                        int settingsId = _dbContext.Insert(new t_eventknockoutsettings
+                        int settingsId = _dbContext.Insert(new t_event_knockout_settings
                         {
                             eventGroupId = item.EventGroupId,
                             eventId = item.EventId,
@@ -134,7 +134,7 @@ namespace nsda.Services.Implement.eventmanage
                         //淘汰赛表
                         foreach (var items in item.ListKnockout)
                         {
-                            int knockoutId = _dbContext.Insert(new t_eventknockout
+                            int knockoutId = _dbContext.Insert(new t_event_knockout
                             {
                                 knockoutStatus=items.KnockoutStatus,
                                 knockoutType=items.KnockoutType,
@@ -147,7 +147,7 @@ namespace nsda.Services.Implement.eventmanage
 
                             foreach (var itemss in items.ListKnockoutDetail)
                             {
-                                _dbContext.Insert(new t_eventknockoutdetail
+                                _dbContext.Insert(new t_event_knockout_detail
                                 {
                                     knockoutId= knockoutId,
                                     endtime = itemss.EndTime,
@@ -185,15 +185,15 @@ namespace nsda.Services.Implement.eventmanage
             List<EventknockoutSettingsResponse> list = new List<EventknockoutSettingsResponse>();
             try
             {
-                var sql = $@"select a.*,b.name EventGroupName from t_eventknockoutsettings a
-                            inner join t_eventgroup b on a.eventGroupId=b.id
+                var sql = $@"select a.*,b.name EventGroupName from t_event_knockout_settings a
+                            inner join t_event_group b on a.eventGroupId=b.id
                             where a.isdelete=0 and a.eventId={eventId}";
                 var data = _dbContext.Query<EventknockoutSettingsResponse>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
                     foreach (var item in data)
                     {
-                        var itemdata = _dbContext.Select<t_eventknockout>(c => c.settingsId == item.Id).ToList();
+                        var itemdata = _dbContext.Select<t_event_knockout>(c => c.settingsId == item.Id).ToList();
                         if (itemdata != null && itemdata.Count > 0)
                         {
                             foreach (var items in itemdata)
@@ -208,7 +208,7 @@ namespace nsda.Services.Implement.eventmanage
                                     RefereeCount=items.refereeCount,
                                     Id = items.id                                   
                                 };
-                                var itemsdata = _dbContext.Select<t_eventknockoutdetail>(c => c.knockoutId == items.id).ToList();
+                                var itemsdata = _dbContext.Select<t_event_knockout_detail>(c => c.knockoutId == items.id).ToList();
                                 if (itemsdata != null && itemsdata.Count > 0)
                                 {
                                     foreach (var itemss in itemsdata)
