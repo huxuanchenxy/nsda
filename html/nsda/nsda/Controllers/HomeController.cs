@@ -53,6 +53,7 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "会员中心";
             return View();
         }
+
         public ActionResult PlayerCompeSign()
         {
             ViewBag.Message = "比赛报名";
@@ -61,7 +62,12 @@ namespace WebApplication2.Controllers
 
         public ActionResult PlayerHadCompe()
         {
-            ViewBag.Message = "比赛报名";
+            ViewBag.Message = "已参加比赛";
+            return View();
+        }
+        public ActionResult PlayerExitCompe()
+        {
+            ViewBag.Message = "退赛信息";
             return View();
         }
         public ActionResult PlayerScore()
@@ -69,16 +75,29 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "会员积分查询";
             return View();
         }
-
-        public ActionResult PlayerInfermation()
+        public ActionResult PlayerInformation()
         {
             ViewBag.Message = "修改个人资料";
             return View();
         }
-
         public ActionResult PlayerBoundCoach()
         {
             ViewBag.Message = "绑定教练";
+            return View();
+        }
+        public ActionResult PlayerSource()
+        {
+            ViewBag.Message = "会员资源";
+            return View();
+        }
+        public ActionResult PlayerMessageBox()
+        {
+            ViewBag.Message = "消息盒子";
+            return View();
+        }
+        public ActionResult CoachInformation()
+        {
+            ViewBag.Message = "Coach Personal Information";
             return View();
         }
     }

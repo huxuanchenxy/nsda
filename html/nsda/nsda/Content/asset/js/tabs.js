@@ -8,8 +8,12 @@ for (let i = 0; i < tabt.length; i++) {
     tabt[i].index = i;
     tabt[i].onclick = function () {
         for (let j = 0; j < tabt.length; j++) {
-            tabcon[j].style.display="none";
+            tabcon[j].style.display = "none";
         }
         tabcon[this.index].style.display = "block";
     }
 }
+
+
+
+

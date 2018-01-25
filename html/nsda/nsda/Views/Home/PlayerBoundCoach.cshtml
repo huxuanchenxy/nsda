@@ -1,204 +1,98 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "绑定教练";
 }
+<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerintegral.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerboundcoach.css?1.1.0")" rel="stylesheet" type="text/css" />
 
-<link href="@Url.Content("~/Content/membercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/compesign.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/score.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/infermation.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/boundcoach.css?1.1.0")" rel="stylesheet" type="text/css" />
 
-<div class="mec-ban">
-    <div class="container player">
-        <div class="player-info">
-            <a href="/Home/PlayerMembercenter"><img src="~/Content/img/teacher.png" alt="" /></a>
-            <div class="player-num">
-                <p>NSDA CHINA 注册会员：</p>
-                <p>目前 NSDA 积分：</p>
-                <p>NSDA 会员编号：</p>
-            </div>
-            <a href="#" class="player-code">
-                <i class="iconfont icon-erweima"></i>
-                我的二维码
-            </a>
-        </div>
-    </div>
+@Html.Partial("_PlayerTop")
+
+<div class="container player-compe">
+    @Html.Partial("_PlayerLeft")
 </div>
-
-
-<div class="container player-compe player-score">
-    <div class="info-lists">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <div class="panel-title">
-                        <p>My tournaments</p>
-                        <h3>
-                            我的比赛&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        <ul>
-                            <li><a href="/Home/PlayerCompeSign" class="compe">比赛报名</a></li>
-                            <li><a href="/Home/PlayerHadCompe" class="compe">已参加比赛</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                    <div class="panel-title">
-                        <p>Activity management</p>
-                        <h3>
-                            活动管理&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="panel-body">
-                        dfgfgf
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingThree">
-                    <div class="panel-title">
-                        <p>Personal information</p>
-                        <h3>
-                            会员信息&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
-                    <div class="panel-body">
-                        <ul>
-                            <li><a href="/Home/PlayerScore" class="compe">会员积分查询</a></li>
-                            <li><a href="/Home/PlayerInfermation" class="compe">修改个人资料</a></li>
-                            <li class="compebaoming"><a href="/Home/PlayerBoundCoach" class="compe baoming">绑定教练</a></li>
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingFour">
-                    <div class="panel-title">
-                        <p> Member Resources</p>
-                        <h3>
-                            会员资源&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                    <div class="panel-body">
-                        dfgh
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="score-con">
+    <div class="score-top">
+        <img class="integral" src="~/Content/asset/img/score_03.jpg" alt="...">
+        <p class="scorecheck">绑定教练</p>
+        <button class="addbound" id="addedu">添加绑定 &nbsp;<i class="iconfont icon-jiahao"></i></button>
     </div>
-    <div class="score-con">
-        <div class="score-top">
-            <img class="integral" src="~/Content/img/score_03.jpg" alt="...">
-            <p class="scorecheck">绑定教练</p>
-            <button class="addbound" id="addedu">添加绑定 &nbsp;<i class="iconfont icon-jiahao"></i></button>
-        </div>
-        <div class="boundtable">
-            <table>
-                <thead>
-                    <tr>
-                        <th width="20%">时间</th>
-                        <th width="20%">NSDA教练编号</th>
-                        <th width="20%">NSDA教练名字</th>
-                        <th width="40%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1999.7-2001.3</td>
-                        <td>C1899254</td>
-                        <td>Eric Patrick Clapton</td>
-                        <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
-                    </tr>
-                    <tr>
-                        <td>1999.7-2001.3</td>
-                        <td>C1899254</td>
-                        <td>Eric Patrick Clapton</td>
-                        <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
-                    </tr>
-                    <tr>
-                        <td>1999.7-2001.3</td>
-                        <td>C1899254</td>
-                        <td>Eric Patrick Clapton</td>
-                        <td><button class="confirmbound">确认绑定</button> <button class="notpass">不通过</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="addcoach" id="addeducation">
-                <div class="addtitle">添加绑定教练
-                    <i class="iconfont icon-guanbi" id="close"></i>
-                </div>
-                <img class="coachimg" src="~/Content/img/bound_03.png" alt="...">
-                <div class="form-group">
-                    <select class="form-select-school" id="school1">
-                        <option>年</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                    <select class="form-select-school" id="school2">
-                        <option>月</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                    <em class="em"> —</em>
-                    <select class="form-select-school" id="school3">
-                        <option>年</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                    <select class="form-select-school" id="school4">
-                        <option>月</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                    <select class="form-select-schools" id="school5">
-                        <option>教练名字</option>
-                        <option>NSDA教练编号</option>
-                    </select>
-                    <input />
-                    <a href="#" class="searchcoach">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
-                    <button class="boundcoach">绑定教练</button>
-                </div>
+    <div class="boundtable">
+        <table>
+            <thead>
+                <tr>
+                    <th width="20%">时间</th>
+                    <th width="20%">NSDA教练编号</th>
+                    <th width="20%">NSDA教练名字</th>
+                    <th width="40%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1999.7-2001.3</td>
+                    <td>C1899254</td>
+                    <td>Eric Patrick Clapton</td>
+                    <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
+                </tr>
+                <tr>
+                    <td>1999.7-2001.3</td>
+                    <td>C1899254</td>
+                    <td>Eric Patrick Clapton</td>
+                    <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
+                </tr>
+                <tr>
+                    <td>1999.7-2001.3</td>
+                    <td>C1899254</td>
+                    <td>Eric Patrick Clapton</td>
+                    <td><button class="confirmbound">确认绑定</button> <button class="notpass">不通过</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="addcoach" id="addeducation">
+            <div class="addtitle">
+                添加绑定教练
+                <i class="iconfont icon-guanbi" id="close"></i>
+            </div>
+            <img class="coachimg" src="~/Content/asset/img/bound_03.png" alt="...">
+            <div class="form-group">
+                <select class="form-select-school" id="school1">
+                    <option>年</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <select class="form-select-school" id="school2">
+                    <option>月</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <em class="em"> —</em>
+                <select class="form-select-school" id="school3">
+                    <option>年</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <select class="form-select-school" id="school4">
+                    <option>月</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <select class="form-select-schools" id="school5">
+                    <option>教练名字</option>
+                    <option>NSDA教练编号</option>
+                </select>
+                <input />
+                <a href="#" class="searchcoach">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
+                <button class="boundcoach" id="confirmadd">绑定教练</button>
             </div>
         </div>
     </div>
 </div>
-
-@Scripts.Render("~/Scripts/info.js")
+@Scripts.Render("~/Content/asset/js/info.js")
