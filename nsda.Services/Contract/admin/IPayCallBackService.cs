@@ -9,6 +9,6 @@ namespace nsda.Services.Contract.admin
 {
     public interface IPayCallBackService: IDependency
     {
-        void Callback(string out_trade_no, string paytransaction);
+        void Callback(int orderId, string paytransaction);
     }
 }

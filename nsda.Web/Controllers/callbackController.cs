@@ -44,16 +44,15 @@ namespace nsda.Web.Controllers
                     //商户订单号
                     //支付宝交易号
                     //交易状态
+                    string[] str = DesEncoderAndDecoder.Decrypt(out_trade_no).Split('#');
                     if (trade_status == "TRADE_FINISHED"|| trade_status == "TRADE_SUCCESS")
                     {
-                        _payCallBackService.Callback(out_trade_no, trade_no);
+                        _payCallBackService.Callback(str[0].ToInt32(), trade_no);
                     }
                     else
                     {
                         //支付失败
-                        string[] str = DesEncoderAndDecoder.Decrypt(out_trade_no).Split('#');
-                        int orderId = str[0].ToInt32();
-                        _orderService.UpdateStatus(orderId, Model.enums.OrderStatusEm.支付失败);
+                        _orderService.UpdateStatus(str[0].ToInt32(), Model.enums.OrderStatusEm.支付失败);
                         return Content(trade_status);
                     }
 
@@ -100,7 +99,8 @@ namespace nsda.Web.Controllers
                         //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
                         //如果有做过处理，不执行商户的业务程序
                         //更新订单信息
-                        _payCallBackService.Callback(out_trade_no, trade_no);
+                        string[] str = DesEncoderAndDecoder.Decrypt(out_trade_no).Split('#');
+                        _payCallBackService.Callback(str[0].ToInt32(), trade_no);
                     }
                     //打印页面
                     else
@@ -168,6 +168,10 @@ namespace nsda.Web.Controllers
             return data;
         }
 
+        /// <summary>
+        /// 微信支付回调
+        /// </summary>
+        /// <returns></returns>
         public ActionResult resultnotify()
         {
             //接收从微信后台POST过来的数据
@@ -234,7 +238,7 @@ namespace nsda.Web.Controllers
                 WxPayData res = new WxPayData();
                 res.SetValue("return_code", "SUCCESS");
                 res.SetValue("return_msg", "OK");
-                _payCallBackService.Callback(data.GetValue("out_trade_no").ToString(), data.GetValue("transaction_id").ToString());
+                _payCallBackService.Callback((data.GetValue("out_trade_no").ToString().ToInt32()-10001), data.GetValue("transaction_id").ToString());
                 Response.Write(res.ToXml());
                 Response.End();
             }

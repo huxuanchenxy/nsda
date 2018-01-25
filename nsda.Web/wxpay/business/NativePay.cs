@@ -78,8 +78,8 @@ namespace nsda.Web.wxpay
             data.SetValue("body", response.Remark);//商品描述
             data.SetValue("detail", response.Remark);//商品描述
             data.SetValue("attach", "");//附加数据
-            data.SetValue("out_trade_no", DesEncoderAndDecoder.Encrypt($"{response.Id}#nsda"));//随机字符串
-            data.SetValue("total_fee", response.Money);//总金额
+            data.SetValue("out_trade_no", response.Id+10001);//随机字符串
+            data.SetValue("total_fee", response.Money*100);//总金额 以分为单位
            // data.SetValue("spbill_create_ip",ip);//总金额
             data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));//交易起始时间
             data.SetValue("time_expire", DateTime.Now.AddMinutes(90).ToString("yyyyMMddHHmmss"));//交易结束时间

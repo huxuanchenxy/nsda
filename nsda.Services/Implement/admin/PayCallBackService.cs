@@ -37,12 +37,10 @@ namespace nsda.Services.Implement.admin
         }
 
         // 支付回调
-        public void Callback(string out_trade_no, string paytransaction)
+        public void Callback(int orderId, string paytransaction)
         {
             try
             {
-                string[] str = DesEncoderAndDecoder.Decrypt(out_trade_no).Split('#');
-                int orderId = str[0].ToInt32();
                 var order = _dbContext.Get<t_order>(orderId);
                 if (order != null&&(order.orderStatus==OrderStatusEm.等待支付|| order.orderStatus == OrderStatusEm.支付失败))
                 {
