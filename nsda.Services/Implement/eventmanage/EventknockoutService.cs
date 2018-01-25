@@ -37,7 +37,7 @@ namespace nsda.Services.Implement.eventmanage
                 var knockoutsettings = _dbContext.Select<t_event_knockout_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
                 var knockout = _dbContext.Select<t_event_knockout>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
                 var knockoutdetail = _dbContext.Select<t_event_knockout_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.knockoutId == knockout.id).FirstOrDefault();
-                //获取报名队伍信息
+                //获取签到 以前排名前多少位的队伍
                 //获取裁判信息
                 //教室信息
                 //排对垒

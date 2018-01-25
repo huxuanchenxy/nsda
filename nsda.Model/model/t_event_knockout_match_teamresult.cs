@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_event_knockout_referee")]
-    public class t_event_knockout_referee
+	[Table("t_event_knockout_match_teamresult")]
+    public class t_event_knockout_match_teamresult
     {
 	   //默认构造函数
-	   public t_event_knockout_referee()
+	   public t_event_knockout_match_teamresult()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -35,7 +35,9 @@ namespace nsda.Models
     
         public int knockoutMatchId { get; set; }
     
-        public int refereeId { get; set; }
+        public string groupNum { get; set; }
+    
+        public bool isWin { get; set; }
     
         /// <summary>
         /// 修改时间

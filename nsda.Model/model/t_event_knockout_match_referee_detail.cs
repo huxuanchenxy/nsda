@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_event_cycling_match_teamresult")]
-    public class t_event_cycling_match_teamresult
+	[Table("t_event_knockout_match_referee_detail")]
+    public class t_event_knockout_match_referee_detail
     {
 	   //默认构造函数
-	   public t_event_cycling_match_teamresult()
+	   public t_event_knockout_match_referee_detail()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -33,15 +33,13 @@ namespace nsda.Models
     
         public int eventGroupId { get; set; }
     
-        public int cyclingMatchId { get; set; }
+        public int knockoutMatchId { get; set; }
     
-        public string groupNum { get; set; }
+        public int refereeId { get; set; }
     
-        public decimal totalScore { get; set; }
+        public string winGroupNum { get; set; }
     
-        public bool isWin { get; set; }
-    
-        public WinTypeEm winType { get; set; }
+        public string loseGroupNum { get; set; }
     
         /// <summary>
         /// 修改时间

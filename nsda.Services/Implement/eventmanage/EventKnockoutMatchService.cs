@@ -70,7 +70,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                t_event_knockout_referee tmatchreferee = _dbContext.Get<t_event_knockout_referee>(knockoutMatchRefereeId);
+                t_event_knockout_match_referee tmatchreferee = _dbContext.Get<t_event_knockout_match_referee>(knockoutMatchRefereeId);
                 if (tmatchreferee != null)
                 {
                     t_event_referee_signup referee = _dbContext.Select<t_event_referee_signup>(c => c.memberId == refereeId && c.eventId == tmatchreferee.eventId).FirstOrDefault();

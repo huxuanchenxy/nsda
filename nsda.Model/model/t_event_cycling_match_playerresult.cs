@@ -39,7 +39,7 @@ namespace nsda.Models
     
         public int ranking { get; set; }
     
-        public decimal points { get; set; }
+        public decimal score { get; set; }
     
         /// <summary>
         /// 修改时间

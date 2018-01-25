@@ -210,7 +210,13 @@
     <Compile Include="model\t_event_knockout_match.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_event_knockout_referee.cs">
+    <Compile Include="model\t_event_knockout_match_referee.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_event_knockout_match_referee_detail.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\t_event_knockout_match_teamresult.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_event_knockout_settings.cs">
