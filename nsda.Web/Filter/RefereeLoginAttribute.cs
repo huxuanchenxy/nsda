@@ -33,7 +33,7 @@ namespace nsda.Web.Filter
 
             if (user.MemberType != (int)Model.enums.MemberTypeEm.裁判)
             {
-                if (!user.Role.Contains(((int)Model.enums.MemberTypeEm.裁判).ToString()))
+                if (!user.IsExtendReferee)
                 {
                     filterContext.Result = new RedirectResult("/login/login");
                     return;

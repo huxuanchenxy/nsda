@@ -159,6 +159,7 @@
     <Compile Include="Controllers\errorController.cs" />
     <Compile Include="Controllers\homeController.cs" />
     <Compile Include="Controllers\loginController.cs" />
+    <Compile Include="Controllers\registerController.cs" />
     <Compile Include="Filter\AdminLoginAttribute.cs" />
     <Compile Include="Filter\AjaxOnlyAttribute.cs" />
     <Compile Include="Filter\CommonExceptionFilter.cs" />
@@ -463,6 +464,7 @@
     <Folder Include="Models\" />
     <Folder Include="Views\callback\" />
     <Folder Include="Views\commondata\" />
+    <Folder Include="Views\register\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appSettings.config" />

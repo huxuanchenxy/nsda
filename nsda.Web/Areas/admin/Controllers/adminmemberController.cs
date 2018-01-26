@@ -17,12 +17,10 @@ namespace nsda.Web.Areas.admin.Controllers
     public class adminmemberController : adminbaseController
     {
         IMemberService _memberService;
-        IMemberExtendService _memberExtendService;
         IMemberTempService _memberTempService;
-        public adminmemberController(IMemberService memberService, IMemberExtendService memberExtendService, IMemberTempService memberTempService)
+        public adminmemberController(IMemberService memberService, IMemberTempService memberTempService)
         {
             _memberService = memberService;
-            _memberExtendService = memberExtendService;
             _memberTempService = memberTempService;
         }
 
@@ -36,33 +34,6 @@ namespace nsda.Web.Areas.admin.Controllers
         #endregion
 
         #region ajax
-        //会员扩展
-        [HttpGet]
-        public ContentResult listmemberextend(MemberExtendQueryRequest request)
-        {
-            var data = _memberExtendService.List(request);
-            var res = new ResultDto<MemberExtendResponse>
-            {
-                page = request.PageIndex,
-                total = request.Total,
-                records = request.Records,
-                rows = data
-            };
-            return Content(res.Serialize());
-        }
-
-        //处理会员扩展
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult checkmemberextend(int id,string remark, bool isAgree)
-        {
-            var msg = string.Empty;
-            var flag = _memberExtendService.Check(id, remark, isAgree, UserContext.SysUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
-
         //重置密码
         [HttpPost]
         [AjaxOnly]
@@ -96,17 +67,6 @@ namespace nsda.Web.Areas.admin.Controllers
             return Result<string>(flag, msg);
         }
 
-        //审核赛事管理员账号
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult check(int id,string remark,bool isAgree)
-        {
-            var msg = string.Empty;
-            var flag = _memberService.Check(id,remark, isAgree, UserContext.SysUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
         //会员列表
         [HttpGet]
         public ContentResult listmember(MemberQueryRequest request)
@@ -122,11 +82,26 @@ namespace nsda.Web.Areas.admin.Controllers
             return Content(res.Serialize());
         }
 
-        //临时会员
+        //临时选手会员
         [HttpGet]
-        public ContentResult listtempmember(TempMemberQueryRequest request)
+        public ContentResult listtempplayer(TempMemberQueryRequest request)
         {
-            var data = _memberTempService.List(request);
+            var data = _memberTempService.ListPlayer(request);
+            var res = new ResultDto<MemberTempResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        //临时教练会员
+        [HttpGet]
+        public ContentResult listtempreferee(TempMemberQueryRequest request)
+        {
+            var data = _memberTempService.ListReferee(request);
             var res = new ResultDto<MemberTempResponse>
             {
                 page = request.PageIndex,

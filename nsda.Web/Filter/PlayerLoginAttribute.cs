@@ -33,7 +33,7 @@ namespace nsda.Web.Filter
 
             if (user.MemberType != (int)Model.enums.MemberTypeEm.选手)
             {
-                if (!user.Role.Contains(((int)Model.enums.MemberTypeEm.选手).ToString()))
+                if (!user.IsExtendPlayer)
                 {
                     filterContext.Result = new RedirectResult("/login/login");
                     return;

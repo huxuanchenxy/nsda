@@ -35,6 +35,40 @@ namespace nsda.Web.Areas.referee.Controllers
         }
 
         #region ajax
+        //修改个人信息
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult edit(RegisterRefereeRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.EditMemberReferee(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //扩展选手
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult extendplayer(RegisterPlayerRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.ExtendPlayer(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //扩展教练
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult extendcoach(RegisterCoachRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.ExtendCoach(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
+
         //当前比赛列表
         [HttpGet]
         public ContentResult current()
@@ -112,7 +146,7 @@ namespace nsda.Web.Areas.referee.Controllers
 
         public ActionResult info()
         {
-            var data = _memberService.Detail(UserContext.WebUserContext.Id);
+            var data = _memberService.MemberRefereeDetail(UserContext.WebUserContext.Id);
             return View(data);
         }
 

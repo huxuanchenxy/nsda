@@ -9,11 +9,14 @@ namespace nsda.Utilities
     public class WebUserContext
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Account { get; set; }
         public string Name { get; set; }
         public int MemberType  { get; set; }
-        public int Status { get; set; }
-        public string Role { get; set; }
         public decimal Points { get; set; }
+        public bool IsExtendPlayer { get; set; }
+        public bool IsExtendCoach { get; set; }
+        public bool IsExtendReferee { get; set; }
+        public int MemberStatus { get; set; }
     }
 }

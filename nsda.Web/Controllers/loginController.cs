@@ -21,13 +21,11 @@ namespace nsda.Web.Controllers
         IMemberService _memberService;
         ILoginLogService _loginLogService;
         IEmailLogService _emailLogService;
-        IEventService _eventService;
-        public loginController(IMemberService memberService, ILoginLogService loginLogService, IEmailLogService emailLogService, IEventService eventService)
+        public loginController(IMemberService memberService, ILoginLogService loginLogService, IEmailLogService emailLogService)
         {
             _memberService = memberService;
             _loginLogService = loginLogService;
             _emailLogService = emailLogService;
-            _eventService = eventService;
         }
 
         #region ajax
@@ -90,45 +88,6 @@ namespace nsda.Web.Controllers
             return Json(res, JsonRequestBehavior.DenyGet);
         }
 
-        //注册
-        [HttpPost]
-        //[AjaxOnly]
-        public JsonResult register(MemberRequest request)
-        {
-            var res = new Result<string>();
-            string msg = string.Empty;
-            res.flag = _memberService.Register(request, out msg);
-            if (res.flag)
-            {
-                res.flag = true;
-                if (request.MemberType == MemberTypeEm.选手)
-                {
-                    res.msg = "/player/player/index";
-                }
-                else if (request.MemberType == MemberTypeEm.教练)
-                {
-                    res.msg = "/coach/coach/index";
-                }
-                else if (request.MemberType == MemberTypeEm.裁判)
-                {
-                    res.msg = "/referee/referee/index";
-                }
-                else if (request.MemberType == MemberTypeEm.赛事管理员)
-                {
-                    res.msg = "/eventmanage/eventmanage/index";
-                }
-                else
-                {
-                    res.msg = "/home/index";
-                }
-            }
-            else
-            {
-                res.msg = msg;
-                res.flag = false;
-            }
-            return Json(res, JsonRequestBehavior.DenyGet);
-        }
 
         //找回密码
         [HttpPost]
@@ -207,7 +166,7 @@ namespace nsda.Web.Controllers
             }
             var res = new Result<string>();
             string msg = string.Empty;
-            res.flag = _memberService.FindPwd(id, pwd, out msg);
+            res.flag = _memberService.EditPwd(id, pwd, out msg);
             return Json(res, JsonRequestBehavior.DenyGet);
         }
         //生成验证码
@@ -231,16 +190,6 @@ namespace nsda.Web.Controllers
                     break;
             }
             return File(new VerifyCode().GetVerifyCode(key), @"image/Gif");
-        }
-
-        //查询账号是否存在
-        [HttpPost]
-        [AjaxOnly]
-        public JsonResult isexist(string account)
-        {
-            var res = new Result<string>();
-            res.flag = _memberService.IsExist(account);
-            return Json(res, JsonRequestBehavior.DenyGet);
         }
         #endregion
 
@@ -277,29 +226,6 @@ namespace nsda.Web.Controllers
                     return RedirectToAction("index", "home");
                 }
             }
-            return View();
-        }
-
-        //赛事管理员
-        public ActionResult eventmanage()
-        {
-            var data = _eventService.RefereeRegisterEvent();
-            ViewBag.EventData = data;
-            return View();
-        }
-        //裁判
-        public ActionResult referee()
-        {
-            return View();
-        }
-        //教练
-        public ActionResult coach()
-        {
-            return View();
-        }
-        //选手
-        public ActionResult player()
-        {
             return View();
         }
         #endregion 

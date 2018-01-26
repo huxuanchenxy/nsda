@@ -36,6 +36,16 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
 
         #region ajax
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult edit(RegisterEventRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.EditMemberEvent(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
         //新增赛事
         [HttpPost]
         [AjaxOnly]
@@ -220,7 +230,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result(true, string.Empty, data);
         }
 
-
         //生成签到信息
         [HttpPost]
         [AjaxOnly]
@@ -254,7 +263,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         public ActionResult info()
         {
-            var data = _memberService.Detail(UserContext.WebUserContext.Id);
+            var data = _memberService.MemberEventDetail(UserContext.WebUserContext.Id);
             return View(data);
         }
 

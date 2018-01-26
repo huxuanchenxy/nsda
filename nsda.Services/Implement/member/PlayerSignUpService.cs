@@ -40,7 +40,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 List<t_event_group> listgroup = _dbContext.Select<t_event_group>(c => c.eventId == eventId).ToList();
-                t_member member = _dbContext.Get<t_member>(memberId);
+                t_member_player member = _dbContext.Get<t_member_player>(memberId);
                 foreach (var item in listgroup)
                 {
                     if (IsValid(item, member))
@@ -84,7 +84,7 @@ namespace nsda.Services.Implement.member
                          ";
                 var dy = new DynamicParameters();
                 dy.Add("key", keyvalue);
-                var data = _dbContext.Query<t_member>(sql).ToList();
+                var data = _dbContext.Query<t_member_player>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
                     t_event_group group = _dbContext.Get<t_event_group>(groupId);
@@ -95,9 +95,9 @@ namespace nsda.Services.Implement.member
                         {
                             list.Add(new MemberSelectResponse
                             {
-                                Id = item.id,
+                                MemberId = item.memberId,
                                 MemberCode = item.code,
-                                MemberName = item.completename
+                                //MemberName = item.completename
                             });
                         }
                     }
@@ -170,14 +170,14 @@ namespace nsda.Services.Implement.member
                             return flag;
                         }
                     }
-                    t_member frommember = _dbContext.Get<t_member>(request.FromMemberId);
+                    t_member_player frommember = _dbContext.Get<t_member_player>(request.FromMemberId);
                     //3.0 是否有资格报名
                     if (!IsValid(eventGroup, frommember))
                     {
                         msg = "您不符合此赛事报名规则";
                         return flag;
                     }
-                    t_member tomember = _dbContext.Get<t_member>(request.ToMemberId);
+                    t_member_player tomember = _dbContext.Get<t_member_player>(request.ToMemberId);
                     if (!IsValid(eventGroup, tomember))
                     {
                         msg = "您队友不符合此赛事报名规则";
@@ -724,7 +724,7 @@ namespace nsda.Services.Implement.member
             return list;
         }
         //判断选手是否可以报名
-        private bool IsValid(t_event_group group, t_member member)
+        private bool IsValid(t_event_group group, t_member_player member)
         {
             bool flag = true;
             try
@@ -734,14 +734,7 @@ namespace nsda.Services.Implement.member
                 {
                     if (group.mingrade != (int)GradeEm.unlimited)
                     {
-                        if (member.grade.HasValue)
-                        {
-                            if ((int)member.grade < group.mingrade)
-                            {
-                                return false;
-                            }
-                        }
-                        else
+                        if ((int)member.grade < group.mingrade)
                         {
                             return false;
                         }
@@ -749,14 +742,7 @@ namespace nsda.Services.Implement.member
 
                     if (group.maxgrade != (int)GradeEm.unlimited)
                     {
-                        if (member.grade.HasValue)
-                        {
-                            if ((int)member.grade > group.maxgrade)
-                            {
-                                return false;
-                            }
-                        }
-                        else
+                        if ((int)member.grade > group.maxgrade)
                         {
                             return false;
                         }
@@ -766,7 +752,7 @@ namespace nsda.Services.Implement.member
                 if (group.mintimes.HasValue || group.maxtimes.HasValue)
                 {
                     //从对垒表中查参加过的赛事
-                    var times = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and memberId={member.id}  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                    var times = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and memberId={member.memberId}  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                     if (group.mintimes > 0)
                     {
                         if (group.mintimes > times)

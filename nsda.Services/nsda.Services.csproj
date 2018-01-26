@@ -68,7 +68,6 @@
     <Compile Include="Contract\eventmanage\IEventSignService.cs" />
     <Compile Include="Contract\member\IMemberOperLogService.cs" />
     <Compile Include="Contract\member\IPlayerEduService.cs" />
-    <Compile Include="Contract\member\IMemberExtendService.cs" />
     <Compile Include="Contract\member\IMemberPointsService.cs" />
     <Compile Include="Contract\member\IMemberService.cs" />
     <Compile Include="Contract\member\IMemberTempService.cs" />
@@ -106,7 +105,6 @@
     <Compile Include="Implement\eventmanage\EventSignService.cs" />
     <Compile Include="Implement\member\MemberOperLogService.cs" />
     <Compile Include="Implement\member\PlayerEduService.cs" />
-    <Compile Include="Implement\member\MemberExtendService.cs" />
     <Compile Include="Implement\member\MemberPointsService.cs" />
     <Compile Include="Implement\member\MemberService.cs" />
     <Compile Include="Implement\member\MemberTempService.cs" />
@@ -116,7 +114,6 @@
     <Compile Include="Implement\referee\RefereeSignUpService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implement\coach\CoachService.cs" />
-    <Compile Include="UserContext.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

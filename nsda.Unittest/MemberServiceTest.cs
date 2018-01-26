@@ -25,7 +25,7 @@ namespace nsda.unittest
             {
                 PageIndex = 1,
                 PageSize = 10,
-                MemberStatus =Model.enums.MemberStatusEm.待审核
+                MemberStatus =Model.enums.MemberStatusEm.已认证
             };
             var list = service.List(request);
             var res = new ResultDto<MemberResponse>

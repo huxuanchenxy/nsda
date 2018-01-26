@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_member")]
-    public class t_member
+	[Table("t_member_coach")]
+    public class t_member_coach
     {
 	   //默认构造函数
-	   public t_member()
+	   public t_member_coach()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -27,42 +27,49 @@ namespace nsda.Models
         }
        
         [Key]
-	    public int id { get; set; }
-    
-        /// <summary>
-        /// 账号
-        /// </summary>
-        public string account { get; set; }
-    
-        /// <summary>
-        /// 密码
-        /// </summary>
-        public string pwd { get; set; }
+	    public int memberId { get; set; }
     
         /// <summary>
         /// 会员编码
         /// </summary>
         public string code { get; set; }
     
-        public MemberTypeEm memberType { get; set; }
+        /// <summary>
+        /// 拼音姓
+        /// </summary>
+        public string pinyinsurname { get; set; }
     
         /// <summary>
-        /// 会员状态
+        /// 拼音名
         /// </summary>
-        public MemberStatusEm memberStatus { get; set; }
-    
-        public string head { get; set; }
-    
-        public bool isExtendPlayer { get; set; }
-    
-        public bool isExtendCoach { get; set; }
-    
-        public bool isExtendReferee { get; set; }
+        public string pinyinname { get; set; }
     
         /// <summary>
-        /// 最晚登录时间
+        /// 完整拼音姓名
         /// </summary>
-        public DateTime? lastlogintime { get; set; }
+        public string completepinyin { get; set; }
+    
+        /// <summary>
+        /// 联系电话
+        /// </summary>
+        public string contactmobile { get; set; }
+    
+        /// <summary>
+        /// 紧急联系人
+        /// </summary>
+        public string emergencycontact { get; set; }
+    
+        public string emergencycontactmobile { get; set; }
+    
+        /// <summary>
+        /// 性别
+        /// </summary>
+        public GenderEm gender { get; set; }
+    
+        /// <summary>
+        /// 联系地址
+        /// </summary>
+        public string contactaddress { get; set; }
     
         /// <summary>
         /// 创建时间
@@ -72,7 +79,7 @@ namespace nsda.Models
         /// <summary>
         /// 修改时间
         /// </summary>
-        public DateTime? updatetime { get; set; }
+        public DateTime updatetime { get; set; }
     
         public bool isdelete { get; set; }
     }

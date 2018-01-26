@@ -33,11 +33,8 @@ namespace nsda.Web.Filter
 
             if (user.MemberType != (int)Model.enums.MemberTypeEm.赛事管理员)
             {
-                if (!user.Role.Contains(((int)Model.enums.MemberTypeEm.赛事管理员).ToString()))
-                {
-                    filterContext.Result = new RedirectResult("/login/login");
-                    return;
-                }
+                filterContext.Result = new RedirectResult("/login/login");
+                return;               
             }
         }
     }

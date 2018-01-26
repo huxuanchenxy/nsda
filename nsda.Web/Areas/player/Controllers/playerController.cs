@@ -19,17 +19,15 @@ namespace nsda.Web.Areas.player.Controllers
     public class playerController : playerbaseController
     {
         IMemberService _memberService;
-        IMemberExtendService _memberExtendService;
         IDataSourceService _dataSourceService;
         IEventScoreService _eventScoreService;
         IMemberPointsService _memberPointsService;
         IPlayerSignUpService _playerSignUpService;
         IPlayerEduService _playerEduService;
         IPlayerCoachService _playerCoachService;
-        public playerController(IMemberService memberService, IMemberExtendService memberExtendService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduService playerEduService, IPlayerCoachService playerCoachService)
+        public playerController(IMemberService memberService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduService playerEduService, IPlayerCoachService playerCoachService)
         {
             _memberService = memberService;
-            _memberExtendService = memberExtendService;
             _dataSourceService = dataSourceService;
             _eventScoreService = eventScoreService;
             _memberPointsService = memberPointsService;
@@ -39,6 +37,47 @@ namespace nsda.Web.Areas.player.Controllers
         }
 
         #region ajax
+        //轮询账号 看是否已认证
+        [HttpGet]
+        public ContentResult polling()
+        {
+            var data = _memberService.MemberPlayerPolling(UserContext.WebUserContext);
+            return Result(true, "", data);
+        }
+        
+        //修改个人信息
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult edit(RegisterPlayerRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.EditMemberPlayer(request,UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //扩展教练
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult extendcoach(RegisterCoachRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.ExtendCoach(request,UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);         
+        }
+
+        //扩展裁判
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult extendreferee(RegisterRefereeRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.ExtendReferee(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
         //当前比赛列表
         [HttpGet]
         public ContentResult current()
@@ -189,7 +228,7 @@ namespace nsda.Web.Areas.player.Controllers
         public ActionResult info()
         {
             var userContext = UserContext.WebUserContext;
-            var data = _memberService.Detail(userContext.Id);
+            var data = _memberService.MemberPlayerDetail(userContext.Id);
             ViewBag.CoachInfo = _playerCoachService.Player_CoachDetail(userContext.Id);
             return View(data);
         }

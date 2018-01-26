@@ -33,16 +33,6 @@ namespace nsda.Model.dto.response
         public string ContactMobile { get; set; }
 
         /// <summary>
-        /// 绑定至此会员
-        /// </summary>
-        public int? ToMemberId { get; set; }
-
-        /// <summary>
-        /// 绑定至此会员
-        /// </summary>
-        public string ToMemberName { get; set; }
-
-        /// <summary>
         /// 临时会员状态
         /// </summary>
         public TempStatusEm TempStatus { get; set; }

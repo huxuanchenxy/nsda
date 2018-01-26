@@ -73,6 +73,15 @@ namespace nsda.Utilities
             return "";
         }
 
+        public static bool IsExistCookie(string strName)
+        {
+            if (HttpContext.Current.Request.Cookies != null && HttpContext.Current.Request.Cookies[strName] != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// 删除Cookie对象
         /// </summary>

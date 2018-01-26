@@ -28,6 +28,39 @@ namespace nsda.Web.Areas.coach.Controllers
         }
 
         #region ajax
+        //修改个人信息
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult edit(RegisterCoachRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.EditMemberCoach(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //扩展选手
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult extendplayer(RegisterPlayerRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.ExtendPlayer(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //扩展裁判
+        [HttpPost]
+        [AjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ContentResult extendreferee(RegisterRefereeRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberService.ExtendReferee(request, UserContext.WebUserContext, out msg);
+            return Result<string>(flag, msg);
+        }
+
         //1 列表
         [HttpGet]
         public ContentResult listplayer(PlayerCoachQueryRequest request)
@@ -110,7 +143,7 @@ namespace nsda.Web.Areas.coach.Controllers
         //个人中心
         public ActionResult info()
         {
-            var data = _memberService.Detail(UserContext.WebUserContext.Id);
+            var data = _memberService.MemberCoachDetail(UserContext.WebUserContext.Id);
             return View(data);
         }
 

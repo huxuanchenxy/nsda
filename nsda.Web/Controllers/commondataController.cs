@@ -32,9 +32,8 @@ namespace nsda.Web.Controllers
         ICountryService _countryService;
         IMemberService _memberService;
         IMailService _mailService;
-        IMemberExtendService _memberExtendService;
         IEventService _eventService;
-        public commondataController(IProvinceService provinceService, ICityService cityService, ISchoolService schoolService, ILeavingMsgService leavingMsgService, ICountryService countryService,IVoteService voteService, IMemberService memberService, IMailService mailService, IMemberExtendService memberExtendService,IEventService eventService)
+        public commondataController(IProvinceService provinceService, ICityService cityService, ISchoolService schoolService, ILeavingMsgService leavingMsgService, ICountryService countryService,IVoteService voteService, IMemberService memberService, IMailService mailService,IEventService eventService)
         {
             _provinceService = provinceService;
             _cityService = cityService;
@@ -44,7 +43,6 @@ namespace nsda.Web.Controllers
             _voteService = voteService;
             _memberService = memberService;
             _mailService = mailService;
-            _memberExtendService = memberExtendService;
             _eventService = eventService;
         }
 
@@ -135,25 +133,6 @@ namespace nsda.Web.Controllers
             var msg = string.Empty;
             var flag = _voteService.Vote(voteId, detailId, out msg);
             return Result<string>(flag, msg);
-        }
-
-        //修改个人信息
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult edit(MemberRequest request)
-        {
-            var userContext = UserContext.WebUserContext;
-            if (userContext == null)
-            {
-                return Result<string>(false, "登录超时,请刷新页面进行登录");
-            }
-            else {
-                request.Id = userContext.Id;
-                string msg = string.Empty;
-                var flag = _memberService.Edit(request, out msg);
-                return Result<string>(flag, msg);
-            }
         }
 
         //修改密码
@@ -301,26 +280,6 @@ namespace nsda.Web.Controllers
             {
                 string msg = string.Empty;
                 var flag = _mailService.Delete(id, UserContext.WebUserContext.Id, out msg);
-                return Result<string>(flag, msg);
-            }
-        }
-
-        // 申请做裁判 或者教练
-        [HttpPost]
-        [AjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ContentResult apply(MemberExtendRequest request)
-        {
-            var userContext = UserContext.WebUserContext;
-            if (userContext == null)
-            {
-                return Result<string>(false, "登录超时,请刷新页面进行登录");
-            }
-            else
-            {
-                string msg = string.Empty;
-                request.MemberId = userContext.Id;
-                var flag = _memberExtendService.Apply(request, out msg);
                 return Result<string>(flag, msg);
             }
         }

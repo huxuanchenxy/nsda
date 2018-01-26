@@ -22,8 +22,10 @@ namespace nsda.Services.Contract.member
         int BindTempPlayer(BindTempPlayerRequest request,out string msg);
         //4.0 临时教练绑定
         bool BindTempReferee(BindTempRefereeRequest request,out string msg);
-        //5.0 临时会员数据列表
-        List<MemberTempResponse> List(TempMemberQueryRequest request);
+        //5.0 临时选手会员数据列表
+        List<MemberTempResponse> ListPlayer(TempMemberQueryRequest request);
+        //5.0 临时裁判会员数据列表
+        List<MemberTempResponse> ListReferee(TempMemberQueryRequest request);
         //6.0 临时会员绑定 支付回调
         void Callback(int memberId,int sourceId);
     }

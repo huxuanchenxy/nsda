@@ -39,7 +39,7 @@ namespace nsda.Services.Implement.member
             };
             try
             {
-                var detail = _dbContext.Select<t_member_points>(c=>c.memberId==memberId).FirstOrDefault();
+                var detail = _dbContext.Get<t_member_points>(memberId);
                 if (detail != null)
                 {
                     response.Points = detail.points;

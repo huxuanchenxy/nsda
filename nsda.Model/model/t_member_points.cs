@@ -27,12 +27,7 @@ namespace nsda.Models
         }
        
         [Key]
-	    public int id { get; set; }
-    
-        /// <summary>
-        /// 会员id
-        /// </summary>
-        public int memberId { get; set; }
+	    public int memberId { get; set; }
     
         /// <summary>
         /// 积分

@@ -105,12 +105,13 @@ namespace nsda.Services.Implement.member
                         t_member member = new t_member
                         {
                             code = code,
-                            account = code,
-                            name = item.Email,
+                            account = item.Name,
                             pwd = item.ContactMobile,
                             memberStatus = MemberStatusEm.待认证,
-                            completename = item.Name,
-                            memberType = MemberTypeEm.临时选手
+                            memberType = MemberTypeEm.临时选手,
+                            isExtendCoach = false,
+                            isExtendPlayer = false,
+                            isExtendReferee = false
                         };
                         int memberInsertId = _dbContext.Insert(member).ToObjInt();
                         _dbContext.Insert(new t_member_points
@@ -204,12 +205,13 @@ namespace nsda.Services.Implement.member
                     t_member member = new t_member
                     {
                         code = code,
-                        account = code,
-                        name = request.Name,
+                        account = request.Name,
                         pwd = request.ContactMobile,
-                        memberStatus = MemberStatusEm.通过,
-                        completename = request.Name,
-                        memberType = MemberTypeEm.临时裁判
+                        memberStatus = MemberStatusEm.已认证,
+                        memberType = MemberTypeEm.临时裁判,
+                        isExtendCoach = false,
+                        isExtendPlayer=false,
+                        isExtendReferee=false
                     };
                     int memberInsertId = _dbContext.Insert(member).ToObjInt();
                     //积分表
@@ -296,14 +298,14 @@ namespace nsda.Services.Implement.member
                     return orderId;
                 }
 
-                if (data.tomemberId != null && data.tomemberId > 0)
-                {
-                    if (data.tomemberId != request.MemberId)
-                    {
-                        msg = "此信息已绑定过";
-                        return orderId;
-                    }
-                }
+                //if (data.tomemberId != null && data.tomemberId > 0)
+                //{
+                //    if (data.tomemberId != request.MemberId)
+                //    {
+                //        msg = "此信息已绑定过";
+                //        return orderId;
+                //    }
+                //}
 
                 t_order order = _dbContext.Select<t_order>(c => c.memberId == data.memberId && c.orderType == OrderTypeEm.临时选手绑定 && c.sourceId == data.id).FirstOrDefault();
                 if (order == null)//没创建过订单 
@@ -425,7 +427,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //临时会员数据列表
-        public List<MemberTempResponse> List(TempMemberQueryRequest request)
+        public List<MemberTempResponse> ListPlayer(TempMemberQueryRequest request)
         {
             List<MemberTempResponse> list = new List<MemberTempResponse>();
             try
@@ -439,10 +441,9 @@ namespace nsda.Services.Implement.member
                 {
                     join.Append(" and a.tempType=@TempType");
                 }
-                var sql=$@"select a.*,b.completename  MemberName,c.completename  ToMemberName,d.name EventName  from t_member_temp a 
+                var sql=$@"select a.*,b.account  MemberName,c.name EventName  from t_member_temp a 
                             inner join t_member b on a.memberId=b.Id 
-                            left  join t_member c on a.tomemberId=c.Id 
-                            inner join t_event  d on a.eventId=d.Id
+                            inner join t_event  c on a.eventId=c.Id
                             where a.isdelete=0 {join.ToString()} order by a.createtime
                         ";
                 int totalCount = 0;
@@ -451,7 +452,37 @@ namespace nsda.Services.Implement.member
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("MemberTempService.List", ex);
+                LogUtils.LogError("MemberTempService.ListPlayer", ex);
+            }
+            return list;
+        }
+        //临时裁判数据列表
+        public List<MemberTempResponse> ListReferee(TempMemberQueryRequest request)
+        {
+            List<MemberTempResponse> list = new List<MemberTempResponse>();
+            try
+            {
+                StringBuilder join = new StringBuilder();
+                if (request.TempStatus.HasValue && request.TempStatus > 0)
+                {
+                    join.Append(" and a.tempStatus=@TempStatus");
+                }
+                if (request.TempType.HasValue && request.TempType > 0)
+                {
+                    join.Append(" and a.tempType=@TempType");
+                }
+                var sql = $@"select a.*,b.account  MemberName,d.name EventName  from t_member_temp a 
+                            inner join t_member b on a.memberId=b.Id 
+                            inner join t_event  c on a.eventId=c.Id
+                            where a.isdelete=0 {join.ToString()} order by a.createtime
+                        ";
+                int totalCount = 0;
+                list = _dbContext.Page<MemberTempResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberTempService.ListReferee", ex);
             }
             return list;
         }
