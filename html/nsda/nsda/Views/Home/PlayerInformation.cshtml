@@ -143,11 +143,10 @@
                             </select>
                         </div>
                         <button class="confirmadd" id="confirmadd">添加</button>
-
                     </div>
                 </div>
             </div>
-            <input type="button" value="修改个人资料" class="submit">
+            <input type="button" value="修改个人资料" class="submit" id="test1">
         </form>
         <div class="modifypassword">
             <img src="~/Content/asset/img/password_03.jpg" alt="" />
@@ -162,3 +161,12 @@
     </div>
 </div>
 @Scripts.Render("~/Content/asset/js/info.js")
+<script>
+    $('#test1').on('click', function () {
+        var ii = layer.load();
+        //此处用setTimeout演示ajax的回调
+        setTimeout(function () {
+            layer.close(ii);
+        }, 1000);
+    });
+</script>

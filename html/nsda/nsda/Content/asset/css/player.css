@@ -59,6 +59,7 @@
 
 .player-info img {
     display: inline;
+    cursor:pointer;
 }
 
 .mec-ban {

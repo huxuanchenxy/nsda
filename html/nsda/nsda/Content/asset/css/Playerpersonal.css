@@ -73,7 +73,7 @@
     position:absolute;
     top:400px;
     left:50%;
-    transform:translate(-35%);
+    transform:translate(-50%);
     box-shadow:2px 2px 4px 4px #bfbbbb;
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -132,10 +132,6 @@
 .addeducation .form-group select.form-select-schoolads{
     width:40%
 }
-.addeducation .form-group select.form-select-school,.addeducation .form-group select.form-select-schools,.addeducation .form-group select.form-select-schoolads{
-        
-        
-}
 .education .form-con .edulists li{
     min-height:50px;
     padding:10px 0;
@@ -155,6 +151,7 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     margin-right:20px;
+    cursor:pointer;
 }
 .education .form-con .edulists li .editedu,.education .form-con .edulists li .deledu{
     display:inline;

@@ -41,6 +41,7 @@
     float:left;
     width:6.8%;
     text-align:center;
+    cursor:pointer;
 }
 .compe-con .address-lists li:hover{
     background:#FBB7A0;
@@ -48,6 +49,7 @@
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     color:white;
+    cursor:pointer;
 }
 .compe-con .level{
     margin-top:60px;
@@ -64,8 +66,16 @@
     float:left;
     width:5%;
     text-align:center;
+    cursor:pointer;
 }
 .compe-con .level-lists li:hover{
+    background:#FBB7A0;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    color:white;
+}
+.selected{
     background:#FBB7A0;
     border-radius: 20px;
     -webkit-border-radius: 20px;
@@ -93,6 +103,10 @@
     -moz-border-radius: 6px 6px 0 0;
     cursor:pointer;
 }
+.compe-con .time-lists li a{
+    width:100%;
+    height:100%
+}
 .compe-con .time-lists li.active{
     border:1px solid #cacaca;
     border-bottom:1px solid white;
@@ -102,6 +116,7 @@
     height:150px;
     float:left;
     margin-left:10%;
+    margin-top:15px;
     position:relative;
 }
 .compe-con .time-mons .monsev{
@@ -112,6 +127,7 @@
 }
 .compe-con .time-mons .moneig li{
     border:1px dashed #666;
+    cursor:pointer;
 }
 .compe-con .time-mons .time-mon{
     width:100%;
@@ -131,7 +147,7 @@
     margin:10px;
     text-align:center;
     line-height:2;
-
+    cursor:pointer;
 }
 .compe-con table{
     border-collapse: collapse;

@@ -49,7 +49,7 @@
 
 .addcoach {
     position: absolute;
-    top: 50%;
+    top: 4%;
     width: 760px;
     height: 430px;
     border-radius: 4px;
@@ -123,11 +123,22 @@
     -moz-border-radius: 4px;
     box-shadow: none;
     border: 1px solid #1ABC9C;
+    position:relative;
 }
-
+.addcoach .form-group select#sel{
+    width:300px;
+    height:130px;
+    overflow:scroll;
+    margin:0;
+    border:1px solid black;
+    position:absolute;
+    bottom:20px;
+    left:29%;
+    z-index:10;
+}
 .addcoach .form-group .searchcoach {
     display: inline;
-    padding: 8px 25px;
+    padding: 8px 20px;
     background: #34495E;
     margin-left: 15px;
     color: white;
@@ -135,6 +146,7 @@
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     font-size: 16px;
+    border:none;
 }
 
 .addcoach .form-group .searchcoach i {
