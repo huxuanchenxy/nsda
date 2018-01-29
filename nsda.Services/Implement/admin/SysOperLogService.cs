@@ -51,7 +51,7 @@ namespace nsda.Services.admin
                 StringBuilder join = new StringBuilder();
                 if (request.OperData.IsNotEmpty())
                 {
-                    request.OperData = "%" + request.OperData + "%";
+                    request.OperData = $"%{request.OperData}%";
                     join.Append(" and a.operdata like @OperData");
                 }
                 if (request.CreateStart.HasValue)

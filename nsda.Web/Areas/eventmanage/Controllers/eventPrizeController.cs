@@ -30,7 +30,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult insert(EventPrizeRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventPrizeService.Insert(request, out msg);
             return Result<string>(flag, msg);
@@ -42,7 +41,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult edit(EventPrizeRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventPrizeService.Edit(request, out msg);
             return Result<string>(flag, msg);
@@ -54,7 +52,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult delete(int id)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventPrizeService.Delete(id,UserContext.WebUserContext.Id,out msg);
             return Result<string>(flag, msg);

@@ -59,9 +59,7 @@ namespace nsda.Web.Areas.player.Controllers
             }
             else
             {
-                string msg = string.Empty;
-                _orderService.PayLog(id, response.Money, PayTypeEm.支付宝, userContext.Id, out msg);//插入支付流水信息
-
+                _orderService.PayLog(id, response.Money, PayTypeEm.支付宝, userContext.Id);//插入支付流水信息
                 string str = "1";
                 string str2 = "/callback/alinotifyurl";//异步回调地址
                 string str3 = "/callback/alireturnurl";//同步回调地址
@@ -112,8 +110,7 @@ namespace nsda.Web.Areas.player.Controllers
             }
             else
             {
-                string msg = string.Empty;
-                _orderService.PayLog(id, response.Money, PayTypeEm.微信, userContext.Id, out msg);//插入支付流水信息
+                _orderService.PayLog(id, response.Money, PayTypeEm.微信, userContext.Id);//插入支付流水信息
                 NativePay nativePay = new NativePay();
                 string url = nativePay.GetPayUrl(response);
                 ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode(url);

@@ -319,12 +319,12 @@ namespace nsda.Services.Implement.admin
                 StringBuilder join = new StringBuilder();
                 if (request.Title.IsNotEmpty())
                 {
-                    request.Title = "%" + request.Title + "%";
+                    request.Title = $"%{request.Title}%";
                     join.Append(" and title like @Title");
                 }
                 if (request.Remark.IsNotEmpty())
                 {
-                    request.Remark = "%" + request.Remark + "%";
+                    request.Remark = $"%{request.Remark}%";
                     join.Append(" and remark like @Remark");
                 }
                 if (request.VoteStartTime1.HasValue)

@@ -49,7 +49,7 @@ namespace nsda.Services.admin
                 StringBuilder join = new StringBuilder();
                 if (request.Account.IsNotEmpty())
                 {
-                    request.Account = "%" + request.Account + "%";
+                    request.Account = $"%{request.Account}%";
                     join.Append(" and account like @Account");
                 }
                 if (request.CreateStart.HasValue)

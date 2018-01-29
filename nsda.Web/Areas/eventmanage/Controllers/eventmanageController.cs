@@ -36,6 +36,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
 
         #region ajax
+        //修改个人信息
         [HttpPost]
         [AjaxOnly]
         [ValidateAntiForgeryToken]
@@ -54,7 +55,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult insertevent(EventRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventService.Insert(request, out msg);
             return Result<string>(flag, msg);
@@ -68,7 +68,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult editevent(EventRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventService.Edit(request, out msg);
             return Result<string>(flag, msg);
@@ -79,7 +78,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult editeventgroup(EventGroupRequest request)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventService.EditGroup(request, out msg);
             return Result<string>(flag, msg);
@@ -91,7 +89,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult editeventstatus(int id,EventStatusEm eventStatus)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventService.EditEventStatus(id, eventStatus, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -118,7 +115,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult insertplayer(List<TempPlayerRequest> request)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _memberTempService.InsertTempPlayer(request, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -130,7 +126,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult insertreferee(TempRefereeRequest request)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _memberTempService.InsertTempReferee(request, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -142,7 +137,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult checkreferee(int id, bool isAgree)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _refereeSignUpService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -154,7 +148,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult sign(List<int> id,int eventId,bool isNormal)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventSignService.BatchSign(id,eventId,isNormal,out msg);
             return Result<string>(flag, msg);
@@ -236,7 +229,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult rendersign(int eventId)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _playerSignUpService.RenderSign(eventId, out msg);
             return Result<string>(flag, msg);

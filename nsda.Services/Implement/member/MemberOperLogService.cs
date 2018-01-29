@@ -52,7 +52,7 @@ namespace nsda.Services.Implement.member
                 StringBuilder join = new StringBuilder();
                 if (request.OperData.IsNotEmpty())
                 {
-                    request.OperData = "%" + request.OperData + "%";
+                    request.OperData = $"%{request.OperData}%";
                     join.Append(" and a.operdata like @OperData");
                 }
                 if (request.CreateStart.HasValue)
@@ -64,7 +64,7 @@ namespace nsda.Services.Implement.member
                     request.CreateEnd = request.CreateEnd.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and a.createtime<=@CreateEnd");
                 }
-                var sql=$@"select a.*,b.completename OperUserName from t_member_operlog a 
+                var sql=$@"select a.*,b.account from t_member_operlog a 
                             inner join  t_member b on a.memberId=b.id
                             where isdelete=0 {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;

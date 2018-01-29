@@ -72,15 +72,13 @@ namespace nsda.Services.Implement.member
             try
             {
                 //需要过滤已经报名的选手
-                var sql = $@"
-                            select * from t_member where (isdelete=0 
-                            and memberType={MemberTypeEm.选手} and id!={memberId} and memberStatus={MemberStatusEm.已认证} and (code=@key or completename=@key)) or id in
-                            (
-	                            select a.memberId from t_member_extend a
-	                            inner join t_member b on a.memberId=b.id
-	                            where a.memberId!={memberId} and a.memberExtendStatus={MemberExtendStatusEm.申请通过} and a.role={RoleEm.选手}  and b.memberStatus={MemberStatusEm.已认证}
-                                and (b.code=@key or b.completename=@key)
-                            )) and id not in (select memberId from t_event_player_signup where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})) limit 30
+                var sql = $@"select a.* from t_member_player a inner join t_member b on a.memberId=b.id                            
+                            where a.isdelete=0  and (b.memberType={MemberTypeEm.选手} or b.isExtendPlayer=1) and a.memberId!={memberId}
+                            and a.memberStatus={MemberStatusEm.已认证} and (a.code=@key or a.completename=@key)
+                            and a.memberId not in (select memberId from t_event_player_signup 
+                                                 where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})
+                                                ) 
+                            limit 30
                          ";
                 var dy = new DynamicParameters();
                 dy.Add("key", keyvalue);
@@ -97,7 +95,7 @@ namespace nsda.Services.Implement.member
                             {
                                 MemberId = item.memberId,
                                 MemberCode = item.code,
-                                //MemberName = item.completename
+                                MemberName = item.completename
                             });
                         }
                     }
@@ -270,7 +268,6 @@ namespace nsda.Services.Implement.member
                     }
                     #endregion 
                 }
-
             }
             catch (Exception ex)
             {
@@ -663,11 +660,12 @@ namespace nsda.Services.Implement.member
             try
             {
                 var sql = $@"select a.*,b.code MemberCode,b.completename MemberName from 
-                             (select b.id EventId,b.code EventCode,b.name EventName,b.eventType EventType,a.memberId MemberId from t_event_player_signup a
-                             inner join t_event b on a.eventId=b.id
-                             where  a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()})
-                             and  a.groupnum in (select groupnum  from t_event_player_signup where memberId={memberId} and signUpStatus={SignUpStatusEm.报名成功})
-                             ) a inner join t_member b on a.MemberId=b.id
+                             (select b.id EventId,b.code EventCode,b.name EventName,b.eventType EventType,
+                              a.memberId MemberId from t_event_player_signup a
+                              inner join t_event b on a.eventId=b.id
+                              where  a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()})
+                              and  a.groupnum in (select groupnum  from t_event_player_signup where memberId={memberId} and signUpStatus={SignUpStatusEm.报名成功})
+                              ) a inner join t_member_player b on a.MemberId=b.memberId
                           ";
                 list = _dbContext.Query<PlayerCurrentEventResponse>(sql).ToList();
             }
@@ -686,7 +684,7 @@ namespace nsda.Services.Implement.member
                 StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
+                    request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
                 }
                 if (request.EventGroupId != null && request.EventGroupId > 0)
@@ -697,8 +695,9 @@ namespace nsda.Services.Implement.member
                 {
                     join.Append(" and a.signUpStatus=@SignUpStatus");
                 }
-                var sql = $@" select a.*,b.code MemberCode,b.completename MemberName,b.grade,b.gender,b.contactmobile from t_event_player_signup a 
-                            inner join t_member b on a.memberId=b.id
+                var sql = $@" select a.*,b.code MemberCode,b.completename MemberName,
+                            b.grade,b.gender,b.contactmobile from t_event_player_signup a 
+                            inner join t_member_player b on a.memberId=b.memberId
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
                             and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
@@ -779,9 +778,10 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder join = new StringBuilder();
-                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,c.code EventCode,c.name EventName,d.name EventGroupName
+                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,c.code EventCode,
+                             c.name EventName,d.name EventGroupName
                              from  t_event_player_signup a 
-                             inner join t_member b on a.memberId=b.id
+                             inner join t_member_player b on a.memberId=b.id
                              inner join t_event c on a.eventId=c.id
                              inner join t_event_group d on a.eventGroupId=d.id
                              where a.isdelete=0  and groupnum in (select groupnum  from t_event_player_signup where memberId=@MemberId)
@@ -992,11 +992,11 @@ namespace nsda.Services.Implement.member
                     return list;
                 }
                 var dy = new DynamicParameters();
-                dy.Add("KeyValue", "%" + keyvalue + "%");
+                dy.Add("KeyValue", $"%{keyvalue}%");
                 var sql = $@"select b.id Id,b.code MemberCode,b.completename MemberName
                              from  t_event_player_signup a 
-                             inner join t_member b on a.memberId=b.id
-                             where a.isdelete=0  and signUpStatus={SignUpStatusEm.报名成功}
+                             inner join t_member_player b on a.memberId=b.memberId
+                             where a.isdelete=0  and a.signUpStatus={SignUpStatusEm.报名成功}
                              and (b.code like @KeyValue or b.completename like @KeyValue)
                            ";
                 _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();

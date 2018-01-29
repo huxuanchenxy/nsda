@@ -25,16 +25,17 @@ namespace nsda.Web.Controllers
         }
 
         //查询账号是否存在
-        [HttpPost]
+        [HttpGet]
         [AjaxOnly]
         public JsonResult isexist(string account)
         {
             var res = new Result<string>();
             res.flag = _memberService.IsExist(account);
-            return Json(res, JsonRequestBehavior.DenyGet);
+            return Json(res, JsonRequestBehavior.AllowGet);
         }
         //注册选手
         [HttpPost]
+        [AjaxOnly]
         public JsonResult registerplayer(RegisterPlayerRequest request)
         {
             var res = new Result<string>();
@@ -54,6 +55,7 @@ namespace nsda.Web.Controllers
         }
         //注册教练
         [HttpPost]
+        [AjaxOnly]
         public JsonResult registercoach(RegisterCoachRequest request)
         {
             var res = new Result<string>();
@@ -73,6 +75,7 @@ namespace nsda.Web.Controllers
         }
         //注册裁判
         [HttpPost]
+        [AjaxOnly]
         public JsonResult registerreferee(RegisterRefereeRequest request)
         {
             var res = new Result<string>();
@@ -92,6 +95,7 @@ namespace nsda.Web.Controllers
         }
         //注册赛事管理员
         [HttpPost]
+        [AjaxOnly]
         public JsonResult registerevent(RegisterEventRequest request)
         {
             var res = new Result<string>();

@@ -601,7 +601,7 @@ namespace nsda.Services.Implement.eventmanage
 
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
+                    request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (code like @KeyValue or name like @KeyValue)");
                 }
                 var sql = $@"select * from t_event where isdelete=0 and memberId=@MemberId {join.ToString()} order by createtime desc ";
@@ -636,7 +636,7 @@ namespace nsda.Services.Implement.eventmanage
                 StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
+                    request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (code like @KeyValue or name like @KeyValue)");
                 }
                 if (request.EventStatus.HasValue && request.EventStatus > 0)

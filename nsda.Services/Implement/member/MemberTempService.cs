@@ -54,13 +54,11 @@ namespace nsda.Services.Implement.member
                     msg = "赛事组别信息有误";
                     return flag;
                 }
-
                 if (t_group.teamnumber != request.Count)
                 {
                     msg = "队伍人数有误";
                     return flag;
                 }
-
                 foreach (var item in request)
                 {
                     if (item.Name.IsEmpty())
@@ -89,11 +87,11 @@ namespace nsda.Services.Implement.member
                         break;
                     }
                 }
-
                 if (msg.IsNotEmpty())
                 {
                     return flag;
                 }
+
                 try
                 {
                     _dbContext.BeginTransaction();
@@ -114,6 +112,25 @@ namespace nsda.Services.Implement.member
                             isExtendReferee = false
                         };
                         int memberInsertId = _dbContext.Insert(member).ToObjInt();
+                        _dbContext.Insert(new t_member_player
+                        {
+                            memberId = memberInsertId,
+                            code = code,
+                            card = item.Name,
+                            cardType = CardTypeEm.身份证,
+                            completename = item.Name,
+                            completepinyin = item.Name,
+                            name = item.Name,
+                            contactaddress = item.Name,
+                            contactmobile = item.ContactMobile,
+                            emergencycontact = item.Name,
+                            emergencycontactmobile = item.ContactMobile,
+                            gender = GenderEm.未知,
+                            grade = item.Grade,
+                            pinyinname = item.Name,
+                            pinyinsurname = item.Name,
+                            surname = item.Name
+                        });
                         _dbContext.Insert(new t_member_points
                         {
                             memberId = memberId,
@@ -143,17 +160,13 @@ namespace nsda.Services.Implement.member
                             signUpStatus = SignUpStatusEm.报名成功,
                             signUpType = SignUpTypeEm.临时添加
                         });
-
-                        if (item.PlayerEdu != null && item.PlayerEdu.SchoolId > 0)
+                        _dbContext.Insert(new t_player_edu
                         {
-                            _dbContext.Insert(new t_player_edu
-                            {
-                                startdate = item.PlayerEdu.StartDate,
-                                enddate = item.PlayerEdu.EndDate,
-                                memberId = memberInsertId,
-                                schoolId = item.PlayerEdu.SchoolId
-                            });
-                        }
+                            startdate = item.PlayerEdu.StartDate,
+                            enddate = item.PlayerEdu.EndDate,
+                            memberId = memberInsertId,
+                            schoolId = item.PlayerEdu.SchoolId
+                        });
                     }
                     _dbContext.CommitChanges();
                     flag = true;
@@ -210,10 +223,24 @@ namespace nsda.Services.Implement.member
                         memberStatus = MemberStatusEm.已认证,
                         memberType = MemberTypeEm.临时裁判,
                         isExtendCoach = false,
-                        isExtendPlayer=false,
-                        isExtendReferee=false
+                        isExtendPlayer = false,
+                        isExtendReferee = false
                     };
                     int memberInsertId = _dbContext.Insert(member).ToObjInt();
+                    _dbContext.Insert(new t_member_referee
+                    {
+                        pinyinsurname = request.Name,
+                        completename = request.Name,
+                        code = code,
+                        completepinyin = request.Name,
+                        contactaddress = request.Name,
+                        contactmobile = request.ContactMobile,
+                        emergencycontact = request.Name,
+                        emergencycontactmobile = request.ContactMobile,
+                        gender = GenderEm.未知,
+                        memberId = memberInsertId,
+                        pinyinname = request.Name
+                    });
                     //积分表
                     _dbContext.Insert(new t_member_points
                     {
@@ -407,7 +434,6 @@ namespace nsda.Services.Implement.member
                     _dbContext.Execute($"update t_member_points set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={request.MemberId}");
                     _dbContext.Execute($"update t_member_temp set tomemberId={request.MemberId},updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={data.id}");
                     _dbContext.Execute($"update t_member_points_record set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_member_pointsdetail set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_event_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_event_cycling_match_referee set memberId={request.MemberId}  memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_event_cycling_matchplayerresultdetail set refereeId={request.MemberId} where memberId={data.memberId} and isdelete=0");
@@ -433,16 +459,17 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.TempStatus.HasValue&&request.TempStatus>0)
+                if (request.TempStatus.HasValue && request.TempStatus > 0)
                 {
                     join.Append(" and a.tempStatus=@TempStatus");
                 }
-                if (request.TempType.HasValue&&request.TempType>0)
+                if (request.TempType.HasValue && request.TempType > 0)
                 {
                     join.Append(" and a.tempType=@TempType");
                 }
-                var sql=$@"select a.*,b.account  MemberName,c.name EventName  from t_member_temp a 
-                            inner join t_member b on a.memberId=b.Id 
+                var sql = $@"select a.*,b.compeletename  MemberName,c.name EventName 
+                            from t_member_temp a 
+                            inner join t_member_player b on a.memberId=b.memberId 
                             inner join t_event  c on a.eventId=c.Id
                             where a.isdelete=0 {join.ToString()} order by a.createtime
                         ";
@@ -471,8 +498,8 @@ namespace nsda.Services.Implement.member
                 {
                     join.Append(" and a.tempType=@TempType");
                 }
-                var sql = $@"select a.*,b.account  MemberName,d.name EventName  from t_member_temp a 
-                            inner join t_member b on a.memberId=b.Id 
+                var sql = $@"select a.*,b.compeletename  MemberName,d.name EventName  from t_member_temp a 
+                            inner join t_member_referee b on a.memberId=b.Id 
                             inner join t_event  c on a.eventId=c.Id
                             where a.isdelete=0 {join.ToString()} order by a.createtime
                         ";
@@ -503,11 +530,9 @@ namespace nsda.Services.Implement.member
                             dbcontext.Execute($"update t_member_points set points=points+{points.points},eventPoints=eventPoints+{points.eventPoints},servicePoints=servicePoints+{points.servicePoints} where memberId={temp.tomemberId}");
                             dbcontext.Execute($"update t_member_temp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
                             dbcontext.Execute($"update t_member_points_record set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                            dbcontext.Execute($"update t_member_pointsdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                             dbcontext.Execute($"update t_event_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                             //对垒表也要修改
                             dbcontext.Execute($"update t_event_cycling_matchplayerresult set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                            dbcontext.Execute($"update t_event_cycling_matchplayerresultdetail set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                             dbcontext.CommitChanges();
                         }
                         catch (Exception ex)

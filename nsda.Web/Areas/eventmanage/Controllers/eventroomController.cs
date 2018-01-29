@@ -32,7 +32,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult insert(EventRoomRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag =_eventRoomService.Insert(request, out msg);
             return Result<string>(flag, msg);
@@ -44,7 +43,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult edit(EventRoomRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventRoomService.Edit(request, out msg);
             return Result<string>(flag, msg);
@@ -55,7 +53,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult editsettings(int id, int status)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventRoomService.EidtSettings(id, status, out msg);
             return Result<string>(flag, msg);
@@ -66,7 +63,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult settingspec(int id,int memberId)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventRoomService.SettingSpec(id,memberId, out msg);
             return Result<string>(flag, msg);
@@ -77,7 +73,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult clearspec(int id)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventRoomService.ClearSpec(id, out msg);
             return Result<string>(flag, msg);

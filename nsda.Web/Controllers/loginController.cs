@@ -29,7 +29,7 @@ namespace nsda.Web.Controllers
         }
 
         #region ajax
-        //登陆
+        //登录
         [HttpPost]
         [AjaxOnly]
         public JsonResult login(LoginRequest request)
@@ -49,7 +49,8 @@ namespace nsda.Web.Controllers
                 res.flag = true;
                 if (request.MemberType == MemberTypeEm.选手)
                 {
-                    res.msg = "/player/home/index";
+                    //跳转到选手报名页面
+                    res.msg = request.RedirectUrl.IsNotEmpty()? request.RedirectUrl:"/player/home/index";
                     datatype = DataTypeEm.选手;
                 }
                 else if (request.MemberType == MemberTypeEm.教练)
@@ -59,7 +60,8 @@ namespace nsda.Web.Controllers
                 }
                 else if (request.MemberType == MemberTypeEm.裁判)
                 {
-                    res.msg = "/referee/home/index";
+                    //跳转到裁判报名页面
+                    res.msg = request.RedirectUrl.IsNotEmpty() ? request.RedirectUrl : "/referee/home/index";
                     datatype = DataTypeEm.裁判;
                 }
                 else if (request.MemberType == MemberTypeEm.赛事管理员)
@@ -87,9 +89,7 @@ namespace nsda.Web.Controllers
             });
             return Json(res, JsonRequestBehavior.DenyGet);
         }
-
-
-        //找回密码
+        //发送邮件
         [HttpPost]
         [AjaxOnly]
         public JsonResult sendemail(string email)
@@ -123,7 +123,6 @@ namespace nsda.Web.Controllers
                 return Json(res, JsonRequestBehavior.DenyGet);
             }
         }
-
         // 校验邮箱验证码
         [HttpPost]
         [AjaxOnly]
@@ -154,7 +153,7 @@ namespace nsda.Web.Controllers
             res.flag = true;
             return Json(res, JsonRequestBehavior.DenyGet);
         }
-
+        //找回密码
         [HttpPost]
         [AjaxOnly]
         public JsonResult findpwd(string pwd)

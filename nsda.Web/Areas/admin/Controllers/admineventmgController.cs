@@ -38,7 +38,6 @@ namespace nsda.Web.Areas.admin.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult settinglevel(int id, EventLevelEm eventLevel)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventService.SettingLevel(id,eventLevel,UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -50,7 +49,6 @@ namespace nsda.Web.Areas.admin.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult check(int id,bool isAgree)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventService.Check(id, isAgree, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -77,7 +75,6 @@ namespace nsda.Web.Areas.admin.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult applyrefund(int eventId)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _playerSignUpService.ApplyRefund(eventId, UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -91,7 +88,6 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult cyclingracerule(CyclingRaceRuleRequest request)
         {
             request.SysUserId=UserContext.SysUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventRuleService.CyclingRaceRule(request, out msg);
             return Result<string>(flag, msg);
@@ -104,7 +100,6 @@ namespace nsda.Web.Areas.admin.Controllers
         public ContentResult knockoutrule(KnockoutRuleRequest request)
         {
             request.SysUserId = UserContext.SysUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventRuleService.KnockoutRule(request, out msg);
             return Result<string>(flag, msg);
@@ -136,7 +131,6 @@ namespace nsda.Web.Areas.admin.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult deleteeventscroe(int id)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventScoreService.Delete(id,UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);

@@ -42,32 +42,32 @@ namespace nsda.Services.member
                 var sql = string.Empty;
                 if (request.MemberType == MemberTypeEm.赛事管理员)
                 {
-                   sql= @"select a.*,b.completeName Name from t_member a 
+                   sql= @"select a.*,b.completename Name from t_member a 
                           inner join t_member_event b on a.id=b.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
                         ";
                 }
                 else if (request.MemberType == MemberTypeEm.选手)
                 {
-                    sql = @"select a.*,b.completename Name,c.points  from t_member_player a 
-                          inner join t_member_event b on a.id=b.memberId
+                    sql = @"select a.*,b.completename Name,c.points  from t_member a 
+                          inner join t_member_player b on a.id=b.memberId
                           inner join t_member_points c on a.id=c.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
                         ";
                 }
                 else if (request.MemberType == MemberTypeEm.教练)
                 {
-                    sql = @"select a.*,b.completepinyin Name,c.points  from t_member_coach a 
-                          inner join t_member_event b on a.id=b.memberId
+                    sql = @"select a.*,b.completepinyin Name,c.points  from t_member a 
+                          inner join t_member_coach b on a.id=b.memberId
                           inner join t_member_points c on a.id=c.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
                         ";
                 }
                 else if (request.MemberType == MemberTypeEm.裁判)
                 {
-                    sql = @"select a.*,b.completename Name,c.points  from t_member_referee a 
-                          inner join t_member_event b on a.id=b.memberId
-                          inner join t_member_points c on a.id=c.memberId
+                    sql = @"select a.*,b.completename Name,c.points  from t_member a 
+                          inner join t_member_referee b on a.id=b.memberId
+                          inner join t_member_points  c on a.id=c.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
                         ";
                 }
@@ -93,8 +93,9 @@ namespace nsda.Services.member
                         IsExtendReferee = data.isExtendReferee,
                         IsExtendPlayer = data.isExtendPlayer,
                         MemberType = (int)data.memberType,
-                        Points = request.MemberType != MemberTypeEm.赛事管理员?data.points:0,
-                        MemberStatus=(int)data.memberStatus
+                        Points = request.MemberType != MemberTypeEm.赛事管理员 ? data.points : 0,
+                        MemberStatus = (int)data.memberStatus,
+                        Head = data.head
                     };
                     SaveCurrentUser(userContext);
                 }
@@ -197,7 +198,7 @@ namespace nsda.Services.member
                 StringBuilder join = new StringBuilder();
                 if (request.Account.IsNotEmpty())
                 {
-                    request.Account = "%" + request.Account + "%";
+                    request.Account = $"%{request.Account}%";
                     join.Append(" and account like @Account");
                 }
                 if (request.MemberStatus.HasValue && request.MemberStatus > 0)
@@ -357,12 +358,11 @@ namespace nsda.Services.member
                     return list;
                 }
                 //查询注册号 为选手号 或者扩展有选手的会员
-                var sql = $@"
-                            select memberId MemberId,code MemberCode,completename MemberName from t_member_player 
-                            where  isdelete=0 and memberId!={memberId} and {key} like @value limit 30
+                var sql = $@"select memberId MemberId,code MemberCode,completename MemberName from t_member_player 
+                             where  isdelete=0 and memberId!={memberId} and {key} like @value limit 30
                            ";
                 var dy = new DynamicParameters();
-                dy.Add("value", "%" + value + "%");
+                dy.Add("value", $"%{value}%");
                 list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
@@ -391,7 +391,7 @@ namespace nsda.Services.member
                             where  isdelete=0 and memberId!={memberId} and {key} like @value limit 30
                          ";
                 var dy = new DynamicParameters();
-                dy.Add("value", "%" + value + "%");
+                dy.Add("value", $"%{value}%");
                 list = _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
@@ -497,7 +497,7 @@ namespace nsda.Services.member
             return flag;
         }
         //替换头像
-        public bool ReplaceHead(string headUrl, int memberId)
+        public bool ReplaceHead(string headUrl, WebUserContext userContext)
         {
             bool flag = false;
             try
@@ -506,13 +506,15 @@ namespace nsda.Services.member
                 {
                     return flag;
                 }
-                t_member member = _dbContext.Get<t_member>(memberId);
+                t_member member = _dbContext.Get<t_member>(userContext.Id);
                 if (member != null)
                 {
                     member.updatetime = DateTime.Now;
                     member.head = headUrl;
                     _dbContext.Update(member);
                     flag = true;
+                    userContext.Head = headUrl;
+                    SaveCurrentUser(userContext);
                 }
             }
             catch (Exception ex)
@@ -586,7 +588,6 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-
                 if (request.PlayerEdu == null || request.PlayerEdu.SchoolId == 0)
                 {
                     msg = "教育经历不能为空";
@@ -597,7 +598,6 @@ namespace nsda.Services.member
                     msg = "教育经历开始时间不能为空";
                     return flag;
                 }
-
                 t_member member = new t_member
                 {
                     account = request.Account,
@@ -649,10 +649,8 @@ namespace nsda.Services.member
                         schoolId = request.PlayerEdu.SchoolId,
                         startdate = request.PlayerEdu.StartDate
                     });
-
                     _dbContext.CommitChanges();
                     flag = true;
-
                     SaveCurrentUser(new WebUserContext
                     {
                         Code = member.code,
@@ -662,7 +660,8 @@ namespace nsda.Services.member
                         Id = memberId,
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
-                        IsExtendReferee = false
+                        IsExtendReferee = false,
+                        Head = "",//默认头像地址
                     });
                 }
                 catch (Exception ex)
@@ -672,7 +671,6 @@ namespace nsda.Services.member
                     msg = "服务异常";
                     LogUtils.LogError("MemberService.RegisterPlayerTran", ex);
                 }
-
             }
             catch (Exception ex)
             {
@@ -709,19 +707,16 @@ namespace nsda.Services.member
                     msg = "密码长度不能低于6";
                     return flag;
                 }
-
                 if (request.PinYinName.IsEmpty())
                 {
                     msg = "First Name不能为空";
                     return flag;
                 }
-
                 if (request.PinYinSurName.IsEmpty())
                 {
                     msg = "Last Name不能为空";
                     return flag;
                 }
-
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
@@ -782,7 +777,6 @@ namespace nsda.Services.member
                     });
                     _dbContext.CommitChanges();
                     flag = true;
-
                     SaveCurrentUser(new WebUserContext
                     {
                         Code = member.code,
@@ -792,7 +786,8 @@ namespace nsda.Services.member
                         Id = memberId,
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
-                        IsExtendReferee = false
+                        IsExtendReferee = false,
+                        Head = ""//默认头像地址
                     });
                 }
                 catch (Exception ex)
@@ -838,25 +833,21 @@ namespace nsda.Services.member
                     msg = "密码长度不能低于6";
                     return flag;
                 }
-
                 if (request.CompleteName.IsEmpty())
                 {
                     msg = "中文名不能为空";
                     return flag;
                 }
-
                 if (request.PinYinName.IsEmpty())
                 {
                     msg = "First Name不能为空";
                     return flag;
                 }
-
                 if (request.PinYinSurName.IsEmpty())
                 {
                     msg = "Last Name不能为空";
                     return flag;
                 }
-
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
@@ -916,7 +907,6 @@ namespace nsda.Services.member
                         points = 0,
                         servicePoints = 0,
                     });
-
                     if (request.EventId != null && request.EventId > 0)
                     {
                         _dbContext.Insert(new t_event_referee_signup
@@ -927,10 +917,8 @@ namespace nsda.Services.member
                             refereeSignUpStatus = RefereeSignUpStatusEm.待审核
                         });
                     }
-
                     _dbContext.CommitChanges();
                     flag = true;
-
                     SaveCurrentUser(new WebUserContext
                     {
                         Code = member.code,
@@ -940,7 +928,8 @@ namespace nsda.Services.member
                         Id = memberId,
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
-                        IsExtendReferee = false
+                        IsExtendReferee = false,
+                        Head = ""//默认头像地址
                     });
                 }
                 catch (Exception ex)
@@ -1021,7 +1010,6 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-
                 t_member member = new t_member
                 {
                     account = request.Account,
@@ -1060,7 +1048,6 @@ namespace nsda.Services.member
                     _dbContext.Insert(member_event);
                     _dbContext.CommitChanges();
                     flag = true;
-
                     SaveCurrentUser(new WebUserContext
                     {
                         Code = member.code,
@@ -1070,7 +1057,8 @@ namespace nsda.Services.member
                         Id = memberId,
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
-                        IsExtendReferee = false
+                        IsExtendReferee = false,
+                        Head = ""//默认头像地址
                     });
                 }
                 catch (Exception ex)
@@ -1134,7 +1122,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_player>(request.Id);
+                var detail = _dbContext.Get<t_member_player>(userContext.Id);
                 if (detail != null)
                 {
                     detail.card = request.Card;
@@ -1154,7 +1142,6 @@ namespace nsda.Services.member
                     detail.updatetime = DateTime.Now;
                     _dbContext.Update(detail);
                     flag = true;
-
                     userContext.Name = detail.completename;
                     SaveCurrentUser(userContext);
                 }
@@ -1183,13 +1170,11 @@ namespace nsda.Services.member
                     msg = "First Name不能为空";
                     return flag;
                 }
-
                 if (request.PinYinSurName.IsEmpty())
                 {
                     msg = "Last Name不能为空";
                     return flag;
                 }
-
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
@@ -1210,7 +1195,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_coach>(request.Id);
+                var detail = _dbContext.Get<t_member_coach>(userContext.Id);
                 if (detail != null)
                 {
                     detail.completepinyin = $"{request.PinYinName}{request.PinYinSurName}";
@@ -1252,19 +1237,16 @@ namespace nsda.Services.member
                     msg = "中文名不能为空";
                     return flag;
                 }
-
                 if (request.PinYinName.IsEmpty())
                 {
                     msg = "First Name不能为空";
                     return flag;
                 }
-
                 if (request.PinYinSurName.IsEmpty())
                 {
                     msg = "Last Name不能为空";
                     return flag;
                 }
-
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
@@ -1285,7 +1267,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_referee>(request.Id);
+                var detail = _dbContext.Get<t_member_referee>(userContext.Id);
                 if (detail != null)
                 {
                     detail.completename = request.CompleteName;
@@ -1307,7 +1289,6 @@ namespace nsda.Services.member
                 {
                     msg = "会员信息不存在";
                 }
-
             }
             catch (Exception ex)
             {
@@ -1359,7 +1340,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_event>(request.Id);
+                var detail = _dbContext.Get<t_member_event>(userContext.Id);
                 if (detail != null)
                 {
                     detail.card = request.Card;
@@ -1439,7 +1420,6 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-
                 if (request.PlayerEdu == null || request.PlayerEdu.SchoolId == 0)
                 {
                     msg = "教育经历不能为空";
@@ -1450,10 +1430,14 @@ namespace nsda.Services.member
                     msg = "教育经历开始时间不能为空";
                     return flag;
                 }
-
-                var detail = _dbContext.Get<t_member>(request.Id);
+                var detail = _dbContext.Get<t_member>(userContext.Id);
                 if (detail != null)
                 {
+                    if (detail.isExtendPlayer)
+                    {
+                        msg = "已申请开通选手权限，请刷新页面后重试";
+                        return flag;
+                    }
                     try
                     {
                         _dbContext.BeginTransaction();
@@ -1489,7 +1473,6 @@ namespace nsda.Services.member
                         });
                         _dbContext.CommitChanges();
                         flag = true;
-
                         userContext.MemberStatus = (int)MemberStatusEm.待认证;
                         userContext.IsExtendPlayer = detail.isExtendPlayer;
                         SaveCurrentUser(userContext);
@@ -1527,13 +1510,11 @@ namespace nsda.Services.member
                     msg = "First Name不能为空";
                     return flag;
                 }
-
                 if (request.PinYinSurName.IsEmpty())
                 {
                     msg = "Last Name不能为空";
                     return flag;
                 }
-
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
@@ -1554,9 +1535,14 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member>(request.Id);
+                var detail = _dbContext.Get<t_member>(userContext.Id);
                 if (detail != null)
                 {
+                    if (detail.isExtendCoach)
+                    {
+                        msg = "已申请开通教练权限，请刷新页面后重试";
+                        return flag;
+                    }
                     try
                     {
                         _dbContext.BeginTransaction();
@@ -1578,7 +1564,6 @@ namespace nsda.Services.member
                         });
                         _dbContext.CommitChanges();
                         flag = true;
-
                         userContext.IsExtendPlayer = detail.isExtendCoach;
                         SaveCurrentUser(userContext);
                     }
@@ -1615,19 +1600,16 @@ namespace nsda.Services.member
                     msg = "中文名不能为空";
                     return flag;
                 }
-
                 if (request.PinYinName.IsEmpty())
                 {
                     msg = "First Name不能为空";
                     return flag;
                 }
-
                 if (request.PinYinSurName.IsEmpty())
                 {
                     msg = "Last Name不能为空";
                     return flag;
                 }
-
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
@@ -1648,9 +1630,14 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member>(request.Id);
+                var detail = _dbContext.Get<t_member>(userContext.Id);
                 if (detail != null)
                 {
+                    if (detail.isExtendPlayer)
+                    {
+                        msg = "已申请开通裁判权限，请刷新页面后重试";
+                        return flag;
+                    }
                     try
                     {
                         _dbContext.BeginTransaction();
@@ -1672,16 +1659,8 @@ namespace nsda.Services.member
                             memberId = detail.id
                         };
                         _dbContext.Insert(member_referee);
-                        _dbContext.Insert(new t_member_points
-                        {
-                            eventPoints = 0,
-                            memberId = detail.id,
-                            points = 0,
-                            servicePoints = 0,
-                        });
                         _dbContext.CommitChanges();
                         flag = true;
-
                         userContext.IsExtendPlayer = detail.isExtendReferee;
                         SaveCurrentUser(userContext);
                     }
@@ -1764,7 +1743,7 @@ namespace nsda.Services.member
                         EmergencyContactMobile = response.emergencycontactmobile,
                         MemberId = response.memberId,
                         PinYinName = response.pinyinname,
-                        PinYinSurName = response.pinyinsurname
+                        PinYinSurName = response.pinyinsurname                            
                     };
                 }
             }

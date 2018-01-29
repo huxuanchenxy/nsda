@@ -204,7 +204,7 @@ namespace nsda.Web.Controllers
                     return Result<string>(false, "上传头像失败");
                 }
                 else {
-                    var flag = _memberService.ReplaceHead(headUrl, userContext.Id);
+                    var flag = _memberService.ReplaceHead(headUrl, userContext);
                     if (!flag)
                     {
                         return Result<string>(false, "上传头像失败");

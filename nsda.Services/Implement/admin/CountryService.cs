@@ -97,7 +97,7 @@ namespace nsda.Services.Implement.admin
                 StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
-                    request.Name = "%" + request.Name + "%";
+                    request.Name = $"%{request.Name}%";
                     join.Append(" and name like @Name");
                 }
                 var sql=$@"select *  from t_sys_country  where isdelete=0 {join.ToString()} order by createtime desc";

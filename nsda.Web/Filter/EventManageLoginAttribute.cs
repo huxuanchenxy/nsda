@@ -24,14 +24,14 @@ namespace nsda.Web.Filter
                 return;
             }
 
-            var user = UserContext.WebUserContext;
-            if (user == null)
+            var userContext = UserContext.WebUserContext;
+            if (userContext == null)
             {
                 filterContext.Result = new RedirectResult("/login/login");
                 return;
             }
 
-            if (user.MemberType != (int)Model.enums.MemberTypeEm.赛事管理员)
+            if (userContext.MemberType != (int)Model.enums.MemberTypeEm.赛事管理员)
             {
                 filterContext.Result = new RedirectResult("/login/login");
                 return;               

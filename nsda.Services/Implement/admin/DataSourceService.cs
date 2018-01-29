@@ -141,7 +141,7 @@ namespace nsda.Services.Implement.admin
                 StringBuilder join = new StringBuilder();
                 if (request.Title.IsNotEmpty())
                 {
-                    request.Title = "%" + request.Title + "%";
+                    request.Title = $"%{request.Title}%";
                     join.Append(" and title like @Title");
                 }
                 var sql=$@"select * from t_sys_datasource where isdelete=0 {join.ToString()} order by createtime desc";            

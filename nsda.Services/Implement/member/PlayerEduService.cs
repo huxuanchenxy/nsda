@@ -81,14 +81,14 @@ namespace nsda.Services.member
                     msg = "请选择开始时间";
                     return flag;
                 }
-                var memberedu = _dbContext.Get<t_player_edu>(request.Id);
-                if (memberedu != null)
+                var playerEdu = _dbContext.Get<t_player_edu>(request.Id);
+                if (playerEdu != null)
                 {
-                    memberedu.schoolId = request.SchoolId;
-                    memberedu.startdate = request.StartDate;
-                    memberedu.enddate = request.EndDate;
-                    memberedu.updatetime = DateTime.Now;
-                    _dbContext.Update(memberedu);
+                    playerEdu.schoolId = request.SchoolId;
+                    playerEdu.startdate = request.StartDate;
+                    playerEdu.enddate = request.EndDate;
+                    playerEdu.updatetime = DateTime.Now;
+                    _dbContext.Update(playerEdu);
                     flag = true;
                 }
                 else
@@ -111,12 +111,12 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                var memberedu = _dbContext.Get<t_player_edu>(id);
-                if (memberedu != null&& memberedu.memberId== memberId)
+                var playerEdu = _dbContext.Get<t_player_edu>(id);
+                if (playerEdu != null&& playerEdu.memberId== memberId)
                 {
-                    memberedu.updatetime = DateTime.Now;
-                    memberedu.isdelete = true;
-                    _dbContext.Update(memberedu);
+                    playerEdu.updatetime = DateTime.Now;
+                    playerEdu.isdelete = true;
+                    _dbContext.Update(playerEdu);
                     flag = true;
                 }
                 else
@@ -157,15 +157,15 @@ namespace nsda.Services.member
             PlayerEduResponse response = null;
             try
             {
-                var memberedu = _dbContext.Get<t_player_edu>(id);
-                if (memberedu != null&& memberId == memberedu.memberId)
+                var playerEdu = _dbContext.Get<t_player_edu>(id);
+                if (playerEdu != null&& memberId == playerEdu.memberId)
                 {
                     response = new PlayerEduResponse
                     {
-                        EndDate= memberedu.enddate,
-                        StartDate= memberedu.startdate,
-                        SchoolId= memberedu.schoolId,
-                        Id= memberedu.id
+                        EndDate= playerEdu.enddate,
+                        StartDate= playerEdu.startdate,
+                        SchoolId= playerEdu.schoolId,
+                        Id= playerEdu.id
                     };
                 }
             }

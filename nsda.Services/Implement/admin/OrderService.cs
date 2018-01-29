@@ -36,8 +36,8 @@ namespace nsda.Services.Implement.admin
                 StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
-                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
+                    request.KeyValue = $"%{request.KeyValue}%";
+                    join.Append(" and (b.code like @KeyValue or b.account like @KeyValue) ");
                 }
                 if (request.OrderType.HasValue && request.OrderType > 0)
                 {
@@ -56,9 +56,9 @@ namespace nsda.Services.Implement.admin
                     request.EndDate = request.EndDate.Value.AddDays(1).AddSeconds(-1);
                     join.Append("  and a.createtime<=@EndDate");
                 }
-                var sql = $@"select * from t_order a
-                             inner join t_member   b on a.memberId=b.id
-                             where isdelete=0 {join.ToString()} order by a.createtime desc";
+                var sql = $@"select a.*,b.code MemberCode,b.account MemberAccount from t_order a
+                             inner join t_member b on a.memberId=b.id
+                             where a.isdelete=0 {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<OrderListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -134,8 +134,8 @@ namespace nsda.Services.Implement.admin
                 StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
-                    join.Append(" and (c.code like @KeyValue or c.completename like @KeyValue)");
+                    request.KeyValue = $"%{request.KeyValue}%";
+                    join.Append(" and (c.code like @KeyValue or c.account like @KeyValue) ");
                 }
                 if (request.OrderOperType.HasValue && request.OrderOperType > 0)
                 {
@@ -151,7 +151,7 @@ namespace nsda.Services.Implement.admin
                     join.Append("  and a.createtime<=@EndDate");
                 }
                 var sql = $@"select a.id,a.orderId,a.title,a.content,a.orderOperType,a.createtime,a.operationStatus, 
-                            b.money,b.remark,c.completename MemberName,c.contactmobile ContactMobile
+                            b.money,b.remark,c.code MemberCode,c.account MemberAccount
                             from t_order_operation  a
                             inner join t_order b on a.orderId=b.id
                             inner join t_member c on b.memberId=c.id
@@ -173,10 +173,9 @@ namespace nsda.Services.Implement.admin
             try
             {
                 var sql = $@"select a.id,a.orderId,a.title,a.content,a.orderOperType,a.createtime,a.operationStatus, 
-                            b.money,b.remark,c.completename MemberName,c.contactmobile ContactMobile
+                            b.money,b.remark
                             from t_order_operation  a
                             inner join t_order b on a.orderId=b.id
-                            inner join t_member c on b.memberId=c.id
                             where a.isdelete=0 and a.id={id}";
                 response = _dbContext.QueryFirstOrDefault<RefundOrderDetailResponse>(sql);
                 if (response != null)
@@ -262,6 +261,7 @@ namespace nsda.Services.Implement.admin
                     }
                     catch (Exception ex)
                     {
+                        _dbContext.Rollback();
                         flag = false;
                         msg = "服务异常";
                         LogUtils.LogError("OrderService.ProcessTran", ex);
@@ -333,10 +333,8 @@ namespace nsda.Services.Implement.admin
             return response;
         }
         //支付记录
-        public bool PayLog(int orderId, decimal orderMoney, PayTypeEm payType, int memberId, out string msg)
+        public void PayLog(int orderId, decimal orderMoney, PayTypeEm payType, int memberId)
         {
-            bool flag = false;
-            msg = string.Empty;
             try
             {
                 _dbContext.BeginTransaction();
@@ -351,14 +349,12 @@ namespace nsda.Services.Implement.admin
                     payType = payType
                 });
                 _dbContext.CommitChanges();
-                flag = true;
             }
             catch (Exception ex)
             {
                 _dbContext.Rollback();
                 LogUtils.LogError("OrderService.PayLog", ex);
             }
-            return flag;
         }
     }
 }

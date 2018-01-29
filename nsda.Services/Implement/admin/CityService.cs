@@ -71,7 +71,7 @@ namespace nsda.Services.Implement.admin
                 StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
-                    request.Name = "%" + request.Name + "%";
+                    request.Name = $"%{request.Name}%";
                     join.Append(" and a.name like @Name");
                 }
                 if (request.ProvinceId != null && request.ProvinceId > 0)

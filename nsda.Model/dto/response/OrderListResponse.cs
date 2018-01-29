@@ -15,8 +15,8 @@ namespace nsda.Model.dto.response
         /// 会员id
         /// </summary>
         public int MemberId { get; set; }
-        public string MemberName { get; set; }
-
+        public string MemberCode { get; set; }
+        public string MemeberAccount { get; set; }
         /// <summary>
         /// 主订单id
         /// </summary>
@@ -229,14 +229,8 @@ namespace nsda.Model.dto.response
         /// 申请时间
         /// </summary>
         public DateTime CreateTime { get; set; }
-        /// <summary>
-        /// 会员姓名
-        /// </summary>
-        public string MemberName { get; set; }
-        /// <summary>
-        /// 联系电话
-        /// </summary>
-        public string ContactMobile { get; set; }
+        public string MemberCode { get; set; }
+        public string MemeberAccount { get; set; }
     }
 
     public class RefundOrderDetailResponse
@@ -274,14 +268,8 @@ namespace nsda.Model.dto.response
         /// 申请时间
         /// </summary>
         public DateTime CreateTime { get; set; }
-        /// <summary>
-        /// 会员姓名
-        /// </summary>
-        public string MemberName { get; set; }
-        /// <summary>
-        /// 联系电话
-        /// </summary>
-        public string ContactMobile { get; set; }
+        public string MemberCode { get; set; }
+        public string MemeberAccount { get; set; }
 
         public List<OrderDetail> OrderDetail { get; set; }
         public OrderPayLog OrderPayLogDetail { get; set; }
@@ -324,8 +312,8 @@ namespace nsda.Model.dto.response
         /// 会员id
         /// </summary>
         public int MemberId { get; set; }
-        public string MemberName { get; set; }
-
+        public string MemberCode { get; set; }
+        public string MemeberAccount { get; set; }
         /// <summary>
         /// 主订单id
         /// </summary>
@@ -385,7 +373,6 @@ namespace nsda.Model.dto.response
         /// 修改时间
         /// </summary>
         public DateTime UpdateTime { get; set; }
-
     }
 
 }

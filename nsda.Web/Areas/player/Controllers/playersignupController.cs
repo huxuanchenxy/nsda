@@ -69,10 +69,9 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult bindplayer(BindTempPlayerRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             int orderId = _memberTempService.BindTempPlayer(request, out msg);
-            return Result<string>(orderId > 0, msg, orderId.ToString());
+            return Result(orderId > 0, msg, orderId.ToString());
         }
 
         //邀请组队成员
@@ -90,7 +89,6 @@ namespace nsda.Web.Areas.player.Controllers
         public ContentResult insert(PlayerSignUpRequest request)
         {
             request.FromMemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _playerSignUpService.Insert(request, out msg);
             return Result<string>(flag, msg);
@@ -102,7 +100,6 @@ namespace nsda.Web.Areas.player.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult isacceptteam(int id, bool isAgree)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _playerSignUpService.IsAcceptTeam(id,isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -113,7 +110,6 @@ namespace nsda.Web.Areas.player.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult applyretire(int id)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _playerSignUpService.ApplyRetire(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -124,7 +120,6 @@ namespace nsda.Web.Areas.player.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult isconfirmretire(int id,bool isAgree)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _playerSignUpService.IsConfirmRetire(id, isAgree, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
@@ -136,7 +131,6 @@ namespace nsda.Web.Areas.player.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult gopay(int id, int newMemberId)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             int orderId = _playerSignUpService.GoPay(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(orderId>0, msg, orderId.ToString());
@@ -148,7 +142,6 @@ namespace nsda.Web.Areas.player.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult sign(int id)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventSignService.Sign(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);

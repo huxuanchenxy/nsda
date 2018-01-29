@@ -2,9 +2,6 @@
 using nsda.Utilities.Orm;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Utilities;
@@ -179,12 +176,15 @@ namespace nsda.Services.member
             List<CoachPlayerResponse> list = new List<CoachPlayerResponse>();
             try
             {
-                var sql = @"select a.*,b.name MemberName,b.code MemberCode,d.points MemberPoints,e.points ToMemberPoints,c.name ToMemberName,c.code ToMemberCode  from t_player_coach a 
-                            inner join t_member b on a.memberId=b.id
-                            inner join t_member c on a.toMemberId=c.id
+                var sql = @"select a.*,b.completepinyin MemberName,b.code MemberCode,d.points MemberPoints,
+                            e.points ToMemberPoints,c.completename ToMemberName,c.code ToMemberCode  
+                            from t_player_coach a 
+                            inner join t_member_coach  b on a.memberId=b.id
+                            inner join t_member_player c on a.toMemberId=c.id
                             inner join t_member_points d on a.memberId=d.memberId
                             inner join t_member_points e on a.toMemberId=e.memberId
-                            where a.isdelete=0 and ((a.isCoach=1 and a.isPositive=0 anda. memberId=@MemberId) or (a.isCoach=0 and a.isPositive=1 and a.toMemberId=@MemberId))
+                            where a.isdelete=0 and ((a.isCoach=1 and a.isPositive=0 anda. memberId=@MemberId)
+                            or (a.isCoach=0 and a.isPositive=1 and a.toMemberId=@MemberId))
                             order by a.createtime desc
                           ";
                 int totalCount = 0;
@@ -201,7 +201,7 @@ namespace nsda.Services.member
                         if (item.PlayerCoachStatus == PlayerCoachStatusEm.同意)
                         {
                             //所在学校
-                            item.School=_dbContext.ExecuteScalar($"select b.chinessname from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id where a.memberid={(item.Flag?item.ToMemberId:item.MemberId)} and a.isdelete=0 order by startdate desc limit 1").ToObjStr();
+                            item.School=_dbContext.ExecuteScalar($"select b.chinessname from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id where a.memberid={(item.Flag?item.ToMemberId:item.MemberId)} and a.isdelete=0 order by a.startdate desc limit 1").ToObjStr();
                             //参与比赛次数
                             item.Times = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                             //指教期间获胜次数
@@ -222,10 +222,13 @@ namespace nsda.Services.member
             List< PlayerCoachResponse > list = new List<PlayerCoachResponse>();
             try
             {
-                var sql = @"select a.*,b.name MemberName,b.code MemberCode,c.name ToMemberName,c.code ToMemberCode from t_player_coach a 
-                            inner join t_member b on a.memberId=b.id
-                            inner join t_member c on a.toMemberId=c.id
-                            where a.isdelete=0 and ((a.isCoach=0 and a.isPositive=1 and a.memberId=@MemberId) or (a.isCoach=1 and a.isPositive=0 and a.toMemberId=@MemberId))
+                var sql = @"select a.*,b.completename MemberName,b.code MemberCode,
+                            c.completepinyin ToMemberName,c.code ToMemberCode 
+                            from t_player_coach a 
+                            inner join t_member_player b on a.memberId=b.id
+                            inner join t_member_coach  c on a.toMemberId=c.id
+                            where a.isdelete=0 and ((a.isCoach=0 and a.isPositive=1 and a.memberId=@MemberId)
+                            or (a.isCoach=1 and a.isPositive=0 and a.toMemberId=@MemberId))
                             order by a.startdate desc
                           ";
                 int totalCount = 0;
@@ -254,10 +257,13 @@ namespace nsda.Services.member
             CurrentCoachResponse response = null;
             try
             {
-                var sql = $@"select a.*,b.completename MemberName,b.code MemberCode,c.completename ToMemberName,c.code ToMemberCode from t_player_coach a 
-                            inner join t_member b on a.memberId=b.id
-                            inner join t_member c on a.toMemberId=c.id
-                            where a.isdelete=0 and a.playerCoachStatus={PlayerCoachStatusEm.同意} and ((a.isCoach=0 and a.isPositive=1 and a.memberId={memberId}) or (a.isCoach=1 and a.isPositive=0 and a.toMemberId={memberId}))
+                var sql = $@"select a.*,b.completename MemberName,b.code MemberCode,c.completepinyin ToMemberName,
+                            c.code ToMemberCode from t_player_coach a 
+                            inner join t_member_player b on a.memberId=b.id
+                            inner join t_member_coach  c on a.toMemberId=c.id
+                            where a.isdelete=0 and a.playerCoachStatus={PlayerCoachStatusEm.同意} 
+                            and ((a.isCoach=0 and a.isPositive=1 and a.memberId={memberId}) 
+                            or (a.isCoach=1 and a.isPositive=0 and a.toMemberId={memberId}))
                             order by a.startdate desc limit 1";
                 var data = _dbContext.QueryFirstOrDefault<PlayerCoachResponse>(sql);
                 if (data != null)

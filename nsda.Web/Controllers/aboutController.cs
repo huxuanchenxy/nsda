@@ -8,7 +8,6 @@ namespace nsda.Web.Controllers
 {
     public class aboutController : Controller
     {
-        // GET: about
         public ActionResult us()
         {
             return View();

@@ -72,7 +72,7 @@ namespace nsda.Services.member
         //账号是否存在
         bool IsExist(string account);
         //更换头像
-        bool ReplaceHead(string headUrl, int memberId);
+        bool ReplaceHead(string headUrl, WebUserContext userContext);
         //账号轮询 看账号是否已认证
         bool MemberPlayerPolling(WebUserContext userContext);
         bool ExtendPlayer(RegisterPlayerRequest request, WebUserContext userContext, out string msg);

@@ -33,6 +33,7 @@ namespace nsda.Model.dto.request
         public string ContactMobile { get; set; }
         //学校信息
         public PlayerEduRequest PlayerEdu { get; set; }
+        public GradeEm Grade { get; set; }
     }
 
     //临时教练

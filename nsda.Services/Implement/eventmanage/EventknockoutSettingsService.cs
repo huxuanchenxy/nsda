@@ -42,7 +42,6 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "赛事信息有误";
                     return flag;
                 }
-
                 if (request == null || request.Count == 0)
                 {
                     msg = "请核对参数后再保存";
@@ -56,7 +55,6 @@ namespace nsda.Services.Implement.eventmanage
                         msg = "晋级队伍数有误";
                         return flag;
                     }
-
                     string message = string.Empty;
                     foreach (var items in item.ListKnockout)
                     {
@@ -65,19 +63,16 @@ namespace nsda.Services.Implement.eventmanage
                             message = "裁判数量有误";
                             break;
                         }
-
                         if (items.Screenings <= 0)
                         {
                             message = "场次有误";
                             break;
                         }
-
                         if (items.Screenings != items.ListKnockoutDetail.Count)
                         {
                             message = "场次对应信息有误";
                             break;
                         }
-
                         string messages = string.Empty;
                         foreach (var itemss in items.ListKnockoutDetail)
                         {
@@ -97,14 +92,12 @@ namespace nsda.Services.Implement.eventmanage
                                 break;
                             }
                         }
-
                         if (messages.IsNotEmpty())
                         {
                             message = messages;
                             break;
                         }
                     }
-
                     if (message.IsNotEmpty())
                     {
                         msg = message;
@@ -159,7 +152,6 @@ namespace nsda.Services.Implement.eventmanage
                             }
                         }
                     }
-
                     _dbContext.CommitChanges();
                     flag = true;
                 }

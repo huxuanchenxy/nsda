@@ -42,13 +42,11 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "教室数量有误";
                     return flag;
                 }
-
                 if (request.EventId <= 0)
                 {
                     msg = "需要赛事信息";
                     return flag;
                 }
-
                 //教练赛事
                 t_event t_event = _dbContext.Get<t_event>(request.EventId);
                 if (t_event == null)
@@ -238,7 +236,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 var sql=$@"select a.*,b.completename MemberName,c.name EventGroupName 
                             from t_event_room a
-                            left join t_member b on a.memberId=b.id
+                            left join t_member_player b on a.memberId=b.memberId
                             left join t_event_group c on a.eventgroupId=c.id
                             where a.eventId=@EventId and a.isdelete=0  order by a.createtime desc ";
                 int totalCount = 0;

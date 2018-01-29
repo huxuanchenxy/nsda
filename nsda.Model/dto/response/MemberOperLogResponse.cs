@@ -15,6 +15,6 @@ namespace nsda.Model.dto.response
         public string Operdata { get; set; }
         public string Operremark { get; set; }
         public int MemberId { get; set; }
-        public string OperUserName { get; set; }
+        public string Account { get; set; }
     }
 }

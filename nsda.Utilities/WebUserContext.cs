@@ -18,5 +18,6 @@ namespace nsda.Utilities
         public bool IsExtendCoach { get; set; }
         public bool IsExtendReferee { get; set; }
         public int MemberStatus { get; set; }
+        public string Head { get; set; }
     }
 }

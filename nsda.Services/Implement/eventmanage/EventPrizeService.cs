@@ -40,13 +40,11 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "奖项名称不能为空";
                     return flag;
                 }
-
                 if (request.Num.IsEmpty())
                 {
                     msg = "获奖队伍/会员编号不能为空";
                     return flag;
                 }
-
                 _dbContext.Insert(new t_event_prize
                 {
                     eventGroupId = request.EventGroupId,
@@ -78,13 +76,11 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "奖项名称不能为空";
                     return flag;
                 }
-
                 if (request.Num.IsEmpty())
                 {
                     msg = "获奖队伍/会员编号不能为空";
                     return flag;
                 }
-
                 var eventPrize = _dbContext.Get<t_event_prize>(request.Id);
                 if (eventPrize != null)
                 {

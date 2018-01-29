@@ -106,17 +106,17 @@ namespace nsda.Services.admin
                 StringBuilder join = new StringBuilder();
                 if (request.Name.IsNotEmpty())
                 {
-                    request.Name = "%" + request.Name + "%";
+                    request.Name = $"%{request.Name}%";
                     join.Append(" and name like @Name");
                 }
                 if (request.Mobile.IsNotEmpty())
                 {
-                    request.Mobile = "%" + request.Mobile + "%";
+                    request.Mobile = $"%{request.Mobile}%";
                     join.Append(" and mobile like @Mobile");
                 }
                 if (request.Email.IsNotEmpty())
                 {
-                    request.Email = "%" + request.Email + "%";
+                    request.Email = $"%{request.Email}%";
                     join.Append(" and email like @Email");
                 }
                 if (request.CreateStart.HasValue)

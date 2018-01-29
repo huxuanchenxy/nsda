@@ -107,11 +107,11 @@ namespace nsda.Services.Implement.referee
                 StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
+                    request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
                 var sql= $@"select a.*,b.code MemberCode,b.completename MemberName from t_event_referee_signup a 
-                            inner join t_member b on a.memberId=b.id
+                            inner join t_member_referee b on a.memberId=b.memberId
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
                             and c.memberId=@MemberId and a.eventId=@EventId 

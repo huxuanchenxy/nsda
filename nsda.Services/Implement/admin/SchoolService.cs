@@ -185,12 +185,12 @@ namespace nsda.Services.Implement.admin
                 StringBuilder join = new StringBuilder();
                 if (request.EnglishName.IsNotEmpty())
                 {
-                    request.EnglishName = "%" + request.EnglishName + "%";
+                    request.EnglishName = $"%{request.EnglishName}%";
                     join.Append(" and englishname like @EnglishName");
                 }
                 if (request.ChinessName.IsNotEmpty())
                 {
-                    request.ChinessName = "%" + request.ChinessName + "%";
+                    request.ChinessName = $"%{request.ChinessName}%";
                     join.Append(" and chinessname like @ChinessName");
                 }
                 if (request.ProvinceId.HasValue && request.ProvinceId > 0)

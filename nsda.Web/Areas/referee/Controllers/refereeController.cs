@@ -68,7 +68,6 @@ namespace nsda.Web.Areas.referee.Controllers
             return Result<string>(flag, msg);
         }
 
-
         //当前比赛列表
         [HttpGet]
         public ContentResult current()
@@ -83,7 +82,6 @@ namespace nsda.Web.Areas.referee.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult apply(int eventId)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _refereeSignUpService.Apply(eventId,UserContext.WebUserContext.Id,out msg);
             return Result<string>(flag, msg);
@@ -96,7 +94,6 @@ namespace nsda.Web.Areas.referee.Controllers
         public ContentResult bindreferee(BindTempRefereeRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _memberTempService.BindTempReferee(request, out msg);
             return Result<string>(flag, msg);
@@ -109,7 +106,6 @@ namespace nsda.Web.Areas.referee.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult sign(int id)
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var flag = _eventSignService.Sign(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);

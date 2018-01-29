@@ -29,7 +29,6 @@ namespace nsda.Services.Implement.eventmanage
             _memberOperLogService = memberOperLogService;
             _sysOperLogService = sysOperLogService;
         }
-
         //编辑循环赛规则
         public bool CyclingRaceRule(CyclingRaceRuleRequest request, out string msg)
         {
@@ -73,7 +72,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-
         //编辑淘汰赛规则
         public bool KnockoutRule(KnockoutRuleRequest request, out string msg)
         {
@@ -99,13 +97,13 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-
         //淘汰赛规则详情
         public KnockoutRuleResponse KnockoutRuleDetail(int eventId)
         {
             KnockoutRuleResponse response = new KnockoutRuleResponse();
             try
             {
+                //淘汰赛裁判规避原则
                 var list = _dbContext.Select<t_event_refereeavoidrule>(c => c.eventId == eventId && c.objEventType == ObjEventTypeEm.淘汰赛).OrderBy(c => c.viewindex).ToList();
                 if (list != null && list.Count > 0)
                 {
@@ -127,13 +125,13 @@ namespace nsda.Services.Implement.eventmanage
             }
             return response;
         }
-
         //循环赛规则详情
         public CyclingRaceRuleResponse CyclingRaceRuleDetail(int eventId)
         {
             CyclingRaceRuleResponse response = new CyclingRaceRuleResponse();
             try
             {
+                //裁判规避原则
                 var list = _dbContext.Select<t_event_refereeavoidrule>(c => c.eventId == eventId && c.objEventType == ObjEventTypeEm.循环赛).OrderBy(c => c.viewindex).ToList();
                 if (list != null && list.Count > 0)
                 {
@@ -148,7 +146,7 @@ namespace nsda.Services.Implement.eventmanage
                         });
                     }
                 }
-
+                //对垒规避原则
                 var avoidrule = _dbContext.Select<t_event_cycling_avoidrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
                 if (avoidrule != null && avoidrule.Count > 0)
                 {
@@ -163,7 +161,7 @@ namespace nsda.Services.Implement.eventmanage
                         });
                     }
                 }
-
+                //队伍排名参考数值
                 var teamscoringrule = _dbContext.Select<t_event_teamscoringrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
                 if (teamscoringrule != null && teamscoringrule.Count > 0)
                 {
@@ -178,7 +176,7 @@ namespace nsda.Services.Implement.eventmanage
                         });
                     }
                 }
-
+                //选手排名参考数值
                 var playerscoringrule = _dbContext.Select<t_event_playerscoringrule>(c => c.eventId == eventId).OrderBy(c => c.viewindex).ToList();
                 if (playerscoringrule != null && playerscoringrule.Count > 0)
                 {

@@ -26,6 +26,6 @@ namespace nsda.Services.Contract.admin
         void UpdateStatus(int id,OrderStatusEm orderStatus);
         OrderResponse OrderDetail(int id);
         //插入支付记录
-        bool PayLog(int orderId, decimal orderMoney, PayTypeEm payType, int memberId, out string msg);
+        void PayLog(int orderId, decimal orderMoney, PayTypeEm payType, int memberId);
     }
 }

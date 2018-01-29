@@ -131,10 +131,9 @@ namespace nsda.Web.Areas.player.Controllers
         [ValidateAntiForgeryToken]
         public ContentResult goauth()
         {
-            var res = new Result<string>();
             string msg = string.Empty;
             var orderId = _memberService.GoAuth(UserContext.WebUserContext.Id, out msg);
-            return Result<string>(orderId>0, msg, orderId.ToString());
+            return Result(orderId>0, msg, orderId.ToString());
         }
 
         //积分记录查询

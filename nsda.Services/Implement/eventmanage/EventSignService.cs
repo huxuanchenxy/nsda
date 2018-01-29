@@ -91,12 +91,12 @@ namespace nsda.Services.Implement.eventmanage
                 StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
+                    request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
                 var sql=$@" select d.groupnum GroupNum,a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss
                             from t_event_sign a 
-                            inner join t_member b on a.memberId=b.id
+                            inner join t_member_player b on a.memberId=b.memberId
                             inner join t_event c on a.eventId=c.id
                             inner join t_event_player_signup d on d.eventId=a.eventId and d.eventGroupId=a.eventGroupId and a.memberId=d.memberId
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
@@ -139,12 +139,12 @@ namespace nsda.Services.Implement.eventmanage
                 StringBuilder join = new StringBuilder();
                 if (request.KeyValue.IsNotEmpty())
                 {
-                    request.KeyValue = "%" + request.KeyValue + "%";
+                    request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
                 var sql=$@" select a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.Id) Ids,GROUP_CONCAT(a.signdate) Signdates,GROUP_CONCAT(a.eventSignStatus) EventSignStatuss
                             from t_event_sign a 
-                            inner join t_member b on a.memberId=b.id
+                            inner join t_member_referee b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
                             and a.eventId=@EventId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.裁判}
