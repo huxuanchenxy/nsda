@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "修改个人资料";
+}
+<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerintegral.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerpersonal.css?1.1.0")" rel="stylesheet" type="text/css" />
+
+
+@Html.Partial("_PlayerTop")
+
+<div class="container player-compe">
+    @Html.Partial("_PlayerLeft")
+</div>
+<div class="score-con">
+    <div class="score-top">
+        <img class="integral" src="~/Content/asset/img/score_03.jpg" alt="...">
+        <p class="scorecheck">修改个人资料</p>
+    </div>
+    <div class="per-con">
+        <div class="person-title"></div>
+        <form action="" method="post" class="modifyinfo">
+            <div class="form-group">
+                <label>注册邮箱</label>
+                <div class="form-con"><p>admin@enreachedu.com</p></div>
+            </div>
+            <div class="form-group">
+                <label for="phone">联系电话</label>
+                <div class="form-con">
+                    <input type="text" id="phone">
+                </div>
+            </div>
+            <div class="form-group two-label">
+                <div>
+                    <label for="emrcontact">紧急联系人</label>
+                    <div class="form-con">
+                        <input type="text" id="emrcontact">
+                    </div>
+                </div>
+                <div>
+                    <label for="emrphone">紧急电话</label>
+                    <div class="form-con">
+                        <input type="text" id="emrphone">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group current-coach">
+                <label>目前教练</label>
+                <div class="form-con"><p class="coach">Eric</p><a href="/Home/PlayerBoundCoach" class="modifycoach">修改</a></div>
+            </div>
+            <div class="form-group education">
+                <label>教育经历</label>
+                <div class="form-con">
+                    <ul class="edulists">
+                        <li>
+                            <span class="addedu" id="addedu">添加</span>
+                        </li>
+                        <li>
+                            <p>1999 / 09 - 2001 / 07</p>
+                            <p>上海</p>
+                            <p>上海</p>
+                            <p>西南位育中学国际部</p>
+                            <a href="#" class="editedu">编辑</a>
+                            <a href="#" class="deledu">删除</a>
+                        </li>
+                        <li>
+                            <p>1999 / 09 - 2001 / 07</p>
+                            <p>上海</p>
+                            <p>上海</p>
+                            <p>西南位育中学国际部</p>
+                            <a href="#" class="editedu">编辑</a>
+                            <a href="#" class="deledu">删除</a>
+                        </li>
+                        <li>
+                            <p>1999 / 09 - 2001 / 07</p>
+                            <p>上海</p>
+                            <p>上海</p>
+                            <p>西南位育中学国际部</p>
+                            <a href="#" class="editedu">编辑</a>
+                            <a href="#" class="deledu">删除</a>
+                        </li>
+                        <li>
+                            <p>1999 / 09 - 2001 / 07</p>
+                            <p>上海</p>
+                            <p>上海</p>
+                            <p>西南位育中学国际部</p>
+                            <a href="#" class="editedu">编辑</a>
+                            <a href="#" class="deledu">删除</a>
+                        </li>
+                    </ul>
+                    <div class="addeducation" id="addeducation">
+                        <h3>添加教育经历</h3>
+                        <a href="#" class="close" id="close"><i class="iconfont icon-close-b"></i></a>
+                        <div class="form-group">
+                            <select class="form-select-school" id="school1">
+                                <option>年</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-school" id="school2">
+                                <option>月</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <em class="em"> —</em>
+                            <select class="form-select-school" id="school3">
+                                <option>年</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-school" id="school4">
+                                <option>月</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-schools" id="school5">
+                                <option>省</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-schools" id="school6">
+                                <option>市</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-schoolads" id="school7">
+                                <option>学校</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <button class="confirmadd" id="confirmadd">添加</button>
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="修改个人资料" class="submit" id="test1">
+        </form>
+        <div class="modifypassword">
+            <img src="~/Content/asset/img/password_03.jpg" alt="" />
+            <div class="modifypanel">
+                <form action="" method="post">
+                    <input type="password" placeholder="输入新密码">
+                    <input type="password" placeholder="再次输入新密码">
+                    <input type="button" value="确认新密码" class="confirmnewpassword">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Content/asset/js/info.js")
+<script>
+    $('#test1').on('click', function () {
+        var ii = layer.load();
+        //此处用setTimeout演示ajax的回调
+        setTimeout(function () {
+            layer.close(ii);
+        }, 1000);
+    });
+</script>

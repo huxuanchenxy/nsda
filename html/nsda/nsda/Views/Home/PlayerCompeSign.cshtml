@@ -1,317 +1,207 @@
-﻿
-@{
-    ViewBag.Title = "我的比赛--比赛报名";
+﻿@{
+    ViewBag.Title = "比赛报名";
 }
+<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playersign.css?1.1.0")" rel="stylesheet" type="text/css" />
 
-<link href="@Url.Content("~/Content/membercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/compesign.css?1.1.0")" rel="stylesheet" type="text/css" />
 
-<div class="mec-ban">
-    <div class="container player">
-        <div class="player-info">
-            <a href="/Home/PlayerMembercenter"><img src="~/Content/img/teacher.png" alt="" /></a>
-            <div class="player-num">
-                <p>NSDA CHINA 注册会员：</p>
-                <p>目前 NSDA 积分：</p>
-                <p>NSDA 会员编号：</p>
-            </div>
-            <a href="#" class="player-code">
-                <i class="iconfont icon-erweima"></i>
-                我的二维码
-            </a>
-        </div>
-    </div>
-</div>
+@Html.Partial("_PlayerTop")
 
 <div class="container player-compe">
-    <div class="info-lists">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <div class="panel-title">
-                        <p>My tournaments</p>
-                        <h3>
-                            我的比赛&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        <ul>
-                            <li class="compebaoming"><a href="/Home/PlayerCompeSign" class="compe baoming">比赛报名</a></li>
-                            <li><a href="/Home/PlayerHadCompe" class="compe">已参加比赛</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                    <div class="panel-title">
-                        <p>Activity management</p>
-                        <h3>
-                            活动管理&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="panel-body">
-                        dfgfgf
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingThree">
-                    <div class="panel-title">
-                        <p>Personal information</p>
-                        <h3>
-                            会员信息&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                    <div class="panel-body">
-                        <ul>
-                            <li><a href="/Home/PlayerScore" class="compe">会员积分查询</a></li>
-                            <li><a href="/Home/PlayerInfermation" class="compe">修改个人资料</a></li>
-                            <li><a href="/Home/PlayerBoundCoach" class="compe">绑定教练</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingFour">
-                    <div class="panel-title">
-                        <p> Member Resources</p>
-                        <h3>
-                            会员资源&nbsp;&nbsp;&nbsp;
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                v
-                            </a>
-                        </h3>
-
-                    </div>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                    <div class="panel-body">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="compe-con">
-        <div class="address">
-            <div class="address-left">地点：<a href="#" class="nolimit">不限</a></div>
-            <ul class="address-lists">
-                <p>国内赛区：</p>
-                <li>郑州</li>
-                <li>西安</li>
-                <li>宁波</li>
-                <li>杭州</li>
-                <li>成都</li>
-                <li>青岛</li>
-                <li>长沙</li>
-                <li>南京</li>
-                <li>上海</li>
-                <li>深圳</li>
-                <li>无锡</li>
-                <li>济南</li>
-                <li>北京</li>
-            </ul>
-            <br />
-            <ul class="address-lists">
-                <p>国际赛区：</p>
-                <li>美国</li>
-                <li>韩国</li>
-                <li>日本</li>
-                <li>台湾</li>
-            </ul>
-        </div>
-        <div class="level">
-            <div class="level-left">级别：<a href="#" class="nolimit">不限</a></div>
-            <ul class="level-lists">
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
-                <li>D</li>
-                <li>E</li>
-            </ul>
-        </div>
-        <div class="time">
-            <div class="time-left">时间：<a href="#" class="nolimit">不限</a></div>
-            <ul class="time-lists nav-tabs tab" id="myTabs">
-                <li role="presentation" class="active tabt"><a href="#">2017</a></li>
-                <li role="presentation" class="tabt"><a href="#">2018</a></li>
-            </ul>
-            <div class="time-mons tabc">
-                <ul class="time-mon monsev tabcon">
-                    <li>一月<br>Jan.</li>
-                    <li>二月<br>Feb.</li>
-                    <li>三月<br>Mar.</li>
-                    <li>四月<br>Apr.</li>
-                    <li>五月<br>May.</li>
-                    <li>六月<br>Jun.</li>
-                    <li>七月<br>Jul.</li>
-                    <li>八月<br>Aug.</li>
-                    <li>九月<br>Sep.</li>
-                    <li>十月<br>Oct.</li>
-                    <li>十一月<br>Nov.</li>
-                    <li>十二月<br>Dec.</li>
-                </ul>
-                <ul class="time-mon moneig tabcon">
-                    <li>一月<br>Jan.</li>
-                    <li>二月<br>Feb.</li>
-                    <li>三月<br>Mar.</li>
-                    <li>四月<br>Apr.</li>
-                    <li>五月<br>May.</li>
-                    <li>六月<br>Jun.</li>
-                    <li>七月<br>Jul.</li>
-                    <li>八月<br>Aug.</li>
-                    <li>九月<br>Sep.</li>
-                    <li>十月<br>Oct.</li>
-                    <li>十一月<br>Nov.</li>
-                    <li>十二月<br>Dec.</li>
-                </ul>
-            </div>
-
-        </div>
-        <script>
-            $('#myTabs a').click(function (e) {
-                e.preventDefault()
-                $(this).tab('show')
-            })
-        </script>
-
-
-
-        <table>
-            <thead>
-                <tr>
-                    <th width="13%">比赛编码</th>
-                    <th width="25%">比赛名称</th>
-                    <th width="7%">类别</th>
-                    <th width="7%">级别</th>
-                    <th width="13%">开始日期</th>
-                    <th width="11%">城市</th>
-                    <th width="16%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td><a href="#" class="sign">立即报名</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td>报名已截止</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td><a href="#" class="sign">立即报名</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td><a href="#" class="sign">立即报名</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td>报名已截止</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td><a href="#" class="sign">立即报名</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td><a href="#" class="sign">立即报名</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td><a href="#" class="sign">立即报名</a></td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>02</td>
-                    <td>03</td>
-                    <td>04</td>
-                    <td>05</td>
-                    <td>06</td>
-                    <td><a href="#" class="sign">立即报名</a></td>
-                </tr>
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
-    </div>
+    @Html.Partial("_PlayerLeft")
 </div>
-@Scripts.Render("~/Scripts/tabs.js")
+<div class="compe-con">
+    <div class="address">
+        <div class="address-left">地点：<a href="#" class="nolimit">不限</a></div>
+        <ul class="address-lists">
+            <p>国内赛区：</p>
+            <li>郑州</li>
+            <li>西安</li>
+            <li>宁波</li>
+            <li>杭州</li>
+            <li>成都</li>
+            <li>青岛</li>
+            <li>长沙</li>
+            <li>南京</li>
+            <li>上海</li>
+            <li>深圳</li>
+            <li>无锡</li>
+            <li>济南</li>
+            <li>北京</li>
+        </ul>
+        <br />
+        <ul class="address-lists">
+            <p>国际赛区：</p>
+            <li>美国</li>
+            <li>韩国</li>
+            <li>日本</li>
+            <li>台湾</li>
+        </ul>
+    </div>
+    <div class="level">
+        <div class="level-left">级别：<a href="#" class="nolimit">不限</a></div>
+        <ul class="level-lists">
+            <li>A</li>
+            <li>B</li>
+            <li>C</li>
+            <li>D</li>
+            <li>E</li>
+        </ul>
+    </div>
+    <div class="time">
+        <div class="time-left">时间：<a href="#" class="nolimit">不限</a></div>
+        <ul class="time-lists nav-tabs tab" id="myTabs">
+            <li role="presentation" class="active tabt">2017</li>
+            <li role="presentation" class="tabt">2018</li>
+        </ul>
+        <div class="time-mons tabc">
+            <ul class="time-mon monsev tabcon">
+                <li>一月<br>Jan.</li>
+                <li>二月<br>Feb.</li>
+                <li>三月<br>Mar.</li>
+                <li>四月<br>Apr.</li>
+                <li>五月<br>May.</li>
+                <li>六月<br>Jun.</li>
+                <li>七月<br>Jul.</li>
+                <li>八月<br>Aug.</li>
+                <li>九月<br>Sep.</li>
+                <li>十月<br>Oct.</li>
+                <li>十一月<br>Nov.</li>
+                <li>十二月<br>Dec.</li>
+            </ul>
+            <ul class="time-mon moneig tabcon">
+                <li>一月<br>Jan.</li>
+                <li>二月<br>Feb.</li>
+                <li>三月<br>Mar.</li>
+                <li>四月<br>Apr.</li>
+                <li>五月<br>May.</li>
+                <li>六月<br>Jun.</li>
+                <li>七月<br>Jul.</li>
+                <li>八月<br>Aug.</li>
+                <li>九月<br>Sep.</li>
+                <li>十月<br>Oct.</li>
+                <li>十一月<br>Nov.</li>
+                <li>十二月<br>Dec.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="13%">比赛编码</th>
+                <th width="25%">比赛名称</th>
+                <th width="7%">类别</th>
+                <th width="7%">级别</th>
+                <th width="13%">开始日期</th>
+                <th width="11%">城市</th>
+                <th width="16%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td><a href="#" class="sign">立即报名</a></td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td>报名已截止</td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td><a href="#" class="sign">立即报名</a></td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td><a href="#" class="sign">立即报名</a></td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td>报名已截止</td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td><a href="#" class="sign">立即报名</a></td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td><a href="#" class="sign">立即报名</a></td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td><a href="#" class="sign">立即报名</a></td>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td><a href="#" class="sign">立即报名</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+@Scripts.Render("~/Content/asset/js/tabs.js")
+@Scripts.Render("~/Content/asset/js/selected.js")

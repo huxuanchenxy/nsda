@@ -1,0 +1,108 @@
+﻿.comp-lists{
+    margin-top:15px;
+    width:78%;
+    float:left;
+    margin-left:15px;
+}
+.comp-title{
+    width:100%;
+    height:40px;
+    margin-top:65px;
+}
+.comp-title li{
+    padding:0px 25px;
+    float:left;
+    text-align:center;
+    line-height:40px;
+    background:#E3E2E2;
+    box-shadow:inset 1px 1px 3px #808080;
+    border-radius: 16px 16px 0 0;
+    -webkit-border-radius: 16px 16px 0 0;
+    -moz-border-radius: 16px 16px 0 0;
+    cursor:pointer;
+    color:#3d3b3b;
+    font-size:15px;
+}
+.comp-con table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.comp-con .hadtable thead{
+    background: #E3D2D2;
+    border-bottom:2px solid #E0E0E0;
+    border-top:2px solid #E0E0E0;
+}
+.comp-con .exittable thead{
+    background: #E3E2E2;
+    border-bottom:2px solid #c8c6c6;
+    border-top:2px solid #c8c6c6;
+}
+.comp-con .hadtable thead th,.comp-con .exittable thead th{
+    padding:7px 0;
+    text-align:center;
+    
+    font-size:14px;
+}
+.comp-con .hadtable tbody td .select{
+    background:#FF7A4C;
+    color:white;
+    width:50%;
+    height:30px;
+    margin-right:5px;
+    float:left;
+}
+.comp-con .hadtable tbody td .pay{
+    background:yellow;
+    width:50%;
+    height:30px;
+    color:#666;
+    margin-right:2px;
+    float:left;
+}
+.comp-con .hadtable tbody td .apply{
+    background:#ddd;
+    width:46%;
+    height:30px;
+    color:#666;
+    float:right;
+}
+.comp-title .act{
+    background:#EBD1D1;
+}
+.comp-con .hadtable tbody td .select:hover{
+    background:#ff6a00;
+}
+.comp-con .hadtable tbody td .select:hover{
+    color:white;
+}
+
+.comp-con .hadtable tbody td .select,.comp-con .hadtable tbody td .pay,.comp-con .hadtable tbody td .apply{
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    line-height:2;
+}
+.comp-con table thead{
+    background: #E3D2D2;
+}
+.comp-con thead th{
+    border-top: 1px solid #a7a7a7;
+    border-bottom: 1px solid #a7a7a7;
+    text-align: center;
+    color: #666666;
+    padding: 7px;
+}
+.comp-con tbody td{
+    border-bottom: 1px solid #a7a7a7;
+    text-align: center;
+    padding: 12px;
+    box-sizing: border-box;
+}
+.comp-con tbody td:not(:last-child) {
+    border-right: 1px solid #a7a7a7;
+}
+.comp-con nav{
+        float:right;
+        margin-right:20px;
+        margin-top:100px;
+}

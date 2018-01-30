@@ -1,0 +1,94 @@
+﻿<link href="@Url.Content("~/Content/asset/css/player.css?1.1.0")" rel="stylesheet" type="text/css" />
+
+@Scripts.Render("~/Content/asset/js/load.js")
+
+<div class="info-lists">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <a href="/Home/PlayerMemberCenter"><h3 class="mc">会员中心</h3></a>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <p>My tournaments</p>
+                        <h3>我的比赛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v</h3>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <ul>
+                        <a href="/Home/PlayerCompeSign" class="compe"><li>比赛报名</li></a>
+                        <a href="/Home/PlayerHadCompe" class="compe"><li>已参加比赛</li></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <p>Personal information</p>
+                        <h3>会员信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v</h3>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <ul>
+                        <a href="/Home/PlayerScore" class="compe"><li>会员积分查询</li></a>
+                        <a href="/Home/PlayerInformation" class="compe"><li>修改个人资料</li></a>
+                        <a href="/Home/PlayerBoundCoach" class="compe"><li>绑定教练</li></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <p>Member Resources</p>
+                        <h3>会员资源&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v</h3>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    <ul>
+                        <a href="/Home/PlayerSource" class="compe"><li>会员资源</li></a>
+                        <a href="#" class="compe"><li>评分单</li></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

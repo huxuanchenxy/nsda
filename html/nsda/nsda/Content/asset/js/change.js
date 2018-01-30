@@ -185,4 +185,3 @@ function change(type = 'r'){
 
 
 
-        }}}
