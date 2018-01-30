@@ -10,10 +10,8 @@ namespace nsda.Model.dto.response
     public class PlayerCoachResponse
     {
         public int Id { get; set; }
-        public string MemberCode { get; set; }
-        public string ToMemberCode { get; set; }
-        public string MemberName { get; set; }
-        public string ToMemberName { get; set; }
+        public string CoachCode { get; set; }
+        public string CoachName { get; set; }
         public int MemberId { get; set; }
         public int ToMemberId { get; set; }
         public PlayerCoachStatusEm PlayerCoachStatus { get; set; }
@@ -27,26 +25,21 @@ namespace nsda.Model.dto.response
     public class CoachPlayerResponse
     {
         public int Id { get; set; }
-        public string MemberCode { get; set; }
-        public string ToMemberCode { get; set; }
-        public string MemberName { get; set; }
-        public string ToMemberName { get; set; }
+        public string PlayerCode { get; set; }
+        public string PlayerName { get; set; }
+        public string PlayerPinYinName { get; set; }
         public int MemberId { get; set; }
         public int ToMemberId { get; set; }
         public PlayerCoachStatusEm PlayerCoachStatus { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
         public bool Flag { get; set; }
         /// <summary>
         /// 当前积分
         /// </summary>
-        public decimal MemberPoints { get; set; }
-        /// <summary>
-        /// 当前积分
-        /// </summary>
-        public decimal ToMemberPoints { get; set; }
+        public decimal PlayerPoints { get; set; }
         /// <summary>
         /// 执教期间比赛次数
         /// </summary>
@@ -55,10 +48,6 @@ namespace nsda.Model.dto.response
         /// 执教期间获胜次数
         /// </summary>
         public int WinTimes { get; set; }
-        /// <summary>
-        /// 所在学校
-        /// </summary>
-        public string School { get; set; }
     }
 
     public class CurrentCoachResponse

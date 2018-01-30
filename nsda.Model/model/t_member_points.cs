@@ -32,11 +32,11 @@ namespace nsda.Models
         /// <summary>
         /// 积分
         /// </summary>
-        public decimal points { get; set; }
+        public int playerPoints { get; set; }
     
-        public decimal eventPoints { get; set; }
+        public int coachPoints { get; set; }
     
-        public decimal servicePoints { get; set; }
+        public int refereePoints { get; set; }
     
         /// <summary>
         /// 创建时间

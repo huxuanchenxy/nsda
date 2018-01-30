@@ -42,14 +42,14 @@ namespace nsda.Services.member
                 var sql = string.Empty;
                 if (request.MemberType == MemberTypeEm.赛事管理员)
                 {
-                   sql= @"select a.*,b.completename Name from t_member a 
+                    sql = @"select a.*,b.completename Name from t_member a 
                           inner join t_member_event b on a.id=b.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
                         ";
                 }
                 else if (request.MemberType == MemberTypeEm.选手)
                 {
-                    sql = @"select a.*,b.completename Name,c.points  from t_member a 
+                    sql = @"select a.*,b.completename Name,c.playerPoints,c.coachPoints,c.refereePoints  from t_member a 
                           inner join t_member_player b on a.id=b.memberId
                           inner join t_member_points c on a.id=c.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
@@ -57,7 +57,7 @@ namespace nsda.Services.member
                 }
                 else if (request.MemberType == MemberTypeEm.教练)
                 {
-                    sql = @"select a.*,b.completepinyin Name,c.points  from t_member a 
+                    sql = @"select a.*,b.completepinyin Name,c.playerPoints,c.coachPoints,c.refereePoints  from t_member a 
                           inner join t_member_coach b on a.id=b.memberId
                           inner join t_member_points c on a.id=c.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
@@ -65,15 +65,15 @@ namespace nsda.Services.member
                 }
                 else if (request.MemberType == MemberTypeEm.裁判)
                 {
-                    sql = @"select a.*,b.completename Name,c.points  from t_member a 
+                    sql = @"select a.*,b.completename Name,c.playerPoints,c.coachPoints,c.refereePoints  from t_member a 
                           inner join t_member_referee b on a.id=b.memberId
                           inner join t_member_points  c on a.id=c.memberId
                           where a.account=@account and a.pwd=@pwd and a.isdelete=0 
                         ";
                 }
                 var dy = new DynamicParameters();
-                dy.Add("account",request.Account);
-                dy.Add("pwd",request.Pwd);
+                dy.Add("account", request.Account);
+                dy.Add("pwd", request.Pwd);
                 var data = _dbContext.QueryFirstOrDefault<dynamic>(sql, dy);
                 if (data == null)
                 {
@@ -93,7 +93,9 @@ namespace nsda.Services.member
                         IsExtendReferee = data.isExtendReferee,
                         IsExtendPlayer = data.isExtendPlayer,
                         MemberType = (int)data.memberType,
-                        Points = request.MemberType != MemberTypeEm.赛事管理员 ? data.points : 0,
+                        CoachPoints = request.MemberType != MemberTypeEm.赛事管理员 ? data.coachPoints : 0,
+                        RefereePoints = request.MemberType != MemberTypeEm.赛事管理员 ? data.refereePoints : 0,
+                        PlayerPoints = request.MemberType != MemberTypeEm.赛事管理员 ? data.playerPoints : 0,
                         MemberStatus = (int)data.memberStatus,
                         Head = data.head
                     };
@@ -178,7 +180,7 @@ namespace nsda.Services.member
                 if (member.memberStatus == MemberStatusEm.已认证)
                 {
                     flag = true;
-                    userContext.MemberStatus=(int)MemberStatusEm.已认证;
+                    userContext.MemberStatus = (int)MemberStatusEm.已认证;
                     SaveCurrentUser(userContext);
                 }
 
@@ -637,10 +639,10 @@ namespace nsda.Services.member
                     _dbContext.Insert(member_player);
                     _dbContext.Insert(new t_member_points
                     {
-                        eventPoints = 0,
+                        playerPoints = 0,
                         memberId = memberId,
-                        points = 0,
-                        servicePoints = 0,
+                        coachPoints = 0,
+                        refereePoints = 0,
                     });
                     _dbContext.Insert(new t_player_edu
                     {
@@ -661,6 +663,10 @@ namespace nsda.Services.member
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
                         IsExtendReferee = false,
+                        CoachPoints = 0,
+                        PlayerPoints = 0,
+                        RefereePoints = 0,
+                        MemberStatus = (int)MemberStatusEm.待认证,
                         Head = "",//默认头像地址
                     });
                 }
@@ -770,10 +776,10 @@ namespace nsda.Services.member
                     _dbContext.Insert(member_coach);
                     _dbContext.Insert(new t_member_points
                     {
-                        eventPoints = 0,
+                        playerPoints = 0,
                         memberId = memberId,
-                        points = 0,
-                        servicePoints = 0,
+                        coachPoints = 0,
+                        refereePoints = 0,
                     });
                     _dbContext.CommitChanges();
                     flag = true;
@@ -787,6 +793,10 @@ namespace nsda.Services.member
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
                         IsExtendReferee = false,
+                        MemberStatus = (int)MemberStatusEm.已认证,
+                        CoachPoints = 0,
+                        PlayerPoints = 0,
+                        RefereePoints = 0,
                         Head = ""//默认头像地址
                     });
                 }
@@ -902,10 +912,10 @@ namespace nsda.Services.member
                     _dbContext.Insert(member_referee);
                     _dbContext.Insert(new t_member_points
                     {
-                        eventPoints = 0,
+                        playerPoints = 0,
                         memberId = memberId,
-                        points = 0,
-                        servicePoints = 0,
+                        coachPoints = 0,
+                        refereePoints = 0,
                     });
                     if (request.EventId != null && request.EventId > 0)
                     {
@@ -929,6 +939,10 @@ namespace nsda.Services.member
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
                         IsExtendReferee = false,
+                        RefereePoints = 0,
+                        CoachPoints = 0,
+                        PlayerPoints = 0,
+                        MemberStatus = (int)MemberStatusEm.已认证,
                         Head = ""//默认头像地址
                     });
                 }
@@ -1058,6 +1072,7 @@ namespace nsda.Services.member
                         IsExtendCoach = false,
                         IsExtendPlayer = false,
                         IsExtendReferee = false,
+                        MemberStatus=(int)MemberStatusEm.已认证,
                         Head = ""//默认头像地址
                     });
                 }
@@ -1081,7 +1096,7 @@ namespace nsda.Services.member
 
         #region 修改账号信息
         //修改选手
-        public bool EditMemberPlayer(RegisterPlayerRequest request,WebUserContext userContext, out string msg)
+        public bool EditMemberPlayer(RegisterPlayerRequest request, WebUserContext userContext, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -1743,7 +1758,7 @@ namespace nsda.Services.member
                         EmergencyContactMobile = response.emergencycontactmobile,
                         MemberId = response.memberId,
                         PinYinName = response.pinyinname,
-                        PinYinSurName = response.pinyinsurname                            
+                        PinYinSurName = response.pinyinsurname
                     };
                 }
             }

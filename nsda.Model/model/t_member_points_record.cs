@@ -47,7 +47,7 @@ namespace nsda.Models
         /// <summary>
         /// 积分
         /// </summary>
-        public decimal points { get; set; }
+        public int points { get; set; }
     
         /// <summary>
         /// 创建时间

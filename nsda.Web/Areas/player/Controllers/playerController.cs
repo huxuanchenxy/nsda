@@ -196,16 +196,10 @@ namespace nsda.Web.Areas.player.Controllers
         [HttpGet]
         public ContentResult listedu(PlayerEduExperQueryRequest request)
         {
-            request.MemberId = UserContext.WebUserContext.Id;
-            var data = _playerEduService.List(request);
-            var res = new ResultDto<PlayerEduResponse>
-            {
-                page = request.PageIndex,
-                total = request.Total,
-                records = request.Records,
-                rows = data
-            };
-            return Content(res.Serialize());
+            var data = _playerEduService.List(new PlayerEduExperQueryRequest {
+                MemberId= UserContext.WebUserContext.Id
+             });
+            return Result(true, string.Empty, data);
         }
         #endregion 
 

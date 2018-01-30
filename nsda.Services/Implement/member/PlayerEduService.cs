@@ -141,9 +141,7 @@ namespace nsda.Services.member
                 var sql= @"select a.*,b.chinessname as SchoolName from t_player_edu a
                             inner  join t_sys_school b on a.schoolId=b.id
                             where a.isdelete=0 and a.memberId=@MemberId order by a.startdate desc ";
-                int totalCount = 0;
-                list = _dbContext.Page<PlayerEduResponse>(sql,out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
+                list = _dbContext.Query<PlayerEduResponse>(sql).ToList();
             }
             catch (Exception ex)
             {

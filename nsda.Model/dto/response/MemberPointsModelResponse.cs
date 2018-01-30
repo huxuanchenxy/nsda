@@ -13,16 +13,16 @@ namespace nsda.Model.dto.response
         /// </summary>
         public int MemberId { get; set; }
         /// <summary>
-        /// 积分
+        /// 裁判积分
         /// </summary>
-        public decimal Points { get; set; }
+        public int RefereePoints { get; set; }
         /// <summary>
-        /// 赛事积分
+        /// 选手积分
         /// </summary>
-        public decimal EventPoints { get; set; }
+        public int PlayerPoints { get; set; }
         /// <summary>
-        /// 服务积分
+        /// 教练积分
         /// </summary>
-        public decimal ServicePoints { get; set; }
+        public int CoachPoints { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace nsda.Model.dto.request
         public int MemberId { get; set; }
     }
 
-    public class PlayerEduExperQueryRequest : PageQuery
+    public class PlayerEduExperQueryRequest
     {
         public int MemberId { get; set; }
     }

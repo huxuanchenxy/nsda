@@ -145,7 +145,7 @@ namespace nsda.Services.Implement.eventmanage
                             mingrade = item.MinGrade,
                             mintimes = item.MinTimes,
                             name = item.Name,
-                            teamnumber = item.TeamNumber
+                            teamnumber =request.EventType==EventTypeEm.辩论?2:1
                         });
                     }
                     #endregion
@@ -393,7 +393,6 @@ namespace nsda.Services.Implement.eventmanage
                     eventgroup.mingrade = request.MinGrade;
                     eventgroup.mintimes = request.MinTimes;
                     eventgroup.maxtimes = request.MaxTimes;
-                    eventgroup.teamnumber = request.TeamNumber;
                     eventgroup.updatetime = DateTime.Now;
                     _dbContext.Update(eventgroup);
                     flag = true;

@@ -60,6 +60,9 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                //先检测是否上一轮成绩都录入完
+                //看是否有双赢双输队伍
+                //查看上一轮所有的对垒 
                 var cyclingracesettings = _dbContext.Select<t_event_cycling_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
                 var cyclingrace = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.currentround == 1).FirstOrDefault();
                 var cyclingracedetail = _dbContext.Select<t_event_cycling_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();

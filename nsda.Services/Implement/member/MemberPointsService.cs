@@ -33,18 +33,18 @@ namespace nsda.Services.Implement.member
         {
             MemberPointsModelResponse response = new MemberPointsModelResponse {
                 MemberId=memberId,
-                Points=0,
-                EventPoints=0,
-                ServicePoints=0
+                CoachPoints = 0,
+                PlayerPoints=0,
+                RefereePoints=0
             };
             try
             {
                 var detail = _dbContext.Get<t_member_points>(memberId);
                 if (detail != null)
                 {
-                    response.Points = detail.points;
-                    response.EventPoints = detail.eventPoints;
-                    response.ServicePoints = detail.servicePoints;
+                    response.RefereePoints = detail.refereePoints;
+                    response.PlayerPoints = detail.playerPoints;
+                    response.CoachPoints = detail.coachPoints;
                 }
             }
             catch (Exception ex)
