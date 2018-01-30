@@ -35,7 +35,11 @@ namespace nsda.Models
     
         public int cyclingMatchId { get; set; }
     
-        public int memberId { get; set; }
+        public int playerId { get; set; }
+    
+        public int refereeId { get; set; }
+    
+        public string groupNum { get; set; }
     
         public int ranking { get; set; }
     

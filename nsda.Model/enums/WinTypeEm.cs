@@ -8,7 +8,7 @@ namespace nsda.Model.enums
 {
     public enum WinTypeEm
     {
-        正常=0,
+        正常 =0,
         双赢=1,
         双输=2,
         反方弃权=3,

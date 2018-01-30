@@ -10,6 +10,7 @@ using nsda.Model.enums;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.admin;
 using nsda.Model;
+using System.Text;
 
 namespace nsda.Services.member
 {
@@ -204,10 +205,31 @@ namespace nsda.Services.member
                         }
                         if (item.PlayerCoachStatus == PlayerCoachStatusEm.同意)
                         {
+                            var playerId = item.Flag ? item.ToMemberId : item.MemberId;
                             //参与比赛次数
-                            item.Times = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                            item.Times = _dbContext.ExecuteScalar($"select count(distinct(eventGroupId)) from t_event_cycling_match_playerresult where playerId={playerId}").ToObjInt();
                             //指教期间获胜次数
-                            item.WinTimes = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                            StringBuilder sb = new StringBuilder();
+                            if (item.EndDate.IsEmpty())
+                            {
+                                sb.Append($" and c.starteventdate>={item.StartDate} ");
+                            }
+                            else
+                            {
+                                sb.Append($" and c.starteventdate>={item.StartDate} and c.endeventdate<={item.EndDate}");
+                            }
+                            item.WinTimes = _dbContext.ExecuteScalar($@"select 
+                            (select count(a.id) Count from t_event_cycling_match_playerresult a
+                            inner join  t_event_cycling_match_teamresult b
+                            on a.eventId = b.eventId and a.eventGroupId = b.eventGroupId and a.cyclingMatchId = b.cyclingMatchId
+                            and a.groupNum = b.groupNum
+                            inner join t_event c on a.eventId=c.id
+                            where a.playerId = {playerId} and b.isWin = 1 {sb.ToString()})
+                            +
+                            (select count(a.id) Count from t_event_knockout_match_teamresult  a
+                            left join t_event_player_signup b on a.groupNum=b.groupNum and a.eventGroupId=b.eventGroupId and a.eventId=a.eventId
+                            inner join t_event c on a.eventId=c.id
+                            where b.memberId ={playerId} and a.isWin = 1 {sb.ToString()})  as Count").ToObjInt();
                         }
                     }
                 }
