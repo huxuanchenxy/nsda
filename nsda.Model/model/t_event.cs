@@ -39,6 +39,8 @@ namespace nsda.Models
         /// </summary>
         public string name { get; set; }
     
+        public string englishname { get; set; }
+    
         public EventTypeEm eventType { get; set; }
     
         public EventTypeNameEm eventTypeName { get; set; }

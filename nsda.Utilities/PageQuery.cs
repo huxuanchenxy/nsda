@@ -21,7 +21,7 @@ namespace nsda.Utilities
         /// <summary>
         /// 每页行数
         /// </summary>
-        public int PageSize { get; set; } = 20;
+        public int PageSize { get; set; } = 10;
 
         /// <summary>
         /// 总页数

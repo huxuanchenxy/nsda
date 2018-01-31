@@ -432,7 +432,7 @@ namespace nsda.Services.Implement.member
                     _dbContext.BeginTransaction();
                     t_member_points points = _dbContext.Select<t_member_points>(c => c.memberId == data.memberId).FirstOrDefault();
                     _dbContext.Execute($"update t_member_points set playerPoints=playerPoints+{points.playerPoints},coachPoints=coachPoints+{points.coachPoints},refereePoints=refereePoints+{points.refereePoints} where memberId={request.MemberId}");
-                    _dbContext.Execute($"update t_member_temp set tomemberId={request.MemberId},updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={data.id}");
+                    _dbContext.Execute($"update t_member_temp set tomemberId={request.MemberId},updateTime='{DateTime.Now}',tempStatus={TempStatusEm.已绑定}  where id={data.id}");
                     _dbContext.Execute($"update t_member_points_record set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_event_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
                     _dbContext.Execute($"update t_event_cycling_match_referee set memberId={request.MemberId}  memberId={data.memberId} and isdelete=0");
@@ -528,7 +528,7 @@ namespace nsda.Services.Implement.member
                             dbcontext.BeginTransaction();
                             t_member_points points = dbcontext.Select<t_member_points>(c => c.memberId == temp.memberId).FirstOrDefault();
                             dbcontext.Execute($"update t_member_points set playerPoints=playerPoints+{points.playerPoints},coachPoints=coachPoints+{points.coachPoints},refereePoints=refereePoints+{points.refereePoints} where memberId={temp.tomemberId}");
-                            dbcontext.Execute($"update t_member_temp set updateTime={DateTime.Now},tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
+                            dbcontext.Execute($"update t_member_temp set updateTime='{DateTime.Now}',tempStatus={TempStatusEm.已绑定}  where id={temp.id}");
                             dbcontext.Execute($"update t_member_points_record set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                             dbcontext.Execute($"update t_event_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
                             //对垒表也要修改

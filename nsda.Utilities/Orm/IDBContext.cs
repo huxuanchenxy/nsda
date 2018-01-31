@@ -40,7 +40,6 @@ namespace nsda.Utilities.Orm
         /// <param name="entity"></param>
         /// <returns></returns>
         object Insert<TEntity>(TEntity entity) where TEntity : class;
-
         /// <summary>
         /// 修改 entity
         /// </summary>

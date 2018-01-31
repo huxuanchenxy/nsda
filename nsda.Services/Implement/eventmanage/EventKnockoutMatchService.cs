@@ -109,7 +109,7 @@ namespace nsda.Services.Implement.eventmanage
                 t_event_knockout_match tmatch = _dbContext.Get<t_event_knockout_match>(knockoutMatchId);
                 if (tmatch != null)
                 {
-                    _dbContext.Execute($"update t_event_knockout_match set congroupNum={tmatch.progroupNum},progroupNum={tmatch.congroupNum},updatetime={DateTime.Now} where id={knockoutMatchId}");
+                    _dbContext.Execute($"update t_event_knockout_match set congroupNum={tmatch.progroupNum},progroupNum={tmatch.congroupNum},updatetime='{DateTime.Now}' where id={knockoutMatchId}");
                     flag = true;
                 }
                 else

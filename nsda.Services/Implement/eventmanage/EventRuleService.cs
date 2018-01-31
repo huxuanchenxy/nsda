@@ -39,25 +39,25 @@ namespace nsda.Services.Implement.eventmanage
                 _dbContext.BeginTransaction();
                 foreach (var item in request.Teamscoringrule)
                 {
-                    var sql = $"update t_event_teamscoringrule set teamScoringRules={item.TeamScoringRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_teamscoringrule set teamScoringRules={item.TeamScoringRules},updatetime='{DateTime.Now}' where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
 
                 foreach (var item in request.Scoringrule)
                 {
-                    var sql = $"update t_event_playerscoringrule set scoringRules={item.ScoringRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_playerscoringrule set scoringRules={item.ScoringRules},updatetime='{DateTime.Now}' where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
 
                 foreach (var item in request.Avoidrule)
                 {
-                    var sql = $"update t_event_cycling_avoidrule set avoidRules={item.AvoidRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_cycling_avoidrule set avoidRules={item.AvoidRules},updatetime='{DateTime.Now}' where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
 
                 foreach (var item in request.RefereeAvoidrule)
                 {
-                    var sql = $"update t_event_refereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_refereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime='{DateTime.Now}' where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
                 _dbContext.CommitChanges();
@@ -82,7 +82,7 @@ namespace nsda.Services.Implement.eventmanage
                 _dbContext.BeginTransaction();
                 foreach (var item in request.RefereeAvoidrule)
                 {
-                    var sql = $"update t_event_refereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime={DateTime.Now} where id={item.Id}";
+                    var sql = $"update t_event_refereeavoidrule set refereeAvoidRules={item.RefereeAvoidRules},updatetime='{DateTime.Now}' where id={item.Id}";
                     _dbContext.Execute(sql);
                 }
                 _dbContext.CommitChanges();

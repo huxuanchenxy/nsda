@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using nsda.Services.member;
 using Autofac;
+using nsda.Services.Contract.member;
 
 namespace nsda.unittest
 {
@@ -11,7 +12,8 @@ namespace nsda.unittest
     [TestClass]
     public class PlayerSignUpServiceTest:BaseTest
     {
-        private IMemberService service = AutofacContainer.Resolve<IMemberService>();
+        private IPlayerSignUpService service = AutofacContainer.Resolve<IPlayerSignUpService>();
+
         [TestMethod]
         public void TestMethod1()
         {

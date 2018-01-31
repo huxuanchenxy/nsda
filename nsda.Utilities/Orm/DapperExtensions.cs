@@ -1404,6 +1404,10 @@ namespace Dapper
             var sql = BuildInsertQuery(connection, typeof(TEntity));
             return connection.ExecuteScalar(sql, entity, transaction);
         }
+        public static object InsertOther<TEntity>(this IDbConnection connection, TEntity entity, IDbTransaction transaction = null) where TEntity : class
+        {
+            return connection.Insert(entity, transaction);
+        }
 
         /// <summary>
         /// Inserts the specified entity into the database and returns the id.

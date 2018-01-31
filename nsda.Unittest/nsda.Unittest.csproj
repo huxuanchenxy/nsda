@@ -64,7 +64,12 @@
     <Compile Include="MemberServiceTest.cs" />
     <Compile Include="PlayerSignUpServiceTest.cs" />
     <Compile Include="BaseDataServiceTest.cs" />
-    <Compile Include="RefereeServiceTest.cs" />
+    <Compile Include="PayCallBackServiceTest.cs" />
+    <Compile Include="MemberPointsServiceTest.cs" />
+    <Compile Include="EventServiceTest.cs" />
+    <Compile Include="PlayerCoachServiceTest.cs" />
+    <Compile Include="RefereeSignUpServiceTest.cs" />
+    <Compile Include="MemberTempServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

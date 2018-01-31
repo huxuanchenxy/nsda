@@ -295,7 +295,7 @@ namespace nsda.Services.Implement.member
                         {
                             signStatus = SignUpStatusEm.组队失败;
                         }
-                        var sql = $"update t_event_player_signup set signUpStatus={signStatus},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                        var sql = $"update t_event_player_signup set signUpStatus={signStatus},updatetime='{DateTime.Now}' where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
                         _dbContext.Execute(sql);
                         flag = true;
                     }
@@ -412,7 +412,7 @@ namespace nsda.Services.Implement.member
                         #region 辩论
                         if (playsignup.signUpStatus == SignUpStatusEm.报名邀请中)//对方还未同意邀请
                         {
-                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime='{DateTime.Now}' where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
                             _dbContext.Execute(sql);
                             flag = true;
                         }
@@ -421,7 +421,7 @@ namespace nsda.Services.Implement.member
                             var otherplaysignup = _dbContext.Select<t_event_player_signup>(c => c.groupnum == playsignup.groupnum && c.eventId == playsignup.eventId && c.memberId != memberId).FirstOrDefault();
                             if (otherplaysignup.signUpStatus == SignUpStatusEm.待付款)
                             {
-                                var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                                var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime='{DateTime.Now}' where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
                                 _dbContext.Execute(sql);
                                 flag = true;
                             }
@@ -430,7 +430,7 @@ namespace nsda.Services.Implement.member
                                 try
                                 {
                                     _dbContext.BeginTransaction();
-                                    var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                                    var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime='{DateTime.Now}' where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
                                     t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == otherplaysignup.id && c.memberId == otherplaysignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                     _dbContext.Insert(new t_order_operation
                                     {
@@ -464,7 +464,7 @@ namespace nsda.Services.Implement.member
                             try
                             {
                                 _dbContext.BeginTransaction();
-                                var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime={DateTime.Now} where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
+                                var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.组队失败},updatetime='{DateTime.Now}' where groupnum={playsignup.groupnum} and eventId={playsignup.eventId}";
                                 t_order t_order = _dbContext.Select<t_order>(c => c.sourceId == id && c.memberId == playsignup.memberId && c.orderType == OrderTypeEm.赛事报名 && c.orderStatus == OrderStatusEm.支付成功).FirstOrDefault();
                                 _dbContext.Insert(new t_order_operation
                                 {
@@ -590,12 +590,12 @@ namespace nsda.Services.Implement.member
                                 _dbContext.Update(t_orderother);
                                 #endregion
                             }
-                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.已退赛},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.已退赛},updatetime='{DateTime.Now}' where groupnum={signup.groupnum} and eventId={signup.eventId}";
                             _dbContext.Execute(sql);
                         }
                         else
                         {
-                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime='{DateTime.Now}' where groupnum={signup.groupnum} and eventId={signup.eventId}";
                             _dbContext.Execute(sql);
                         }
                         _dbContext.CommitChanges();
@@ -642,7 +642,7 @@ namespace nsda.Services.Implement.member
                         }
                         else if (other_signup.signUpStatus == SignUpStatusEm.已付款)
                         {
-                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime={DateTime.Now} where groupnum={signup.groupnum} and eventId={signup.eventId}";
+                            var sql = $"update t_event_player_signup set signUpStatus={SignUpStatusEm.报名成功},updatetime='{DateTime.Now}' where groupnum={signup.groupnum} and eventId={signup.eventId}";
                             dbcontext.Execute(sql);
                         }
                     }

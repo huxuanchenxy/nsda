@@ -289,24 +289,24 @@ namespace nsda.Services.member
             {
                 var sql = $@"select * from 
 								(
-								select a.Id,a.toMemberId,a.startdate,
+								select a.Id,a.toMemberId MemberId,a.startdate,
 										b.completepinyin CoachName
 										from t_player_coach a 
 										inner join t_member_coach  b on a.toMemberId=b.memberId
-										where a.isdelete=0 and a.isCoach=0 and a.isPositive=1 and a.memberId=1 and a.playerCoachStatus={PlayerCoachStatusEm.同意}
+										where a.isdelete=0 and a.isCoach=0 and a.isPositive=1 and a.memberId={memberId} and a.playerCoachStatus={(int)PlayerCoachStatusEm.同意}
 								union all
-								select a.memberId,a.startdate,
+								select  a.Id,a.memberId MemberId,a.startdate,
 										b.completepinyin CoachName
 										from t_player_coach a 
 										inner join t_member_coach  b on a.memberId=b.memberId
-										where a.isdelete=0 and a.isCoach=1 and a.isPositive=0 and a.toMemberId=1 and a.playerCoachStatus={PlayerCoachStatusEm.同意}
+										where a.isdelete=0 and a.isCoach=1 and a.isPositive=0 and a.toMemberId={memberId} and a.playerCoachStatus={(int)PlayerCoachStatusEm.同意}
 								) a order by a.startdate desc limit 1";
                 var data = _dbContext.QueryFirstOrDefault<dynamic>(sql);
                 if (data != null)
                 {
                     response = new CurrentCoachResponse {
-                        Id = data.id,
-                        CoachId = data.toMemberId,
+                        Id = data.Id,
+                        CoachId = data.MemberId,
                         CoachName=data.CoachName
                     };
                 }

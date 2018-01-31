@@ -81,7 +81,7 @@ namespace nsda.Services.member
                 }
                 else
                 {
-                    _dbContext.Update($"update t_member set lastlogintime={DateTime.Now} where id={data.id}");
+                    _dbContext.Execute($"update t_member set lastlogintime='{DateTime.Now}' where id={data.id}");
                     //记录缓存
                     userContext = new WebUserContext
                     {
@@ -89,9 +89,9 @@ namespace nsda.Services.member
                         Name = data.Name,
                         Account = data.account,
                         Code = data.code,
-                        IsExtendCoach = data.isExtendCoach,
-                        IsExtendReferee = data.isExtendReferee,
-                        IsExtendPlayer = data.isExtendPlayer,
+                        IsExtendCoach = data.isExtendCoach==1,
+                        IsExtendReferee = data.isExtendReferee == 1,
+                        IsExtendPlayer = data.isExtendPlayer == 1,
                         MemberType = (int)data.memberType,
                         CoachPoints = request.MemberType != MemberTypeEm.赛事管理员 ? data.coachPoints : 0,
                         RefereePoints = request.MemberType != MemberTypeEm.赛事管理员 ? data.refereePoints : 0,
@@ -600,6 +600,11 @@ namespace nsda.Services.member
                     msg = "教育经历开始时间不能为空";
                     return flag;
                 }
+                if (_dataRepository.MemberRepo.IsExist(request.Account))
+                {
+                    msg = "邮箱已存在";
+                    return flag;
+                }
                 t_member member = new t_member
                 {
                     account = request.Account,
@@ -743,6 +748,11 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
+                if (_dataRepository.MemberRepo.IsExist(request.Account))
+                {
+                    msg = "邮箱已存在";
+                    return flag;
+                }
                 t_member member = new t_member
                 {
                     account = request.Account,
@@ -876,6 +886,11 @@ namespace nsda.Services.member
                 if (request.ContactAddress.IsEmpty())
                 {
                     msg = "联系地址不能为空";
+                    return flag;
+                }
+                if (_dataRepository.MemberRepo.IsExist(request.Account))
+                {
+                    msg = "邮箱已存在";
                     return flag;
                 }
                 t_member member = new t_member
@@ -1024,6 +1039,11 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
+                if (_dataRepository.MemberRepo.IsExist(request.Account))
+                {
+                    msg = "邮箱已存在";
+                    return flag;
+                }
                 t_member member = new t_member
                 {
                     account = request.Account,
@@ -1137,7 +1157,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_player>(userContext.Id);
+                var detail = _dbContext.Select<t_member_player>(c => c.memberId == userContext.Id).FirstOrDefault();
                 if (detail != null)
                 {
                     detail.card = request.Card;
@@ -1210,7 +1230,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_coach>(userContext.Id);
+                var detail = _dbContext.Select<t_member_coach>(c=>c.memberId== userContext.Id).FirstOrDefault();
                 if (detail != null)
                 {
                     detail.completepinyin = $"{request.PinYinName}{request.PinYinSurName}";
@@ -1282,7 +1302,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_referee>(userContext.Id);
+                var detail = _dbContext.Select<t_member_referee>(c => c.memberId == userContext.Id).FirstOrDefault();
                 if (detail != null)
                 {
                     detail.completename = request.CompleteName;
@@ -1355,7 +1375,7 @@ namespace nsda.Services.member
                     msg = "联系地址不能为空";
                     return flag;
                 }
-                var detail = _dbContext.Get<t_member_event>(userContext.Id);
+                var detail = _dbContext.Select<t_member_event>(c => c.memberId == userContext.Id).FirstOrDefault();
                 if (detail != null)
                 {
                     detail.card = request.Card;
@@ -1448,6 +1468,12 @@ namespace nsda.Services.member
                 var detail = _dbContext.Get<t_member>(userContext.Id);
                 if (detail != null)
                 {
+                    if (detail.memberType == MemberTypeEm.选手)
+                    {
+                        msg = "您已有选手权限，请刷新页面后重试";
+                        return flag;
+                    }
+
                     if (detail.isExtendPlayer)
                     {
                         msg = "已申请开通选手权限，请刷新页面后重试";
@@ -1553,6 +1579,12 @@ namespace nsda.Services.member
                 var detail = _dbContext.Get<t_member>(userContext.Id);
                 if (detail != null)
                 {
+                    if (detail.memberType == MemberTypeEm.教练)
+                    {
+                        msg = "您已有教练权限，请刷新页面后重试";
+                        return flag;
+                    }
+
                     if (detail.isExtendCoach)
                     {
                         msg = "已申请开通教练权限，请刷新页面后重试";
@@ -1648,7 +1680,13 @@ namespace nsda.Services.member
                 var detail = _dbContext.Get<t_member>(userContext.Id);
                 if (detail != null)
                 {
-                    if (detail.isExtendPlayer)
+                    if (detail.memberType == MemberTypeEm.裁判)
+                    {
+                        msg = "您已有裁判权限，请刷新页面后重试";
+                        return flag;
+                    }
+
+                    if (detail.isExtendReferee)
                     {
                         msg = "已申请开通裁判权限，请刷新页面后重试";
                         return flag;
@@ -1709,7 +1747,7 @@ namespace nsda.Services.member
             MemberPlayerResponse detail = null;
             try
             {
-                var response = _dbContext.Get<t_member_player>(id);
+                var response = _dbContext.Select<t_member_player>(c => c.memberId == id).FirstOrDefault();
                 if (response != null)
                 {
                     detail = new MemberPlayerResponse
@@ -1745,7 +1783,7 @@ namespace nsda.Services.member
             MemberCoachResponse detail = null;
             try
             {
-                var response = _dbContext.Get<t_member_coach>(id);
+                var response = _dbContext.Select<t_member_coach>(c => c.memberId == id).FirstOrDefault();
                 if (response != null)
                 {
                     detail = new MemberCoachResponse
@@ -1774,7 +1812,7 @@ namespace nsda.Services.member
             MemberRefereeResponse detail = null;
             try
             {
-                var response = _dbContext.Get<t_member_referee>(id);
+                var response = _dbContext.Select<t_member_referee>(c => c.memberId == id).FirstOrDefault();
                 if (response != null)
                 {
                     detail = new MemberRefereeResponse
@@ -1804,7 +1842,7 @@ namespace nsda.Services.member
             MemberEventResponse detail = null;
             try
             {
-                var response = _dbContext.Get<t_member_event>(id);
+                var response = _dbContext.Select<t_member_event>(c => c.memberId == id).FirstOrDefault();
                 if (response != null)
                 {
                     detail = new MemberEventResponse

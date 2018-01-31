@@ -28,7 +28,7 @@ namespace nsda.Repository.Implement.member
             {
                 var dy = new DynamicParameters();
                 string sql = $@"select  code from t_member where code like '{code}%' order by Id desc limit 1";
-                object obj = _dbContext.Query<object>(sql).FirstOrDefault();
+                object obj = _dbContext.ExecuteScalar(sql);
 
                 if (obj == null || obj.ToString().IsEmpty())
                 {

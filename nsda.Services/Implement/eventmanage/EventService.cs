@@ -112,6 +112,7 @@ namespace nsda.Services.Implement.eventmanage
                     #region 赛事
                     int eventId = _dbContext.Insert(new t_event
                     {
+                        englishname=request.EnglishName,
                         address = request.Address,
                         cityId = request.CityId,
                         code = _dataRepository.EventRepo.RenderCode(),

@@ -26,6 +26,10 @@ namespace nsda.Model.dto.request
         /// 赛事名称
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// 赛事英文名称
+        /// </summary>
+        public string EnglishName { get; set; }
 
         /// <summary>
         /// 赛事开始时间
