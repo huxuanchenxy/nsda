@@ -1,0 +1,210 @@
+﻿.event-select{
+    width:100%;
+    padding-top:90px;
+    background:#F5F8FA;
+    position:relative;
+    z-index:1;
+    margin-bottom:180px;
+}
+.event-select .tri{
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid white;
+    border-left: 15px solid transparent;
+    position:absolute;
+    z-index:9;
+    top:-40px;
+    left:420px;
+}
+.event-select .form-group label{
+    width:100%;
+    font-size:14px;
+    color:#333;
+    letter-spacing:1px;
+    font-weight:800;
+}
+.event-select .form-group{
+    margin-bottom:30px;
+}
+.event-select .form-group:first-child input{
+    width:100%;
+    height:46px;
+    font-size:14px;
+    color:#cccccc;
+    background:transparent;
+    border:1px solid #cccccc;
+    padding:0 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    margin-bottom:10px;
+}
+.event-select .form-group:nth-child(2) input,.event-select .form-group:nth-child(3) input,.event-select .form-group:nth-child(6) input,.event-select .form-group:nth-child(7) input{
+    width:20%;
+    height:46px;
+    font-size:14px;
+    color:#cccccc;
+    background:#fff;
+    border:1px solid #cccccc;
+    padding:0 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    font-weight:400;
+}
+.event-select .form-group:nth-child(4) select,.event-select .form-group:nth-child(4) input{
+    font-size:14px;
+    color:#787373;
+    background:transparent;
+    border:1px solid #cccccc;
+    padding:0 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    float:left;
+    margin-right:15px;
+}
+.event-select .form-group:nth-child(4) select{
+    width:13%;
+    height:46px;
+}
+.event-select .form-group:nth-child(4) input{
+    width:70%;
+    height:46px;
+}
+.event-select .form-group:nth-child(4){
+    height:80px;
+}
+.event-select .form-group:nth-child(5) textarea{
+    width:100%;
+    height:300px;
+    font-size:14px;
+    color:#787373;
+    background:transparent;
+    border:1px solid #cccccc;
+    padding:0 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    resize:none;
+}
+.event-select .form-group:nth-child(6) input{
+    font-size:18px;
+    font-weight:400;
+}
+.event-select .form-group:nth-child(8) input{
+    width:10%;
+    height:36px;
+    font-size:14px;
+    color:#787373;
+    background:transparent;
+    border:1px solid #cccccc;
+    padding:0 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    margin-right:15px;
+}
+.event-select .teambg{
+    width:100%;
+    height:460px;
+    background:#28353C;
+    position:relative;
+}
+.event-select .teambg h3{
+    font-size:18px;
+    color:#fff;
+    line-height:60px;
+}
+.event-select .teambg .tbg{
+    width:100%;
+    height:340px;
+    background:#162329;
+    position:absolute;
+    top:60px;
+    padding:6px 0;
+}
+.event-select .tbg .teamlist{
+    width:30%;
+    border:1px solid #28353C;
+    float:left;
+    margin-right:60px;
+    padding:10px;
+}
+.event-select .tbg .teamlist .form-group label{
+    color:#ccc;
+}
+.event-select .tbg .teamlist .form-group input,.event-select .tbg .teamlist .form-group div select{
+    color:#ccc;
+}
+.event-select .tbg .teamlist .form-group:nth-child(2){
+    height:80px;
+}
+.event-select .tbg .teamlist .form-group:nth-child(2) p{
+    float:left;
+    margin-left:10px;
+    margin-right:10px;
+    line-height:30px;
+    color:#ccc;
+}
+.event-select .tbg .teamlist .form-group:nth-child(2) select{
+    width:30%;
+    height:30px;
+    float:left;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding:0 5px;
+    background:#162329;
+    border:1px solid #B4BDC2;
+}
+.event-select .tbg .teamlist .form-group:last-child p{
+    float:left;
+    margin-left:10px;
+    margin-right:10px;
+    line-height:30px;
+    color:#ccc;
+}
+.event-select .tbg .teamlist .form-group:last-child {
+    margin-bottom: 80px;
+}
+.event-select .tbg .teamlist .form-group:last-child input{
+    width:35%;
+    height:30px;
+    float:left;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding:0 5px;
+    background:#162329;
+    border:1px solid #B4BDC2;
+}
+.event-select button{
+    width:270px;
+    height:55px;
+    border:none;
+    background:#4E5D66;
+    color:white;
+    font-size:18px;
+    line-height:55px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    margin-top:50px;
+    position:absolute;
+    left:50%;
+    transform:translate(-50%);
+}
+
+
+
+
+
+
+
+
+
+
+

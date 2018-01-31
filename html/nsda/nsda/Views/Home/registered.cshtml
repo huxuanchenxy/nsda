@@ -32,7 +32,7 @@
                 <p>登录密码 Password <a href="#">忘记密码 Forgot?</a></p>
                 <img src="~/Content/asset/img/password.svg" alt="Alternate Text" />
                 <input type="password" name="name" value="" />
-                <a id="test1" href="/Home/PlayerMembercenter" class="button">登录 Sign In</a>
+                <a id="test1" href="/Home/playermembercenter" class="button">登录 Sign In</a>
                 <p>Not a member?  <a href="/Home/Regform" class="reg-a">即刻注册会员 Sign up now</a></p>
             </form>
         </div>
@@ -45,60 +45,10 @@
                 <p>登录密码 Password <a href="#">忘记密码 Forgot?</a></p>
                 <img src="~/Content/asset/img/password.svg" alt="Alternate Text" />
                 <input type="password" name="name" value="" />
-                <a href="/Home/CoachInformation" class="button">登录 Sign In</a>
+                <a href="/Home/coachinformation" class="button">登录 Sign In</a>
                 <p>Not a coach member?  <a href="#" class="reg-a">Sign up now</a></p>
             </form>
             
         </div>
     </div>
 </div>
-
-<div class="reg-con-small reg-content-small container-fluid">
-    <div class="reg-top">
-        <div class="container">
-            <h3>NSDA会员登录</h3>
-            <p>注册邮箱 Email</p>
-            <form action="/" method="post">
-                <img src="~/Content/asset/img/member.svg" alt="Alternate Text" />
-                <input type="text" name="name" value="" />
-                <p>登录密码 Password <a href="#">忘记密码 Forgot?</a></p>
-                <img src="~/Content/asset/img/password.svg" alt="Alternate Text" />
-                <input type="password" name="name" value="" />
-                <a href="/Home/PlayerMembercenter" class="button">登录 Sign In</a>
-                <p>Not a member?  <a href="/Home/Regform" class="reg-a">即刻注册会员 Sign up now</a></p>
-            </form>
-            
-        </div>
-        
-    </div>
-    <div class="reg-bottom">
-        <div class="container">
-            <h3>NSDA Coach Login</h3>
-            <p>注册邮箱 Email</p>
-            <form action="/" method="post">
-                <img src="~/Content/asset/img/member.svg" alt="Alternate Text" />
-                <input type="text" name="name" value="" />
-                <p>登录密码 Password <a href="#">忘记密码 Forgot?</a></p>
-                <img src="~/Content/asset/img/password.svg" alt="Alternate Text" />
-                <input type="password" name="name" value="" />
-                <a href="/Home/CoachInformation" class="button">登录 Sign In</a>
-                <p>Not a coach member?  <a href="#" class="reg-a">Sign up now</a></p>
-            </form>
-            
-        </div>
-    </div>
-    <div class="circle-left"></div>
-    <div class="circle-right"></div>
-    <div class="medium-small"></div>
-    <div class="triangle-left"></div>
-    <div class="triangle-right"></div>
-</div>
-<script>
-    $('#test1').on('click', function () {
-        var ii = layer.load();
-        //此处用setTimeout演示ajax的回调
-        setTimeout(function () {
-            layer.close(ii);
-        }, 1000);
-    });
-</script>

@@ -215,10 +215,15 @@
     <Content Include="Content\asset\css\bootstrap.css" />
     <Content Include="Content\asset\css\bootstrap.min.css" />
     <Content Include="Content\asset\css\coach.css" />
+    <Content Include="Content\asset\css\Coachboundplayer.css" />
     <Content Include="Content\asset\css\Coachinformation.css" />
+    <Content Include="Content\asset\css\event.css" />
+    <Content Include="Content\asset\css\Eventmanage.css" />
+    <Content Include="Content\asset\css\eventstart.css" />
+    <Content Include="Content\asset\css\eventstartlists.css" />
+    <Content Include="Content\asset\css\iconfont.css" />
     <Content Include="Content\asset\css\Playerboundcoach.css" />
     <Content Include="Content\asset\css\Playercenter.css" />
-    <Content Include="Content\asset\css\iconfont.css" />
     <Content Include="Content\asset\css\index.css" />
     <Content Include="Content\asset\css\Playerintegral.css" />
     <Content Include="Content\asset\css\Playersource.css" />
@@ -229,6 +234,7 @@
     <Content Include="Content\asset\css\registered.css" />
     <Content Include="Content\asset\css\Playersign.css" />
     <Content Include="Content\asset\css\Site.css" />
+    <Content Include="Content\asset\img\add_03.png" />
     <Content Include="Content\asset\img\Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg" />
     <Content Include="Content\asset\img\bg1.png" />
     <Content Include="Content\asset\img\bg2 .png" />
@@ -306,19 +312,24 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Registered.cshtml" />
-    <Content Include="Views\Home\Regform.cshtml" />
-    <Content Include="Views\Home\PlayerHadCompe.cshtml" />
-    <Content Include="Views\Home\PlayerExitCompe.cshtml" />
-    <Content Include="Views\Home\PlayerScore.cshtml" />
-    <Content Include="Views\Home\PlayerInformation.cshtml" />
-    <Content Include="Views\Home\PlayerBoundCoach.cshtml" />
-    <Content Include="Views\Home\PlayerSource.cshtml" />
-    <Content Include="Views\Home\_CoachTop.cshtml" />
-    <Content Include="Views\Home\_CoachLeft.cshtml" />
-    <Content Include="Views\Home\CoachInformation.cshtml" />
+    <Content Include="Views\Home\about.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
+    <Content Include="Views\Home\registered.cshtml" />
+    <Content Include="Views\Home\regform.cshtml" />
+    <Content Include="Views\Home\playerhadcompe.cshtml" />
+    <Content Include="Views\Home\playerexitcompe.cshtml" />
+    <Content Include="Views\Home\playerscore.cshtml" />
+    <Content Include="Views\Home\playerinformation.cshtml" />
+    <Content Include="Views\Home\playerboundcoach.cshtml" />
+    <Content Include="Views\Home\playersource.cshtml" />
+    <Content Include="Views\Home\_coachtop.cshtml" />
+    <Content Include="Views\Home\_coachleft.cshtml" />
+    <Content Include="Views\Home\coachinformation.cshtml" />
+    <Content Include="Views\Home\coachboundplayer.cshtml" />
+    <Content Include="Views\Home\eventmanage.cshtml" />
+    <Content Include="Views\Shared\_EventManage.cshtml" />
+    <Content Include="Views\Home\eventstart.cshtml" />
+    <Content Include="Views\Home\eventstartlists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -332,13 +343,13 @@
     <Content Include="Content\asset\js\laydate\theme\default\font\iconfont.ttf" />
     <Content Include="Content\asset\js\laydate\theme\default\font\iconfont.woff" />
     <None Include="Project_Readme.html" />
-    <Content Include="Views\Home\Aboutp.cshtml" />
-    <Content Include="Views\Home\Aboutus.cshtml" />
-    <Content Include="Views\Home\_PlayerTop.cshtml" />
-    <Content Include="Views\Home\PlayerMemberCenter.cshtml" />
-    <Content Include="Views\Home\_PlayerLeft.cshtml" />
-    <Content Include="Views\Home\PlayerMessageBox.cshtml" />
-    <Content Include="Views\Home\PlayerCompeSign.cshtml" />
+    <Content Include="Views\Home\aboutp.cshtml" />
+    <Content Include="Views\Home\aboutus.cshtml" />
+    <Content Include="Views\Home\_playertop.cshtml" />
+    <Content Include="Views\Home\playermembercenter.cshtml" />
+    <Content Include="Views\Home\_playerleft.cshtml" />
+    <Content Include="Views\Home\playermessagebox.cshtml" />
+    <Content Include="Views\Home\playercompesign.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

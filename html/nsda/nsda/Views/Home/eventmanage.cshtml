@@ -1,0 +1,89 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "比赛进程管理";
+}
+<link href="@Url.Content("~/Content/asset/css/Eventmanage.css?1.1.0")" rel="stylesheet" type="text/css" />
+
+<div class="container event-lists">
+    <div class="tri"></div>
+    <h4>您发起的赛事列表</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>赛事编码</th>
+                <th>赛事名称</th>
+                <th>赛事类别</th>
+                <th>报名队伍数</th>
+                <th>报名截止时间</th>
+                <th>赛程状态</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>0</i>/108</td>
+                <td>2018-02-15</td>
+                <td>审核中...</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>50</i>/108</td>
+                <td>2018-02-15</td>
+                <td>报名中</td>
+                <td><a href="#" class="entercompe">进入比赛</a></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>140</i>/108</td>
+                <td>2018-02-15</td>
+                <td>比赛中</td>
+                <td><a href="#" class="entercompe">进入比赛</a></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>115</i>/108</td>
+                <td>2018-02-15</td>
+                <td>比赛完结</td>
+                <td><a href="#" class="checkresult">查看赛果</a></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>104</i>/108</td>
+                <td>2018-02-15</td>
+                <td>比赛完结</td>
+                <td><a href="#" class="checkresult">查看赛果</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

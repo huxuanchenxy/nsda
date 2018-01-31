@@ -1,0 +1,231 @@
+﻿.score-top{
+    padding-right: 35px;
+}
+.score-con{
+    width:73%;
+    float:left;
+    margin-top:50px;
+    margin-left:10px;
+    position:relative;
+}
+.score-top{
+    width:100%;
+    height:46px;
+    padding-left:10px;
+}
+.score-top .integral{
+    display:inline;
+    width:40px;
+    height:40px;
+    float:left;
+    margin-right:4px;
+}
+.score-top .scorecheck{
+    font-size:24px;
+    color:#666;
+    float:left;
+    line-height:56px;
+    vertical-align:baseline;
+        
+}
+.addbound {
+    display: inline-block;
+    padding: 5px 15px;
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    background: #1ABC9C;
+    float: right;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    margin-top: 10px;
+    border: none;
+}
+
+.boundtable tbody td button {
+    width: 90px;
+    height: 30px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border: none;
+
+}
+
+.boundtable tbody td .editcoach {
+    background: #1985E8;
+    margin-right: 20px;
+    color: white;
+}
+
+.boundtable tbody td .delcoach {
+    background: #DDDDDD;
+}
+
+.boundtable tbody td .confirmbound {
+    background: #DF812F;
+    color: white;
+    margin-right: 20px;
+}
+
+.boundtable tbody td .notpass {
+    background: #E67368;
+    color: white;
+}
+
+.addcoach {
+    position: absolute;
+    top: 4%;
+    width: 760px;
+    height: 430px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    box-shadow: 2px 1px 1px 1px #808080;
+    background: #ECF0F1;
+    display: none;
+}
+
+.addcoach .addtitle {
+    width: 100%;
+    height: 60px;
+    background: #34495E;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    color: #1ABC9C;
+    font-size: 20px;
+    line-height: 60px;
+    padding-left: 30px;
+    position: relative;
+}
+
+.addcoach .addtitle i {
+    float: right;
+    color: white;
+    font-size: 20px;
+    padding-right: 20px;
+}
+
+.addcoach .coachimg {
+    display: inline;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.addcoach .form-group {
+    margin-top: 120px;
+    padding: 0 80px;
+}
+
+.addcoach .form-group select {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    background: #526476;
+    color: white;
+    font-size: 16px;
+    padding-left: 6px;
+}
+
+.addcoach .form-group select.form-select-school {
+    width: 23%;
+    height: 36px;
+    margin-bottom: 25px;
+}
+
+.addcoach .form-group select.form-select-schools {
+    width: 33%;
+    height: 36px;
+}
+
+.addcoach .form-group input {
+    width: 40%;
+    height: 36px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    box-shadow: none;
+    border: 1px solid #1ABC9C;
+    position:relative;
+}
+.addcoach .form-group select#sel{
+    width:300px;
+    height:130px;
+    overflow:scroll;
+    margin:0;
+    border:1px solid black;
+    position:absolute;
+    bottom:20px;
+    left:29%;
+    z-index:10;
+}
+.addcoach .form-group .searchcoach {
+    display: inline;
+    padding: 8px 20px;
+    background: #34495E;
+    margin-left: 15px;
+    color: white;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    font-size: 16px;
+    border:none;
+}
+
+.addcoach .form-group .searchcoach i {
+    color: #1ABC9C;
+    font-size: 20px;
+}
+
+.addcoach .form-group .boundcoach {
+    padding: 12px 95px;
+    border-radius: 4px;
+    font-size: 18px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    background: #34495E;
+    border: none;
+    color: white;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    margin-top: 120px;
+}
+
+.boundtable table thead {
+    background: #ECECEC;
+    border: 1px solid #FBFBFB;
+}
+.boundtable table{
+    border-collapse: collapse;
+    width: 96%;
+    margin-bottom:50px;
+    margin-top:20px;
+}
+.info-con table thead{
+    background: #E3D2D2;
+}
+.boundtable thead th{
+    border-top: 1px solid #a7a7a7;
+    border-bottom: 1px solid #a7a7a7;
+    text-align: center;
+    color: #666666;
+    padding: 7px;
+}
+.boundtable tbody td{
+    border-bottom: 1px solid #a7a7a7;
+    text-align: center;
+    padding: 12px;
+    box-sizing: border-box;
+}
+.boundtable tbody td:not(:last-child) {
+    border-right: 1px solid #a7a7a7;
+}
+
+.info-lists .panel-group .panel:last-child .panel-heading .panel-title h3{
+    color:#1DB8FF;
+}

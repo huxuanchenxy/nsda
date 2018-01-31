@@ -19,12 +19,15 @@ a:hover {
 .navbar {
     margin-bottom: 0;
 }
-.navbar-default .navbar-nav>li>a{
-    color:black;
+
+.navbar-default .navbar-nav > li > a {
+    color: black;
 }
-.navbar-default .navbar-nav>li>a:hover{
-    color:#f25815;
-}
+
+    .navbar-default .navbar-nav > li > a:hover {
+        color: #f25815;
+    }
+
 @media (max-width: 320px) {
     nav.nav-top {
         display: none;
@@ -474,22 +477,23 @@ a:hover {
     .testi p {
         font-size: 28px;
     }
+
     .test-list .msg h4, .test-list .msg p {
         font-size: 14px;
         color: #666699;
         text-align: left;
         line-height: 1.6;
     }
+
     .course h2 {
         font-size: 36px;
-        line-height:1.6;
+        line-height: 1.6;
     }
 
     .course h3 {
         font-size: 12px;
         font-weight: normal;
         color: #ff7a4c;
-        
     }
 
     .course-list .cour .caption h3 {
@@ -499,28 +503,30 @@ a:hover {
     .course-time {
         padding-left: 0;
     }
-    .course-list .cour .caption p{
-        line-height:1.6;
-        color:#797979;
+
+    .course-list .cour .caption p {
+        line-height: 1.6;
+        color: #797979;
     }
-        .course-time .time-icon {
-            margin-right: 2px;
+
+    .course-time .time-icon {
+        margin-right: 2px;
+    }
+
+    .course-time .time-icon {
+        float: left;
+        line-height: 1.8;
+    }
+
+        .course-time .time-icon .iconfont {
+            font-size: 18px;
+            line-height: 24px;
         }
 
-        .course-time .time-icon {
-            float: left;
-            line-height: 1.8;
-        }
-
-            .course-time .time-icon .iconfont {
-                font-size: 18px;
-                line-height: 24px;
-            }
-
-        .course-time h5, .course-time h4 {
-            line-height: 2.2;
-            font-size: 12px;
-        }
+    .course-time h5, .course-time h4 {
+        line-height: 2.2;
+        font-size: 12px;
+    }
 
     .course-list {
         height: 405px;
@@ -742,12 +748,14 @@ a:hover {
     .testi p {
         font-size: 28px;
     }
+
     .test-list .msg h4, .test-list .msg p {
         font-size: 14px;
         color: #666699;
         text-align: left;
         line-height: 1.6;
     }
+
     .course h2 {
         font-size: 36px;
     }
@@ -1262,13 +1270,13 @@ a:hover {
         display: inline-block;
     }
 
-        .data-num i {
-            line-height: 340px;
-            font-size: 160px;
-            color: white;
-            float: left;
-            margin-right: 10px;
-        }
+    .data-num i {
+        line-height: 340px;
+        font-size: 160px;
+        color: white;
+        float: left;
+        margin-right: 10px;
+    }
 
     .data-num-right {
         padding: 65px 0;
@@ -1276,41 +1284,41 @@ a:hover {
         box-sizing: border-box;
     }
 
-        .data-num-right span {
-            display: inline-block;
-            width: 110px;
-            height: 8px;
-            background: white;
-        }
+    .data-num-right span {
+        display: inline-block;
+        width: 110px;
+        height: 8px;
+        background: white;
+    }
 
-        .data-num-right p {
-            font-size: 18px;
-            color: white;
-            line-height: 24px;
-        }
+    .data-num-right p {
+        font-size: 18px;
+        color: white;
+        line-height: 24px;
+    }
 
-        .data-num-right i {
-            float: left;
-            color: white;
-            font-size: 18px;
-        }
+    .data-num-right i {
+        float: left;
+        color: white;
+        font-size: 18px;
+    }
 
     .data-right {
         padding: 40px 0;
         box-sizing: border-box;
     }
 
-        .data-right .thumbnail h3, .data-right .thumbnail p {
-            font-size: 14px;
-            color: white;
-            text-align: left;
-            line-height: 22px;
-        }
+    .data-right .thumbnail h3, .data-right .thumbnail p {
+        font-size: 14px;
+        color: white;
+        text-align: left;
+        line-height: 22px;
+    }
 
-        .data-right .thumbnail .member {
-            color: white;
-            font-size: 18px;
-        }
+    .data-right .thumbnail .member {
+        color: white;
+        font-size: 18px;
+    }
 
     .btn-primary {
         margin-top: 15px;
@@ -1343,9 +1351,9 @@ a:hover {
         padding-left: 0;
     }
 
-        .course-time .time-icon {
-            margin-right: 5px;
-        }
+    .course-time .time-icon {
+        margin-right: 5px;
+    }
 
     .course-list {
         height: 470px;
@@ -1360,47 +1368,47 @@ a:hover {
         margin-bottom: 40px;
     }
 
-        .info .media-left {
-            float: right;
-        }
+    .info .media-left {
+        float: right;
+    }
 
-        .info .info-con {
-            width: 540px;
-            height: 100%;
-            margin-right: 20px;
-            float: right;
-        }
+    .info .info-con {
+        width: 540px;
+        height: 100%;
+        margin-right: 20px;
+        float: right;
+    }
 
-            .info .info-con h4 {
-                width: 470px;
-                font-size: 24px;
-                line-height: 1.6;
-                letter-spacing: 0.5px;
-            }
+    .info .info-con h4 {
+        width: 470px;
+        font-size: 24px;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+    }
 
-            .info .info-con .panel-heading {
-                height: 50px;
-            }
+    .info .info-con .panel-heading {
+        height: 50px;
+    }
 
-                .info .info-con .panel-heading p {
-                    float: left;
-                    font-size: 20px;
-                }
+    .info .info-con .panel-heading p {
+        float: left;
+        font-size: 20px;
+    }
 
-                .info .info-con .panel-heading .p-num {
-                    color: #FF7473;
-                }
+    .info .info-con .panel-heading .p-num {
+        color: #FF7473;
+    }
 
-                .info .info-con .panel-heading h4 a {
-                    float: right;
-                    font-size: 20px;
-                }
+    .info .info-con .panel-heading h4 a {
+        float: right;
+        font-size: 20px;
+    }
 
-            .info .info-con .panel-body {
-                font-size: 16px;
-                letter-spacing: 1px;
-                color: #797979;
-            }
+    .info .info-con .panel-body {
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: #797979;
+    }
 
     .sinfo {
         margin: 40px auto;
@@ -1427,6 +1435,7 @@ a:hover {
         width: 50px;
         height: 100px;
         line-height: 100px;
+        cursor:pointer;
     }
 
     .contact p {
@@ -1606,56 +1615,56 @@ input.form-control {
     position: relative;
 }
 
-    .twoLink ul.bg {
+.twoLink ul.bg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.twoLink ul.bg > li {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.twoLink ul.bg > li:first-child {
+    background: url(../img/bg1.png) no-repeat center /cover;
+}
+
+.twoLink ul.bg > li:last-child {
+    background: url("../img/bg2 .png") no-repeat center /cover;
+}
+
+.twoLink ul.bg > li img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.twoLink ul.fg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+    .twoLink ul.fg li {
         height: 100%;
         width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
         position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 0;
+        top: 60%;
+        z-index: 9;
+        margin: 0 auto;
+        color: whitesmoke;
     }
-
-        .twoLink ul.bg > li {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-        }
-
-            .twoLink ul.bg > li:first-child {
-                background: url(../img/bg1.png) no-repeat center /cover;
-            }
-
-            .twoLink ul.bg > li:last-child {
-                background: url("../img/bg2 .png") no-repeat center /cover;
-            }
-
-            .twoLink ul.bg > li img {
-                display: inline-block;
-                width: 100%;
-                height: 100%;
-            }
-
-    .twoLink ul.fg {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 1;
-    }
-
-        .twoLink ul.fg li {
-            height: 100%;
-            width: 100%;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            position: absolute;
-            top: 60%;
-            z-index: 9;
-            margin: 0 auto;
-            color: whitesmoke;
-        }
 
     .twoLink .link-dot {
         width: 90px;
@@ -1687,7 +1696,7 @@ input.form-control {
     color: #fff;
     top: 50%;
     background: rgba(0, 0, 0, 0.7);
-    z-index: 2;
+    z-index: 2;cursor:pointer;
 }
 
 .rightBtn {
@@ -1710,10 +1719,10 @@ input.form-control {
     padding-top: 20px;
 }
 
-    .content h2, .content h3, .content p {
-        font-weight: normal;
-        color: #10B5FF;
-    }
+.content h2, .content h3, .content p {
+    font-weight: normal;
+    color: #10B5FF;
+}
 
 .testi {
     width: 100%;
@@ -1725,9 +1734,9 @@ input.form-control {
     -webkit-box-sizing: border-box;
 }
 
-    .testi h3, .testi p {
-        color: white;
-    }
+.testi h3, .testi p {
+    color: white;
+}
 
 .testmsg {
     margin-top: 40px;
@@ -1753,17 +1762,17 @@ input.form-control {
     line-height: 26px;
 }
 
-    .dialog-box .tri {
-        width: 0;
-        height: 0;
-        border-bottom: 20px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 20px solid white;
-        border-left: 10px solid transparent;
-        position: absolute;
-        bottom: -40px;
-        left: 40px;
-    }
+.dialog-box .tri {
+    width: 0;
+    height: 0;
+    border-bottom: 20px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid white;
+    border-left: 10px solid transparent;
+    position: absolute;
+    bottom: -40px;
+    left: 40px;
+}
 
 .test-list .icon2 i {
     font-size: 60px;
@@ -1788,9 +1797,9 @@ input.form-control {
     top: 0;
 }
 
-    .test-list .cen .media-left img {
-        float: left;
-    }
+.test-list .cen .media-left img {
+    float: left;
+}
 
 .testmsg-dot {
     width: 50px;
@@ -1798,18 +1807,18 @@ input.form-control {
     margin: 0 auto;
 }
 
-    .testmsg-dot li {
-        width: 12px;
-        height: 12px;
-        float: left;
-        margin-right: 10px;
-        border-radius: 50%;
-        background: #2D3946;
-    }
+.testmsg-dot li {
+    width: 12px;
+    height: 12px;
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: #2D3946;
+}
 
-    .testmsg-dot .active2 {
-        background: #2b5178;
-    }
+.testmsg-dot .active2 {
+    background: #2b5178;
+}
 
 .test-list .row, .course-list .row {
     margin-left: 0;
@@ -1820,14 +1829,14 @@ input.form-control {
     margin-top: 50px;
 }
 
-    .course span {
-        display: inline-block;
-        width: 70px;
-        height: 2px;
-        background: #FF5655;
-        margin-bottom:10px;
-        margin-top:20px;
-    }
+.course span {
+    display: inline-block;
+    width: 70px;
+    height: 2px;
+    background: #FF5655;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
 
 .course-list {
     width: 100%;
@@ -1835,45 +1844,47 @@ input.form-control {
     overflow: hidden;
 }
 
-    .course-list .cour {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-    }
-.course-list .cour .caption h3{
-    margin-top:10px;
-    line-height:1.8;
+.course-list .cour {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
 }
+
+.course-list .cour .caption h3 {
+    margin-top: 10px;
+    line-height: 1.8;
+}
+
 .course-detail {
     height: 70px;
-    margin-top:10px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
-    .course-detail .coach-img {
-        width: 70px;
-        height: 70px;
-        margin-right: 10px;
-        background: silver;
-        border-radius: 50%;
-        float: left;
-        background: url("~/img/teacher.png") no-repeat center /cover;
-    }
+.course-detail .coach-img {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+    background: silver;
+    border-radius: 50%;
+    float: left;
+    background: url("../img/teacher.png") no-repeat center /cover;
+}
 
-    .course-detail h5, .course-detail h4 {
-        line-height: 70px;
-        font-size: 14px;
-    }
+.course-detail h5, .course-detail h4 {
+    line-height: 70px;
+    font-size: 14px;
+}
 
-    .course-detail h5 {
-        float: left;
-    }
+.course-detail h5 {
+    float: left;
+}
 
-    .course-detail h4 {
-        float: right;
-        color: red;
-    }
+.course-detail h4 {
+    float: right;
+    color: red;
+}
 
 
 .course-time .time-icon .iconfont {

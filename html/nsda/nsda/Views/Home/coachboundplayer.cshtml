@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "绑定学员";
+}
+<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Coachboundplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
+
+
+@Html.Partial("_CoachTop")
+
+<div class="container player-compe">
+        @Html.Partial("_CoachLeft")
+        <div class="score-con">
+            <div class="score-top">
+                <img class="integral" src="~/Content/asset/img/add_03.png" alt="...">
+                <p class="scorecheck">Add your students</p>
+                <button class="addbound" id="addedu">Add New &nbsp;<i class="iconfont icon-jiahao"></i></button>
+            </div>
+            <div class="boundtable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="14%">时间段</th>
+                            <th width="16%">NSDA会员编号</th>
+                            <th width="26%">姓名</th>
+                            <th width="13%">执教期获胜数</th>
+                            <th width="28%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1999.7-2001.3</td>
+                            <td>C1899254</td>
+                            <td>Eric Patrick Clapton</td>
+                            <td>5</td>
+                            <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
+                        </tr>
+                        <tr>
+                            <td>1999.7-2001.3</td>
+                            <td>C1899254</td>
+                            <td>Eric Patrick Clapton</td>
+                            <td>5</td>
+                            <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
+                        </tr>
+                        <tr>
+                            <td>1999.7-2001.3</td>
+                            <td>C1899254</td>
+                            <td>Eric Patrick Clapton</td>
+                            <td>6</td>
+                            <td><button class="confirmbound">Confirm</button> <button class="notpass">Fail</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="addcoach" id="addeducation">
+                    <div class="addtitle">
+                        Add your students
+                        <i class="iconfont icon-guanbi" id="close"></i>
+                    </div>
+                    <img class="coachimg" src="~/Content/asset/img/bound_03.png" alt="...">
+                    <form action="/" method="post">
+                        <div class="form-group">
+                            <select class="form-select-school" id="school1">
+                                <option>Year</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-school" id="school2">
+                                <option>Month</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <em class="em"> —</em>
+                            <select class="form-select-school" id="school3">
+                                <option>Year</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-school" id="school4">
+                                <option>Month</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <select class="form-select-schools" id="school5">
+                                <option>Students Name</option>
+                                <option>NSDA Code</option>
+                            </select>
+                            <input id="txt" />
+                            <a class="searchcoach" id="search">Search&nbsp;<i class="iconfont icon-sousuo1"></i></a>
+                            <select size="6" id="sel" style="display:none;">
+                                <option>123</option>
+                                <option>23456</option>
+                                <option>1111</option>
+                                <option>123333</option>
+                                <option>aaaa</option>
+                                <option>1bbb23</option>
+                            </select>
+                            <a href="#" class="boundcoach" id="confirmadd">Submit</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+</div>
+@Scripts.Render("~/Content/asset/js/info.js")
+<script>
+    function $$(id) {
+        return document.getElementById(id);
+    }
+    window.onload = function () {
+        $$("search").onclick = function () {
+            $$("sel").style.display = "block"
+        };
+        $$("sel").onclick = function () {
+            this.style.display = "none"
+            $$("txt").value = this.options[this.selectedIndex].text;
+        };
+    };
+</script>

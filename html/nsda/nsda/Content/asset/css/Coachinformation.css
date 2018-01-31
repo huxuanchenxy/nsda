@@ -138,3 +138,6 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
 }
+.info-lists .panel-group .panel:nth-child(2) .panel-heading .panel-title h3{
+    color:#1DB8FF;
+}
