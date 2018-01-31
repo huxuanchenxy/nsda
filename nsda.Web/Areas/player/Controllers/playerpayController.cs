@@ -34,8 +34,10 @@ namespace nsda.Web.Areas.player.Controllers
         /// </summary>
         public ActionResult index(int orderId)
         {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
             var detail = _orderService.Detail(orderId);
-            if (detail == null || detail.MemberId != UserContext.WebUserContext.Id)
+            if (detail == null || detail.MemberId != userContext.Id)
                 Response.Redirect("/error/error", true);
             return View(detail);
         }
@@ -96,6 +98,7 @@ namespace nsda.Web.Areas.player.Controllers
         {
             OrderResponse response = _orderService.OrderDetail(id);
             var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
             if (response == null || response.MemberId != userContext.Id)
             {
                 return RedirectToAction("index", "player", new { area = "player" });
@@ -122,6 +125,7 @@ namespace nsda.Web.Areas.player.Controllers
         //支付成功页
         public ActionResult paysuccess(int orderId)
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             var order = _orderService.OrderDetail(orderId);
             return View(order);
         }

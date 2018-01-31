@@ -48,7 +48,6 @@ namespace nsda.Web.Areas.player.Controllers
         //修改个人信息
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(RegisterPlayerRequest request)
         {
             string msg = string.Empty;
@@ -59,7 +58,6 @@ namespace nsda.Web.Areas.player.Controllers
         //扩展教练
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult extendcoach(RegisterCoachRequest request)
         {
             string msg = string.Empty;
@@ -70,7 +68,6 @@ namespace nsda.Web.Areas.player.Controllers
         //扩展裁判
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult extendreferee(RegisterRefereeRequest request)
         {
             string msg = string.Empty;
@@ -128,7 +125,6 @@ namespace nsda.Web.Areas.player.Controllers
         //去认证
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult goauth()
         {
             string msg = string.Empty;
@@ -163,7 +159,6 @@ namespace nsda.Web.Areas.player.Controllers
         #region 教育经历
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deleteedu(int id)
         {
             var msg = string.Empty;
@@ -173,7 +168,6 @@ namespace nsda.Web.Areas.player.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertedu(PlayerEduRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -184,7 +178,6 @@ namespace nsda.Web.Areas.player.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editedu(PlayerEduRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -208,6 +201,7 @@ namespace nsda.Web.Areas.player.Controllers
         #region view
         public ActionResult index()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/player/player/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
@@ -221,6 +215,7 @@ namespace nsda.Web.Areas.player.Controllers
         public ActionResult info()
         {
             var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
             var data = _memberService.MemberPlayerDetail(userContext.Id);
             ViewBag.CoachInfo = _playerCoachService.Player_CoachDetail(userContext.Id);
             return View(data);
@@ -229,18 +224,21 @@ namespace nsda.Web.Areas.player.Controllers
         //资料页面
         public ActionResult datasource()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
 
         //评分单页面
         public ActionResult eventscore()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
 
         //站内信页面
         public ActionResult mail()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
         #endregion

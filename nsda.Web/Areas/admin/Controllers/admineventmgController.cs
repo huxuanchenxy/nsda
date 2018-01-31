@@ -35,7 +35,6 @@ namespace nsda.Web.Areas.admin.Controllers
         //设定赛事等级
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult settinglevel(int id, EventLevelEm eventLevel)
         {
             string msg = string.Empty;
@@ -46,7 +45,6 @@ namespace nsda.Web.Areas.admin.Controllers
         //审核赛事
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult check(int id,bool isAgree)
         {
             string msg = string.Empty;
@@ -72,7 +70,6 @@ namespace nsda.Web.Areas.admin.Controllers
         //审核赛事
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult applyrefund(int eventId)
         {
             string msg = string.Empty;
@@ -84,7 +81,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult cyclingracerule(CyclingRaceRuleRequest request)
         {
             request.SysUserId=UserContext.SysUserContext.Id;
@@ -96,7 +92,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult knockoutrule(KnockoutRuleRequest request)
         {
             request.SysUserId = UserContext.SysUserContext.Id;
@@ -128,7 +123,6 @@ namespace nsda.Web.Areas.admin.Controllers
         }
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deleteeventscroe(int id)
         {
             string msg = string.Empty;
@@ -137,7 +131,6 @@ namespace nsda.Web.Areas.admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ContentResult inserteventscroe(EventScoreRequest request)
         {
             request.SysUserId = UserContext.SysUserContext.Id;

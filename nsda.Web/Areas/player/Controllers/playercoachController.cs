@@ -40,7 +40,6 @@ namespace nsda.Web.Areas.player.Controllers
         //2 新增
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insert(PlayerCoachRequest request)
         {
             request.IsCoach = false;
@@ -53,7 +52,6 @@ namespace nsda.Web.Areas.player.Controllers
         //3 编辑
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(PlayerCoachRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -64,7 +62,6 @@ namespace nsda.Web.Areas.player.Controllers
         //4 删除
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult delete(int id)
         {
             var msg = string.Empty;
@@ -84,6 +81,7 @@ namespace nsda.Web.Areas.player.Controllers
         //选手 教练页
         public ActionResult index()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
         #endregion

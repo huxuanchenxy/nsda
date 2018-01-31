@@ -37,7 +37,9 @@ namespace nsda.Utilities
 
         public static readonly decimal AuthMoney = ConfigurationManager.AppSettings["authmoney"].ToObjDecimal();//实名认证金额
 
-
         public static readonly string PayAccount = ConfigurationManager.AppSettings["PayAccount"];//支付宝账号
+
+        public static readonly string Version = ConfigurationManager.AppSettings["version"];//css js版本号
+        
     }
 }

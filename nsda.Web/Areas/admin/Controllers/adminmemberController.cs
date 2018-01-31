@@ -37,7 +37,6 @@ namespace nsda.Web.Areas.admin.Controllers
         //重置密码
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult reset(int id)
         {
             var msg = string.Empty;
@@ -48,7 +47,6 @@ namespace nsda.Web.Areas.admin.Controllers
         //删除会员
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult delete(int id)
         {
             var msg = string.Empty;
@@ -59,7 +57,6 @@ namespace nsda.Web.Areas.admin.Controllers
         //强制认证选手
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult force(int id)
         {
             var msg = string.Empty;

@@ -403,17 +403,88 @@
     <Content Include="asset\css\aboutp.css" />
     <Content Include="asset\css\aboutus.css" />
     <Content Include="asset\css\basic.css" />
+    <Content Include="asset\css\bootstrap.css" />
     <Content Include="asset\css\bootstrap.min.css" />
+    <Content Include="asset\css\coach.css" />
+    <Content Include="asset\css\coachinformation.css" />
     <Content Include="asset\css\iconfont.css" />
-    <Content Include="asset\css\nsda.css" />
-    <Content Include="asset\jquery\jquery-1.11.1.min.js" />
-    <Content Include="asset\jquery\jquery-3.2.1.min.js" />
-    <Content Include="asset\jquery\jquery.cookie.js" />
-    <Content Include="asset\jquery\jquery.form.js" />
-    <Content Include="asset\jquery\jquery.validate.js" />
+    <Content Include="asset\css\index.css" />
+    <Content Include="asset\css\player.css" />
+    <Content Include="asset\css\playerboundcoach.css" />
+    <Content Include="asset\css\playercenter.css" />
+    <Content Include="asset\css\playerintegral.css" />
+    <Content Include="asset\css\playerpartin.css" />
+    <Content Include="asset\css\playerpersonal.css" />
+    <Content Include="asset\css\playersign.css" />
+    <Content Include="asset\css\playersource.css" />
+    <Content Include="asset\css\regform.css" />
+    <Content Include="asset\css\registered.css" />
+    <Content Include="asset\css\Site.css" />
+    <Content Include="asset\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="asset\img\Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg" />
+    <Content Include="asset\img\bg1.png" />
+    <Content Include="asset\img\bg2 .png" />
+    <Content Include="asset\img\bg2.png" />
+    <Content Include="asset\img\bound_03.png" />
+    <Content Include="asset\img\chat-user-2.svg" />
+    <Content Include="asset\img\city-sunny-people-street-1.png" />
+    <Content Include="asset\img\coach.png" />
+    <Content Include="asset\img\course.png" />
+    <Content Include="asset\img\en-icon.png" />
+    <Content Include="asset\img\integral.svg" />
+    <Content Include="asset\img\mail-at.svg" />
+    <Content Include="asset\img\map-3.svg" />
+    <Content Include="asset\img\mecban_03.jpg" />
+    <Content Include="asset\img\member.svg" />
+    <Content Include="asset\img\more.gif" />
+    <Content Include="asset\img\msour_03.png" />
+    <Content Include="asset\img\partner1.jpg" />
+    <Content Include="asset\img\partner2.jpg" />
+    <Content Include="asset\img\partner3.jpg" />
+    <Content Include="asset\img\password.svg" />
+    <Content Include="asset\img\password_03.jpg" />
+    <Content Include="asset\img\pass_03.png" />
+    <Content Include="asset\img\per-pic.png" />
+    <Content Include="asset\img\Samuel Alito.jpg" />
+    <Content Include="asset\img\score_03.jpg" />
+    <Content Include="asset\img\scroll-bg.png" />
+    <Content Include="asset\img\Sonia_Sotomayor_in_SCOTUS_robe.jpg" />
+    <Content Include="asset\img\source_03.png" />
+    <Content Include="asset\img\source_06.png" />
+    <Content Include="asset\img\source_10.png" />
+    <Content Include="asset\img\source_12.png" />
+    <Content Include="asset\img\source_14.png" />
+    <Content Include="asset\img\source_16.png" />
+    <Content Include="asset\img\speach.png" />
+    <Content Include="asset\img\Stephen Breyer.jpg" />
+    <Content Include="asset\img\teacher.png" />
+    <Content Include="asset\img\txt1.png" />
     <Content Include="asset\js\bootstrap.min.js" />
-    <Content Include="asset\js\nsda.js" />
+    <Content Include="asset\js\change.js" />
+    <Content Include="asset\js\info.js" />
+    <Content Include="asset\js\jquery-3.2.1.min.js" />
+    <Content Include="asset\js\jquery.form.js" />
+    <Content Include="asset\js\jquery.min.js" />
+    <Content Include="asset\js\jquery.tabslet.min.js" />
+    <Content Include="asset\js\laydate\laydate.js" />
+    <Content Include="asset\js\laydate\theme\default\font\iconfont.svg" />
+    <Content Include="asset\js\laydate\theme\default\laydate.css" />
+    <Content Include="asset\js\layer\layer.js" />
+    <Content Include="asset\js\layer\mobile\layer.js" />
+    <Content Include="asset\js\layer\mobile\need\layer.css" />
+    <Content Include="asset\js\layer\theme\default\icon-ext.png" />
+    <Content Include="asset\js\layer\theme\default\icon.png" />
+    <Content Include="asset\js\layer\theme\default\layer.css" />
+    <Content Include="asset\js\layer\theme\default\loading-0.gif" />
+    <Content Include="asset\js\layer\theme\default\loading-1.gif" />
+    <Content Include="asset\js\layer\theme\default\loading-2.gif" />
+    <Content Include="asset\js\load.js" />
     <Content Include="asset\js\parallax.min.js" />
+    <Content Include="asset\js\selected.js" />
+    <Content Include="asset\js\tabs.js" />
+    <Content Include="Areas\player\Views\Shared\_Layout.cshtml" />
+    <None Include="asset\js\_references.js" />
+    <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
     <Content Include="asset\layer\css\layer.ext.css" />
     <Content Include="asset\layer\img\icon.png" />
@@ -438,6 +509,8 @@
     <Content Include="wxpay\imgs\绿色logo.png" />
     <Content Include="wxpay\imgs\说明文字.png" />
     <Content Include="wxpay\imgs\页签标签.png" />
+    <Content Include="Views\register\player.cshtml" />
+    <Content Include="Views\register\coach.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -456,15 +529,9 @@
     <Folder Include="Areas\eventmanage\Views\eventromm\" />
     <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />
-    <Folder Include="Areas\player\Views\Shared\" />
     <Folder Include="Areas\referee\Models\" />
     <Folder Include="Areas\referee\Views\Shared\" />
-    <Folder Include="asset\fonts\" />
-    <Folder Include="asset\img\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\callback\" />
-    <Folder Include="Views\commondata\" />
-    <Folder Include="Views\register\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appSettings.config" />
@@ -561,7 +628,7 @@
     <Content Include="Areas\admin\Views\Shared\_LayoutForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\login\player.cshtml" />
+    <Content Include="Views\login\login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="wxpay\cert\apiclient_cert.p12" />
@@ -622,6 +689,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\referee\Views\referee\info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="asset\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="asset\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="asset\fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="asset\js\laydate\theme\default\font\iconfont.eot" />
+    <Content Include="asset\js\laydate\theme\default\font\iconfont.ttf" />
+    <Content Include="asset\js\laydate\theme\default\font\iconfont.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

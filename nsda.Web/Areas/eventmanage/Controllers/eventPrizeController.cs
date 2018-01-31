@@ -26,7 +26,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #region ajax
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insert(EventPrizeRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -37,7 +36,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(EventPrizeRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -49,7 +47,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult delete(int id)
         {
             string msg = string.Empty;

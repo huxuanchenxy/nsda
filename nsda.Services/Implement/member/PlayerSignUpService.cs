@@ -906,7 +906,7 @@ namespace nsda.Services.Implement.member
                              inner join t_event_player_signup c on b.sourceId=c.id
                              inner join t_event d on c.eventId=d.id
                              inner join t_event_group e on c.eventGroupId=e.id
-                             where a.isdelete=0 and a.memberId=@MemberId  and b.orderType={OrderTypeEm.赛事报名}
+                             where a.isdelete=0 and a.memberId=@MemberId  and b.orderType={(int)OrderTypeEm.赛事报名}
                              {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerRefundListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);

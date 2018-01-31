@@ -38,7 +38,6 @@ namespace nsda.Web.Areas.referee.Controllers
         //修改个人信息
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(RegisterRefereeRequest request)
         {
             string msg = string.Empty;
@@ -49,7 +48,6 @@ namespace nsda.Web.Areas.referee.Controllers
         //扩展选手
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult extendplayer(RegisterPlayerRequest request)
         {
             string msg = string.Empty;
@@ -60,7 +58,6 @@ namespace nsda.Web.Areas.referee.Controllers
         //扩展教练
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult extendcoach(RegisterCoachRequest request)
         {
             string msg = string.Empty;
@@ -79,7 +76,6 @@ namespace nsda.Web.Areas.referee.Controllers
         //申请做裁判
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult apply(int eventId)
         {
             string msg = string.Empty;
@@ -90,7 +86,6 @@ namespace nsda.Web.Areas.referee.Controllers
         //绑定临时账号
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult bindreferee(BindTempRefereeRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -103,7 +98,6 @@ namespace nsda.Web.Areas.referee.Controllers
         //签到
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult sign(int id)
         {
             string msg = string.Empty;

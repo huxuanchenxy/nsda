@@ -44,7 +44,6 @@ namespace nsda.Web.Areas.admin.Controllers
         #region ajax
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult delete(int id)
         {
             var msg = string.Empty;
@@ -54,7 +53,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insert(VoteRequest request)
         {
             var msg = string.Empty;
@@ -64,7 +62,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(VoteRequest request)
         {
             var msg = string.Empty;

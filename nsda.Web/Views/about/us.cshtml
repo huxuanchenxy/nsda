@@ -1,12 +1,13 @@
-﻿@{
+﻿@using nsda.Utilities
+@{
+    ViewBag.Title = "关于我们";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section styles
 {  
-    <link rel="stylesheet" href="/asset/css/about.css">
-    <link rel="stylesheet" href="/asset/css/aboutus.css">
+    <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/aboutus.css?version=@Constant.Version">
 }
-
 <!--这里可能是logo也可能是广告 到底是什么 我也不知道-->
 <div class="ad">
 
@@ -36,15 +37,15 @@
             <h3>您的称呼<br></h3>
             <p>YOUR NAME</p>
         </div>
-        <input type="text">
+        <input type="text" id="name" />
     </div>
     <div class="form-call">
         <span class="iconfont icon-overview-msg" aria-hidden="true"></span>
         <div class="call-h">
-            <h3>您的邮件</h3>
+            <h3>您的邮箱</h3>
             <p>YOUR  MAIL</p>
         </div>
-        <input type="text">
+        <input type="text" id="email">
     </div>
     <div class="form-msg">
         <span class="iconfont icon-bianqian" aria-hidden="true"></span>
@@ -52,9 +53,9 @@
             <h3>您的留言</h3>
             <p>MESSAGE</p>
         </div>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <textarea name="" id="message" cols="30" rows="10"></textarea>
     </div>
-    <a href="">
+    <a href="javascript:;" id="sendmsg">
         <div class="sendmsg">
             <h3>发送信息</h3>
             <p>SEND MESSAGE</p>
@@ -62,39 +63,60 @@
     </a>
 </div>
 
-<div class="container contact">
-    <div class="row contact">
-        <span></span>
-        <h2>联系我们<br>GET IN TOUCH</h2>
-        <p>全美演讲与辩论联盟中国办公室（NSDA China）欢迎教育、传媒、金融等社会各领域组织机构<br>与我方进行冠名、赞助等多种形式合作，共同推动学术辩论与公共演讲在中国的蓬勃发展。</p>
+@section scripts
+{
+   <script src="~/asset/layer/js/layer.js"></script>
+   <script src="/asset/js/validate.js?version=@Constant.Version"></script>
+   <script>
+       $("#sendmsg").click(function () {
+           var $name = $("#name");
+           var $email = $("#email");
+           var $message = $("#message");
+           if ($name.val() == "")
+           {
+               layer.msg('请输入您的称呼', { icon: 5, time: 1000 });
+               return;
+           }
 
-        <div class="col-sm-4 col-md-4">
-            <div class="thumbnail">
-                <div class="caption">
-                    <i class="iconfont icon-ditu ced" aria-hidden="true"></i>
-                    <p>上海市杨浦区淞沪路303号创智天地<br>11号楼501室</p>
+           if ($email.val() == "") {
+               layer.msg('请输入您的邮箱', { icon: 5, time: 1000 });
+               return;
+           }
 
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-4">
-            <div class="thumbnail">
-                <div class="caption">
-                    <i class="iconfont icon-icon12 ced" aria-hidden="true"></i>
-                    <p>021-60452021</p>
+           if (!validate.isEmail($email.val())) {
+               layer.msg('邮箱格式有误', { icon: 5, time: 1000 });
+               return;
+           }
 
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-4">
-            <div class="thumbnail">
-                <div class="caption">
-                    <i class="iconfont icon-email ced" aria-hidden="true"></i>
-                    <p>joyofdebate@dipont-edu.com</p>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
+           $.ajax({
+               url: "/commondata/leaving",
+               type: "post",
+               dataType: "json",
+               data: {
+                   Name: $name.val(),
+                   Email: $email.val(),
+                   Message: $message.val()
+               },
+               beforeSend: function () {
+                   layer.msg('留言中', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+               },
+               success: function (json) {
+                   layer.closeAll();
+                   if(json.flag)
+                   {
+                       layer.msg("留言成功", { icon: 1, time: 1000 });
+                       $name.val("");
+                       $email.val("");
+                       $message.val("");
+                   }
+                   else{
+                       layer.msg(json.msg, { icon: 5, time: 1000 });
+                   }
+               }
+               , error: function () {
+                   layer.closeAll();
+               }
+           });   
+       });
+    </script>
+}

@@ -55,7 +55,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deletecountry(int id)
         {
             var msg = string.Empty;
@@ -65,7 +64,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertcountry(CountryRequest request)
         {
             var msg = string.Empty;
@@ -75,7 +73,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editcountry(CountryRequest request)
         {
             var msg = string.Empty;
@@ -120,7 +117,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deleteprovince(int id)
         {
             var msg = string.Empty;
@@ -130,7 +126,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertprovince(ProvinceRequest request)
         {
             var msg = string.Empty;
@@ -140,7 +135,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editprovince(ProvinceRequest request)
         {
             var msg = string.Empty;
@@ -185,7 +179,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deletecity(int id)
         {
             var msg = string.Empty;
@@ -195,7 +188,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertcity(CityRequest request)
         {
             var msg = string.Empty;
@@ -205,7 +197,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editcity(CityRequest request)
         {
             var msg = string.Empty;
@@ -250,7 +241,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deleteschool(int id)
         {
             var msg = string.Empty;
@@ -260,7 +250,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertschool(SchoolRequest request)
         {
             var msg = string.Empty;
@@ -270,7 +259,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editschool(SchoolRequest request)
         {
             var msg = string.Empty;
@@ -314,7 +302,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deletedatasource(int id)
         {
             var msg = string.Empty;
@@ -323,7 +310,6 @@ namespace nsda.Web.Areas.admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ContentResult insertdatasource(DataSourceRequest request)
         {
             request.SysUserId = UserContext.SysUserContext.Id;
@@ -417,7 +403,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deleteleavingmsg(int id)
         {
             var msg = string.Empty;
@@ -427,7 +412,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult processleavingmsg(int id)
         {
             var msg = string.Empty;

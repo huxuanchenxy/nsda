@@ -63,7 +63,6 @@ namespace nsda.Web.Areas.admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [AjaxOnly]
         public ContentResult editpwd(string pwd)
         {
@@ -73,7 +72,6 @@ namespace nsda.Web.Areas.admin.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [AjaxOnly]
         public ContentResult edit(string name, string mobile)
         {

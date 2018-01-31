@@ -34,29 +34,34 @@ namespace nsda.Web.Areas.player.Controllers
         {
             var data = _eventService.EventCondition();
             ViewBag.Condition = data;
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
 
         //签到页面
         public ActionResult signview(int eventId)
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id);
             return View(detail);
         }
 
         public ActionResult bindtemp()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
 
         //已报名页
         public ActionResult list()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
         //退赛退费页
         public ActionResult refundlist()
         {
+            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
         #endregion
@@ -65,7 +70,6 @@ namespace nsda.Web.Areas.player.Controllers
         //绑定临时账号
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult bindplayer(BindTempPlayerRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -85,7 +89,6 @@ namespace nsda.Web.Areas.player.Controllers
         //比赛报名
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insert(PlayerSignUpRequest request)
         {
             request.FromMemberId = UserContext.WebUserContext.Id;
@@ -97,7 +100,6 @@ namespace nsda.Web.Areas.player.Controllers
         //是否接受组队
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult isacceptteam(int id, bool isAgree)
         {
             string msg = string.Empty;
@@ -107,7 +109,6 @@ namespace nsda.Web.Areas.player.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult applyretire(int id)
         {
             string msg = string.Empty;
@@ -117,7 +118,6 @@ namespace nsda.Web.Areas.player.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult isconfirmretire(int id,bool isAgree)
         {
             string msg = string.Empty;
@@ -128,7 +128,6 @@ namespace nsda.Web.Areas.player.Controllers
         //去支付
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult gopay(int id, int newMemberId)
         {
             string msg = string.Empty;
@@ -139,7 +138,6 @@ namespace nsda.Web.Areas.player.Controllers
         //签到
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult sign(int id)
         {
             string msg = string.Empty;

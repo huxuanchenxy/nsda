@@ -28,7 +28,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #region ajax
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insert(EventRoomRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -39,7 +38,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(EventRoomRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -50,7 +48,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editsettings(int id, int status)
         {
             string msg = string.Empty;
@@ -60,7 +57,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult settingspec(int id,int memberId)
         {
             string msg = string.Empty;
@@ -70,7 +66,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult clearspec(int id)
         {
             string msg = string.Empty;

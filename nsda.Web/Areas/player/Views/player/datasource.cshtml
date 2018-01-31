@@ -1,17 +1,65 @@
-﻿
+﻿@using nsda.Utilities
 @{
-    Layout = null;
+    ViewBag.Title = "会员资料";
+    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>datasource</title>
-</head>
-<body>
-    <div> 
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
+}
+<div class="score-con">
+    <div class="score-top">
+        <img class="integral" src="/asset/img/msour_03.png" alt="...">
+        <p class="scorecheck">会员资源</p>
     </div>
-</body>
-</html>
+    <span class="source-top"></span>
+    <ul class="source-lists">
+        <li>
+            <img src="/asset/img/source_03.png" alt="" />
+            <span class="source-content">
+                <h4>2017-18赛季 全国中学生学术辩论与演讲联赛 第一轮区域赛 辩题资料包（starter evidence packet）</h4>
+                <p>发布时间：2017/9/30</p>
+            </span>
+
+            <a href="#" download=""><img src="/asset/img/source_06.png" alt="" /></a>
+        </li>
+        <li>
+            <img src="/asset/img/source_10.png" alt="" />
+            <span class="source-content">
+                <h4>2017-18赛季 全国中学生学术辩论与演讲联赛 第一轮区域赛 辩题资料包（starter evidence packet）</h4>
+                <p>发布时间：2017/9/30</p>
+            </span>
+
+            <a href="#" download=""><img src="/asset/img/source_06.png" alt="" /></a>
+        </li>
+        <li>
+            <img src="/asset/img/source_12.png" alt="" />
+            <span class="source-content">
+                <h4>2017-18赛季 全国中学生学术辩论与演讲联赛 第一轮区域赛 辩题资料包（starter evidence packet）</h4>
+                <p>发布时间：2017/9/30</p>
+            </span>
+
+            <a href="#" download=""><img src="/asset/img/source_06.png" alt="" /></a>
+        </li>
+        <li>
+            <img src="/asset/img/source_14.png" alt="" />
+            <span class="source-content">
+                <h4>2017-18赛季 全国中学生学术辩论与演讲联赛 第一轮区域赛 辩题资料包（starter evidence packet）</h4>
+                <p>发布时间：2017/9/30</p>
+            </span>
+
+            <a href="#" download=""><img src="/asset/img/source_06.png" alt="" /></a>
+        </li>
+        <li>
+            <img src="/asset/img/source_16.png" alt="" />
+            <span class="source-content">
+                <h4>2017-18赛季 全国中学生学术辩论与演讲联赛 第一轮区域赛 辩题资料包（starter evidence packet）</h4>
+                <p>发布时间：2017/9/30</p>
+            </span>
+
+            <a href="#" download=""><img src="/asset/img/source_06.png" alt="" /></a>
+        </li>
+    </ul>
+</div>

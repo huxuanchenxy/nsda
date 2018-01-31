@@ -50,23 +50,23 @@ namespace nsda.Web.Controllers
                 if (request.MemberType == MemberTypeEm.选手)
                 {
                     //跳转到选手报名页面
-                    res.msg = request.RedirectUrl.IsNotEmpty()? request.RedirectUrl:"/player/home/index";
+                    res.msg = request.RedirectUrl.IsNotEmpty()? request.RedirectUrl: "/player/player/index";
                     datatype = DataTypeEm.选手;
                 }
                 else if (request.MemberType == MemberTypeEm.教练)
                 {
-                    res.msg = "/coach/home/index";
+                    res.msg = "/coach/coach/index";
                     datatype = DataTypeEm.教练;
                 }
                 else if (request.MemberType == MemberTypeEm.裁判)
                 {
                     //跳转到裁判报名页面
-                    res.msg = request.RedirectUrl.IsNotEmpty() ? request.RedirectUrl : "/referee/home/index";
+                    res.msg = request.RedirectUrl.IsNotEmpty() ? request.RedirectUrl : "/referee/referee/index";
                     datatype = DataTypeEm.裁判;
                 }
                 else if (request.MemberType == MemberTypeEm.赛事管理员)
                 {
-                    res.msg = "/eventmanage/home/index";
+                    res.msg = "/eventmanage/eventmanage/index";
                     datatype = DataTypeEm.赛事管理员;
                 }
                 else

@@ -44,7 +44,6 @@ namespace nsda.Web.Areas.admin.Controllers
         #region ajax
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insert(SysUserRequest request)
         {
             var msg = string.Empty;
@@ -55,7 +54,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(SysUserRequest request)
         {
             var msg = string.Empty;
@@ -65,7 +63,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult delete(int id)
         {
             var msg = string.Empty;
@@ -75,7 +72,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult reset(int id)
         {
             var msg = string.Empty;
@@ -85,7 +81,6 @@ namespace nsda.Web.Areas.admin.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult isenable(int id,bool isEnable)
         {
             var msg = string.Empty;

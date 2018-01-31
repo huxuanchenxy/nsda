@@ -54,7 +54,7 @@ namespace nsda.Services
             WebUserContext webContext = null;
             try
             {
-                string key = SessionCookieUtility.GetCookie(Constant.SysCookieKey).ToString();
+                string key = SessionCookieUtility.GetCookie(Constant.WebCookieKey).ToString();
                 if (key.IsNotEmpty())
                 {
                     webContext = DesEncoderAndDecoder.Decrypt(key).Deserialize<WebUserContext>();

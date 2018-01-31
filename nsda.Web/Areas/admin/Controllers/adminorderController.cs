@@ -54,7 +54,6 @@ namespace nsda.Web.Areas.admin.Controllers
         //处理退款
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult process(int id)
         {
             var msg = string.Empty;

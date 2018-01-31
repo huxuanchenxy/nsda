@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace nsda.Services.Contract.admin
 {
-    public interface ISchoolService
+    public interface ISchoolService: IDependency
     {
         bool Insert(SchoolRequest request, int sysUserId, out string msg);
         bool Edit(SchoolRequest request,int sysUserId, out string msg);

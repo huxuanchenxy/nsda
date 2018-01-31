@@ -138,7 +138,6 @@ namespace nsda.Web.Controllers
         //修改密码
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editpwd(string pwd)
         {
             var userContext = UserContext.WebUserContext;
@@ -156,7 +155,6 @@ namespace nsda.Web.Controllers
 
         //上传头像
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ContentResult updatehead()
         {
             var userContext = UserContext.WebUserContext;
@@ -217,7 +215,6 @@ namespace nsda.Web.Controllers
         //站内信标记为已读
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult mark(int id)
         {
             var userContext = UserContext.WebUserContext;
@@ -268,7 +265,6 @@ namespace nsda.Web.Controllers
         //删除站内信
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deletemail(int id)
         {
             var userContext = UserContext.WebUserContext;

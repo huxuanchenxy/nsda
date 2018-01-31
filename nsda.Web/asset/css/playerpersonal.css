@@ -1,0 +1,229 @@
+﻿
+.person-title{
+    margin-top:20px;
+    margin-bottom:30px;
+    width:100%;
+    height:30px;
+    float:left;
+    background:#b9b2b2;
+    border-bottom:2px solid #d9d3d3;
+    border-top:2px solid #d9d3d3;
+}
+.per-con .modifyinfo{
+    padding:10px 3px;
+    font-size:16px;
+    color:#666;
+    min-height:660px;
+    border-bottom:1px solid #B4BDC2;
+}
+.per-con .modifyinfo label{
+    width:13%;
+    text-align:right;
+    float:left;
+    margin-right:30px;
+        
+}
+.per-con .form-group{
+    margin-bottom:30px;
+}
+.per-con .two-label{
+    height:22px;
+    margin-bottom:30px;
+}
+.per-con .two-label div{
+    width:50%;
+    float:left;
+}
+.per-con .two-label div label{
+    width:26%;
+}
+.per-con .current-coach{
+    height:22px;
+    margin-bottom:30px;
+}
+.per-con .education{
+    height:22px;
+    margin-bottom:30px;
+}
+.per-con .coach{
+    float:left;
+}
+.per-con .modifycoach{
+    display:inline;
+    float:left;
+    padding:2px 30px;
+    background:#1ABC9C;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    margin-left:30px;
+    color:white;
+}
+.education .form-con .edulists{
+    width:73%;
+    padding:0 8px 0 8px;
+    background:#ECF0F1;
+    margin-left:16%;
+    position:relative;
+}
+.addeducation{
+    width:760px;
+    height:360px;
+    background:#ECF0F1;
+    position:absolute;
+    top:400px;
+    left:50%;
+    transform:translate(-50%);
+    box-shadow:2px 2px 4px 4px #bfbbbb;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    padding:20px 0 0 0;
+    display:none;
+}
+.addeducation i{
+    font-size:30px;
+    position:absolute;
+    top:-15px;
+    right:-10px;
+    color:#100707;
+    opacity:1;
+}
+.addeducation h3{
+    font-size:20px;
+    font-weight:600;
+    padding-left:10px;
+}
+.addeducation .form-group{
+    width:90%;
+    margin:70px auto;
+}
+.addeducation .form-group select{
+    margin-bottom:30px;
+    background:#1ABC9C;
+    height:40px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    color:white;
+    padding-left:8px;
+}
+.addeducation .form-group em{
+    color:#1ABC9C;
+}
+.addeducation button{
+    width:100%;
+    height:50px;
+    color:white;
+    background:#1ABC9C;
+    text-align:center;
+    border-radius: 0 0 10px 10px;
+    -webkit-border-radius: 0 0 10px 10px;
+    -moz-border-radius: 0 0 10px 10px;
+    border:none;
+    box-shadow:none;
+}
+.addeducation .form-group select.form-select-school{
+    width:23%;
+}
+.addeducation .form-group select.form-select-schools{
+    width:28%;
+}
+.addeducation .form-group select.form-select-schoolads{
+    width:40%
+}
+.education .form-con .edulists li{
+    min-height:50px;
+    padding:10px 0;
+    box-sizing:border-box;
+}
+.education .form-con .edulists li:not(:last-child){
+    border-bottom:1px solid #DDDDDE;
+}
+.education .form-con .edulists li .addedu{
+    display:inline;
+    padding:5px 30px;
+    font-size:16px;
+    float:right;
+    background:#1ABC9C;
+    color:white;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    margin-right:20px;
+    cursor:pointer;
+}
+.education .form-con .edulists li .editedu,.education .form-con .edulists li .deledu{
+    display:inline;
+    padding:5px 10px;
+    color:white;
+    border-radius: 6px;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+
+}
+.education .form-con .edulists li .editedu{
+    background:#1ABC9C;
+         
+}
+.education .form-con .edulists li .deledu{
+    background:#FF5655;
+    margin-left:10px;
+}
+.education .form-con .edulists li:not(:first-child){
+    padding:20px 1px;
+}
+.education .form-con .edulists li p{
+    float:left;
+    margin-right:30px;
+          
+}
+.per-con .submit{
+    width:260px;
+    height:55px;
+    background:#4E5D66;
+    color:white;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    text-align:center;
+    line-height:55px;
+    margin-top:300px;
+    margin-left:16%;
+}
+.modifypassword{
+    padding:50px 30px 0 120px;;
+}
+.modifypassword img{
+    display:inline;
+    float:left;
+}
+.modifypassword .modifypanel{
+    width:357px;
+    height:240px;
+    background:#ECF0F1;
+    margin-left:180px;
+    padding:30px 15px;
+}
+.modifypanel input{
+    width:100%;
+    height:40px;
+    margin-bottom:30px;
+    font-size:16px;
+    color:#666;
+    padding-left:5px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border:1px solid #eee;
+}
+.modifypanel input.confirmnewpassword{
+    width:100%;
+    height:40px;
+    background:#1ABC9C;
+    color:white;
+    border-radius: 6px;
+          
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+}

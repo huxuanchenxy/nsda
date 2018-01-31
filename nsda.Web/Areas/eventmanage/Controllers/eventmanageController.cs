@@ -39,7 +39,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //修改个人信息
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(RegisterEventRequest request)
         {
             string msg = string.Empty;
@@ -50,7 +49,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //新增赛事
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         [ValidateInput(false)]
         public ContentResult insertevent(EventRequest request)
         {
@@ -63,7 +61,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //编辑赛事
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         [ValidateInput(false)]
         public ContentResult editevent(EventRequest request)
         {
@@ -75,7 +72,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editeventgroup(EventGroupRequest request)
         {
             string msg = string.Empty;
@@ -86,7 +82,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //修改赛事状态
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editeventstatus(int id,EventStatusEm eventStatus)
         {
             string msg = string.Empty;
@@ -112,7 +107,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //新增临时选手
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertplayer(List<TempPlayerRequest> request)
         {
             string msg = string.Empty;
@@ -123,7 +117,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //新增临时教练
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertreferee(TempRefereeRequest request)
         {
             string msg = string.Empty;
@@ -134,7 +127,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //裁判审核
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult checkreferee(int id, bool isAgree)
         {
             string msg = string.Empty;
@@ -145,7 +137,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //批量签到
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult sign(List<int> id,int eventId,bool isNormal)
         {
             string msg = string.Empty;
@@ -226,7 +217,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //生成签到信息
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult rendersign(int eventId)
         {
             string msg = string.Empty;

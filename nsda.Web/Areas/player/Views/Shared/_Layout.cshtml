@@ -1,0 +1,283 @@
+﻿@using nsda.Utilities
+@{
+    var userContext = ViewBag.UserContext as WebUserContext;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <title>@ViewBag.Title 全美演讲与辩论联盟 National Forensic League</title>
+
+    <link href="/asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/asset/css/basic.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/iconfont.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/index.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/player.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/playercenter.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    @RenderSection("styles", false)
+</head>
+<body>
+    <nav class="nav navbar-inverse nav-top navbar-fixed-top">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <div class="container search navbar-right">
+                    <a href="/login/login" class="navbar-link link"> &nbsp;|&nbsp; 注册 </a><a href="/register/player" class="navbar-link link">登录</a>
+                    <span class="iconfont icon-yonghu" aria-hidden="true"></span>
+                    <a href="" id="check"><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
+                    <input type="text" class="form-control" name="" placeholder="">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <nav class="navbar navbar-default header container" role="navigation">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"></a>
+
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav drop-list" id="lead">
+                    <li class=""><a href="/">首页</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            关于我们
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("关于NSDA", "nsda", "about")</li>
+                            <li>@Html.ActionLink("NSDA中国", "nsda", "about")</li>
+                            <li>@Html.ActionLink("合作伙伴", "partner", "about")</li>
+                            <li>@Html.ActionLink("联系我们", "us", "about")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            会员系统
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">会员系统</a></li>
+                            <li><a href="#">裁判招募</a></li>
+                            <li><a href="#">申请赛事管理员</a></li>
+                            <li><a href="#">排名榜单</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            赛事
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">赛历</a></li>
+                            <li><a href="#">国内赛事</a></li>
+                            <li><a href="#">国际赛事</a></li>
+                        </ul>
+                    </li>
+                    <li class=""><a href="#">课程专栏</a></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            更多
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">辩题</a></li>
+                            <li><a href="#">教材购买</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+                <div class="sear hidden-sm hidden-md hidden-lg">
+                    <input type="text" class="form-control" name="" placeholder="">
+                    <a href="" class="check2"><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
+                    <span class="iconfont icon-yonghu" aria-hidden="true"></span>
+                    <a href="#" class="navbar-link link">注册 | </a><a href="#" class="navbar-link link">&nbsp;登录 </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+ 
+    <div class="mec-ban">
+            <div class="container player">
+                <div class="player-info">
+                    <form action="/" method="post">
+                        <img src="/asset/img/teacher.png" alt="" />
+                        <div class="player-num">
+                            <p>NSDA CHINA 注册会员：@userContext.Name</p>
+                            <p>目前 NSDA 积分：@userContext.PlayerPoints</p>
+                            <p>NSDA 会员编号：@userContext.Code</p>
+                    </div>
+                    <a href="#" class="player-code">
+                        <i class="iconfont icon-erweima"></i>
+                        我的二维码
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container player-compe">
+        <div class="info-lists">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <a href="/Home/PlayerMemberCenter"><h3 class="mc">会员中心</h3></a>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <p>My tournaments</p>
+                                <h3>我的比赛&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v</h3>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <ul>
+                                <a href="/Home/PlayerCompeSign" class="compe"><li>比赛报名</li></a>
+                                <a href="/Home/PlayerHadCompe" class="compe"><li>已参加比赛</li></a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <p>Personal information</p>
+                                <h3>会员信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v</h3>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            <ul>
+                                <a href="/Home/PlayerScore" class="compe"><li>会员积分查询</li></a>
+                                <a href="/Home/PlayerInformation" class="compe"><li>修改个人资料</li></a>
+                                <a href="/Home/PlayerBoundCoach" class="compe"><li>绑定教练</li></a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <p>Member Resources</p>
+                                <h3>会员资源&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v</h3>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body">
+                            <ul>
+                                <a href="/Home/PlayerSource" class="compe"><li>会员资源</li></a>
+                                <a href="#" class="compe"><li>评分单</li></a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+    <!--联系我们-->
+    <div class="container">
+        <div class="row contact">
+            <span></span>
+            <h2>联系我们<br>GET IN TOUCH</h2>
+            <p>全美演讲与辩论联盟中国办公室（NSDA China）欢迎教育、传媒、金融等社会各领域组织机构<br>与我方进行冠名、赞助等多种形式合作，共同推动学术辩论与公共演讲在中国的蓬勃发展。</p>
+
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/map-3.svg" alt="">
+                        <p>上海市杨浦区淞沪路303号创智天地11号楼501室</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/chat-user-2.svg" alt="">
+                        <p>021-60452021</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/mail-at.svg" alt="">
+                        <p>joyofdebate@dipont-edu.com</p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="blank">
+
+    </div>
+    <footer>
+        <p>Copyright © 2005 - 2017 National Forensic League of China All Reserved</p>
+    </footer>
+
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/js/parallax.min.js"></script>
+    <script src="/asset/js/bootstrap.min.js"></script>
+    <script src="/asset/js/layer/layer.js"></script>
+    @RenderSection("scripts", false)
+    <script>
+        //如果账号未认证 就开启定时轮询 
+        if(@userContext.MemberStatus==1)
+        {
+            var timer=window.setInterval(polling, 3 * 1000);
+            function polling() {
+                $.ajax({
+                    url: "/player/player/polling",
+                    type: "get",
+                    dataType: "text",
+                    success: function (json) {
+                        if (json.flag)
+                        {
+                            window.clearTimeout(timer);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

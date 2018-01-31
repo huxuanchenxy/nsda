@@ -31,7 +31,6 @@ namespace nsda.Web.Areas.coach.Controllers
         //修改个人信息
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult edit(RegisterCoachRequest request)
         {
             string msg = string.Empty;
@@ -42,7 +41,6 @@ namespace nsda.Web.Areas.coach.Controllers
         //扩展选手
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult extendplayer(RegisterPlayerRequest request)
         {
             string msg = string.Empty;
@@ -53,7 +51,6 @@ namespace nsda.Web.Areas.coach.Controllers
         //扩展裁判
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult extendreferee(RegisterRefereeRequest request)
         {
             string msg = string.Empty;
@@ -79,7 +76,6 @@ namespace nsda.Web.Areas.coach.Controllers
         //2 新增
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult insertplayer(PlayerCoachRequest request)
         {
             request.IsPositive = false;
@@ -92,7 +88,6 @@ namespace nsda.Web.Areas.coach.Controllers
         //3 编辑
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult editplayer(PlayerCoachRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
@@ -103,7 +98,6 @@ namespace nsda.Web.Areas.coach.Controllers
         //4 删除
         [HttpPost]
         [AjaxOnly]
-        [ValidateAntiForgeryToken]
         public ContentResult deleteplayer(int id)
         {
             var msg = string.Empty;
