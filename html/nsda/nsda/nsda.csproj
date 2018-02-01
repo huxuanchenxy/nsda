@@ -276,7 +276,6 @@
     <Content Include="Content\asset\js\block.js" />
     <Content Include="Content\asset\js\bootstrap.min.js" />
     <Content Include="Content\asset\js\change.js" />
-    <Content Include="Content\asset\js\loading.js" />
     <Content Include="Content\asset\js\selected.js" />
     <Content Include="Content\asset\js\info.js" />
     <Content Include="Content\asset\js\jquery-3.2.1.min.js" />
@@ -297,7 +296,6 @@
     <Content Include="Content\asset\js\parallax.min.js" />
     <Content Include="Content\asset\js\tabs.js" />
     <None Include="Content\asset\js\_references.js" />
-    <Content Include="Content\asset\js\load.js" />
     <Content Include="favicon.ico" />
     <Content Include="Content\asset\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
