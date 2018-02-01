@@ -1,16 +1,228 @@
-﻿
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.MemberCoachResponse
 @{
-    Layout = null;
+    ViewBag.Title = "教练个人中心";
+    Layout = "~/Areas/coach/Views/Shared/_Layout.cshtml";
 }
+@{
+    var userContext = ViewBag.UserContext as WebUserContext;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/coachinformation.css?version=@Constant.Version">
+}
+<div class="coach-personal">
+    <div class="per-top">
+        <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
+        <p class="scorecheck">Changing your account information</p>
+    </div>
+    <div class="per-con">
+        <div class="person-title"></div>
+        <div class="modifyinfo">
+            <div class="form-group">
+                <label>E-mail:</label>
+                <div class="form-con"><p>@userContext.Account</p></div>
+            </div>
+            <div class="form-group two-label">
+                <div>
+                    <label for="firstname"> First Name:</label>
+                    <div class="form-con">
+                        <input type="text" id="firstname" value="@Model.PinYinSurName">
+                    </div>
+                </div>
+                <div>
+                    <label for="lastname">Last Name:</label>
+                    <div class="form-con">
+                        <input type="text" id="lastname" value="@Model.PinYinName">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <div class="form-con">
+                    <label class="radio-inline">
+                        @if (Model.Gender == nsda.Model.enums.GenderEm.男)
+                        {
+                        <input name="Gender" type="radio" checked="checked" value="1" />
+                        }
+                        else
+                        {
+                        <input name="Gender" type="radio" value="1" />
+                        }
+                        Male
+                    </label>
+                    <label class="radio-inline">
+                        @if (Model.Gender == nsda.Model.enums.GenderEm.女)
+                        {
+                        <input name="Gender" type="radio" checked="checked" value="2" />
+                        }
+                        else
+                        {
+                        <input name="Gender" type="radio" value="2" />
+                        }
+                        Female
+                    </label>
 
-<!DOCTYPE html>
+                </div>
+            </div>
+            <div class="form-group two-label">
+                <div>
+                    <label for="address">Address:</label>
+                    <div class="form-con">
+                        <input type="text" id="address" value="@Model.ContactAddress">
+                    </div>
+                </div>
+                <div>
+                    <label for="contactNumber">Contact Number:</label>
+                    <div class="form-con">
+                        <input type="text" id="contactNumber" value="@Model.ContactMobile">
+                    </div>
+                </div>
+            </div>
+            <div class="emergency">
+                <h4>Emergency Contact Information</h4>
+                <div class="form-group">
+                    <label for="phone">Emergency Contact Person:</label>
+                    <div class="form-con">
+                        <input type="text" id="emergencyContact" value="@Model.EmergencyContact">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Emergency Number:</label>
+                    <div class="form-con">
+                        <input type="text" id="emergencyContactMobile" value="@Model.EmergencyContactMobile">
+                    </div>
+                </div>
+                <button id="modifyinfo">Confirm Your Information</button>
+            </div>
+        </div>
+        <div class="modifypassword">
+            <img src="/asset/img/pass_03.png" alt="" />
+            <div class="modifypanel">
+                <input type="password" id="newpwd" placeholder="输入新密码">
+                <input type="password" id="againpwd" placeholder="再次输入新密码">
+                <input type="button" value="确认新密码" class="confirmnewpassword" id="modifypwd">
+            </div>
+        </div>
+    </div>
+</div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>index</title>
-</head>
-<body>
-    nsda教练首页
-</body>
-</html>
+@section scripts
+{
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/validate.js?version=@Constant.Version"></script>
+    <script>
+        $("#modifypwd").click(function () {
+            var $newpwd = $("#newpwd").val();
+            var $againpwd = $("#againpwd").val();
+
+            if ($newpwd == "") {
+                layer.msg('请输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if ($againpwd == "") {
+                layer.msg('请再次输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+
+            if ($newpwd != $againpwd) {
+                layer.msg('两次输入的密码不一致', { icon: 5, time: 1000 });
+                return;
+            }
+
+            if (!validate.isPwd($newpwd)) {
+                layer.msg('必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
+                return;
+            }
+
+            $.ajax({
+                url: "/commondata/editpwd",
+                type: "post",
+                dataType: "json",
+                data: {
+                    pwd: $newpwd,
+                },
+                beforeSend: function () {
+                    layer.msg('修改密码中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("修改成功", { icon: 1, time: 1000 });
+                        $("#newpwd").val("");
+                        $("#againpwd").val("");
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+
+        $("#modifyinfo").click(function () {
+            var gender = $('input[name=Gender]:checked').val();
+            var $firstname = $("#firstname").val();
+            if ($firstname == "") {
+                layer.msg('请输入First Name', { icon: 5, time: 1000 });
+                return;
+            }
+            var $lastname = $("#lastname").val();
+            if ($lastname == "") {
+                layer.msg('请输入Last Name', { icon: 5, time: 1000 });
+                return;
+            }
+            var $address = $("#address").val();
+            if ($address == "") {
+                layer.msg('请输入Address', { icon: 5, time: 1000 });
+                return;
+            }
+            var $contactNumber = $("#contactNumber").val();
+            if ($contactNumber == "") {
+                layer.msg('请输入Contact Number', { icon: 5, time: 1000 });
+                return;
+            }
+            var $emergencyContact = $("#emergencyContact").val();
+            if ($emergencyContact == "") {
+                layer.msg('请输入Emergency Contact Person', { icon: 5, time: 1000 });
+                return;
+            }
+            var $emergencyContactMobile = $("#emergencyContactMobile").val();
+            if ($emergencyContactMobile == "") {
+                layer.msg('请输入Emergency Number', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/coach/coach/edit",
+                type: "post",
+                dataType: "json",
+                data: {
+                    PinYinSurName: $firstname,
+                    PinYinName: $lastname,
+                    ContactMobile: $contactNumber,
+                    Gender:gender,
+                    EmergencyContact: $emergencyContact,
+                    EmergencyContactMobile: $emergencyContactMobile,
+                    ContactAddress: $address
+                },
+                beforeSend: function () {
+                    layer.msg('修改个人资料中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("修改成功", { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+}

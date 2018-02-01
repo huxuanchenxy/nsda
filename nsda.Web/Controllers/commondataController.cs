@@ -93,9 +93,9 @@ namespace nsda.Web.Controllers
 
         //省份
         [HttpGet]
-        public ContentResult listprovince(int countryId)
+        public ContentResult listprovince(bool? isInter)
         {
-            var data = _provinceService.Province(countryId);
+            var data = _provinceService.Province(isInter);
             return Result(true, string.Empty, data);
         }
 

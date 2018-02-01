@@ -1,4 +1,5 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace nsda.Model.dto.request
 
         public string Title { get; set; }
         public string FilePath { get; set; }
+
+        public FileTypeEm FileType { get; set; }
     }
 
     public class PlayerEventScoreQueryRequest:PageQuery

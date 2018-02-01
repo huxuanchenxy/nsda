@@ -38,6 +38,8 @@ namespace nsda.Model.dto.response
         public int MemberId { get; set; }
         public string GroupNum { get; set; }
         public string EventGroupName { get; set; }
+        public EventTypeEm EventType { get; set; }
+        public bool Flag { get; set; }
     }
 
 
@@ -47,6 +49,6 @@ namespace nsda.Model.dto.response
         public string EventCode { get; set; }
         public EventTypeEm  EventType{ get; set; }
         public string EventGroupName { get; set; }
-        public OrderStatusEm OrderStatus{ get; set; }
+        public OperationStatusEm OperationStatus { get; set; }
     }
 }

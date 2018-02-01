@@ -15,9 +15,11 @@ namespace nsda.Model.dto.response
         public string EventCode { get; set; }
         //public string CityName { get; set; }
         //public string ProvinceName { get; set; }
-        //public string CountryName { get; set; }
-        public decimal Points { get; set; }
+        public int Points { get; set; }
         public int Id { get; set; }
+        public string EventGroupName { get; set; }
+        public EventTypeEm EventType { get; set; }
+        public EventTypeNameEm EventTypeName { get; set; }
     }
 
     public class PlayerPointsRecordDetailResponse

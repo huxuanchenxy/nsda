@@ -1,0 +1,125 @@
+﻿@using nsda.Utilities
+@{
+    ViewBag.Title = "积分查询";
+    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
+}
+<div class="score-con">
+    <div class="score-top">
+        <img class="integral" src="/asset/img/score_03.jpg" alt="...">
+        <p class="scorecheck">积分查询</p>
+        <a href="javascript:;" id="search">
+            <span class="score-search">
+                <i class="iconfont icon-fangdajing"></i>搜索
+            </span>
+        </a>
+        <input type="text" class="date-input" id="querydate" placeholder="Date Select">
+
+    </div>
+    <div class="score-table">
+        <table>
+            <thead>
+                <tr>
+                    <th width="15%">比赛编码</th>
+                    <th width="30%">比赛名称</th>
+                    <th width="5%">类别</th>
+                    <th width="14%">组别</th>
+                    <th width="10%">积分</th>
+                    <th width="30%">状态</th>
+                </tr>
+            </thead>
+            <tbody id="data">
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation" id="pager">
+        </nav>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/asset/js/common.js"></script>
+    <script src="/asset/js/pager.js"></script>
+    <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/js/enumreplace.js"></script>
+    <script>
+        laydate.render({
+            elem: '#querydate',
+            lang: 'en',
+            range: true,
+            theme: '#393D49',
+            done: function(value, date, endDate){//控件选择完毕后的回调---点击日期、清空、现在、确定均会触发。
+                console.log(value);
+                var myarray = value.split(" - ");
+                console.log(myarray)
+                $("#querydate").attr("data-date", value);//得到日期生成的值，如：2017-08-18
+            }
+        });
+
+        (function (w) {
+            var playerpoints = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                    StartDate: "",
+                    EndDate:""
+                }
+            };
+            playerpoints.Load = function (filter) {
+                $.ajax({
+                    url: "/player/player/pointsrecord",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            playerpoints.param.TotalPage = json.total;
+                            _pager.init(filter, playerpoints.param.PageIndex, playerpoints.param.TotalPage, function (p) {
+                                playerpoints.param.PageIndex = p;
+                                playerpoints.Load(playerpoints.param)
+                            });                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html += '<tr>';
+                                html += '<td>' + val.EventCode + '</td>'
+                                html += '<td>' + val.EventName + '</td>';
+                                html += '<td>' + enumreplace.replaceeventType(val.EventType)+ '</td>';
+                                html += '<td>'+ val.EventGroupName +'</td>';
+                                html += '<td>'+val.Points+'</td>';
+                                html += ' <td><a href="/player/player/pointsdetail/'+val.Id+'" class="checkdetail">查看明细</a></td>';
+                                html += '</tr>';
+                            });
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.playerpoints = playerpoints
+        })(window);
+        playerpoints.Load(playerpoints.param);
+
+        $("#search").click(function () {
+            var date = $("#querydate").attr("data-date");
+            if (date == "") {
+                playerpoints.param.StartDate = "";
+                playerpoints.param.EndDate = "";
+            } else {
+                var myarray = date.split(" - ");
+                playerpoints.param.StartDate = myarray[0];
+                playerpoints.param.EndDate = myarray[1];
+            }
+            playerpoints.Load(playerpoints.param);
+        });
+    </script>
+}

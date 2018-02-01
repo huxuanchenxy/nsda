@@ -680,7 +680,8 @@
         width:52%
     }
     .form-group .form-select-school{
-        width:14%;
+        width:29%;
+        padding-left:10px;
     }
     .form-group .em{
         margin-left:30px;

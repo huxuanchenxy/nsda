@@ -3,74 +3,65 @@
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
 
-<div class="info-con">
-    <div class="msg-box">
-        <p>消息盒子 Message Box</p>
-    </div>
-    <div class="msgbox-con">
-        <div class="msgimg">
-            <img src="/asset/img/teacher.png" alt="...">
-            <p>通知</p><p>01/04</p><p>13:42</p>
-        </div>
-        <div class="msgc">
-            <p class="msgteam">周星驰 向您发出组队申请</p>
-            <p class="teamcon">周星驰 想您发出组队申请。邀请您一同参加<a href="#">“2017-2018全国中学生学术辩论与演讲联赛第一轮（济南赛区辩论）”</a>新手组组别比赛。请尽快前往处理。</p>
-        </div>
-        <a href="#" class="cmore">查看详情</a>
-    </div>
-    <div class="msgbox-con">
-        <div class="msgimg">
-            <img src="/asset/img/teacher.png" alt="...">
-            <p>通知</p><p>01/04</p><p>13:42</p>
-        </div>
-        <div class="msgc">
-            <p class="msgteam">周星驰 向您发出组队申请</p>
-            <p class="teamcon">周星驰 想您发出组队申请。邀请您一同参加<a href="#">“2017-2018全国中学生学术辩论与演讲联赛第一轮（济南赛区辩论）”</a>新手组组别比赛。请尽快前往处理。</p>
-        </div>
-        <a href="#" class="cmore">查看详情</a>
-    </div>
-    <div class="msgbox-con">
-        <div class="msgimg">
-            <img src="/asset/img/teacher.png" alt="...">
-            <p>通知</p><p>01/04</p><p>13:42</p>
-        </div>
-        <div class="msgc">
-            <p class="msgteam">周星驰 向您发出组队申请</p>
-            <p class="teamcon">周星驰 想您发出组队申请。邀请您一同参加<a href="#">“2017-2018全国中学生学术辩论与演讲联赛第一轮（济南赛区辩论）”</a>新手组组别比赛。请尽快前往处理。</p>
-        </div>
-        <a href="#" class="cmore">查看详情</a>
-    </div>
-    <div class="msgbox-con">
-        <div class="msgimg">
-            <img src="/asset/img/teacher.png" alt="...">
-            <p>通知</p><p>01/04</p><p>13:42</p>
-        </div>
-        <div class="msgc">
-            <p class="msgteam">周星驰 向您发出组队申请</p>
-            <p class="teamcon">周星驰 想您发出组队申请。邀请您一同参加<a href="#">“2017-2018全国中学生学术辩论与演讲联赛第一轮（济南赛区辩论）”</a>新手组组别比赛。请尽快前往处理。</p>
-        </div>
-        <a href="#" class="cmore">查看详情</a>
-    </div>
+<div class="info-con" id="mail">
 </div>
-
-<nav aria-label="Page navigation" class="info-nav">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
+<nav aria-label="Page navigation" class="info-nav" id="pager">
 </nav>
 
-
+@section scripts
+{
+    <script src="/asset/js/pager.js"></script>
+    <script>
+        (function (w) {
+            var playermail = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 4,
+                }
+            };
+            playermail.Load = function (filter) {
+                $.ajax({
+                    url: "/commondata/mail",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        var html = '<div class="msg-box"><p>消息盒子 Message Box</p></div>'
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            playermail.param.TotalPage = json.total;
+                            _pager.init(filter, playermail.param.PageIndex, playermail.param.TotalPage, function (p) {
+                                playermail.param.PageIndex = p;
+                                playermail.Load(playermail.param)
+                            });
+                            $.each(json.rows, function (k, val) {
+                                html += '<div class="msgbox-con">'
+                                html += '<div class="msgimg">';
+                                if (val.Head == "" || val.Head == null) {
+                                    html += '<img src="/asset/img/teacher.png" alt="...">'
+                                } else {
+                                    html += '<img src="' + val.Head + '" alt="...">'
+                                }
+                                html += '<p>通知</p><p>' + val.CreateTime.substring(5, 10) + '</p><p>' + val.CreateTime.substring(11, 16) + '</p></div>';
+                                html += '<div class="msgc">';
+                                html += '<p class="msgteam">' + val.Title + '</p>';
+                                html += '<p class="teamcon">'+val.Content+'</p>';
+                                html += '</div><a href="/player/playersignup/list" class="cmore">查看详情</a>';
+                                html += '</div>';
+                            });
+                            $("#mail").html(html);
+                        } else {
+                            $("#mail").html(html);
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.playermail = playermail
+        })(window);
+        playermail.Load(playermail.param);
+    </script>
+}

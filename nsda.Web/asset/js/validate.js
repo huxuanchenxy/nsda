@@ -82,7 +82,7 @@
         var rule2 = /[a-z]+/;
         var rule3 = /[A-Z]+/;
         var rule4 = /[~!@@#\$%^&*\{\};,.\?\/'"]/;
-        var rule5 = /^.{6,16}$/;
+        var rule5 = /^.{6,32}$/;
         var flag1 = rule1.test(pwd);
         var flag2 = rule2.test(pwd);
         var flag3 = rule3.test(pwd);

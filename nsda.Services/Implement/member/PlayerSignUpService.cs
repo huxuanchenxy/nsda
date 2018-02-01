@@ -168,14 +168,14 @@ namespace nsda.Services.Implement.member
                             return flag;
                         }
                     }
-                    t_member_player frommember = _dbContext.Get<t_member_player>(request.FromMemberId);
+                    t_member_player frommember = _dbContext.Select<t_member_player>(c=>c.memberId==request.FromMemberId).FirstOrDefault();
                     //3.0 是否有资格报名
                     if (!IsValid(eventGroup, frommember))
                     {
                         msg = "您不符合此赛事报名规则";
                         return flag;
                     }
-                    t_member_player tomember = _dbContext.Get<t_member_player>(request.ToMemberId);
+                    t_member_player tomember = _dbContext.Select<t_member_player>(c=>c.memberId==request.ToMemberId).FirstOrDefault();
                     if (!IsValid(eventGroup, tomember))
                     {
                         msg = "您队友不符合此赛事报名规则";
@@ -214,10 +214,11 @@ namespace nsda.Services.Implement.member
                         _dbContext.Insert(new t_sys_mail
                         {
                             title = $"{frommember.completename} 向您发出组队申请",
-                            content = $"{frommember.completename} 向您发出组队申请。邀请您一同参加 \"{tevent.name}\" {eventGroup.name}组别比赛。请尽快前往处理",
+                            content = $"{frommember.completename} 向您发出组队申请。邀请您一同参加<a href=\"/player/playersignup/eventdetail\"> \"{tevent.name}</a>\" {eventGroup.name}组别比赛。请尽快前往处理",
                             isRead = false,
                             mailType = MailTypeEm.赛事报名邀请,
-                            memberId = request.ToMemberId
+                            memberId = request.ToMemberId,
+                            sendMemberId=request.FromMemberId
                         });
                         _dbContext.CommitChanges();
                         flag = true;
@@ -660,7 +661,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 var sql = $@"select a.*,b.code MemberCode,b.completename MemberName from 
-                             (select b.id EventId,b.code EventCode,b.name EventName,b.eventType EventType,
+                             (select b.id EventId,b.code EventCode,b.name EventName,b.eventType EventType,b.starteventdate StartEventDate
                               a.memberId MemberId from t_event_player_signup a
                               inner join t_event b on a.eventId=b.id
                               where  a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()})
@@ -779,16 +780,26 @@ namespace nsda.Services.Implement.member
             {
                 StringBuilder join = new StringBuilder();
                 var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,c.code EventCode,
-                             c.name EventName,d.name EventGroupName
+                             c.name EventName,d.name EventGroupName,c.eventType EventType
                              from  t_event_player_signup a 
                              inner join t_member_player b on a.memberId=b.id
                              inner join t_event c on a.eventId=c.id
                              inner join t_event_group d on a.eventGroupId=d.id
                              where a.isdelete=0  and groupnum in (select groupnum  from t_event_player_signup where memberId=@MemberId)
-                            {join.ToString()} order by  a.creatTime desc
+                            {join.ToString()} order by  a.createtime desc
                          ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.MemberId == request.MemberId)
+                        {
+                            item.Flag = true;
+                        }
+                    }
+                }
                 request.Records = totalCount;
             }
             catch (Exception ex)
@@ -896,11 +907,7 @@ namespace nsda.Services.Implement.member
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.OperationStatus != null && request.OperationStatus > 0)
-                {
-                    join.Append(" and a.operationStatus=@OperationStatus ");
-                }
-                var sql = $@"select d.code EventCode,d.name EventName,d.eventType EventType,e.name EventGroupName,b.orderStatus OrderStatus 
+                var sql = $@"select d.code EventCode,d.name EventName,d.eventType EventType,e.name EventGroupName,a.operationStatus OperationStatus 
                              from t_order_operation a
                              inner join t_order b on a.orderId=b.id
                              inner join t_event_player_signup c on b.sourceId=c.id

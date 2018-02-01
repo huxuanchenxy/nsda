@@ -15,7 +15,9 @@
     margin-top: 10px;
     border: none;
 }
-
+.boundtable{
+    min-height:600px;
+}
 .boundtable tbody td button {
     width: 90px;
     height: 30px;
@@ -156,8 +158,8 @@
 
 .addcoach .form-group .boundcoach {
     padding: 12px 95px;
-    border-radius: 4px;
     font-size: 18px;
+    border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     background: #34495E;
@@ -197,4 +199,21 @@
 }
 .boundtable tbody td:not(:last-child) {
     border-right: 1px solid #a7a7a7;
+}
+.boundtable tbody td{
+    position:relative;
+}
+.boundtable tbody td span{
+    display:inline-block;
+    font-size:12px;
+    color:white;
+    width:30%;
+    height:15px;
+    background:#1ABC9C;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    position:absolute;
+    top:5px;
+    left:40px;
 }

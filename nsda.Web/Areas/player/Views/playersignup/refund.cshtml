@@ -1,0 +1,96 @@
+﻿@using nsda.Utilities
+@{
+    ViewBag.Title = "会员中心";
+    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/playerpartin.css?version=@Constant.Version">
+}
+<div class="comp-lists tab">
+    <ul class="comp-title">
+        <a href="/player/playersignup/list"><li class="act tabt">已参与比赛</li></a>
+        <a href="javascript:;"><li class="tabt">退赛信息</li></a>
+    </ul>
+    <div class="comp-con">
+        <div class="exittable">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="13%">比赛编码</th>
+                        <th width="40%">比赛名称</th>
+                        <th width="10%">类别</th>
+                        <th width="15%">组别</th>
+                        <th width="20%">状态</th>
+                    </tr>
+                </thead>
+                <tbody id="data">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>退赛确认</td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation" id="pager">
+            </nav>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/pager.js"></script>
+    <script src="/asset/js/enumreplace.js"></script>
+    <script>
+        (function (w) {
+            var playerrefund = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                }
+            };
+            playerrefund.Load = function (filter) {
+                $.ajax({
+                    url: "/player/playersignup/refundlist",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            playerrefund.param.TotalPage = json.total;
+                            _pager.init(filter, playerrefund.param.PageIndex, playerrefund.param.TotalPage, function (p) {
+                                playerrefund.param.PageIndex = p;
+                                playerrefund.Load(playerrefund.param)
+                            });                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html += '<tr>';
+                                html += '<td>' + val.EventCode + '</td>';
+                                html += '<td>' + val.EventName + '</td>';
+                                html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
+                                html += '<td>' + val.EventGroupName + '</td>';
+                                html += '<td>' + enumreplace.replaceoperationStatus(val.OperationStatus) + '</td>';
+                                html += '</tr>';
+                            });
+                            html += '';
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.playerrefund = playerrefund
+        })(window);
+        playerrefund.Load(playerrefund.param);
+    </script>
+ }

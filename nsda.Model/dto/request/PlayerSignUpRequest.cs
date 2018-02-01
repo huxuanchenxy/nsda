@@ -50,6 +50,5 @@ namespace nsda.Model.dto.request
     public class PlayerSignUpQueryRequest : PageQuery
     {
         public int MemberId { get; set; }
-        public OperationStatusEm? OperationStatus { get; set; }
     }
 }

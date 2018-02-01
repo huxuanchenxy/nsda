@@ -57,8 +57,6 @@ namespace nsda.Model.dto.response
         /// </summary>
         public string Address { get; set; }
 
-        public int CountryId { get; set; }
-
         public int ProvinceId { get; set; }
 
         public int CityId { get; set; }

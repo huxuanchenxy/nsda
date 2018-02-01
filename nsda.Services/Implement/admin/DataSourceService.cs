@@ -67,7 +67,8 @@ namespace nsda.Services.Implement.admin
                 _dbContext.Insert(new t_sys_datasource
                 {
                     title = request.Title,
-                    filepath=request.FilePath 
+                    filepath=request.FilePath,
+                    fileType=request.FileType
                 });
                 flag = true; 
             }
@@ -76,35 +77,6 @@ namespace nsda.Services.Implement.admin
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("DataSourceService.Insert", ex);
-            }
-            return flag;
-        }
-
-        public bool Edit(DataSourceRequest request, int sysUserId, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                var datasource = _dbContext.Get<t_sys_datasource>(request.Id);
-                if (datasource != null)
-                {
-                    datasource.filepath = request.FilePath;
-                    datasource.title = request.Title;
-                    datasource.updatetime = DateTime.Now;
-                    _dbContext.Update(datasource);
-                    flag = true;
-                }
-                else
-                {
-                    msg = "资料信息不存在";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("DataSourceService.Edit", ex);
             }
             return flag;
         }
@@ -122,7 +94,8 @@ namespace nsda.Services.Implement.admin
                         FilePath = detail.filepath,
                         Id = detail.id,
                         Title = detail.title,
-                        UpdateTime = detail.updatetime  
+                        UpdateTime = detail.updatetime,
+                        FileType=detail.fileType
                     };
                 }
             }

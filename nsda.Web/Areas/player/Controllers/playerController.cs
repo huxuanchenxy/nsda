@@ -25,8 +25,10 @@ namespace nsda.Web.Areas.player.Controllers
         IPlayerSignUpService _playerSignUpService;
         IPlayerEduService _playerEduService;
         IPlayerCoachService _playerCoachService;
-        public playerController(IMemberService memberService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduService playerEduService, IPlayerCoachService playerCoachService)
+        IMailService _mailService;
+        public playerController(IMailService mailService,IMemberService memberService,IDataSourceService dataSourceService, IEventScoreService eventScoreService, IMemberTempService memberTempService, IMemberPointsService memberPointsService, IPlayerSignUpService playerSignUpService,IPlayerEduService playerEduService, IPlayerCoachService playerCoachService)
         {
+            _mailService = mailService;
             _memberService = memberService;
             _dataSourceService = dataSourceService;
             _eventScoreService = eventScoreService;
@@ -73,14 +75,6 @@ namespace nsda.Web.Areas.player.Controllers
             string msg = string.Empty;
             var flag = _memberService.ExtendReferee(request, UserContext.WebUserContext, out msg);
             return Result<string>(flag, msg);
-        }
-
-        //当前比赛列表
-        [HttpGet]
-        public ContentResult current()
-        {
-            var data = _playerSignUpService.CurrentPlayerEvent(UserContext.WebUserContext.Id);
-            return Result(true, "", data);
         }
 
         //辩题资料下载
@@ -201,7 +195,10 @@ namespace nsda.Web.Areas.player.Controllers
         #region view
         public ActionResult index()
         {
-            ViewBag.UserContext = UserContext.WebUserContext;
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            ViewBag.Mail = _mailService.List(userContext.Id);
+            ViewBag.CurrentPlayerEvent = _playerSignUpService.CurrentPlayerEvent(userContext.Id);
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/player/player/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
@@ -239,6 +236,29 @@ namespace nsda.Web.Areas.player.Controllers
         public ActionResult mail()
         {
             ViewBag.UserContext = UserContext.WebUserContext;
+            return View();
+        }
+
+        //积分列表页
+        public ActionResult points()
+        {
+            ViewBag.UserContext = UserContext.WebUserContext;
+            return View();
+        }
+
+        public ActionResult pointsdetail(int id)
+        {
+            ViewBag.UserContext = UserContext.WebUserContext;
+            return View();
+        }
+
+        public ActionResult addedu()
+        {
+            return View();
+        }
+
+        public ActionResult editedu(int id)
+        {
             return View();
         }
         #endregion

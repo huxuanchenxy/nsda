@@ -317,5 +317,28 @@ namespace nsda.Services.member
             }
             return response;
         }
+        //详情
+        public PlayerCoachResponse Detail(int id)
+        {
+            PlayerCoachResponse response = null;
+            try
+            {
+                var detail = _dbContext.Get<t_player_coach>(id);
+                if (detail != null)
+                {
+                    response = new PlayerCoachResponse
+                    {
+                        Id=id,
+                        StartDate=detail.startdate,
+                        EndDate=detail.enddate                           
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("PlayerCoachService.Detail", ex);
+            }
+            return response;
+        }
     }
 }

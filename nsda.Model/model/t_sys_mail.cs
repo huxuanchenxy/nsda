@@ -29,6 +29,8 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
+        public int? sendMemberId { get; set; }
+    
         /// <summary>
         /// 会员id
         /// </summary>

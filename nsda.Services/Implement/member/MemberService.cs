@@ -1122,21 +1122,21 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                if (request.Name.IsEmpty() || request.SurName.IsEmpty())
-                {
-                    msg = "姓/名不能为空";
-                    return flag;
-                }
-                if (request.PinYinName.IsEmpty() || request.PinYinSurName.IsEmpty())
-                {
-                    msg = "拼音姓/名不能为空";
-                    return flag;
-                }
-                if (request.Card.IsEmpty())
-                {
-                    msg = "证件号不能为空";
-                    return flag;
-                }
+                //if (request.Name.IsEmpty() || request.SurName.IsEmpty())
+                //{
+                //    msg = "姓/名不能为空";
+                //    return flag;
+                //}
+                //if (request.PinYinName.IsEmpty() || request.PinYinSurName.IsEmpty())
+                //{
+                //    msg = "拼音姓/名不能为空";
+                //    return flag;
+                //}
+                //if (request.Card.IsEmpty())
+                //{
+                //    msg = "证件号不能为空";
+                //    return flag;
+                //}
                 if (request.ContactMobile.IsEmpty())
                 {
                     msg = "联系电话不能为空";
@@ -1152,33 +1152,33 @@ namespace nsda.Services.member
                     msg = "紧急联系人电话不能为空";
                     return flag;
                 }
-                if (request.ContactAddress.IsEmpty())
-                {
-                    msg = "联系地址不能为空";
-                    return flag;
-                }
+                //if (request.ContactAddress.IsEmpty())
+                //{
+                //    msg = "联系地址不能为空";
+                //    return flag;
+                //}
                 var detail = _dbContext.Select<t_member_player>(c => c.memberId == userContext.Id).FirstOrDefault();
                 if (detail != null)
                 {
-                    detail.card = request.Card;
-                    detail.cardType = request.CardType;
-                    detail.completename = $"{request.Name}{request.SurName}";
-                    detail.surname = request.SurName;
-                    detail.name = request.Name;
-                    detail.pinyinname = request.PinYinName;
-                    detail.pinyinsurname = request.PinYinSurName;
-                    detail.completepinyin = $"{request.PinYinName}{request.PinYinSurName}";
-                    detail.contactaddress = request.ContactAddress;
+                    //detail.card = request.Card;
+                    //detail.cardType = request.CardType;
+                    //detail.completename = $"{request.Name}{request.SurName}";
+                    //detail.surname = request.SurName;
+                    //detail.name = request.Name;
+                    //detail.pinyinname = request.PinYinName;
+                    //detail.pinyinsurname = request.PinYinSurName;
+                    //detail.completepinyin = $"{request.PinYinName}{request.PinYinSurName}";
+                    //detail.contactaddress = request.ContactAddress;
                     detail.contactmobile = request.ContactMobile;
                     detail.emergencycontact = request.EmergencyContact;
                     detail.emergencycontactmobile = request.EmergencyContactMobile;
-                    detail.gender = request.Gender;
-                    detail.grade = request.Grade;
+                    //detail.gender = request.Gender;
+                    //detail.grade = request.Grade;
                     detail.updatetime = DateTime.Now;
                     _dbContext.Update(detail);
                     flag = true;
-                    userContext.Name = detail.completename;
-                    SaveCurrentUser(userContext);
+                    //userContext.Name = detail.completename;
+                    //SaveCurrentUser(userContext);
                 }
                 else
                 {
@@ -1796,7 +1796,8 @@ namespace nsda.Services.member
                         EmergencyContactMobile = response.emergencycontactmobile,
                         MemberId = response.memberId,
                         PinYinName = response.pinyinname,
-                        PinYinSurName = response.pinyinsurname
+                        PinYinSurName = response.pinyinsurname,
+                        Gender=response.gender
                     };
                 }
             }

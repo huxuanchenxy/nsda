@@ -15,6 +15,7 @@ namespace nsda.Model.dto.response
         public string MemberCode { get; set; }
         public string MemberName { get; set; }
         public EventTypeEm EventType { get; set; }
+        public DateTime StartEventDate { get; set; }
     }
 
     public class RefereeCurrentEventResponse

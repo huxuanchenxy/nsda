@@ -207,10 +207,6 @@ namespace nsda.Services.Implement.referee
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.CountryId.HasValue && request.CountryId > 0)
-                {
-                    join.Append(" and b.countryId=@CountryId ");
-                }
                 if (request.ProvinceId.HasValue && request.ProvinceId > 0)
                 {
                     join.Append(" and b.provinceId=@ProvinceId ");
@@ -225,12 +221,11 @@ namespace nsda.Services.Implement.referee
                     join.Append($" and b.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and b.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
                 }
                 var sql= $@"select a.id Id,b.id EventId,b.name EventName,b.code EventCode,refereeSignUpStatus,
-                                                      b.EventType,c.name CountryName,d.name ProvinceName,e.name CityName
+                                                      b.EventType,c.name ProvinceName,d.name CityName
                                                       from t_event_referee_signup a 
                                                       inner join t_event b on a.eventId=b.id
-                                                      left  join t_sys_country c on b.countryId=c.id
-                                                      left  join t_sys_province d on b.provinceId=d.id
-                                                      left  join t_sys_city e on b.cityId=e.id
+                                                      left  join t_sys_province c on b.provinceId=c.id
+                                                      left  join t_sys_city d on b.cityId=d.id
                                                       where a.isdelete=0 and b.isdelete=0 
                                                       and a.memberId=@MemberId {join.ToString()}  order by a.createtime desc
                                                      ";

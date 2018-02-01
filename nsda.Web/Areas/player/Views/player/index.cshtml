@@ -1,9 +1,16 @@
 ﻿@{
     ViewBag.Title = "会员中心";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+    var mail = ViewBag.Mail as List<nsda.Model.dto.response.MailResponse>;
+    var data = ViewBag.CurrentPlayerEvent as List<nsda.Model.dto.response.PlayerCurrentEventResponse>;
+    var eventId = 0;
+    var flag = 0;
+    var rowspan = 1;
 }
 
 <div class="info-con">
+@foreach (var item in data)
+{
     <table>
         <thead>
             <tr>
@@ -17,66 +24,62 @@
             </tr>
         </thead>
         <tbody>
+
+            if (eventId != item.EventId)
+            {
+                eventId = item.EventId;
+                flag = 1;
+                rowspan = data.Where(p => p.EventId == item.EventId).Count();
+            }
+            else
+            {
+                flag = 0;
+            }
             <tr>
-                <td rowspan="4">01</td>
-                <td rowspan="4">02</td>
-                <td rowspan="4">03</td>
-                <td rowspan="4">04</td>
-                <td>05</td>
-                <td>06</td>
-                <td rowspan="4"><a href="#" class="enter">进入比赛</a></td>
+                @if (flag == 1)
+                {
+                    <td rowspan="@rowspan">@item.EventCode</td>
+                    <td rowspan="@rowspan">@item.EventName</td>
+                    <td rowspan="@rowspan">@item.EventType</td>
+                    <td rowspan="@rowspan">@item.StartEventDate.ToString("yyyy-MM-dd")</td>
+                }
+                <td>@item.MemberCode</td>
+                <td>@item.MemberName</td>
+                @if (flag == 1)
+                {
+                   <td rowspan="@rowspan"><a href="#" class="enter">进入比赛</a></td>
+                }
             </tr>
-            <tr>
-                <td>01</td>
-                <td>02</td>
-            </tr>
-            <tr></tr>
-            <tr></tr>
-            <tr class="pink">
-                <td rowspan="4">01</td>
-                <td rowspan="4">02</td>
-                <td rowspan="4">03</td>
-                <td rowspan="4">04</td>
-                <td>05</td>
-                <td>06</td>
-                <td rowspan="4">即将开始</td>
-            </tr>
-            <tr class="pink">
-                <td>01</td>
-                <td>02</td>
-            </tr>
-            <tr class="pink"></tr>
-            <tr class="pink"></tr>
-            <tr>
-                <td rowspan="4">01</td>
-                <td rowspan="4">02</td>
-                <td rowspan="4">03</td>
-                <td rowspan="4">04</td>
-                <td>05</td>
-                <td>06</td>
-                <td rowspan="4"><a href="#" class="check">查看赛果</a></td>
-            </tr>
-            <tr>
-                <td>01</td>
-                <td>02</td>
-            </tr>
-            <tr></tr>
-            <tr></tr>
+   
         </tbody>
-    </table>
+    </table>     }
     <div class="msg-box">
         <p>消息盒子 Message Box</p>
         <a href="/player/player/mail"><img src="/asset/img/more.gif" alt="..." class="msg-more"></a>
     </div>
-    <div class="msgbox-con">
-        <div class="msgimg">
-            <img src="/asset/img/teacher.png" alt="...">
-            <p>通知</p><p>01/04</p><p>13:42</p>
-        </div>
-        <div class="msgc">
-            <p class="msgteam">周星驰 向您发出组队申请</p>
-            <p class="teamcon">周星驰 想您发出组队申请。邀请您一同参加<a href="#">“2017-2018全国中学生学术辩论与演讲联赛第一轮（济南赛区辩论）”</a>新手组组别比赛。请尽快前往处理。</p>
-        </div>
-        <a href="#" class="cmore">查看详情</a>
-    </div>
+
+    @if (mail != null)
+    {
+        foreach (var item in mail)
+        {
+            <div class="msgbox-con">
+                <div class="msgimg">
+                    @if (string.IsNullOrEmpty(item.Head))
+                    {
+                        <img src="/asset/img/teacher.png" alt="...">
+                    }
+                    else
+                    {
+                        <img src="@item.Head" alt="...">
+                    }
+                    <p>通知</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(5, 5)</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(11, 5)</p>
+                </div>
+                <div class="msgc">
+                    <p class="msgteam">@item.Title</p>
+                    <p class="teamcon">@Html.Raw(item.Content)</p>
+                </div>
+                <a href="/player/playersignup/list" class="cmore">查看详情</a>
+            </div>
+       }
+   }
 </div>

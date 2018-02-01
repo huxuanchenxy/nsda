@@ -10,13 +10,13 @@ namespace nsda.Model.dto.request
     public class ProvinceRequest
     {
         public int Id { get; set; }
-        public int CountryId { get; set; }
+        public bool IsInter { get; set; }
         public string Name { get; set; }
     }
 
     public class ProvinceQueryRequest:PageQuery
     {
-        public int? CountryId { get; set; }
+        public bool? IsInter { get; set; }
         public string Name { get; set; }
     }
 }

@@ -84,6 +84,17 @@ namespace nsda.Web.Areas.player.Controllers
             ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
+
+        public ActionResult update(int id)
+        {
+            var detail = _playerCoachService.Detail(id);
+            return View();
+        }
+
+        public ActionResult add()
+        {
+            return View();
+        }
         #endregion
     }
 }

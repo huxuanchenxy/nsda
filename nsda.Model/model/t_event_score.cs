@@ -43,6 +43,11 @@ namespace nsda.Models
         /// <summary>
         /// 创建时间
         /// </summary>
+        public FileTypeEm fileType { get; set; }
+    
+        /// <summary>
+        /// 创建时间
+        /// </summary>
         public DateTime createtime { get; set; }
     
         /// <summary>

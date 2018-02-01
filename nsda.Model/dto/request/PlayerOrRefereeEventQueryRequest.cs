@@ -10,7 +10,6 @@ namespace nsda.Model.dto.request
 {
     public class PlayerOrRefereeEventQueryRequest:PageQuery
     {
-        public int? CountryId { get; set; }
         public int? ProvinceId { get; set; }
         public int? CityId { get; set; }
         /// <summary>

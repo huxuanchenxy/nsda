@@ -1,4 +1,5 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace nsda.Model.dto.request
         public int SysUserId { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Remark { get; set; }
         public string FilePath { get; set; }
+        public FileTypeEm  FileType { get; set; }
     }
     public class DataSourceQueryRequest : PageQuery
     {

@@ -33,6 +33,8 @@ namespace nsda.Models
     
         public string filepath { get; set; }
     
+        public FileTypeEm fileType { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

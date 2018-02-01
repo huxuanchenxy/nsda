@@ -41,16 +41,10 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                if (request.CountryId <= 0)
-                {
-                    msg = "请选择国家信息";
-                    return flag;
-                }
-
                 _dbContext.Insert(new t_sys_province
                 {
                     name = request.Name,
-                    countryId = request.CountryId
+                    isInter=request.IsInter
                 });
                 flag = true;
             }
@@ -75,17 +69,11 @@ namespace nsda.Services.Implement.admin
                     return flag;
                 }
 
-                if (request.CountryId <= 0)
-                {
-                    msg = "请选择国家信息";
-                    return flag;
-                }
-
                 t_sys_province province = _dbContext.Get<t_sys_province>(request.Id);
                 if (province != null)
                 {
                     province.name = request.Name;
-                    province.countryId = request.CountryId;
+                    province.isInter = request.IsInter;
                     province.updatetime = DateTime.Now;
                     _dbContext.Update(province);
                     flag = true;
@@ -113,13 +101,13 @@ namespace nsda.Services.Implement.admin
                 if (request.Name.IsNotEmpty())
                 {
                     request.Name = $"%{request.Name}%";
-                    join.Append(" and a.name like @Name");
+                    join.Append(" and name like @Name");
                 }
-                if (request.CountryId != null && request.CountryId > 0)
+                if (request.IsInter != null)
                 {
-                    join.Append(" and a.countryId=@CountryId ");
+                    join.Append(" and IsInter=@IsInter ");
                 }
-                var sql=$@"select a.* from t_sys_province a inner join t_sys_country b on a.countryId=b.id  where isdelete=0 {join.ToString()} order by a.createtime desc";              
+                var sql=$@"select * from t_sys_province  where isdelete=0 {join.ToString()} order by createtime desc";              
                 int totalCount = 0;
                 list = _dbContext.Page<ProvinceResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -171,7 +159,7 @@ namespace nsda.Services.Implement.admin
                     {
                         Id = detail.id,
                         Name = detail.name,
-                        CountryId=detail.countryId
+                        IsInter=detail.isInter
                     };
                 }
             }
@@ -182,12 +170,23 @@ namespace nsda.Services.Implement.admin
             return response;
         }
 
-        public List<BaseDataResponse> Province(int countryId)
+        public List<BaseDataResponse> Province(bool?  isInter)
         {
             List<BaseDataResponse> list = new List<BaseDataResponse>();
             try
             {
-                var data = _dbContext.Select<t_sys_province>(c => c.countryId==countryId).ToList();
+                var data = new List<t_sys_province>();
+                if (isInter == null)
+                {
+                    data = _dbContext.Select<t_sys_province>(c => true).ToList();
+                }
+                else if ((bool)isInter)
+                {
+                    data = _dbContext.Select<t_sys_province>(c => c.isInter).ToList();
+                }
+                else{
+                    data= _dbContext.Select<t_sys_province>(c => !c.isInter).ToList();
+                }
                 if (data != null && data.Count > 0)
                 {
                     list = data.Select(c => new BaseDataResponse

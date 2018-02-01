@@ -40,7 +40,8 @@ namespace nsda.Services.Implement.admin
                       eventId=request.EventId,
                       eventGroupId=request.EventGroupId,
                       filepath=request.FilePath,
-                      title=request.Title
+                      title=request.Title,
+                      fileType=request.FileType
                  });
                 flag = true;
             }

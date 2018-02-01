@@ -80,8 +80,6 @@ namespace nsda.Models
         /// </summary>
         public string address { get; set; }
     
-        public int countryId { get; set; }
-    
         public int provinceId { get; set; }
     
         public int cityId { get; set; }

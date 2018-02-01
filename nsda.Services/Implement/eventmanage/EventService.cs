@@ -116,7 +116,6 @@ namespace nsda.Services.Implement.eventmanage
                         address = request.Address,
                         cityId = request.CityId,
                         code = _dataRepository.EventRepo.RenderCode(),
-                        countryId = request.CountryId,
                         endeventdate = request.EndEventDate,
                         endrefunddate = request.EndRefundDate,
                         endsigndate = request.EndSignDate,
@@ -341,7 +340,6 @@ namespace nsda.Services.Implement.eventmanage
                 {
                     tevent.address = request.Address;
                     tevent.cityId = request.CityId;
-                    tevent.countryId = request.CountryId;
                     tevent.endeventdate = request.EndEventDate;
                     tevent.endrefunddate = request.EndRefundDate;
                     tevent.endsigndate = request.EndSignDate;
@@ -482,7 +480,6 @@ namespace nsda.Services.Implement.eventmanage
                         Name = tevent.name,
                         CityId = tevent.cityId,
                         Code = tevent.code,
-                        CountryId = tevent.countryId,
                         EndEventDate = tevent.endeventdate,
                         EndRefundDate = tevent.endrefunddate,
                         EndSignDate = tevent.endsigndate,
@@ -531,10 +528,6 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 StringBuilder join = new StringBuilder();
-                if (request.CountryId.HasValue && request.CountryId > 0)
-                {
-                    join.Append(" and a.countryId=@CountryId ");
-                }
                 if (request.ProvinceId.HasValue && request.ProvinceId > 0)
                 {
                     join.Append(" and a.provinceId=@ProvinceId ");
@@ -554,11 +547,10 @@ namespace nsda.Services.Implement.eventmanage
                 }
                 var sql = $@"select a.id EventId,a.code EventCode, a.name EventName,a.eventType EventType, a.eventLevel EventLevel,
                              a.signfee SignFee, a.eventStatus EventStatus,a.starteventdate StartEventDate, a.endsigndate EndSignDate,
-                             b.name CountryName,b.name ProvinceName,c.name CityName
+                             b.name ProvinceName,c.name CityName
                              from t_event a 
-                             left join t_sys_country  b on a.countryId=b.id
-                             left join t_sys_province c on a.provinceId=c.id
-                             left join t_sys_city     d on a.cityId=d.id
+                             left join t_sys_province b on a.provinceId=b.id
+                             left join t_sys_city     c on a.cityId=c.id
                              where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerOrRefereeEventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
@@ -684,12 +676,11 @@ namespace nsda.Services.Implement.eventmanage
             List<EventConditionResponse> list = new List<EventConditionResponse>();
             try
             {
-                var sql = $@"select a.isInter IsInter,a.countryId CountryId,a.provinceId ProvinceId,a.cityId CityId,
-                            b.name CountryName,c.name ProvinceName,d.name CityName
+                var sql = $@"select a.isInter IsInter,a.provinceId ProvinceId,a.cityId CityId,
+                            b.name ProvinceName,c.name CityName
                             from t_event a
-                            inner join t_sys_country b on a.countryId=b.id
-                            left join  t_sys_province c on a.provinceId=c.id
-                            left join  t_sys_city     d on a.cityId=d.id
+                            left join  t_sys_province b on a.provinceId=b.id
+                            left join  t_sys_city     c on a.cityId=c.id
                             where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventnoquerystatus})";
                 list = _dbContext.Query<EventConditionResponse>(sql).ToList();
             }

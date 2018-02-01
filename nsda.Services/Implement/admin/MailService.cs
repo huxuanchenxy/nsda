@@ -35,7 +35,8 @@ namespace nsda.Services.Implement.admin
                     memberId = request.MemberId,
                     isRead = false,
                     mailType = request.MailType,
-                    title = request.Title
+                    title = request.Title,
+                    sendMemberId=request.SendMemberId
                 });
             }
             catch (Exception ex)
@@ -49,7 +50,9 @@ namespace nsda.Services.Implement.admin
             List<MailResponse> list = new List<MailResponse>();
             try
             {
-                var sql = $"select * from t_sys_mail where isdelete=0 and memberId={request.MemberId} order by createtime desc";
+                var sql = $@"select a.*,b.Head from t_sys_mail a
+                             left join t_member b on a.sendMemberId=b.id
+                             where a.isdelete=0 and a.memberId={request.MemberId} order by a.createtime desc";
                 int totalCount = 0;
                 list = _dbContext.Page<MailResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -65,7 +68,9 @@ namespace nsda.Services.Implement.admin
             List<MailResponse> list = new List<MailResponse>();
             try
             {
-                var sql = $"select * from t_sys_mail where isdelete=0 and memberId={memberId} order by createtime desc  limit 5";
+                var sql = $@"select a.*,b.Head from t_sys_mail a
+                             left join t_member b on a.sendMemberId=b.id
+                             where a.isdelete=0 and a.memberId={memberId} order by a.createtime desc  limit 5";
                 list = _dbContext.Query<MailResponse>(sql).ToList();
             }
             catch (Exception ex)

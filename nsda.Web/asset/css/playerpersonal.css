@@ -13,8 +13,8 @@
     padding:10px 3px;
     font-size:16px;
     color:#666;
-    min-height:660px;
     border-bottom:1px solid #B4BDC2;
+    position:relative;
 }
 .per-con .modifyinfo label{
     width:13%;
@@ -42,8 +42,7 @@
     margin-bottom:30px;
 }
 .per-con .education{
-    height:22px;
-    margin-bottom:30px;
+    margin-bottom:140px;
 }
 .per-con .coach{
     float:left;
@@ -60,78 +59,13 @@
     color:white;
 }
 .education .form-con .edulists{
-    width:73%;
+    width:84%;
     padding:0 8px 0 8px;
     background:#ECF0F1;
     margin-left:16%;
     position:relative;
 }
-.addeducation{
-    width:760px;
-    height:360px;
-    background:#ECF0F1;
-    position:absolute;
-    top:400px;
-    left:50%;
-    transform:translate(-50%);
-    box-shadow:2px 2px 4px 4px #bfbbbb;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    padding:20px 0 0 0;
-    display:none;
-}
-.addeducation i{
-    font-size:30px;
-    position:absolute;
-    top:-15px;
-    right:-10px;
-    color:#100707;
-    opacity:1;
-}
-.addeducation h3{
-    font-size:20px;
-    font-weight:600;
-    padding-left:10px;
-}
-.addeducation .form-group{
-    width:90%;
-    margin:70px auto;
-}
-.addeducation .form-group select{
-    margin-bottom:30px;
-    background:#1ABC9C;
-    height:40px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    color:white;
-    padding-left:8px;
-}
-.addeducation .form-group em{
-    color:#1ABC9C;
-}
-.addeducation button{
-    width:100%;
-    height:50px;
-    color:white;
-    background:#1ABC9C;
-    text-align:center;
-    border-radius: 0 0 10px 10px;
-    -webkit-border-radius: 0 0 10px 10px;
-    -moz-border-radius: 0 0 10px 10px;
-    border:none;
-    box-shadow:none;
-}
-.addeducation .form-group select.form-select-school{
-    width:23%;
-}
-.addeducation .form-group select.form-select-schools{
-    width:28%;
-}
-.addeducation .form-group select.form-select-schoolads{
-    width:40%
-}
+
 .education .form-con .edulists li{
     min-height:50px;
     padding:10px 0;
@@ -150,7 +84,7 @@
     border-radius: 6px;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
-    margin-right:20px;
+    margin-right:10px;
     cursor:pointer;
 }
 .education .form-con .edulists li .editedu,.education .form-con .edulists li .deledu{
@@ -158,8 +92,8 @@
     padding:5px 10px;
     color:white;
     border-radius: 6px;
--webkit-border-radius: 6px;
--moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
 
 }
 .education .form-con .edulists li .editedu{
@@ -175,8 +109,20 @@
 }
 .education .form-con .edulists li p{
     float:left;
-    margin-right:30px;
-          
+    margin-right:10px;
+    text-align:left;
+}
+.education .form-con .edulists li p:first-child{
+    width:24%;
+}
+.education .form-con .edulists li p:nth-child(2){
+    width:13%;
+}
+.education .form-con .edulists li p:nth-child(3){
+    width:15%;
+}
+.education .form-con .edulists li p:nth-child(4){
+    width:26%;
 }
 .per-con .submit{
     width:260px;
@@ -188,8 +134,10 @@
     -moz-border-radius: 6px;
     text-align:center;
     line-height:55px;
-    margin-top:300px;
     margin-left:16%;
+    position:absolute;
+    bottom:20px;
+    left:0;
 }
 .modifypassword{
     padding:50px 30px 0 120px;;
@@ -223,7 +171,105 @@
     background:#1ABC9C;
     color:white;
     border-radius: 6px;
-          
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
 }
+.fg-layer{
+    border-radius: 20px;
+    -webkit-border-radius:20px;
+    -moz-border-radius: 20px;
+}
+fg-layer-iframe{
+   border-radius: 20px;
+    -webkit-border-radius:20px;
+    -moz-border-radius: 20px;
+}
+.fg-layer-title{
+    border-radius: 16px 16px 0 0;
+    -webkit-border-radius: 16px 16px 0 0;
+    -moz-border-radius:  16px 16px 0 0;
+    background:#ECF0F1;
+    color:black;
+    font-weight:800;
+    font-size:20px;
+}
+.fg-layer-content{
+    border-radius: 0 0 16px 16px ;
+    -webkit-border-radius: 0 0 16px 16px ;
+    -moz-border-radius:  0 0 16px 16px ;
+    background:#ECF0F1;
+}
+
+.addeducation i{
+    font-size:30px;
+    position:absolute;
+    top:-15px;
+    right:-10px;
+    color:#100707;
+    opacity:1;
+}
+
+.addeducation h3{
+    font-size:20px;
+    font-weight:600;
+    padding-left:10px;
+}
+.addeducation .form-group{
+    width:90%;
+    margin:90px auto;
+}
+.addeducation .form-group select,.addeducation .form-group input{
+    margin-bottom:30px;
+    background:#1ABC9C;
+    height:46px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    color:white;
+    padding-left:8px;
+    border:none;
+    font-size:20px;
+}
+.addeducation .form-group em{
+    color:#1ABC9C;
+}
+.addeducation button{
+    width:100%;
+    height:50px;
+    color:white;
+    background:#1ABC9C;
+    text-align:center;
+    border-radius: 0 0 10px 10px;
+    -webkit-border-radius: 0 0 10px 10px;
+    -moz-border-radius: 0 0 10px 10px;
+    border:none;
+    box-shadow:none;
+    position:absolute;
+    bottom:0;
+    left:0;
+    cursor:pointer;
+}
+.addeducation .form-group .form-select-school{
+    width:46%;
+}
+.addeducation .form-group .form-select-schools{
+    width:28%;
+}
+.addeducation .form-group .form-select-schoolads{
+    width:40%
+}
+body{
+    margin:0;
+}
+.addeducation .form-group input:focus{
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+
+
+
+
+
+

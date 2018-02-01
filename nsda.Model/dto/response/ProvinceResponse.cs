@@ -10,8 +10,7 @@ namespace nsda.Model.dto.response
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int CountryId { get; set; }
-        public string CountryName { get; set; }
+        public bool IsInter { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
     }

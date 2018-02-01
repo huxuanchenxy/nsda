@@ -1,7 +1,6 @@
 ﻿@using nsda.Utilities
 @{
     var userContext = ViewBag.UserContext as WebUserContext;
-
 }
 <!DOCTYPE html>
 <html>
@@ -73,10 +72,10 @@
                             关于我们
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("关于NSDA", "nsda", "about")</li>
-                            <li>@Html.ActionLink("NSDA中国", "nsda", "about")</li>
-                            <li>@Html.ActionLink("合作伙伴", "partner", "about")</li>
-                            <li>@Html.ActionLink("联系我们", "us", "about")</li>
+                            <li><a href="/about/nsda">关于NSDA</a></li>
+                            <li><a href="/about/nsda">NSDA中国</a></li>
+                            <li><a href="/about/partner">"合作伙伴</a></li>
+                            <li><a href="/about/us">联系我们</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -128,18 +127,28 @@
     <div class="mec-ban">
             <div class="container player">
                 <div class="player-info">
-                    <form action="/" method="post">
-                        <img src="/asset/img/teacher.png" alt="" />
-                        <div class="player-num">
-                            <p>NSDA CHINA 注册会员：@userContext.Name</p>
-                            <p>目前 NSDA 积分：@userContext.PlayerPoints</p>
-                            <p>NSDA 会员编号：@userContext.Code</p>
+                    <div class="img">
+                        @if (userContext.Head.IsNotEmpty())
+                        { 
+                            <img id="uploadPreview" src="@userContext.Head" />
+                        }
+                        else
+                        {
+                            <img id="uploadPreview" src="/asset/img/teacher.png" />
+                        }
+                        <input type="file" name="uploadFile" id="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png">
                     </div>
-                    <a href="#" class="player-code">
-                        <i class="iconfont icon-erweima"></i>
-                        我的二维码
-                    </a>
-                </form>
+              <div class="player-num">
+                  <ul>
+                      <li><span>NSDA CHINA 注册会员：</span><p>@userContext.Name</p></li>
+                      <li><span>目前 NSDA 积分：</span><p>@userContext.PlayerPoints</p></li>
+                      <li><span>NSDA 会员编号：</span><p>@userContext.Code</p></li>
+                  </ul>
+            </div>
+            <a href="#" class="player-code">
+                <i class="iconfont icon-erweima"></i>
+                我的二维码
+            </a>
             </div>
         </div>
     </div>
@@ -148,7 +157,7 @@
         <div class="info-lists">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
-                    <a href="/Home/PlayerMemberCenter"><h3 class="mc">会员中心</h3></a>
+                    <a href="/player/player"><h3 class="mc">会员中心</h3></a>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
@@ -162,8 +171,8 @@
                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
                             <ul>
-                                <a href="/Home/PlayerCompeSign" class="compe"><li>比赛报名</li></a>
-                                <a href="/Home/PlayerHadCompe" class="compe"><li>已参加比赛</li></a>
+                                <a href="/player/playersignup/index" class="compe"><li>比赛报名</li></a>
+                                <a href="/player/playersignup/list" class="compe"><li>已参加比赛</li></a>
                             </ul>
                         </div>
                     </div>
@@ -180,9 +189,9 @@
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="panel-body">
                             <ul>
-                                <a href="/Home/PlayerScore" class="compe"><li>会员积分查询</li></a>
-                                <a href="/Home/PlayerInformation" class="compe"><li>修改个人资料</li></a>
-                                <a href="/Home/PlayerBoundCoach" class="compe"><li>绑定教练</li></a>
+                                <a href="/player/player/points" class="compe"><li>会员积分查询</li></a>
+                                <a href="/player/player/info" class="compe"><li>修改个人资料</li></a>
+                                <a href="/player/playercoach/index" class="compe"><li>绑定教练</li></a>
                             </ul>
                         </div>
                     </div>
@@ -199,8 +208,8 @@
                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                         <div class="panel-body">
                             <ul>
-                                <a href="/Home/PlayerSource" class="compe"><li>会员资源</li></a>
-                                <a href="#" class="compe"><li>评分单</li></a>
+                                <a href="/player/player/datasource" class="compe"><li>会员资源</li></a>
+                                <a href="/player/player/eventscore" class="compe"><li>评分单</li></a>
                             </ul>
                         </div>
                     </div>
@@ -258,6 +267,8 @@
     <script src="/asset/js/parallax.min.js"></script>
     <script src="/asset/js/bootstrap.min.js"></script>
     <script src="/asset/js/layer/layer.js"></script>
+    <script src="/asset/uploadify/ajaxfileupload.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
     @RenderSection("scripts", false)
     <script>
         //如果账号未认证 就开启定时轮询 
@@ -268,7 +279,7 @@
                 $.ajax({
                     url: "/player/player/polling",
                     type: "get",
-                    dataType: "text",
+                    dataType: "json",
                     success: function (json) {
                         if (json.flag)
                         {
@@ -278,6 +289,39 @@
                 });
             }
         }
+        $(function () {
+            $('#uploadFile').change(function () {
+                var f = document.getElementById('uploadFile').files[0]
+                var src = window.URL.createObjectURL(f);
+                document.getElementById('uploadPreview').src = src;
+
+                $.ajaxFileUpload({
+                    url: "/commondata/updatehead",
+                    secureuri: false,
+                    fileElementId: 'uploadFile',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.flag) {
+                            location.reload();
+                        }
+                        else {
+                            layermsg(data.msg, 1);
+                        }
+                    }
+                });
+            });
+        });
+
+        $("#goauth").click(function(){
+            $.ajax({
+                url: "/player/player/polling",
+                type: "get",
+                dataType: "json",
+                success: function (json) {                  
+                    //跳转到支付页面
+                }
+            });
+        });
     </script>
 </body>
 </html>

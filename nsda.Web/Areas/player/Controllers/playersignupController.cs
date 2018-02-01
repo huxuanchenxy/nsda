@@ -59,7 +59,14 @@ namespace nsda.Web.Areas.player.Controllers
             return View();
         }
         //退赛退费页
-        public ActionResult refundlist()
+        public ActionResult refund()
+        {
+            ViewBag.UserContext = UserContext.WebUserContext;
+            return View();
+        }
+
+        //赛事详情页
+        public ActionResult eventdetail()
         {
             ViewBag.UserContext = UserContext.WebUserContext;
             return View();

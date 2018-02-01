@@ -1,9 +1,13 @@
 ﻿@using nsda.Utilities
+@model nsda.Model.dto.response.MemberPlayerResponse
 @{
     ViewBag.Title = "修改个人资料";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    var userContext = ViewBag.UserContext as WebUserContext;
+    var coachInfo = ViewBag.CoachInfo as nsda.Model.dto.response.CurrentCoachResponse;
+}
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
@@ -16,160 +20,101 @@
     </div>
     <div class="per-con">
         <div class="person-title"></div>
-        <form action="" method="post" class="modifyinfo">
+        <div class="modifyinfo">
             <div class="form-group">
                 <label>注册邮箱</label>
-                <div class="form-con"><p>admin@enreachedu.com</p></div>
+                <div class="form-con"><p>@userContext.Account</p></div>
             </div>
             <div class="form-group">
                 <label for="phone">联系电话</label>
                 <div class="form-con">
-                    <input type="text" id="phone">
+                    <input type="text" id="phone" value="@Model.ContactMobile">
                 </div>
             </div>
             <div class="form-group two-label">
                 <div>
                     <label for="emrcontact">紧急联系人</label>
                     <div class="form-con">
-                        <input type="text" id="emrcontact">
+                        <input type="text" id="emrcontact" value="@Model.EmergencyContact">
                     </div>
                 </div>
                 <div>
                     <label for="emrphone">紧急电话</label>
                     <div class="form-con">
-                        <input type="text" id="emrphone">
+                        <input type="text" id="emrphone" value="@Model.EmergencyContactMobile">
                     </div>
                 </div>
             </div>
             <div class="form-group current-coach">
                 <label>目前教练</label>
-                <div class="form-con"><p class="coach">Eric</p>@*<a href="javascript:;" class="modifycoach">修改</a>*@</div>
+                <div class="form-con">
+                    @if (coachInfo != null)
+                {
+                        <p class="coach">
+                            @Html.Raw(coachInfo.CoachName)
+                        </p>
+                        <a href="/player/playercoach/index" class="modifycoach">修改</a>
+                }
+                else
+                { <a href="/player/playercoach/index" class="modifycoach">去绑定</a> }
+                </div>
             </div>
             <div class="form-group education">
                 <label>教育经历</label>
                 <div class="form-con">
-                    <ul class="edulists">
-                        <li>
-                            <span class="addedu" id="addedu">添加</span>
-                        </li>
-                        <li>
-                            <p>1999 / 09 - 2001 / 07</p>
-                            <p>上海</p>
-                            <p>上海</p>
-                            <p>西南位育中学国际部</p>
-                            <a href="#" class="editedu">编辑</a>
-                            <a href="#" class="deledu">删除</a>
-                        </li>
-                        <li>
-                            <p>1999 / 09 - 2001 / 07</p>
-                            <p>上海</p>
-                            <p>上海</p>
-                            <p>西南位育中学国际部</p>
-                            <a href="#" class="editedu">编辑</a>
-                            <a href="#" class="deledu">删除</a>
-                        </li>
-                        <li>
-                            <p>1999 / 09 - 2001 / 07</p>
-                            <p>上海</p>
-                            <p>上海</p>
-                            <p>西南位育中学国际部</p>
-                            <a href="#" class="editedu">编辑</a>
-                            <a href="#" class="deledu">删除</a>
-                        </li>
-                        <li>
-                            <p>1999 / 09 - 2001 / 07</p>
-                            <p>上海</p>
-                            <p>上海</p>
-                            <p>西南位育中学国际部</p>
-                            <a href="#" class="editedu">编辑</a>
-                            <a href="#" class="deledu">删除</a>
-                        </li>
+                    <ul class="edulists" id="edu">
+                        <li><span class="addedu" id="addedu">添加</span></li>
                     </ul>
-                    <div class="addeducation" id="addeducation">
-                        <h3>添加教育经历</h3>
-                        <a href="#" class="close" id="close"><i class="iconfont icon-close-b"></i></a>
-                        <div class="form-group">
-                            <select class="form-select-school" id="school1">
-                                <option>年</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <select class="form-select-school" id="school2">
-                                <option>月</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <em class="em"> —</em>
-                            <select class="form-select-school" id="school3">
-                                <option>年</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <select class="form-select-school" id="school4">
-                                <option>月</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <select class="form-select-schools" id="school5">
-                                <option>省</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <select class="form-select-schools" id="school6">
-                                <option>市</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <select class="form-select-schoolads" id="school7">
-                                <option>学校</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                        <button class="confirmadd" id="confirmadd">添加</button>
-                    </div>
+                  
                 </div>
             </div>
             <input type="button" value="修改个人资料" class="submit" id="modifyinfo">
-        </form>
+        </div>
         <div class="modifypassword">
             <img src="/asset/img/password_03.jpg" alt="" />
             <div class="modifypanel">
-                <form action="" method="post">
                     <input type="password" id="newpwd" placeholder="输入新密码">
                     <input type="password" id="againpwd" placeholder="再次输入新密码">
                     <input type="button" value="确认新密码" class="confirmnewpassword" id="modifypwd">
-                </form>
             </div>
         </div>
     </div>
-</div>@section scripts
+</div>
+@section scripts
 {
-    <script src="~/asset/layer/js/layer.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
     <script src="/asset/js/validate.js?version=@Constant.Version"></script>
-    <script src="/asset/js/info.js?version=@Constant.Version"></script>
     <script>
         $("#modifypwd").click(function () {
+            var $newpwd = $("#newpwd").val();
+            var $againpwd = $("#againpwd").val();
+
+            if ($newpwd == "") {
+                layer.msg('请输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if ($againpwd == "") {
+                layer.msg('请再次输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+
+            if ($newpwd != $againpwd) {
+                layer.msg('两次输入的密码不一致', { icon: 5, time: 1000 });
+                return;
+            }
+
+            if (!validate.isPwd($newpwd))
+            {
+                layer.msg('必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
+                return;
+            }
+
             $.ajax({
                 url: "/commondata/editpwd",
                 type: "post",
                 dataType: "json",
                 data: {
-                    pwd: $newpwd.val(),
+                    pwd: $newpwd,
                 },
                 beforeSend: function () {
                     layer.msg('修改密码中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
@@ -178,6 +123,8 @@
                     layer.closeAll();
                     if (json.flag) {
                         layer.msg("修改成功", { icon: 1, time: 1000 });
+                        $("#newpwd").val("");
+                        $("#againpwd").val("");
                     }
                     else {
                         layer.msg(json.msg, { icon: 5, time: 1000 });
@@ -190,12 +137,29 @@
         });
 
         $("#modifyinfo").click(function () {
+            var $ContactMobile = $("#phone").val();
+            if ($ContactMobile == "") {
+                layer.msg('请输入联系电话', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EmergencyContact = $("#emrcontact").val();
+            if ($EmergencyContact == "") {
+                layer.msg('请输入紧急联系人', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EmergencyContactMobile = $("#emrphone").val();
+            if ($EmergencyContactMobile == "") {
+                layer.msg('请输入紧急联系人电话', { icon: 5, time: 1000 });
+                return;
+            }
             $.ajax({
                 url: "/player/player/edit",
                 type: "post",
                 dataType: "json",
                 data: {
-                    
+                    ContactMobile: $ContactMobile,
+                    EmergencyContactMobile: $EmergencyContactMobile,
+                    EmergencyContact: $EmergencyContact
                 },
                 beforeSend: function () {
                     layer.msg('修改个人资料中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
@@ -213,26 +177,52 @@
                     layer.closeAll();
                 }
             });
-
         });
 
         $(document).ready(function () { renderedu();});
 
         function renderedu()
         {
-
+            $.ajax({
+                url: "/player/player/listedu",
+                type: "get",
+                dataType: "json",
+                success: function (json) {
+                    var html = '<li><span class="addedu" id="addedu">添加</span></li>';
+                    if (json.data != null && json.data.length > 0)
+                    {
+                        $.each(json.data, function (k, val) {
+                            html += '<li>';
+                            html += '<p>' + val.StartDate + '-';
+                            if (val.EndDate == "" || val.EndDate == null) {
+                                html += "至今";
+                            } else {
+                                html += val.EndDate;
+                            }
+                            html += '</p>';
+                            html += '<p>' + val.ProvinceName + '</p>';
+                            html+='<p>'+val.CityName+'</p>';
+                            html+='<p>'+val.SchoolName+'</p>';
+                            html += '<a href="javascript:;" data-id='+val.Id+' class="editedu">编辑</a>';
+                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="deledu">删除</a>';
+                            html += '</li>';
+                        });
+                    }
+                    $("#edu").html(html);
+                }
+            });        
         }
 
-        $("#deledu").click(function () {
+        $(document).on("click", ".deledu", function () {
             $.ajax({
-                url: "/player/player/edit",
+                url: "/player/player/deleteedu",
                 type: "post",
                 dataType: "json",
                 data: {
-
+                    id: $(this).attr("data-id")
                 },
                 beforeSend: function () {
-                    layer.msg('修改个人资料中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    layer.msg('删除教育经历中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
                 },
                 success: function (json) {
                     layer.closeAll();
@@ -243,8 +233,33 @@
                         layer.msg(json.msg, { icon: 5, time: 1000 });
                     }
                 }
-                , error: function () {
-                    layer.closeAll();
+    , error: function () {
+        layer.closeAll();
+    }
+            });
+        });
+
+        $(document).on("click", "#addedu", function () {
+            layer.open({
+                title: "新增教育经历",
+                type: 2,
+                content: "/player/player/addedu",
+                area: ["400px", "320px"],
+                end: function () {
+                    location.reload();
+                }
+            });
+        });
+
+        $(document).on("click", ".editedu", function () {
+            var id = $(this).attr("data-id");
+            layer.open({
+                title: "新增教育经历",
+                type: 2,
+                content: "/player/player/editedu/"+id,
+                area: ["400px", "320px"],
+                end: function () {
+                    location.reload();
                 }
             });
         });

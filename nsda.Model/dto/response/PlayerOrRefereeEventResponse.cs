@@ -26,10 +26,6 @@ namespace nsda.Model.dto.response
         /// </summary>
         public EventTypeEm EventType { get; set; }
         /// <summary>
-        /// 举办国家
-        /// </summary>
-        public string CountryName { get; set; }
-        /// <summary>
         /// 举办省份
         /// </summary>
         public string ProvinceName { get; set; }

@@ -24,5 +24,6 @@ namespace nsda.Services.member
         //4.0 会员查询 教练列表
         List<PlayerCoachResponse> Player_CoachList(PlayerCoachQueryRequest request);
         CurrentCoachResponse Player_CoachDetail(int memberId);
+        PlayerCoachResponse Detail(int id);
     }
 }

@@ -60,7 +60,7 @@ namespace nsda.Web.Areas.coach.Controllers
 
         //1 列表
         [HttpGet]
-        public ContentResult listplayer(PlayerCoachQueryRequest request)
+        public ContentResult coachplayer(PlayerCoachQueryRequest request)
         {
             request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerCoachService.Coach_PlayerList(request);
@@ -125,8 +125,11 @@ namespace nsda.Web.Areas.coach.Controllers
         #region view
         public ActionResult index()
         {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var data = _memberService.MemberCoachDetail(userContext.Id);
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/coach/coach/qrcode/{UserContext.WebUserContext.Id}");
-            return View();
+            return View(data);
         }
 
         public ActionResult qrcode(int id)
@@ -134,23 +137,23 @@ namespace nsda.Web.Areas.coach.Controllers
             return View();
         }
 
-        //个人中心
-        public ActionResult info()
-        {
-            var data = _memberService.MemberCoachDetail(UserContext.WebUserContext.Id);
-            return View(data);
-        }
-
-        //站内信列表
-        public ActionResult mail()
-        {
-            return View();
-        }
-
         //教练学生列表
-        public ActionResult list()
+        public ActionResult bindplayer()
+        {
+            ViewBag.UserContext = UserContext.WebUserContext;
+            return View();
+        }
+
+        //绑定学生
+        public ActionResult add()
         {
             return View();
+        }
+
+        public ActionResult update(int id)
+        {
+            var detail = _playerCoachService.Detail(id);
+            return View(detail);
         }
         #endregion 
     }

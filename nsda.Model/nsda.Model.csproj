@@ -141,6 +141,7 @@
     <Compile Include="enums\EventSignStatusEm.cs" />
     <Compile Include="enums\EventStatusEm.cs" />
     <Compile Include="enums\EventTypeEm.cs" />
+    <Compile Include="enums\FileTypeEm.cs" />
     <Compile Include="enums\GenderEm.cs" />
     <Compile Include="enums\GradeEm.cs" />
     <Compile Include="enums\InvoiceTypeEm.cs" />

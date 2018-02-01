@@ -27,7 +27,6 @@ namespace nsda.Model.dto.response
         public string EventName { get; set; }
         public RefereeSignUpStatusEm RefereeSignUpStatus { get; set; }
         public EventTypeEm EventType { get; set; }
-        public string CountryName { get; set; }
         public string ProvinceName { get; set; }
         public string CityName { get; set; }
     }

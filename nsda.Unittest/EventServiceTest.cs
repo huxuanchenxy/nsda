@@ -18,7 +18,6 @@ namespace nsda.unittest
             {
                 Address = "上海杨浦区",
                 CityId = 1,
-                CountryId = 1,
                 IsInter = false,
                 EndEventDate = DateTime.Now.AddDays(7),
                 StartEventDate = DateTime.Now.AddDays(6),

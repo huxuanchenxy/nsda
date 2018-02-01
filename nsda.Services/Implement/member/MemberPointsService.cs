@@ -69,9 +69,10 @@ namespace nsda.Services.Implement.member
                     request.EndDate = request.EndDate.Value.AddDays(1).AddSeconds(-1);
                     sqljoin.Append(" and a.createtime<=@EndDate ");
                 }
-                var sql= $@"select b.name EventName,b.code EventCode,a.points,a.Id
+                var sql= $@"select b.name EventName,b.code EventCode,a.points,a.Id,c.name EventGroupName,b.eventType EventType,b.eventTypeName EventTypeName
                             from t_member_points_record a
                             inner join t_event b on a.eventId=b.id
+                            inner join t_event_group c on a.eventGroupId=c.id
                             where a.isdelete=0 and a.memberId=@memberId {sqljoin.ToString()}
                             order by a.createtime desc
                         ";
@@ -107,12 +108,11 @@ namespace nsda.Services.Implement.member
                 if (totalPoints > 0)//有积分再查询列表
                 {
                     var sql=$@"select b.starteventtime StartDate,b.endeventtime EndDate,b.name EventName, 
-                            a.points,c.name ProvinceName,d.name CityName,a.Id,c.name CountryName
+                            a.points,c.name ProvinceName,d.name CityName,a.Id
                             from t_member_points_record a
                             inner join t_event b on a.eventId=b.id
-                            left join  t_sys_country c on b.countryId=c.id
-                            left join t_sys_province d on b.provinceId=d.id
-                            left join t_sys_city e on b.cityId = e.id
+                            left join t_sys_province c on b.provinceId=c.id
+                            left join t_sys_city d on b.cityId = d.id
                             where a.isdelete=0 and a.memberId=@memberId {sqljoin.ToString()}
                             order by a.createtime desc
                             ";

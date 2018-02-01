@@ -30,5 +30,6 @@ namespace nsda.Model.dto.response
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+        public string Head { get; set; }
     }
 }

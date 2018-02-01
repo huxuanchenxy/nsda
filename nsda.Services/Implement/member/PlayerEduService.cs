@@ -138,10 +138,12 @@ namespace nsda.Services.member
             List<PlayerEduResponse> list = new List<PlayerEduResponse>();
             try
             {
-                var sql= @"select a.*,b.chinessname as SchoolName from t_player_edu a
+                var sql= @" select a.*,b.chinessname  SchoolName,c.name CityName,d.name ProvinceName  from t_player_edu a
                             inner  join t_sys_school b on a.schoolId=b.id
+                            inner  join t_sys_city c on b.cityId=c.id
+                            inner  join t_sys_province d on b.provinceId=d.id
                             where a.isdelete=0 and a.memberId=@MemberId order by a.startdate desc ";
-                list = _dbContext.Query<PlayerEduResponse>(sql).ToList();
+                list = _dbContext.Query<PlayerEduResponse>(sql, request).ToList();
             }
             catch (Exception ex)
             {

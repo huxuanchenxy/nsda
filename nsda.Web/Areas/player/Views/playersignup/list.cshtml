@@ -1,17 +1,97 @@
-﻿
+﻿@using nsda.Utilities
 @{
-    Layout = null;
+    ViewBag.Title = "会员中心";
+    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{
+ <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
+ <link rel="stylesheet" href="/asset/css/playerpartin.css?version=@Constant.Version">
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>list</title>
-</head>
-<body>
-    <div> 
+<div class="comp-lists tab">
+    <ul class="comp-title">
+        <a href="javascript:;"><li class="act">已参与比赛</li></a>
+        <a href="/player/playersignup/refund"><li>退赛信息</li></a>
+    </ul>
+    <div class="comp-con">
+        <div class="hadtable">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="11%">比赛编码</th>
+                        <th width="15%">比赛名称</th>
+                        <th width="5%">类别</th>
+                        <th width="15%">队伍编码</th>
+                        <th width="10%">会员编码</th>
+                        <th width="12%">队员</th>
+                        <th width="12%">状态</th>
+                        <th width="21%"></th>
+                    </tr>
+                </thead>
+                <tbody id="data">
+                   
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation" id="pager">
+            </nav>
+        </div>
     </div>
-</body>
-</html>
+</div>
+
+@section scripts
+{
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/pager.js"></script>
+   <script src="/asset/js/enumreplace.js"></script>
+    <script>
+        (function (w) {
+            var playersignup = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                }
+            };
+            playersignup.Load = function (filter) {
+                $.ajax({
+                    url: "/player/playersignup/signuplist",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            playersignup.param.TotalPage = json.total;
+                            _pager.init(filter, playersignup.param.PageIndex, playersignup.param.TotalPage, function (p) {
+                                playersignup.param.PageIndex = p;
+                                playersignup.Load(playersignup.param)
+                            });                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html+='<tr>'
+                                html+='<td>'+val.EventCode+'</td>';
+                                html += '<td>' + val.EventName + '</td>';
+                                html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
+                                html += '<td>' + val.GroupNum + '</td>';
+                                html+='<td>'+val.MemberCode+'</td>';
+                                html += '<td>' + val.MemberName + '</td>';
+                                html += '<td>' + val.SignUpStatus + '</td>';
+                                html+='<td>操作</td>';
+                                html+='</tr>'
+                            });
+                            html += '';
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.playersignup = playersignup
+        })(window);
+        playersignup.Load(playersignup.param);
+    </script>
+}

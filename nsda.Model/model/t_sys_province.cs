@@ -29,12 +29,12 @@ namespace nsda.Models
         [Key]
 	    public int id { get; set; }
     
-        public int countryId { get; set; }
-    
         /// <summary>
         /// 省份名称
         /// </summary>
         public string name { get; set; }
+    
+        public bool isInter { get; set; }
     
         /// <summary>
         /// 创建时间

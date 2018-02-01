@@ -406,7 +406,12 @@
     <Content Include="asset\css\bootstrap.css" />
     <Content Include="asset\css\bootstrap.min.css" />
     <Content Include="asset\css\coach.css" />
+    <Content Include="asset\css\coachboundplayer.css" />
     <Content Include="asset\css\coachinformation.css" />
+    <Content Include="asset\css\event.css" />
+    <Content Include="asset\css\eventmanage.css" />
+    <Content Include="asset\css\eventstart.css" />
+    <Content Include="asset\css\eventstartlists.css" />
     <Content Include="asset\css\iconfont.css" />
     <Content Include="asset\css\index.css" />
     <Content Include="asset\css\player.css" />
@@ -421,6 +426,7 @@
     <Content Include="asset\css\registered.css" />
     <Content Include="asset\css\Site.css" />
     <Content Include="asset\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="asset\img\add_03.png" />
     <Content Include="asset\img\Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg" />
     <Content Include="asset\img\bg1.png" />
     <Content Include="asset\img\bg2 .png" />
@@ -459,8 +465,11 @@
     <Content Include="asset\img\Stephen Breyer.jpg" />
     <Content Include="asset\img\teacher.png" />
     <Content Include="asset\img\txt1.png" />
+    <Content Include="asset\js\block.js" />
     <Content Include="asset\js\bootstrap.min.js" />
     <Content Include="asset\js\change.js" />
+    <Content Include="asset\js\common.js" />
+    <Content Include="asset\js\enumreplace.js" />
     <Content Include="asset\js\info.js" />
     <Content Include="asset\js\jquery-3.2.1.min.js" />
     <Content Include="asset\js\jquery.form.js" />
@@ -479,10 +488,22 @@
     <Content Include="asset\js\layer\theme\default\loading-1.gif" />
     <Content Include="asset\js\layer\theme\default\loading-2.gif" />
     <Content Include="asset\js\load.js" />
+    <Content Include="asset\js\loading.js" />
+    <Content Include="asset\js\pager.js" />
     <Content Include="asset\js\parallax.min.js" />
+    <Content Include="asset\js\playerevent.js" />
     <Content Include="asset\js\selected.js" />
     <Content Include="asset\js\tabs.js" />
     <Content Include="Areas\player\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\coach\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\player\Views\player\points.cshtml" />
+    <Content Include="Areas\player\Views\player\pointsdetail.cshtml" />
+    <Content Include="Areas\player\Views\player\addedu.cshtml" />
+    <Content Include="Areas\player\Views\player\editedu.cshtml" />
+    <Content Include="Areas\player\Views\playercoach\update.cshtml" />
+    <Content Include="Areas\player\Views\playercoach\add.cshtml" />
+    <Content Include="Areas\coach\Views\coach\add.cshtml" />
+    <Content Include="Areas\coach\Views\coach\update.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
@@ -491,6 +512,19 @@
     <Content Include="asset\layer\img\loading.gif" />
     <Content Include="asset\layer\js\layer.ext.js" />
     <Content Include="asset\layer\js\layer.js" />
+    <Content Include="asset\simditor\css\simditor.css" />
+    <Content Include="asset\simditor\js\hotkeys.min.js" />
+    <Content Include="asset\simditor\js\module.min.js" />
+    <Content Include="asset\simditor\js\simditor.min.js" />
+    <Content Include="asset\simditor\js\uploader.min.js" />
+    <Content Include="asset\uploadify\ajaxfileupload.js" />
+    <Content Include="asset\uploadify\jquery.uploadify.js" />
+    <Content Include="asset\uploadify\jquery.uploadify.min.js" />
+    <Content Include="asset\uploadify\uploadify-cancel.png" />
+    <Content Include="asset\uploadify\uploadify.css" />
+    <Content Include="asset\uploadify\uploadify.extension.css" />
+    <Content Include="asset\uploadify\uploadify.js" />
+    <Content Include="asset\uploadify\uploadify.swf" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -511,6 +545,9 @@
     <Content Include="wxpay\imgs\页签标签.png" />
     <Content Include="Views\register\player.cshtml" />
     <Content Include="Views\register\coach.cshtml" />
+    <Content Include="asset\simditor\css\editor.scss" />
+    <Content Include="asset\simditor\css\fonticon.scss" />
+    <Content Include="asset\simditor\css\simditor.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -523,7 +560,6 @@
     <Folder Include="Areas\admin\Views\sysuser\" />
     <Folder Include="Areas\admin\Views\vote\" />
     <Folder Include="Areas\coach\Models\" />
-    <Folder Include="Areas\coach\Views\Shared\" />
     <Folder Include="Areas\eventmanage\Models\" />
     <Folder Include="Areas\eventmanage\Views\eventPrize\" />
     <Folder Include="Areas\eventmanage\Views\eventromm\" />
@@ -664,7 +700,7 @@
     <Content Include="Areas\player\Views\playersignup\list.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\player\Views\playersignup\refundlist.cshtml" />
+    <Content Include="Areas\player\Views\playersignup\refund.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\player\Views\playersignup\bindtemp.cshtml" />
@@ -673,10 +709,7 @@
     <Content Include="Areas\player\Views\playersignup\signview.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\coach\Views\coach\info.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\coach\Views\coach\mail.cshtml" />
+    <Content Include="Areas\coach\Views\coach\bindplayer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\eventmanage\Views\eventmanage\info.cshtml" />

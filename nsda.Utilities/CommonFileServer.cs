@@ -36,7 +36,7 @@ namespace nsda.Utilities
 
                 CreateNewDirectory(directoryFolder);
                 string fileUrl = $"{directoryFolder}{fileName}";
-                string PictureSpaceUrl = $"{pictureSpaceDir.Replace('\\', '/')}{fileName}";
+                string PictureSpaceUrl = $"/files{pictureSpaceDir.Replace('\\', '/')}{fileName}";
 
                 File.WriteAllBytes(fileUrl, request.FileBinary);
 
