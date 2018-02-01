@@ -64,7 +64,9 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
 }
-
+.event-nav ul a:first-child li{
+    color:#fff;
+}
 
 
 

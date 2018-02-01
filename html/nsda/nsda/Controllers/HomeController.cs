@@ -119,5 +119,10 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "发起赛事";
             return View();
         }
+        public ActionResult addedu()
+        {
+            ViewBag.Message = "添加教育经历";
+            return View();
+        }
     }
 }

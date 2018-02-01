@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "";
+    ViewBag.Title = "添加教育经历";
+}
+<link href="@Url.Content("~/Content/asset/css/Playerpersonal.css?1.1.3")" rel="stylesheet" type="text/css" />
+
+
+<div class="addeducation" id="addeducation">
+    <div class="form-group">
+        <input class="form-select-school" id="test2">
+        <em class="em"> —</em>
+        <input class="form-select-school" id="test3">
+        <select class="form-select-schools" id="school5">
+            <option>省</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <select class="form-select-schools" id="school6">
+            <option>市</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <select class="form-select-schoolads" id="school7">
+            <option>学校</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </div>
+    <button class="confirmadd" id="confirmadd">添加</button>
+</div>
+
+@Scripts.Render("~/Content/asset/js/laydate/laydate.js")
+<script>
+    laydate.render({
+        elem: '#test2',
+        type:'month'
+    });
+    laydate.render({
+        elem: '#test3',
+        type: 'month'
+    });
+</script>

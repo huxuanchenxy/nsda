@@ -296,6 +296,12 @@
     <Content Include="Content\asset\js\parallax.min.js" />
     <Content Include="Content\asset\js\tabs.js" />
     <None Include="Content\asset\js\_references.js" />
+    <Content Include="Content\asset\layer\css\layer.css" />
+    <Content Include="Content\asset\layer\css\layer.ext.css" />
+    <Content Include="Content\asset\layer\img\icon.png" />
+    <Content Include="Content\asset\layer\img\loading.gif" />
+    <Content Include="Content\asset\layer\js\layer.ext.js" />
+    <Content Include="Content\asset\layer\js\layer.js" />
     <Content Include="favicon.ico" />
     <Content Include="Content\asset\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -330,6 +336,7 @@
     <Content Include="Views\Shared\_EventManage.cshtml" />
     <Content Include="Views\Home\eventstart.cshtml" />
     <Content Include="Views\Home\eventstartlists.cshtml" />
+    <Content Include="Views\Home\addedu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
