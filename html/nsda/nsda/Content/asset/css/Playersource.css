@@ -1,4 +1,8 @@
-﻿.score-top .integral{
+﻿.score-con{
+    width:75%;
+    float:left;
+}
+.score-top .integral{
     display:inline;
     width:36px;
     height:46px;

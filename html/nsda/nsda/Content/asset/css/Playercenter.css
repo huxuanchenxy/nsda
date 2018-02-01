@@ -10,7 +10,7 @@
     position:relative;
 }
 .info-con{
-    width:76%;
+    width:73%;
     float:left;
     margin-left:15px;
     margin-top:110px;
@@ -144,10 +144,31 @@ nav.info-nav{
     bottom:0;
     margin-bottom:50px;
 }
-
-
-
-
+.page{
+    color: #a2a2a2;
+    margin: 20px 0;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+.page a.prev, .page a.next {
+    font-size: 14px;
+    font-weight: bold;
+}
+.page span, .page a {
+    color: #a2a2a2;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    text-decoration: none;
+}
+.page a:hover, .page .on{
+    background-color: #2577e3;
+    border-radius: 30px;
+    color: #fff;
+}
 
 
 

@@ -1,4 +1,8 @@
-﻿.score-top{
+﻿.coach-con{
+    width:100%;
+    background:white;
+}
+.score-top{
     padding-right: 35px;
 }
 .score-con{
@@ -7,6 +11,7 @@
     margin-top:50px;
     margin-left:10px;
     position:relative;
+    min-height:700px;
 }
 .score-top{
     width:100%;
@@ -228,4 +233,35 @@
 
 .info-lists .panel-group .panel:last-child .panel-heading .panel-title h3{
     color:#1DB8FF;
+}
+.score-con nav{
+    position:absolute;
+    right:20px;
+    bottom:0;
+    margin-bottom:60px;
+}
+.page{
+    color: #a2a2a2;
+    margin: 20px 0;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+.page a.prev, .page a.next {
+    font-size: 14px;
+    font-weight: bold;
+}
+.page span, .page a {
+    color: #a2a2a2;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    text-decoration: none;
+}
+.page a:hover, .page .on{
+    background-color: #2577e3;
+    border-radius: 30px;
+    color: #fff;
 }

@@ -15,7 +15,9 @@
     margin-top: 10px;
     border: none;
 }
-
+.boundtable{
+    min-height:600px;
+}
 .boundtable tbody td button {
     width: 90px;
     height: 30px;

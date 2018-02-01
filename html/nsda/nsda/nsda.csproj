@@ -273,8 +273,10 @@
     <Content Include="Content\asset\img\Stephen Breyer.jpg" />
     <Content Include="Content\asset\img\teacher.png" />
     <Content Include="Content\asset\img\txt1.png" />
+    <Content Include="Content\asset\js\block.js" />
     <Content Include="Content\asset\js\bootstrap.min.js" />
     <Content Include="Content\asset\js\change.js" />
+    <Content Include="Content\asset\js\loading.js" />
     <Content Include="Content\asset\js\selected.js" />
     <Content Include="Content\asset\js\info.js" />
     <Content Include="Content\asset\js\jquery-3.2.1.min.js" />

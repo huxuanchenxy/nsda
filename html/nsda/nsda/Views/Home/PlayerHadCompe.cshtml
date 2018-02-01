@@ -8,130 +8,125 @@
 @Html.Partial("_PlayerTop")
 
 <div class="container player-compe">
-    @Html.Partial("_PlayerLeft")
-</div>
-<div class="comp-lists tab">
-    <ul class="comp-title">
-        <a href="/Home/PlayerHadCompe"><li class="act">已参与比赛</li></a>
-        <a href="/Home/PlayerExitCompe"><li>退赛信息</li></a>
-    </ul>
-    <div class="comp-con">
-        <div class="hadtable">
-            <table>
-                <thead>
-                    <tr>
-                        <th width="11%">比赛编码</th>
-                        <th width="18%">比赛名称</th>
-                        <th width="5%">类别</th>
-                        <th width="10%">会员编码</th>
-                        <th width="12%">队员</th>
-                        <th width="12%">状态</th>
-                        <th width="33%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>报名邀请中</td>
-                        <td><a href="#" class="select">是否接受组队</a></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>确认组队</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>组队成功</td>
-                        <td><a href="#" class="pay">付款</a><a href="#" class="apply">退赛申请</a></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>06</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>报名成功</td>
-                        <td><a href="#" class="apply">退赛申请</a></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>06</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>报名成功</td>
-                        <td><a href="#" class="apply">退赛申请</a></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>06</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>01</td>
-                        <td>02</td>
-                        <td>03</td>
-                        <td>04</td>
-                        <td>05</td>
-                        <td>报名成功</td>
-                        <td><a href="#" class="apply">退赛申请</a></td>
-                    </tr>
-                </tbody>
-            </table>
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+        @Html.Partial("_PlayerLeft")
+        <div class="comp-lists tab">
+            <ul class="comp-title">
+                <a href="/Home/PlayerHadCompe"><li class="act">已参与比赛</li></a>
+                <a href="/Home/PlayerExitCompe"><li>退赛信息</li></a>
+            </ul>
+            <div class="comp-con">
+                <div class="hadtable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="11%">比赛编码</th>
+                                <th width="18%">比赛名称</th>
+                                <th width="5%">类别</th>
+                                <th width="10%">会员编码</th>
+                                <th width="12%">队员</th>
+                                <th width="12%">状态</th>
+                                <th width="33%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>报名邀请中</td>
+                                <td><a href="#" class="select">是否接受组队</a></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>确认组队</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>组队成功</td>
+                                <td><a href="#" class="pay">付款</a><a href="#" class="apply">退赛申请</a></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>06</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>报名成功</td>
+                                <td><a href="#" class="apply">退赛申请</a></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>06</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>报名成功</td>
+                                <td><a href="#" class="apply">退赛申请</a></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>06</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>01</td>
+                                <td>02</td>
+                                <td>03</td>
+                                <td>04</td>
+                                <td>05</td>
+                                <td>报名成功</td>
+                                <td><a href="#" class="apply">退赛申请</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation">
+                        <div class="page">
+                            <a href="javascript:void(0);" class="prev"><</a>
+                            <a href="javascript:void(0);" class="on">1</a>
+                            <span>...</span>
+                            <a href="javascript:void(0);">4</a>
+                            <a href="javascript:void(0);">5</a>
+                            <a href="javascript:void(0);">6</a>
+                            <span>...</span>
+                            <a href="javascript:void(0);">7</a>
+                            <a href="javascript:void(0);" class="next">></a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
         </div>
-    </div>
 </div>
+@Scripts.Render("~/Content/asset/js/selected.js")
