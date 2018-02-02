@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "会员中心";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+    var data = ViewBag.Condition as List<nsda.Model.dto.response.EventConditionResponse>;
 }
 @section styles
 {
@@ -9,36 +10,40 @@
     <link rel="stylesheet" href="/asset/css/playersign.css?version=@Constant.Version">
 }
 <div class="compe-con">
-    <div class="address">
-        <div class="address-left">地点：<a href="#" class="nolimit">不限</a></div>
-        <ul class="address-lists">
-            <p>国内赛区：</p>
-            <li>郑州</li>
-            <li>西安</li>
-            <li>宁波</li>
-            <li>杭州</li>
-            <li>成都</li>
-            <li>青岛</li>
-            <li>长沙</li>
-            <li>南京</li>
-            <li>上海</li>
-            <li>深圳</li>
-            <li>无锡</li>
-            <li>济南</li>
-            <li>北京</li>
-        </ul>
-        <br />
-        <ul class="address-lists">
-            <p>国际赛区：</p>
-            <li>美国</li>
-            <li>韩国</li>
-            <li>日本</li>
-            <li>台湾</li>
-        </ul>
-    </div>
+    <div class="address" >
+       @if (data != null)
+       {
+            <p class="ads">地点：</p>
+            <ul class="address-lists common-lists">
+                <li class="selected">不限</li>
+                @{
+                    var datas = data.Where(c => !c.IsInter);
+                    if (datas != null)
+                    {
+                        <p class="division">国内赛区：</p>
+                        foreach (var item in datas)
+                        {
+                            <li data-cityId="@item.CityId">@item.CityName</li>
+                        }
+                    }
+                    var datass = data.Where(c => c.IsInter);
+                    if (datass != null)
+                    {
+                        <p class="division international">国际赛区：</p>
+                        foreach (var item in datass)
+                        {
+                            <li data-provinceId="@item.ProvinceId">@item.ProvinceName</li>
+                        }
+                    }
+                }
+            </ul>
+       }
+   </div>
+   
     <div class="level">
-        <div class="level-left">级别：<a href="#" class="nolimit" date-eventlevel="1">不限</a></div>
-        <ul class="level-lists">
+        <p class="lev">级别：</p>
+        <ul class="level-lists common-lists">
+            <li class="selected" date-eventlevel="0">不限</li>
             <li date-eventlevel="1">A</li>
             <li date-eventlevel="2">B</li>
             <li date-eventlevel="3">C</li>
@@ -46,54 +51,58 @@
             <li date-eventlevel="5">E</li>
         </ul>
     </div>
+
     <div class="time">
-        <div class="time-left">时间：<a href="#" class="nolimit">不限</a></div>
-        <ul class="time-lists nav-tabs tab" id="myTabs">
-            <li role="presentation" class="active tabt">@DateTime.Now.AddYears(-1).Year</li>
-            <li role="presentation" class="tabt">@DateTime.Now.Year</li>
-        </ul>
-        <div class="time-mons tabc">
-            <ul class="time-mon monsev tabcon">
-                <li>一月<br>Jan.</li>
-                <li>二月<br>Feb.</li>
-                <li>三月<br>Mar.</li>
-                <li>四月<br>Apr.</li>
-                <li>五月<br>May.</li>
-                <li>六月<br>Jun.</li>
-                <li>七月<br>Jul.</li>
-                <li>八月<br>Aug.</li>
-                <li>九月<br>Sep.</li>
-                <li>十月<br>Oct.</li>
-                <li>十一月<br>Nov.</li>
-                <li>十二月<br>Dec.</li>
-            </ul>
-            <ul class="time-mon moneig tabcon">
-                <li>一月<br>Jan.</li>
-                <li>二月<br>Feb.</li>
-                <li>三月<br>Mar.</li>
-                <li>四月<br>Apr.</li>
-                <li>五月<br>May.</li>
-                <li>六月<br>Jun.</li>
-                <li>七月<br>Jul.</li>
-                <li>八月<br>Aug.</li>
-                <li>九月<br>Sep.</li>
-                <li>十月<br>Oct.</li>
-                <li>十一月<br>Nov.</li>
-                <li>十二月<br>Dec.</li>
-            </ul>
-        </div>
+        <p class="tim">时间：</p>
+        <ul class="time-lists common-lists">
+            <li class="selected nolimit">不限</li>
+            <div class="nav-tabs tab" id="myTabs">
+                <div role="presentation" class="active tabt">@DateTime.Now.Year</div>
+                <div role="presentation" class="tabt">@DateTime.Now.AddYears(1).Year</div>
+            </div>
+            <div class="time-mons tabc">
+                <ul class="time-mon monsev tabcon">
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-01-01")">一月<br>Jan.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-02-01")">二月<br>Feb.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-03-01")">三月<br>Mar.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-04-01")">四月<br>Apr.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-05-01")">五月<br>May.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-06-01")">六月<br>Jun.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-07-01")">七月<br>Jul.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-08-01")">八月<br>Aug.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-09-01")">九月<br>Sep.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-10-01")">十月<br>Oct.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-11-01")">十一月<br>Nov.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-12-01")">十二月<br>Dec.</li>
+                </ul>
+                <ul class="time-mon moneig tabcon">
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-01-01")">一月<br>Jan.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-02-01")">二月<br>Feb.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-03-01")">三月<br>Mar.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-04-01")">四月<br>Apr.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-05-01")">五月<br>May.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-06-01")">六月<br>Jun.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-07-01")">七月<br>Jul.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-08-01")">八月<br>Aug.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-09-01")">九月<br>Sep.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-10-01")">十月<br>Oct.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-11-01")">十一月<br>Nov.</li>
+                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-12-01")">十二月<br>Dec.</li>
+                </ul>
+            </div>
+         </ul>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th width="13%">比赛编码</th>
-                <th width="25%">比赛名称</th>
-                <th width="7%">类别</th>
-                <th width="7%">级别</th>
-                <th width="13%">开始日期</th>
-                <th width="11%">城市</th>
-                <th width="16%"></th>
+                <th>比赛编码</th>
+                <th>比赛名称</th>
+                <th>类别</th>
+                <th>级别</th>
+                <th>开始日期</th>
+                <th>城市</th>
+                <th></th>
             </tr>
         </thead>
         <tbody id="data">
@@ -109,7 +118,7 @@
    <script src="/asset/js/enumreplace.js"></script>
    <script src="/asset/js/pager.js"></script>
    <script src="/asset/js/tabs.js"></script>
-   <script src="/asset/js/selected.js"></script>
+   <script src="/asset/js/click.js"></script>
     <script>
         (function (w) {
             var playerevent = {
@@ -117,6 +126,10 @@
                     TotalPage: 1,
                     PageIndex: 1,
                     PageSize: 10,
+                    ProvinceId: 0,
+                    CityId: 0,
+                    EventLevel: 0,
+                    StartDate:""
                 }
             };
             playerevent.Load = function (filter) {
@@ -166,5 +179,22 @@
             w.playerevent = playerevent
         })(window);
         playerevent.Load(playerevent.param);
+
+        //时间
+        $("#time").click(function () {
+            playerevent.param.StartDate = "";
+            playerevent.Load(playerevent.param);
+        });
+        //地址
+        $("#address").click(function () {
+            playerevent.param.ProvinceId = 0;
+            playerevent.param.CityId = 0;
+            playerevent.Load(playerevent.param);
+        });
+        //等级
+        $("#level").click(function () {
+            playerevent.param.EventLevel = 0;
+            playerevent.Load(playerevent.param);
+        });
     </script>
 }

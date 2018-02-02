@@ -32,8 +32,7 @@ namespace nsda.Web.Areas.player.Controllers
         //报名页面
         public ActionResult index()
         {
-            var data = _eventService.EventCondition();
-            ViewBag.Condition = data;
+            ViewBag.Condition = _eventService.EventCondition();
             ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
@@ -114,6 +113,7 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
 
+        //申请退赛
         [HttpPost]
         [AjaxOnly]
         public ContentResult applyretire(int id)
@@ -123,6 +123,7 @@ namespace nsda.Web.Areas.player.Controllers
             return Result<string>(flag, msg);
         }
 
+        //确认退赛
         [HttpPost]
         [AjaxOnly]
         public ContentResult isconfirmretire(int id,bool isAgree)
@@ -135,7 +136,7 @@ namespace nsda.Web.Areas.player.Controllers
         //去支付
         [HttpPost]
         [AjaxOnly]
-        public ContentResult gopay(int id, int newMemberId)
+        public ContentResult gopay(int id)
         {
             string msg = string.Empty;
             int orderId = _playerSignUpService.GoPay(id, UserContext.WebUserContext.Id, out msg);

@@ -5,8 +5,8 @@
 }
 @section styles
 {
- <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
- <link rel="stylesheet" href="/asset/css/playerpartin.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/playerpartin.css?version=@Constant.Version">
 }
 
 <div class="comp-lists tab">
@@ -19,19 +19,17 @@
             <table>
                 <thead>
                     <tr>
-                        <th width="11%">比赛编码</th>
-                        <th width="15%">比赛名称</th>
-                        <th width="5%">类别</th>
-                        <th width="15%">队伍编码</th>
-                        <th width="10%">会员编码</th>
-                        <th width="12%">队员</th>
-                        <th width="12%">状态</th>
-                        <th width="21%"></th>
+                        <th>比赛编码</th>
+                        <th>比赛名称</th>
+                        <th>类别</th>
+                        <th>队伍编码</th>
+                        <th>会员编码</th>
+                        <th>队员</th>
+                        <th>状态</th>
+                        <th></th>
                     </tr>
                 </thead>
-                <tbody id="data">
-                   
-                </tbody>
+                <tbody id="data"></tbody>
             </table>
             <nav aria-label="Page navigation" id="pager">
             </nav>
@@ -43,7 +41,7 @@
 {
     <script src="/asset/layer/js/layer.js"></script>
     <script src="/asset/js/pager.js"></script>
-   <script src="/asset/js/enumreplace.js"></script>
+    <script src="/asset/js/enumreplace.js"></script>
     <script>
         (function (w) {
             var playersignup = {
@@ -68,18 +66,63 @@
                             _pager.init(filter, playersignup.param.PageIndex, playersignup.param.TotalPage, function (p) {
                                 playersignup.param.PageIndex = p;
                                 playersignup.Load(playersignup.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
-                                html+='<tr>'
-                                html+='<td>'+val.EventCode+'</td>';
+                                html += '<tr>'
+                                html += '<td>' + val.EventCode + '</td>';
                                 html += '<td>' + val.EventName + '</td>';
                                 html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
                                 html += '<td>' + val.GroupNum + '</td>';
-                                html+='<td>'+val.MemberCode+'</td>';
+                                html += '<td>' + val.MemberCode + '</td>';
                                 html += '<td>' + val.MemberName + '</td>';
-                                html += '<td>' + val.SignUpStatus + '</td>';
-                                html+='<td>操作</td>';
-                                html+='</tr>'
+                                if (val.Flag) {//数据是否是自己的
+                                    if (val.SignUpType == 1) {//是否是邀请人
+                                        html += '<td>' + enumreplace.replacezsignUpStatus(val.SignUpStatus) + '</td>';
+                                        html += '<td>';
+                                        if (val.SignUpStatus == 1) {
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="apply applyretire">退赛申请</a>';
+                                        } else if (val.SignUpStatus == 2) {//待支付
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="pay gopay">付款</a>';
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="apply applyretire">退赛申请</a>';
+                                        }
+                                        else if (val.SignUpStatus == 3) {//已支付
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="apply applyretire">退赛申请</a>';
+                                        }
+                                        else if (val.SignUpStatus == 4) {//报名成功
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="apply applyretire">退赛申请</a>';
+                                        }
+                                        html += '</td>';
+                                    }
+                                    else {
+                                        html += '<td>' + enumreplace.replacebsignUpStatus(val.SignUpStatus) + '</td>';
+                                        html += '<td>'
+                                        if (val.SignUpStatus == 1) {
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="select isacceptteam">是否接受组队</a>';
+                                        } else if (val.SignUpStatus == 2) {
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="pay gopay">付款</a>';
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="apply applyretire">退赛申请</a>';
+                                        } else if (val.SignUpStatus == 3) {//已支付
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="apply applyretire">退赛申请</a>';
+                                        } else if (val.SignUpStatus == 4) {//报名成功
+                                            html += '<a href="javascript:;" data-id=' + val.Id + ' class="apply applyretire">退赛申请</a>';
+                                        }
+                                        html += '</td>';
+                                    }
+                                } else {//队友数据
+                                    if (val.SignUpType == 1) {//是否是邀请人
+                                        html += '<td>' + enumreplace.replacezsignUpStatus(val.SignUpStatus) + '</td>';
+                                    }
+                                    else {
+                                        html += '<td>' + enumreplace.replacebsignUpStatus(val.SignUpStatus) + '</td>';
+                                    }
+                                    html += '<td>';
+                                    if (val.SignUpStatus == 5) {
+                                        html += '<a href="javascript:;" data-id=' + val.Id + ' class="select confirmretire">是否确认退赛</a>';
+                                    }
+                                    html += '</td>';
+                                }
+                                html += '</tr>'
                             });
                             html += '';
                             $("#data").html(html)
@@ -93,5 +136,176 @@
             w.playersignup = playersignup
         })(window);
         playersignup.Load(playersignup.param);
+        //是否接受组队
+        $(document).on("click", ".isacceptteam", function () {
+            var id = $(this).attr("data-id");
+            layer.confirm('是否确认组队', {
+                btn: ['是', '否']
+            },function (index) {
+                $.ajax({
+                    url: "/player/playersignup/isacceptteam",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                        isAgree: true
+                    },
+                    beforeSend: function () {
+                        layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            layer.msg("操作成功", { icon: 1, time: 1000 });
+                            playersignup.Load(playersignup.param);
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+                , error: function () {
+                    layer.closeAll();
+                }
+                });
+            }, function () {
+                $.ajax({
+                    url: "/player/playersignup/isacceptteam",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                        isAgree: false
+                    },
+                    beforeSend: function () {
+                        layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            layer.msg("操作成功", { icon: 1, time: 1000 });
+                            playersignup.Load(playersignup.param);
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+               , error: function () {
+                   layer.closeAll();
+               }
+                });
+            });
+        });
+        //申请退赛
+        $(document).on("click", ".applyretire", function () {
+            $.ajax({
+                url: "/player/playersignup/applyretire",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: $(this).attr("data-id")
+                },
+                beforeSend: function () {
+                    layer.msg('申请中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("申请成功", { icon: 1, time: 1000 });
+                        playersignup.Load(playersignup.param);
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+              ,error: function () {
+                  layer.closeAll();
+              }
+            });
+        });
+        //是否确认退赛
+        $(document).on("click", ".confirmretire", function () {
+            var id = $(this).attr("data-id");
+            layer.confirm('是否确认退赛', {
+                btn: ['是', '否']
+            },function (index) {
+               $.ajax({
+                   url: "/player/playersignup/isconfirmretire",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: id,
+                    isAgree: true
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("退赛成功", { icon: 1, time: 1000 });
+                        playersignup.Load(playersignup.param);
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+              ,error: function () {
+                  layer.closeAll();
+              }
+            });
+            },function () {
+                $.ajax({
+                    url: "/player/playersignup/isconfirmretire",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        id: id,
+                        isAgree: false
+                    },
+                    beforeSend: function () {
+                        layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            layer.msg("退赛成功", { icon: 1, time: 1000 });
+                            playersignup.Load(playersignup.param);
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+                     , error: function () {
+                         layer.closeAll();
+                     }
+                });
+            });
+        });
+        //去支付
+        $(document).on("click", ".gopay", function () {
+            $.ajax({
+                url: "/player/playersignup/gopay",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: $(this).attr("data-id")
+                },
+                beforeSend: function () {
+                    layer.msg('支付中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        window.location.href = "/player/playerpay/alipay/" + json.data;
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                },
+                error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
     </script>
 }

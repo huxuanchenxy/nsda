@@ -469,6 +469,7 @@
     <Content Include="asset\js\block.js" />
     <Content Include="asset\js\bootstrap.min.js" />
     <Content Include="asset\js\change.js" />
+    <Content Include="asset\js\click.js" />
     <Content Include="asset\js\common.js" />
     <Content Include="asset\js\enumreplace.js" />
     <Content Include="asset\js\info.js" />
@@ -493,8 +494,6 @@
     <Content Include="asset\js\pager.js" />
     <Content Include="asset\js\parallax.min.js" />
     <Content Include="asset\js\pcs.js" />
-    <Content Include="asset\js\playerevent.js" />
-    <Content Include="asset\js\selected.js" />
     <Content Include="asset\js\tabs.js" />
     <Content Include="Areas\player\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\coach\Views\Shared\_Layout.cshtml" />

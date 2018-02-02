@@ -129,6 +129,27 @@ namespace nsda.Web.Areas.admin.Controllers
             var flag = _eventScoreService.Delete(id,UserContext.SysUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
+        private FileTypeEm ReturnFileType(string extendName)
+        {
+            FileTypeEm fileType = FileTypeEm.Zip;
+            if (extendName.Contains("doc") || extendName.Contains("docx"))
+            {
+                fileType = FileTypeEm.Doc;
+            }
+            else if (extendName.Contains("xls") || extendName.Contains("xlsx"))
+            {
+                fileType = FileTypeEm.Excel;
+            }
+            else if (extendName.Contains("pdf"))
+            {
+                fileType = FileTypeEm.Excel;
+            }
+            else if (extendName.Contains("png") || extendName.Contains("gif") || extendName.Contains("jpeg") || extendName.Contains("bmp"))
+            {
+                fileType = FileTypeEm.Excel;
+            }
+            return fileType;
+        }
 
         [HttpPost]
         public ContentResult inserteventscroe(EventScoreRequest request)
@@ -178,6 +199,7 @@ namespace nsda.Web.Areas.admin.Controllers
             else
             {
                 request.FilePath = filePath;
+                request.FileType = ReturnFileType(extendName);
                 var insertmsg = string.Empty;
                 var flag = _eventScoreService.Insert(request,out insertmsg);
                 return Result<string>(flag, insertmsg);

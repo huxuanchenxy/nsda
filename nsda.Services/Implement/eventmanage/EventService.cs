@@ -676,12 +676,12 @@ namespace nsda.Services.Implement.eventmanage
             List<EventConditionResponse> list = new List<EventConditionResponse>();
             try
             {
-                var sql = $@"select a.isInter IsInter,a.provinceId ProvinceId,a.cityId CityId,
+                var sql = $@"select distinct a.isInter IsInter,a.provinceId ProvinceId,a.cityId CityId,
                             b.name ProvinceName,c.name CityName
                             from t_event a
                             left join  t_sys_province b on a.provinceId=b.id
                             left join  t_sys_city     c on a.cityId=c.id
-                            where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventnoquerystatus})";
+                            where a.isdelete=0 and a.eventStatus not in ({ParamsConfig._eventnoquerystatus})";
                 list = _dbContext.Query<EventConditionResponse>(sql).ToList();
             }
             catch (Exception ex)
