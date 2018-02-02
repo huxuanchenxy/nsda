@@ -3,6 +3,7 @@
 }
 <link href="@Url.Content("~/Content/asset/css/playercenter.css?1.1.2")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/playersign.css?1.1.4")" rel="stylesheet" type="text/css" />
+@Scripts.Render("~/Content/asset/layer/js/layer.js")
 
 @Html.Partial("_playertop")
 
@@ -10,37 +11,6 @@
     @Html.Partial("_playerleft")
     <div class="compe-con">
         <div class="address">
-<<<<<<< HEAD
-            <div class="address-item">
-                <p>地点：</p><a href="javascript:;" class="selected">不限</a>
-            </div>
-            <div class="address-con">
-                <p>国内赛区：</p>
-                <a href="javascript:;">郑州</a>
-                <a href="javascript:;">西安</a>
-                <a href="javascript:;">宁波</a>
-                <a href="javascript:;">杭州</a>
-                <a href="javascript:;">成都</a>
-                <a href="javascript:;">青岛</a>
-                <a href="javascript:;">长沙</a>
-                <a href="javascript:;">南京</a>
-                <a href="javascript:;">上海</a>
-                <a href="javascript:;">深圳</a>
-                <a href="javascript:;">无锡</a>
-                <a href="javascript:;">济南</a>
-                <a href="javascript:;">北京</a>
-
-            </div>
-            <div class="address-con-two">
-                <p>国际赛区：</p>
-                <a href="javascript:;">郑州</a>
-                <a href="javascript:;">西安</a>
-                <a href="javascript:;">宁波</a>
-                <a href="javascript:;">杭州</a>
-                <a href="javascript:;">成都</a>
-                <a href="javascript:;">青岛</a>
-            </div>
-=======
             <p class="ads">地点：</p>
             <ul class="address-lists common-lists">
                 <li class="selected">不限</li>
@@ -65,59 +35,58 @@
                 <li>日本</li>
                 <li>台湾</li>*@
             </ul>
->>>>>>> f99967865dada06c2f58f269c7bb8f1972a150b5
         </div>
         <div class="level">
-            <div class="level-item">
-                <p>级别：</p><a href="javascript:;" class="selected">不限</a>
-            </div>
-            <div class="level-con">
-                <a href="javascript:;">A</a>
-                <a href="javascript:;">B</a>
-                <a href="javascript:;">C</a>
-                <a href="javascript:;">D</a>
-                <a href="javascript:;">E</a>
-            </div>
+            <p class="lev">地点：</p>
+            <ul class="level-lists common-lists">
+                <li class="selected">不限</li>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+            </ul>
         </div>
         <div class="time">
-            <div class="time-item">
-                <p>时间：</p><a href="javascript:;" class="selected">不限</a>
-            </div>
-            <div class="time-con">
-                <a href="javascript:;" class="active tabt">2017</a>
-                <a href="javascript:;" class="tabt">2018</a>
-            </div>
-            <div class="month-con month-con-first tabcon">
-                <a href="javascript:;">一月<br>Jan.</a>
-                <a href="javascript:;">二月<br>Feb.</a>
-                <a href="javascript:;">三月<br>Mar.</a>
-                <a href="javascript:;">四月<br>Apr.</a>
-                <a href="javascript:;">五月<br>May.</a>
-                <a href="javascript:;">六月<br>Jun.</a>
-                <a href="javascript:;">七月<br>Jul.</a>
-                <a href="javascript:;">八月<br>Aug.</a>
-                <a href="javascript:;">九月<br>Sep.</a>
-                <a href="javascript:;">十月<br>Oct.</a>
-                <a href="javascript:;">十一月<br>Nov.</a>
-                <a href="javascript:;">十二月<br>Dec.</a>
-            </div>
-            <div class="month-con month-con-two tabcon">
-                <a href="javascript:;">一月<br>Jan.</a>
-                <a href="javascript:;">二月<br>Feb.</a>
-                <a href="javascript:;">三月<br>Mar.</a>
-                <a href="javascript:;">四月<br>Apr.</a>
-                <a href="javascript:;">五月<br>May.</a>
-                <a href="javascript:;">六月<br>Jun.</a>
-                <a href="javascript:;">七月<br>Jul.</a>
-                <a href="javascript:;">八月<br>Aug.</a>
-                <a href="javascript:;">九月<br>Sep.</a>
-                <a href="javascript:;">十月<br>Oct.</a>
-                <a href="javascript:;">十一月<br>Nov.</a>
-                <a href="javascript:;">十二月<br>Dec.</a>
-            </div>
+            <p class="tim">地点：</p>
+            <ul class="time-lists common-lists">
+                <li class="selected nolimit">不限</li>
+                <div class="nav-tabs tab" id="myTabs">
+                    <div role="presentation" class="active tabt">2017</div>
+                    <div role="presentation" class="tabt">2018</div>
+                </div>
+                <div class="time-mons tabc">
+                    <ul class="time-mon monsev tabcon">
+                        <li>一月<br>Jan.</li>
+                        <li>二月<br>Feb.</li>
+                        <li>三月<br>Mar.</li>
+                        <li>四月<br>Apr.</li>
+                        <li>五月<br>May.</li>
+                        <li>六月<br>Jun.</li>
+                        <li>七月<br>Jul.</li>
+                        <li>八月<br>Aug.</li>
+                        <li>九月<br>Sep.</li>
+                        <li>十月<br>Oct.</li>
+                        <li>十一月<br>Nov.</li>
+                        <li>十二月<br>Dec.</li>
+                    </ul>
+                    <ul class="time-mon moneig tabcon">
+                        <li>一月<br>Jan.</li>
+                        <li>二月<br>Feb.</li>
+                        <li>三月<br>Mar.</li>
+                        <li>四月<br>Apr.</li>
+                        <li>五月<br>May.</li>
+                        <li>六月<br>Jun.</li>
+                        <li>七月<br>Jul.</li>
+                        <li>八月<br>Aug.</li>
+                        <li>九月<br>Sep.</li>
+                        <li>十月<br>Oct.</li>
+                        <li>十一月<br>Nov.</li>
+                        <li>十二月<br>Dec.</li>
+                    </ul>
+                </div>
+            </ul>
         </div>
-
-
         <table>
             <thead>
                 <tr>
@@ -231,8 +200,6 @@
 </div>
 @Scripts.Render("~/Content/asset/js/tabs.js")
 @Scripts.Render("~/Content/asset/js/click.js")
-
-
 
 
 
