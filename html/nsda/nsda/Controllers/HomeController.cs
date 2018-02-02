@@ -124,5 +124,15 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "添加教育经历";
             return View();
         }
+        public ActionResult boundcoach()
+        {
+            ViewBag.Message = "添加绑定教练";
+            return View();
+        }
+        public ActionResult boundplayer()
+        {
+            ViewBag.Message = "添加绑定学员";
+            return View();
+        }
     }
 }

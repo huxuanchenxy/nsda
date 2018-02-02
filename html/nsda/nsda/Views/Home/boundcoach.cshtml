@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "";
+    ViewBag.Title = "添加教育经历";
+}
+<link href="@Url.Content("~/Content/asset/css/playerboundcoach.css?1.1.4")" rel="stylesheet" type="text/css" />
+
+
+<div class="addcoach" id="addeducation">
+    <img class="coachimg" src="~/Content/asset/img/bound_03.png" alt="...">
+    <div class="form-group">
+        <input class="form-select-school" id="staryear">
+        <em class="em"> —</em>
+        <input class="form-select-school" id="endyear">
+        <select class="form-select-schools" id="coach">
+            <option>教练名字</option>
+            <option>NSDA教练编号</option>
+        </select>
+        <input id="txt" />
+        <a class="searchcoach" id="search">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
+        <select size="6" id="sel" style="display:none;">
+            <option>123</option>
+            <option>23456</option>
+            <option>1111</option>
+            <option>123333</option>
+            <option>aaaa</option>
+            <option>1bbb23</option>
+        </select>
+        <a href="#" class="boundcoach" id="confirmadd">绑定教练</a>
+    </div>
+</div>
+
+
+@Scripts.Render("~/Content/asset/js/block.js")
+@Scripts.Render("~/Content/asset/js/laydate/laydate.js")
+
+<script>
+    laydate.render({
+        elem: '#staryear',
+        type:'month'
+    });
+    laydate.render({
+        elem: '#endyear',
+        type: 'month'
+    });
+</script>
+
+
+
+
+
+
+
+
+
+

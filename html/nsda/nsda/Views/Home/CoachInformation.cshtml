@@ -1,13 +1,13 @@
 ﻿@{
     ViewBag.Title = "Personal Information";
 }
-<link href="@Url.Content("~/Content/asset/css/Coachinformation.css?1.1.2")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/coachinformation.css?1.1.2")" rel="stylesheet" type="text/css" />
 
 
-@Html.Partial("_CoachTop")
+@Html.Partial("_coachtop")
 
 <div class="container coach-con">
-        @Html.Partial("_CoachLeft")
+        @Html.Partial("_coachleft")
         <div class="coach-personal">
             <div class="per-top">
                 <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
@@ -18,24 +18,24 @@
                 <div class="modifyinfo">
                     <div class="form-group">
                         <label>E-mail:</label>
-                        <div class="form-con"><p>admin@enreachedu.com</p></div>
+                        <div class="form-con" id="email"><p>admin@enreachedu.com</p></div>
                     </div>
                     <div class="form-group two-label">
                         <div>
-                            <label for="emrphone"> First Name:</label>
+                            <label for="firstname"> First Name:</label>
                             <div class="form-con">
                                 <input type="text" id="firstname">
                             </div>
                         </div>
                         <div>
-                            <label for="emrcontact">Last Name:</label>
+                            <label for="lastname">Last Name:</label>
                             <div class="form-con">
                                 <input type="text" id="lastname">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Gender:</label>
+                        <label>Gender:</label>
                         <div class="form-con">
                             <label class="radio-inline">
                                 <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Male
@@ -46,21 +46,21 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Address:</label>
-                        <div class="form-con">
-                            <input type="text" id="address">
+                        <label>Address:</label>
+                        <div class="form-con" id="address">
+                            <input type="text">
                         </div>
                     </div>
                     <div class="emergency">
                         <h4>Emergency Contact Information</h4>
                         <div class="form-group">
-                            <label for="phone">Emergency Contact Person:</label>
+                            <label>Emergency Contact Person:</label>
                             <div class="form-con">
                                 <input type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="phone">Emergency Numbe:</label>
+                            <label>Emergency Numbe:</label>
                             <div class="form-con">
                                 <input type="text">
                             </div>

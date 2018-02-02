@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="form-group form-sexy">
-                <label for="address" class="form-label">性别</label>
+                <label for="sex" class="form-label">性别</label>
                 <label class="radio-inline sexy">
                     <input type="radio" name="inlineRadioOptions" id="men" value="option1"> 男
                 </label>
@@ -103,25 +103,25 @@
             </div>
             <div class="form-group">
                 <label for="school" class="form-label">目前学校</label>
-                <input class="form-select-school" id="year1">
+                <input class="form-select-school" id="startyear">
                 <em class="em"> —</em>
-                <input class="form-select-school" id="year2">
+                <input class="form-select-school" id="endyear">
                 <select class="form-select-schoolads schoolads" id="school5">
-                    <option>1</option>
+                    <option>省</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
                 </select>
                 <select class="form-select-schoolads" id="school6">
-                    <option>1</option>
+                    <option>市</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
                 </select>
                 <select class="form-select-schoolads form-sel-ads" id="school7">
-                    <option>1</option>
+                    <option>学校</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
@@ -135,11 +135,11 @@
 
 <script>
     laydate.render({
-        elem: '#year1'
+        elem: '#startyear'
         , type: 'month'
     });
     laydate.render({
-        elem: '#year2'
+        elem: '#endyear'
         , type: 'month'
     });
 </script>

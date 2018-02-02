@@ -208,31 +208,31 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\asset\css\About.css" />
+    <Content Include="Content\asset\css\about.css" />
     <Content Include="Content\asset\css\aboutp.css" />
     <Content Include="Content\asset\css\aboutus.css" />
     <Content Include="Content\asset\css\basic.css" />
     <Content Include="Content\asset\css\bootstrap.css" />
     <Content Include="Content\asset\css\bootstrap.min.css" />
     <Content Include="Content\asset\css\coach.css" />
-    <Content Include="Content\asset\css\Coachboundplayer.css" />
-    <Content Include="Content\asset\css\Coachinformation.css" />
+    <Content Include="Content\asset\css\coachboundplayer.css" />
+    <Content Include="Content\asset\css\coachinformation.css" />
     <Content Include="Content\asset\css\event.css" />
-    <Content Include="Content\asset\css\Eventmanage.css" />
+    <Content Include="Content\asset\css\eventmanage.css" />
     <Content Include="Content\asset\css\eventstart.css" />
     <Content Include="Content\asset\css\eventstartlists.css" />
     <Content Include="Content\asset\css\iconfont.css" />
-    <Content Include="Content\asset\css\Playerboundcoach.css" />
-    <Content Include="Content\asset\css\Playercenter.css" />
+    <Content Include="Content\asset\css\playerboundcoach.css" />
+    <Content Include="Content\asset\css\playercenter.css" />
     <Content Include="Content\asset\css\index.css" />
-    <Content Include="Content\asset\css\Playerintegral.css" />
-    <Content Include="Content\asset\css\Playersource.css" />
-    <Content Include="Content\asset\css\Playerpartin.css" />
-    <Content Include="Content\asset\css\Playerpersonal.css" />
+    <Content Include="Content\asset\css\playerintegral.css" />
+    <Content Include="Content\asset\css\playersource.css" />
+    <Content Include="Content\asset\css\playerpartin.css" />
+    <Content Include="Content\asset\css\playerpersonal.css" />
     <Content Include="Content\asset\css\player.css" />
     <Content Include="Content\asset\css\regform.css" />
     <Content Include="Content\asset\css\registered.css" />
-    <Content Include="Content\asset\css\Playersign.css" />
+    <Content Include="Content\asset\css\playersign.css" />
     <Content Include="Content\asset\css\Site.css" />
     <Content Include="Content\asset\img\add_03.png" />
     <Content Include="Content\asset\img\Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg" />
@@ -277,7 +277,6 @@
     <Content Include="Content\asset\js\bootstrap.min.js" />
     <Content Include="Content\asset\js\change.js" />
     <Content Include="Content\asset\js\selected.js" />
-    <Content Include="Content\asset\js\info.js" />
     <Content Include="Content\asset\js\jquery-3.2.1.min.js" />
     <Content Include="Content\asset\js\jquery.min.js" />
     <Content Include="Content\asset\js\jquery.tabslet.min.js" />
@@ -337,6 +336,8 @@
     <Content Include="Views\Home\eventstart.cshtml" />
     <Content Include="Views\Home\eventstartlists.cshtml" />
     <Content Include="Views\Home\addedu.cshtml" />
+    <Content Include="Views\Home\boundcoach.cshtml" />
+    <Content Include="Views\Home\boundplayer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

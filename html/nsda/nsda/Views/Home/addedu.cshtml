@@ -7,24 +7,24 @@
 
 <div class="addeducation" id="addeducation">
     <div class="form-group">
-        <input class="form-select-school" id="test2">
+        <input class="form-select-school" id="staryear">
         <em class="em"> —</em>
-        <input class="form-select-school" id="test3">
-        <select class="form-select-schools" id="school5">
+        <input class="form-select-school" id="endyear">
+        <select class="form-select-schools" id="province">
             <option>省</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
             <option>5</option>
         </select>
-        <select class="form-select-schools" id="school6">
+        <select class="form-select-schools" id="city">
             <option>市</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
             <option>5</option>
         </select>
-        <select class="form-select-schoolads" id="school7">
+        <select class="form-select-schoolads" id="school">
             <option>学校</option>
             <option>2</option>
             <option>3</option>
@@ -38,11 +38,11 @@
 @Scripts.Render("~/Content/asset/js/laydate/laydate.js")
 <script>
     laydate.render({
-        elem: '#test2',
+        elem: '#staryear',
         type:'month'
     });
     laydate.render({
-        elem: '#test3',
+        elem: '#endyear',
         type: 'month'
     });
 </script>
