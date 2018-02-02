@@ -3,9 +3,13 @@
     ViewBag.Title = "比赛进程管理";
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanage.css?1.1.3")" rel="stylesheet" type="text/css" />
-
+<link href="@Url.Content("~/Content/asset/css/eventmanagelists.css?1.1.3")" rel="stylesheet" type="text/css" />
 <div class="container event-lists">
-
+    <div class="compe-lists">
+        <ul class="manage-lists">
+            <li><span></span></li>
+        </ul>
+    </div>
     <div class="tri"></div>
 
     <table>
@@ -41,4 +45,3 @@
         </div>
     </nav>
 </div>
-@Scripts.Render("~/Content/asset/js/selected.js")

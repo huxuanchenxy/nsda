@@ -1,1 +1,46 @@
-﻿
+﻿.event-lists{
+    position:relative;
+}
+.compe-lists{
+    width:260px;
+    padding:10px;
+    border:1px solid #B3B9BE;
+    float:left;
+    position:absolute;
+    left:-270px;
+}
+.compe-lists .manage-lists li{
+    width:100%;
+    padding:10px;
+    text-align:left;
+    font-size:18px;
+    border-bottom:1px dashed #CED4D7;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

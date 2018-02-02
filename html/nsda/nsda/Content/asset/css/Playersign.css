@@ -84,13 +84,17 @@
     float:left;
     display:inline-block;
     width:60%;
-
+    
 }
+.compe-con .nav
 .compe-con .tab .tabt{
     width:15%;
     float:left;
     text-align:center;
     cursor:pointer;
+    border-radius:10px 10px 0 0;
+    -webkit-border-radius:10px 10px 0 0;
+    -moz-border-radius:10px 10px 0 0;
 }
 .compe-con .time-lists .tab .tabt.active{
     border:1px solid #cacaca;
