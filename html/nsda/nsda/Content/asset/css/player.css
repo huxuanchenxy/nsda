@@ -62,11 +62,13 @@
     float:left;
 }
 .player-num ul li p{
+    float:left;
+    min-width:400px;
+    height:30px;
     font-size: 14px;
     color: #666;
     line-height: 2.1;
     text-align:left;
-    float:left;
     font-weight: 600;
 }
 .player-code {

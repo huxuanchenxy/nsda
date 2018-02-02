@@ -11,69 +11,40 @@
 .info-lists{
     margin-right:15px;
 }
+ .compe-con nav{
+     position:absolute;
+     bottom:0;
+     right:30px;
+ }
  .compe-con{
-    margin-top:115px;
+     margin-top:115px;
+    min-height:1000px;
     width:100%;
+    position:relative;
 }
-.compe-con .nolimit{
-    display:inline;
-    padding:2px 8px;
-    color:white;
-    background:#FBB7A0;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-}
-    
-.compe-con .address-left{
-    width:10%;
+.address{
+     height:90px;
+ }
+.address p,.address .address-lists p,.address .address-lists li{
     float:left;
+    cursor:pointer;
 }
-.compe-con .address-lists{
-    float:right;
-    width:68%;
+.address p.ads,.level p.lev,.time p.tim{
+    width:5%
+}
+.address .address-lists .division{
+    width:7%;
+    margin-left:22px;
+   
+}
+.address .address-lists .international{
+    margin-left:11%;
+}
+.address .address-lists li{
+    width:4%;
     margin-bottom:20px;
-}
-.compe-con .address-lists p{
-    float:left;
-}
-.compe-con .address-lists li{
-    float:left;
-    width:6.8%;
     text-align:center;
     cursor:pointer;
-}
-.compe-con .address-lists li:hover{
-    background:#FBB7A0;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    color:white;
-    cursor:pointer;
-}
-.compe-con .level{
-    margin-top:60px;
-}
-.compe-con .level-left{
-    width:10%;
-    float:left;
-}
-.compe-con .level-lists{
-    width:68%;
-    float:right;
-} 
-.compe-con .level-lists li{
-    float:left;
-    width:5%;
-    text-align:center;
-    cursor:pointer;
-}
-.compe-con .level-lists li:hover{
-    background:#FBB7A0;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    color:white;
 }
 .selected{
     background:#FBB7A0;
@@ -82,32 +53,46 @@
     -moz-border-radius: 20px;
     color:white;
 }
-.compe-con .time{
-    margin-top:108px;
+.level{
+    height:50px;
 }
-.compe-con .time-left{
-    width:10%;
+.level p.lev,.level-lists p,.level-lists li{
     float:left;
 }
-.compe-con .time-lists{
-    width:67%;
-    float:left;
-    border-bottom:1px solid #cacaca;
-} 
-.compe-con .time-lists li{
-    float:left;
-    width:10%;
+.level .level-lists li:first-child{
+    width:4%;
     text-align:center;
-    border-radius: 6px 6px 0 0;
-    -webkit-border-radius: 6px 6px 0 0;
-    -moz-border-radius: 6px 6px 0 0;
+    margin-right:15px;
+}
+.level .level-lists li:not(:first-child){
+    width:4%;
+    text-align:center;
+    
+}
+.time p.tim ,.level-lists p,.level-lists li{
+    float:left;
+}
+.time .time-lists li{
+    float:left;
+}
+.time .time-lists li.nolimit{
+    width:4%;
+    text-align:center;
+    margin-right:15px;
+}
+.compe-con .tab{
+    float:left;
+    display:inline-block;
+    width:60%;
+
+}
+.compe-con .tab .tabt{
+    width:15%;
+    float:left;
+    text-align:center;
     cursor:pointer;
 }
-.compe-con .time-lists li a{
-    width:100%;
-    height:100%
-}
-.compe-con .time-lists li.active{
+.compe-con .time-lists .tab .tabt.active{
     border:1px solid #cacaca;
     border-bottom:1px solid white;
 }
@@ -152,7 +137,7 @@
 .compe-con table{
     border-collapse: collapse;
     width:77%;
-    margin-top:350px;
+    margin-top:240px;
 
 }
 .compe-con table thead{
@@ -211,3 +196,17 @@
     -webkit-border-radius:20px;
     -moz-border-radius: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
