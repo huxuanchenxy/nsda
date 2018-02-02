@@ -1,6 +1,23 @@
 ﻿(function (w) {
     var enumreplace = {
     };
+    enumreplace.replaceeventLevel = function (eventlevel) {
+        if (eventlevel == 1) {
+            return "A";
+        }
+        else if (eventlevel == 2) {
+            return "B";
+        }
+        else if (eventlevel == 3) {
+            return "C";
+        }
+        else if (eventlevel == 4) {
+            return "D";
+        }
+        else if (eventlevel == 5) {
+            return "E";
+        }
+    };
     enumreplace.replaceeventType = function (eventtype) {
         if (eventtype == 1)
         {

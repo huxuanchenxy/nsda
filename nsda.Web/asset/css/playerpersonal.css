@@ -229,6 +229,7 @@ fg-layer-iframe{
     padding-left:8px;
     border:none;
     font-size:20px;
+    cursor:pointer;
 }
 .addeducation .form-group em{
     color:#1ABC9C;
@@ -266,10 +267,3 @@ body{
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
 }
-
-
-
-
-
-
-

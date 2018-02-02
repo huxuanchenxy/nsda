@@ -1,186 +1,111 @@
 ﻿@using nsda.Utilities
 @{
-    ViewBag.Title = "会员中心";
-    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+    Layout = "";
 }
-@section styles
-{
-    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
+<html>
+<head>
     <link rel="stylesheet" href="/asset/css/playerboundcoach.css?version=@Constant.Version">
-}
-<div class="score-con">
-    <div class="score-top">
-        <img class="integral" src="/asset/img/score_03.jpg" alt="...">
-        <p class="scorecheck">绑定教练</p>
-        <button class="addbound" id="addedu">添加绑定 &nbsp;<i class="iconfont icon-jiahao"></i></button>
+</head>
+<body>
+    <div class="addcoach" id="addeducation">
+        <img class="coachimg" src="/asset/img/bound_03.png" alt="...">
+        <div class="form-group">
+            <input class="form-select-school" id="startdate">
+            <em class="em"> —</em>
+            <input class="form-select-school" id="enddate">
+            <select class="form-select-schools" id="coach">
+                <option value="completepinyin">教练名字</option>
+                <option value="code">NSDA教练编号</option>
+            </select>
+            <input id="txtCoachValue" value="" data-id="0"/>
+            <a class="searchcoach" id="search" style="cursor:pointer;">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
+            <select size="2"  id="sel" style="display:none;">
+            </select>
+            <a href="javascript:;" class="boundcoach" id="confirmadd">绑定教练</a>
+        </div>
     </div>
-    <div class="boundtable">
-        <table>
-            <thead>
-                <tr>
-                    <th width="20%">时间</th>
-                    <th width="20%">NSDA教练编号</th>
-                    <th width="20%">NSDA教练名字</th>
-                    <th width="40%"></th>
-                </tr>
-            </thead>
-            <tbody id="data">
-                <tr>
-                    <td>1999.7-2001.3</td>
-                    <td>C1899254</td>
-                    <td>Eric Patrick Clapton</td>
-                    <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation" id="pager">
-        </nav>
-    </div>
-</div>
-
-
-
-@section scripts
-{
+    <script src="/asset/js/jquery-3.2.1.min.js"></script>
+    <script src="/asset/js/laydate/laydate.js"></script>
     <script src="/asset/layer/js/layer.js"></script>
-    <script src="/asset/js/pager.js"></script>
     <script>
-        //审核
-        $(document).on("click", ".check", function () {
-            var $this = $(this);
-            var isAgree = $this.attr("data-agree");
-            $.ajax({
-                url: "/player/playercoach/checkcoach",
-                type: "post",
-                dataType: "json",
-                data: {
-                    id : id.attr("data-id"),
-                    isAgree: $this.attr("data-agree")
-                },
-                beforeSend: function () {
-                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
-                },
-                success: function (json) {
-                    layer.closeAll();
-                    if (json.flag) {
-                        layer.msg("操作成功", { icon: 1, time: 1000 });
-                        playercoach.Load(playercoach.param);
-                    }
-                    else {
-                        layer.msg(json.msg, { icon: 5, time: 1000 });
-                    }
-                }
-             , error: function () {
-                 layer.closeAll();
-             }
-            });
+        laydate.render({
+            elem: '#startdate',
+            type: 'month'
+        });
+        laydate.render({
+            elem: '#enddate',
+            type: 'month'
         });
 
-        //删除
-        $(document).on("click", ".delete", function () {
-            var id = $(this).attr("data-id");
-            $.ajax({
-                url: "/player/playercoach/delete",
-                type: "post",
-                dataType: "json",
-                data: {
-                    id:$(this).attr("data-id")
-                },
-                beforeSend: function () {
-                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
-                },
-                success: function (json) {
-                    layer.closeAll();
-                    if (json.flag) {
-                        layer.msg("删除成功", { icon: 1, time: 1000 });
-                        playercoach.Load(playercoach.param);
-                    }
-                    else {
-                        layer.msg(json.msg, { icon: 5, time: 1000 });
-                    }
+       $("#confirmadd").click(function () {
+                var $startdate = $("#startdate").val();
+                if ($startdate == null) {
+                    layer.msg('请输入起始年月', { icon: 5, time: 1000 });
+                    return;
                 }
-             , error: function () {
-                 layer.closeAll();
-             }
-            });
-        });
-
-        //编辑
-        $(document).on("click", ".update", function () {
-            var id = $(this).attr("data-id");
-            layer.open({
-                title: "绑定教练",
-                type: 2,
-                content: "/player/playercoach/edit/"+id,
-                area: ["400px", "320px"],
-                end: function () {
-                    location.reload();
+                var $enddate = $("#enddate").val();
+                var $coachId = $("#txtCoachValue").attr("data-id");
+                if ($coachId == null || $coachId == 0) {
+                    layer.msg('请选择教练', { icon: 5, time: 1000 });
+                    return;
                 }
-            })
-        });
-
-        //新增
-        $(document).on("click", ".add", function () {
-            layer.open({
-                title: "绑定教练",
-                type: 2,
-                content: "/player/playercoach/add",
-                area: ["400px", "320px"],
-                end: function () {
-                    location.reload();
-                }
-            });
-        });
-
-        (function (w) {
-            var playercoach = {
-                param: {
-                    TotalPage: 1,
-                    PageIndex: 1,
-                    PageSize: 10,
-                }
-            };
-            playercoach.Load = function (filter) {
                 $.ajax({
-                    url: "/player/playercoach/list",
-                    type: "get",
+                    url: "/player/playercoach/insert",
+                    type: "post",
                     dataType: "json",
-                    data: filter,
+                    data: {
+                        StartDate: $startdate,
+                        EndDate: $enddate,
+                        ObjMemberId: $coachId
+                    },
+                    beforeSend: function () {
+                        layer.msg('绑定教练中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
                     success: function (json) {
-                        if (json.records > 0) {
-                            var _pager = new w.pager({
-                                'parent': $('#pager')
-                            });
-                            playercoach.param.TotalPage = json.total;
-                            _pager.init(filter, playercoach.param.PageIndex, playercoach.param.TotalPage, function (p) {
-                                playercoach.param.PageIndex = p;
-                                playercoach.Load(playercoach.param)
-                            });                            var html = '';
-                            $.each(json.rows, function (k, val) {
-                                html+='<tr>';
-                                html += '<td>' + val.StartDate + '-';
-                                if (val.EndDate == "" || val.EndDate == null) {
-                                    html += "至今";
-                                } else {
-                                    html += val.EndDate;
-                                }
-                                html+='</td>'
-                                html += '<td>' + val.CoachCode + '</td>';
-                                html += '<td>' + val.CoachName + '</td>';
-                                html += '<td><button class="editcoach update" data-id=' + val.Id + '>Edit 修改</button> <button class="delcoach delete" data-id=' + val.Id + '>Del 删除</button></td>';
-                                html+='</tr>';
-                            });
-                            $("#data").html(html)
-                        } else {
-                            $("#data").html('');
-                            $("#pager").html("")
+                        layer.closeAll();
+                        if (json.flag) {
+                            parent.layer.closeAll();
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
                         }
                     }
-                })
-            };
-            w.playercoach = playercoach
-        })(window);
-        playercoach.Load(playercoach.param);
+                  , error: function () {
+                      layer.closeAll();
+                  }
+                });
+       });
+
+       $("#search").click(function () {
+           $.ajax({
+               url: "/player/playercoach/listcoach",
+               type: "get",
+               dataType: "json",
+               data: {
+                   key: $("#coach").val(),
+                   value: $("#txtCoachValue").val()
+               },
+               success: function (json) {
+                   var html = '';
+                   if (json.data != null && json.data.length > 0) {
+                       $.each(json.data, function (k, val) {
+                           html += '<option value=' + val.MemberId + '>' + val.MemberName + '</option>';
+                       });
+                       $("#sel").html(html);
+                       $("#sel").show();
+                   }
+               }
+           });
+
+       });
+
+       $("#sel").change(function () {
+           var options = $("#sel option:selected");
+           $("#txtCoachValue").val(options.text());
+           $("#txtCoachValue").attr("data-id", options.val());
+           $(this).hide();
+      });
+
     </script>
-}
+</body>
+</html>

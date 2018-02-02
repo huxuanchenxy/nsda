@@ -15,5 +15,7 @@ namespace nsda.Model.dto.response
         public string SchoolName { get; set; }
         public string ProvinceName { get; set; }
         public string CityName { get; set; }
+        public int ProvinceId { get; set; }
+        public int CityId { get; set; }
     }
 }

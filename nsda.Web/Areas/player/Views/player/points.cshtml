@@ -53,11 +53,9 @@
             lang: 'en',
             range: true,
             theme: '#393D49',
-            done: function(value, date, endDate){//控件选择完毕后的回调---点击日期、清空、现在、确定均会触发。
-                console.log(value);
+            done: function(value, date, endDate){
                 var myarray = value.split(" - ");
-                console.log(myarray)
-                $("#querydate").attr("data-date", value);//得到日期生成的值，如：2017-08-18
+                $("#querydate").attr("data-date", value);
             }
         });
 

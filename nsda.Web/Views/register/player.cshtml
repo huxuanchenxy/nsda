@@ -1,21 +1,295 @@
-﻿
+﻿@using nsda.Utilities
 @{
-    Layout = null;
+    ViewBag.Title = "会员注册";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{  
+<link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/regform.css?version=@Constant.Version">
 }
 
-<!DOCTYPE html>
+<!--这里可能是logo也可能是广告 到底是什么 我也不知道-->
+<div class="ad">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>player</title>
-</head>
-<body>
-    <div> 
-        <form action="/login/register" method="post">
-            <input name="MemberType" value="1" type="hidden"/>
-            <input type="submit" value="提交"/>
+</div>
+
+<!--面包屑导航-->
+<div class="rode">
+
+</div>
+
+@*会员注册*@
+
+<div class="container regform-con">
+    <h3>欢迎加入NSDA会员，您需要几分钟填写申请信息</h3>
+    <div class="reg-sign">
+        <span class="signup">Sign Up</span>
+        <form class="form-ctrl">
+            <div class="form-group">
+                <label for="email" class="form-label">注册邮箱</label>
+                <input type="email" class="form-input" id="account">
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">密码</label>
+                <input type="password" class="form-input" id="pwd">
+            </div>
+            <div class="form-group">
+                <label for="confirmpassword" class="form-label">确认密码</label>
+                <input type="password" class="form-input" id="againpwd">
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="lastname" class="form-label">姓</label>
+                    <input type="text" class="form-input" id="name">
+                </div>
+                <div class="form-group-small">
+                    <label for="firstname" class="form-label">名</label>
+                    <input type="text" class="form-input" id="surname">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="pylastname" class="form-label">拼音姓</label>
+                    <input type="text" class="form-input" id="pyname">
+                </div>
+                <div class="form-group-small">
+                    <label for="pyfirstname" class="form-label">拼音名</label>
+                    <input type="text" class="form-input" id="pinsurname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="grade" class="form-label">目前年级</label>
+                <select class="form-select-grade" id="grade">
+                    <option value="0">学前</option>
+                    <option value="1">1年级</option>
+                    <option value="2">2年级</option>
+                    <option value="3">3年级</option>
+                    <option value="4">4年级</option>
+                    <option value="5">5年级</option>
+                    <option value="6">6年级</option>
+                    <option value="7">7年级</option>
+                    <option value="8">8年级</option>
+                    <option value="9">9年级</option>
+                    <option value="10">10年级</option>
+                    <option value="11">11年级</option>
+                    <option value="12">12年级</option>
+                    <option value="13">13年级</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="telephone" class="form-label">联系电话</label>
+                <input type="text" class="form-input-phone" id="contactMobile">
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="urgentbody" class="form-label">紧急联系人</label>
+                    <input type="text" class="form-input" id="emergencycontact">
+                </div>
+                <div class="form-group-small">
+                    <label for="urgentphone" class="form-label">紧急电话</label>
+                    <input type="text" class="form-input" id="emergencycontactmobile">
+                </div>
+            </div>
+            <div class="form-group form-sexy">
+                <label for="Gender" class="form-label">性别</label>
+                <label class="radio-inline sexy">
+                    <input type="radio" name="Gender"  value="1" checked> 男
+                </label>
+                <label class="radio-inline sexy">
+                    <input type="radio" name="Gender"  value="2"> 女
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="contactaddress" class="form-label">通讯地址</label>
+                <input type="text" class="form-input" id="contactaddress">
+            </div>
+            <div class="form-group">
+                <label for="card" class="form-label">有效证件</label>
+                <select class="form-select-card" id="card">
+                    <option value="1">身份证</option>
+                    <option value="2">护照</option>
+                    <option value="3">港澳台通行证</option>
+                </select>
+                <input type="text" class="form-input-card" id="idcard">
+            </div>
+            <div class="form-group">
+                <label for="school" class="form-label">目前学校</label>
+                <input class="form-select-school" id="startdate">
+                <em class="em">—</em>
+                <input class="form-select-school" id="enddate">
+                <select class="form-select-schoolads schoolads" id="provinceId">
+                    <option>省</option>
+                </select>
+                <select class="form-select-schoolads" id="cityId">
+                    <option>市</option>
+                </select>
+                <select class="form-select-schoolads form-sel-ads" id="schoolId">
+                    <option>学校</option>
+                </select>
+            </div>
+            <button type="button" class="button" id="register">递交注册会员申请</button>
         </form>
     </div>
-</body>
-</html>
+</div>
+
+@section scripts
+{
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/js/pcs.js"></script>
+    <script src="/asset/js/validate.js"></script>
+    <script>
+        laydate.render({
+            elem: '#startdate'
+            , type: 'month'
+        });
+        laydate.render({
+            elem: '#enddate'
+            , type: 'month'
+        });
+        $(document).ready(function () {
+            $.province(0);
+            $("#provinceId").change(function () {
+                $.city(0, 0);
+                $.school(0, 0);
+            });
+
+            $("#cityId").change(function () {
+                $.school(0, 0);
+            });
+        });
+        $("#register").click(function () {
+            var $Account = $("#account").val();
+            if ($Account == "")
+            {
+                layer.msg('请输入注册邮箱', { icon: 5, time: 1000 });
+                return;
+            }
+            if (!validate.isEmail($Account)) {
+                layer.msg('请输入正确的注册邮箱', { icon: 5, time: 1000 });
+                return;
+            }
+            var $Pwd = $("#pwd").val();
+            var $againpwd = $("#againpwd").val();
+            if ($Pwd == "") {
+                layer.msg('请输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if ($againpwd == "") {
+                layer.msg('请再次输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if ($Pwd != $againpwd) {
+                layer.msg('两次输入的密码不一致', { icon: 5, time: 1000 });
+                return;
+            }
+            if (!validate.isPwd($Pwd)) {
+                layer.msg('必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
+                return;
+            }
+            var $Name = $("#name").val();
+            if ($Name=="")
+            {
+                layer.msg('请输入姓', { icon: 5, time: 1000 });
+                return;
+            }
+            var $SurName = $("#surname").val();
+            if ($SurName == "") {
+                layer.msg('请输入名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $PinYinName = $("#pyname").val();
+            if ($PinYinName == "") {
+                layer.msg('请输入拼音姓', { icon: 5, time: 1000 });
+                return;
+            }
+            var $PinYinSurName = $("#pinsurname").val();
+            if ($PinYinSurName == "") {
+                layer.msg('请输入拼音名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $ContactMobile = $("#contactMobile").val();
+            if ($ContactMobile == "") {
+                layer.msg('请输入联系电话', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EmergencyContact = $("#emergencycontact").val();
+            if ($EmergencyContact == "") {
+                layer.msg('请输入紧急联系人', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EmergencyContactMobile = $("#emergencycontactmobile").val();
+            if ($EmergencyContactMobile == "") {
+                layer.msg('请输入紧急电话', { icon: 5, time: 1000 });
+                return;
+            }
+            var $ContactAddress = $("#contactaddress").val();
+            if ($ContactAddress == "") {
+                layer.msg('请输入联系地址', { icon: 5, time: 1000 });
+                return;
+            }
+            var $Card = $("#idcard").val();
+            if ($ContactAddress == "") {
+                layer.msg('请输入证件号', { icon: 5, time: 1000 });
+                return;
+            }
+            var $Startdate = $("#startdate").val();
+            if ($Startdate == "") {
+                layer.msg('请选择目前学校入校时间', { icon: 5, time: 1000 });
+                return;
+            }
+            var $SchoolId = $("#schoolId").val();
+            if ($SchoolId == "") {
+                layer.msg('请选择目前学校', { icon: 5, time: 1000 });
+                return;
+            }
+            var $CardType = $("#card").val();
+            var $Grade = $("#grade").val();
+            var $Gender = $('input[name=Gender]:checked').val();
+            var $Enddate = $("#enddate").val();
+            $.ajax({
+                url: "/register/registerplayer",
+                type: "post",
+                dataType: "json",
+                data: {
+                    Account: $Account,
+                    Pwd: $Pwd,
+                    CardType: $CardType,
+                    Card: $Card,
+                    SurName: $SurName,
+                    Name: $Name,
+                    PinYinSurName: $PinYinSurName,
+                    PinYinName: $PinYinName,
+                    Grade: $Grade,
+                    ContactMobile: $ContactMobile,
+                    EmergencyContactMobile: $EmergencyContactMobile,
+                    EmergencyContact: $EmergencyContact,
+                    Gender: $Gender,
+                    ContactAddress: $ContactAddress,
+                    PlayerEdu: {
+                        SchoolId: $SchoolId,
+                        StartDate: $Startdate,
+                        EndDate: $Enddate
+                    }
+                },
+                beforeSend: function () {
+                    layer.msg('选手注册中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("注册成功", { icon: 1, time: 1000 }); 
+                        location.href = json.msg;
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+               , error: function () {
+                   layer.closeAll();
+               }
+            });
+        });
+    </script>
+}

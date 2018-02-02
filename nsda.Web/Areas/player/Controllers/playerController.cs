@@ -108,14 +108,6 @@ namespace nsda.Web.Areas.player.Controllers
             return Content(res.Serialize());
         }
 
-        //模糊查询教练
-        [HttpGet]
-        public ContentResult listcoach(string key, string value)
-        {
-            var data = _memberService.SelectCoach(key,value, UserContext.WebUserContext.Id);
-            return Result(true, string.Empty,data);
-        }
-
         //去认证
         [HttpPost]
         [AjaxOnly]
@@ -259,7 +251,8 @@ namespace nsda.Web.Areas.player.Controllers
 
         public ActionResult editedu(int id)
         {
-            return View();
+            var detail = _playerEduService.Detail(id, UserContext.WebUserContext.Id);
+            return View(detail);
         }
         #endregion
     }

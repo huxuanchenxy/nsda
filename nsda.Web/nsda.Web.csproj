@@ -410,6 +410,7 @@
     <Content Include="asset\css\coachinformation.css" />
     <Content Include="asset\css\event.css" />
     <Content Include="asset\css\eventmanage.css" />
+    <Content Include="asset\css\eventmanagelists.css" />
     <Content Include="asset\css\eventstart.css" />
     <Content Include="asset\css\eventstartlists.css" />
     <Content Include="asset\css\iconfont.css" />
@@ -491,6 +492,7 @@
     <Content Include="asset\js\loading.js" />
     <Content Include="asset\js\pager.js" />
     <Content Include="asset\js\parallax.min.js" />
+    <Content Include="asset\js\pcs.js" />
     <Content Include="asset\js\playerevent.js" />
     <Content Include="asset\js\selected.js" />
     <Content Include="asset\js\tabs.js" />

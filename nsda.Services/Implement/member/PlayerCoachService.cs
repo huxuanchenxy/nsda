@@ -51,6 +51,12 @@ namespace nsda.Services.member
                     }
                 }
 
+                if (request.StartDate.IsEmpty())
+                {
+                    msg = "开始时间不能为空";
+                    return flag;
+                }
+
                 var playerCoach = new t_player_coach
                 {
                     memberId = request.MemberId,
@@ -79,18 +85,10 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                if (request.ObjMemberId <= 0)
+                if (request.StartDate.IsEmpty())
                 {
-                    if (request.IsCoach)
-                    {
-                        msg = "教练不能为空";
-                        return flag;
-                    }
-                    else
-                    {
-                        msg = "学生不能为空";
-                        return flag;
-                    }
+                    msg = "开始时间不能为空";
+                    return flag;
                 }
 
                 var playerCoach = _dbContext.Get<t_player_coach>(request.Id);

@@ -157,15 +157,20 @@ namespace nsda.Services.member
             PlayerEduResponse response = null;
             try
             {
-                var playerEdu = _dbContext.Get<t_player_edu>(id);
-                if (playerEdu != null&& memberId == playerEdu.memberId)
+                var sql = $@"select a.*,b.cityId,b.provinceId  from t_player_edu a
+                            inner join t_sys_school b on a.schoolId = b.id
+                            where a.isdelete = 0 and a.id = {id} and a.memberId={memberId}";
+                var playerEdu = _dbContext.QueryFirstOrDefault<dynamic>(sql);
+                if (playerEdu != null)
                 {
                     response = new PlayerEduResponse
                     {
                         EndDate= playerEdu.enddate,
                         StartDate= playerEdu.startdate,
                         SchoolId= playerEdu.schoolId,
-                        Id= playerEdu.id
+                        ProvinceId= playerEdu.provinceId,
+                        CityId= playerEdu.cityId,
+                        Id = playerEdu.id
                     };
                 }
             }

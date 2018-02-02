@@ -40,7 +40,7 @@ namespace nsda.Model.dto.response
         /// <summary>
         /// 比赛开始时间
         /// </summary>
-        public DateTime EventStartDate { get; set; }
+        public DateTime StartEventDate { get; set; }
         /// <summary>
         /// 报名费
         /// </summary>

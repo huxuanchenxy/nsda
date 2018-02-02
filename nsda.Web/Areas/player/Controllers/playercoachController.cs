@@ -15,13 +15,23 @@ namespace nsda.Web.Areas.player.Controllers
 {
     public class playercoachController : playerbaseController
     {
+        IMemberService _memberService;
         IPlayerCoachService _playerCoachService;
-        public playercoachController(IPlayerCoachService playerCoachService)
+        public playercoachController(IPlayerCoachService playerCoachService,IMemberService memberService)
         {
             _playerCoachService = playerCoachService;
+            _memberService = memberService;
         }
 
         #region ajax
+        //模糊查询教练
+        [HttpGet]
+        public ContentResult listcoach(string key, string value)
+        {
+            var data = _memberService.SelectCoach(key, value, UserContext.WebUserContext.Id);
+            return Result(true, string.Empty, data);
+        }
+
         //1 列表
         [HttpGet]
         public ContentResult list(PlayerCoachQueryRequest request)
@@ -88,7 +98,7 @@ namespace nsda.Web.Areas.player.Controllers
         public ActionResult update(int id)
         {
             var detail = _playerCoachService.Detail(id);
-            return View();
+            return View(detail);
         }
 
         public ActionResult add()

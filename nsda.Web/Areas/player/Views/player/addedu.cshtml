@@ -1,73 +1,94 @@
 ﻿@using nsda.Utilities
 @{
-    Layout = null;
+    Layout = "";
 }
-
-@section styles
-{
-<link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
-<link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
-}
-
-<div class="addeducation" id="addeducation">
-    <h3>添加教育经历</h3>
-    <a href="#" class="close" id="close"><i class="iconfont icon-close-b"></i></a>
-    <div class="form-group">
-        <select class="form-select-school" id="school1">
-            <option>年</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <select class="form-select-school" id="school2">
-            <option>月</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <em class="em"> —</em>
-        <select class="form-select-school" id="school3">
-            <option>年</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <select class="form-select-school" id="school4">
-            <option>月</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <select class="form-select-schools" id="school5">
-            <option>省</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <select class="form-select-schools" id="school6">
-            <option>市</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-        <select class="form-select-schoolads" id="school7">
-            <option>学校</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
+<html>
+<head>
+    <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
+</head>
+<body>
+        <div class="addeducation" id="addeducation">
+        <div class="form-group">
+            <input class="form-select-school" id="startdate">
+            <em class="em"> —</em>
+            <input class="form-select-school" id="enddate">
+            <select class="form-select-schools" id="provinceId">
+                <option value="0">省</option>
+            </select>
+            <select class="form-select-schools" id="cityId">
+                <option value="0">市</option>
+            </select>
+            <select class="form-select-schoolads" id="schoolId">
+                <option value="0">学校</option>
+            </select>
+        </div>
+        <button class="confirmadd" id="confirmadd">保存</button>
     </div>
-    <button class="confirmadd" id="confirmadd">添加</button>
-</div>
+        <script src="/asset/js/jquery-3.2.1.min.js"></script>
+        <script src="/asset/js/laydate/laydate.js"></script>
+        <script src="/asset/layer/js/layer.js"></script>
+        <script src="/asset/js/pcs.js"></script>
+        <script>
+            laydate.render({
+                elem: '#startdate',
+                type: 'month'
+            });
+            laydate.render({
+                elem: '#enddate',
+                type: 'month'
+            });
 
-@section scripts
-{
-    <script src="/asset/js/common.js"></script>
-}
+            $("#confirmadd").click(function () {
+                var $startdate = $("#startdate").val();
+                if ($startdate == null) {
+                    layer.msg('请输入起始年月', { icon: 5, time: 1000 });
+                    return;
+                }
+                var $enddate = $("#enddate").val();
+                var $schoolId = $("#schoolId").val();
+                if ($schoolId == null || $schoolId==0) {
+                    layer.msg('请选择学校', { icon: 5, time: 1000 });
+                    return;
+                }
+                $.ajax({
+                    url: "/player/player/insertedu",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        StartDate: $startdate,
+                        EndDate: $enddate,
+                        SchoolId: $schoolId
+                    },
+                    beforeSend: function () {
+                        layer.msg('添加教育经历中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            parent.layer.closeAll();
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+                  , error: function () {
+                      layer.closeAll();
+                  }
+                });
+            });
+
+
+            $(document).ready(function () {
+                $.province(0);
+                $("#provinceId").change(function () {
+                    $.city(0,0);
+                    $.school(0,0);
+                });
+
+                $("#cityId").change(function () {
+                    $.school(0,0);
+                });
+            });
+        </script>
+</body>
+</html>

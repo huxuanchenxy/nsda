@@ -1,17 +1,170 @@
-﻿
+﻿@using nsda.Utilities
 @{
-    Layout = null;
+    ViewBag.Title = "会员中心";
+    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>index</title>
-</head>
-<body>
-    <div> 
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/playersign.css?version=@Constant.Version">
+}
+<div class="compe-con">
+    <div class="address">
+        <div class="address-left">地点：<a href="#" class="nolimit">不限</a></div>
+        <ul class="address-lists">
+            <p>国内赛区：</p>
+            <li>郑州</li>
+            <li>西安</li>
+            <li>宁波</li>
+            <li>杭州</li>
+            <li>成都</li>
+            <li>青岛</li>
+            <li>长沙</li>
+            <li>南京</li>
+            <li>上海</li>
+            <li>深圳</li>
+            <li>无锡</li>
+            <li>济南</li>
+            <li>北京</li>
+        </ul>
+        <br />
+        <ul class="address-lists">
+            <p>国际赛区：</p>
+            <li>美国</li>
+            <li>韩国</li>
+            <li>日本</li>
+            <li>台湾</li>
+        </ul>
     </div>
-</body>
-</html>
+    <div class="level">
+        <div class="level-left">级别：<a href="#" class="nolimit" date-eventlevel="1">不限</a></div>
+        <ul class="level-lists">
+            <li date-eventlevel="1">A</li>
+            <li date-eventlevel="2">B</li>
+            <li date-eventlevel="3">C</li>
+            <li date-eventlevel="4">D</li>
+            <li date-eventlevel="5">E</li>
+        </ul>
+    </div>
+    <div class="time">
+        <div class="time-left">时间：<a href="#" class="nolimit">不限</a></div>
+        <ul class="time-lists nav-tabs tab" id="myTabs">
+            <li role="presentation" class="active tabt">@DateTime.Now.AddYears(-1).Year</li>
+            <li role="presentation" class="tabt">@DateTime.Now.Year</li>
+        </ul>
+        <div class="time-mons tabc">
+            <ul class="time-mon monsev tabcon">
+                <li>一月<br>Jan.</li>
+                <li>二月<br>Feb.</li>
+                <li>三月<br>Mar.</li>
+                <li>四月<br>Apr.</li>
+                <li>五月<br>May.</li>
+                <li>六月<br>Jun.</li>
+                <li>七月<br>Jul.</li>
+                <li>八月<br>Aug.</li>
+                <li>九月<br>Sep.</li>
+                <li>十月<br>Oct.</li>
+                <li>十一月<br>Nov.</li>
+                <li>十二月<br>Dec.</li>
+            </ul>
+            <ul class="time-mon moneig tabcon">
+                <li>一月<br>Jan.</li>
+                <li>二月<br>Feb.</li>
+                <li>三月<br>Mar.</li>
+                <li>四月<br>Apr.</li>
+                <li>五月<br>May.</li>
+                <li>六月<br>Jun.</li>
+                <li>七月<br>Jul.</li>
+                <li>八月<br>Aug.</li>
+                <li>九月<br>Sep.</li>
+                <li>十月<br>Oct.</li>
+                <li>十一月<br>Nov.</li>
+                <li>十二月<br>Dec.</li>
+            </ul>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="13%">比赛编码</th>
+                <th width="25%">比赛名称</th>
+                <th width="7%">类别</th>
+                <th width="7%">级别</th>
+                <th width="13%">开始日期</th>
+                <th width="11%">城市</th>
+                <th width="16%"></th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+
+@section scripts
+{
+   <script src="/asset/js/common.js"></script>
+   <script src="/asset/js/enumreplace.js"></script>
+   <script src="/asset/js/pager.js"></script>
+   <script src="/asset/js/tabs.js"></script>
+   <script src="/asset/js/selected.js"></script>
+    <script>
+        (function (w) {
+            var playerevent = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                }
+            };
+            playerevent.Load = function (filter) {
+                $.ajax({
+                    url: "/commondata/listevent",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            playerevent.param.TotalPage = json.total;
+                            _pager.init(filter, playerevent.param.PageIndex, playerevent.param.TotalPage, function (p) {
+                                playerevent.param.PageIndex = p;
+                                playerevent.Load(playerevent.param)
+                            });                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html += '<tr>';
+                                html += '<td>' + val.EventCode + '</td>';
+                                html += '<td>' + val.EventName + '</td>';
+                                html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
+                                html += '<td>' + enumreplace.replaceeventLevel(val.EventLevel) + '</td>';
+                                html += '<td>' + parseDate(new Date(val.StartEventDate), "yyyy-MM-dd").format + '</td>';
+                                if (val.CityName == null || val.CityName == "") {
+                                    html += '<td>' + val.ProvinceName + '</td>';
+                                }
+                                else {
+                                    html += '<td>' + val.CityName + '</td>';
+                                }
+                                if (val.IsVisiable) {
+                                    html += '<td><a href="javascript:;" class="sign">立即报名</a></td>';
+                                } else {
+                                    html += '<td></td>';
+                                }
+                                html += '</tr>';
+                            });
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.playerevent = playerevent
+        })(window);
+        playerevent.Load(playerevent.param);
+    </script>
+}

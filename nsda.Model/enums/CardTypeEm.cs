@@ -10,6 +10,6 @@ namespace nsda.Model.enums
     {
         身份证 = 1,
         护照 = 2,
-        台胞证=3
+        港澳台通行证 = 3
     }
 }

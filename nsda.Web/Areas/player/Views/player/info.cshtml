@@ -12,6 +12,7 @@
 {
     <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
 }
 <div class="score-con">
     <div class="score-top">
@@ -233,20 +234,20 @@
                         layer.msg(json.msg, { icon: 5, time: 1000 });
                     }
                 }
-    , error: function () {
-        layer.closeAll();
-    }
+                , error: function () {
+                    layer.closeAll();
+                }
             });
         });
 
         $(document).on("click", "#addedu", function () {
             layer.open({
-                title: "新增教育经历",
+                title: "添加教育经历",
                 type: 2,
                 content: "/player/player/addedu",
-                area: ["400px", "320px"],
+                area: ["760px", "530px"],
                 end: function () {
-                    location.reload();
+                    renderedu();
                 }
             });
         });
@@ -254,12 +255,12 @@
         $(document).on("click", ".editedu", function () {
             var id = $(this).attr("data-id");
             layer.open({
-                title: "新增教育经历",
+                title: "编辑教育经历",
                 type: 2,
                 content: "/player/player/editedu/"+id,
-                area: ["400px", "320px"],
+                area: ["760px", "530px"],
                 end: function () {
-                    location.reload();
+                    renderedu();
                 }
             });
         });

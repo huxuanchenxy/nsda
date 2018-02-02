@@ -1,18 +1,101 @@
 ﻿@using nsda.Utilities
+@model nsda.Model.dto.response.PlayerEduResponse
 @{
-    ViewBag.Title = "会员资料";
-    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+    Layout = "";
 }
+<html>
+<head>
+    <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
+</head>
+<body>
+    <input type="hidden" id="id" value="@Model.Id"/>
+    <div class="addeducation" id="addeducation">
+        <div class="form-group">
+            <input class="form-select-school" id="startdate" value="@Model.StartDate">
+            <em class="em"> —</em>
+            <input class="form-select-school" id="enddate" value="@Model.EndDate">
+            <select class="form-select-schools" id="provinceId">
+                <option value="0">省</option>
+            </select>
+            <select class="form-select-schools" id="cityId">
+                <option value="0">市</option>
+            </select>
+            <select class="form-select-schoolads" id="schoolId">
+                <option value="0">学校</option>
+            </select>
+        </div>
+        <button class="confirmadd" id="confirmadd">保存</button>
+    </div>
 
-@section styles
-{
-    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
-}
-
-积分详情页
-
-@section scripts
-{
+    <script src="/asset/js/jquery-3.2.1.min.js"></script>
+    <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
     <script src="/asset/js/common.js"></script>
-}
+    <script src="/asset/js/pcs.js"></script>
+
+    <script>
+            laydate.render({
+                elem: '#startdate',
+                type: 'month'
+            });
+            laydate.render({
+                elem: '#enddate',
+                type: 'month'
+            });
+
+            $("#confirmadd").click(function () {
+                var $startdate = $("#startdate").val();
+                if ($startdate == null)
+                {
+                    layer.msg('请输入起始年月', { icon: 5, time: 1000 });
+                    return;
+                }
+                var $enddate = $("#enddate").val();
+                var $schoolId = $("#schoolId").val();
+                if ($schoolId == null || $schoolId == 0) {
+                    layer.msg('请选择学校', { icon: 5, time: 1000 });
+                    return;
+                }
+                $.ajax({
+                    url: "/player/player/editedu",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        Id:$("#id").val(),
+                        StartDate: $startdate,
+                        EndDate: $enddate,
+                        SchoolId: $schoolId
+                    },
+                    beforeSend: function () {
+                        layer.msg('编辑教育经历中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            parent.layer.closeAll();
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+                  , error: function () {
+                      layer.closeAll();
+                  }
+                });
+            });
+            
+            $.province(@Model.ProvinceId);
+            $.city(@Model.CityId,@Model.ProvinceId);
+            $.school(@Model.SchoolId,@Model.CityId);
+
+            $("#ProvinceId").change(function () {
+                $.city("", 0);
+                $.school("", 0);
+            });
+
+            $("#CityId").change(function () {
+                $.school("",0);
+            });
+    </script>
+</body>
+</html>

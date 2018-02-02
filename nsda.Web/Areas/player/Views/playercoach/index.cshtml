@@ -26,12 +26,6 @@
                 </tr>
             </thead>
             <tbody id="data">
-                <tr>
-                    <td>1999.7-2001.3</td>
-                    <td>C1899254</td>
-                    <td>Eric Patrick Clapton</td>
-                    <td><button class="editcoach">Edit 修改</button> <button class="delcoach">Del 删除</button></td>
-                </tr>
             </tbody>
         </table>
         <nav aria-label="Page navigation" id="pager">
@@ -55,7 +49,7 @@
                 type: "post",
                 dataType: "json",
                 data: {
-                    id : id.attr("data-id"),
+                    id: $this.attr("data-id"),
                     isAgree: $this.attr("data-agree")
                 },
                 beforeSend: function () {
@@ -79,7 +73,6 @@
 
         //删除
         $(document).on("click", ".delete", function () {
-            var id = $(this).attr("data-id");
             $.ajax({
                 url: "/player/playercoach/delete",
                 type: "post",
@@ -108,14 +101,13 @@
 
         //编辑
         $(document).on("click", ".update", function () {
-            var id = $(this).attr("data-id");
             layer.open({
                 title: "绑定教练",
                 type: 2,
-                content: "/player/playercoach/update/"+id,
-                area: ["400px", "320px"],
+                content: "/player/playercoach/update/"+$(this).attr("data-id"),
+                area: ["760px", "550px"],
                 end: function () {
-                    location.reload();
+                    playercoach.Load(playercoach.param);
                 }
             })
         });
@@ -126,9 +118,9 @@
                 title: "绑定教练",
                 type: 2,
                 content: "/player/playercoach/add",
-                area: ["400px", "320px"],
+                area: ["760px", "550px"],
                 end: function () {
-                    location.reload();
+                    playercoach.Load(playercoach.param);
                 }
             });
         });
@@ -175,7 +167,7 @@
                                 }
                                 else {
                                     if (val.PlayerCoachStatus == 0) {
-                                        html += '<td><button data-id=' + val.Id + ' data-isAgree=true class="confirmbound check">确认绑定</button> <button class="notpass check" data-id=' + val.Id + ' data-isAgree=false>不通过</button></td>';
+                                        html += '<td><button data-id=' + val.Id + ' data-agree=true class="confirmbound check">确认绑定</button> <button class="notpass check" data-id=' + val.Id + ' data-agree=false>不通过</button></td>';
                                     } else {
                                         html+='<td></td>'
                                     }
