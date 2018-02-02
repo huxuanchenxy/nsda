@@ -107,9 +107,8 @@ fg-layer-iframe{
     color: white;
     font-size: 16px;
     padding-left: 6px;
+    cursor:pointer;
 }
-
-
 .addcoach .form-group select.form-select-schools {
     width: 25%;
     height: 36px;
@@ -125,6 +124,7 @@ fg-layer-iframe{
     border: 1px solid #1ABC9C;
     position:relative;
     font-size:16px;
+    padding-left:10px;
 }
 .addcoach .form-group .form-select-school {
     width: 45%;
@@ -132,18 +132,19 @@ fg-layer-iframe{
     margin-bottom: 50px;
     background:#526476;
     color:white;
+    cursor:pointer;
 }
 
 .addcoach .form-group select#sel{
     width:300px;
-    height:130px;
     margin:0;
     border:1px solid white;
     padding:10px;
     position:absolute;
-    top:75px;
+    bottom:305px;
     left:23%;
     z-index:10;
+
 }
 .addcoach .form-group select#sel::-webkit-scrollbar{
     width:6px;
@@ -172,6 +173,7 @@ fg-layer-iframe{
     -moz-border-radius: 20px;
     font-size: 16px;
     border:none;
+    cursor:pointer;
 }
 
 .addcoach .form-group .searchcoach i {
