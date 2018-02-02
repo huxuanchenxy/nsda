@@ -10,70 +10,43 @@
 }
 .info-lists{
     margin-right:15px;
+    position:relative;
 }
+ .compe-con nav{
+     position:absolute;
+     bottom:0;
+     right:30px;
+ }
  .compe-con{
     margin-top:115px;
-    width:100%;
-}
-.compe-con .nolimit{
-    display:inline;
-    padding:2px 8px;
-    color:white;
-    background:#FBB7A0;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-}
-    
-.compe-con .address-left{
-    width:10%;
+    min-height:1000px;
     float:left;
+    width:78%;
+    position:relative;
 }
-.compe-con .address-lists{
-    float:right;
-    width:68%;
-    margin-bottom:20px;
-}
-.compe-con .address-lists p{
+.address{
+     height:90px;
+ }
+.address p,.address .address-lists p,.address .address-lists li{
     float:left;
-}
-.compe-con .address-lists li{
-    float:left;
-    width:6.8%;
-    text-align:center;
     cursor:pointer;
 }
-.compe-con .address-lists li:hover{
-    background:#FBB7A0;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    color:white;
-    cursor:pointer;
+.address p.ads,.level p.lev,.time p.tim{
+    width:5%
 }
-.compe-con .level{
-    margin-top:60px;
+.address .address-lists .division{
+    width:9%;
+    margin-left:20px;
+   
 }
-.compe-con .level-left{
-    width:10%;
-    float:left;
+.address .address-lists .international{
+    margin-left:12%;
 }
-.compe-con .level-lists{
-    width:68%;
-    float:right;
-} 
-.compe-con .level-lists li{
-    float:left;
+.address .address-lists li{
     width:5%;
+    margin-bottom:20px;
     text-align:center;
     cursor:pointer;
-}
-.compe-con .level-lists li:hover{
-    background:#FBB7A0;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    color:white;
 }
 .selected{
     background:#FBB7A0;
@@ -82,37 +55,59 @@
     -moz-border-radius: 20px;
     color:white;
 }
-.compe-con .time{
-    margin-top:108px;
+.level{
+    height:50px;
 }
-.compe-con .time-left{
-    width:10%;
+.level p.lev,.level-lists p,.level-lists li{
     float:left;
 }
-.compe-con .time-lists{
-    width:67%;
-    float:left;
-    border-bottom:1px solid #cacaca;
-} 
-.compe-con .time-lists li{
-    float:left;
-    width:10%;
+.level .level-lists li:first-child{
+    width:4%;
     text-align:center;
-    border-radius: 6px 6px 0 0;
-    -webkit-border-radius: 6px 6px 0 0;
-    -moz-border-radius: 6px 6px 0 0;
+    margin-right:25px;
+}
+.level .level-lists li:not(:first-child){
+    width:4%;
+    text-align:center;
+    
+}
+.level-lists li{
     cursor:pointer;
 }
-.compe-con .time-lists li a{
-    width:100%;
-    height:100%
+.time p.tim ,.level-lists p,.level-lists li{
+    float:left;
 }
-.compe-con .time-lists li.active{
+.time .time-lists li{
+    float:left;
+    
+}
+.time .time-lists li.nolimit{
+    width:4%;
+    text-align:center;
+    margin-right:25px;
+}
+.compe-con .tab{
+    float:left;
+    display:inline-block;
+    width:78%;
+    border-bottom:1px solid #eee;
+}
+
+.compe-con .tab .tabt{
+    width:15%;
+    float:left;
+    text-align:center;
+    cursor:pointer;
+    border-radius:10px 10px 0 0;
+    -webkit-border-radius:10px 10px 0 0;
+    -moz-border-radius:10px 10px 0 0;
+}
+.compe-con .time-lists .tab .tabt.active{
     border:1px solid #cacaca;
     border-bottom:1px solid white;
 }
 .compe-con .time-mons{
-    width:67%;
+    width:78%;
     height:150px;
     float:left;
     margin-left:10%;
@@ -137,7 +132,7 @@
     left:0;
 }
 .compe-con .time-mon li{
-    width:8%;
+    width:9%;
     height:58px;
     border:1px solid #a7a7a7;
     border-radius: 50%;
@@ -151,8 +146,8 @@
 }
 .compe-con table{
     border-collapse: collapse;
-    width:77%;
-    margin-top:350px;
+    width:90%;
+    margin-top:240px;
 
 }
 .compe-con table thead{
@@ -211,3 +206,17 @@
     -webkit-border-radius:20px;
     -moz-border-radius: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

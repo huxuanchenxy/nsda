@@ -1,6 +1,58 @@
 ﻿(function (w) {
     var enumreplace = {
     };
+    enumreplace.replacezsignUpStatus = function (signUpStatus) {
+        if (signUpStatus == 1) {
+            return "确认组队";
+        }
+        else if (signUpStatus == 2) {
+            return "待付款";
+        }
+        else if (signUpStatus == 3) {
+            return "已付款";
+        }
+        else if (signUpStatus == 4) {
+            return "报名成功";
+        }
+        else if (signUpStatus == 5) {
+            return "退赛申请中";
+        }
+        else if (signUpStatus == 6) {
+            return "已退赛";
+        }
+        else if (signUpStatus == 7) {
+            return "组队失败";
+        }
+        else if (signUpStatus == 8) {
+            return "已完成";
+        }
+    };
+    enumreplace.replacebsignUpStatus = function (signUpStatus) {
+        if (signUpStatus == 1) {
+            return "报名邀请中";
+        }
+        else if (signUpStatus == 2) {
+            return "待付款";
+        }
+        else if (signUpStatus == 3) {
+            return "已付款";
+        }
+        else if (signUpStatus == 4) {
+            return "报名成功";
+        }
+        else if (signUpStatus == 5) {
+            return "退赛申请中";
+        }
+        else if (signUpStatus == 6) {
+            return "已退赛";
+        }
+        else if (signUpStatus == 7) {
+            return "组队失败";
+        }
+        else if (signUpStatus == 8) {
+            return "已完成";
+        }
+    };
     enumreplace.replaceeventLevel = function (eventlevel) {
         if (eventlevel == 1) {
             return "A";

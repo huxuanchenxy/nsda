@@ -123,32 +123,32 @@
             </div>
         </nav>
     </header>
- 
+
     <div class="mec-ban">
-            <div class="container player">
-                <div class="player-info">
-                    <div class="img">
-                        @if (userContext.Head.IsNotEmpty())
-                        { 
-                            <img id="uploadPreview" src="@userContext.Head" />
-                        }
-                        else
-                        {
-                            <img id="uploadPreview" src="/asset/img/teacher.png" />
-                        }
-                        <input type="file" name="uploadFile" id="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png">
-                    </div>
-              <div class="player-num">
-                  <ul>
-                      <li><span>NSDA CHINA 注册会员：</span><p>@userContext.Name</p></li>
-                      <li><span>目前 NSDA 积分：</span><p>@userContext.PlayerPoints</p></li>
-                      <li><span>NSDA 会员编号：</span><p>@userContext.Code</p></li>
-                  </ul>
-            </div>
-            <a href="#" class="player-code">
-                <i class="iconfont icon-erweima"></i>
-                我的二维码
-            </a>
+        <div class="container player">
+            <div class="player-info">
+                <div class="img">
+                    @if (userContext.Head.IsNotEmpty())
+                    {
+                        <img id="uploadPreview" src="@userContext.Head" />
+                    }
+                    else
+                    {
+                        <img id="uploadPreview" src="/asset/img/teacher.png" />
+                    }
+                    <input type="file" title="点击更换头像" name="uploadFile" id="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png">
+                </div>
+                <div class="player-num">
+                    <ul>
+                        <li><span>NSDA CHINA 注册会员：</span><p>@userContext.Name</p></li>
+                        <li><span>目前 NSDA 积分：</span><p>@userContext.PlayerPoints</p></li>
+                        <li><span>NSDA 会员编号：</span><p>@userContext.Code</p></li>
+                    </ul>
+                </div>
+                <a href="#" class="player-code">
+                    <i class="iconfont icon-erweima"></i>
+                    我的二维码
+                </a>
             </div>
         </div>
     </div>
@@ -271,7 +271,7 @@
     <script src="/asset/layer/js/layer.js"></script>
     @RenderSection("scripts", false)
     <script>
-        //如果账号未认证 就开启定时轮询 
+        //如果账号未认证 就开启定时轮询
         if(@userContext.MemberStatus==1)
         {
             var timer=window.setInterval(polling, 3 * 1000);
@@ -317,8 +317,13 @@
                 url: "/player/player/polling",
                 type: "get",
                 dataType: "json",
-                success: function (json) {                  
-                    //跳转到支付页面
+                success: function (json) {
+                    if(json.flag)
+                    {
+                        window.location.href = "/player/playerpay/alipay" + json.data;
+                    }else{
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
                 }
             });
         });

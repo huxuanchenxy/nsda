@@ -40,6 +40,7 @@ namespace nsda.Model.dto.response
         public string EventGroupName { get; set; }
         public EventTypeEm EventType { get; set; }
         public bool Flag { get; set; }
+        public SignUpTypeEm SignUpType { get; set; }
     }
 
 

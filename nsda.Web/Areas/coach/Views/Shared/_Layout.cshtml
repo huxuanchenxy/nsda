@@ -122,7 +122,7 @@
             </div>
         </nav>
     </header>
- 
+
     <div class="mec-ban">
         <div class="container player">
             <div class="player-info">
@@ -135,7 +135,7 @@
                     {
                     <img id="uploadPreview" src="/asset/img/teacher.png" />
                     }
-                  <input type="file" name="uploadFile" id="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png">
+                    <input type="file" title="点击更换头像" name="uploadFile" id="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png">
                 </div>
                 <div class="player-num">
                     <ul>
@@ -150,13 +150,13 @@
                             </span><p>@userContext.CoachPoints</p>
                         </li>
                         <li><span>Coach Member Number：</span><p>@userContext.Code</p></li>
-</ul>
-</div>
-            
-                    <a href="#" class="player-code">
-                        <i class="iconfont icon-erweima"></i>
-                        Show QR Code
-                    </a>
+                    </ul>
+                </div>
+
+                <a href="#" class="player-code">
+                    <i class="iconfont icon-erweima"></i>
+                    Show QR Code
+                </a>
             </div>
         </div>
     </div>
@@ -199,60 +199,60 @@
         @RenderBody()
     </div>
 
-        <!--联系我们-->
-        <div class="container">
-            <div class="row contact">
-                <span></span>
-                <h2>联系我们<br>GET IN TOUCH</h2>
-                <p>全美演讲与辩论联盟中国办公室（NSDA China）欢迎教育、传媒、金融等社会各领域组织机构<br>与我方进行冠名、赞助等多种形式合作，共同推动学术辩论与公共演讲在中国的蓬勃发展。</p>
+    <!--联系我们-->
+    <div class="container">
+        <div class="row contact">
+            <span></span>
+            <h2>联系我们<br>GET IN TOUCH</h2>
+            <p>全美演讲与辩论联盟中国办公室（NSDA China）欢迎教育、传媒、金融等社会各领域组织机构<br>与我方进行冠名、赞助等多种形式合作，共同推动学术辩论与公共演讲在中国的蓬勃发展。</p>
 
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <img src="~/asset/img/map-3.svg" alt="">
-                            <p>上海市杨浦区淞沪路303号创智天地11号楼501室</p>
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/map-3.svg" alt="">
+                        <p>上海市杨浦区淞沪路303号创智天地11号楼501室</p>
 
-                        </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <img src="~/asset/img/chat-user-2.svg" alt="">
-                            <p>021-60452021</p>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <img src="~/asset/img/mail-at.svg" alt="">
-                            <p>joyofdebate@dipont-edu.com</p>
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/chat-user-2.svg" alt="">
+                        <p>021-60452021</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/mail-at.svg" alt="">
+                        <p>joyofdebate@dipont-edu.com</p>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
 
-        <div class="blank">
+    <div class="blank">
 
-        </div>
+    </div>
 
-        <footer>
-            <p>Copyright © 2005 - 2017 National Forensic League of China All Reserved</p>
-        </footer>
+    <footer>
+        <p>Copyright © 2005 - 2017 National Forensic League of China All Reserved</p>
+    </footer>
 
-        <script src="/asset/js/jquery.min.js"></script>
-        <script src="/asset/js/parallax.min.js"></script>
-        <script src="/asset/js/bootstrap.min.js"></script>
-        <script src="/asset/js/layer/layer.js"></script>
-        <script src="/asset/uploadify/ajaxfileupload.js"></script>
-        <script src="/asset/layer/js/layer.js"></script>
-        @RenderSection("scripts", false)
-        <script>
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/js/parallax.min.js"></script>
+    <script src="/asset/js/bootstrap.min.js"></script>
+    <script src="/asset/js/layer/layer.js"></script>
+    <script src="/asset/uploadify/ajaxfileupload.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
+    @RenderSection("scripts", false)
+    <script>
             $(function () {
                 $('#uploadFile').change(function () {
                     var f = document.getElementById('uploadFile').files[0]
@@ -275,6 +275,6 @@
                     });
                 });
             });
-        </script>
+    </script>
 </body>
 </html>
