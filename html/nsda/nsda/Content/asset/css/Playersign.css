@@ -10,6 +10,7 @@
 }
 .info-lists{
     margin-right:15px;
+    position:relative;
 }
  .compe-con nav{
      position:absolute;
@@ -17,9 +18,10 @@
      right:30px;
  }
  .compe-con{
-     margin-top:115px;
+    margin-top:115px;
     min-height:1000px;
-    width:100%;
+    float:left;
+    width:78%;
     position:relative;
 }
 .address{
@@ -33,15 +35,15 @@
     width:5%
 }
 .address .address-lists .division{
-    width:7%;
-    margin-left:22px;
+    width:9%;
+    margin-left:20px;
    
 }
 .address .address-lists .international{
-    margin-left:11%;
+    margin-left:12%;
 }
 .address .address-lists li{
-    width:4%;
+    width:5%;
     margin-bottom:20px;
     text-align:center;
     cursor:pointer;
@@ -62,31 +64,35 @@
 .level .level-lists li:first-child{
     width:4%;
     text-align:center;
-    margin-right:15px;
+    margin-right:25px;
 }
 .level .level-lists li:not(:first-child){
     width:4%;
     text-align:center;
     
 }
+.level-lists li{
+    cursor:pointer;
+}
 .time p.tim ,.level-lists p,.level-lists li{
     float:left;
 }
 .time .time-lists li{
     float:left;
+    
 }
 .time .time-lists li.nolimit{
     width:4%;
     text-align:center;
-    margin-right:15px;
+    margin-right:25px;
 }
 .compe-con .tab{
     float:left;
     display:inline-block;
-    width:60%;
-    
+    width:78%;
+    border-bottom:1px solid #eee;
 }
-.compe-con .nav
+
 .compe-con .tab .tabt{
     width:15%;
     float:left;
@@ -101,7 +107,7 @@
     border-bottom:1px solid white;
 }
 .compe-con .time-mons{
-    width:67%;
+    width:78%;
     height:150px;
     float:left;
     margin-left:10%;
@@ -126,7 +132,7 @@
     left:0;
 }
 .compe-con .time-mon li{
-    width:8%;
+    width:9%;
     height:58px;
     border:1px solid #a7a7a7;
     border-radius: 50%;
@@ -140,7 +146,7 @@
 }
 .compe-con table{
     border-collapse: collapse;
-    width:77%;
+    width:90%;
     margin-top:240px;
 
 }
