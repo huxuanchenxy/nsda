@@ -5,158 +5,154 @@
 <link href="@Url.Content("~/Content/asset/css/eventstartlists.css?1.1.3")" rel="stylesheet" type="text/css" />
 <div class="container-fulid event-select">
     <div class="tri"></div>
-    <form action="/" method="post" >
-        <div class="form-group container">
-            <label for="inputName">本次赛事名称：</label>
-            <div>
-                <input type="text" id="inputName" placeholder="赛事中文名称">
-                <input type="text" id="inputName" placeholder="English name of the tournament">
-            </div>
+    <div class="form-group container">
+        <label for="inputName">本次赛事名称：</label>
+        <div>
+            <input type="text" id="inputName" placeholder="赛事中文名称">
+            <input type="text" id="inputEnName" placeholder="English name of the tournament">
         </div>
-        <div class="form-group container">
-            <label>添加比赛日期：</label>
-            <input type="text" id="test1" placeholder="选择比赛日期">
+    </div>
+    <div class="form-group container">
+        <label>添加比赛日期：</label>
+        <input type="text" id="compedate" placeholder="选择比赛日期">
+    </div>
+    <div class="form-group container">
+        <label>报名截止日期：</label>
+        <div>
+            <input type="text" id="deadlinedate" placeholder="选择报名截止日期">
         </div>
-        <div class="form-group container">
-            <label>报名截止日期：</label>
-            <div>
-                <input type="text" id="test2" placeholder="选择报名截止日期">
-            </div>
+    </div>
+    <div class="form-group container">
+        <label>赛场地址：</label>
+        <div>
+            <select>
+                <option>省</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            <select>
+                <option>市</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            <input type="text" placeholder="输入赛场地址">
         </div>
-        <div class="form-group container">
-            <label>赛场地址：</label>
-            <div>
-                <select>
-                    <option>省</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-                <select>
-                    <option>市</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-                <input type="text" placeholder="输入赛场地址">
-            </div>
+    </div>
+    <div class="form-group container">
+        <label>赛事描述：</label>
+        <div>
+            <textarea rows="3"></textarea>
         </div>
-        <div class="form-group container">
-            <label>赛事描述：</label>
-            <div>
-                <textarea rows="3"></textarea>
-            </div>
+    </div>
+    <div class="form-group container">
+        <label>参赛报名费用（人/元）:</label>
+        <div>
+            <input type="text" placeholder="￥">
         </div>
-        <div class="form-group container">
-            <label>参赛报名费用（人/元）:</label>
-            <div>
-                <input type="text" placeholder="￥">
-            </div>
+    </div>
+    <div class="form-group container">
+        <label>退费截止日期：</label>
+        <div>
+            <input type="text" id="refunddate" placeholder="选择退费截止日期">
         </div>
-        <div class="form-group container">
-            <label>退费截止日期：</label>
-            <div>
-                <input type="text" id="test3" placeholder="选择退费截止日期">
-            </div>
+    </div>
+    <div class="form-group container">
+        <label>报名队伍数上限:</label>
+        <div>
+            <input type="text" placeholder="输入队伍数字">队 
         </div>
-        <div class="form-group container">
-            <label>报名队伍数上限:</label>
-            <div>
-                <input type="text" placeholder="输入队伍数字">队 
-            </div>
+    </div>
+    <div class="container-fulid teambg">
+        <div class="container">
+            <h3>组别设置</h3>
         </div>
-        <div class="container-fulid teambg">
+        <div class="tbg">
             <div class="container">
-                <h3>组别设置</h3>
-            </div>
-            <div class="tbg">
-                <div class="container">
-                    <div class="teamlist">
-                        <div class="form-group">
-                            <input type="text" placeholder="输入组别名称">
-                        </div>
-                        <div class="form-group">
-                            <label>年级段设置:</label>
-                            <div>
-                                <select>
-                                    <option>不限</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                                <p>到</p>
-                                <select>
-                                    <option>不限</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>累计比赛次数设置 （如不填写，则为不限）:</label>
-                            <div>
-                                <input type="text" placeholder="填写参赛次数">
-                                <p>到</p>
-                                <input type="text" placeholder="填写参赛次数">
-                            </div>
+                <div class="teamlist">
+                    <div class="form-group">
+                        <input type="text" placeholder="输入组别名称">
+                    </div>
+                    <div class="form-group">
+                        <label>年级段设置:</label>
+                        <div>
+                            <select>
+                                <option>不限</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <p>到</p>
+                            <select>
+                                <option>不限</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="teamlist">
-                        <div class="form-group">
-                            <input type="text" placeholder="输入组别名称">
+                    <div class="form-group">
+                        <label>累计比赛次数设置 （如不填写，则为不限）:</label>
+                        <div>
+                            <input type="text" placeholder="填写参赛次数">
+                            <p>到</p>
+                            <input type="text" placeholder="填写参赛次数">
                         </div>
-                        <div class="form-group">
-                            <label>年级段设置:</label>
-                            <div>
-                                <select>
-                                    <option>不限</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                                <p>到</p>
-                                <select>
-                                    <option>不限</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
+                    </div>
+                </div>
+                <div class="teamlist">
+                    <div class="form-group">
+                        <input type="text" placeholder="输入组别名称">
+                    </div>
+                    <div class="form-group">
+                        <label>年级段设置:</label>
+                        <div>
+                            <select>
+                                <option>不限</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <p>到</p>
+                            <select>
+                                <option>不限</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label>累计比赛次数设置 （如不填写，则为不限）:</label>
-                            <div>
-                                <input type="text" placeholder="填写参赛次数">
-                                <p>到</p>
-                                <input type="text" placeholder="填写参赛次数">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label>累计比赛次数设置 （如不填写，则为不限）:</label>
+                        <div>
+                            <input type="text" placeholder="填写参赛次数">
+                            <p>到</p>
+                            <input type="text" placeholder="填写参赛次数">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <button type="submit">递交发布赛事申请</button>
-    </form>
+    </div>
+    <button type="submit">递交发布赛事申请</button>
 </div>
 <script>
     laydate.render({
-        elem: '#test1',
+        elem: '#compedate',
         range: true
     });
     laydate.render({
-        elem: '#test2',
-        lang: 'en'
+        elem: '#deadlinedate'
     });
     laydate.render({
-        elem: '#test3',
-        lang: 'en'
+        elem: '#refunddate'
     });
 </script>
 
