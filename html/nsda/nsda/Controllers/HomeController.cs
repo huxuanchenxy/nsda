@@ -47,7 +47,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "会员注册";
             return View();
         }
-
+        public ActionResult sign()
+        {
+            ViewBag.Message = "会员注册";
+            return View();
+        }
         public ActionResult playermembercenter()
         {
             ViewBag.Message = "会员中心";

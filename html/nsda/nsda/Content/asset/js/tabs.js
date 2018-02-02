@@ -1,6 +1,5 @@
-﻿var tab = document.getElementsByClassName('tab');
+﻿
 var tabt = document.getElementsByClassName('tabt');
-var tabc = document.getElementsByClassName('tabc');
 var tabcon = document.getElementsByClassName('tabcon');
 
 for (let i = 0; i < tabt.length; i++) {
@@ -13,6 +12,7 @@ for (let i = 0; i < tabt.length; i++) {
         tabcon[this.index].style.display = "block";
         tabt[i].style.border = "1px solid #cacaca";
         tabt[i].style.borderBottom = "1px solid white";
+        tabt[i].style.borderRadius = "10px 10px 0 0";
     }
 }
 
