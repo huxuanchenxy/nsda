@@ -145,6 +145,22 @@ fg-layer-iframe{
     left:23%;
     z-index:10;
 }
+.addcoach .form-group select#sel::-webkit-scrollbar{
+    width:6px;
+    height:6px;
+}
+.addcoach .form-group select#sel::-webkit-scrollbar-track {
+      background-color: #ddd;
+}
+
+.addcoach .form-group select#sel::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+}
+.addcoach .form-group select#sel::-webkit-scrollbar-button {
+    background-color: #888;
+    display: none;
+}
 .addcoach .form-group .searchcoach {
     display: inline;
     padding: 8px 20px;
@@ -175,7 +191,7 @@ fg-layer-iframe{
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    margin-top: 120px;
+    bottom:50px;
     text-decoration:none;
 }
 
