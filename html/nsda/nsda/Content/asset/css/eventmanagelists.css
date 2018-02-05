@@ -15,7 +15,7 @@
     position:absolute;
     z-index:9;
     top:-40px;
-    left:170px;
+    left:14%;
 }
 .compe-lists{
     width:260px;
@@ -31,6 +31,9 @@
     text-align:left;
     font-size:18px;
     border-bottom:1px dashed #CED4D7;
+}
+.event-nav ul a:last-child li{
+    color:#fff;
 }
 .event-lists table{
     width:100%;
