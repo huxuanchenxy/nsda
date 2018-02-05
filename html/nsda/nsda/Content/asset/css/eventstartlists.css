@@ -256,7 +256,7 @@
   appearance: none;
   margin: 0;
 }
-.teamlist .form-group:last-child input[type=number]::-webkit-inner-spin-button,.teamlist .form-group:last-child input[type=number]::-webkit-outer-spin-button{
+.teamlist .form-group:nth-child(3) input[type=number]::-webkit-inner-spin-button,.teamlist .form-group:nth-child(3) input[type=number]::-webkit-outer-spin-button{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
