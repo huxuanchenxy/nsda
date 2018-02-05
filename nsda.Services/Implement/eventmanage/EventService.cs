@@ -120,7 +120,7 @@ namespace nsda.Services.Implement.eventmanage
                         endrefunddate = request.EndRefundDate,
                         endsigndate = request.EndSignDate,
                         remark = request.Remark,
-                        eventStatus = EventStatusEm.待审核,
+                        eventStatus = EventStatusEm.审核中,
                         eventType = request.EventType,
                         filepath = request.Filepath,
                         isInter = request.IsInter,
@@ -344,7 +344,7 @@ namespace nsda.Services.Implement.eventmanage
                     tevent.endrefunddate = request.EndRefundDate;
                     tevent.endsigndate = request.EndSignDate;
                     tevent.remark = request.Remark;
-                    tevent.eventStatus = tevent.eventStatus == EventStatusEm.拒绝 ? EventStatusEm.待审核 : tevent.eventStatus;
+                    tevent.eventStatus = tevent.eventStatus == EventStatusEm.拒绝 ? EventStatusEm.审核中 : tevent.eventStatus;
                     tevent.eventType = request.EventType;
                     tevent.filepath = request.Filepath;
                     tevent.isInter = request.IsInter;
@@ -445,7 +445,7 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 t_event tevent = _dbContext.Get<t_event>(id);
-                if (tevent != null && tevent.eventStatus == EventStatusEm.待审核)
+                if (tevent != null && tevent.eventStatus == EventStatusEm.审核中)
                 {
                     tevent.updatetime = DateTime.Now;
                     tevent.eventStatus = isAgree ? EventStatusEm.报名中 : EventStatusEm.拒绝;
@@ -596,7 +596,7 @@ namespace nsda.Services.Implement.eventmanage
                     request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (code like @KeyValue or name like @KeyValue)");
                 }
-                var sql = $@"select * from t_event where isdelete=0 and memberId=@MemberId {join.ToString()} order by createtime desc ";
+                var sql = $@"select * from t_event where isdelete=0 and memberId=@MemberId {join.ToString()} order by id desc ";
 
                 int totalCount = 0;
                 list = _dbContext.Page<EventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
@@ -605,7 +605,7 @@ namespace nsda.Services.Implement.eventmanage
                     foreach (var item in list)
                     {
                         //计算报名人数或者队伍
-                        if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
+                        if (item.EventStatus != EventStatusEm.审核中 && item.EventStatus != EventStatusEm.拒绝)
                         {
                             item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
                         }
@@ -657,7 +657,7 @@ namespace nsda.Services.Implement.eventmanage
                     foreach (var item in list)
                     {
                         //计算报名人数或者队伍
-                        if (item.EventStatus != EventStatusEm.待审核 && item.EventStatus != EventStatusEm.拒绝)
+                        if (item.EventStatus != EventStatusEm.审核中 && item.EventStatus != EventStatusEm.拒绝)
                         {
                             item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
                         }

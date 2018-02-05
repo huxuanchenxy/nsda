@@ -1,6 +1,26 @@
 ﻿(function (w) {
     var enumreplace = {
     };
+    enumreplace.replaceEventStatus = function (eventStatus) {
+        if (eventStatus == 1) {
+            return "审核中";
+        }
+        else if (eventStatus == 2) {
+            return "拒绝";
+        }
+        else if (eventStatus == 3) {
+            return "报名中";
+        }
+        else if (eventStatus == 4) {
+            return "停止报名";
+        }
+        else if (eventStatus == 5) {
+            return "比赛中";
+        }
+        else if (eventStatus == 6) {
+            return "比赛完成";
+        }
+    };
     enumreplace.replacezsignUpStatus = function (signUpStatus) {
         if (signUpStatus == 1) {
             return "确认组队";

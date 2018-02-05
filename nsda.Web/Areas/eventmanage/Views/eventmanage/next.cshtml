@@ -1,0 +1,296 @@
+﻿@using nsda.Utilities
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "发起赛事";
+}
+
+@section styles{
+    <link href="/asset/css/eventstartlists.css?version=@Constant.Version" rel="stylesheet" />
+   <link href="/asset/simditor/css/simditor.css" rel="stylesheet" />
+}
+<div class="container-fulid event-select">
+    <div class="tri"></div>
+    <div class="form-group container">
+        <label for="eventName">本次赛事名称：</label>
+        <div>
+            <input type="text" id="eventName" placeholder="赛事中文名称">
+            <input type="text" id="eventEnglishName" placeholder="English name of the tournament">
+        </div>
+    </div>
+    <div class="form-group container">
+        <label for="eventdate">添加比赛日期：</label>
+        <input type="text" id="eventdate" placeholder="选择比赛日期">
+    </div>
+    <div class="form-group container">
+        <label for="deadlinedate">报名截止日期：</label>
+        <div>
+            <input type="text" id="deadlinedate" placeholder="选择报名截止日期">
+        </div>
+    </div>
+    <div class="form-group container">
+        <label>赛场地址：</label>
+        <div>
+            <select id="inter">
+                <option value="1">国内</option>
+                <option value="2">国际</option>
+            </select>
+            <select id="provinceId">
+                <option value="0">省</option>
+            </select>
+            <select id="cityId">
+                <option value="0">市</option>
+            </select>
+            <input type="text" placeholder="输入赛场地址" id="Address">
+        </div>
+    </div>
+    <div class="form-group container">
+        <label>赛事描述：</label>
+        <div>
+            <textarea rows="3" id="Content"></textarea>
+        </div>
+    </div>
+    <div class="form-group container">
+        <label>参赛报名费用（人/元）:</label>
+        <div>
+            <input type="number" placeholder="￥" id="signFee">
+        </div>
+    </div>
+    <div class="form-group container">
+        <label>退费截止日期：</label>
+        <div>
+            <input type="text" id="refunddate" placeholder="选择退费截止日期">
+        </div>
+    </div>
+    <div class="form-group container">
+        <label>报名队伍数上限:</label>
+        <div>
+            <input type="number" placeholder="输入队伍数" id="maxteamNum">队
+        </div>
+    </div>
+    <div class="container-fulid teambg">
+        <div class="container">
+            <h3>组别设置</h3>
+        </div>
+        <div class="tbg">
+            <div class="container">
+                <div class="teamlist">
+                    <div class="form-group">
+                        <input type="text" placeholder="输入组别名称">
+                    </div>
+                    <div class="form-group">
+                        <label>年级段设置:</label>
+                        <div>
+                            <select id="grade01">
+                            </select>
+                            <p>到</p>
+                            <select id="grade02">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>累计比赛次数设置 （如不填写，则为不限）:</label>
+                        <div>
+                            <input type="number" placeholder="填写参赛次数">
+                            <p>到</p>
+                            <input type="number" placeholder="填写参赛次数">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="isInter" value="false" />
+    <input type="hidden" id="eventType" value="@ViewBag.EventType" />
+    <input type="hidden" id="eventTypeName" value="@ViewBag.EventTypeName" />
+    <button type="button" id="submit">递交发布赛事申请</button>
+</div>
+@section scripts
+{
+    <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/simditor/js/module.min.js"></script>
+    <script src="/asset/simditor/js/uploader.min.js"></script>
+    <script src="/asset/simditor/js/hotkeys.min.js"></script>
+    <script src="/asset/simditor/js/simditor.min.js"></script>
+    <script src="/asset/js/ipc.js?version=@Constant.Version"></script>
+    <script>
+        laydate.render({
+            elem: '#eventdate',
+            range: true,
+            done: function (value, date, endDate) {
+                $("#eventdate").attr("data-date", value);
+            }
+        });
+        laydate.render({
+            elem: '#deadlinedate'
+        });
+        laydate.render({
+            elem: '#refunddate'
+        });
+
+        var editor = null;
+        $(function () {
+            editor = new Simditor({
+                textarea: $('#Content'),
+                placeholder: '这里输入公告内容...',
+                fgtoolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent'],
+                defaultImage:"/asset/img/default.png",
+                upload: {
+                    url: '/eventmanage/eventmanage/uploadimage',
+                params: null,
+                fileKey: 'fileDataFileName',
+                connectionCount: 3,
+                leaveConfirm: '正在上传文件'
+                }
+        });
+        });
+
+        $("#inter").change(function () {
+            var val = $(this).val();
+            if (val == 1) {
+                $("#isInter").val("false");
+            } else {
+                $("#isInter").val("true");
+            }
+            init();
+        });
+        function init()
+        {
+            $.province(0);
+            $.city(0, 0);
+        }
+        $(document).ready(function () {
+            init();
+            $("#provinceId").change(function () {
+                $.city(0, 0);
+            });
+            $("#grade01").html(rendergrade());
+            $("#grade02").html(rendergrade());
+        });
+
+        $("#submit").click(function () {
+            var $Name = $("#eventName").val();
+            if (validate.isNull($Name)) {
+                layer.msg('请输入赛事名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EnglishName = $("#eventEnglishName").val();
+            var $EventDate = $("#eventdate").attr("data-date");
+            if (validate.isNull($EventDate)) {
+                layer.msg('请输入比赛日期', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EndSignDate = $("#deadlinedate").val();
+            if (validate.isNull($EndSignDate)) {
+                layer.msg('请输入比赛日期', { icon: 5, time: 1000 });
+                return;
+            }
+            var $provinceId = $("#provinceId").val();
+            if ($provinceId==0) {
+                layer.msg('请输入比赛省份', { icon: 5, time: 1000 });
+                return;
+            }
+            var $Address = $("#Address").val();
+            if (validate.isNull($Address)) {
+                layer.msg('请输入比赛地址', { icon: 5, time: 1000 });
+                return;
+            }
+            var $SignFee = $("#signFee").val();
+            if (validate.isNull($SignFee)) {
+                layer.msg('请输入报名费', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EndRefundDate = $("#refunddate").val();
+            if (validate.isNull($EndRefundDate)) {
+                layer.msg('请输入退费截止日期', { icon: 5, time: 1000 });
+                return;
+            }
+            var $Maxnumber = $("#maxteamNum").val();
+            if (validate.isNull($Maxnumber)) {
+                layer.msg('请输入队伍数上限', { icon: 5, time: 1000 });
+                return;
+            }
+            $remark = editor.getValue();
+            var myarray = $EventDate.split(" - ");
+
+            var grouplist = [];
+
+            var objectData = {
+                Name: "ceshi1",
+                MinGrade: "1",
+                MaxGrade: "2",
+                MinTimes: 0,
+                MaxTimes: 0
+            };
+            var objectData1 = {
+                Name: "ceshi2",
+                MinGrade: "3",
+                MaxGrade: "4",
+                MinTimes: 1,
+                MaxTimes: 2
+            };
+            grouplist.push(objectData);
+            grouplist.push(objectData1);
+            var $cityId = $("#cityId").val();
+            $.ajax({
+                url: "/eventmanage/eventmanage/insertevent",
+                type: "post",
+                dataType: "json",
+                data: {
+                    EventGroup: grouplist,
+                    Name: $Name,
+                    EnglishName: $EnglishName,
+                    StartEventDate: myarray[0],
+                    EndEventDate: myarray[1],
+                    EndSignDate: $EndSignDate,
+                    EndRefundDate: $EndRefundDate,
+                    Remark:$remark,
+                    Address: $Address,
+                    ProvinceId: $provinceId,
+                    CityId: $cityId,
+                    IsInter: $("#isInter").val(),
+                    EventType: $("#eventType").val(),
+                    EventTypeName: $("#eventTypeName").val(),
+                    Signfee: $SignFee,
+                    Maxnumber: $Maxnumber
+                },
+                beforeSend: function () {
+                    layer.msg('保存中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("保存成功", { icon: 1, time: 1000 });
+                        location.href = "/eventmanage/eventmanage/index";
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+             , error: function () {
+                 layer.closeAll();
+             }
+            });
+        });
+
+        function rendergrade()
+        {
+            var html = '';
+            html += '<option value="-1">不限</option>';
+            html += '<option value="0">学前</option>';
+            html += '<option value="1">1年级</option>';
+            html += '<option value="2">2年级</option>';
+            html += '<option value="3">3年级</option>';
+            html += '<option value="4">4年级</option>';
+            html += '<option value="5">5年级</option>';
+            html += '<option value="6">6年级</option>';
+            html += '<option value="7">7年级</option>';
+            html += '<option value="8">8年级</option>';
+            html += '<option value="9">9年级</option>';
+            html += '<option value="10">10年级</option>';
+            html += '<option value="11">11年级</option>';
+            html += '<option value="12">12年级</option>';
+            html += '<option value="13">13年级</option>';
+            return html;
+        }
+    </script>
+}

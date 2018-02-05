@@ -47,7 +47,7 @@ namespace nsda.Services.Implement.referee
                     return flag;
                 }
                 t_event t_event = _dbContext.Get<t_event>(eventId);
-                if (t_event != null &&t_event.eventStatus!=EventStatusEm.待审核&&t_event.eventStatus!=EventStatusEm.拒绝&& t_event.endsigndate>DateTime.Now)
+                if (t_event != null &&t_event.eventStatus!=EventStatusEm.审核中 && t_event.eventStatus!=EventStatusEm.拒绝&& t_event.endsigndate>DateTime.Now)
                 {
                     var data = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.memberId == memberId&&c.refereeSignUpStatus!=RefereeSignUpStatusEm.申请失败).ToList();
                     if (data != null && data.Count > 0)

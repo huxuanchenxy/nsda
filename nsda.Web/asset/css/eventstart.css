@@ -15,7 +15,7 @@
     position:absolute;
     z-index:9;
     top:-40px;
-    left:420px;
+    left:22%;
 }
 .eventsel{
     position:absolute;
@@ -67,7 +67,6 @@
 .event-nav ul a:first-child li{
     color:#fff;
 }
-
 
 
 

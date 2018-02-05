@@ -20,9 +20,9 @@ namespace nsda.Model.enums
     /// </summary>
     public enum EventTypeNameEm
     {
-        原创演讲 = 1,
-        公共论坛式辩论 = 2,
-        林肯道格拉斯辩论=3,
-        英国议会制辩论=4
+        公共论坛式辩论 = 1,
+        林肯道格拉斯辩论=2,
+        英国议会制辩论=3,
+        原创演讲 = 4
     }
 }

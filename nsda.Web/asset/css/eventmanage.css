@@ -3,7 +3,6 @@
     padding-top:50px;
     min-height:800px;
     position:relative;
-    position:relative;
 }
 .event-lists .tri{
     width: 0;
@@ -15,7 +14,7 @@
     position:absolute;
     z-index:9;
     top:-40px;
-    left:170px;
+    left:14%;
 }
 .event-lists h4{
     font-size:18px;

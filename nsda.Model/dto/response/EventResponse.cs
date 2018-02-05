@@ -68,7 +68,7 @@ namespace nsda.Model.dto.response
 
         public EventTypeEm EventType { get; set; }
 
-        public EventCategoryEm EventCategory { get; set; }
+        public EventTypeNameEm EventTypeName { get; set; }
 
         public EventLevelEm? EventLevel { get; set; }
 
@@ -83,7 +83,6 @@ namespace nsda.Model.dto.response
         public string Filepath { get; set; }
 
         public int Maxnumber { get; set; }
-
         /// <summary>
         /// 赛事状态
         /// </summary>

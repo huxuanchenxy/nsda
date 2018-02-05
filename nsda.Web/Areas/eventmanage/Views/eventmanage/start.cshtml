@@ -1,0 +1,61 @@
+﻿@using nsda.Utilities
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "发起赛事";
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventstart.css?version=@Constant.Version">
+}
+<div class="container-fulid event-select">
+    <div class="tri"></div>
+
+    <div class="container-fulid  eventsel">
+        <div class="container">
+            <h4>赛事类别</h4>
+        </div>
+    </div>
+
+    <div class="container-fulid selects">
+        <div class="container">
+            <select class="form-control" id="eventType">
+                <option value="1">辩论</option>
+                <option value="2">演讲</option>
+            </select>
+            <select class="form-control" id="eventTypeName">
+                <option value="1">公共论坛式辩论</option>
+                <option value="2">林肯·道格拉斯辩论</option>
+                <option value="3">英国议会制辩论</option>
+            </select>
+            <a href="javascript:;" id="next">NEXT STEP 下一步</a>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#eventType").trigger("change");
+        });
+        $("#eventType").change(function () {
+            var val = $(this).val();
+            var html = '';
+            if (val == 1)
+            {
+                html += '<option value="1">公共论坛式辩论</option>';
+                html += '<option value="2">林肯·道格拉斯辩论</option>';
+                html += '<option value="3">英国议会制辩论</option>';
+            } else {
+                html += '<option value=4>原创演讲</option>';
+            }
+            $("#eventTypeName").html(html);
+        });
+
+        $("#next").click(function () {
+            var eventType=$("#eventType").val();
+            var eventTypeName=$("#eventTypeName").val();
+            window.location.href = "/eventmanage/eventmanage/next?eventType=" + eventType + "&eventTypeName=" + eventTypeName;
+        });
+    </script>
+}

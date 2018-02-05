@@ -11,7 +11,7 @@ namespace nsda.Model.enums
     /// </summary>
     public enum EventStatusEm
     {
-        待审核=1,
+        审核中=1,
         拒绝=2,
         报名中=3,
         停止报名=4,

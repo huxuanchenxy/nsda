@@ -138,8 +138,6 @@
     <Compile Include="Areas\admin\Controllers\adminvoteController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\eventbaseController.cs" />
     <Compile Include="Areas\eventmanage\Controllers\eventmanageController.cs" />
-    <Compile Include="Areas\eventmanage\Controllers\eventprizeController.cs" />
-    <Compile Include="Areas\eventmanage\Controllers\eventroomController.cs" />
     <Compile Include="Areas\eventmanage\eventmanageAreaRegistration.cs" />
     <Compile Include="Areas\player\Controllers\playerbaseController.cs" />
     <Compile Include="Areas\player\Controllers\playerController.cs" />
@@ -437,6 +435,7 @@
     <Content Include="asset\img\city-sunny-people-street-1.png" />
     <Content Include="asset\img\coach.png" />
     <Content Include="asset\img\course.png" />
+    <Content Include="asset\img\default.png" />
     <Content Include="asset\img\en-icon.png" />
     <Content Include="asset\img\integral.svg" />
     <Content Include="asset\img\mail-at.svg" />
@@ -473,6 +472,7 @@
     <Content Include="asset\js\common.js" />
     <Content Include="asset\js\enumreplace.js" />
     <Content Include="asset\js\info.js" />
+    <Content Include="asset\js\ipc.js" />
     <Content Include="asset\js\jquery-3.2.1.min.js" />
     <Content Include="asset\js\jquery.form.js" />
     <Content Include="asset\js\jquery.min.js" />
@@ -480,15 +480,6 @@
     <Content Include="asset\js\laydate\laydate.js" />
     <Content Include="asset\js\laydate\theme\default\font\iconfont.svg" />
     <Content Include="asset\js\laydate\theme\default\laydate.css" />
-    <Content Include="asset\js\layer\layer.js" />
-    <Content Include="asset\js\layer\mobile\layer.js" />
-    <Content Include="asset\js\layer\mobile\need\layer.css" />
-    <Content Include="asset\js\layer\theme\default\icon-ext.png" />
-    <Content Include="asset\js\layer\theme\default\icon.png" />
-    <Content Include="asset\js\layer\theme\default\layer.css" />
-    <Content Include="asset\js\layer\theme\default\loading-0.gif" />
-    <Content Include="asset\js\layer\theme\default\loading-1.gif" />
-    <Content Include="asset\js\layer\theme\default\loading-2.gif" />
     <Content Include="asset\js\load.js" />
     <Content Include="asset\js\loading.js" />
     <Content Include="asset\js\pager.js" />
@@ -505,6 +496,7 @@
     <Content Include="Areas\player\Views\playercoach\add.cshtml" />
     <Content Include="Areas\coach\Views\coach\add.cshtml" />
     <Content Include="Areas\coach\Views\coach\update.cshtml" />
+    <Content Include="Areas\eventmanage\Views\Shared\_Layout.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
@@ -566,9 +558,6 @@
     <Folder Include="Areas\admin\Views\vote\" />
     <Folder Include="Areas\coach\Models\" />
     <Folder Include="Areas\eventmanage\Models\" />
-    <Folder Include="Areas\eventmanage\Views\eventPrize\" />
-    <Folder Include="Areas\eventmanage\Views\eventromm\" />
-    <Folder Include="Areas\eventmanage\Views\Shared\" />
     <Folder Include="Areas\player\Models\" />
     <Folder Include="Areas\referee\Models\" />
     <Folder Include="Areas\referee\Views\Shared\" />
@@ -717,10 +706,10 @@
     <Content Include="Areas\coach\Views\coach\bindplayer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\eventmanage\Views\eventmanage\info.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\start.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\eventmanage\Views\eventmanage\mail.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\next.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\referee\Views\referee\mail.cshtml" />

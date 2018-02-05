@@ -1,5 +1,21 @@
 ﻿.event-lists{
+    width:100%;
+    margin-bottom:80px;
+    padding-top:50px;
+    min-height:800px;
     position:relative;
+}
+.event-lists .tri{
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid white;
+    border-left: 15px solid transparent;
+    position:absolute;
+    z-index:9;
+    top:-40px;
+    left:14%;
 }
 .compe-lists{
     width:260px;
@@ -15,12 +31,65 @@
     text-align:left;
     font-size:18px;
     border-bottom:1px dashed #CED4D7;
-
 }
-
-
-
-
+.event-nav ul a:last-child li{
+    color:#fff;
+}
+.event-lists table{
+    width:100%;
+}
+.event-lists table thead{
+    width:100%;
+    background:#D8E0E5;
+}
+.event-lists table thead tr th{
+    text-align:center;
+    padding:10px;
+}
+.event-lists tbody td{
+    color:#666699;
+    border:1px solid #ccc;
+    text-align-last:center;
+    padding:10px;
+}
+.event-lists tbody td:first-child{
+    border-left:none;
+}
+.event-lists tbody td:last-child{
+    border-right:none
+}
+.event-lists tbody tr:nth-child(even) td:last-child{
+}
+.event-lists nav{
+    position:absolute;
+    bottom:0;
+    right:0;
+}
+.page{
+    color: #a2a2a2;
+    margin: 20px 0;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+.page a.prev, .page a.next {
+    font-size: 14px;
+    font-weight: bold;
+}
+.page span, .page a {
+    color: #a2a2a2;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    text-decoration: none;
+}
+.page a:hover, .page .on{
+    background-color: #2577e3;
+    border-radius: 30px;
+    color: #fff;
+}
 
 
 

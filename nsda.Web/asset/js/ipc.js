@@ -3,6 +3,7 @@
         url: "/commondata/listprovince",
         type: "get",
         dataType: "json",
+        data:{isInter:$("#isInter").val()},
         success: function (json) {
             var html = '<option value=0>省</option>';
             if (json.data != null && json.data.length > 0) {
@@ -34,7 +35,7 @@ $.city = function (id, provinceId) {
         url: "/commondata/listcity",
         type: "get",
         dataType: "json",
-        data:{provinceId:province},
+        data: { provinceId: province },
         success: function (json) {
             var html = '<option value=0>市</option>';
             if (json.data != null && json.data.length > 0) {
@@ -47,39 +48,6 @@ $.city = function (id, provinceId) {
                 });
             }
             $("#cityId").html(html);
-        }
-    });
-}
-
-$.school = function (id,cityId) {
-    $("#schoolId").html("");
-    var city = $("#cityId").val();
-    if (cityId > 0) {
-        city = cityId;
-    }
-    else {
-        if (city == "" || city == null || city == "undefined" || city == "0") {
-            $("#schoolId").html("<option value=0>学校</option");
-            return;
-        }
-    }
-    $.ajax({
-        url: "/commondata/listschool",
-        type: "get",
-        dataType: "json",
-        data: { cityId: city },
-        success: function (json) {
-            var html = '<option value=0>学校</option>';
-            if (json.data != null && json.data.length > 0) {
-                $.each(json.data, function (k, val) {
-                    if (id == val.Id) {
-                        html += '<option value=' + val.Id + ' selected>' + val.Name + '</option>';
-                    } else {
-                        html += '<option value=' + val.Id + '>' + val.Name + '</option>';
-                    }
-                });
-            }
-            $("#schoolId").html(html);
         }
     });
 }

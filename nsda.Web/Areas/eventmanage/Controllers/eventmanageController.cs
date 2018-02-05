@@ -11,6 +11,7 @@ using nsda.Utilities;
 using nsda.Web.Filter;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,14 +20,18 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 {
     public class eventmanageController : eventbaseController
     {
+        IEventRoomService _eventRoomService;
+        IEventPrizeService _eventPrizeService;
         IMemberService _memberService;
         IEventService _eventService;
         IMemberTempService _memberTempService;
         IEventSignService _eventSignService;
         IPlayerSignUpService _playerSignUpService;
         IRefereeSignUpService _refereeSignUpService;
-        public eventmanageController(IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
+        public eventmanageController(IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
         {
+            _eventRoomService = eventRoomService;
+            _eventPrizeService = eventPrizeService;
             _memberService = memberService;
             _eventService = eventService;
             _memberTempService = memberTempService;
@@ -35,7 +40,131 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             _refereeSignUpService = refereeSignUpService;
         }
 
+        #region view
+        public ActionResult index()
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
+            return View();
+        }
+        //第一步
+        public ActionResult start()
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            return View();
+        }
+        //第二步
+        public ActionResult next(EventTypeEm eventType, EventTypeNameEm eventTypeName)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            ViewBag.EventType = eventType;
+            ViewBag.EventTypeName = eventTypeName;
+            return View();
+        }
+
+        public ActionResult qrcode(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            return View();
+        }
+
+        public ActionResult eventgroup(int eventGroupId)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.EventGroupDetail(eventGroupId);
+            return View(detail);
+        }
+
+        public ActionResult info()
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var data = _memberService.MemberEventDetail(UserContext.WebUserContext.Id);
+            return View(data);
+        }
+
+        public ActionResult detail(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            return View(detail);
+        }
+
+        public ActionResult eventresult(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            return View(detail);
+        }
+        #endregion
+
         #region ajax
+        /// <summary>
+        /// 上传图片
+        /// </summary>
+        [HttpPost]
+        public ContentResult uploadimage()
+        {
+            HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
+            if (files[0].ContentLength == 0 || files[0].FileName.IsEmpty())
+            {
+                return Result<string>(false, "没有选择图片");
+            }
+            if (files[0].ContentLength > 2 * 1024 * 1024)
+            {
+                return Result<string>(false, "图片大小限制2M");
+            }
+            string extendName = Path.GetExtension(files[0].FileName);
+            if (extendName.Contains("exe") || extendName.Contains("bat"))
+            {
+                return Result<string>(false, "禁止上传exe/bat文件");
+            }
+            byte[] uploadFileBytes = null;
+            uploadFileBytes = new byte[files[0].ContentLength];
+            try
+            {
+                files[0].InputStream.Read(uploadFileBytes, 0, files[0].ContentLength);
+            }
+            catch
+            {
+                return Result<string>(false, "上传图片失败");
+            }
+
+            var uploadImage = new UploadFileRequest
+            {
+                FileEnum = FileEnum.EventAttachment,
+                ExtendName = extendName,
+                FileName = Path.GetFileName(files[0].FileName),
+                Size = 2,
+                FileBinary = uploadFileBytes
+            };
+            string msg = string.Empty;
+            string imageUrl = CommonFileServer.UploadFile(new UploadFileRequest
+            {
+                ExtendName = extendName,
+                FileBinary = uploadFileBytes,
+                Size = 2,
+                FileEnum = FileEnum.MemberHead,
+                FileName = Path.GetFileName(files[0].FileName)
+            }, out msg);
+            if (msg.IsNotEmpty())
+            {
+                return Result<string>(false, "上传图片失败");
+            }
+            else
+            {
+                return Result<string>(true, "", imageUrl);
+            }
+        }
+
+
         //修改个人信息
         [HttpPost]
         [AjaxOnly]
@@ -93,6 +222,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [HttpGet]
         public ContentResult listevent(EventQueryRequest request)
         {
+            request.MemberId = UserContext.WebUserContext.Id;
             var data = _eventService.EventList(request);
             var res = new ResultDto<EventResponse>
             {
@@ -225,34 +355,113 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
         #endregion
 
-        #region view
-        public ActionResult index()
+        #region 奖项设置
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult insertprize(EventPrizeRequest request)
         {
-            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
-            return View();
+            request.MemberId = UserContext.WebUserContext.Id;
+            string msg = string.Empty;
+            var flag = _eventPrizeService.Insert(request, out msg);
+            return Result<string>(flag, msg);
         }
 
-        public ActionResult qrcode(int id)
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult editprize(EventPrizeRequest request)
         {
-            return View();
+            request.MemberId = UserContext.WebUserContext.Id;
+            string msg = string.Empty;
+            var flag = _eventPrizeService.Edit(request, out msg);
+            return Result<string>(flag, msg);
         }
 
-        public ActionResult eventgroup(int eventGroupId)
+
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult deleteprize(int id)
         {
-            var detail = _eventService.EventGroupDetail(eventGroupId);
-            return View(detail);
+            string msg = string.Empty;
+            var flag = _eventPrizeService.Delete(id, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
         }
 
-        public ActionResult info()
+        [HttpGet]
+        public ContentResult listprize(int eventId, int eventGroupId)
         {
-            var data = _memberService.MemberEventDetail(UserContext.WebUserContext.Id);
-            return View(data);
+            var data = _eventPrizeService.List(eventId, eventGroupId);
+            return Result(true, string.Empty, data);
+        }
+        #endregion
+
+        #region 教室设置
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult insertroom(EventRoomRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            string msg = string.Empty;
+            var flag = _eventRoomService.Insert(request, out msg);
+            return Result<string>(flag, msg);
         }
 
-        public ActionResult mail()
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult editroom(EventRoomRequest request)
         {
-            return View();
+            request.MemberId = UserContext.WebUserContext.Id;
+            string msg = string.Empty;
+            var flag = _eventRoomService.Edit(request, out msg);
+            return Result<string>(flag, msg);
         }
-        #endregion 
+
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult editroomsettings(int id, int status)
+        {
+            string msg = string.Empty;
+            var flag = _eventRoomService.EidtSettings(id, status, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult settingroomspec(int id, int memberId)
+        {
+            string msg = string.Empty;
+            var flag = _eventRoomService.SettingSpec(id, memberId, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult clearroomspec(int id)
+        {
+            string msg = string.Empty;
+            var flag = _eventRoomService.ClearSpec(id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        [HttpGet]
+        public ContentResult listroom(EventRoomQueryRequest request)
+        {
+            var data = _eventRoomService.List(request);
+            var res = new ResultDto<EventRoomResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        [HttpGet]
+        public ContentResult selectplayer(int eventId, string keyvalue)
+        {
+            var data = _playerSignUpService.SelectPlayer(eventId, keyvalue);
+            return Result(true, string.Empty, data);
+        }
+        #endregion
     }
 }

@@ -1,16 +1,92 @@
-﻿
+﻿@using nsda.Utilities
 @{
-    Layout = null;
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "发起赛事";
 }
 
-<!DOCTYPE html>
+@section styles{
+    <link href="/asset/css/eventmanage.css?version=@Constant.Version" rel="stylesheet" />
+}
+<div class="container event-lists">
+    <div class="tri"></div>
+    <h4>您发起的赛事列表</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>赛事编码</th>
+                <th>赛事名称</th>
+                <th>赛事类别</th>
+                <th>报名队伍数</th>
+                <th>报名截止时间</th>
+                <th>赛程状态</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+@section scripts
+{   
+    <script src="/asset/js/common.js?version=@Constant.Version"></script>
+    <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script>
+        (function (w) {
+            var eventlist = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                }
+            };
+            eventlist.Load = function (filter) {
+                $.ajax({
+                    url: "/eventmanage/eventmanage/listevent",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            eventlist.param.TotalPage = json.total;
+                            _pager.init(filter, eventlist.param.PageIndex, eventlist.param.TotalPage, function (p) {
+                                eventlist.param.PageIndex = p;
+                                eventlist.Load(eventlist.param)
+                            });                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html += '<tr>';
+                                html += '<td>' + val.Code + '</td>';
+                                html += '<td>' + val.Name + '</td>';
+                                html += '<td>' + enumreplace.replaceeventTypeName(val.EventTypeName) + '</td>';
+                                html += '<td><i>' + val.SignUpCount + '</i>/' + val.Maxnumber + '</td>';
+                                html += '<td>' +parseDate(new Date(val.EndSignDate), "yyyy-MM-dd").format+ '</td>';
+                                html += '<td>' + enumreplace.replaceEventStatus(val.EventStatus) + '</td>';
+                                if (val.EventStatus == 3 || val.EventStatus == 4 || val.EventStatus == 5) {
+                                    html += '<td><a href="/eventmanage/eventmanage/detail/' + val.Id + '" class="entercompe">进入比赛</a></td>'
+                                } else if (val.EventStatus == 6) {
+                                    html += '<td><a href="/eventmanage/eventmanage/eventresult/' + val.Id + '" class="checkresult">查看赛果</a></td>'
+                                } else {
+                                    html += '<td></td>';
+                                }
+                                html += '</tr>';
+                            });
+                            html += '';
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.eventlist = eventlist
+        })(window);
+        eventlist.Load(eventlist.param);
+    </script>
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>index</title>
-</head>
-<body>
-    nsda赛事管理员首页
-</body>
-</html>

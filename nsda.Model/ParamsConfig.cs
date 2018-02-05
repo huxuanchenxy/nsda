@@ -37,6 +37,6 @@ namespace nsda.Model
         /// <summary>
         /// 赛事不可查询状态
         /// </summary>
-        public static string _eventnoquerystatus = new int[] { (int)EventStatusEm.待审核, (int)EventStatusEm.拒绝 }.Splice();
+        public static string _eventnoquerystatus = new int[] { (int)EventStatusEm.审核中, (int)EventStatusEm.拒绝 }.Splice();
     }
 }
