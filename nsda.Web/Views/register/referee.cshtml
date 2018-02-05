@@ -1,6 +1,6 @@
 ﻿@using nsda.Utilities
 @{
-    ViewBag.Title = "教练注册";
+    ViewBag.Title = "裁判注册";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section styles
@@ -167,6 +167,12 @@
                 layer.msg('密码必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
                 return;
             }
+            var $CompleteName = $("#completeName").val();
+            if ($CompleteName == "")
+            {
+                layer.msg('请输入中文姓名', { icon: 5, time: 1000 });
+                return;
+            }
             var $PinYinName = $("#pyname").val();
             if ($PinYinName == "") {
                 layer.msg('请输入拼音姓', { icon: 5, time: 1000 });
@@ -198,13 +204,15 @@
                 return;
             }
             var $Gender = $('input[name=Gender]:checked').val();
+            var $EventId = $("#event").val();
             $.ajax({
-                url: "/register/registercoach",
+                url: "/register/registerreferee",
                 type: "post",
                 dataType: "json",
                 data: {
                     Account: $Account,
                     Pwd: $Pwd,
+                    CompleteName: $CompleteName,
                     PinYinSurName: $PinYinSurName,
                     PinYinName: $PinYinName,
                     Grade: $Grade,
@@ -212,10 +220,11 @@
                     EmergencyContactMobile: $EmergencyContactMobile,
                     EmergencyContact: $EmergencyContact,
                     Gender: $Gender,
-                    ContactAddress: $ContactAddress
+                    ContactAddress: $ContactAddress,
+                    EventId:$EventId
                 },
                 beforeSend: function () {
-                    layer.msg('教练注册中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    layer.msg('裁判注册中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
                 },
                 success: function (json) {
                     layer.closeAll();

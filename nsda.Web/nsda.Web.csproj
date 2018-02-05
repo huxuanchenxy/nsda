@@ -549,6 +549,10 @@
     <Content Include="asset\simditor\css\editor.scss" />
     <Content Include="asset\simditor\css\fonticon.scss" />
     <Content Include="asset\simditor\css\simditor.scss" />
+    <Content Include="Views\register\referee.cshtml" />
+    <Content Include="Views\register\eventmanage.cshtml" />
+    <Content Include="Views\login\referee.cshtml" />
+    <Content Include="Views\login\eventmanage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

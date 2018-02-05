@@ -1,6 +1,6 @@
 ﻿@using nsda.Utilities
 @{
-    ViewBag.Title = "教练注册";
+    ViewBag.Title = "赛事管理员注册";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section styles
@@ -167,6 +167,17 @@
                 layer.msg('密码必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
                 return;
             }
+            var $Name = $("#name").val();
+            if ($Name=="")
+            {
+                layer.msg('请输入姓', { icon: 5, time: 1000 });
+                return;
+            }
+            var $SurName = $("#surname").val();
+            if ($SurName == "") {
+                layer.msg('请输入名', { icon: 5, time: 1000 });
+                return;
+            }
             var $PinYinName = $("#pyname").val();
             if ($PinYinName == "") {
                 layer.msg('请输入拼音姓', { icon: 5, time: 1000 });
@@ -197,14 +208,24 @@
                 layer.msg('请输入联系地址', { icon: 5, time: 1000 });
                 return;
             }
+            var $Card = $("#idcard").val();
+            if ($ContactAddress == "") {
+                layer.msg('请输入证件号', { icon: 5, time: 1000 });
+                return;
+            }
+            var $CardType = $("#card").val();
             var $Gender = $('input[name=Gender]:checked').val();
             $.ajax({
-                url: "/register/registercoach",
+                url: "/register/registerevent",
                 type: "post",
                 dataType: "json",
                 data: {
                     Account: $Account,
                     Pwd: $Pwd,
+                    CardType: $CardType,
+                    Card: $Card,
+                    SurName: $SurName,
+                    Name: $Name,
                     PinYinSurName: $PinYinSurName,
                     PinYinName: $PinYinName,
                     Grade: $Grade,
@@ -215,7 +236,7 @@
                     ContactAddress: $ContactAddress
                 },
                 beforeSend: function () {
-                    layer.msg('教练注册中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    layer.msg('赛事管理员注册中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
                 },
                 success: function (json) {
                     layer.closeAll();

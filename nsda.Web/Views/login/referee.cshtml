@@ -1,0 +1,104 @@
+﻿@using nsda.Utilities
+@{
+    ViewBag.Title = "裁判登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{  
+ <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+ <link rel="stylesheet" href="/asset/css/registered.css?version=@Constant.Version">
+}
+<!--这里可能是logo也可能是广告 到底是什么 我也不知道-->
+<div class="ad">
+
+</div>
+
+<!--面包屑导航-->
+<div class="rode">
+
+</div>
+
+<!--会员注册-->
+<div class="reg-con-big reg-content container-fluid">
+    <div class="reg-left"></div>
+    <div class="reg-right"></div>
+    <div class="circle"></div>
+    <div class="medium"></div>
+    <div class="triangle"></div>
+    <div class="register container">
+        <div class="reg-zh">
+            <h3>NSDA会员登录</h3>
+            <p>注册邮箱 Email</p>
+                <img src="/asset/img/member.svg" alt="Alternate Text" />
+                <input type="text" name="playeremail" id="playeremail" value="" />
+                <p>登录密码 Password <a href="#">忘记密码 Forgot?</a></p>
+                <img src="/asset/img/password.svg" alt="Alternate Text" />
+                <input type="password" name="playerpwd" id="playerpwd" value="" />
+                <a id="player" href="javascript:;" class="button">登录 Sign In</a>
+                <p>Not a member?  <a href="/register/player" class="reg-a">即刻注册会员 Sign up now</a></p>
+        </div>
+        <div class="reg-en">
+            <h3>NSDA Coach Login</h3>
+            <p>注册邮箱 Email</p>
+                <img src="/asset/img/member.svg" alt="Alternate Text" />
+                <input type="text" name="coachemail" id="coachemail" value="" />
+                <p>登录密码 Password <a href="#">忘记密码 Forgot?</a></p>
+                <img src="/asset/img/password.svg" alt="Alternate Text" />
+                <input type="password" name="coachpwd" id="coachpwd" value="" />
+                <a id="coach" href="javascript:;" class="button">登录 Sign In</a>
+                <p>Not a coach member?  <a href="/register/coach" class="reg-a">Sign up now</a></p>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/validate.js?version=@Constant.Version"></script>
+
+    <script>
+        $("#login").click(function () {
+            var $refereeemail = $("#refereeemail");
+            var $refereepwd = $("#refereepwd");
+            if ($refereemail.val() == "") {
+                layer.msg('请输入您的邮箱', { icon: 5, time: 1000 });
+                return;
+            }
+
+            if (!validate.isEmail($refereeemail.val())) {
+                layer.msg('邮箱格式有误', { icon: 5, time: 1000 });
+                return;
+            }
+
+            if ($refereepwd.val() == "") {
+                layer.msg('请输入您的密码', { icon: 5, time: 1000 });
+                return;
+            }
+
+            $.ajax({
+                url: "/login/login",
+                type: "post",
+                dataType: "json",
+                data: {
+                    Account: $refereeemail.val(),
+                    Pwd: $refereepwd.val(),
+                    MemberType: 3
+                },
+                beforeSend: function () {
+                    layer.msg('登录中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        location.href = json.msg;
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+}

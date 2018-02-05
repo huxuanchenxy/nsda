@@ -199,7 +199,68 @@ namespace nsda.Web.Controllers
             return RedirectToAction("login");
         }
 
+        //选手 教练登录页
         public ActionResult login()
+        {
+            var usercontext = UserContext.WebUserContext;
+            if (usercontext != null)
+            {
+                if (usercontext.MemberType == (int)MemberTypeEm.选手)
+                {
+                    return RedirectToAction("index", "player", new { area = "player" });
+                }
+                else if (usercontext.MemberType == (int)MemberTypeEm.教练)
+                {
+                    return RedirectToAction("index", "coach", new { area = "coach" });
+                }
+                else if (usercontext.MemberType == (int)MemberTypeEm.裁判)
+                {
+                    return RedirectToAction("index", "referee", new { area = "referee" });
+                }
+                else if (usercontext.MemberType == (int)MemberTypeEm.赛事管理员)
+                {
+                    return RedirectToAction("index", "eventmanage", new { area = "eventmanage" });
+                }
+                else
+                {
+                    return RedirectToAction("index", "home");
+                }
+            }
+            return View();
+        }
+
+        //裁判登录页面
+        public ActionResult referee()
+        {
+            var usercontext = UserContext.WebUserContext;
+            if (usercontext != null)
+            {
+                if (usercontext.MemberType == (int)MemberTypeEm.选手)
+                {
+                    return RedirectToAction("index", "player", new { area = "player" });
+                }
+                else if (usercontext.MemberType == (int)MemberTypeEm.教练)
+                {
+                    return RedirectToAction("index", "coach", new { area = "coach" });
+                }
+                else if (usercontext.MemberType == (int)MemberTypeEm.裁判)
+                {
+                    return RedirectToAction("index", "referee", new { area = "referee" });
+                }
+                else if (usercontext.MemberType == (int)MemberTypeEm.赛事管理员)
+                {
+                    return RedirectToAction("index", "eventmanage", new { area = "eventmanage" });
+                }
+                else
+                {
+                    return RedirectToAction("index", "home");
+                }
+            }
+            return View();
+        }
+
+        //赛事管理员登录页面
+        public ActionResult eventmanage()
         {
             var usercontext = UserContext.WebUserContext;
             if (usercontext != null)
