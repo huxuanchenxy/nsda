@@ -1,0 +1,120 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "发起赛事";
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanagelists.css?version=@Constant.Version">
+}
+<div class="container event-lists">
+    <div class="tri"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>组队编号</th>
+                <th>NSDA会员编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>联系电话</th>
+                <th>年级</th>
+                <th>学校</th>
+                <th>学校所在城市</th>
+                <th>报名组别</th>
+                <th>状态</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="data">
+            @*<tr>
+                <td rowspan="2">021</td>
+                <td>N1899235</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td>国际高中组</td>
+                <td>确认组队</td>
+                <td rowspan="2"></td>
+
+            </tr>
+            <tr>
+                <td>N1899225</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td>国际高中组</td>
+                <td>确认组队</td>
+            </tr>*@
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+@section scripts
+{
+   <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+   <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script>
+        (function (w) {
+            var eventplayerlist = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                    EventId:@Model.Id,
+                    EventGroupId:0,
+                    SignUpStatus:0
+                }
+            };
+            eventplayerlist.Load = function (filter) {
+                $.ajax({
+                    url: "/eventmanage/eventmanage/listplayersignup",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            eventplayerlist.param.TotalPage = json.total;
+                            _pager.init(filter, eventplayerlist.param.PageIndex, eventplayerlist.param.TotalPage, function (p) {
+                                eventplayerlist.param.PageIndex = p;
+                                eventplayerlist.Load(eventplayerlist.param)
+                            });                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html+='<tr>';
+                                html+='<td>'+val.GroupNum+'</td>';
+                                html+='<td>'+val.MemberCode+'</td>';
+                                html+='<td>'+val.MemberName+'</td>';
+                                html+='<td>'+enumreplace.replaceGender(val.Gender)+'</td>';
+                                html+='<td>'+val.ContactMobile+'</td>';
+                                html+='<td>'+enumreplace.replaceGrade(val.Grade)+'</td>';
+                                html+='<td>'+val.SchoolName+'</td>';
+                                html+='<td>'+val.CityName+'</td>';
+                                html+='<td>'+val.EventGroupName+'</td>';
+                                html+='<td>'+enumreplace.replacesignUpStatus(val.SignUpStatus)+'</td>';
+                                html+='</tr>';
+                            });
+                            html += '';
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.eventplayerlist = eventplayerlist
+        })(window);
+        eventplayerlist.Load(eventplayerlist.param);
+    </script>
+}

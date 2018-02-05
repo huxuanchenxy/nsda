@@ -497,6 +497,7 @@
     <Content Include="Areas\coach\Views\coach\add.cshtml" />
     <Content Include="Areas\coach\Views\coach\update.cshtml" />
     <Content Include="Areas\eventmanage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\detail.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />

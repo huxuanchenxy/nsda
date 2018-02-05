@@ -14,7 +14,8 @@ namespace nsda.Model.dto.response
         public int Id { get; set; }
         public int EventId { get; set; }
         public SignUpStatusEm SignUpStatus { get; set; }
-        public int GroupId { get; set; }
+        public int EventGroupId { get; set; }
+        public string EventGroupName { get; set; }
         public bool IsTemp { get; set; }
         public int MemberId { get; set; }
         public string GroupNum { get; set; }

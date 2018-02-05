@@ -696,11 +696,11 @@ namespace nsda.Services.Implement.member
                 {
                     join.Append(" and a.signUpStatus=@SignUpStatus");
                 }
-                var sql = $@" select a.*,b.code MemberCode,b.completename MemberName,
-                            b.grade,b.gender,b.contactmobile from t_event_player_signup a 
+                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,
+                            b.grade,b.gender,b.contactmobile,d.name EventGroupName from t_event_player_signup a 
                             inner join t_member_player b on a.memberId=b.memberId
                             inner join t_event c on a.eventId=c.id
-                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
+                            inner join t_event_group d on a.eventGroupId=d.id
                             and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
                             order by a.createtime desc 
                          ";

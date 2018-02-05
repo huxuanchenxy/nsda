@@ -310,6 +310,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [HttpGet]
         public ContentResult listplayersignup(EventPlayerSignUpQueryRequest request)
         {
+            request.MemberId = UserContext.WebUserContext.Id;
             var data = _playerSignUpService.EventPlayerList(request);
             var res = new ResultDto<EventPlayerSignUpListResponse>
             {
