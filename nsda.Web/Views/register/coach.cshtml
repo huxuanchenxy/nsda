@@ -135,12 +135,10 @@
 
 @section scripts
 {
-    <script src="/asset/layer/js/layer.js"></script>
-    <script src="/asset/js/validate.js"></script>
     <script>
         $("#register").click(function () {
             var $Account = $("#account").val();
-            if ($Account == "")
+            if (validate.isNull($Account))
             {
                 layer.msg('请输入注册邮箱', { icon: 5, time: 1000 });
                 return;
@@ -151,12 +149,12 @@
             }
             var $Pwd = $("#pwd").val();
             var $againpwd = $("#againpwd").val();
-            if ($Pwd == "") {
-                layer.msg('请输入新密码', { icon: 5, time: 1000 });
+            if (validate.isNull($Pwd)) {
+                layer.msg('请输入密码', { icon: 5, time: 1000 });
                 return;
             }
-            if ($againpwd == "") {
-                layer.msg('请再次输入新密码', { icon: 5, time: 1000 });
+            if (validate.isNull($againpwd)) {
+                layer.msg('请输入确认密码', { icon: 5, time: 1000 });
                 return;
             }
             if ($Pwd != $againpwd) {
@@ -168,32 +166,32 @@
                 return;
             }
             var $PinYinName = $("#pyname").val();
-            if ($PinYinName == "") {
+            if (validate.isNull($PinYinName)) {
                 layer.msg('请输入拼音姓', { icon: 5, time: 1000 });
                 return;
             }
             var $PinYinSurName = $("#pinsurname").val();
-            if ($PinYinSurName == "") {
+            if (validate.isNull($PinYinSurName)) {
                 layer.msg('请输入拼音名', { icon: 5, time: 1000 });
                 return;
             }
             var $ContactMobile = $("#contactMobile").val();
-            if ($ContactMobile == "") {
+            if (validate.isNull($ContactMobile)) {
                 layer.msg('请输入联系电话', { icon: 5, time: 1000 });
                 return;
             }
             var $EmergencyContact = $("#emergencycontact").val();
-            if ($EmergencyContact == "") {
+            if (validate.isNull($EmergencyContact)) {
                 layer.msg('请输入紧急联系人', { icon: 5, time: 1000 });
                 return;
             }
             var $EmergencyContactMobile = $("#emergencycontactmobile").val();
-            if ($EmergencyContactMobile == "") {
+            if (validate.isNull($EmergencyContactMobile)) {
                 layer.msg('请输入紧急电话', { icon: 5, time: 1000 });
                 return;
             }
             var $ContactAddress = $("#contactaddress").val();
-            if ($ContactAddress == "") {
+            if (validate.isNull($ContactAddress)) {
                 layer.msg('请输入联系地址', { icon: 5, time: 1000 });
                 return;
             }

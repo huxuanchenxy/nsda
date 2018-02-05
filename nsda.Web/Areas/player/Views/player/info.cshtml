@@ -83,33 +83,27 @@
 </div>
 @section scripts
 {
-    <script src="/asset/layer/js/layer.js"></script>
-    <script src="/asset/js/validate.js?version=@Constant.Version"></script>
     <script>
         $("#modifypwd").click(function () {
             var $newpwd = $("#newpwd").val();
             var $againpwd = $("#againpwd").val();
-
-            if ($newpwd == "") {
+            if (validate.isNull($newpwd.val())) {
                 layer.msg('请输入新密码', { icon: 5, time: 1000 });
                 return;
             }
-            if ($againpwd == "") {
+            if (validate.isNull($againpwd.val())) {
                 layer.msg('请再次输入新密码', { icon: 5, time: 1000 });
                 return;
             }
-
             if ($newpwd != $againpwd) {
                 layer.msg('两次输入的密码不一致', { icon: 5, time: 1000 });
                 return;
             }
-
             if (!validate.isPwd($newpwd))
             {
                 layer.msg('密码必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
                 return;
             }
-
             $.ajax({
                 url: "/commondata/editpwd",
                 type: "post",
@@ -139,17 +133,17 @@
 
         $("#modifyinfo").click(function () {
             var $ContactMobile = $("#phone").val();
-            if ($ContactMobile == "") {
+            if (validate.isNull($ContactMobile.val())) {
                 layer.msg('请输入联系电话', { icon: 5, time: 1000 });
                 return;
             }
             var $EmergencyContact = $("#emrcontact").val();
-            if ($EmergencyContact == "") {
+            if (validate.isNull($EmergencyContact.val())) {
                 layer.msg('请输入紧急联系人', { icon: 5, time: 1000 });
                 return;
             }
             var $EmergencyContactMobile = $("#emrphone").val();
-            if ($EmergencyContactMobile == "") {
+            if (validate.isNull($EmergencyContactMobile.val())) {
                 layer.msg('请输入紧急联系人电话', { icon: 5, time: 1000 });
                 return;
             }

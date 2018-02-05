@@ -109,32 +109,26 @@
 
 @section scripts
 {
-    <script src="/asset/layer/js/layer.js"></script>
-    <script src="/asset/js/validate.js?version=@Constant.Version"></script>
     <script>
         $("#modifypwd").click(function () {
             var $newpwd = $("#newpwd").val();
             var $againpwd = $("#againpwd").val();
-
-            if ($newpwd == "") {
+            if (validate.isNull($newpwd.val())) {
                 layer.msg('请输入新密码', { icon: 5, time: 1000 });
                 return;
             }
-            if ($againpwd == "") {
+            if (validate.isNull($againpwd.val())) {
                 layer.msg('请再次输入新密码', { icon: 5, time: 1000 });
                 return;
             }
-
             if ($newpwd != $againpwd) {
                 layer.msg('两次输入的密码不一致', { icon: 5, time: 1000 });
                 return;
             }
-
             if (!validate.isPwd($newpwd)) {
                 layer.msg('密码必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
                 return;
             }
-
             $.ajax({
                 url: "/commondata/editpwd",
                 type: "post",
@@ -165,32 +159,32 @@
         $("#modifyinfo").click(function () {
             var gender = $('input[name=Gender]:checked').val();
             var $firstname = $("#firstname").val();
-            if ($firstname == "") {
+            if (validate.isNull($firstname)) {
                 layer.msg('请输入First Name', { icon: 5, time: 1000 });
                 return;
             }
             var $lastname = $("#lastname").val();
-            if ($lastname == "") {
+            if (validate.isNull($lastname)) {
                 layer.msg('请输入Last Name', { icon: 5, time: 1000 });
                 return;
             }
             var $address = $("#address").val();
-            if ($address == "") {
+            if (validate.isNull($address)) {
                 layer.msg('请输入Address', { icon: 5, time: 1000 });
                 return;
             }
             var $contactNumber = $("#contactNumber").val();
-            if ($contactNumber == "") {
+            if (validate.isNull($contactNumber)) {
                 layer.msg('请输入Contact Number', { icon: 5, time: 1000 });
                 return;
             }
             var $emergencyContact = $("#emergencyContact").val();
-            if ($emergencyContact == "") {
+            if (validate.isNull($emergencyContact)) {
                 layer.msg('请输入Emergency Contact Person', { icon: 5, time: 1000 });
                 return;
             }
             var $emergencyContactMobile = $("#emergencyContactMobile").val();
-            if ($emergencyContactMobile == "") {
+            if ($validate.isNull($emergencyContactMobileG)) {
                 layer.msg('请输入Emergency Number', { icon: 5, time: 1000 });
                 return;
             }

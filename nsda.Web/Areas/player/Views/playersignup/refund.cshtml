@@ -1,6 +1,6 @@
 ﻿@using nsda.Utilities
 @{
-    ViewBag.Title = "会员中心";
+    ViewBag.Title = "退赛列表";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
 @section styles
@@ -43,9 +43,8 @@
 
 @section scripts
 {
-    <script src="/asset/layer/js/layer.js"></script>
     <script src="/asset/js/pager.js"></script>
-    <script src="/asset/js/enumreplace.js"></script>
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
         (function (w) {
             var playerrefund = {

@@ -47,7 +47,6 @@ namespace nsda.Web.Areas.player.Controllers
 
         public ActionResult bindtemp()
         {
-            ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
 

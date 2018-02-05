@@ -17,14 +17,13 @@
                 <option value="completepinyin">教练名字</option>
                 <option value="code">NSDA教练编号</option>
             </select>
-            <input id="txtCoachValue" value="" data-id="0"/>
+            <input id="txtCoachValue" value="" data-id="0" />
             <a class="searchcoach" id="search" style="cursor:pointer;">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
-            <select size="2"  id="sel" style="display:none;">
-            </select>
+            <select size="2" id="sel" style="display:none;"></select>
             <a href="javascript:;" class="boundcoach" id="confirmadd">绑定教练</a>
         </div>
     </div>
-    <script src="/asset/js/jquery-3.2.1.min.js"></script>
+    <script src="/asset/js/jquery.min.js"></script>
     <script src="/asset/js/laydate/laydate.js"></script>
     <script src="/asset/layer/js/layer.js"></script>
     <script>
@@ -37,74 +36,74 @@
             type: 'month'
         });
 
-       $("#confirmadd").click(function () {
-                var $startdate = $("#startdate").val();
-                if ($startdate == null) {
-                    layer.msg('请输入起始年月', { icon: 5, time: 1000 });
-                    return;
-                }
-                var $enddate = $("#enddate").val();
-                var $coachId = $("#txtCoachValue").attr("data-id");
-                if ($coachId == null || $coachId == 0) {
-                    layer.msg('请选择教练', { icon: 5, time: 1000 });
-                    return;
-                }
-                $.ajax({
-                    url: "/player/playercoach/insert",
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        StartDate: $startdate,
-                        EndDate: $enddate,
-                        ObjMemberId: $coachId
-                    },
-                    beforeSend: function () {
-                        layer.msg('绑定教练中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
-                    },
-                    success: function (json) {
-                        layer.closeAll();
-                        if (json.flag) {
-                            parent.layer.closeAll();
-                        }
-                        else {
-                            layer.msg(json.msg, { icon: 5, time: 1000 });
-                        }
+        $("#confirmadd").click(function () {
+            var $startdate = $("#startdate").val();
+            if ($startdate == null) {
+                layer.msg('请输入起始年月', { icon: 5, time: 1000 });
+                return;
+            }
+            var $enddate = $("#enddate").val();
+            var $coachId = $("#txtCoachValue").attr("data-id");
+            if ($coachId == null || $coachId == 0) {
+                layer.msg('请选择教练', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/player/playercoach/insert",
+                type: "post",
+                dataType: "json",
+                data: {
+                    StartDate: $startdate,
+                    EndDate: $enddate,
+                    ObjMemberId: $coachId
+                },
+                beforeSend: function () {
+                    layer.msg('绑定教练中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        parent.layer.closeAll();
                     }
-                  , error: function () {
-                      layer.closeAll();
-                  }
-                });
-       });
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+              , error: function () {
+                  layer.closeAll();
+              }
+            });
+        });
 
-       $("#search").click(function () {
-           $.ajax({
-               url: "/player/playercoach/listcoach",
-               type: "get",
-               dataType: "json",
-               data: {
-                   key: $("#coach").val(),
-                   value: $("#txtCoachValue").val()
-               },
-               success: function (json) {
-                   var html = '';
-                   if (json.data != null && json.data.length > 0) {
-                       $.each(json.data, function (k, val) {
-                           html += '<option value=' + val.MemberId + '>' + val.MemberName + '</option>';
-                       });
-                       $("#sel").html(html);
-                       $("#sel").show();
-                   }
-               }
-           });
+        $("#search").click(function () {
+            $.ajax({
+                url: "/player/playercoach/listcoach",
+                type: "get",
+                dataType: "json",
+                data: {
+                    key: $("#coach").val(),
+                    value: $("#txtCoachValue").val()
+                },
+                success: function (json) {
+                    var html = '';
+                    if (json.data != null && json.data.length > 0) {
+                        $.each(json.data, function (k, val) {
+                            html += '<option value=' + val.MemberId + '>' + val.MemberName + '</option>';
+                        });
+                        $("#sel").html(html);
+                        $("#sel").show();
+                    }
+                }
+            });
 
-       });
+        });
 
-       $("#sel").change(function () {
-           var options = $("#sel option:selected");
-           $("#txtCoachValue").val(options.text());
-           $("#txtCoachValue").attr("data-id", options.val());
-           $(this).hide();
-      });
+        $("#sel").change(function () {
+            var options = $("#sel option:selected");
+            $("#txtCoachValue").val(options.text());
+            $("#txtCoachValue").attr("data-id", options.val());
+            $(this).hide();
+        });
 
     </script>
 </body>

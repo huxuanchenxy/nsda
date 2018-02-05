@@ -543,7 +543,7 @@ namespace nsda.Services.Implement.eventmanage
                 if (request.StartDate.HasValue)
                 {
                     DateTime dt = Convert.ToDateTime(request.StartDate);
-                    join.Append($" and a.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and a.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
+                    join.Append($" and a.starteventdate >='{Utility.FirstDayOfMonth(dt).ToShortDateString()}' and a.starteventdate<='{Utility.LastDayOfMonth(dt).ToShortDateString()}'");
                 }
                 var sql = $@"select a.id EventId,a.code EventCode, a.name EventName,a.eventType EventType, a.eventLevel EventLevel,
                              a.signfee SignFee, a.eventStatus EventStatus,a.starteventdate StartEventDate, a.endsigndate EndSignDate,

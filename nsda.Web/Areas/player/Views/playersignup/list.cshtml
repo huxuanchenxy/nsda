@@ -1,6 +1,6 @@
 ﻿@using nsda.Utilities
 @{
-    ViewBag.Title = "会员中心";
+    ViewBag.Title = "已参与比赛";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
 @section styles
@@ -39,9 +39,8 @@
 
 @section scripts
 {
-    <script src="/asset/layer/js/layer.js"></script>
     <script src="/asset/js/pager.js"></script>
-    <script src="/asset/js/enumreplace.js"></script>
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
         (function (w) {
             var playersignup = {
@@ -306,6 +305,17 @@
                     layer.closeAll();
                 }
             });
+        });
+        //绑定临时报名
+        $("#bindtemp").click(function () {
+            layer.open({
+                title: "绑定现场报名",
+                type: 2,
+                content: "/player/playersignup/bindtemp",
+                area: ["760px", "550px"],
+                end: function () {
+                }
+            })
         });
     </script>
 }

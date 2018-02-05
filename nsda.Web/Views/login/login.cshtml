@@ -52,28 +52,22 @@
 </div>
 @section scripts
 {
-    <script src="~/asset/layer/js/layer.js"></script>
-    <script src="/asset/js/validate.js?version=@Constant.Version"></script>
-
     <script>
         $("#player").click(function () {
             var $playeremail = $("#playeremail");
             var $playerpwd = $("#playerpwd");
-            if ($playeremail.val() == "") {
+            if (validate.isNull($playeremail.val())) {
                 layer.msg('请输入您的邮箱', { icon: 5, time: 1000 });
                 return;
             }
-
             if (!validate.isEmail($playeremail.val())) {
                 layer.msg('邮箱格式有误', { icon: 5, time: 1000 });
                 return;
             }
-
-            if ($playerpwd.val() == "") {
+            if (validate.isNull($playerpwd.val())) {
                 layer.msg('请输入您的密码', { icon: 5, time: 1000 });
                 return;
             }
-
             $.ajax({
                 url: "/login/login",
                 type: "post",
@@ -104,21 +98,18 @@
         $("#coach").click(function () {
             var $coachemail = $("#coachemail");
             var $coachpwd = $("#coachpwd");
-            if ($coachemail.val() == "") {
+            if (validate.isNull($coachemail.val())) {
                 layer.msg('请输入您的邮箱', { icon: 5, time: 1000 });
                 return;
             }
-
             if (!validate.isEmail($coachemail.val())) {
                 layer.msg('邮箱格式有误', { icon: 5, time: 1000 });
                 return;
             }
-
-            if ($coachpwd.val() == "") {
+            if (validate.isNull($coachpwd.val())) {
                 layer.msg('请输入您的密码', { icon: 5, time: 1000 });
                 return;
             }
-
             $.ajax({
                 url: "/login/login",
                 type: "post",

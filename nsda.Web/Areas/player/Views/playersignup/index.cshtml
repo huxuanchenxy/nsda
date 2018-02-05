@@ -10,87 +10,88 @@
     <link rel="stylesheet" href="/asset/css/playersign.css?version=@Constant.Version">
 }
 <div class="compe-con">
-    <div class="address" >
-       @if (data != null)
-       {
-            <p class="ads">地点：</p>
-            <ul class="address-lists common-lists">
-                <li class="selected">不限</li>
-                @{
-                    var datas = data.Where(c => !c.IsInter);
-                    if (datas != null)
+    <div class="address">
+        @if (data != null)
+        {
+            <div class="address-item">
+                <p>地点：</p><a href="javascript:;" id="addressUnlimited" class="selected">不限</a>
+            </div> 
+            var datas = data.Where(c => !c.IsInter);
+            if (datas != null)
+            {
+                <div class="address-con">
+                    <p>国内赛区：</p>
+                    @foreach (var item in datas)
                     {
-                        <p class="division">国内赛区：</p>
-                        foreach (var item in datas)
-                        {
-                            <li data-cityId="@item.CityId">@item.CityName</li>
-                        }
+                        <a href="javascript:;" class="selectaddress" data-cityId="@item.CityId" data-provinceId="@item.ProvinceId">@item.CityName</a>
                     }
-                    var datass = data.Where(c => c.IsInter);
-                    if (datass != null)
-                    {
-                        <p class="division international">国际赛区：</p>
-                        foreach (var item in datass)
-                        {
-                            <li data-provinceId="@item.ProvinceId">@item.ProvinceName</li>
-                        }
-                    }
+                </div>
+            }
+            var datass = data.Where(c => c.IsInter);
+            if (datass != null)
+            {  
+                <div class="address-con-two">
+                <p class="division international">国际赛区：</p>
+                @foreach (var item in datass)
+                {
+                    <a href="javascript:;" class="selectaddress" data-provinceId="@item.ProvinceId" data-cityId="0">@item.ProvinceName</a>
                 }
-            </ul>
-       }
-   </div>
-   
+        </div>
+            }
+        }
+    </div>
+
     <div class="level">
-        <p class="lev">级别：</p>
-        <ul class="level-lists common-lists">
-            <li class="selected" date-eventlevel="0">不限</li>
-            <li date-eventlevel="1">A</li>
-            <li date-eventlevel="2">B</li>
-            <li date-eventlevel="3">C</li>
-            <li date-eventlevel="4">D</li>
-            <li date-eventlevel="5">E</li>
-        </ul>
+        <div class="level-item">
+            <p>级别：</p><a href="javascript:;"  id="levelUnlimited" class="selected">不限</a>
+        </div>
+        <div class="level-con">
+            <a href="javascript:;" class="selectlevel" date-eventlevel="1">A</a>
+            <a href="javascript:;" class="selectlevel" date-eventlevel="2">B</a>
+            <a href="javascript:;" class="selectlevel" date-eventlevel="3">C</a>
+            <a href="javascript:;" class="selectlevel" date-eventlevel="4">D</a>
+            <a href="javascript:;" class="selectlevel" date-eventlevel="5">E</a>
+        </div>
     </div>
 
     <div class="time">
-        <p class="tim">时间：</p>
-        <ul class="time-lists common-lists">
-            <li class="selected nolimit">不限</li>
-            <div class="nav-tabs tab" id="myTabs">
-                <div role="presentation" class="active tabt">@DateTime.Now.Year</div>
-                <div role="presentation" class="tabt">@DateTime.Now.AddYears(1).Year</div>
-            </div>
-            <div class="time-mons tabc">
-                <ul class="time-mon monsev tabcon">
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-01-01")">一月<br>Jan.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-02-01")">二月<br>Feb.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-03-01")">三月<br>Mar.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-04-01")">四月<br>Apr.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-05-01")">五月<br>May.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-06-01")">六月<br>Jun.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-07-01")">七月<br>Jul.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-08-01")">八月<br>Aug.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-09-01")">九月<br>Sep.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-10-01")">十月<br>Oct.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-11-01")">十一月<br>Nov.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-12-01")">十二月<br>Dec.</li>
-                </ul>
-                <ul class="time-mon moneig tabcon">
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-01-01")">一月<br>Jan.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-02-01")">二月<br>Feb.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-03-01")">三月<br>Mar.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-04-01")">四月<br>Apr.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-05-01")">五月<br>May.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-06-01")">六月<br>Jun.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-07-01")">七月<br>Jul.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-08-01")">八月<br>Aug.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-09-01")">九月<br>Sep.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-10-01")">十月<br>Oct.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-11-01")">十一月<br>Nov.</li>
-                    <li data-date="@DateTime.Now.AddYears(1).ToString("yyyy-12-01")">十二月<br>Dec.</li>
-                </ul>
-            </div>
-         </ul>
+        <div class="time-item">
+            <p>时间：</p><a href="javascript:;" id="timeUnlimited" class="selected">不限</a>
+        </div>
+        <div class="time-con">
+            <a href="javascript:;" class="active tabt">@DateTime.Now.Year</a>
+            <a href="javascript:;" class="tabt">@DateTime.Now.AddYears(1).Year</a>
+        </div>
+
+        <div class="month-con month-con-first tabcon">
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-01-01")">一月<br>Jan.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-02-01")">二月<br>Feb.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-03-01")">三月<br>Mar.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-04-01")">四月<br>Apr.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-05-01")">五月<br>May.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-06-01")">六月<br>Jun.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-07-01")">七月<br>Jul.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-08-01")">八月<br>Aug.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-09-01")">九月<br>Sep.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-10-01")">十月<br>Oct.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-11-01")">十一月<br>Nov.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.ToString("yyyy-12-01")">十二月<br>Dec.</a>
+        </div>
+        <div class="month-con month-con-two tabcon">
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-01-01")">一月<br>Jan.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-02-01")">二月<br>Feb.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-03-01")">三月<br>Mar.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-04-01")">四月<br>Apr.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-05-01")">五月<br>May.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-06-01")">六月<br>Jun.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-07-01")">七月<br>Jul.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-08-01")">八月<br>Aug.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-09-01")">九月<br>Sep.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-10-01")">十月<br>Oct.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-11-01")">十一月<br>Nov.</a>
+            <a href="javascript:;" class="selecttime" data-date="@DateTime.Now.AddYears(1).ToString("yyyy-12-01")">十二月<br>Dec.</a>
+
+        </div>
     </div>
 
     <table>
@@ -105,8 +106,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody id="data">
-        </tbody>
+        <tbody id="data"></tbody>
     </table>
     <nav aria-label="Page navigation" id="pager">
     </nav>
@@ -114,11 +114,10 @@
 
 @section scripts
 {
-   <script src="/asset/js/common.js"></script>
-   <script src="/asset/js/enumreplace.js"></script>
-   <script src="/asset/js/pager.js"></script>
-   <script src="/asset/js/tabs.js"></script>
-   <script src="/asset/js/click.js"></script>
+    <script src="/asset/js/common.js?version=@Constant.Version"></script>
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script src="/asset/js/pager.js"></script>
+    <script src="/asset/js/tabs.js?version=@Constant.Version"></script>
     <script>
         (function (w) {
             var playerevent = {
@@ -147,7 +146,8 @@
                             _pager.init(filter, playerevent.param.PageIndex, playerevent.param.TotalPage, function (p) {
                                 playerevent.param.PageIndex = p;
                                 playerevent.Load(playerevent.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html += '<tr>';
                                 html += '<td>' + val.EventCode + '</td>';
@@ -164,7 +164,7 @@
                                 if (val.IsVisiable) {
                                     html += '<td><a href="javascript:;" class="sign">立即报名</a></td>';
                                 } else {
-                                    html += '<td></td>';
+                                    html += '<td>报名已截止</td>';
                                 }
                                 html += '</tr>';
                             });
@@ -181,19 +181,69 @@
         playerevent.Load(playerevent.param);
 
         //时间
-        $("#time").click(function () {
+        $("#timeUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".selecttime").removeClass("selected");
             playerevent.param.StartDate = "";
             playerevent.Load(playerevent.param);
         });
+        $(".selecttime").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#timeUnlimited").addClass("selected");
+                playerevent.param.StartDate = "";
+            } else {
+                $(".selecttime").removeClass("selected");
+                $this.addClass("selected");
+                $("#timeUnlimited").removeClass("selected");
+                playerevent.param.StartDate = $this.attr("data-date");
+            }
+            playerevent.Load(playerevent.param);
+        });
         //地址
-        $("#address").click(function () {
+        $("#addressUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".selectaddress").removeClass("selected");
             playerevent.param.ProvinceId = 0;
             playerevent.param.CityId = 0;
             playerevent.Load(playerevent.param);
         });
+        $(".selectaddress").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#addressUnlimited").addClass("selected");
+                playerevent.param.ProvinceId = 0;
+                playerevent.param.CityId = 0;
+            } else {
+                $(".selectaddress").removeClass("selected");
+                $this.addClass("selected");
+                $("#addressUnlimited").removeClass("selected");
+                playerevent.param.ProvinceId = $this.attr("data-provinceId");
+                playerevent.param.CityId = $this.attr("data-cityId");
+            }
+            playerevent.Load(playerevent.param);
+        });
         //等级
-        $("#level").click(function () {
+        $("#levelUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".selectlevel").removeClass("selected");
             playerevent.param.EventLevel = 0;
+            playerevent.Load(playerevent.param);
+        });
+        $(".selectlevel").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#levelUnlimited").addClass("selected");
+                playerevent.param.EventLevel = 0;
+            } else {
+                $(".selectlevel").removeClass("selected");
+                $this.addClass("selected");
+                $("#levelUnlimited").removeClass("selected");
+                playerevent.param.EventLevel = $this.attr("date-eventlevel");
+            }
             playerevent.Load(playerevent.param);
         });
     </script>

@@ -22,7 +22,7 @@
         return flag;
     };
 
-    validate.isNotNull = function (obj) {
+    validate.isNull = function (obj) {
         obj = $.trim(obj);
         if (obj.length == 0 || obj == null || obj == undefined) {
             return true;
@@ -33,47 +33,26 @@
 
     validate.isMoney = function (obj) {
         reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
-        if (!reg.test(obj)) {
-            return false;
-        } else {
-            return true;
-        }
+        return reg.test(obj);   
     };
 
     validate.isInt = function (obj) {
-        reg = /^[-+]?\d+$/;
-        if (!reg.test(obj)) {
-            return false;
-        } else {
-            return true;
-        }
+        return reg.test(obj);
     };
 
     validate.isEmail = function (email) {
         var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-        if (!reg.test(email)) {
-            return false;
-        } else {
-            return true;
-        }
+        return reg.test(email);
     };
 
     validate.isTel = function (tel) {
         reg = /^(\d{3,4}\-)?[1-9]\d{6,7}$/;
-        if (!reg.test(tel)) {
-            return false;
-        } else {
-            return true;
-        }
+        return reg.test(tel);
     };
 
     validate.isUri = function (uri) {
         reg = /^http:\/\/[a-zA-Z0-9]+\.[a-zA-Z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/;
-        if (!reg.test(uri)) {
-            return false;
-        } else {
-            return true;
-        }
+        return reg.test(uri);
     };
     
     validate.isPwd = function (pwd) {

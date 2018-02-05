@@ -52,28 +52,22 @@
 </div>
 @section scripts
 {
-    <script src="~/asset/layer/js/layer.js"></script>
-    <script src="/asset/js/validate.js?version=@Constant.Version"></script>
-
     <script>
         $("#login").click(function () {
             var $refereeemail = $("#refereeemail");
             var $refereepwd = $("#refereepwd");
-            if ($refereemail.val() == "") {
+            if (validate.isNull($refereeemail.val())) {
                 layer.msg('请输入您的邮箱', { icon: 5, time: 1000 });
                 return;
             }
-
             if (!validate.isEmail($refereeemail.val())) {
                 layer.msg('邮箱格式有误', { icon: 5, time: 1000 });
                 return;
             }
-
-            if ($refereepwd.val() == "") {
+            if (validate.isNull($refereepwd.val())) {
                 layer.msg('请输入您的密码', { icon: 5, time: 1000 });
                 return;
             }
-
             $.ajax({
                 url: "/login/login",
                 type: "post",

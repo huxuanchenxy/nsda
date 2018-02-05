@@ -218,7 +218,7 @@ namespace nsda.Services.Implement.referee
                 if (request.StartDate.HasValue)
                 {
                     DateTime dt = Convert.ToDateTime(request.StartDate);
-                    join.Append($" and b.starteventdate >={Utility.FirstDayOfMonth(dt).ToShortDateString()} and b.starteventdate<={Utility.LastDayOfMonth(dt).ToShortDateString()}");
+                    join.Append($" and b.starteventdate >='{Utility.FirstDayOfMonth(dt).ToShortDateString()}' and b.starteventdate<='{Utility.LastDayOfMonth(dt).ToShortDateString()}'");
                 }
                 var sql= $@"select a.id Id,b.id EventId,b.name EventName,b.code EventCode,refereeSignUpStatus,
                                                       b.EventType,c.name ProvinceName,d.name CityName
