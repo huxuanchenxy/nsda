@@ -108,7 +108,7 @@
     margin-right:15px;
 }
 .event-select .form-group:nth-child(9) input{
-    width:10%;
+    width:12%;
     height:46px;
     font-size:14px;
     color:#787373;
@@ -226,9 +226,25 @@
 .event-nav ul a:first-child li{
     color:#fff;
 }
-
-
-
+.event-select .form-group:nth-child(7) input[type=number]::-webkit-inner-spin-button,
+.event-select .form-group:nth-child(7) input[type=number]::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.teamlist .form-group:last-child input[type=number]::-webkit-inner-spin-button,.teamlist .form-group:last-child input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+.event-select .form-group:nth-child(9) input[type=number]::-webkit-inner-spin-button,.event-select .form-group:nth-child(9) input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
 
 
 
