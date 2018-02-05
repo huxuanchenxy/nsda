@@ -19,12 +19,12 @@
     </div>
     <div class="form-group container">
         <label for="eventdate">添加比赛日期：</label>
-        <input type="text" id="eventdate" placeholder="选择比赛日期">
+        <input type="text" id="eventdate" placeholder="选择比赛日期" readonly>
     </div>
     <div class="form-group container">
         <label for="deadlinedate">报名截止日期：</label>
         <div>
-            <input type="text" id="deadlinedate" placeholder="选择报名截止日期">
+            <input type="text" id="deadlinedate" placeholder="选择报名截止日期" readonly>
         </div>
     </div>
     <div class="form-group container">
@@ -58,7 +58,7 @@
     <div class="form-group container">
         <label>退费截止日期：</label>
         <div>
-            <input type="text" id="refunddate" placeholder="选择退费截止日期">
+            <input type="text" id="refunddate" placeholder="选择退费截止日期" readonly>
         </div>
     </div>
     <div class="form-group container">
@@ -69,33 +69,10 @@
     </div>
     <div class="container-fulid teambg">
         <div class="container">
-            <h3>组别设置</h3>
+            <a href="javascript:;" style="margin-left: 0%;margin-bottom: 10px;" id="addgroup" class="addteam">+添加组别</a>
         </div>
         <div class="tbg">
-            <div class="container">
-                <div class="teamlist">
-                    <div class="form-group">
-                        <input type="text" placeholder="输入组别名称">
-                    </div>
-                    <div class="form-group">
-                        <label>年级段设置:</label>
-                        <div>
-                            <select id="grade01">
-                            </select>
-                            <p>到</p>
-                            <select id="grade02">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>累计比赛次数设置 （如不填写，则为不限）:</label>
-                        <div>
-                            <input type="number" placeholder="填写参赛次数">
-                            <p>到</p>
-                            <input type="number" placeholder="填写参赛次数">
-                        </div>
-                    </div>
-                </div>
+            <div class="container" id="eventgroup">
             </div>
         </div>
     </div>
@@ -113,6 +90,7 @@
     <script src="/asset/simditor/js/simditor.min.js"></script>
     <script src="/asset/js/ipc.js?version=@Constant.Version"></script>
     <script>
+        var CurrentGroupCount = 0;
         laydate.render({
             elem: '#eventdate',
             range: true,
@@ -141,7 +119,13 @@
                 connectionCount: 3,
                 leaveConfirm: '正在上传文件'
                 }
-        });
+            });
+
+            init();
+            $("#provinceId").change(function () {
+                $.city(0, 0);
+            });
+            $("#addgroup").trigger("click");
         });
 
         $("#inter").change(function () {
@@ -153,19 +137,12 @@
             }
             init();
         });
+
         function init()
         {
             $.province(0);
             $.city(0, 0);
         }
-        $(document).ready(function () {
-            init();
-            $("#provinceId").change(function () {
-                $.city(0, 0);
-            });
-            $("#grade01").html(rendergrade());
-            $("#grade02").html(rendergrade());
-        });
 
         $("#submit").click(function () {
             var $Name = $("#eventName").val();
@@ -213,23 +190,22 @@
             var myarray = $EventDate.split(" - ");
 
             var grouplist = [];
-
-            var objectData = {
-                Name: "ceshi1",
-                MinGrade: "1",
-                MaxGrade: "2",
-                MinTimes: 0,
-                MaxTimes: 0
-            };
-            var objectData1 = {
-                Name: "ceshi2",
-                MinGrade: "3",
-                MaxGrade: "4",
-                MinTimes: 1,
-                MaxTimes: 2
-            };
-            grouplist.push(objectData);
-            grouplist.push(objectData1);
+            for (var i = 1, len = CurrentGroupCount ; i <= len; i++) {
+                var groupName = $("#eventgroup" + i + " input[name='groupname']").val();
+                if (validate.isNull(groupName))
+                {
+                    layer.msg('请输入组别名称', { icon: 5, time: 1000 });
+                    return;
+                }
+                var objectData = {
+                    Name: groupName,
+                    MinGrade: $("#eventgroup" + i + " select[name='mingrade']").val(),
+                    MaxGrade: $("#eventgroup" + i + " select[name='maxgrade']").val(),
+                    MinTimes: $("#eventgroup" + i + " input[name='minTimes']").val(),
+                    MaxTimes: $("#eventgroup" + i + " input[name='maxTimes']").val()
+                };
+                grouplist.push(objectData);
+            }
             var $cityId = $("#cityId").val();
             $.ajax({
                 url: "/eventmanage/eventmanage/insertevent",
@@ -292,5 +268,55 @@
             html += '<option value="13">13年级</option>';
             return html;
         }
+
+        $(document).on("click", ".delgroup", function () {
+            var id = $(this).parent().attr("id");
+            layer.confirm('是否删除组别信息', {
+                btn: ['是', '否']
+            }, function (index) {
+                $("#" + id).remove();
+                var currentIndex = id.substr(80);
+                for (var i = 1; i <= CurrentGroupCount; i++) {
+                    if (i > currentIndex) {
+                        $("#eventgroup" + i).attr("id", "eventgroup" + (i - 1));
+                    }
+                }
+                CurrentGroupCount--;
+                layer.closeAll();
+            }, function () {
+            });
+        });
+
+        //添加组别
+        $("#addgroup").click(function () {
+            CurrentGroupCount = CurrentGroupCount + 1;
+            var html = '<div class="teamlist" id="eventgroup' + CurrentGroupCount + '">';
+            html += '<div class="form-group">';
+            html += '  <input type="text" name="groupname" placeholder="输入组别名称">'
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<label>年级段设置:</label>';
+            html += '<div>';
+            html += '<select name="mingrade">';
+            html += rendergrade();
+            html += '</select>';
+            html += '  <p>到</p>';
+            html += '<select name="maxgrade">';
+            html += rendergrade();
+            html += '</select>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<label>累计比赛次数设置 （如不填写，则为不限）:</label>';
+            html += '<div>';
+            html += '<input type="number" name="minTimes" placeholder="填写参赛次数">';
+            html += '<p>到</p>';
+            html += '<input type="number" name="maxTimes" placeholder="填写参赛次数">';
+            html += '</div>';
+            html += '</div>';
+            html += '  <a href="javascript:;" class="delteam delgroup">删除</a>'
+            html += '</div>';
+            $("#eventgroup").append(html);
+        });
     </script>
 }

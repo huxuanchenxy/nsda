@@ -22,7 +22,6 @@
                         <th>比赛编码</th>
                         <th>比赛名称</th>
                         <th>类别</th>
-                        <th>队伍编码</th>
                         <th>会员编码</th>
                         <th>队员</th>
                         <th>状态</th>
@@ -72,7 +71,6 @@
                                 html += '<td>' + val.EventCode + '</td>';
                                 html += '<td>' + val.EventName + '</td>';
                                 html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
-                                html += '<td>' + val.GroupNum + '</td>';
                                 html += '<td>' + val.MemberCode + '</td>';
                                 html += '<td>' + val.MemberName + '</td>';
                                 if (val.Flag) {//数据是否是自己的
@@ -228,7 +226,7 @@
                 btn: ['是', '否']
             },function (index) {
                $.ajax({
-                   url: "/player/playersignup/isconfirmretire",
+                url: "/player/playersignup/isconfirmretire",
                 type: "post",
                 dataType: "json",
                 data: {

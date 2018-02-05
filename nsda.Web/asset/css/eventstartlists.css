@@ -26,7 +26,7 @@
     font-weight:800;
 }
 .event-select .form-group{
-    margin-bottom:30px;
+    margin-bottom:20px;
 }
 
 .event-select .form-group:nth-child(2) input{
@@ -122,22 +122,32 @@
 }
 .event-select .teambg{
     width:100%;
-    height:460px;
     background:#28353C;
-    position:relative;
+    padding:0 0 30px 0;
 }
 .event-select .teambg h3{
     font-size:18px;
     color:#fff;
     line-height:60px;
+    float:left;
+}
+.event-select .teambg .addteam{
+    display:inline-block;
+    float:left;
+    margin-left:6%;
+    padding:6px 15px;
+    background:#47BBED;
+    color:#333333;
+    margin-top:13px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 .event-select .teambg .tbg{
     width:100%;
-    height:340px;
     background:#162329;
-    position:absolute;
-    top:60px;
-    padding:6px 0;
+   margin-bottom:20px;
+   padding:10px;
 }
 .event-select .tbg .teamlist{
     width:30%;
@@ -163,7 +173,7 @@
     color:#ccc;
 }
 .event-select .tbg .teamlist .form-group:nth-child(2){
-    height:80px;
+    height:60px;
 }
 .event-select .tbg .teamlist .form-group:nth-child(2) p{
     float:left;
@@ -183,17 +193,17 @@
     background:#162329;
     border:1px solid #B4BDC2;
 }
-.event-select .tbg .teamlist .form-group:last-child p{
+.event-select .tbg .teamlist .form-group:nth-child(3) p{
     float:left;
     margin-left:10px;
     margin-right:10px;
     line-height:30px;
     color:#ccc;
 }
-.event-select .tbg .teamlist .form-group:last-child {
-    margin-bottom: 80px;
+.event-select .tbg .teamlist .form-group:nth-child(3) {
+    margin-bottom: 60px;
 }
-.event-select .tbg .teamlist .form-group:last-child input{
+.event-select .tbg .teamlist .form-group:nth-child(3) input{
     width:35%;
     height:30px;
     float:left;
@@ -203,6 +213,18 @@
     padding:0 5px;
     background:#162329;
     border:1px solid #B4BDC2;
+}
+.event-select .tbg .teamlist .delteam{
+    display:inline-block;
+    padding:6px 20px;
+    background:#cb4444;
+    margin:0 auto;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    color:white;
+    margin-left:50%;
+    transform:translate(-50%);
 }
 .event-select button{
     width:270px;
@@ -215,14 +237,15 @@
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    margin-top:50px;
     position:absolute;
     left:50%;
     transform:translate(-50%);
+    bottom:-90px;
 }
 .event-select .form-group input{
     color:#28353C;
 }
+
 .event-nav ul a:first-child li{
     color:#fff;
 }
@@ -233,7 +256,7 @@
   appearance: none;
   margin: 0;
 }
-.teamlist .form-group:last-child input[type=number]::-webkit-inner-spin-button,.teamlist .form-group:last-child input[type=number]::-webkit-outer-spin-button{
+.teamlist .form-group:nth-child(3) input[type=number]::-webkit-inner-spin-button,.teamlist .form-group:nth-child(3) input[type=number]::-webkit-outer-spin-button{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
