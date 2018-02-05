@@ -4,7 +4,11 @@
     min-height:800px;
     position:relative;
 }
-.event-lists .tri{
+.event-nav ul a:last-child li{
+    position:relative;
+    color:#fff;
+}
+.event-nav ul a:last-child li .tri{
     width: 0;
     height: 0;
     border-top: 20px solid transparent;
@@ -12,9 +16,9 @@
     border-bottom: 20px solid white;
     border-left: 15px solid transparent;
     position:absolute;
+    top:20px;
+    left:40%;
     z-index:9;
-    top:-40px;
-    left:14%;
 }
 .event-lists h4{
     font-size:18px;
