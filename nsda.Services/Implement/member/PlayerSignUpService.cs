@@ -702,13 +702,13 @@ namespace nsda.Services.Implement.member
                             inner join t_event c on a.eventId=c.id
                             inner join t_event_group d on a.eventGroupId=d.id
                             and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
-                            order by a.createtime desc 
+                            order by a.groupnum desc 
                          ";
                 int totalCount = 0;
                 list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 foreach (var item in list)
                 {
-                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by startdate desc limit 1").FirstOrDefault();
+                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by a.startdate desc limit 1").FirstOrDefault();
                     if (data != null)
                     {
                         item.SchoolName = data.chinessname;
