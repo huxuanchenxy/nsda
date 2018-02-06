@@ -36,11 +36,11 @@
    color:black;
 }
 .selected{
+    color:white;
     background:#FBB7A0;
     border-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
-    color:white;
 }
 .level{
     width:96%;

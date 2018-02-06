@@ -9,29 +9,28 @@
    <link href="/asset/simditor/css/simditor.css" rel="stylesheet" />
 }
 <div class="container-fulid event-select">
-    <div class="form-group container">
+    <div class="form-group container compename">
         <label for="eventName">本次赛事名称：</label>
         <div>
             <input type="text" id="eventName" placeholder="赛事中文名称">
             <input type="text" id="eventEnglishName" placeholder="English name of the tournament">
         </div>
     </div>
-    <div class="form-group container">
+    <div class="form-group container competime">
         <label for="eventdate">添加比赛日期：</label>
-        @*<input type="text" id="eventdate" placeholder="选择比赛日期" readonly>*@
         <div class="adddate" id="EventMatchDate1">
             <input type="text" class="eventdate"  name="eventdate" placeholder="选择比赛日期" readonly="readonly">
         </div>
 
         <i class="iconfont icon-jiahao addinput" id="eventMatchDate"></i>
     </div>
-    <div class="form-group container">
+    <div class="form-group container compedeadtime">
         <label for="deadlinedate">报名截止日期：</label>
         <div>
             <input type="text" id="deadlinedate" placeholder="选择报名截止日期" readonly>
         </div>
     </div>
-    <div class="form-group container">
+    <div class="form-group container compeaddress">
         <label>赛场地址：</label>
         <div>
             <select id="inter">
@@ -47,25 +46,25 @@
             <input type="text" placeholder="输入赛场地址" id="Address">
         </div>
     </div>
-    <div class="form-group container">
+    <div class="form-group container compedetail">
         <label>赛事描述：</label>
         <div>
             <textarea rows="3" id="Content"></textarea>
         </div>
     </div>
-    <div class="form-group container">
+    <div class="form-group container compecost">
         <label>参赛报名费用（人/元）:</label>
         <div>
             <input type="number" placeholder="￥" id="signFee">
         </div>
     </div>
-    <div class="form-group container">
+    <div class="form-group container comperetime">
         <label>退费截止日期：</label>
         <div>
             <input type="text" id="refunddate" placeholder="选择退费截止日期" readonly>
         </div>
     </div>
-    <div class="form-group container">
+    <div class="form-group container compenumber">
         <label>报名队伍数上限:</label>
         <div>
             <input type="number" placeholder="输入队伍数" id="maxteamNum">队
@@ -298,10 +297,10 @@
         $("#addgroup").click(function () {
             CurrentGroupCount = CurrentGroupCount + 1;
             var html = '<div class="teamlist" id="eventgroup' + CurrentGroupCount + '">';
-            html += '<div class="form-group">';
+            html += '<div class="form-group groupname">';
             html += '  <input type="text" name="groupname" placeholder="输入组别名称">'
             html += '</div>';
-            html += '<div class="form-group">';
+            html += '<div class="form-group grade">';
             html += '<label>年级段设置:</label>';
             html += '<div>';
             html += '<select name="mingrade">';
@@ -313,7 +312,7 @@
             html += '</select>';
             html += '</div>';
             html += '</div>';
-            html += '<div class="form-group">';
+            html += '<div class="form-group allnum">';
             html += '<label>累计比赛次数设置 （如不填写，则为不限）:</label>';
             html += '<div>';
             html += '<input type="number" name="minTimes" placeholder="填写参赛次数">';

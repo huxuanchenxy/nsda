@@ -35,7 +35,7 @@
     margin-bottom:20px;
 }
 
-.event-select .form-group:nth-child(1) input{
+.event-select .compename input{
     width:100%;
     height:46px;
     font-size:14px;
@@ -47,7 +47,7 @@
     -moz-border-radius: 5px;
     margin-bottom:10px;
 }
-,.event-select .form-group:nth-child(3) input,.event-select .form-group:nth-child(6) input,.event-select .form-group:nth-child(7) input{
+.event-select .compedeadtime input,.event-select .compecost input,.event-select .comperetime input{
     width:20%;
     height:46px;
     font-size:14px;
@@ -88,11 +88,11 @@
     cursor:pointer;
     line-height:46px;
 }
-.event-select .form-group:nth-child(3) input{
+.event-select .compedeadtime input{
     width:20%;
     height:46px;
 }
-.event-select .form-group:nth-child(4) select,.event-select .form-group:nth-child(4) input{
+.event-select .compeaddress select,.event-select .compeaddress input{
 
     height:46px;
     font-size:14px;
@@ -106,13 +106,13 @@
     float:left;
     margin-right:15px;
 }
-.event-select .form-group:nth-child(4) select{
+.event-select .compeaddress select{
     width:13%
 }
-.event-select .form-group:nth-child(4) input{
+.event-select .compeaddress input{
     width:40%
 }
-.event-select .form-group:nth-child(5) textarea{
+.event-select .compedetail textarea{
     width:100%;
     height:300px;
     font-size:16px;
@@ -125,11 +125,11 @@
     -moz-border-radius: 5px;
     resize:none;
 }
-.event-select .form-group:nth-child(5) input{
+.event-select .compecost input{
     font-size:18px;
     font-weight:400;
 }
-.event-select .form-group:nth-child(8) input{
+.event-select .comperetime input{
     width:20%;
     height:46px;
     font-size:14px;
@@ -142,7 +142,7 @@
     -moz-border-radius: 5px;
     margin-right:15px;
 }
-.event-select .form-group:nth-child(8) input{
+.event-select .compenumber input{
     width:12%;
     height:46px;
     font-size:14px;
@@ -194,7 +194,7 @@
 .event-select .tbg .teamlist .form-group label{
     color:#ccc;
 }
-.event-select .tbg .teamlist .form-group:first-child input{
+.event-select .tbg .teamlist .groupname input{
     width:100%;
     height:46px;
     border-radius: 5px;
@@ -207,17 +207,17 @@
 .event-select .tbg .teamlist .form-group input,.event-select .tbg .teamlist .form-group div select{
     color:#ccc;
 }
-.event-select .tbg .teamlist .form-group:nth-child(2){
+.event-select .tbg .teamlist .grade{
     height:60px;
 }
-.event-select .tbg .teamlist .form-group:nth-child(2) p{
+.event-select .tbg .teamlist .grade p{
     float:left;
     margin-left:10px;
     margin-right:10px;
     line-height:30px;
     color:#ccc;
 }
-.event-select .tbg .teamlist .form-group:nth-child(2) select{
+.event-select .tbg .teamlist .grade select{
     width:30%;
     height:30px;
     float:left;
@@ -228,17 +228,17 @@
     background:#162329;
     border:1px solid #B4BDC2;
 }
-.event-select .tbg .teamlist .form-group:nth-child(3) p{
+.event-select .tbg .teamlist .allnum p{
     float:left;
     margin-left:10px;
     margin-right:10px;
     line-height:30px;
     color:#ccc;
 }
-.event-select .tbg .teamlist .form-group:nth-child(3) {
+.event-select .tbg .teamlist .allnum {
     margin-bottom: 60px;
 }
-.event-select .tbg .teamlist .form-group:nth-child(3) input{
+.event-select .tbg .teamlist .allnum input{
     width:35%;
     height:30px;
     float:left;
@@ -284,20 +284,20 @@
 .event-nav ul a:first-child li{
     color:#fff;
 }
-.event-select .form-group:nth-child(6) input[type=number]::-webkit-inner-spin-button,
-.event-select .form-group:nth-child(6) input[type=number]::-webkit-outer-spin-button{
+.event-select .compecost input[type=number]::-webkit-inner-spin-button,
+.event-select .compecost input[type=number]::-webkit-outer-spin-button{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   margin: 0;
 }
-.teamlist .form-group:nth-child(3) input[type=number]::-webkit-inner-spin-button,.teamlist .form-group:nth-child(3) input[type=number]::-webkit-outer-spin-button{
+.teamlist .allnum input[type=number]::-webkit-inner-spin-button,.teamlist .allnum input[type=number]::-webkit-outer-spin-button{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     margin: 0;
 }
-.event-select .form-group:nth-child(8) input[type=number]::-webkit-inner-spin-button,.event-select .form-group:nth-child(8) input[type=number]::-webkit-outer-spin-button{
+.event-select .compenumber input[type=number]::-webkit-inner-spin-button,.event-select .compenumber input[type=number]::-webkit-outer-spin-button{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
