@@ -151,12 +151,9 @@
     <button type="submit">递交发布赛事申请</button>
 </div>
 <script>
-    lay('.compedate').each(function () {
-        laydate.render({
-            elem: this,
-            trigger: 'click',
-            showBottom: false
-        });
+    laydate.render({
+        elem: '.compedate',
+        showBottom: false
     });
     laydate.render({
         elem: '#deadlinedate',
