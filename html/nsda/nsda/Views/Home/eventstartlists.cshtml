@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_EventManage.cshtml";
     ViewBag.Title = "发起赛事";
 }
-<link href="@Url.Content("~/Content/asset/css/eventstartlists.css?1.1.4")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventstartlists.css?1.1.5")" rel="stylesheet" type="text/css" />
 <div class="container-fulid event-select">
     <div class="form-group container">
         <label for="inputName">本次赛事名称：</label>
@@ -13,7 +13,8 @@
     </div>
     <div class="form-group container">
         <label for="compedate">添加比赛日期：</label>
-        <input type="text" id="compedate" placeholder="选择比赛日期" readonly="readonly">
+        <input type="text" class="compedate" id="compedate" placeholder="选择比赛日期" readonly="readonly">
+        <i class="iconfont icon-jiahao addinput"></i>
     </div>
     <div class="form-group container">
         <label for="deadlinedate">报名截止日期：</label>
@@ -146,9 +147,12 @@
     <button type="submit">递交发布赛事申请</button>
 </div>
 <script>
-    laydate.render({
-        elem: '#compedate',
-        range: true
+    lay('.compedate').each(function () {
+        laydate.render({
+            elem: this,
+            trigger: 'click',
+            showBottom: false
+        });
     });
     laydate.render({
         elem: '#deadlinedate',

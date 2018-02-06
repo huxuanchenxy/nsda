@@ -22,6 +22,10 @@
     left:40%;
     z-index:9;
 }
+.event-select .form-group .addinput{
+    margin-left:15px;
+    cursor:pointer;
+}
 .event-select .form-group label{
     width:100%;
     font-size:14px;
