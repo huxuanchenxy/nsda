@@ -2,7 +2,7 @@
     ViewBag.Title = "绑定学员";
 }
 
-<link href="@Url.Content("~/Content/asset/css/coachboundplayer.css?1.1.7")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/coachboundplayer.css?1.1.8")" rel="stylesheet" type="text/css" />
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 
 @Html.Partial("_coachtop")
@@ -80,7 +80,7 @@
             title: "Add your students",
             type: 2,
             content: "/Home/boundplayer",
-            area: ["760px", "450px"],
+            area: ["760px", "550px"],
             end: function () {
                 location.reload();
             }
