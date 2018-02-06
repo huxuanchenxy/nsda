@@ -169,16 +169,13 @@ fg-layer-iframe{
 
 .addcoach .form-group select#sel{
     width:300px;
-    min-height:10px;
-    max-height:100px;
     margin:0;
     border:1px solid white;
     padding:10px;
     position:absolute;
-    bottom:205px;
+    bottom:285px;
     left:23%;
     z-index:10;
-
 }
 .addcoach .form-group select#sel::-webkit-scrollbar{
     width:6px;
