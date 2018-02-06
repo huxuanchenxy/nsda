@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_EventManage.cshtml";
     ViewBag.Title = "比赛进程管理";
 }
-<link href="@Url.Content("~/Content/asset/css/eventmanagelists.css?1.1.4")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanagelists.css?2.1.0")" rel="stylesheet" type="text/css" />
 <div class="container event-lists">
     <div class="compe-lists">
         <ul class="manage-lists">
@@ -14,7 +14,33 @@
         </ul>
     </div>
     <div class="tri"></div>
-
+    <div class="classcheck">
+        <img src="~/Content/asset/img/sinfo_03.png" alt="" />
+        <div class="class">
+            <div class="group">
+                <div class="group-item">
+                    <p>按组别查看：</p><a href="javascript:;" class="selected">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;">新手组</a>
+                    <a href="javascript:;">公开组</a>
+                    <a href="javascript:;">国际高中组</a>
+                    <a href="javascript:;">国际新手组</a>
+                </div>
+            </div>
+            <div class="group">
+                <div class="group-item">
+                    <p>按状态查看：</p><a href="javascript:;" class="selected">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;">未确认组队</a>
+                    <a href="javascript:;">等待付款</a>
+                    <a href="javascript:;">报名成功</a>
+                    <a href="javascript:;">已退赛</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <table>
         <thead>
             <tr>
