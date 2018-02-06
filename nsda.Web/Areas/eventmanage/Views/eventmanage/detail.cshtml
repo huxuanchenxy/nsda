@@ -63,6 +63,17 @@
    <script src="/asset/js/pager.js?version=@Constant.Version"></script>
    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
+        function foreach(data,groupNum) {
+            var reval = new Array();
+            if (data != null) {
+                $(data).each(function (i, v) {
+                    if (v.GroupNum == groupNum) {
+                        reval.push(v);
+                    }
+                });
+            }
+            return reval.length;
+        }
         (function (w) {
             var eventplayerlist = {
                 param: {
@@ -90,9 +101,26 @@
                                 eventplayerlist.param.PageIndex = p;
                                 eventplayerlist.Load(eventplayerlist.param)
                             });                            var html = '';
+                            var groupNum = "";
+                            var flag = 0;
+                            var rowspan = 1;
                             $.each(json.rows, function (k, val) {
+                                if (groupNum != val.GroupNum)
+                                {
+                                    groupNum = val.GroupNum;
+                                    flag = 1;
+                                    rowspan = foreach(json.rows,groupNum);
+                                }
+                                else
+                                {
+                                    flag = 0;
+                                }
+
                                 html+='<tr>';
-                                html+='<td>'+val.GroupNum+'</td>';
+                                if (flag == 1)
+                                {
+                                    html += '<td rowspan='+ rowspan + '>' + val.GroupNum + '</td>';
+                                }
                                 html+='<td>'+val.MemberCode+'</td>';
                                 html+='<td>'+val.MemberName+'</td>';
                                 html+='<td>'+enumreplace.replaceGender(val.Gender)+'</td>';
@@ -103,8 +131,7 @@
                                 html+='<td>'+val.EventGroupName+'</td>';
                                 html+='<td>'+enumreplace.replacesignUpStatus(val.SignUpStatus)+'</td>';
                                 html+='</tr>';
-                            });
-                            html += '';
+                             });
                             $("#data").html(html)
                         } else {
                             $("#data").html('');
