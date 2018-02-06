@@ -9,6 +9,7 @@
     border-bottom:2px solid #d9d3d3;
     border-top:2px solid #d9d3d3;
 }
+
 .per-con .modifyinfo{
     padding:10px 3px;
     font-size:16px;
@@ -266,4 +267,12 @@ body{
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
+}
+.fg-layer{
+    position:absolute;
+    z-index:-1;
+}
+.fg-layer .layui-laydate{
+    position:absolute;
+    z-index:99;
 }

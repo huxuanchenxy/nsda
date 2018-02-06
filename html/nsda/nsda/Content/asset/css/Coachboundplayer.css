@@ -175,7 +175,7 @@ fg-layer-iframe{
     border:1px solid white;
     padding:10px;
     position:absolute;
-    bottom:305px;
+    bottom:205px;
     left:23%;
     z-index:10;
 
@@ -196,7 +196,11 @@ fg-layer-iframe{
     background-color: #888;
     display: none;
 }
+a{
+    text-decoration:none;
+}
 .addcoach .form-group .searchcoach {
+    text-decoration:none;
     display: inline;
     padding: 8px 20px;
     background: #34495E;
