@@ -162,23 +162,20 @@ fg-layer-iframe{
 .addcoach .form-group .form-select-school {
     width: 45%;
     height: 36px;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
     background:#526476;
     color:white;
 }
 
 .addcoach .form-group select#sel{
     width:300px;
-    min-height:10px;
-    max-height:100px;
     margin:0;
     border:1px solid white;
     padding:10px;
     position:absolute;
-    bottom:305px;
+    bottom:285px;
     left:23%;
     z-index:10;
-
 }
 .addcoach .form-group select#sel::-webkit-scrollbar{
     width:6px;
@@ -196,7 +193,11 @@ fg-layer-iframe{
     background-color: #888;
     display: none;
 }
+a{
+    text-decoration:none;
+}
 .addcoach .form-group .searchcoach {
+    text-decoration:none;
     display: inline;
     padding: 8px 20px;
     background: #34495E;

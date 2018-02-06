@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Model.enums;
 using nsda.Utilities;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,6 @@ namespace nsda.Services.Contract.eventmanage
         //裁判签到列表
         List<RefereeSignResponse> RefereeSignList(RefereeSignQueryRequest request);
         //选手 裁判获取签到信息
-        SignResponse GetSign(int eventId,int memberId);
+        SignResponse GetSign(int eventId,int memberId,EventSignTypeEm eventSignType);
     }
 }

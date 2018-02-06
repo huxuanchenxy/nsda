@@ -223,6 +223,9 @@
     <Compile Include="model\t_event_knockout_settings.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
+    <Compile Include="model\t_event_matchdate.cs">
+      <DependentUpon>t4_table.tt</DependentUpon>
+    </Compile>
     <Compile Include="model\t_event_playerscoringrule.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>

@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Model.enums;
 using nsda.Services;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
@@ -41,7 +42,7 @@ namespace nsda.Web.Areas.player.Controllers
         public ActionResult signview(int eventId)
         {
             ViewBag.UserContext = UserContext.WebUserContext;
-            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id);
+            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id,EventSignTypeEm.选手);
             return View(detail);
         }
 

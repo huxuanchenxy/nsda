@@ -19,8 +19,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>比赛编码</th>
-                        <th>比赛名称</th>
+                        <th>队伍编码</th>
+                        <th>赛事编码/名称</th>
                         <th>类别</th>
                         <th>会员编码</th>
                         <th>队员</th>
@@ -28,7 +28,8 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="data"></tbody>
+                <tbody id="data">
+                </tbody>
             </table>
             <nav aria-label="Page navigation" id="pager">
             </nav>
@@ -41,6 +42,17 @@
     <script src="/asset/js/pager.js"></script>
     <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
+        function foreach(data, groupNum) {
+            var reval = new Array();
+            if (data != null) {
+                $(data).each(function (i, v) {
+                    if (v.GroupNum == groupNum) {
+                        reval.push(v);
+                    }
+                });
+            }
+            return reval.length;
+        }
         (function (w) {
             var playersignup = {
                 param: {
@@ -66,11 +78,25 @@
                                 playersignup.Load(playersignup.param)
                             });
                             var html = '';
+                            var groupNum = "";
+                            var flag = 0;
+                            var rowspan = 1;
                             $.each(json.rows, function (k, val) {
+                                if (groupNum != val.GroupNum) {
+                                    groupNum = val.GroupNum;
+                                    flag = 1;
+                                    rowspan = foreach(json.rows, groupNum);
+                                }
+                                else {
+                                    flag = 0;
+                                }
                                 html += '<tr>'
-                                html += '<td>' + val.EventCode + '</td>';
-                                html += '<td>' + val.EventName + '</td>';
-                                html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
+                                if (flag == 1) {
+                                    //html += '<td rowspan=' + rowspan + '>' + val.EventCode + '</td>';
+                                    html += '<td rowspan=' + rowspan + '>' + val.GroupNum + '</td>';
+                                    html += '<td rowspan=' + rowspan + '>' +val.EventCode+"<br/>"+ val.EventName + '</td>';
+                                    html += '<td rowspan=' + rowspan + '>' + enumreplace.replaceeventType(val.EventType) + '</td>';
+                                }
                                 html += '<td>' + val.MemberCode + '</td>';
                                 html += '<td>' + val.MemberName + '</td>';
                                 if (val.Flag) {//数据是否是自己的
@@ -121,7 +147,6 @@
                                 }
                                 html += '</tr>'
                             });
-                            html += '';
                             $("#data").html(html)
                         } else {
                             $("#data").html('');

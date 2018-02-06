@@ -9,7 +9,6 @@
    <link href="/asset/simditor/css/simditor.css" rel="stylesheet" />
 }
 <div class="container-fulid event-select">
-    <div class="tri"></div>
     <div class="form-group container">
         <label for="eventName">本次赛事名称：</label>
         <div>
@@ -19,7 +18,12 @@
     </div>
     <div class="form-group container">
         <label for="eventdate">添加比赛日期：</label>
-        <input type="text" id="eventdate" placeholder="选择比赛日期" readonly>
+        @*<input type="text" id="eventdate" placeholder="选择比赛日期" readonly>*@
+        <div class="adddate" id="EventMatchDate1">
+            <input type="text" class="eventdate"  name="eventdate" placeholder="选择比赛日期" readonly="readonly">
+        </div>
+
+        <i class="iconfont icon-jiahao addinput" id="eventMatchDate"></i>
     </div>
     <div class="form-group container">
         <label for="deadlinedate">报名截止日期：</label>
@@ -91,18 +95,18 @@
     <script src="/asset/js/ipc.js?version=@Constant.Version"></script>
     <script>
         var CurrentGroupCount = 0;
+        var EventMatchDate = 1;
         laydate.render({
-            elem: '#eventdate',
-            range: true,
-            done: function (value, date, endDate) {
-                $("#eventdate").attr("data-date", value);
-            }
+            elem: '.eventdate',
+            showBottom: false
         });
         laydate.render({
-            elem: '#deadlinedate'
+            elem: '#deadlinedate',
+            showBottom: false
         });
         laydate.render({
-            elem: '#refunddate'
+            elem: '#refunddate',
+            showBottom: false
         });
 
         var editor = null;
@@ -120,7 +124,6 @@
                 leaveConfirm: '正在上传文件'
                 }
             });
-
             init();
             $("#provinceId").change(function () {
                 $.city(0, 0);
@@ -151,14 +154,19 @@
                 return;
             }
             var $EnglishName = $("#eventEnglishName").val();
-            var $EventDate = $("#eventdate").attr("data-date");
-            if (validate.isNull($EventDate)) {
-                layer.msg('请输入比赛日期', { icon: 5, time: 1000 });
-                return;
+            var matchDate = [];
+            for (var i = 1, len = EventMatchDate ; i <= len; i++) {
+                var eventdate = $("#EventMatchDate" + i + " input[name='eventdate']").val();
+                if (validate.isNull(eventdate)) {
+                    layer.msg('请输入比赛日期', { icon: 5, time: 1000 });
+                    return;
+                }
+                matchDate.push(eventdate);
             }
+
             var $EndSignDate = $("#deadlinedate").val();
             if (validate.isNull($EndSignDate)) {
-                layer.msg('请输入比赛日期', { icon: 5, time: 1000 });
+                layer.msg('请输入报名截止日期', { icon: 5, time: 1000 });
                 return;
             }
             var $provinceId = $("#provinceId").val();
@@ -187,8 +195,6 @@
                 return;
             }
             $remark = editor.getValue();
-            var myarray = $EventDate.split(" - ");
-
             var grouplist = [];
             for (var i = 1, len = CurrentGroupCount ; i <= len; i++) {
                 var groupName = $("#eventgroup" + i + " input[name='groupname']").val();
@@ -215,8 +221,9 @@
                     EventGroup: grouplist,
                     Name: $Name,
                     EnglishName: $EnglishName,
-                    StartEventDate: myarray[0],
-                    EndEventDate: myarray[1],
+                    //StartEventDate: myarray[0],
+                    //EndEventDate: myarray[1],
+                    EventDate:matchDate,
                     EndSignDate: $EndSignDate,
                     EndRefundDate: $EndRefundDate,
                     Remark:$remark,
@@ -275,7 +282,7 @@
                 btn: ['是', '否']
             }, function (index) {
                 $("#" + id).remove();
-                var currentIndex = id.substr(80);
+                var currentIndex = id.substr(10);
                 for (var i = 1; i <= CurrentGroupCount; i++) {
                     if (i > currentIndex) {
                         $("#eventgroup" + i).attr("id", "eventgroup" + (i - 1));
@@ -317,6 +324,34 @@
             html += '  <a href="javascript:;" class="delteam delgroup">删除</a>'
             html += '</div>';
             $("#eventgroup").append(html);
+        });
+
+        $("#eventMatchDate").click(function () {
+            EventMatchDate = EventMatchDate + 1;
+            var html = '<div class="adddate" style="margin-left:20px;" id="EventMatchDate' + EventMatchDate + '">';
+            html += '<input type="text" class="eventdate" name="eventdate" placeholder="选择比赛日期" readonly="readonly">';
+            html += ' <i class="iconfont icon-close-b delinput delMatchDate"></i>'
+            html += ' </div>';
+            $(this).before(html);
+            lay('.eventdate').each(function () {
+                 laydate.render({
+                     elem: this,
+                     trigger: 'click',
+                     showBottom: false
+                 });
+             });
+        });
+
+        $(document).on("click", ".delMatchDate", function () {
+            var id = $(this).parent().attr("id");
+            $("#" + id).remove();
+            var currentIndex = id.substr(14);
+            for (var i = 2; i <= EventMatchDate; i++) {
+                if (i > currentIndex) {
+                    $("#EventMatchDate" + i).attr("id", "EventMatchDate" + (i - 1));
+                }
+            }
+            EventMatchDate--;
         });
     </script>
 }

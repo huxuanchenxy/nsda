@@ -1,6 +1,7 @@
 ﻿using nsda.Model.dto;
 using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Model.enums;
 using nsda.Services;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
@@ -156,7 +157,7 @@ namespace nsda.Web.Areas.referee.Controllers
         //签到页面
         public ActionResult signview(int eventId)
         {
-            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id);
+            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id,EventSignTypeEm.裁判);
             return View(detail);
         }
         #endregion

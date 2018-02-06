@@ -266,7 +266,7 @@ namespace nsda.Services.Implement.member
                         isTemp = true,
                         eventId = request.EventId,
                         memberId = memberInsertId,
-                        refereeSignUpStatus = RefereeSignUpStatusEm.申请成功
+                        refereeSignUpStatus = RefereeSignUpStatusEm.通过
                     });
                     _dbContext.CommitChanges();
                     flag = true;

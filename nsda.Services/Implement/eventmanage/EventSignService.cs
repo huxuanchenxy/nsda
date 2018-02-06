@@ -100,7 +100,7 @@ namespace nsda.Services.Implement.eventmanage
                             inner join t_event c on a.eventId=c.id
                             inner join t_event_player_signup d on d.eventId=a.eventId and d.eventGroupId=a.eventGroupId and a.memberId=d.memberId
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
-                            and a.eventId=@EventId and a.eventGroupId=@EventGroupId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.选手}
+                            and a.eventId=@EventId and a.eventGroupId=@EventGroupId and c.memberId=@MemberId and eventSignType={(int)EventSignTypeEm.选手}
                             {join.ToString()} group by a.memberId order by a.createtime desc
                         ";
                 int totalCount = 0;
@@ -147,7 +147,7 @@ namespace nsda.Services.Implement.eventmanage
                             inner join t_member_referee b on a.memberId=b.id
                             inner join t_event c on a.eventId=c.id
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
-                            and a.eventId=@EventId and c.memberId=@MemberId and eventSignType={EventSignTypeEm.裁判}
+                            and a.eventId=@EventId and c.memberId=@MemberId and a.eventSignType={(int)EventSignTypeEm.裁判}
                             {join.ToString()} group by a.memberId order by a.createtime desc
                         ";
                 int totalCount = 0;
@@ -179,14 +179,15 @@ namespace nsda.Services.Implement.eventmanage
             return list;
         }
         //选手/裁判获取签到信息
-        public SignResponse GetSign(int eventId, int memberId)
+        public SignResponse GetSign(int eventId, int memberId,EventSignTypeEm eventSignType)
         {
             SignResponse response = null;
             try
             {
-                var sql = @"select a.id,b.code EventCode,b.name EventName,a.signdate,a.eventSignStatus from t_event_sign a
+                var sql = $@"select a.id,b.code EventCode,b.name EventName,a.signdate,a.eventSignStatus from t_event_sign a
                             inner join t_event b on a.eventId=b.id
-                            where a.isdelete=0 and a.eventId=@EventId and a.memberId=@MemberId and a.signdate=@SignDate";
+                            where a.isdelete=0 and a.eventId=@EventId and a.memberId=@MemberId 
+                            and a.signdate=@SignDate and a.eventSignType={(int)eventSignType}";
                 var dy = new DynamicParameters();
                 dy.Add("EventId",eventId);
                 dy.Add("MemberId",memberId);

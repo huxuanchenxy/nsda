@@ -109,7 +109,7 @@ namespace nsda.Services.Implement.eventmanage
                 t_event_cycling_match tmatch = _dbContext.Get<t_event_cycling_match>(cyclingMatchId);
                 if (tmatch != null)
                 {
-                    _dbContext.Execute($"update t_event_cycling_match set congroupNum={tmatch.progroupNum},progroupNum={tmatch.congroupNum},updatetime='{DateTime.Now}' where id={cyclingMatchId}");
+                    _dbContext.Execute($"update t_event_cycling_match set congroupNum='{tmatch.progroupNum}',progroupNum='{tmatch.congroupNum}',updatetime='{DateTime.Now}' where id={cyclingMatchId}");
                     flag = true;
                 }
                 else

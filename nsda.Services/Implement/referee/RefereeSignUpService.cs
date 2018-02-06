@@ -49,7 +49,7 @@ namespace nsda.Services.Implement.referee
                 t_event t_event = _dbContext.Get<t_event>(eventId);
                 if (t_event != null &&t_event.eventStatus!=EventStatusEm.审核中 && t_event.eventStatus!=EventStatusEm.拒绝&& t_event.endsigndate>DateTime.Now)
                 {
-                    var data = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.memberId == memberId&&c.refereeSignUpStatus!=RefereeSignUpStatusEm.申请失败).ToList();
+                    var data = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.memberId == memberId&&c.refereeSignUpStatus!=RefereeSignUpStatusEm.拒绝).ToList();
                     if (data != null && data.Count > 0)
                     {
                         msg = "您已提交过申请";
@@ -86,7 +86,8 @@ namespace nsda.Services.Implement.referee
             {
                 var sql = $@"select b.id EventId,b.name EventName,b.code EventCode from t_event_referee_signup a
                              inner join t_event b on a.eventId=b.id
-                             where a.isdelete=0 and (b.starteventdate={DateTime.Now.ToShortDateString()} or b.endeventdate={DateTime.Now.ToShortDateString()})
+                             left join t_event_matchdate c on  a.eventId=c.eventId
+                             where a.isdelete=0 and c.eventMatchDate='{DateTime.Now.ToShortDateString()}'
                              and a.refereeSignUpStatus in ({ParamsConfig._refereestatus}) and  a.memberId={memberId}
                            ";
                 return _dbContext.Query<RefereeCurrentEventResponse>(sql).ToList();
@@ -139,7 +140,7 @@ namespace nsda.Services.Implement.referee
                 if (referee_signup != null)
                 {
                     referee_signup.updatetime = DateTime.Now;
-                    referee_signup.refereeSignUpStatus = isAgree ? RefereeSignUpStatusEm.申请成功 : RefereeSignUpStatusEm.申请失败;
+                    referee_signup.refereeSignUpStatus = isAgree ? RefereeSignUpStatusEm.通过 : RefereeSignUpStatusEm.拒绝;
                     _dbContext.Update(referee_signup);
                     flag = true;
                 }
@@ -201,6 +202,7 @@ namespace nsda.Services.Implement.referee
             return flag;
         }
 
+        //裁判报名列表
         public List<RefereeSignUpListResponse> RefereeSignUpList(RefereeSignUpQueryRequest request)
         {
             List<RefereeSignUpListResponse> list = new List<RefereeSignUpListResponse>();

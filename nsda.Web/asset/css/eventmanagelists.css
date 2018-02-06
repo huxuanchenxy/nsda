@@ -1,11 +1,9 @@
-﻿.event-lists{
-    width:100%;
-    margin-bottom:80px;
-    padding-top:50px;
-    min-height:800px;
+﻿
+.event-nav ul a:last-child li{
     position:relative;
+    color:#fff;
 }
-.event-lists .tri{
+.event-nav ul a:last-child .tri{
     width: 0;
     height: 0;
     border-top: 20px solid transparent;
@@ -13,9 +11,16 @@
     border-bottom: 20px solid white;
     border-left: 15px solid transparent;
     position:absolute;
+    top:20px;
+    left:40%;
     z-index:9;
-    top:-40px;
-    left:14%;
+}
+.event-lists{
+    width:100%;
+    margin-bottom:80px;
+    padding-top:50px;
+    min-height:800px;
+    position:relative;
 }
 .compe-lists{
     width:260px;
@@ -27,10 +32,54 @@
 }
 .compe-lists .manage-lists li{
     width:100%;
+    min-height:50px;
     padding:10px;
     text-align:left;
     font-size:18px;
     border-bottom:1px dashed #CED4D7;
+}
+.compe-lists .manage-lists li input[type=checkbox]{
+    display:inline-block;
+    width:40px;
+    height:25px;
+    float:left;
+
+}
+.compe-lists .manage-lists li p{
+    float:left;
+    font-size:18px;
+    color:#666699;
+    line-height:35px;
+}
+.compe-lists .manage-lists .clickready{
+    display:inline-block;
+    width:100%;
+    height:50px;
+    background:#CAE69A;
+    border:1px solid #A7CB6C;
+    color:#999966;
+    text-align:center;
+    margin-top:5px;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    line-height:26px;
+}
+.compe-lists .manage-lists .clickready p{
+    font-size:14px;
+}
+.compe-lists .manage-lists .clickready h4{
+    font-size:14px;
+    font-weight:600;
+}
+.compe-lists .manage-lists li input[type=checkbox]::-webkit-inner-spin-button,.compe-lists .manage-lists li input[type=checkbox]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+.compe-lists .manage-lists li input[type=checkbox]:checked{
+    color:red;
 }
 .event-nav ul a:last-child li{
     color:#fff;
@@ -65,6 +114,7 @@
     bottom:0;
     right:0;
 }
+
 .page{
     color: #a2a2a2;
     margin: 20px 0;

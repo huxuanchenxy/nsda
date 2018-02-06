@@ -73,11 +73,11 @@ namespace nsda.Services.Implement.member
             {
                 //需要过滤已经报名的选手
                 var sql = $@"select a.* from t_member_player a inner join t_member b on a.memberId=b.id                            
-                            where a.isdelete=0  and (b.memberType={MemberTypeEm.选手} or b.isExtendPlayer=1) and a.memberId!={memberId}
-                            and a.memberStatus={MemberStatusEm.已认证} and (a.code=@key or a.completename=@key)
+                            where a.isdelete=0  and (b.memberType={(int)MemberTypeEm.选手} or b.isExtendPlayer=1) and a.memberId!={memberId}
+                            and b.memberStatus={(int)MemberStatusEm.已认证} and (a.code=@key or a.completename=@key)
                             and a.memberId not in (select memberId from t_event_player_signup 
-                                                 where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})
-                                                ) 
+                                                   where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})
+                                                  ) 
                             limit 30
                          ";
                 var dy = new DynamicParameters();
@@ -661,10 +661,11 @@ namespace nsda.Services.Implement.member
             try
             {
                 var sql = $@"select a.*,b.code MemberCode,b.completename MemberName from 
-                             (select b.id EventId,b.code EventCode,b.name EventName,b.eventType EventType,b.starteventdate StartEventDate
+                             (select b.id EventId,b.code EventCode,b.name EventName,b.eventType EventType,b.starteventdate StartEventDate,
                               a.memberId MemberId from t_event_player_signup a
                               inner join t_event b on a.eventId=b.id
-                              where  a.isdelete=0 and (b.starteventdate='{DateTime.Now.ToShortDateString()}' or b.endeventdate='{DateTime.Now.ToShortDateString()}')
+                              left  join t_event_matchdate c on a.eventId=c.eventId
+                              where  a.isdelete=0 and c.eventMatchDate='{DateTime.Now.ToShortDateString()}' 
                               and  a.groupnum in (select groupnum  from t_event_player_signup where memberId={memberId} and signUpStatus={(int)SignUpStatusEm.报名成功})
                               ) a inner join t_member_player b on a.MemberId=b.memberId
                           ";
@@ -752,7 +753,7 @@ namespace nsda.Services.Implement.member
                 if (group.mintimes.HasValue || group.maxtimes.HasValue)
                 {
                     //从对垒表中查参加过的赛事
-                    var times = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and memberId={member.memberId}  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
+                    var times = _dbContext.ExecuteScalar($"select count(1) from t_event_player_signup where isdelete=0 and memberId={member.memberId} and  signUpStatus in ({ParamsConfig._signup_in})").ToObjInt();
                     if (group.mintimes > 0)
                     {
                         if (group.mintimes > times)
@@ -785,8 +786,8 @@ namespace nsda.Services.Implement.member
                              inner join t_member_player b on a.memberId=b.memberId
                              inner join t_event c on a.eventId=c.id
                              inner join t_event_group d on a.eventGroupId=d.id
-                             where a.isdelete=0  and groupnum in (select groupnum  from t_event_player_signup where memberId=@MemberId)
-                            {join.ToString()} order by  a.createtime desc
+                             where a.isdelete=0  and a.groupnum in (select groupnum  from t_event_player_signup where memberId=@MemberId)
+                            {join.ToString()} order by  a.groupnum desc
                          ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
@@ -825,69 +826,52 @@ namespace nsda.Services.Implement.member
                         return flag;
                     }
 
-                    #region 教练
-                    var list_event_referee_signup = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.refereeSignUpStatus != RefereeSignUpStatusEm.申请失败 && c.refereeSignUpStatus != RefereeSignUpStatusEm.待审核).ToList();
-                    if (list_event_referee_signup != null && list_event_referee_signup.Count > 0)
-                    {
-                        foreach (var item in list_event_referee_signup)
-                        {
-                            //生成签到表
-                            _dbContext.Insert(new t_event_sign
-                            {
-                                eventId = t_event.id,
-                                eventSignStatus = EventSignStatusEm.待签到,
-                                eventSignType = EventSignTypeEm.裁判,
-                                memberId = item.memberId,
-                                signdate = t_event.starteventdate
-                            });
-
-                            if (t_event.starteventdate != t_event.endeventdate)
-                            {
-                                _dbContext.Insert(new t_event_sign
-                                {
-                                    eventId = t_event.id,
-                                    eventSignStatus = EventSignStatusEm.待签到,
-                                    eventSignType = EventSignTypeEm.裁判,
-                                    memberId = item.memberId,
-                                    signdate = t_event.endeventdate
-                                });
-                            }
-                        }
-                    }
-                    #endregion
-
-                    #region 选手
+                    var listMatchDate = _dbContext.Select<t_event_matchdate>(c => c.eventId == eventId).ToList();
                     var list_playsignup = _dbContext.Select<t_event_player_signup>(c => c.eventId == eventId && c.signUpStatus == SignUpStatusEm.报名成功).ToList();
-                    if (list_playsignup != null && list_playsignup.Count > 0)
-                    {
-                        foreach (var item in list_playsignup)
-                        {
-                            //生成签到表
-                            _dbContext.Insert(new t_event_sign
-                            {
-                                eventId = t_event.id,
-                                eventSignStatus = EventSignStatusEm.待签到,
-                                eventSignType = EventSignTypeEm.选手,
-                                memberId = item.memberId,
-                                signdate = t_event.starteventdate,
-                                eventGroupId = item.eventGroupId
-                            });
+                    var list_event_referee_signup = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.refereeSignUpStatus != RefereeSignUpStatusEm.拒绝 && c.refereeSignUpStatus != RefereeSignUpStatusEm.待审核).ToList();
 
-                            if (t_event.starteventdate != t_event.endeventdate)
+                    if (listMatchDate != null && listMatchDate.Count > 0)
+                    {
+                        foreach (var item in listMatchDate)
+                        {
+                            #region 教练
+                            if (list_event_referee_signup != null && list_event_referee_signup.Count > 0)
                             {
-                                _dbContext.Insert(new t_event_sign
+                                foreach (var itemreferee in list_event_referee_signup)
                                 {
-                                    eventId = t_event.id,
-                                    eventSignStatus = EventSignStatusEm.待签到,
-                                    eventSignType = EventSignTypeEm.选手,
-                                    memberId = item.memberId,
-                                    signdate = t_event.endeventdate,
-                                    eventGroupId = item.eventGroupId
-                                });
+                                    //生成签到表
+                                    _dbContext.Insert(new t_event_sign
+                                    {
+                                        eventId = t_event.id,
+                                        eventSignStatus = EventSignStatusEm.待签到,
+                                        eventSignType = EventSignTypeEm.裁判,
+                                        memberId = itemreferee.memberId,
+                                        signdate = item.eventMatchDate
+                                    });
+                                }
                             }
+                            #endregion
+
+                            #region 选手
+                            if (list_playsignup != null && list_playsignup.Count > 0)
+                            {
+                                foreach (var itemplayer in list_playsignup)
+                                {
+                                    //生成签到表
+                                    _dbContext.Insert(new t_event_sign
+                                    {
+                                        eventId = t_event.id,
+                                        eventSignStatus = EventSignStatusEm.待签到,
+                                        eventSignType = EventSignTypeEm.选手,
+                                        memberId = itemplayer.memberId,
+                                        signdate = item.eventMatchDate,
+                                        eventGroupId = itemplayer.eventGroupId
+                                    });
+                                }
+                            }
+                            #endregion
                         }
                     }
-                    #endregion 
                 }
                 else
                 {

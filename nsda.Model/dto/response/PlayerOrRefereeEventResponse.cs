@@ -46,9 +46,9 @@ namespace nsda.Model.dto.response
         /// </summary>
         public decimal SignFee { get; set; }
         /// <summary>
-        /// 是否显示报名
+        /// 是否显示报名 1 审核未通过 2 报名截止或停止报名 3.可以报名
         /// </summary>
-        public bool IsVisiable{ get; set; }
+        public int Visiable{ get; set; }
         /// <summary>
         /// 赛事状态
         /// </summary>

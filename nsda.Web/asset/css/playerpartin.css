@@ -52,9 +52,6 @@
     float:left;
     overflow:hidden;
 }
-.comp-con .hadtable tbody td {
-    padding:8px 0;
-}
 .comp-con .hadtable tbody td .pay{
     background:yellow;
     width:50%;
@@ -64,6 +61,8 @@
     float:left;
     overflow:hidden;
 }
+.comp-con .hadtable table tbody tr:nth-child(4n+3) td{background:#f6f3e7;}
+.comp-con .hadtable table tbody tr:nth-child(4n+4) td{background:#f6f3e7;}
 .comp-con .hadtable tbody td .apply{
     background:#ddd;
     width:46%;
@@ -81,7 +80,28 @@
 .comp-con .hadtable tbody td .select:hover{
     color:white;
 }
-
+.comp-con .hadtable tbody td{
+    padding:20px 0 10px 0;
+    position:relative;
+}
+.comp-con tbody td:not(:last-child){
+    max-width:50px;
+    word-break:keep-all;
+    word-wrap:break-word;
+    overflow:hidden; 
+    text-overflow:ellipsis;  
+    -o-text-overflow:ellipsis;
+    -icab-text-overflow: ellipsis;
+    -khtml-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+}
+.comp-con .hadtable tbody td span{
+    position:absolute;
+    top:15px;
+    left:5px;
+    font-size:12px;
+}
 .comp-con .hadtable tbody td .select,.comp-con .hadtable tbody td .pay,.comp-con .hadtable tbody td .apply{
     border-radius: 20px;
     -webkit-border-radius: 20px;
@@ -104,6 +124,7 @@
     box-sizing: border-box;
 }
 .comp-con tbody td:not(:last-child) {
+    min-width:30%;
     border-right: 1px solid #a7a7a7;
 }
 .comp-con{
@@ -114,4 +135,14 @@
         position:absolute;
         right:30px;
         bottom:0
+}
+.comp-con .exittable tbody td{
+    position:relative;
+    padding:18px 8px;
+}
+.comp-con .exittable tbody td span{
+    position:absolute;
+    top:4px;
+    left:6px;
+    margin-bottom:10px;
 }

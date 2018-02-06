@@ -105,9 +105,9 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
         #endregion
 
-        #region ajax
+        #region 赛事信息设置
         /// <summary>
-        /// 上传图片
+        /// 上传图片 赛事描述
         /// </summary>
         [HttpPost]
         public ContentResult uploadimage()
@@ -164,7 +164,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             }
         }
 
-
         //修改个人信息
         [HttpPost]
         [AjaxOnly]
@@ -199,6 +198,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result<string>(flag, msg);
         }
 
+        //编辑赛事组别信息
         [HttpPost]
         [AjaxOnly]
         public ContentResult editeventgroup(EventGroupRequest request)
@@ -234,125 +234,12 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Content(res.Serialize());
         }
 
-        //新增临时选手
-        [HttpPost]
-        [AjaxOnly]
-        public ContentResult insertplayer(List<TempPlayerRequest> request)
-        {
-            string msg = string.Empty;
-            var flag = _memberTempService.InsertTempPlayer(request, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
-        //新增临时教练
-        [HttpPost]
-        [AjaxOnly]
-        public ContentResult insertreferee(TempRefereeRequest request)
-        {
-            string msg = string.Empty;
-            var flag = _memberTempService.InsertTempReferee(request, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
-        //裁判审核
-        [HttpPost]
-        [AjaxOnly]
-        public ContentResult checkreferee(int id, bool isAgree)
-        {
-            string msg = string.Empty;
-            var flag = _refereeSignUpService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
-            return Result<string>(flag, msg);
-        }
-
-        //批量签到
-        [HttpPost]
-        [AjaxOnly]
-        public ContentResult sign(List<int> id,int eventId,bool isNormal)
-        {
-            string msg = string.Empty;
-            var flag = _eventSignService.BatchSign(id,eventId,isNormal,out msg);
-            return Result<string>(flag, msg);
-        }
-
-        //选手签到列表
-        [HttpGet]
-        public ContentResult playersignlist(PlayerSignQueryRequest request)
-        {
-            request.MemberId = UserContext.WebUserContext.Id;
-            var data=_eventSignService.PlayerSignList(request);
-            var res = new ResultDto<PlayerSignResponse>
-            {
-                page = request.PageIndex,
-                total = request.Total,
-                records = request.Records,
-                rows = data
-            };
-            return Content(res.Serialize());
-        }
-
-        //裁判签到列表
-        [HttpGet]
-        public ContentResult refereesignlist(RefereeSignQueryRequest request)
-        {
-            request.MemberId = UserContext.WebUserContext.Id;
-            var data=_eventSignService.RefereeSignList(request);
-            var res = new ResultDto<RefereeSignResponse>
-            {
-                page = request.PageIndex,
-                total = request.Total,
-                records = request.Records,
-                rows = data
-            };
-            return Content(res.Serialize());
-        }
-
-        //选手报名列表
-        [HttpGet]
-        public ContentResult listplayersignup(EventPlayerSignUpQueryRequest request)
-        {
-            request.MemberId = UserContext.WebUserContext.Id;
-            var data = _playerSignUpService.EventPlayerList(request);
-            var res = new ResultDto<EventPlayerSignUpListResponse>
-            {
-                page = request.PageIndex,
-                total = request.Total,
-                records = request.Records,
-                rows = data
-            };
-            return Content(res.Serialize());
-        }
-
-        //裁判报名列表
-        [HttpGet]
-        public ContentResult listrefereesignup(EventRefereeSignUpQueryRequest request)
-        {
-            var data = _refereeSignUpService.EventRefereeList(request);
-            var res = new ResultDto<EventRefereeSignUpListResponse>
-            {
-                page = request.PageIndex,
-                total = request.Total,
-                records = request.Records,
-                rows = data
-            };
-            return Content(res.Serialize());
-        }
-
         //赛事组别信息
         [HttpGet]
         public ContentResult listeventgroup(int eventId)
         {
             var data = _eventService.SelectEventGroup(eventId,UserContext.WebUserContext.Id);
             return Result(true, string.Empty, data);
-        }
-
-        //生成签到信息
-        [HttpPost]
-        [AjaxOnly]
-        public ContentResult rendersign(int eventId)
-        {
-            string msg = string.Empty;
-            var flag = _playerSignUpService.RenderSign(eventId, out msg);
-            return Result<string>(flag, msg);
         }
         #endregion
 
@@ -464,5 +351,143 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result(true, string.Empty, data);
         }
         #endregion
+
+        #region 裁判设置
+        //裁判报名列表
+        [HttpGet]
+        public ContentResult listrefereesignup(EventRefereeSignUpQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _refereeSignUpService.EventRefereeList(request);
+            var res = new ResultDto<EventRefereeSignUpListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        //新增临时裁判
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult insertreferee(TempRefereeRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _memberTempService.InsertTempReferee(request, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //裁判审核
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult checkreferee(int id, bool isAgree)
+        {
+            string msg = string.Empty;
+            var flag = _refereeSignUpService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //裁判设置
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult settingsreferee(int id,int statusOrGroup)
+        {
+            string msg = string.Empty;
+            var flag = _refereeSignUpService.Settings(id, statusOrGroup, out msg);
+            return Result<string>(flag, msg);
+        }
+        #endregion
+
+        #region 签到管理
+        //批量签到
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult sign(List<int> id, int eventId, bool isNormal)
+        {
+            string msg = string.Empty;
+            var flag = _eventSignService.BatchSign(id, eventId, isNormal, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //选手签到列表
+        [HttpGet]
+        public ContentResult playersignlist(PlayerSignQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _eventSignService.PlayerSignList(request);
+            var res = new ResultDto<PlayerSignResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        //裁判签到列表
+        [HttpGet]
+        public ContentResult refereesignlist(RefereeSignQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _eventSignService.RefereeSignList(request);
+            var res = new ResultDto<RefereeSignResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+
+        //生成签到信息
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult rendersign(int eventId)
+        {
+            string msg = string.Empty;
+            var flag = _playerSignUpService.RenderSign(eventId, out msg);
+            return Result<string>(flag, msg);
+        }
+        #endregion
+
+        #region 选手设置
+        //新增临时选手
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult insertplayer(List<TempPlayerRequest> request)
+        {
+            string msg = string.Empty;
+            var flag = _memberTempService.InsertTempPlayer(request, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //选手报名列表
+        [HttpGet]
+        public ContentResult listplayersignup(EventPlayerSignUpQueryRequest request)
+        {
+            request.MemberId = UserContext.WebUserContext.Id;
+            var data = _playerSignUpService.EventPlayerList(request);
+            var res = new ResultDto<EventPlayerSignUpListResponse>
+            {
+                page = request.PageIndex,
+                total = request.Total,
+                records = request.Records,
+                rows = data
+            };
+            return Content(res.Serialize());
+        }
+        #endregion
+
+        #region 循环赛设置
+
+        #endregion
+
+        #region 淘汰赛设置
+
+        #endregion 
     }
 }

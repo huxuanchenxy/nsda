@@ -9,8 +9,8 @@ namespace nsda.Model.enums
     public enum RefereeSignUpStatusEm
     {
         待审核 = 1,
-        申请成功 = 2,
-        申请失败=3,
+        通过 = 2,
+        拒绝=3,
         停用=4,
         启用=5
     }

@@ -33,7 +33,7 @@ namespace nsda.Model
         /// <summary>
         /// 裁判可查询当日比赛的状态
         /// </summary>
-        public static string _refereestatus = new int[] { (int)RefereeSignUpStatusEm.申请成功, (int)RefereeSignUpStatusEm.停用, (int)RefereeSignUpStatusEm.启用}.Splice();  
+        public static string _refereestatus = new int[] { (int)RefereeSignUpStatusEm.通过, (int)RefereeSignUpStatusEm.停用, (int)RefereeSignUpStatusEm.启用}.Splice();  
         /// <summary>
         /// 赛事不可查询状态
         /// </summary>

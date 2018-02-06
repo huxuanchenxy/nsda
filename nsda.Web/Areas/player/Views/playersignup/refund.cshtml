@@ -18,21 +18,13 @@
             <table>
                 <thead>
                     <tr>
-                        <th>比赛编码</th>
-                        <th>比赛名称</th>
+                        <th>赛事编码/名称</th>
                         <th>类别</th>
                         <th>组别</th>
                         <th>状态</th>
                     </tr>
                 </thead>
                 <tbody id="data">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>退赛确认</td>
-                    </tr>
                 </tbody>
             </table>
             <nav aria-label="Page navigation" id="pager">
@@ -72,14 +64,12 @@
                             });                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html += '<tr>';
-                                html += '<td>' + val.EventCode + '</td>';
-                                html += '<td>' + val.EventName + '</td>';
+                                html += '<td>' + val.EventCode+"</br/>"+ val.EventName + '</td>';
                                 html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
                                 html += '<td>' + val.EventGroupName + '</td>';
                                 html += '<td>' + enumreplace.replaceoperationStatus(val.OperationStatus) + '</td>';
                                 html += '</tr>';
                             });
-                            html += '';
                             $("#data").html(html)
                         } else {
                             $("#data").html('');

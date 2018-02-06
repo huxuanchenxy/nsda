@@ -38,18 +38,26 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+
                 if (request.Name.IsEmpty())
                 {
                     msg = "赛事名不能为空";
                     return flag;
                 }
 
+                if (request.EventDate == null || request.EventDate.Count == 0)
+                {
+                    msg = "请设置赛事时间";
+                    return flag;
+                }
+                request.EventDate = request.EventDate.Distinct().OrderBy(c=>true).ToList();
+                request.StartEventDate = request.EventDate.FirstOrDefault();
                 if (request.StartEventDate == DateTime.MinValue || request.StartEventDate == DateTime.MaxValue)
                 {
                     msg = "赛事开始时间有误";
                     return flag;
                 }
-
+                request.EndEventDate = request.EventDate.LastOrDefault();
                 if (request.EndEventDate == DateTime.MinValue || request.EndEventDate == DateTime.MaxValue)
                 {
                     msg = "赛事结束时间有误";
@@ -149,6 +157,16 @@ namespace nsda.Services.Implement.eventmanage
                         });
                     }
                     #endregion
+
+                    #region 赛事比赛时间
+                    foreach (var item in request.EventDate)
+                    {
+                        _dbContext.Insert(new t_event_matchdate {
+                            eventId=eventId,
+                            eventMatchDate=item
+                        });
+                    }
+                    #endregion 
 
                     InsertEventRule(eventId);
 
@@ -294,13 +312,19 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "赛事名不能为空";
                     return flag;
                 }
-
+                if (request.EventDate == null || request.EventDate.Count == 0)
+                {
+                    msg = "请设置赛事时间";
+                    return flag;
+                }
+                request.EventDate = request.EventDate.Distinct().OrderBy(c => true).ToList();
+                request.StartEventDate = request.EventDate.FirstOrDefault();
                 if (request.StartEventDate == DateTime.MinValue || request.StartEventDate == DateTime.MaxValue)
                 {
                     msg = "赛事开始时间有误";
                     return flag;
                 }
-
+                request.EndEventDate = request.EventDate.LastOrDefault();
                 if (request.EndEventDate == DateTime.MinValue || request.EndEventDate == DateTime.MaxValue)
                 {
                     msg = "赛事结束时间有误";
@@ -338,26 +362,48 @@ namespace nsda.Services.Implement.eventmanage
                 t_event tevent = _dbContext.Get<t_event>(request.Id);
                 if (tevent != null && tevent.memberId == request.MemberId)
                 {
-                    tevent.address = request.Address;
-                    tevent.cityId = request.CityId;
-                    tevent.endeventdate = request.EndEventDate;
-                    tevent.endrefunddate = request.EndRefundDate;
-                    tevent.endsigndate = request.EndSignDate;
-                    tevent.remark = request.Remark;
-                    tevent.eventStatus = tevent.eventStatus == EventStatusEm.拒绝 ? EventStatusEm.审核中 : tevent.eventStatus;
-                    tevent.eventType = request.EventType;
-                    tevent.filepath = request.Filepath;
-                    tevent.isInter = request.IsInter;
-                    tevent.maxnumber = request.Maxnumber;
-                    tevent.starteventdate = request.StartEventDate;
-                    tevent.memberId = request.MemberId;
-                    tevent.name = request.Name;
-                    tevent.provinceId = request.ProvinceId;
-                    tevent.signfee = request.Signfee;
-                    tevent.eventTypeName = request.EventTypeName;
-                    tevent.updatetime = DateTime.Now;
-                    _dbContext.Update(tevent);
-                    flag = true;
+                    try
+                    {
+                        _dbContext.BeginTransaction();
+                        tevent.address = request.Address;
+                        tevent.cityId = request.CityId;
+                        tevent.endeventdate = request.EndEventDate;
+                        tevent.endrefunddate = request.EndRefundDate;
+                        tevent.endsigndate = request.EndSignDate;
+                        tevent.remark = request.Remark;
+                        tevent.eventStatus = tevent.eventStatus == EventStatusEm.拒绝 ? EventStatusEm.审核中 : tevent.eventStatus;
+                        tevent.eventType = request.EventType;
+                        tevent.filepath = request.Filepath;
+                        tevent.isInter = request.IsInter;
+                        tevent.maxnumber = request.Maxnumber;
+                        tevent.starteventdate = request.StartEventDate;
+                        tevent.memberId = request.MemberId;
+                        tevent.name = request.Name;
+                        tevent.provinceId = request.ProvinceId;
+                        tevent.signfee = request.Signfee;
+                        tevent.eventTypeName = request.EventTypeName;
+                        tevent.updatetime = DateTime.Now;
+                        _dbContext.Update(tevent);
+
+                        _dbContext.Execute($"delete from t_event_matchdate where eventId={request.Id}");
+                        foreach (var item in request.EventDate)
+                        {
+                            _dbContext.Insert(new t_event_matchdate
+                            {
+                                eventId = request.Id,
+                                eventMatchDate = item
+                            });
+                        }
+                        _dbContext.CommitChanges();
+                        flag = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _dbContext.Rollback();
+                        flag = false;
+                        msg = "服务异常";
+                        LogUtils.LogError("EventService.EditTran", ex);
+                    }
                 }
                 else
                 {
@@ -558,17 +604,22 @@ namespace nsda.Services.Implement.eventmanage
                 {
                     foreach (var item in list)
                     {
+                        if (item.EventStatus == EventStatusEm.审核中 || item.EventStatus == EventStatusEm.拒绝)
+                        {
+                            item.Visiable = 1;
+                        }
+
                         if (item.EventStatus == EventStatusEm.停止报名)
                         {
-                            item.IsVisiable = false;
+                            item.Visiable = 2;
                             break;
                         }
                         if (DateTime.Now > item.EndSignDate)
                         {
-                            item.IsVisiable = false;
+                            item.Visiable = 2;
                             break;
                         }
-                        item.IsVisiable = true;
+                        item.Visiable = 3;
                     }
                 }
                 request.Records = totalCount;
@@ -633,11 +684,11 @@ namespace nsda.Services.Implement.eventmanage
                 }
                 if (request.EventStatus.HasValue && request.EventStatus > 0)
                 {
-                    join.Append(" and eventStatus >= @EventStatus");
+                    join.Append(" and eventStatus = @EventStatus");
                 }
                 if (request.EventType.HasValue && request.EventType > 0)
                 {
-                    join.Append(" and eventType >= @EventType");
+                    join.Append(" and eventType = @EventType");
                 }
                 if (request.EventStartDate.HasValue)
                 {
@@ -696,7 +747,7 @@ namespace nsda.Services.Implement.eventmanage
             List<EventSelectResponse> list = new List<EventSelectResponse>();
             try
             {
-                var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus ={EventStatusEm.报名中} and starteventdate>={DateTime.Now.ToShortDateString()}";
+                var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus ={(int)EventStatusEm.报名中} and starteventdate>='{DateTime.Now.ToShortDateString()}'";
                 list = _dbContext.Query<EventSelectResponse>(sql).ToList();
                 list.Insert(0, new EventSelectResponse
                 {
@@ -766,7 +817,7 @@ namespace nsda.Services.Implement.eventmanage
                     foreach (var item in list)
                     {
                         item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where eventId={item.EventId} and eventGroupId={item.Id} ").ToObjInt();
-                        item.SignUpSuccessCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where eventId={item.EventId} and eventGroupId={item.Id} and signUpStatus={SignUpStatusEm.报名成功}").ToObjInt();
+                        item.SignUpSuccessCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where eventId={item.EventId} and eventGroupId={item.Id} and signUpStatus={(int)SignUpStatusEm.报名成功}").ToObjInt();
                     }
                 }
             }

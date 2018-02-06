@@ -95,6 +95,8 @@ namespace nsda.Model.dto.request
         /// 赛事状态
         /// </summary>
         public EventStatusEm EventStatus { get; set; }
+
+        public List<DateTime> EventDate { get; set; }
     }
 
     public class EventGroupRequest
