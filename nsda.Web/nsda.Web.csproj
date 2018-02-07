@@ -432,6 +432,8 @@
     <Content Include="asset\img\bg2.png" />
     <Content Include="asset\img\bound_03.png" />
     <Content Include="asset\img\chat-user-2.svg" />
+    <Content Include="asset\img\check.svg" />
+    <Content Include="asset\img\checked.svg" />
     <Content Include="asset\img\city-sunny-people-street-1.png" />
     <Content Include="asset\img\coach.png" />
     <Content Include="asset\img\course.png" />
@@ -454,6 +456,7 @@
     <Content Include="asset\img\Samuel Alito.jpg" />
     <Content Include="asset\img\score_03.jpg" />
     <Content Include="asset\img\scroll-bg.png" />
+    <Content Include="asset\img\sinfo_03.png" />
     <Content Include="asset\img\Sonia_Sotomayor_in_SCOTUS_robe.jpg" />
     <Content Include="asset\img\source_03.png" />
     <Content Include="asset\img\source_06.png" />
@@ -498,6 +501,7 @@
     <Content Include="Areas\coach\Views\coach\update.cshtml" />
     <Content Include="Areas\eventmanage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\detail.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\playersignup.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />

@@ -26,5 +26,7 @@ namespace nsda.Services.Contract.referee
         bool Settings(int id, int statusOrGroup, out string msg);
         //裁判赛事报名列表
         List<RefereeSignUpListResponse> RefereeSignUpList(RefereeSignUpQueryRequest request);
+        //裁判数据统计
+        RefereeDataResponse RefereeData(int eventId, int memberId);
     }
 }

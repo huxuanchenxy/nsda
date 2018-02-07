@@ -3,6 +3,7 @@
 @{
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "发起赛事";
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
 }
 
 @section styles
@@ -15,18 +16,18 @@
         <div class="class">
             <div class="group">
                 <div class="group-item">
-                    <p>按组别查看：</p><a href="javascript:;" class="selected">不限</a>
+                    <p>按组别查看：</p><a href="javascript:;" class="selected" id="eventgroupUnlimited">不限</a>
                 </div>
                 <div class="group-con">
-                    <a href="javascript:;" class="eventgroup">新手组</a>
-                    <a href="javascript:;" class="eventgroup">公开组</a>
-                    <a href="javascript:;" class="eventgroup">国际高中组</a>
-                    <a href="javascript:;" class="eventgroup">国际新手组</a>
+                    @foreach (var item in eventGroup)
+                    {
+                        <a href="javascript:;" class="eventgroup" data-id="@item.Id">@item.Name</a>
+                    }
                 </div>
             </div>
             <div class="group">
                 <div class="group-item">
-                    <p>按状态查看：</p><a href="javascript:;" class="selected">不限</a>
+                    <p>按状态查看：</p><a href="javascript:;" class="selected" id="playersignUnlimited">不限</a>
                 </div>
                 <div class="group-con">
                     <a href="javascript:;"  class="playersign" data-status="1">未确认组队</a>
@@ -144,5 +145,46 @@
             w.eventplayerlist = eventplayerlist
         })(window);
         eventplayerlist.Load(eventplayerlist.param);
+        $("#eventgroupUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".eventgroup").removeClass("selected");
+            eventplayerlist.param.EventGroupId = 0;
+            eventplayerlist.Load(eventplayerlist.param);
+        });
+        $(".eventgroup").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#eventgroupUnlimited").addClass("selected");
+                eventplayerlist.param.EventGroupId = 0;
+            } else {
+                $(".eventgroup").removeClass("selected");
+                $this.addClass("selected");
+                $("#eventgroupUnlimited").removeClass("selected");
+                eventplayerlist.param.EventGroupId = $this.attr("data-id");
+            }
+            eventplayerlist.Load(eventplayerlist.param);
+        });
+
+        $("#playersignUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".playersign").removeClass("selected");
+            eventplayerlist.param.SignUpStatus = 0;
+            eventplayerlist.Load(playerevent.param);
+        });
+        $(".playersign").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#playersignUnlimited").addClass("selected");
+                eventplayerlist.param.SignUpStatus = 0;
+            } else {
+                $(".playersign").removeClass("selected");
+                $this.addClass("selected");
+                $("#playersignUnlimited").removeClass("selected");
+                eventplayerlist.param.SignUpStatus = $this.attr("data-status");
+            }
+            eventplayerlist.Load(eventplayerlist.param);
+        });
     </script>
 }

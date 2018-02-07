@@ -103,6 +103,27 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             return View(detail);
         }
+
+        //选手报名页
+        public ActionResult playersignup(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id,userContext.Id);
+            return View(detail);
+        }
+
+        //裁判报名页
+        public ActionResult refereesignup(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, userContext.Id);
+            ViewBag.RefereeData = _refereeSignUpService.RefereeData(id, userContext.Id);
+            return View(detail);
+        }
         #endregion
 
         #region 赛事信息设置
@@ -397,6 +418,14 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             string msg = string.Empty;
             var flag = _refereeSignUpService.Settings(id, statusOrGroup, out msg);
             return Result<string>(flag, msg);
+        }
+
+        //裁判统计数据
+        [HttpGet]
+        public ContentResult refereedata(int eventId)
+        {
+            var data = _refereeSignUpService.RefereeData(eventId,UserContext.WebUserContext.Id);
+            return Result(true, string.Empty, data);
         }
         #endregion
 

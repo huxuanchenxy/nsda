@@ -1,4 +1,5 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.enums;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace nsda.Model.dto.request
         public int MemberId { get; set; }
         public int EventId { get; set; }
         public string KeyValue { get; set; }
+        public RefereeSignUpStatusEm? RefereeSignUpStatus { get; set; }
+        public int? EventGroupId { get; set; }
     }
 
     public class RefereeSignUpQueryRequest : PageQuery

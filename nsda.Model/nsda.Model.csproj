@@ -122,6 +122,7 @@
     <Compile Include="dto\response\RatingSinglLabelResponse.cs" />
     <Compile Include="dto\response\RecordOfDetailResponse.cs" />
     <Compile Include="dto\response\RecordOfListResponse.cs" />
+    <Compile Include="dto\response\RefereeDataResponse.cs" />
     <Compile Include="dto\response\RefereeSignUpListResponse.cs" />
     <Compile Include="dto\response\RefereeSignUpResponse.cs" />
     <Compile Include="dto\response\SchoolResponse.cs" />

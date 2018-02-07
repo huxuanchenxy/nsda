@@ -275,24 +275,6 @@
             return html;
         }
 
-        $(document).on("click", ".delgroup", function () {
-            var id = $(this).parent().attr("id");
-            layer.confirm('是否删除组别信息', {
-                btn: ['是', '否']
-            }, function (index) {
-                $("#" + id).remove();
-                var currentIndex = id.substr(10);
-                for (var i = 1; i <= CurrentGroupCount; i++) {
-                    if (i > currentIndex) {
-                        $("#eventgroup" + i).attr("id", "eventgroup" + (i - 1));
-                    }
-                }
-                CurrentGroupCount--;
-                layer.closeAll();
-            }, function () {
-            });
-        });
-
         //添加组别
         $("#addgroup").click(function () {
             CurrentGroupCount = CurrentGroupCount + 1;
@@ -324,7 +306,26 @@
             html += '</div>';
             $("#eventgroup").append(html);
         });
+        //删除组别
+        $(document).on("click", ".delgroup", function () {
+            var id = $(this).parent().attr("id");
+            layer.confirm('是否删除组别信息', {
+                btn: ['是', '否']
+            }, function (index) {
+                $("#" + id).remove();
+                var currentIndex = id.substr(10);
+                for (var i = 1; i <= CurrentGroupCount; i++) {
+                    if (i > currentIndex) {
+                        $("#eventgroup" + i).attr("id", "eventgroup" + (i - 1));
+                    }
+                }
+                CurrentGroupCount--;
+                layer.closeAll();
+            }, function () {
+            });
+        });
 
+        //添加赛事时间
         $("#eventMatchDate").click(function () {
             EventMatchDate = EventMatchDate + 1;
             var html = '<div class="adddate" style="margin-left:20px;" id="EventMatchDate' + EventMatchDate + '">';
@@ -340,7 +341,7 @@
                  });
              });
         });
-
+        //删除赛事时间
         $(document).on("click", ".delMatchDate", function () {
             var id = $(this).parent().attr("id");
             $("#" + id).remove();

@@ -111,6 +111,22 @@ namespace nsda.Services.Implement.referee
                     request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
                 }
+                if (request.RefereeSignUpStatus != null && request.RefereeSignUpStatus > 0)
+                {
+                    //需要区分临时裁判
+                    if ((int)request.RefereeSignUpStatus == 9)
+                    {
+                        join.Append($" and a.isTemp=1 ");
+                    }
+                    else
+                    {
+                        join.Append(" and a.refereeSignUpStatus=@RefereeSignUpStatus ");
+                    }
+                }
+                if (request.EventGroupId != null && request.EventGroupId > 0)
+                {
+                    join.Append(" and a.eventGroupId=@EventGroupId ");
+                }
                 var sql= $@"select a.*,b.code MemberCode,b.completename MemberName from t_event_referee_signup a 
                             inner join t_member_referee b on a.memberId=b.memberId
                             inner join t_event c on a.eventId=c.id
@@ -240,6 +256,28 @@ namespace nsda.Services.Implement.referee
                 LogUtils.LogError("RefereeSignUpService.RefereeSignUpList", ex);
             }
             return list;
+        }
+        //裁判统计数据
+        public RefereeDataResponse RefereeData(int eventId, int memberId)
+        {
+            RefereeDataResponse response = new RefereeDataResponse();
+            try
+            {
+                var sql = $@"select a.* from t_event_referee_signup a 
+                              inner join t_event b on a.eventId=b.id
+                              where a.isdelete=0 and b.memberId={memberId} and a.eventId={eventId}
+                           ";
+                var list = _dbContext.Query<t_event_referee_signup>(sql).ToList();
+                if (list != null && list.Count > 0)
+                {
+                    response.Total = list.Count;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("RefereeSignUpService.RefereeData", ex);
+            }
+            return response;
         }
     }
 }
