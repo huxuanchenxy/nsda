@@ -1,60 +1,68 @@
 ﻿
-.event-nav ul a:last-child li{
-    position:relative;
-    color:#fff;
+@media(min-width:768px){
+    .event-lists{
+        width:74%;
+    }
 }
-.event-nav ul a:last-child .tri{
-    width: 0;
-    height: 0;
-    border-top: 20px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 20px solid white;
-    border-left: 15px solid transparent;
-    position:absolute;
-    top:20px;
-    left:40%;
-    z-index:9;
+@media(min-width:1024px){
+    .event-lists{
+        width:74%;
+    }
 }
+@media(min-width:1200px){
+    .event-lists{
+        width:74%;
+    }
+}
+@media(min-width:1300px){
+    .event-lists{
+        width:70%;
+    }
+}
+@media(min-width:1500px){
+    .event-lists{
+        width:65%;
+    }
+}
+
 .event-lists{
-    width:100%;
+    margin:0 auto;
+    padding-top:60px;
     margin-bottom:80px;
-    padding-top:50px;
-    min-height:800px;
+    float:left;
+    margin-left:20%;
 }
-.compe-lists{
-    width:260px;
-    padding:10px;
+.managelists{
+    width:14%;
     border:1px solid #B3B9BE;
     float:left;
     position:absolute;
     left:85px;
-    
+    top:20%;
 }
-.compe-lists .manage-lists li{
-    width:100%;
-    min-height:50px;
-    padding:10px;
-    text-align:left;
-    font-size:18px;
+.managelists ul{
+    padding:6px;
+}
+.managelists ul li{
     border-bottom:1px dashed #CED4D7;
-}
-.compe-lists .manage-lists li input[type=checkbox]{
-    display:inline-block;
-    width:40px;
-    height:25px;
-    float:left;
-
-}
-.compe-lists .manage-lists li p{
-    float:left;
+    padding:6px;
     font-size:18px;
     color:#666699;
-    line-height:35px;
 }
-.compe-lists .manage-lists .clickready{
+.managelists ul li label{
+    float:left;
+    width:25px;
+    height:25px;
+    margin-right:6px;
+}
+.managelists ul li label input[type=checkbox]{
+    width:20px;
+    height:20px;
+}
+.managelists .clickready{
     display:inline-block;
     width:100%;
-    height:50px;
+    padding:6px;
     background:#CAE69A;
     border:1px solid #A7CB6C;
     color:#999966;
@@ -65,27 +73,12 @@
     -moz-border-radius:10px;
     line-height:26px;
 }
-.compe-lists .manage-lists .clickready p{
+.managelists .clickready p{
     font-size:14px;
 }
-.compe-lists .manage-lists .clickready h4{
+.managelists .clickready h4{
     font-size:14px;
     font-weight:600;
-}
-.compe-lists .manage-lists li input[type=checkbox]::-webkit-inner-spin-button,.compe-lists .manage-lists li input[type=checkbox]::-webkit-outer-spin-button{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0;
-}
-.compe-lists .manage-lists li input[type=checkbox]:checked{
-    color:red;
-}
-.event-nav ul a:last-child li{
-    color:#fff;
-}
-.classcheck{
-    margin-left:10px;
 }
 .classcheck img{
     float:left;
@@ -109,7 +102,6 @@
     margin-right:10px;
 }
 .classcheck .class .group .group-item a{
-    width:5%;
     padding:2px 10px;
     text-align:center;
 }
@@ -125,25 +117,27 @@
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
 }
-
 .event-lists table{
+    border-collapse:collapse;
     width:100%;
-    margin-top:100px;
-    margin-left:10px;
+    color:#666699;
+    margin-top:90px;
+    margin-bottom:70px;
 }
 .event-lists table thead{
-    width:100%;
     background:#D8E0E5;
 }
 .event-lists table thead tr th{
+    padding:6px 0;
     text-align:center;
-    padding:10px;
+    font-size:14px;
 }
-.event-lists tbody td{
-    color:#666699;
+.event-lists table tbody tr td{
+    text-align:center;
     border:1px solid #ccc;
-    text-align-last:center;
-    padding:10px;
+    box-sizing:border-box;
+    padding:6px 0;
+    font-size:14px;
 }
 .event-lists tbody td:first-child{
     border-left:none;
@@ -151,20 +145,28 @@
 .event-lists tbody td:last-child{
     border-right:none
 }
-.event-lists tbody tr:nth-child(even) td:last-child{
+.event-nav ul a:last-child li{
+    position:relative;
+    color:#fff;
 }
-.event-lists nav{
+.event-nav ul a:last-child .tri{
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid white;
+    border-left: 15px solid transparent;
     position:absolute;
-    bottom:0;
-    right:0;
+    top:20px;
+    left:40%;
+    z-index:9;
 }
-
+.event-lists{
+    position:relative;
+}
 .page{
-    color: #a2a2a2;
-    margin: 20px 0;
-    display: inline-block;
-    text-align: center;
-    width: 100%;
+    position:absolute;
+    right:0;
 }
 .page a.prev, .page a.next {
     font-size: 14px;
@@ -184,6 +186,15 @@
     border-radius: 30px;
     color: #fff;
 }
+
+
+
+
+
+
+
+
+
 
 
 
