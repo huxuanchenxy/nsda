@@ -143,5 +143,10 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "裁判报名管理";
             return View();
         }
+        public ActionResult manageumpire()
+        {
+            ViewBag.Message = "裁判管理";
+            return View();
+        }
     }
 }
