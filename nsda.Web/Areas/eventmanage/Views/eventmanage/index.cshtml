@@ -67,7 +67,7 @@
                                 html += '<td>' +parseDate(new Date(val.EndSignDate), "yyyy-MM-dd").format+ '</td>';
                                 html += '<td>' + enumreplace.replaceEventStatus(val.EventStatus) + '</td>';
                                 if (val.EventStatus == 3 || val.EventStatus == 4 || val.EventStatus == 5) {
-                                    html += '<td><a href="/eventmanage/eventmanage/detail/' + val.Id + '" class="entercompe">进入比赛</a></td>'
+                                    html += '<td><a href="/eventmanage/eventmanage/playersignup/' + val.Id + '" class="entercompe">进入比赛</a></td>'
                                 } else if (val.EventStatus == 6) {
                                     html += '<td><a href="/eventmanage/eventmanage/eventresult/' + val.Id + '" class="checkresult">查看赛果</a></td>'
                                 } else {
