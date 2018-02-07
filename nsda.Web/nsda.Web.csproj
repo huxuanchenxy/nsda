@@ -502,6 +502,7 @@
     <Content Include="Areas\eventmanage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\detail.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\playersignup.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\refereesignup.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />

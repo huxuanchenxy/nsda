@@ -170,7 +170,7 @@
             $(this).addClass("selected");
             $(".playersign").removeClass("selected");
             eventplayerlist.param.SignUpStatus = 0;
-            eventplayerlist.Load(playerevent.param);
+            eventplayerlist.Load(eventplayerlist.param);
         });
         $(".playersign").click(function () {
             var $this = $(this);

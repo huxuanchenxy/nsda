@@ -1,0 +1,123 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "发起赛事";
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanagelists.css?version=@Constant.Version">
+}
+<div class="container event-lists">
+    <div class="classcheck">
+        <img src="/asset/img/sinfo_03.png" alt="" />
+        <div class="class">
+            <div class="group">
+                <div class="group-item">
+                    <p>按状态查看：</p><a href="javascript:;" class="selected" id="refereesignUnlimited">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;"  class="refereesign" data-status="1">待审核</a>
+                    <a href="javascript:;"  class="refereesign" data-status="2">已录取</a>
+                    <a href="javascript:;"  class="refereesign" data-status="4">未录取</a>
+                    <a href="javascript:;"  class="refereesign" data-status="6">候选名单</a>
+                    <a href="javascript:;" class="refereesign" data-status="9">临时裁判</a>
+                    <a href="javascript:;" class="refereesign" data-status="6">标记</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>裁判编号</th>
+                <th>裁判姓名</th>
+                <th>联系电话</th>
+                <th>电子邮箱</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+@section scripts
+{
+   <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+   <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script>
+        (function (w) {
+            var eventrefereelist = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                    EventId:@Model.Id,
+                    EventGroupId:0,
+                    RefereeSignUpStatus:0
+                }
+            };
+            eventrefereelist.Load = function (filter) {
+                $.ajax({
+                    url: "/eventmanage/eventmanage/listrefereesignup",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            eventrefereelist.param.TotalPage = json.total;
+                            _pager.init(filter, eventrefereelist.param.PageIndex, eventrefereelist.param.TotalPage, function (p) {
+                                eventrefereelist.param.PageIndex = p;
+                                eventrefereelist.Load(eventrefereelist.param)
+                            });                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html+='<tr>';
+                                html+='<td>'+val.MemberCode+'</td>';
+                                html+='<td>'+val.MemberName+'</td>';
+                                html+='<td>'+val.ContactMobile+'</td>';
+                                html+='<td>'+val.Email+'</td>';
+                                html+='<td>'+enumreplace.replacerefereesignUpStatus(val.RefereeSignUpStatus)+'</td>';
+                                html+='<td>想怎么操作就怎么操作</td>';
+                                html+='</tr>';
+                             });
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.eventrefereelist = eventrefereelist
+        })(window);
+        eventrefereelist.Load(eventrefereelist.param);
+        $("#refereesignUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".refereesign").removeClass("selected");
+            eventrefereelist.param.RefereeSignUpStatus = 0;
+            eventrefereelist.Load(eventrefereelist.param);
+        });
+        $(".refereesign").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#refereesignUnlimited").addClass("selected");
+                eventrefereelist.param.RefereeSignUpStatus = 0;
+            } else {
+                $(".refereesign").removeClass("selected");
+                $this.addClass("selected");
+                $("#refereesignUnlimited").removeClass("selected");
+                eventrefereelist.param.RefereeSignUpStatus = $this.attr("data-status");
+            }
+            eventrefereelist.Load(eventrefereelist.param);
+        });
+    </script>
+}

@@ -102,6 +102,23 @@
             return "已完成";
         }
     };
+    enumreplace.replacerefereesignUpStatus = function (refereesignUpStatus) {
+        if (refereesignUpStatus == 1) {
+            return "待审核";
+        }
+        else if (refereesignUpStatus == 2) {
+            return "已录取";
+        }
+        else if (refereesignUpStatus == 3) {
+            return "未录取";
+        }
+        else if (refereesignUpStatus == 4) {
+            return "候选名单";
+        }
+        else if (refereesignUpStatus == 5) {
+            return "标记";
+        }
+    };
     enumreplace.replacezsignUpStatus = function (signUpStatus) {
         if (signUpStatus == 1) {
             return "确认组队";

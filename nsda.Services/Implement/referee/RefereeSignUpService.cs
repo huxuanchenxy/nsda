@@ -127,11 +127,12 @@ namespace nsda.Services.Implement.referee
                 {
                     join.Append(" and a.eventGroupId=@EventGroupId ");
                 }
-                var sql= $@"select a.*,b.code MemberCode,b.completename MemberName from t_event_referee_signup a 
+                var sql= $@"select a.*,b.code MemberCode,b.completename MemberName,c.account Email,b.contactmobile ContactMobile from t_event_referee_signup a 
                             inner join t_member_referee b on a.memberId=b.memberId
-                            inner join t_event c on a.eventId=c.id
-                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 
-                            and c.memberId=@MemberId and a.eventId=@EventId 
+                            inner join t_member         c on a.memberId=c.id
+                            inner join t_event d on a.eventId=d.id
+                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 and d.isdelete=0
+                            and   d.memberId=@MemberId and a.eventId=@EventId 
                             {join.ToString()} order by a.createtime desc
                           ";
                 int totalCount = 0;
@@ -271,6 +272,9 @@ namespace nsda.Services.Implement.referee
                 if (list != null && list.Count > 0)
                 {
                     response.Total = list.Count;
+                    response.Pending = list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.待审核).Count();
+                    response.NoPassed = list.Where(c=>c.refereeSignUpStatus==RefereeSignUpStatusEm.拒绝).Count();
+                    response.TempReferee = list.Where(c=>c.isTemp).Count();
                 }
             }
             catch (Exception ex)

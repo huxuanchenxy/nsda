@@ -14,9 +14,11 @@ namespace nsda.Model.dto.response
         public int Id { get; set; }
         public int EventId { get; set; }
         public RefereeSignUpStatusEm RefereeSignUpStatus { get; set; }
-        public int? GroupId { get; set; }
+        public int? EventGroupId { get; set; }
         public bool IsTemp { get; set; }
         public int MemberId { get; set; }
+        public string Email { get; set; }
+        public string ContactMobile { get; set; }
     }
 
     public class RefereeSignUpListResponse

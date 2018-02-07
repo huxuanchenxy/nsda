@@ -419,14 +419,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var flag = _refereeSignUpService.Settings(id, statusOrGroup, out msg);
             return Result<string>(flag, msg);
         }
-
-        //裁判统计数据
-        [HttpGet]
-        public ContentResult refereedata(int eventId)
-        {
-            var data = _refereeSignUpService.RefereeData(eventId,UserContext.WebUserContext.Id);
-            return Result(true, string.Empty, data);
-        }
         #endregion
 
         #region 签到管理
