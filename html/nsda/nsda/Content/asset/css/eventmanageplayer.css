@@ -20,7 +20,6 @@
     margin-bottom:80px;
     padding-top:50px;
     min-height:800px;
-    position:relative;
 }
 .compe-lists{
     width:260px;
@@ -28,7 +27,8 @@
     border:1px solid #B3B9BE;
     float:left;
     position:absolute;
-    left:-270px;
+    left:85px;
+    
 }
 .compe-lists .manage-lists li{
     width:100%;
@@ -84,6 +84,9 @@
 .event-nav ul a:last-child li{
     color:#fff;
 }
+.classcheck{
+    margin-left:10px;
+}
 .classcheck img{
     float:left;
     margin-right:30px;
@@ -126,6 +129,7 @@
 .event-lists table{
     width:100%;
     margin-top:100px;
+    margin-left:10px;
 }
 .event-lists table thead{
     width:100%;
