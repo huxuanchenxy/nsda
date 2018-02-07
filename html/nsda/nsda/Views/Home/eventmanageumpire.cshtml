@@ -1,19 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_EventManage.cshtml";
-    ViewBag.Title = "比赛进程管理";
+    ViewBag.Title = "裁判报名管理";
 }
-<link href="@Url.Content("~/Content/asset/css/eventmanagelists.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageumpire.css?2.1.0")" rel="stylesheet" type="text/css" />
 <div class="container event-lists">
-    <div class="compe-lists">
-        <ul class="manage-lists">
-            <li><input type="checkbox"><p>比赛规则设置</p></li>
-            <li><input type="checkbox"><p>选手报名管理</p></li>
-            <li><input type="checkbox"><p>裁判报名管理</p></li>
-            <li><input type="checkbox"><p>Room管理</p></li>
-            <a href="javascript:;" class="clickready"><p>准备好了吗？</p><h4>点击开始比赛当日操作</h4></a>
-        </ul>
-    </div>
-    <div class="tri"></div>
+    @Html.Partial("_manage")
     <div class="classcheck">
         <img src="~/Content/asset/img/sinfo_03.png" alt="" />
         <div class="class">
@@ -217,3 +209,4 @@
         </div>
     </nav>
 </div>
+

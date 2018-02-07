@@ -219,7 +219,8 @@
     <Content Include="Content\asset\css\coachinformation.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
-    <Content Include="Content\asset\css\eventmanagelists.css" />
+    <Content Include="Content\asset\css\eventmanageplayer.css" />
+    <Content Include="Content\asset\css\eventmanageumpire.css" />
     <Content Include="Content\asset\css\eventstart.css" />
     <Content Include="Content\asset\css\eventstartlists.css" />
     <Content Include="Content\asset\css\iconfont.css" />
@@ -342,8 +343,10 @@
     <Content Include="Views\Home\addedu.cshtml" />
     <Content Include="Views\Home\boundcoach.cshtml" />
     <Content Include="Views\Home\boundplayer.cshtml" />
-    <Content Include="Views\Home\eventmanagelists.cshtml" />
+    <Content Include="Views\Home\eventmanageplayer.cshtml" />
     <Content Include="Views\Home\playercompesign.cshtml" />
+    <Content Include="Views\Home\eventmanageumpire.cshtml" />
+    <Content Include="Views\Home\_manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

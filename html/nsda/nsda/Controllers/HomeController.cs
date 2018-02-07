@@ -133,9 +133,14 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "添加绑定学员";
             return View();
         }
-        public ActionResult eventmanagelists()
+        public ActionResult eventmanageplayer()
         {
-            ViewBag.Message = "比赛进程管理";
+            ViewBag.Message = "选手报名管理";
+            return View();
+        }
+        public ActionResult eventmanageumpire()
+        {
+            ViewBag.Message = "裁判报名管理";
             return View();
         }
     }
