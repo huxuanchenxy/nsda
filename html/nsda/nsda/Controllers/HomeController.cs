@@ -148,5 +148,10 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "裁判管理";
             return View();
         }
+        public ActionResult addjudge()
+        {
+            ViewBag.Message = "添加临时裁判";
+            return View();
+        }
     }
 }

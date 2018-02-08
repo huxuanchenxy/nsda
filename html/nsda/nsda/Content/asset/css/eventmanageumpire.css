@@ -156,14 +156,81 @@
     top:5px;
     left:6%
 }
-
-
-
-
-
-
-
-
+body{
+    padding:0;
+    margin:0;
+}
+.fg-layer-iframe iframe{
+    border:2px solid #2C3E50;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.fg-layer-iframe .fg-layer-content{
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.addtemporaryjudge{
+    overflow:hidden;
+    background:#D8E0E5;
+    padding:10px 120px 39px 120px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.addtemporaryjudge h4{
+    font-size:18px;
+    color:#666666;
+    text-align:center;
+}
+.addtemporaryjudge span{
+    display:inline-block;
+    width:30px;
+    height:3px;
+    background:#4E5D66;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+.addtemporaryjudge .form-group.judgename{
+    margin-top:70px;
+    margin-bottom:40px;
+}
+.addtemporaryjudge .form-group input{
+    width:350px;
+    height:40px;
+    background:#FFF6E7;
+    padding-left:10px;
+    font-size:14px;
+    color:#999999;
+    box-shadow:none;
+    border:1px solid transparent;
+}
+.addtemporaryjudge .form-group p{
+    font-size:12px;
+    color:#ff6666;
+}
+.addtemporaryjudge button{
+    display:inline-block;
+    width:270px;
+    height:50px;
+    background:#4E5D66;
+    color:#fff;
+    text-align:center;
+    line-height:50px;
+    font-size:18px;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border:none;
+    margin-top:45px;
+    margin-left:35px;
+}
 
 
 

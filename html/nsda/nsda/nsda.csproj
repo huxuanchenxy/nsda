@@ -349,6 +349,7 @@
     <Content Include="Views\Home\eventmanageplayer.cshtml" />
     <Content Include="Views\Home\_manager.cshtml" />
     <Content Include="Views\Home\manageumpire.cshtml" />
+    <Content Include="Views\Home\addjudge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
