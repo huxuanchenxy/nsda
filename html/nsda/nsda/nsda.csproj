@@ -222,8 +222,8 @@
     <Content Include="Content\asset\css\eventmanageumpire.css" />
     <Content Include="Content\asset\css\eventstart.css" />
     <Content Include="Content\asset\css\eventstartlists.css" />
-    <Content Include="Content\asset\css\iconfont.css" />
     <Content Include="Content\asset\css\eventmanageplayer.css" />
+    <Content Include="Content\asset\css\iconfont.css" />
     <Content Include="Content\asset\css\playerboundcoach.css" />
     <Content Include="Content\asset\css\playercenter.css" />
     <Content Include="Content\asset\css\index.css" />
