@@ -1,4 +1,11 @@
-﻿.classcheck .class .addroom{
+﻿.data .data-con a{
+    float:left;
+}
+.data .data-con a p{
+    float:right;
+    color:#FD7E7F;
+}
+.classcheck .class .addroom{
     display:inline-block;
     padding:4px 10px;
     background:#47BBED;
@@ -11,3 +18,236 @@
     right:0;
     top:140px;
 }
+.classcheck select.batch{
+    max-width:200px;
+    height:30px;
+    border:1px solid #EDEDED;
+    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    padding-left:5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    position:absolute;
+    top:165px;
+    left:0;
+}
+.event-lists table tbody td:first-child span.mark{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    position:absolute;
+    left:3px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+.event-lists table tbody td.modify{
+    position:relative;
+    min-width:90px;
+}
+.event-lists table tbody td a.modifyroom{
+    display:inline-block;
+    padding:5px 10px;
+    color:white;
+    background:#4E5D66;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    position:absolute;
+    left:50%;
+    top:30%;
+    transform:translate(-50%);
+}
+.event-lists table tbody td:first-child{
+    min-width:140px;
+}
+.event-lists table tbody tr td span.amend{
+    display:inline-block;
+    padding:1px 8px;
+    color:#fff;
+    font-size:12px;
+    background:#1ABC9C;
+    border-radius:40px;
+    -webkit-border-radius:40px;
+    -moz-border-radius:40px;
+    position:absolute;
+    top:5px;
+    left:6%;
+    cursor:pointer;
+   
+}
+.event-lists table tbody td:not(:last-child){
+    max-width:200px;
+    word-break:keep-all;
+    word-wrap:break-word;
+    overflow:hidden; 
+    text-overflow:ellipsis;  
+    -o-text-overflow:ellipsis;
+    -icab-text-overflow: ellipsis;
+    -khtml-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+}
+.event-lists table tbody td select{
+    max-width:200px;
+    height:30px;
+    border:1px solid #EDEDED;
+    background: linear-gradient(#F2F4F5,#fff,#F2F4F5);
+    padding-left:5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.event-lists table tbody tr td:last-child{
+    min-width:200px;
+    position:relative;
+}
+.event-lists table tbody tr td a:not(:last-child){
+    margin-right:10px;
+}
+.event-lists table tbody tr td{
+    padding:25px 0;
+}
+.event-lists table tbody tr td:last-child a{
+    display:inline-block;
+    padding:5px 10px;
+    color:white;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+}
+.event-lists table tbody tr td p.playername{
+    display:inline-block;
+    width:30%;
+    color:#666;
+    left:6%;
+    float:left;
+
+}
+.event-lists table tbody tr td a.addassign{
+    background:#1ABC9C;
+    left:36%;
+}
+.event-lists table tbody tr td a.clearassign{
+    background:#F3924B;
+    left:66%;
+}
+body{
+    padding:0;
+    margin:0;
+}
+.fg-layer-iframe iframe{
+    border:2px solid #2C3E50;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.fg-layer-iframe .fg-layer-content{
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.modiroom{
+    overflow:hidden;
+    background:#D8E0E5;
+    padding:10px 160px 39px 160px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.modiroom h4{
+    font-size:18px;
+    color:#666666;
+    text-align:center;
+}
+.modiroom span{
+    display:inline-block;
+    width:30px;
+    height:3px;
+    background:#4E5D66;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+.modiroom .form-group.roomname{
+    margin-top:70px;
+    margin-bottom:60px;
+}
+.modiroom .form-group input{
+    width:230px;
+    height:40px;
+    background:#FFF6E7;
+    padding-left:10px;
+    font-size:14px;
+    color:#999999;
+    box-shadow:none;
+    border:1px solid transparent;
+}
+.modiroom .roomclass{
+    margin-bottom:18px;
+}
+.modiroom .roomclass label{
+    color:#666;
+    font-size:14px;
+}
+.modiroom .roomclass select{
+    min-width: 180px;
+    height:30px;
+    border:1px solid #EDEDED;
+    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    padding-left:5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+
+.modiroom button{
+    display:inline-block;
+    width:240px;
+    height:50px;
+    background:#4E5D66;
+    color:#fff;
+    text-align:center;
+    line-height:50px;
+    font-size:18px;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border:none;
+    margin-top:45px;
+    cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

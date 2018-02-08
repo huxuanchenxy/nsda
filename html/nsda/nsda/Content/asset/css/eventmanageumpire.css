@@ -92,7 +92,6 @@
 }
 .event-lists table tbody tr td a:not(:last-child){
     margin-right:10px;
-
 }
 .event-lists table tbody tr td{
     padding:25px 0;
@@ -203,7 +202,7 @@ body{
 }
 .addtemporaryjudge .form-group.judgename{
     margin-top:70px;
-    margin-bottom:40px;
+    margin-bottom:30px;
 }
 .addtemporaryjudge .form-group input{
     width:350px;
@@ -234,6 +233,7 @@ body{
     border:none;
     margin-top:45px;
     margin-left:35px;
+    cursor:pointer;
 }
 
 

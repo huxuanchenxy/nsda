@@ -346,12 +346,12 @@
     <Content Include="Views\Home\boundplayer.cshtml" />
     <Content Include="Views\Home\playercompesign.cshtml" />
     <Content Include="Views\Home\eventmanageumpire.cshtml" />
-    <Content Include="Views\Home\_manage.cshtml" />
     <Content Include="Views\Home\eventmanageplayer.cshtml" />
     <Content Include="Views\Home\_manager.cshtml" />
     <Content Include="Views\Home\manageumpire.cshtml" />
     <Content Include="Views\Home\addjudge.cshtml" />
     <Content Include="Views\Home\eventmanageroom.cshtml" />
+    <Content Include="Views\Home\modifyroom.cshtml" />
     <Content Include="Views\Home\addroom.cshtml" />
   </ItemGroup>
   <ItemGroup>
