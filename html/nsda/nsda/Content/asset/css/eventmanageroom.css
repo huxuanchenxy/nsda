@@ -1,0 +1,13 @@
+﻿.classcheck .class .addroom{
+    display:inline-block;
+    padding:4px 10px;
+    background:#47BBED;
+    color:#fff;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    cursor:pointer;
+    position:absolute;
+    right:0;
+    top:140px;
+}

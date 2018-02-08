@@ -99,7 +99,7 @@
     font-size:14px;
 }
 .classcheck .class .group .group-item{
-    width:13%;
+    min-width:13%;
     text-align:right;
     float:left;
 }

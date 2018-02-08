@@ -1,6 +1,4 @@
-﻿.managelists{
-    margin-top:90px;
-}
+﻿
 .managelists ul{
     padding:6px;
 }
@@ -42,7 +40,7 @@
     font-weight:600;
 }
 .data .data-item{
-    width:7%;
+    min-width:7%;
     text-align:right;
     float:left;
 }
@@ -142,6 +140,12 @@
 .event-lists table tbody tr td:nth-child(2){
     position:relative;
 
+}
+.event-lists table tbody tr.markred td{
+    color:red;
+}
+.event-lists table tbody tr.markred span.mark i{
+    color:red;
 }
 .event-lists table tbody tr td span.snap{
     display:inline-block;

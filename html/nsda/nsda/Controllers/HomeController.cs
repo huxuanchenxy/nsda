@@ -153,5 +153,16 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "添加临时裁判";
             return View();
         }
+        
+            public ActionResult eventmanageroom()
+        {
+            ViewBag.Message = "Room管理";
+            return View();
+        }
+        public ActionResult addroom()
+        {
+            ViewBag.Message = "添加Room";
+            return View();
+        }
     }
 }

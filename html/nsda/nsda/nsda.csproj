@@ -219,6 +219,7 @@
     <Content Include="Content\asset\css\coachinformation.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
+    <Content Include="Content\asset\css\eventmanageroom.css" />
     <Content Include="Content\asset\css\eventmanageumpire.css" />
     <Content Include="Content\asset\css\eventstart.css" />
     <Content Include="Content\asset\css\eventstartlists.css" />
@@ -350,6 +351,8 @@
     <Content Include="Views\Home\_manager.cshtml" />
     <Content Include="Views\Home\manageumpire.cshtml" />
     <Content Include="Views\Home\addjudge.cshtml" />
+    <Content Include="Views\Home\eventmanageroom.cshtml" />
+    <Content Include="Views\Home\addroom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "裁判报名管理";
+}
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageumpire.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageroom.css?1.1.0")" rel="stylesheet" type="text/css" />
+@Scripts.Render("~/Content/asset/layer/js/layer.js")
+@Html.Partial("_manager")
+<div class="event-lists">
+    <div class="classcheck">
+        <img src="~/Content/asset/img/sinfo_03.png" alt="" />
+        <div class="class">
+            <div class="group">
+                <div class="group-item">
+                    <p>按组别查看：</p><a href="javascript:;" class="selected">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;">新手组</a>
+                    <a href="javascript:;">公开组</a>
+                </div>
+            </div>
+            <div class="group">
+                <div class="group-item">
+                    <p>按状态查看：</p><a href="javascript:;" class="selected">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;">使用中</a>
+                    <a href="javascript:;">停用</a>
+                    <a href="javascript:;">限制</a>
+                </div>
+            </div>
+            <div class="data">
+                <div class="data-item">
+                    <p>数据统计：</p>
+                </div>
+                <div class="data-con">
+                    <a href="javascript:;">目前总Room数量为：5</a>
+                    <a href="javascript:;">建议房间数为：请在比赛规则设置完成后，才能显示。</a>
+                </div>
+            </div>
+            <span class="addroom">+ 添加Room</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Room编号</th>
+                    <th>Room名称</th>
+                    <th>目前状态</th>
+                    <th>操作</th>
+                    <th>修改</th>
+                    <th>指定选手使用该房间（每间room仅可指定一位） </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="mark"><i class="iconfont icon-qizhibiaojibiaozhu"></i></span>021</td>
+                    <td>James RingerJames Ringer</td>
+                    <td>13948485677</td>
+                    <td>1394@hahahaha.com</td>
+                    <td>已录取</td>
+                    <td><a href="javascript:;" class="enrol">录取此人</a><a href="javascript:;" class="refuse">拒绝此人</a><a href="javascript:;" class="candidate">设为候选</a></td>
+                </tr>
+                <tr>
+                    <td><span class="mark"><i class="iconfont icon-qizhibiaojibiaozhu"></i></span>021</td>
+                    <td>James RingerJames Ringer<span class="snap">临时裁判</span></td>
+                    <td>13948485677</td>
+                    <td>13dfghjhgfdsfgh94@hahahaha.com</td>
+                    <td>已录取</td>
+                    <td><a href="javascript:;" class="refuse">拒绝此人</a><a href="javascript:;" class="candidate">设为候选</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation" id="page">
+        <div class="page">
+            <a href="javascript:void(0);" class="prev"><</a>
+            <a href="javascript:void(0);" class="on">1</a>
+            <span>...</span>
+            <a href="javascript:void(0);">4</a>
+            <a href="javascript:void(0);">5</a>
+            <a href="javascript:void(0);">6</a>
+            <span>...</span>
+            <a href="javascript:void(0);">7</a>
+            <a href="javascript:void(0);" class="next">></a>
+        </div>
+    </nav>
+</div>
+<script>
+    $(".addjudge").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Home/addroom",
+            area: ["565px", "410px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
