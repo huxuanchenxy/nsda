@@ -229,6 +229,7 @@
     <Content Include="Content\asset\css\eventstart.css" />
     <Content Include="Content\asset\css\eventstartlists.css" />
     <Content Include="Content\asset\css\eventmanageplayer.css" />
+    <Content Include="Content\asset\css\eventumpiresignin.css" />
     <Content Include="Content\asset\css\iconfont.css" />
     <Content Include="Content\asset\css\playerboundcoach.css" />
     <Content Include="Content\asset\css\playercenter.css" />
@@ -365,6 +366,7 @@
     <Content Include="Views\Home\addassign.cshtml" />
     <Content Include="Views\Home\eventnewplayersignin.cshtml" />
     <Content Include="Views\Home\eventopenplayersignin.cshtml" />
+    <Content Include="Views\Home\eventumpiresignin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,21 +16,12 @@
     <div class="form-group searchplayer">
         <input id="txt" placeholder="输入组队编号/会员编号/姓名" />
         <a class="search" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
-        <select size="2" id="sel" style="display:none;">
-            <option>123</option>
-            <option>23456</option>
-            <option>1111</option>
-            <option>123333</option>
-            <option>aaaa</option>
-            <option>1bbb23</option>
-        </select>
     </div>
     <div class="form-group batch">
         <select class="batchsignin">
             <option value="1">批处理为</option>
             <option value="2">签到</option>
         </select>
-        <a href="javascript:;" class="addjudge">+ 添加临时裁判</a>
     </div>
     <table>
         <thead>
@@ -140,24 +131,3 @@
     </nav>
 </div>
 
-
-
-
-
-
-
-@Scripts.Render("~/Content/asset/js/block.js")
-<script>
-    $(".addjudge").click(function () {
-        layer.open({
-            title: "",
-            type: 2,
-            content: "/Home/addjudge",
-            area: ["565px", "400px"],
-            end: function () {
-                location.reload();
-            }
-        });
-    })
-
-</script>

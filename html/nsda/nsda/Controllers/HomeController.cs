@@ -205,6 +205,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "公开组选手签到";
             return View();
         }
+        public ActionResult eventumpiresignin()
+        {
+            ViewBag.Message = "裁判签到管理";
+            return View();
+        }
         public ActionResult eventjudgesignin()
         {
             ViewBag.Message = "裁判签到";

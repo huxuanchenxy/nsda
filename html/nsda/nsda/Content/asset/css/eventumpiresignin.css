@@ -1,5 +1,63 @@
-﻿.list-top{
+﻿.classcheck .class{
     margin-bottom:30px;
+}
+.classcheck .class .group .group-item a.selected{
+    color:#fff;
+}
+.data .data-item{
+    min-width:7%;
+    text-align:right;
+    float:left;
+}
+.data .data-con{
+    float:left;
+    width:80%
+}
+.data .data-con a{
+    float:left;
+    color:black;
+    margin-left:2%;
+    margin-right:2%;
+}
+.event-lists .class .data .data-con{
+    position:relative;
+}
+.event-lists .class .data .data-con ul.hadnumber,.event-lists .class .data .data-con ul.advisenumber{
+    width:23%;
+}
+.event-lists .class .data .data-con ul.statistics{
+    width:47%;
+    margin-left:30px;
+}
+.event-lists .class .data .data-con ul{
+    min-height:60px;
+    float:left;
+    margin-left:10px;
+}
+.event-lists .class .data .data-con ul.hadnumber li{
+    width:100%;
+    color:#666;
+}
+.event-lists .class .data .data-con ul.hadnumber span{
+    float:left;
+    min-width:170px;
+    text-align:right;
+}
+.event-lists .class .data .data-con ul.hadnumber p{
+    text-align:left;
+}
+.event-lists .class .data .data-con ul.advisenumber li{
+    width:100%;
+    color:#666;
+}
+.event-lists .class .data .data-con ul.advisenumber span{
+    float:left;
+    min-width:170px;
+    text-align:right;
+}
+.event-lists .class .data .data-con ul.advisenumber p{
+    text-align:left;
+    color:#ff6666;
 }
 .searchplayer{
     position:relative;
@@ -57,7 +115,6 @@
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
 }
-
 .event-lists table{
     border-collapse: collapse;
     width: 100%;
@@ -72,11 +129,19 @@
     display:inline-block;
     width:20px;
     height:20px;
+    cursor:pointer;
     position:absolute;
-    left:3px;
+    left:0;
     top:50%;
     transform:translateY(-50%);
-    cursor:pointer;
+}
+.event-lists table tbody tr td a{
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 .event-lists table tbody td.status{
     min-width:50px;
@@ -88,9 +153,6 @@
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
     color:#fff;
-}
-.event-lists table tbody td.status a.stop{
-    background:#FF6666;
 }
 .event-lists table tbody td.status a.signin{
     background:#47BBED;
@@ -107,21 +169,6 @@
     -moz-text-overflow: ellipsis;
     -webkit-text-overflow: ellipsis;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
