@@ -1,12 +1,15 @@
 ﻿@{
     Layout = "~/Views/Shared/_EventManage.cshtml";
-    ViewBag.Title = "裁判报名管理";
+    ViewBag.Title = "淘汰赛规则设置";
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/eventmanageknockout.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageknockout.css?2.1.0")" rel="stylesheet" type="text/css" />
 @Html.Partial("_manager")
 <div class="event-lists">
-    
+    <div class="list-top">
+        <a href="/Home/eventmanageround" class="list">循环赛规则设置</a>
+        <a href="/Home/eventmanageknockout" class="active list">淘汰赛规则设置</a>
+    </div>
 </div>
 
 
