@@ -219,8 +219,12 @@
     <Content Include="Content\asset\css\coachinformation.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
+    <Content Include="Content\asset\css\eventmanageknockout.css" />
     <Content Include="Content\asset\css\eventmanageroom.css" />
+    <Content Include="Content\asset\css\eventmanageround.css" />
     <Content Include="Content\asset\css\eventmanageumpire.css" />
+    <Content Include="Content\asset\css\eventnewinfocomfirm.css" />
+    <Content Include="Content\asset\css\eventopeninfocomfirm.css" />
     <Content Include="Content\asset\css\eventstart.css" />
     <Content Include="Content\asset\css\eventstartlists.css" />
     <Content Include="Content\asset\css\eventmanageplayer.css" />
@@ -353,6 +357,10 @@
     <Content Include="Views\Home\eventmanageroom.cshtml" />
     <Content Include="Views\Home\modifyroom.cshtml" />
     <Content Include="Views\Home\addroom.cshtml" />
+    <Content Include="Views\Home\eventmanageknockout.cshtml" />
+    <Content Include="Views\Home\eventmanageround.cshtml" />
+    <Content Include="Views\Home\eventnewinfocomfirm.cshtml" />
+    <Content Include="Views\Home\eventopeninfocomfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -153,8 +153,8 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "添加临时裁判";
             return View();
         }
-        
-            public ActionResult eventmanageroom()
+
+        public ActionResult eventmanageroom()
         {
             ViewBag.Message = "Room管理";
             return View();
@@ -167,6 +167,27 @@ namespace WebApplication2.Controllers
         public ActionResult modifyroom()
         {
             ViewBag.Message = "修改Room";
+            return View();
+        }
+        public ActionResult eventmanageknockout()
+        {
+            ViewBag.Message = "淘汰赛规则设置";
+            return View();
+        }
+        public ActionResult eventmanageround()
+        {
+            ViewBag.Message = "循环赛规则设置";
+            return View();
+        }
+
+        public ActionResult eventnewinfocomfirm()
+        {
+            ViewBag.Message = "开始执行对垒";
+            return View();
+        }
+        public ActionResult eventopeninfocomfirm()
+        {
+            ViewBag.Message = "开始执行对垒";
             return View();
         }
     }
