@@ -362,7 +362,6 @@
     <Content Include="Views\Home\eventmanageknockout.cshtml" />
     <Content Include="Views\Home\eventmanageround.cshtml" />
     <Content Include="Views\Home\eventnewinfocomfirm.cshtml" />
-    <Content Include="Views\Home\eventopeninfocomfirm.cshtml" />
     <Content Include="Views\Home\addassign.cshtml" />
     <Content Include="Views\Home\eventnewplayersignin.cshtml" />
     <Content Include="Views\Home\eventopenplayersignin.cshtml" />

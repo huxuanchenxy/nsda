@@ -1,4 +1,7 @@
-﻿.classcheck .class{
+﻿.classcheck{
+    min-height:200px;
+}
+.classcheck .class{
     margin-bottom:30px;
 }
 .classcheck .class .group .group-item a.selected{
@@ -23,28 +26,36 @@
     position:relative;
 }
 .event-lists .class .data .data-con ul.hadnumber,.event-lists .class .data .data-con ul.advisenumber{
-    width:23%;
+    width:25%;
 }
 .event-lists .class .data .data-con ul.statistics{
-    width:47%;
+    width:360px;
     margin-left:30px;
+    
+}
+.event-lists .class .data .data-con ul.statistics li a{
+    color:#666;
 }
 .event-lists .class .data .data-con ul{
+    min-width:200px;
     min-height:60px;
     float:left;
     margin-left:10px;
+    margin-bottom:20px;
 }
 .event-lists .class .data .data-con ul.hadnumber li{
     width:100%;
-    color:#666;
 }
 .event-lists .class .data .data-con ul.hadnumber span{
     float:left;
     min-width:170px;
     text-align:right;
+    color:#666;
 }
 .event-lists .class .data .data-con ul.hadnumber p{
+    float:left;
     text-align:left;
+    color:#666;
 }
 .event-lists .class .data .data-con ul.advisenumber li{
     width:100%;
