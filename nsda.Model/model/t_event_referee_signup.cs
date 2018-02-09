@@ -48,6 +48,8 @@ namespace nsda.Models
     
         public bool isTemp { get; set; }
     
+        public bool isFlag { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

@@ -20,5 +20,7 @@ namespace nsda.Model.dto.request
         public int EventId { get; set; }
         public int MemberId { get; set; }
         public string KeyValue { get; set; }
+        public int? EventGroupId { get; set; }
+        public int? RefereeStatus { get; set; }
     }
 }

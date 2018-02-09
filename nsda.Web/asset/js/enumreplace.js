@@ -56,6 +56,17 @@
             return "女";
         }
     };
+    enumreplace.replaceRoomStatus = function (roomStatus) {
+        if (roomStatus == 1) {
+            return "闲置";
+        }
+        else if (roomStatus == 2) {
+            return "停用";
+        }
+        else if (roomStatus == 3) {
+            return "使用中";
+        }
+    };
     enumreplace.replaceEventStatus = function (eventStatus) {
         if (eventStatus == 1) {
             return "审核中";
@@ -114,9 +125,6 @@
         }
         else if (refereesignUpStatus == 4) {
             return "候选名单";
-        }
-        else if (refereesignUpStatus == 5) {
-            return "标记";
         }
     };
     enumreplace.replacezsignUpStatus = function (signUpStatus) {

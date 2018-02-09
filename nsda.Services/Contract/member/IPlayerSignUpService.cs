@@ -44,6 +44,6 @@ namespace nsda.Services.Contract.member
         //未报名成功的队伍 申请退费
         bool ApplyRefund(int eventId, int operUserId, out string msg);
         // 教室设定特殊学员
-        List<MemberSelectResponse> SelectPlayer(int eventId, string keyvalue);
+        List<MemberSelectResponse> SelectPlayer(int eventId, int? eventGroupId, string keyvalue);
     }
 }

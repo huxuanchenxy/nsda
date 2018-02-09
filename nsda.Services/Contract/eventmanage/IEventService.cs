@@ -40,5 +40,6 @@ namespace nsda.Services.Contract.eventmanage
         List<EventGroupResponse> ListEventGroup(int eventId, int memberId);
         // 赛事组别详情
         EventGroupResponse EventGroupDetail(int eventGroupId);
+        List<string> EventDate(int eventId);
     }
 }

@@ -20,7 +20,7 @@ namespace nsda.unittest
         public void Check()
         {
             string msg = string.Empty;
-            service.Check(2, true, 11, out msg);
+            service.Check(2, Model.enums.CheckRefereeEnum.通过, 11, out msg);
         }
     }
 }

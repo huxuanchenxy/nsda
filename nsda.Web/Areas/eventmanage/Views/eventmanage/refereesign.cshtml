@@ -1,0 +1,270 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "裁判签到管理";
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+    var date = ViewBag.EventDate as List<string>;
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventumpiresignin.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+<div class="event-lists newplayer">
+    <div class="classcheck">
+        <img src="/asset/img/sinfo_03.png" alt="" />
+        <div class="class">
+            <div class="group">
+                <div class="group-item">
+                    <p>按组别查看：</p><a href="javascript:;" class="selected" id="eventgroupUnlimited">不限</a>
+                </div>
+                <div class="group-con">
+                    @foreach (var item in eventGroup)
+                    {
+                        <a href="javascript:;" class="eventgroup" data-id="@item.Id">@item.Name</a>
+                    }
+                </div>
+            </div>
+            <div class="group">
+                <div class="group-item">
+                    <p>按状态查看：</p><a href="javascript:;" class="selected" id="refereesignUnlimited">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;" class="refereesign" data-status="1">使用中</a>
+                    <a href="javascript:;" class="refereesign" data-status="2">停用</a>
+                    <a href="javascript:;" class="refereesign" data-status="3">闲置</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group searchplayer">
+        <input id="txt" placeholder="输入组队编号/会员编号/姓名" />
+        <a class="search" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
+    </div>
+
+    <div class="form-group batch">
+        <select class="batchsignin" id="batchsignin">
+            <option value="0">批处理为</option>
+            <option value="1">签到</option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>裁判编号</th>
+                <th>裁判姓名</th>
+                <th>联系电话</th>
+                <th>组别状态</th>
+                <th>状态</th>
+                @foreach (var item in date)
+                {
+                    <th>@item</th>
+                }
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+@section scripts
+{
+   <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+   <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script>
+        (function (w) {
+            var eventrefereelist = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                    EventId:@Model.Id,
+                    KeyValue:"",
+                    EventGroupId:0,
+                    RefereeStatus:0
+                }
+            };
+            eventrefereelist.Load = function (filter) {
+                $.ajax({
+                    url: "/eventmanage/eventmanage/refereesignlist",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            eventrefereelist.param.TotalPage = json.total;
+                            _pager.init(filter, eventrefereelist.param.PageIndex, eventrefereelist.param.TotalPage, function (p) {
+                                eventrefereelist.param.PageIndex = p;
+                                eventrefereelist.Load(eventrefereelist.param)
+                            });
+                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html+='<tr>';
+                                html+='<td><span class="mark"><input type="checkbox" data-id='+val.MemberId +' class="chksign"/></span>'+val.MemberCode+'</td>';
+                                html+='<td>'+val.MemberName+'</td>';
+                                html+='<td>'+val.ContactMobile+'</td>';
+                                if(val.EventGroupName!=null)
+                                {
+                                    html+='<td>'+val.EventGroupName+'</td>';
+                                }else{
+                                    html+='<td>随机使用</td>';
+                                }
+                                html+='<td>待处理</td>';
+                                $.each(val.List, function (kk, item) {
+                                    html+='<td class="status">';
+                                    if(item.IsCurrentDate==true)
+                                    {
+                                        if(item.EventSignStatus==1)
+                                        {
+                                            html+='<a href="javascript:;" class="sign signin" data-id='+val.MemberId+'>签到</a>';
+                                        }
+                                        else{
+                                            html+='已签到';
+                                        }
+                                    }
+                                    html+='</td>';
+                                });
+                                html+='</tr>';
+                            });
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.eventrefereelist = eventrefereelist
+        })(window);
+        eventrefereelist.Load(eventrefereelist.param);
+        $("#refereesignUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".refereesign").removeClass("selected");
+            eventrefereelist.param.RefereeSignUpStatus = 0;
+            eventrefereelist.Load(eventrefereelist.param);
+        });
+        $(".refereesign").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#refereesignUnlimited").addClass("selected");
+                eventrefereelist.param.RefereeSignUpStatus = 0;
+            } else {
+                $(".refereesign").removeClass("selected");
+                $this.addClass("selected");
+                $("#refereesignUnlimited").removeClass("selected");
+                eventrefereelist.param.RefereeSignUpStatus = $this.attr("data-status");
+            }
+            eventrefereelist.Load(eventrefereelist.param);
+        });
+
+        $("#eventgroupUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".eventgroup").removeClass("selected");
+            eventrefereelist.param.EventGroupId = 0;
+            eventrefereelist.Load(eventplayerlist.param);
+        });
+        $(".eventgroup").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#eventgroupUnlimited").addClass("selected");
+                eventrefereelist.param.EventGroupId = 0;
+            } else {
+                $(".eventgroup").removeClass("selected");
+                $this.addClass("selected");
+                $("#eventgroupUnlimited").removeClass("selected");
+                eventrefereelist.param.EventGroupId = $this.attr("data-id");
+            }
+            eventrefereelist.Load(eventrefereelist.param);
+        });
+
+        $("#search").click(function(){
+            eventrefereelist.param.KeyValue=$("#txt").val();
+            eventrefereelist.Load(eventrefereelist.param);
+        });
+
+        $("#batchsignin").change(function(){
+            var val=$(this).val();
+            if(val!=0)
+            {
+                var arr=[];
+                $(".chksign").each(function(){
+                    if($(this).is(":checked")==true){
+                        arr.push($(this).attr("data-id"));
+                    }
+                });
+                if(arr.length>0)
+                {
+                    $.ajax({
+                        url: "/eventmanage/eventmanage/batchsign",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            memberId: arr,
+                            eventId:eventrefereelist.param.EventId,
+                            eventSignType: 2
+                        },
+                        beforeSend: function () {
+                            layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                        },
+                        success: function (json) {
+                            layer.closeAll();
+                            if (json.flag) {
+                                layer.msg('签到成功', { icon: 1, time: 1000 });
+                                location.reload();
+                            }
+                            else {
+                                layer.msg(json.msg, { icon: 5, time: 1000 });
+                            }
+                        }
+                        ,error: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }else{
+                    layer.msg('请先勾选好数据再进行操作', { icon: 5, time: 1000 });
+                }
+            }        
+        });
+
+        $(document).on("click", ".sign", function (){
+            $.ajax({
+                url: "/eventmanage/eventmanage/batchsign",
+                type: "post",
+                dataType: "json",
+                data: {
+                    memberId: $(this).attr("data-id"),
+                    eventId:eventrefereelist.param.EventId,
+                    eventSignType: 2
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('签到成功', { icon: 1, time: 1000 });
+                        location.reload();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+}

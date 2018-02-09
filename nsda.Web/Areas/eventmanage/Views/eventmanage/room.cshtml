@@ -1,0 +1,404 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "room管理";
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventmanageumpire.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanageroom.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+<div class="event-lists">
+    <div class="classcheck">
+        <input type="hidden" id="eventgroupData" value="@eventGroup.Serialize()"/>
+        <img src="/asset/img/sinfo_03.png" alt="" />
+        <div class="class">
+            <div class="group">
+                <div class="group-item">
+                    <p>按组别查看：</p><a href="javascript:;" class="selected" id="eventGroupUnlimited">不限</a>
+                </div>
+                <div class="group-con">
+                    @foreach (var item in eventGroup)
+                    {
+                        <a href="javascript:;" class="eventGroup" data-group="@item.Id">@item.Name</a>
+                    }
+                </div>
+            </div>
+            <div class="group">
+                <div class="group-item">
+                    <p>按状态查看：</p><a href="javascript:;" class="selected" id="eventRoomStatusUnlimited">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;" class="eventRoomStatus" data-status="3">使用中</a>
+                    <a href="javascript:;"  class="eventRoomStatus" data-status="2">停用</a>
+                    <a href="javascript:;"  class="eventRoomStatus" data-status="1">闲置</a>
+                </div>
+            </div>
+            <div class="data">
+                <div class="data-item">
+                    <p>数据统计：</p>
+                </div>
+                <div class="data-con">
+                    <a href="javascript:;">目前总Room数量为：<span id="roomCount">5</span></a>
+                </div>
+            </div>
+            <span class="addroom" id="addroom">+ 添加Room</span>
+        </div>
+
+        <select class="batch" id="batch">
+            <option value="-2">批量处理</option>
+            <option value="-1">停用</option>
+            <option value="0">随机使用</option>
+            @foreach (var item in eventGroup)
+            {
+                <option value="@item.Id">仅 @item.Name 使用（组别）</option>
+            }
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>Room编号</th>
+                    <th>Room名称</th>
+                    <th>目前状态</th>
+                    <th>操作</th>
+                    <th>修改</th>
+                    <th>指定选手使用该房间（每间room仅可指定一位） </th>
+                </tr>
+            </thead>
+            <tbody id="data">
+                @*<tr>
+         <td><span class="mark"><input type="checkbox" class="chkroom" data-id=""/></span>R1899582</td>
+         <td>A401</td>
+         <td>使用中</td>
+         <td>
+             <select class="tbselect">
+                 <option value="1">停用</option>
+                 <option value="2">仅 新手组 使用（组别）</option>
+                 <option value="3">仅 公开组 使用（组别）</option>
+             </select>
+         </td>
+         <td class="modify"><a href="javascript:;" class="modifyroom">修改名称</a></td>
+         <td><p class="playername">tylergypsy</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
+     </tr>
+    <tr>
+         <td><span class="mark"><input type="checkbox" /></span>R189345</td>
+         <td>A402</td>
+         <td>停用</td>
+         <td>
+             <select>
+                 <option value="1">停用</option>
+                 <option value="2">仅 新手组 使用（组别）</option>
+                 <option value="3">仅 公开组 使用（组别）</option>
+             </select>
+         </td>
+         <td class="modify"><a href="javascript:;" class="modifyroom">修改Room</a></td>
+         <td><p class="playername">范湉湉</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
+     </tr>
+     <tr>
+         <td><span class="mark"><input type="checkbox" /></span>R1899582</td>
+         <td>A401</td>
+         <td>闲置</td>
+         <td>
+             <select>
+                 <option value="1">停用</option>
+                 <option value="2">仅 新手组 使用（组别）</option>
+                 <option value="3">仅 公开组 使用（组别）</option>
+             </select>
+         </td>
+         <td class="modify"><a href="javascript:;" class="modifyroom">修改Room</a></td>
+         <td><p class="playername"></p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
+     </tr>*@
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+@section scripts
+{
+   <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+   <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script>
+        var data=$("#eventgroupData").val();
+        function returnGroup(roomId,eventGroupId,status)
+        {
+            var obj=$.parseJSON(data)
+            var html='<select class="tbselect" data-id='+roomId+'>';
+            if(status==2)//停用状态
+            { 
+                html+='<option value="-1" selected>停用</option>';
+                html+='<option value="0">随机使用</option>';
+            }
+            else{
+                html+='<option value="-1">停用</option>';
+                if(eventGroupId==0)
+                {
+                    html+='<option value="0" selected>随机使用</option>';
+                }
+                else{
+                    html+='<option value="0">随机使用</option>';
+                }
+            }
+            $.each(obj, function (k, val) {
+                if(val.Id==eventGroupId)
+                {
+                    html+='<option value='+val.Id+' selected>仅 '+val.Name+' 使用（组别）</option>';
+                }else{
+                    html+='<option value='+val.Id+' >仅 '+val.Name+' 使用（组别）</option>';
+                }
+            });
+            html+=' </select>';
+            return html;
+        }
+
+        (function (w) {
+            var eventroomlist = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                    EventId:@Model.Id,
+                    EventGroupId:0,
+                    RoomStatus:0
+                }
+            };
+            eventroomlist.Load = function (filter) {
+                $.ajax({
+                    url: "/eventmanage/eventmanage/listroom",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        $("#roomCount").html(json.records);
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            eventroomlist.param.TotalPage = json.total;
+                            _pager.init(filter, eventroomlist.param.PageIndex, eventroomlist.param.TotalPage, function (p) {
+                                eventroomlist.param.PageIndex = p;
+                                eventroomlist.Load(eventroomlist.param)
+                            });
+                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html+='<tr>';
+                                html+='<td><span class="mark"><input type="checkbox" data-id='+val.Id+' class="chkroom"  /></span>'+val.Code+'</td>';
+                                html+='<td>'+val.Name+'</td>';
+                                html+='<td>'+enumreplace.replaceRoomStatus(val.RoomStatus)+'</td>';
+                                html+='<td>'+returnGroup(val.Id,val.EventGroupId,val.RoomStatus)+'</td>';
+                                html+=' <td class="modify"><a href="javascript:;" class="modifyroom" data-id='+val.Id+'>修改名称</a></td>';
+                                html+='<td>';
+                                if(val.MemberName!=null)
+                                {
+                                    html+='<p class="playername">'+val.MemberName+'</p>';
+                                }
+                                html+='<a href="javascript:;" class="addassign" data-id='+val.Id+'>添加指定</a>';
+                                if(val.MemberName!=null)
+                                {
+                                   html+='<a href="javascript:;" class="clearassign" data-id='+val.Id+'>清除指定</a>';
+                                }
+                                html+='</td>'
+                                html+='</tr>';
+                            });
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.eventroomlist = eventroomlist
+        })(window);
+        eventroomlist.Load(eventroomlist.param);
+        $("#eventGroupUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".eventGroup").removeClass("selected");
+            eventroomlist.param.EventGroupId = 0;
+            eventroomlist.Load(eventroomlist.param);
+        });
+        $(".eventGroup").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#eventGroupUnlimited").addClass("selected");
+                eventroomlist.param.EventGroupId = 0;
+            } else {
+                $(".eventGroup").removeClass("selected");
+                $this.addClass("selected");
+                $("#eventGroupUnlimited").removeClass("selected");
+                eventroomlist.param.EventGroupId = $this.attr("data-group");
+            }
+            eventroomlist.Load(eventroomlist.param);
+        });
+
+        $("#eventRoomStatusUnlimited").click(function () {
+            $(this).addClass("selected");
+            $(".eventRoomStatus").removeClass("selected");
+            eventroomlist.param.RoomStatus = 0;
+            eventroomlist.Load(eventroomlist.param);
+        });
+        $(".eventRoomStatus").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("selected")) {
+                $this.removeClass("selected");
+                $("#eventRoomStatusUnlimited").addClass("selected");
+                eventroomlist.param.RoomStatus = 0;
+            } else {
+                $(".eventRoomStatus").removeClass("selected");
+                $this.addClass("selected");
+                $("#eventRoomStatusUnlimited").removeClass("selected");
+                eventroomlist.param.RoomStatus = $this.attr("data-status");
+            }
+            eventroomlist.Load(eventroomlist.param);
+        });
+
+        $("#addroom").click(function () {
+            layer.open({
+                title: "",
+                type: 2,
+                content: "/eventmanage/eventmanage/addroom/"+eventroomlist.param.EventId,
+                area: ["565px", "410px"],
+                end: function () {
+                    location.reload();
+                }
+            });
+        });
+
+        $(document).on("click", ".modifyroom", function (){
+            var id=$(this).attr("data-id");
+            layer.open({
+                title: "",
+                type: 2,
+                content: "/eventmanage/eventmanage/updateroom/"+id,
+                area: ["565px", "410px"],
+                end: function () {
+                    location.reload();
+                }
+            });
+
+        });
+
+        $("#batch").change(function(){
+            var val=$(this).val();
+            if(val!=-2)
+            {
+                var arr=[];
+                $(".chkroom").each(function(){
+                    if($(this).is(":checked")==true){
+                        arr.push($(this).attr("data-id"));
+                    }
+                });
+                if(arr.length>0)
+                {
+                    $.ajax({
+                        url: "/eventmanage/eventmanage/batcheditroomsettings",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            id: arr,
+                            status: val
+                        },
+                        beforeSend: function () {
+                            layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                        },
+                        success: function (json) {
+                            layer.closeAll();
+                            if (json.flag) {
+                                layer.msg('操作成功', { icon: 1, time: 1000 });
+                                location.reload();
+                            }
+                            else {
+                                layer.msg(json.msg, { icon: 5, time: 1000 });
+                            }
+                        }
+                        ,error: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }else{
+                    layer.msg('请先勾选好数据再进行操作', { icon: 5, time: 1000 });
+                }
+            }
+        });
+
+        //表格下拉框操作
+        $(document).on("change", ".tbselect", function (){
+            var id=$(this).attr("data-id");
+            var status=$(this).val();
+            if(status==-2)
+            {
+                return;
+            }
+            $.ajax({
+                url: "/eventmanage/eventmanage/editroomsettings",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: id,
+                    status: status
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                        location.reload();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+
+        $(document).on("click", ".addassign", function (){
+            layer.open({
+                title: "",
+                type: 2,
+                content: "/eventmanage/eventmanage/addroomplayer/"+$(this).attr("data-id"),
+                area: ["565px", "410px"],
+                end: function () {
+                    location.reload();
+                }
+            });
+        });
+
+        $(document).on("click", ".clearassign", function (){
+            $.ajax({
+                url: "/eventmanage/eventmanage/clearroomspec",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: $(this).attr("data-id")
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                        eventroomlist.Load(eventroomlist.param);
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+}

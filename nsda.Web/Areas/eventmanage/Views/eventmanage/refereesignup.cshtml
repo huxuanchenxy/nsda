@@ -2,13 +2,14 @@
 @model nsda.Model.dto.response.EventResponse
 @{
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "发起赛事";
-    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+    ViewBag.Title = "裁判报名管理";
+    var data = ViewBag.RefereeData as nsda.Model.dto.response.RefereeDataResponse;
 }
 
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventmanageumpire.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
 }
 @Html.Partial("_left")
 <div class="container event-lists">
@@ -20,32 +21,47 @@
                     <p>按状态查看：</p><a href="javascript:;" class="selected" id="refereesignUnlimited">不限</a>
                 </div>
                 <div class="group-con">
-                    <a href="javascript:;"  class="refereesign" data-status="1">待审核</a>
-                    <a href="javascript:;"  class="refereesign" data-status="2">已录取</a>
-                    <a href="javascript:;"  class="refereesign" data-status="4">未录取</a>
-                    <a href="javascript:;"  class="refereesign" data-status="6">候选名单</a>
+                    <a href="javascript:;" class="refereesign" data-status="1">待审核</a>
+                    <a href="javascript:;" class="refereesign" data-status="2">已录取</a>
+                    <a href="javascript:;" class="refereesign" data-status="4">未录取</a>
+                    <a href="javascript:;" class="refereesign" data-status="6">候选名单</a>
                     <a href="javascript:;" class="refereesign" data-status="9">临时裁判</a>
-                    <a href="javascript:;" class="refereesign" data-status="6">标记</a>
+                    <a href="javascript:;" class="refereesign" data-status="8">标记</a>
                 </div>
             </div>
+            <div class="data">
+                <div class="data-item">
+                    <p>数据统计：</p>
+                </div>
+                <div class="data-con">
+                    <a href="javascript:;">申请总人数：@data.Total</a>
+                    <a href="javascript:;">待审核：@data.Pending</a>
+                    <a href="javascript:;">已录取：@data.Passed</a>
+                    <a href="javascript:;">未录取：@data.NoPassed</a>
+                    <a href="javascript:;">候选名单：@data.Candidate</a>
+                    <a href="javascript:;">临时裁判：@data.TempReferee</a>
+                    <a href="javascript:;">标记：@data.Flag</a>
+                </div>
+            </div>
+            <span class="addjudge" id="addReferee">+ 添加临时裁判</span>
         </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>裁判编号</th>
+                    <th>裁判姓名</th>
+                    <th>联系电话</th>
+                    <th>电子邮箱</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="data"></tbody>
+        </table>
+        <nav aria-label="Page navigation" id="pager">
+        </nav>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>裁判编号</th>
-                <th>裁判姓名</th>
-                <th>联系电话</th>
-                <th>电子邮箱</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody id="data">
-        </tbody>
-    </table>
-    <nav aria-label="Page navigation" id="pager">
-    </nav>
 </div>
 @section scripts
 {
@@ -59,7 +75,6 @@
                     PageIndex: 1,
                     PageSize: 10,
                     EventId:@Model.Id,
-                    EventGroupId:0,
                     RefereeSignUpStatus:0
                 }
             };
@@ -78,15 +93,46 @@
                             _pager.init(filter, eventrefereelist.param.PageIndex, eventrefereelist.param.TotalPage, function (p) {
                                 eventrefereelist.param.PageIndex = p;
                                 eventrefereelist.Load(eventrefereelist.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
-                                html+='<tr>';
-                                html+='<td>'+val.MemberCode+'</td>';
-                                html+='<td>'+val.MemberName+'</td>';
+                                if(val.IsFlag)
+                                {
+                                    html+='<tr class="markred">';
+                                }else{
+                                    html+='<tr>';
+                                }
+                                html+='<td><span class="mark flag" data-id='+val.Id+'><i class="iconfont icon-qizhibiaojibiaozhu"></i></span>'+val.MemberCode+'</td>';
+                                html+='<td>'+val.MemberName;
+                                if(val.IsTemp)
+                                {
+                                    html+='<span class="snap">临时裁判</span>';
+                                }
+                                html+='</td>';
                                 html+='<td>'+val.ContactMobile+'</td>';
                                 html+='<td>'+val.Email+'</td>';
                                 html+='<td>'+enumreplace.replacerefereesignUpStatus(val.RefereeSignUpStatus)+'</td>';
-                                html+='<td>想怎么操作就怎么操作</td>';
+                                html+='<td>';
+                                if(!val.IsTemp)
+                                {
+                                    if(val.RefereeSignUpStatus==1)
+                                    {
+                                        html+='<a href="javascript:;" data-id='+val.Id+' data-type=1 class="enrol operator">录取此人</a><a href="javascript:;" class="refuse operator" data-id='+val.Id+' data-type=2>拒绝此人</a><a href="javascript:;" data-id='+val.Id+' data-type=3 class="candidate operator">设为候选</a>';
+                                    }
+                                    else if(val.RefereeSignUpStatus==2)
+                                    {
+                                        html+='<a href="javascript:;" data-id='+val.Id+' data-type=2 class="refuse operator">拒绝此人</a><a href="javascript:;" class="candidate operator" data-id='+val.Id+' data-type=3>设为候选</a>';
+                                    }
+                                    else if(val.RefereeSignUpStatus==3)
+                                    {
+                                        html+='<a href="javascript:;" data-id='+val.Id+' data-type=1 class="enrol operator">录取此人</a><a href="javascript:;" class="candidate operator" data-id='+val.Id+' data-type=3>设为候选</a>';
+                                    }
+                                    else if(val.RefereeSignUpStatus==3)
+                                    {
+                                        html+='<a href="javascript:;" data-id='+val.Id+' data-type=1 class="enrol operator">录取此人</a><a href="javascript:;" class="refuse operator" data-id='+val.Id+' data-type=2>拒绝此人</a>';
+                                    }
+                                }
+                                html+='</td>';
                                 html+='</tr>';
                              });
                             $("#data").html(html)
@@ -120,5 +166,70 @@
             }
             eventrefereelist.Load(eventrefereelist.param);
         });
+
+        $(document).on("click", ".flag", function () {
+            $.ajax({
+                url: "/eventmanage/eventmanage/refereeflag",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id:$(this).attr("data-id")
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        location.reload();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+               , error: function () {
+                   layer.closeAll();
+               }
+            });
+        });
+
+        $(document).on("click", ".operator", function () {
+            $.ajax({
+                url: "/eventmanage/eventmanage/checkreferee",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id:$(this).attr("data-id"),
+                    checkReferee:$(this).attr("data-type")
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        location.reload();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+               , error: function () {
+                   layer.closeAll();
+               }
+            });
+        });
+
+        $("#addReferee").click(function () {
+            layer.open({
+                title: "",
+                type: 2,
+                content: "/eventmanage/eventmanage/addreferee/"+eventrefereelist.param.EventId,
+                area: ["565px", "410px"],
+                end: function () {
+                    location.reload();
+                }
+            });
+        })
     </script>
 }

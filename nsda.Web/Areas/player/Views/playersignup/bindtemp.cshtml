@@ -20,13 +20,13 @@
     <script>
         $("#bindtemp").click(function () {
             var $GroupNum = $("#GroupNum").val();
-            if (validate.isNotNull($GroupNum))
+            if (validate.isNull($GroupNum))
             {
                 layer.msg('请输入队伍编号', { icon: 5, time: 1000 });
                 return;
             }
             var $Email = $("#Email").val();
-            if (validate.isNotNull($Email)) {
+            if (validate.isNull($Email)) {
                 layer.msg('请输入邮箱', { icon: 5, time: 1000 });
                 return;
             }
@@ -35,7 +35,7 @@
                 return;
             }
             var $ContactMobile = $("#ContactMobile").val();
-            if (validate.isNotNull($ContactMobile)) {
+            if (validate.isNull($ContactMobile)) {
                 layer.msg('请输入联系电话', { icon: 5, time: 1000 });
                 return;
             }

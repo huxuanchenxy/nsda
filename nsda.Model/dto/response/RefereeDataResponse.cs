@@ -35,6 +35,6 @@ namespace nsda.Model.dto.response
         /// <summary>
         /// 标记
         /// </summary>
-        public int Mark { get; set; }
+        public int Flag { get; set; }
     }
 }

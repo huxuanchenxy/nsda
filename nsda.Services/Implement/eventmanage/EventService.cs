@@ -855,5 +855,25 @@ namespace nsda.Services.Implement.eventmanage
             }
             return response;
         }
+        public List<string> EventDate(int eventId)
+        {
+            List<string> date = new List<string>();
+            try
+            {
+                var list = _dbContext.Select<t_event_matchdate>(c => c.eventId == eventId).ToList();
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        date.Add(item.eventMatchDate.ToString("MM/dd"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.EventDate", ex);
+            }
+            return date;
+        }
     }
 }

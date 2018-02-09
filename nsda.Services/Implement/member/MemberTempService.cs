@@ -48,6 +48,11 @@ namespace nsda.Services.Implement.member
                     msg = "赛事信息有误";
                     return flag;
                 }
+                if (t_event.eventStatus != EventStatusEm.比赛中)
+                {
+                    msg = "只有赛事当天才能添加临时选手";
+                    return flag;
+                }
                 t_event_group t_group = _dbContext.Get<t_event_group>(tempplayer.EventGroupId);
                 if (t_group == null)
                 {
@@ -91,7 +96,7 @@ namespace nsda.Services.Implement.member
                 {
                     return flag;
                 }
-
+                var eventdate = _dbContext.Select<t_event_matchdate>(c => c.eventId == tempplayer.EventId);
                 try
                 {
                     _dbContext.BeginTransaction();
@@ -167,6 +172,20 @@ namespace nsda.Services.Implement.member
                             memberId = memberInsertId,
                             schoolId = item.PlayerEdu.SchoolId
                         });
+
+                        //生成签到表
+                        foreach (var itemdate in eventdate)
+                        {
+                            _dbContext.Insert(new t_event_sign
+                            {
+                                eventGroupId =tempplayer.EventGroupId,
+                                eventId=tempplayer.EventId,
+                                eventSignType=EventSignTypeEm.选手,
+                                eventSignStatus=EventSignStatusEm.待签到,
+                                signdate=itemdate.eventMatchDate,
+                                memberId=memberInsertId
+                            });
+                        }
                     }
                     _dbContext.CommitChanges();
                     flag = true;
@@ -266,8 +285,26 @@ namespace nsda.Services.Implement.member
                         isTemp = true,
                         eventId = request.EventId,
                         memberId = memberInsertId,
-                        refereeSignUpStatus = RefereeSignUpStatusEm.通过
+                        refereeSignUpStatus = RefereeSignUpStatusEm.已录取,
+                        isFlag=false
                     });
+                    if (t_event.eventStatus==EventStatusEm.比赛中)
+                    {
+                        var eventdate = _dbContext.Select<t_event_matchdate>(c => c.eventId == t_event.id);
+                        foreach (var itemdate in eventdate)
+                        {
+                            _dbContext.Insert(new t_event_sign
+                            {
+                                eventGroupId = 0,
+                                eventId = request.EventId,
+                                eventSignType = EventSignTypeEm.裁判,
+                                eventSignStatus = EventSignStatusEm.待签到,
+                                signdate = itemdate.eventMatchDate,
+                                memberId = memberInsertId
+                            });
+                        }
+                    }
+
                     _dbContext.CommitChanges();
                     flag = true;
                 }

@@ -1,0 +1,67 @@
+﻿@using nsda.Utilities
+<html>
+<head>
+    <title>添加临时裁判</title>
+    <link rel="stylesheet" href="/asset/css/eventmanageumpire.css?version=@Constant.Version">
+</head>
+<body>
+     <div class="addtemporaryjudge">
+        <h4>添加临时裁判</h4>
+        <span></span>
+         <input type="hidden" value="@ViewBag.EventId" id="eventId"/>
+        <div class="form-group judgename">
+            <label for="refereeName"></label>
+            <input type="text" id="refereeName" value="" placeholder="输入临时裁判姓名" />
+        </div>
+        <div class="form-group refereeMobile">
+            <label for="judgephone"></label>
+            <input type="text" id="refereeMobile" value="" placeholder="输入临时裁判的联系电话" />
+        </div>
+        <button id="save" style="cursor:pointer;">确认添加该临时裁判</button>
+    </div>
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/validate.js"></script>
+    <script>
+        $("#save").click(function () {
+            var $refereeName = $("#refereeName").val();
+            if (validate.isNull($refereeName))
+            {
+                layer.msg('请输入裁判姓名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $refereeMobile = $("#refereeMobile").val();
+            if (validate.isNull($refereeMobile)) {
+                layer.msg('请输入裁判手机号码', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/eventmanage/eventmanage/insertreferee",
+                type: "post",
+                dataType: "json",
+                data: {
+                    Name: $refereeName,
+                    ContactMobile: $refereeMobile,
+                    EventId: $("#eventId").val()
+                },
+                beforeSend: function () {
+                    layer.msg('添加裁判中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        parent.layer.closeAll();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -19,6 +19,7 @@ namespace nsda.Model.dto.response
         public int MemberId { get; set; }
         public string Email { get; set; }
         public string ContactMobile { get; set; }
+        public bool IsFlag { get; set; }
     }
 
     public class RefereeSignUpListResponse

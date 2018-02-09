@@ -17,17 +17,20 @@ namespace nsda.Model.dto.response
         public string MemberName { get; set; }
         public string MemberCode { get; set; }
         public string GroupNum { get; set; }
-        public string Ids { get; set; }
         public string SignDates { get; set; }
         public string EventSignStatuss { get; set; }
         public List<PlayerSignSplitResponse> List { get; set; }
+        public string SchoolName { get; set; }
+        public string CityName { get; set; }
+        public string ContactMobile { get; set; }
+        public GradeEm Grade { get; set; }
     }
 
     public class PlayerSignSplitResponse
     {
-        public int Id { get; set; }
-        public DateTime SignDate { get; set; }
+        public string SignDate { get; set; }
         public EventSignStatusEm EventSignStatus{ get; set; }
+        public bool IsCurrentDate { get; set; }
     }
 
     public class RefereeSignResponse
@@ -43,12 +46,14 @@ namespace nsda.Model.dto.response
         public string Ids { get; set; }
         public string SignDates { get; set; }
         public string EventSignStatuss { get; set; }
+        public string ContactMobile { get; set; }
+        public string EventGroupName { get; set; }
     }
 
     public class RefereeSignSplitResponse
     {
-        public int Id { get; set; }
-        public DateTime SignDate { get; set; }
+        public string SignDate { get; set; }
         public EventSignStatusEm EventSignStatus { get; set; }
+        public bool IsCurrentDate { get; set; }
     }
 }

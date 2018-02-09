@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
-
+using Dapper;
 namespace nsda.Services.Implement.eventmanage
 {
     /// <summary>
@@ -37,14 +37,14 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                if (request.Num <= 0)
+                if (request.Name.IsEmpty())
                 {
-                    msg = "教室数量有误";
+                    msg = "教室名不能为空";
                     return flag;
                 }
                 if (request.EventId <= 0)
                 {
-                    msg = "需要赛事信息";
+                    msg = "赛事信息有误";
                     return flag;
                 }
                 //教练赛事
@@ -54,29 +54,15 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "赛事信息有误";
                     return flag;
                 }
-                try
+                _dbContext.Insert(new t_event_room
                 {
-                    _dbContext.BeginTransaction();
-                    for (int i = 0; i < request.Num; i++)
-                    {
-                        _dbContext.Insert(new t_event_room
-                        {
-                            eventgroupId = request.EventGroupId,
-                            code = _dataRepository.EventRoomRepo.RenderCode(request.EventId),
-                            eventId = request.EventId,
-                            roomStatus = RoomStatusEm.闲置
-                        });
-                    }
-                    _dbContext.CommitChanges();
-                    flag = true;
-                }
-                catch(Exception ex)
-                {
-                    _dbContext.Rollback();
-                    flag = false;
-                    msg = "服务异常";
-                    LogUtils.LogError("EventRoomService.InsertTran", ex);
-                }
+                    eventgroupId = request.EventGroupId,
+                    code = _dataRepository.EventRoomRepo.RenderCode(request.EventId),
+                    eventId = request.EventId,
+                    roomStatus = RoomStatusEm.闲置,
+                    name=request.Name
+                });
+                flag = true;
             }
             catch (Exception ex)
             {
@@ -93,6 +79,11 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                if (request.Name.IsEmpty())
+                {
+                    msg = "教室名不能为空";
+                    return flag;
+                }
                 t_event_room room = _dbContext.Get<t_event_room>(request.Id);
                 if (room != null)
                 {
@@ -124,16 +115,19 @@ namespace nsda.Services.Implement.eventmanage
                 t_event_room room = _dbContext.Get<t_event_room>(id);
                 if (room != null)
                 {
-                    if (statusOrGroup == 0)//停用
+                    if (statusOrGroup == -1)//停用
                     {
+                        room.eventgroupId = 0;
                         room.roomStatus = RoomStatusEm.停用;
                     }
                     else if (statusOrGroup == 1)//启用
                     {
+                        room.eventgroupId = 0;
                         room.roomStatus = RoomStatusEm.闲置;
                     }
                     else {//组别
                         room.eventgroupId = statusOrGroup;
+                        room.roomStatus = RoomStatusEm.闲置;
                     }
                     room.updatetime = DateTime.Now;
                     _dbContext.Update(room);
@@ -149,6 +143,43 @@ namespace nsda.Services.Implement.eventmanage
                 flag = false;
                 msg = "服务异常";
                 LogUtils.LogError("EventRoomService.EidtSettings", ex);
+            }
+            return flag;
+        }
+        //修改设置
+        public bool BatchEidtSettings(List<int> id, int statusOrGroup, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                var dy = new DynamicParameters();
+                if (statusOrGroup == -1)//停用
+                {
+                    dy.Add("EventgroupId", 0);
+                    dy.Add("RoomStatus", (int)RoomStatusEm.停用);
+                }
+                else if (statusOrGroup == 1)//启用
+                {
+                    dy.Add("EventgroupId", 0);
+                    dy.Add("RoomStatus", (int)RoomStatusEm.闲置);
+                }
+                else
+                {
+                    dy.Add("EventgroupId", statusOrGroup);
+                    dy.Add("RoomStatus", (int)RoomStatusEm.闲置);
+                }
+                dy.Add("UpdateTime",DateTime.Now);
+                dy.Add("Id",id.ToArray());
+                var sql = $"update t_event_room set  eventgroupId=@EventgroupId,roomStatus=@RoomStatus,updatetime=@UpdateTime where id in @Id ";
+                _dbContext.Execute(sql, dy);
+                flag = true;
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventRoomService.BatchEidtSettings", ex);
             }
             return flag;
         }
@@ -224,7 +255,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 flag = false;
                 msg = "服务异常";
-                LogUtils.LogError("EventRoomService.Delete", ex);
+                LogUtils.LogError("EventRoomService.SettingSpec", ex);
             }
             return flag;
         }
@@ -248,6 +279,30 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventRoomService.List", ex);
             }
             return list;
+        }
+        //教室详情
+        public EventRoomResponse Detail(int id)
+        {
+            EventRoomResponse response = null;
+            try
+            {
+                t_event_room room = _dbContext.Get<t_event_room>(id);
+                if (room != null)
+                {
+                    response = new EventRoomResponse {
+                         Code=room.code,
+                         EventGroupId=room.eventgroupId,
+                         EventId=room.eventId,
+                         Name=room.name,
+                         Id=room.id
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventRoomService.Detail", ex);
+            }
+            return response;
         }
     }
 }

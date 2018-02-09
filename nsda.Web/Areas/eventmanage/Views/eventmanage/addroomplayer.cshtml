@@ -1,0 +1,105 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventRoomResponse
+<html>
+<head>
+    <title>添加教室</title>
+    <link rel="stylesheet" href="/asset/css/eventmanageroom.css?version=@Constant.Version">
+</head>
+<body>
+    <div class="addplayer">
+        <input type="hidden" value="@Model.Id" id="id" />
+        <input type="hidden" value="@Model.EventGroupId" id="eventGroupId" />
+        <input type="hidden" value="@Model.EventId" id="eventId" />
+        <h4>添加指定选手使用该房间</h4>
+        <span></span>
+        <div class="form-group searchplayer">
+            <input placeholder="输入组队编号/会员编号/姓名" id="playerkey"/>
+            <a class="search" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
+            <select size="2" id="sel" style="display:none;">
+            </select>
+        </div>
+        <div class="form-group inputplayername">
+            <p>指定选手为：</p>
+            <label for="txt"></label>
+            <input type="text" id="txt" readonly/>
+        </div>
+        <button id="save">确认Room指定给该选手</button>
+     </div>
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/validate.js"></script>
+    <script>
+        $("#save").click(function () {
+            var memberId = $("#txt").attr("data-id");
+            if (validate.isNull(memberId))
+            {
+                layer.msg('请先选择选手', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/eventmanage/eventmanage/settingroomspec",
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: $("#id").val(),
+                    memberId: memberId
+                },
+                beforeSend: function () {
+                    layer.msg('添加选手中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        parent.layer.closeAll();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+
+        });
+
+        $("#search").click(function () {
+            var $keyvalue = $("#playerkey").val();
+            if (validate.isNull($keyvalue)) {
+                return;
+            }
+            $.ajax({
+                url: "/eventmanage/eventmanage/selectplayer",
+                type: "get",
+                dataType: "json",
+                async:false,
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val(),
+                    keyvalue: $("#playerkey").val()
+                },
+                success: function (json) {
+                    var html = '';
+                    if (json.data != null && json.data.length > 0) {
+                        $.each(json.data, function (k, val) {
+                            html += '<option value=' + val.MemberId + '>' + val.MemberName + '</option>';
+                        });
+                        $("#sel").html(html);
+                        $("#sel").show();
+                    }
+                }
+            });
+
+        });
+
+        $("#sel").change(function () {
+            var options = $("#sel option:selected");
+            $("#playerkey").val(options.text());
+            $("#txt").val(options.text());
+            $("#txt").attr("data-id", $(this).val());
+            $(this).hide();
+        });
+    </script>
+</body>
+</html>
+

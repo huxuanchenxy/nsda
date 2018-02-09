@@ -18,12 +18,14 @@ namespace nsda.Services.Contract.eventmanage
         //选手 裁判签到
         bool Sign(int id,int memberId,out string msg);
         //赛事管理员批量签到
-        bool BatchSign(List<int> id,int eventId,bool isNormal,out string msg);
+        bool BatchSign(List<int> memberId, int eventId, EventSignTypeEm eventSignType, out string msg);
         //选手签到列表
         List<PlayerSignResponse> PlayerSignList(PlayerSignQueryRequest request);
         //裁判签到列表
         List<RefereeSignResponse> RefereeSignList(RefereeSignQueryRequest request);
         //选手 裁判获取签到信息
         SignResponse GetSign(int eventId,int memberId,EventSignTypeEm eventSignType);
+        //选手批量签到
+        bool PlayerBatchSign(List<string> groupNum, int eventId,out string msg);
     }
 }

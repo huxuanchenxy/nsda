@@ -134,6 +134,7 @@
     <Compile Include="dto\Result.cs" />
     <Compile Include="enums\AvoidRulesEm.cs" />
     <Compile Include="enums\CardTypeEm.cs" />
+    <Compile Include="enums\CheckRefereeEnum.cs" />
     <Compile Include="enums\CyclingRaceStatusEm.cs" />
     <Compile Include="enums\DataTypeEm.cs" />
     <Compile Include="enums\EventAreaEm.cs" />

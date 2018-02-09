@@ -12,8 +12,7 @@ namespace nsda.Model.enums
     public enum EventSignStatusEm
     {
         待签到=1,
-        已签到=2,
-        未到
+        已签到=2
     }
 
     /// <summary>

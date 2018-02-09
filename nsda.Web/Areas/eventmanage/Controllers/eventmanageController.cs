@@ -120,8 +120,66 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
             var detail = _eventService.Detail(id);
-            ViewBag.EventGroup = _eventService.SelectEventGroup(id, userContext.Id);
             ViewBag.RefereeData = _refereeSignUpService.RefereeData(id, userContext.Id);
+            return View(detail);
+        }
+        //添加裁判
+        public ActionResult addreferee(int id)
+        {
+            ViewBag.EventId = id;
+            return View();
+        }
+
+        public ActionResult room(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, userContext.Id);
+            return View(detail);
+        }
+
+        public ActionResult addroom(int id)
+        {
+            ViewBag.EventId = id;
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            return View();
+        }
+
+        public ActionResult updateroom(int id)
+        {
+            var detail = _eventRoomService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            return View(detail);
+        }
+
+        public ActionResult addroomplayer(int id)
+        {
+            var detail = _eventRoomService.Detail(id);
+            return View(detail);
+        }
+
+        //选手签到页
+        public ActionResult playersign(int eventId, int eventGroupId=0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, UserContext.WebUserContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventDate = _eventService.EventDate(eventId);
+            ViewBag.EventGroupId = eventGroupId == 0?eventgroup.FirstOrDefault().Id: eventGroupId;
+            return View(detail);
+        }
+
+        //裁判签到页
+        public ActionResult refereesign(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            ViewBag.EventDate = _eventService.EventDate(id);
             return View(detail);
         }
         #endregion
@@ -333,6 +391,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result<string>(flag, msg);
         }
 
+
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult batcheditroomsettings(List<int> id, int status)
+        {
+            string msg = string.Empty;
+            var flag = _eventRoomService.BatchEidtSettings(id, status, out msg);
+            return Result<string>(flag, msg);
+        }
+
+
         [HttpPost]
         [AjaxOnly]
         public ContentResult settingroomspec(int id, int memberId)
@@ -366,9 +435,9 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
 
         [HttpGet]
-        public ContentResult selectplayer(int eventId, string keyvalue)
+        public ContentResult selectplayer(int eventId,int? eventGroupId,string keyvalue)
         {
-            var data = _playerSignUpService.SelectPlayer(eventId, keyvalue);
+            var data = _playerSignUpService.SelectPlayer(eventId, eventGroupId,keyvalue);
             return Result(true, string.Empty, data);
         }
         #endregion
@@ -403,10 +472,20 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //裁判审核
         [HttpPost]
         [AjaxOnly]
-        public ContentResult checkreferee(int id, bool isAgree)
+        public ContentResult checkreferee(int id,CheckRefereeEnum checkReferee)
         {
             string msg = string.Empty;
-            var flag = _refereeSignUpService.Check(id, isAgree, UserContext.WebUserContext.Id, out msg);
+            var flag = _refereeSignUpService.Check(id, checkReferee, UserContext.WebUserContext.Id, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //裁判标记
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult refereeflag(int id)
+        {
+            string msg = string.Empty;
+            var flag = _refereeSignUpService.Flag(id,UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -425,10 +504,20 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //批量签到
         [HttpPost]
         [AjaxOnly]
-        public ContentResult sign(List<int> id, int eventId, bool isNormal)
+        public ContentResult batchsign(List<int> memberId, int eventId, EventSignTypeEm eventSignType)
         {
             string msg = string.Empty;
-            var flag = _eventSignService.BatchSign(id, eventId, isNormal, out msg);
+            var flag = _eventSignService.BatchSign(memberId,eventId, eventSignType, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //批量签到
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult playerbatchsign(List<string> groupNum, int eventId)
+        {
+            string msg = string.Empty;
+            var flag = _eventSignService.PlayerBatchSign(groupNum, eventId, out msg);
             return Result<string>(flag, msg);
         }
 

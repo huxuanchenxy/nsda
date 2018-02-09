@@ -828,7 +828,7 @@ namespace nsda.Services.Implement.member
 
                     var listMatchDate = _dbContext.Select<t_event_matchdate>(c => c.eventId == eventId).ToList();
                     var list_playsignup = _dbContext.Select<t_event_player_signup>(c => c.eventId == eventId && c.signUpStatus == SignUpStatusEm.报名成功).ToList();
-                    var list_event_referee_signup = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.refereeSignUpStatus != RefereeSignUpStatusEm.拒绝 && c.refereeSignUpStatus != RefereeSignUpStatusEm.待审核).ToList();
+                    var list_event_referee_signup = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.refereeSignUpStatus == RefereeSignUpStatusEm.已录取).ToList();
 
                     if (listMatchDate != null && listMatchDate.Count > 0)
                     {
@@ -846,7 +846,8 @@ namespace nsda.Services.Implement.member
                                         eventSignStatus = EventSignStatusEm.待签到,
                                         eventSignType = EventSignTypeEm.裁判,
                                         memberId = itemreferee.memberId,
-                                        signdate = item.eventMatchDate
+                                        signdate = item.eventMatchDate,
+                                        eventGroupId= itemreferee.eventGroupId
                                     });
                                 }
                             }
@@ -973,7 +974,7 @@ namespace nsda.Services.Implement.member
             return flag;
         }
         //报名成功的学员
-        public List<MemberSelectResponse> SelectPlayer(int eventId, string keyvalue)
+        public List<MemberSelectResponse> SelectPlayer(int eventId,int? eventGroupId,string keyvalue)
         {
             List<MemberSelectResponse> list = new List<MemberSelectResponse>();
             try
@@ -984,13 +985,18 @@ namespace nsda.Services.Implement.member
                 }
                 var dy = new DynamicParameters();
                 dy.Add("KeyValue", $"%{keyvalue}%");
-                var sql = $@"select b.id Id,b.code MemberCode,b.completename MemberName
+                StringBuilder sb = new StringBuilder();
+                if (eventGroupId != null&& eventGroupId>0)
+                {
+                    sb.Append($" and a.eventGroupId={eventGroupId}");
+                }
+                var sql = $@"select a.memberId MemberId,b.code MemberCode,b.completename MemberName
                              from  t_event_player_signup a 
                              inner join t_member_player b on a.memberId=b.memberId
-                             where a.isdelete=0  and a.signUpStatus={(int)SignUpStatusEm.报名成功}
-                             and (b.code like @KeyValue or b.completename like @KeyValue)
+                             where a.isdelete=0 and a.eventId={eventId}  and a.signUpStatus={(int)SignUpStatusEm.报名成功}
+                             and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue) {sb.ToString()}
                            ";
-                _dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
+                list=_dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
             }
             catch (Exception ex)
             {

@@ -1,0 +1,244 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "选手签到管理";
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+    var date = ViewBag.EventDate as List<string>;
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/eventmanageround.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/eventplayersignin.css?version=@Constant.Version">
+}
+@Html.Partial("_left")
+<div class="event-lists newplayer">
+    <div class="list-top">
+        @foreach (var item in eventGroup)
+        {
+            if (item.Id == ViewBag.EventGroupId)
+            {
+                <a href="/eventmanage/eventmanage/playersign?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+            }
+            else
+            {
+                <a href="/eventmanage/eventmanage/playersign?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+            }
+        }
+    </div>
+    <div class="form-group searchplayer">
+        <input id="txt" placeholder="输入组队编号/会员编号/姓名" />
+        <a class="search" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
+    </div>
+    <div class="form-group batch">
+        <select class="batchsignin" id="batchsignin">
+            <option value="0">批处理为</option>
+            <option value="1">签到</option>
+        </select>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>组队编号</th>
+                <th>NSDA会员编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>联系电话</th>
+                <th>年级</th>
+                <th>学校</th>
+                <th>学校所在城市</th>
+                <th>状态</th>
+                @foreach (var item in date)
+                {
+                    <th>@item</th>
+                }
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+@section scripts
+{
+   <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+   <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script>
+        function foreach(data,groupNum) {
+            var reval = new Array();
+            if (data != null) {
+                $(data).each(function (i, v) {
+                    if (v.GroupNum == groupNum) {
+                        reval.push(v);
+                    }
+                });
+            }
+            return reval.length;
+        }
+        (function (w) {
+            var eventplayersign = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                    EventId:@Model.Id,
+                    EventGroupId:@ViewBag.EventGroupId,
+                    KeyValue:""
+                }
+            };
+            eventplayersign.Load = function (filter) {
+                $.ajax({
+                    url: "/eventmanage/eventmanage/playersignlist",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            eventplayersign.param.TotalPage = json.total;
+                            _pager.init(filter, eventplayersign.param.PageIndex, eventplayersign.param.TotalPage, function (p) {
+                                eventplayersign.param.PageIndex = p;
+                                eventplayersign.Load(eventplayersign.param)
+                            });                            var html = '';
+                            var groupNum = "";
+                            var flag = 0;
+                            var rowspan = 1;
+                            $.each(json.rows, function (k, val) {
+                                if (groupNum != val.GroupNum)
+                                {
+                                    groupNum = val.GroupNum;
+                                    flag = 1;
+                                    rowspan = foreach(json.rows,groupNum);
+                                }
+                                else
+                                {
+                                    flag = 0;
+                                }
+
+                                html+='<tr>';
+                                if (flag == 1)
+                                {
+                                    html += '<td rowspan='+ rowspan + '><span class="mark"><input type="checkbox" data-groupnum='+val.GroupNum +' class="chksign" /></span>' + val.GroupNum + '</td>';
+                                }
+                                html+='<td>'+val.MemberCode+'</td>';
+                                html+='<td>'+val.MemberName+'</td>';
+                                html+='<td>'+enumreplace.replaceGender(val.Gender)+'</td>';
+                                html+='<td>'+val.ContactMobile+'</td>';
+                                html+='<td>'+enumreplace.replaceGrade(val.Grade)+'</td>';
+                                html+='<td>'+val.SchoolName+'</td>';
+                                html+='<td>'+val.CityName+'</td>';
+                                if (flag == 1)
+                                {
+                                    html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" class="stop">停赛</a></td>';
+                                }
+                                $.each(val.List, function (kk, item) {
+                                    html+='<td class="status">';
+                                    if(item.IsCurrentDate==true)
+                                    {
+                                        if(item.EventSignStatus==1)
+                                        {
+                                            html+='<a href="javascript:;" class="sign signin" data-id='+val.MemberId+'>签到</a>';
+                                        }
+                                        else{
+                                            html+='已签到';
+                                        }
+                                    }
+                                    html+='</td>';
+                                });
+                                html+='</tr>';
+                             });
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.eventplayersign = eventplayersign
+        })(window);
+        eventplayersign.Load(eventplayersign.param);
+        
+        $("#search").click(function(){
+            eventplayersign.param.KeyValue=$("#txt").val();
+            eventplayersign.Load(eventplayersign.param);
+        });
+
+        $("#batchsignin").change(function(){
+            var val=$(this).val();
+            if(val!=0)
+            {
+                var arr=[];
+                $(".chksign").each(function(){
+                    if($(this).is(":checked")==true){
+                        arr.push($(this).attr("data-groupnum"));
+                    }
+                });
+                if(arr.length>0)
+                {
+                    $.ajax({
+                        url: "/eventmanage/eventmanage/playerbatchsign",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            groupNum: arr,
+                            eventId:eventplayersign.param.EventId
+                        },
+                        beforeSend: function () {
+                            layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                        },
+                        success: function (json) {
+                            layer.closeAll();
+                            if (json.flag) {
+                                layer.msg('签到成功', { icon: 1, time: 1000 });
+                                location.reload();
+                            }
+                            else {
+                                layer.msg(json.msg, { icon: 5, time: 1000 });
+                            }
+                        }
+                        ,error: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }else{
+                    layer.msg('请先勾选好数据再进行操作', { icon: 5, time: 1000 });
+                }
+            }        
+        });
+
+        $(document).on("click", ".sign", function (){
+            $.ajax({
+                url: "/eventmanage/eventmanage/batchsign",
+                type: "post",
+                dataType: "json",
+                data: {
+                    memberId: $(this).attr("data-id"),
+                    eventId:eventplayersign.param.EventId,
+                    eventSignType: 1
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('签到成功', { icon: 1, time: 1000 });
+                        location.reload();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+              });
+        });
+    </script>
+}

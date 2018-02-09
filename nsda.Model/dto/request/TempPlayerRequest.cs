@@ -49,11 +49,6 @@ namespace nsda.Model.dto.request
         public int? GroupId { get; set; }
         public string Name { get; set; }
         public string ContactMobile { get; set; }
-
-        public object FirstOrDefault()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     //绑定临时选手

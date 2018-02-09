@@ -49,7 +49,7 @@ namespace nsda.Services.Implement.referee
                 t_event t_event = _dbContext.Get<t_event>(eventId);
                 if (t_event != null &&t_event.eventStatus!=EventStatusEm.审核中 && t_event.eventStatus!=EventStatusEm.拒绝&& t_event.endsigndate>DateTime.Now)
                 {
-                    var data = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.memberId == memberId&&c.refereeSignUpStatus!=RefereeSignUpStatusEm.拒绝).ToList();
+                    var data = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.memberId == memberId).ToList();
                     if (data != null && data.Count > 0)
                     {
                         msg = "您已提交过申请";
@@ -60,7 +60,8 @@ namespace nsda.Services.Implement.referee
                          isTemp=false,
                          memberId=memberId,
                          eventGroupId=0,
-                         refereeSignUpStatus=RefereeSignUpStatusEm.待审核
+                         refereeSignUpStatus=RefereeSignUpStatusEm.待审核,
+                         isFlag=false
                     });
                     flag = true;
                 }
@@ -113,19 +114,18 @@ namespace nsda.Services.Implement.referee
                 }
                 if (request.RefereeSignUpStatus != null && request.RefereeSignUpStatus > 0)
                 {
-                    //需要区分临时裁判
-                    if ((int)request.RefereeSignUpStatus == 9)
+                    if ((int)request.RefereeSignUpStatus == 9)//临时裁判
                     {
                         join.Append($" and a.isTemp=1 ");
+                    }
+                    else if ((int)request.RefereeSignUpStatus == 8)//标记
+                    {
+                        join.Append($" and a.isFlag=1 ");
                     }
                     else
                     {
                         join.Append(" and a.refereeSignUpStatus=@RefereeSignUpStatus ");
                     }
-                }
-                if (request.EventGroupId != null && request.EventGroupId > 0)
-                {
-                    join.Append(" and a.eventGroupId=@EventGroupId ");
                 }
                 var sql= $@"select a.*,b.code MemberCode,b.completename MemberName,c.account Email,b.contactmobile ContactMobile from t_event_referee_signup a 
                             inner join t_member_referee b on a.memberId=b.memberId
@@ -147,7 +147,7 @@ namespace nsda.Services.Implement.referee
         }
 
         //裁判审核
-        public bool Check(int id,bool isAgree,int memberId, out string msg)
+        public bool Check(int id,CheckRefereeEnum checkReferee, int memberId, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -157,7 +157,7 @@ namespace nsda.Services.Implement.referee
                 if (referee_signup != null)
                 {
                     referee_signup.updatetime = DateTime.Now;
-                    referee_signup.refereeSignUpStatus = isAgree ? RefereeSignUpStatusEm.通过 : RefereeSignUpStatusEm.拒绝;
+                    referee_signup.refereeSignUpStatus =checkReferee== CheckRefereeEnum.通过 ? RefereeSignUpStatusEm.已录取 : (checkReferee == CheckRefereeEnum.拒绝?RefereeSignUpStatusEm.未录取: RefereeSignUpStatusEm.候选名单);
                     _dbContext.Update(referee_signup);
                     flag = true;
                 }
@@ -185,15 +185,7 @@ namespace nsda.Services.Implement.referee
                 t_event_referee_signup referee_signup = _dbContext.Get<t_event_referee_signup>(id);
                 if (referee_signup != null)
                 {
-                    if (statusOrGroup == 0)
-                    {
-                        referee_signup.refereeSignUpStatus = RefereeSignUpStatusEm.停用;
-                    }
-                    else if (statusOrGroup == 1)
-                    {
-                        referee_signup.refereeSignUpStatus = RefereeSignUpStatusEm.启用;
-                    }
-                    else if (statusOrGroup == 2)//随机
+                    if (statusOrGroup == 0)//随机
                     {
                         referee_signup.eventGroupId = 0;
                     }
@@ -273,8 +265,11 @@ namespace nsda.Services.Implement.referee
                 {
                     response.Total = list.Count;
                     response.Pending = list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.待审核).Count();
-                    response.NoPassed = list.Where(c=>c.refereeSignUpStatus==RefereeSignUpStatusEm.拒绝).Count();
+                    response.NoPassed = list.Where(c=>c.refereeSignUpStatus==RefereeSignUpStatusEm.未录取).Count();
                     response.TempReferee = list.Where(c=>c.isTemp).Count();
+                    response.Flag = list.Where(c => c.isFlag).Count();
+                    response.Passed= list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.已录取).Count();
+                    response.Candidate = list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.候选名单).Count();
                 }
             }
             catch (Exception ex)
@@ -282,6 +277,40 @@ namespace nsda.Services.Implement.referee
                 LogUtils.LogError("RefereeSignUpService.RefereeData", ex);
             }
             return response;
+        }
+        //标记
+        public bool Flag(int id, int memberId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_event_referee_signup referee_signup = _dbContext.Get<t_event_referee_signup>(id);
+                if (referee_signup != null)
+                {
+                    if (referee_signup.isFlag)
+                    {
+                        referee_signup.isFlag = false;
+                    }
+                    else {
+                        referee_signup.isFlag = true;
+                    }
+                    referee_signup.updatetime = DateTime.Now;
+                    _dbContext.Update(referee_signup);
+                    flag = true;
+                }
+                else
+                {
+                    msg = "未找到裁判信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("RefereeSignUpService.Flag", ex);
+            }
+            return flag;
         }
     }
 }

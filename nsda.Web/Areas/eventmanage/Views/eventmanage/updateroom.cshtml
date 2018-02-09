@@ -1,0 +1,81 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventRoomResponse
+@{
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+}
+<html>
+<head>
+    <title>添加教室</title>
+    <link rel="stylesheet" href="/asset/css/eventmanageroom.css?version=@Constant.Version">
+</head>
+<body>
+    <div class="modiroom">
+        <input type="hidden" value="@Model.Id" id="id" />
+        <h4>添加Room</h4>
+        <span></span>
+        <div class="form-group roomname">
+            <label for="roomname"></label>
+            <input type="text" id="roomname" value="@Model.Name" placeholder="输入Room名称" />
+        </div>
+        <div class="form-group roomclass">
+            <label for="roomclass">设为：</label>
+            <select id="roomclass">
+                <option value="0">随机使用</option>
+                @foreach (var item in eventGroup)
+                {
+                    if (item.Id == Model.EventGroupId)
+                    {
+                        <option value="@item.Id" selected>仅 @item.Name 使用（组别）</option>
+
+                    }
+                    else
+                    {
+                        <option value="@item.Id">仅 @item.Name 使用（组别）</option>
+                    }
+                }
+            </select>
+        </div>
+        <button id="save">确认修改Room</button>
+    </div>
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/validate.js"></script>
+    <script>
+        $("#save").click(function () {
+            var $roomname = $("#roomname").val();
+            if (validate.isNull($roomname))
+            {
+                layer.msg('请输入教室名称', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/eventmanage/eventmanage/editroom",
+                type: "post",
+                dataType: "json",
+                data: {
+                    Name: $roomname,
+                    EventGroupId:$("#roomclass").val(),
+                    Id: $("#id").val()
+                },
+                beforeSend: function () {
+                    layer.msg('添加教室中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        parent.layer.closeAll();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
+
