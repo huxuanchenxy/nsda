@@ -1,19 +1,163 @@
 ﻿@{
     Layout = "~/Views/Shared/_EventManage.cshtml";
-    ViewBag.Title = "新手组选手签到管理";
+    ViewBag.Title = "公开组选手签到管理";
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/eventmanageknockout.css?2.1.0")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/eventplayersignin.css?2.1.0")" rel="stylesheet" type="text/css" />
 
+@Scripts.Render("~/Content/asset/layer/js/layer.js")
 @Html.Partial("_manager")
 <div class="event-lists">
     <div class="list-top">
         <a href="/Home/eventnewplayersignin" class="list">新手组</a>
         <a href="/Home/eventopenplayersignin" class="active list">公开组</a>
     </div>
-    
+    <div class="form-group searchplayer">
+        <input id="txt" placeholder="输入组队编号/会员编号/姓名" />
+        <a class="search" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
+        <select size="2" id="sel" style="display:none;">
+            <option>123</option>
+            <option>23456</option>
+            <option>1111</option>
+            <option>123333</option>
+            <option>aaaa</option>
+            <option>1bbb23</option>
+        </select>
+    </div>
+    <div class="form-group batch">
+        <select class="batchsignin">
+            <option value="1">批处理为</option>
+            <option value="2">签到</option>
+        </select>
+        <a href="javascript:;" class="addjudge">+ 添加临时裁判</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>组队编号</th>
+                <th>NSDA会员编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>联系电话</th>
+                <th>年级</th>
+                <th>学校</th>
+                <th>学校所在城市</th>
+                <th>状态</th>
+                <th>12/8</th>
+                <th>12/9</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td rowspan="2"><span class="mark"><input type="checkbox" /></span>021</td>
+                <td>N1899235</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td rowspan="2" class="status"><a href="javascript:;" class="stop">停赛</a></td>
+                <td class="status"><a href="javascript:;" class="signin">签到</a></td>
+                <td class="status"></td>
+            </tr>
+            <tr>
+                <td>N1899225</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td class="status"><a href="javascript:;" class="signin">签到</a></td>
+                <td class="status"></td>
+            </tr>
+            <tr>
+                <td rowspan="2"><span class="mark"><input type="checkbox" /></span>021</td>
+                <td>N1899235</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td rowspan="2" class="status"><a href="javascript:;" class="stop">停赛</a></td>
+                <td class="status"><a href="javascript:;" class="signin">签到</a></td>
+                <td class="status"></td>
+            </tr>
+            <tr>
+                <td>N1899225</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td class="status"><a href="javascript:;" class="signin">签到</a></td>
+                <td class="status"></td>
+            </tr>
+            <tr>
+                <td rowspan="2"><span class="mark"><input type="checkbox" /></span>021</td>
+                <td>N1899235</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td rowspan="2" class="status"><a href="javascript:;" class="stop">停赛</a></td>
+                <td class="status"><a href="javascript:;" class="signin">签到</a></td>
+                <td class="status"><a href="javascript:;" class="signin">签到</a></td>
+            </tr>
+            <tr>
+                <td>N1899225</td>
+                <td>唐嫣</td>
+                <td>女</td>
+                <td>12345678945</td>
+                <td>7</td>
+                <td>上海外国语大学附属双语学校</td>
+                <td>上海</td>
+                <td class="status"><a href="javascript:;" class="signin">签到</a></td>
+                <td class="status"></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" id="page">
+        <div class="page">
+            <a href="javascript:void(0);" class="prev"><</a>
+            <a href="javascript:void(0);" class="on">1</a>
+            <span>...</span>
+            <a href="javascript:void(0);">4</a>
+            <a href="javascript:void(0);">5</a>
+            <a href="javascript:void(0);">6</a>
+            <span>...</span>
+            <a href="javascript:void(0);">7</a>
+            <a href="javascript:void(0);" class="next">></a>
+        </div>
+    </nav>
 </div>
 
 
+
+
+
+
+
 @Scripts.Render("~/Content/asset/js/block.js")
+<script>
+    $(".addjudge").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Home/addjudge",
+            area: ["565px", "400px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+
+</script>
