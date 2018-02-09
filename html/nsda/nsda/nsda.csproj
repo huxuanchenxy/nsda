@@ -225,6 +225,7 @@
     <Content Include="Content\asset\css\eventmanageumpire.css" />
     <Content Include="Content\asset\css\eventnewinfocomfirm.css" />
     <Content Include="Content\asset\css\eventopeninfocomfirm.css" />
+    <Content Include="Content\asset\css\eventplayersignin.css" />
     <Content Include="Content\asset\css\eventstart.css" />
     <Content Include="Content\asset\css\eventstartlists.css" />
     <Content Include="Content\asset\css\eventmanageplayer.css" />
@@ -362,6 +363,8 @@
     <Content Include="Views\Home\eventnewinfocomfirm.cshtml" />
     <Content Include="Views\Home\eventopeninfocomfirm.cshtml" />
     <Content Include="Views\Home\addassign.cshtml" />
+    <Content Include="Views\Home\eventnewplayersignin.cshtml" />
+    <Content Include="Views\Home\eventopenplayersignin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -195,5 +195,20 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "开始执行对垒";
             return View();
         }
+        public ActionResult eventnewplayersignin()
+        {
+            ViewBag.Message = "新手组选手签到";
+            return View();
+        }
+        public ActionResult eventopenplayersignin()
+        {
+            ViewBag.Message = "公开组选手签到";
+            return View();
+        }
+        public ActionResult eventjudgesignin()
+        {
+            ViewBag.Message = "裁判签到";
+            return View();
+        }
     }
 }

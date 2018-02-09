@@ -260,6 +260,7 @@ body{
     font-size:14px;
     position:absolute;
     top:32px;
+    left:0;
 }
 .addplayer .form-group.searchplayer a.search{
     display:inline-block;
