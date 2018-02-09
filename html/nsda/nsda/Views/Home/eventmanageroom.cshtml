@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_EventManage.cshtml";
-    ViewBag.Title = "裁判报名管理";
+    ViewBag.Title = "Room管理";
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/eventmanageumpire.css?1.1.0")" rel="stylesheet" type="text/css" />
@@ -71,8 +71,8 @@
                             <option value="3">仅 公开组 使用（组别）</option>
                         </select>
                     </td>
-                    <td class="modify"><a href="javascript:;" class="modifyroom">修改名称</a></td>
-                    <td><p class="playername">tylergypsy</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
+                    <td class="modify"><a href="javascript:;" class="modifyroom">修改Room</a></td>
+                    <td><p class="playername">tylergypsy</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清除指定</a></td>
                 </tr>
                 <tr>
                     <td><span class="mark"><input type="checkbox" /></span>R189345</td>
@@ -86,7 +86,7 @@
                         </select>
                     </td>
                     <td class="modify"><a href="javascript:;" class="modifyroom">修改Room</a></td>
-                    <td><p class="playername">范湉湉</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
+                    <td><p class="playername">范湉湉</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清除指定</a></td>
                 </tr>
                 <tr>
                     <td><span class="mark"><input type="checkbox" /></span>R1899582</td>
@@ -100,7 +100,7 @@
                         </select>
                     </td>
                     <td class="modify"><a href="javascript:;" class="modifyroom">修改Room</a></td>
-                    <td><p class="playername"></p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
+                    <td><p class="playername"></p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清除指定</a></td>
                 </tr>
             </tbody>
         </table>
@@ -136,6 +136,17 @@
             title: "",
             type: 2,
             content: "/Home/modifyroom",
+            area: ["565px", "410px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+    $(".addassign").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Home/addassign",
             area: ["565px", "410px"],
             end: function () {
                 location.reload();

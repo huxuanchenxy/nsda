@@ -164,6 +164,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "添加Room";
             return View();
         }
+        public ActionResult addassign()
+        {
+            ViewBag.Message = "添加指定";
+            return View();
+        }
         public ActionResult modifyroom()
         {
             ViewBag.Message = "修改Room";
