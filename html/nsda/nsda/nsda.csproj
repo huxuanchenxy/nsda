@@ -217,6 +217,7 @@
     <Content Include="Content\asset\css\coach.css" />
     <Content Include="Content\asset\css\coachboundplayer.css" />
     <Content Include="Content\asset\css\coachinformation.css" />
+    <Content Include="Content\asset\css\coachregform.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
     <Content Include="Content\asset\css\eventmanageknockout.css" />
@@ -239,7 +240,7 @@
     <Content Include="Content\asset\css\playerpartin.css" />
     <Content Include="Content\asset\css\playerpersonal.css" />
     <Content Include="Content\asset\css\player.css" />
-    <Content Include="Content\asset\css\regform.css" />
+    <Content Include="Content\asset\css\playerregform.css" />
     <Content Include="Content\asset\css\registered.css" />
     <Content Include="Content\asset\css\playersign.css" />
     <Content Include="Content\asset\css\Site.css" />
@@ -332,7 +333,7 @@
     <Content Include="Views\Home\about.cshtml" />
     <Content Include="Views\Home\index.cshtml" />
     <Content Include="Views\Home\registered.cshtml" />
-    <Content Include="Views\Home\regform.cshtml" />
+    <Content Include="Views\Home\playerregform.cshtml" />
     <Content Include="Views\Home\playerhadcompe.cshtml" />
     <Content Include="Views\Home\playerexitcompe.cshtml" />
     <Content Include="Views\Home\playerscore.cshtml" />
@@ -366,6 +367,7 @@
     <Content Include="Views\Home\eventnewplayersignin.cshtml" />
     <Content Include="Views\Home\eventopenplayersignin.cshtml" />
     <Content Include="Views\Home\eventumpiresignin.cshtml" />
+    <Content Include="Views\Home\coachregform.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

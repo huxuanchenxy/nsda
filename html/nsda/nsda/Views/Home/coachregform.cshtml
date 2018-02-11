@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "会员注册";
+}
+
+<link href="@Url.Content("~/Content/asset/css/About.css?1.1.2")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/coachregform.css?1.1.3")" rel="stylesheet" type="text/css" />
+
+<!--这里可能是logo也可能是广告 到底是什么 我也不知道-->
+<div class="ad">
+
+</div>
+
+<!--面包屑导航-->
+<div class="rode">
+
+</div>
+
+@*会员注册*@
+
+<div class="container regform-con">
+    <h3>If you are not an NSDA  coach, create a new account.</h3>
+    <div class="reg-sign">
+        <span class="signup">Sign Up</span>
+        <form class="form-ctrl">
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-input" id="email">
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-input" id="password">
+            </div>
+            <div class="form-group">
+                <label for="confirmpassword" class="form-label">Repeat the Password:</label>
+                <input type="password" class="form-input" id="confirmpassword">
+            </div>
+            <div class="form-group">
+                <label for="telephone" class="form-label">Nick Name:</label>
+                <input type="text" class="form-input-phone" id="telephone">
+            </div>
+            <div class="form-group formname">
+                <div class="form-group-small">
+                    <label for="lastname" class="form-label">First Name:</label>
+                    <input type="text" class="form-input" id="lastname">
+                </div>
+                <div class="form-group-small">
+                    <label for="firstname" class="form-label">Last Name:</label>
+                    <input type="text" class="form-input" id="firstname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telephone" class="form-label">Phone Number: </label>
+                <input type="text" class="form-input-phone" id="telephone">
+            </div>
+            <div class="form-group formcontact">
+                <div class="form-group-small">
+                    <label for="urgentbody" class="form-label">Emergency Contact Person:</label>
+                    <input type="text" class="form-input" id="urgentbody">
+                </div>
+                <div class="form-group-small">
+                    <label for="urgentphone" class="form-label">Emergency Number:</label>
+                    <input type="text" class="form-input" id="urgentphone">
+                </div>
+            </div>
+            <div class="form-group form-sexy">
+                <label for="sex" class="form-label">Gender:</label>
+                <label class="radio-inline sexy">
+                    <input type="radio" name="inlineRadioOptions" id="men" value="option1"> Male
+                </label>
+                <label class="radio-inline sexy">
+                    <input type="radio" name="inlineRadioOptions" id="women" value="option2"> Female
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="address" class="form-label">Address:</label>
+                <input type="text" class="form-input" id="address">
+            </div>
+            <button type="submit" class="button">Create Login</button>
+        </form>
+    </div>
+</div>

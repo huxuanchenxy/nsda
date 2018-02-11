@@ -42,9 +42,14 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "会员登录";
             return View();
         }
-        public ActionResult regform()
+        public ActionResult playerregform()
         {
             ViewBag.Message = "会员注册";
+            return View();
+        }
+        public ActionResult coachregform()
+        {
+            ViewBag.Message = "教练注册";
             return View();
         }
         public ActionResult playermembercenter()
