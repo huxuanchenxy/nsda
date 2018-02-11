@@ -241,6 +241,7 @@
     <Content Include="Content\asset\css\judgelogin.css" />
     <Content Include="Content\asset\css\judgeregform.css" />
     <Content Include="Content\asset\css\judgetour.css" />
+    <Content Include="Content\asset\css\messagebox.css" />
     <Content Include="Content\asset\css\playerboundcoach.css" />
     <Content Include="Content\asset\css\playercenter.css" />
     <Content Include="Content\asset\css\index.css" />

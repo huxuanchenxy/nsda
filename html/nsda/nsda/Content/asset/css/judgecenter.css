@@ -46,69 +46,7 @@
     -moz-border-radius: 20px;
     color: #666666;
 }
-.msg-box{
-    width:100%;
-    padding:8px;
-    min-height:40px;
-    border-top: 1px solid #a7a7a7;
-    border-bottom: 1px solid #a7a7a7;
-}
-.msg-box p{
-    float:left;
-    font-size:16px;
-}
-.msg-box a .msg-more{
-    float:right;
-    display:inline;
-    width:68px;
-    height:20px;
-}
-.msgbox-con {
-    padding: 20px 10px;
-    min-height: 200px;
-    border-bottom: 1px solid #a7a7a7;
-}
 
-.msgimg img {
-    display: inline;
-    width: 46px;
-    height: 46px;
-    float: left;
-}
-
-.msgimg p {
-    float: left;
-    margin-left: 10px;
-    line-height: 46px;
-    font-size: 14px;
-    color: #666666;
-}
-.msgc {
-    margin-top: 48px;
-    margin-left: 56px;
-    margin-right: 100px;
-}
-.msgc .teamcon{
-    margin-top:10px;
-}
-.msgbox-con .cmore {
-    float: right;
-    padding: 8px 20px;
-    margin-top: 10px;
-}
-.msgbox-con .cmore {
-    display: inline;
-    background: #3CC2FF;
-    color: white;
-    text-align: center;
-    border-radius: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-}
-
-.msgbox-con .cmore:hover {
-    background: #5486cb;
-}
 
 
 
