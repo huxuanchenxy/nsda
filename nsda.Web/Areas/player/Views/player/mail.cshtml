@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "消息盒子";
+    ViewBag.Title = "站内信";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,7 +17,7 @@
                 param: {
                     TotalPage: 1,
                     PageIndex: 1,
-                    PageSize: 4,
+                    PageSize: 10
                 }
             };
             playermail.Load = function (filter) {

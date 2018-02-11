@@ -1,17 +1,67 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "站内信";
+    Layout = "~/Areas/referee/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<div class="info-con" id="mail">
+</div>
+<nav aria-label="Page navigation" class="info-nav" id="pager">
+</nav>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>mail</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>
+@section scripts
+{
+    <script src="/asset/js/pager.js"></script>
+    <script>
+        (function (w) {
+            var playermail = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10
+                }
+            };
+            playermail.Load = function (filter) {
+                $.ajax({
+                    url: "/commondata/mail",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        var html = '<div class="msg-box"><p>消息盒子 Message Box</p></div>'
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            playermail.param.TotalPage = json.total;
+                            _pager.init(filter, playermail.param.PageIndex, playermail.param.TotalPage, function (p) {
+                                playermail.param.PageIndex = p;
+                                playermail.Load(playermail.param)
+                            });
+                            $.each(json.rows, function (k, val) {
+                                html += '<div class="msgbox-con">'
+                                html += '<div class="msgimg">';
+                                if (val.Head == "" || val.Head == null) {
+                                    html += '<img src="/asset/img/teacher.png" alt="...">'
+                                } else {
+                                    html += '<img src="' + val.Head + '" alt="...">'
+                                }
+                                html += '<p>通知</p><p>' + val.CreateTime.substring(5, 10) + '</p><p>' + val.CreateTime.substring(11, 16) + '</p></div>';
+                                html += '<div class="msgc">';
+                                html += '<p class="msgteam">' + val.Title + '</p>';
+                                html += '<p class="teamcon">'+val.Content+'</p>';
+                                html += '</div><a href="/referee/referee/list" class="cmore">查看详情</a>';
+                                html += '</div>';
+                            });
+                            $("#mail").html(html);
+                        } else {
+                            $("#mail").html(html);
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.playermail = playermail
+        })(window);
+        playermail.Load(playermail.param);
+    </script>
+}

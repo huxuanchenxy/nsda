@@ -1,16 +1,63 @@
-﻿
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.MemberRefereeResponse
 @{
-    Layout = null;
+    ViewBag.Title = "裁判个人中心";
+    Layout = "~/Areas/coach/Views/Shared/_Layout.cshtml";
+    var data = ViewBag.CurrentRefereeEvent as List<nsda.Model.dto.response.RefereeCurrentEventResponse>;
+    var mail = ViewBag.Mail as List<nsda.Model.dto.response.MailResponse>;
 }
+@{
+    var userContext = ViewBag.UserContext as WebUserContext;
+}
+<div class="judge-con">
+    @foreach (var item in data)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Tournament</th>
+                    <th>Events</th>
+                    <th>Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@item.EventCode</td>
+                    <td>@item.EventName</td>
+                    <td>@item.EventType</td>
+                    <td>@item.EventLevel</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>
+<div class="msg-box">
+    <p>消息盒子 Message Box</p>
+    <a href="/referee/referee/mail"><img src="/asset/img/more.gif" alt="..." class="msg-more"></a>
+</div>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>index</title>
-</head>
-<body>
-    nsda裁判首页
-</body>
-</html>
+@if (mail != null)
+{
+    foreach (var item in mail)
+    {
+        <div class="msgbox-con">
+            <div class="msgimg">
+                @if (string.IsNullOrEmpty(item.Head))
+                    {
+                    <img src="/asset/img/teacher.png" alt="...">
+                }
+                else
+                {
+                    <img src="@item.Head" alt="...">
+                }
+                <p>Notice</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(5, 5)</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(11, 5)</p>
+            </div>
+            <div class="msgc">
+                <p class="msgteam">@item.Title</p>
+                <p class="teamcon">@Html.Raw(item.Content)</p>
+            </div>
+            <a href="/player/playersignup/list" class="cmore">查看详情</a>
+        </div>
+    }
+}

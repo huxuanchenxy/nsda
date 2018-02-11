@@ -83,7 +83,7 @@ namespace nsda.Services.Implement.referee
             List<RefereeCurrentEventResponse> list = new List<RefereeCurrentEventResponse>();
             try
             {
-                var sql = $@"select b.id EventId,b.name EventName,b.code EventCode from t_event_referee_signup a
+                var sql = $@"select b.id EventId,b.name EventName,b.code EventCode,b.eventType EventType,b.eventLevel EventLevel from t_event_referee_signup a
                              inner join t_event b on a.eventId=b.id
                              left join t_event_matchdate c on  a.eventId=c.eventId
                              where a.isdelete=0 and c.eventMatchDate='{DateTime.Now.ToShortDateString()}'
@@ -179,6 +179,19 @@ namespace nsda.Services.Implement.referee
                             }
                         }
                         _dbContext.Update(referee_signup);
+                        if (checkReferee == CheckRefereeEnum.通过)
+                        {
+                            _dbContext.Insert(new t_sys_mail
+                            {
+                                title = $"You meet the qualification to be a judge.",
+                                content = $"Congratulations, your application to be a judge of {t_event.name} has been accepted.",
+                                isRead = false,
+                                mailType = MailTypeEm.赛事报名邀请,
+                                memberId = referee_signup.memberId,
+                                sendMemberId = memberId
+                            });
+
+                        }
                     }
                     else {
                         _dbContext.Update(referee_signup);

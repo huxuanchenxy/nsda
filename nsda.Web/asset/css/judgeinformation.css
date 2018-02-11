@@ -1,0 +1,144 @@
+﻿.judge-compe{
+    width:100%;
+    padding:40px 10px 140px 10px;
+    background:#fff;
+    margin-bottom:80px;
+}
+.judge-con{
+    width:73%;
+    float:left;
+    margin-top:0px;
+    margin-left:20px;
+}
+.per-top{
+    padding-left:20px;
+}
+.per-top .integral{
+    font-size:36px;
+    float:left;
+    line-height:50px;
+    margin-right:20px;
+}
+.per-top .scorecheck{
+    font-size:18px;
+    color:#666;
+    float:left;
+    line-height:66px;
+    font-family:"微软雅黑"
+}
+.per-con{
+    margin-top:60px;
+}
+.person-title{
+    width:96%;
+    height:30px;
+    background:#CAE699;
+    border-bottom:2px solid #E1E1E1;
+    border-top:2px solid #E1E1E1;
+    margin-bottom:30px;
+}
+.per-con .modifyinfo{
+    padding:10px;
+    box-sizing:border-box;
+}
+.per-con .modifyinfo .form-group{
+    height:30px;
+    margin-bottom:30px;
+}
+.per-con .modifyinfo .form-group label{
+    width:11%;
+    text-align:right;
+    float:left;
+    margin-right:20px;
+    color:#666;
+}
+.per-con .modifyinfo .two-label div{
+    width:45%;
+    float:left;
+    margin-bottom:15px;
+}
+.per-con .modifyinfo .two-label div label{
+    width:24%;
+}
+.per-con .two-label{
+    height:22px;
+    margin-bottom:30px;
+}
+.per-con .form-group .form-con label{
+    width:6%;
+    margin-right:50px;
+}
+.per-con .emergency{
+    border-top:1px solid #D2D9DD;
+    border-bottom:1px solid #D2D9DD;
+    margin-right:25px;
+    padding-top:20px;
+    padding-left:10px;
+}
+.per-con .emergency h4{
+    font-size:14px;
+    font-family:"微软雅黑";
+    color:#333366;
+    font-weight:600;
+    padding-left:4px;
+    margin-bottom:30px;
+}
+.per-con .emergency .form-group label{
+    width:24%;
+    float:left;
+}
+.per-con .modifyinfo button{
+    border:none;
+    background:#4E5D66;
+    border-radius:6px;
+    -webkit-border-radius:6px;
+    -webkit-border-radius:6px;
+    padding:10px 20px;
+    font-size:18px;
+    color:white;
+    font-family:"微软雅黑";
+    margin-left:15%;
+    margin-top:50px;
+    margin-bottom:40px;
+}
+.modifypassword{
+    padding:50px 30px 0 120px;
+}
+.modifypassword img{
+    display:inline;
+    float:left;
+}
+.modifypassword .modifypanel{
+    width:357px;
+    height:240px;
+    background:#ECF0F1;
+    margin-left:180px;
+    padding:30px 15px;
+    border-radius:6px;
+    -webkit-border-radius:6px;
+    -webkit-border-radius:6px;
+}
+.modifypanel input{
+    width:100%;
+    height:40px;
+    margin-bottom:30px;
+    font-size:16px;
+    color:#666;
+    padding-left:5px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border:1px solid #eee;
+}
+.modifypanel input.confirmnewpassword{
+    width:100%;
+    height:40px;
+    background:#1ABC9C;
+    color:white;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+}
+.info-lists .panel-group .panel:nth-child(3) .panel-heading .panel-title h3,.info-lists .panel-group .panel:nth-child(3) .panel-heading .panel-title p{
+    color:#1DB8FF;
+}

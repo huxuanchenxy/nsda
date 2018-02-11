@@ -431,9 +431,12 @@
     <Content Include="asset\css\index.css" />
     <Content Include="asset\css\judge.css" />
     <Content Include="asset\css\judgeapply.css" />
+    <Content Include="asset\css\judgecenter.css" />
+    <Content Include="asset\css\judgeinformation.css" />
     <Content Include="asset\css\judgelogin.css" />
     <Content Include="asset\css\judgeregform.css" />
     <Content Include="asset\css\judgetour.css" />
+    <Content Include="asset\css\messagebox.css" />
     <Content Include="asset\css\player.css" />
     <Content Include="asset\css\playerboundcoach.css" />
     <Content Include="asset\css\playercenter.css" />
