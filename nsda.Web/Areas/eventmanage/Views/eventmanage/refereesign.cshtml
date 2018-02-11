@@ -48,8 +48,13 @@
 
     <div class="form-group batch">
         <select class="batchsignin" id="batchsignin">
-            <option value="0">批处理为</option>
-            <option value="1">签到</option>
+            <option value="-2">批处理为</option>
+            <option value="-1">签到</option>
+            <option value="0">随机使用</option>
+            @foreach (var item in eventGroup)
+            {
+                <option value="@item.Id">仅 @item.Name 使用（组别）</option>
+            }
         </select>
     </div>
 
@@ -122,7 +127,18 @@
                                 html+='<td>待处理</td>';
                                 $.each(val.List, function (kk, item) {
                                     html+='<td class="status">';
-                                    if(item.IsCurrentDate==true)
+                                    if(item.SignType==1)//过期
+                                    {
+                                        if(item.EventSignStatus==1)
+                                        {
+                                            html+='未签到';
+                                            html+='<a href="javascript:;" class="sign signin" data-id='+val.MemberId+'>签到</a>';
+                                        }
+                                        else{
+                                            html+='已签到';
+                                        }
+                                    }
+                                    else if(item.SignType==2)//当天
                                     {
                                         if(item.EventSignStatus==1)
                                         {
@@ -196,7 +212,7 @@
 
         $("#batchsignin").change(function(){
             var val=$(this).val();
-            if(val!=0)
+            if(val!=-2)
             {
                 var arr=[];
                 $(".chksign").each(function(){
@@ -207,13 +223,13 @@
                 if(arr.length>0)
                 {
                     $.ajax({
-                        url: "/eventmanage/eventmanage/batchsign",
+                        url: "/eventmanage/eventmanage/batchrefereesign",
                         type: "post",
                         dataType: "json",
                         data: {
                             memberId: arr,
                             eventId:eventrefereelist.param.EventId,
-                            eventSignType: 2
+                            status:val
                         },
                         beforeSend: function () {
                             layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });

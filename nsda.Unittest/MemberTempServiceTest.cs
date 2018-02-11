@@ -84,7 +84,7 @@ namespace nsda.unittest
             {
                 MemberId = 10,
                 ContactMobile = "18701729689",
-                TempRefereeNum = "tnsda1000001"
+                TempRefereeNum = "nsda1000001"
             }, out msg);
 
         }

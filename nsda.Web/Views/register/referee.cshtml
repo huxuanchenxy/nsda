@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/asset/css/regform.css?version=@Constant.Version">
 }
 
-<!--这里可能是logo也可能是广告 到底是什么 我也不知道-->
 <div class="ad">
 
 </div>
@@ -227,14 +226,13 @@
                 success: function (json) {
                     layer.closeAll();
                     if (json.flag) {
-                        layer.msg("注册成功", { icon: 1, time: 1000 });
                         location.href = json.msg;
                     }
                     else {
                         layer.msg(json.msg, { icon: 5, time: 1000 });
                     }
                 }
-               , error: function () {
+               ,error: function () {
                    layer.closeAll();
                }
             });

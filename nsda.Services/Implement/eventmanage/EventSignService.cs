@@ -38,7 +38,7 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 t_event_sign eventsign = _dbContext.Get<t_event_sign>(id);
-                if (eventsign == null || eventsign.memberId != memberId)
+                if (eventsign == null || eventsign.memberId != memberId||eventsign.isStop)
                 {
                     msg = "签到信息有误";
                 }
@@ -65,7 +65,7 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                var sql = "update t_event_sign set eventSignType=@EventSignType,eventSignStatus=@EventSignStatus,signtime=@SignTime where memberId in @MemberId and eventId=@EventId and signDate=@SignDate ";
+                var sql = "update t_event_sign set eventSignStatus=@EventSignStatus,signtime=@SignTime where eventSignType=@EventSignType and memberId in @MemberId and eventId=@EventId and signDate=@SignDate ";
                 var dy = new DynamicParameters();
                 dy.Add("MemberId", memberId.ToArray());
                 dy.Add("EventId",eventId);
@@ -91,8 +91,8 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
-                var sql = @"update t_event_sign set eventSignType=@EventSignType,eventSignStatus=@EventSignStatus,signtime=@SignTime where  eventId=@EventId and signDate=@SignDate and memberId in (
-                            select memberId from t_event_player_signup where eventId=@EventId and groupNum=@GroupNum)";
+                var sql = @"update t_event_sign set eventSignStatus=@EventSignStatus,signtime=@SignTime where  eventSignType=@EventSignType and eventId=@EventId and signDate=@SignDate and memberId in (
+                            select memberId from t_event_player_signup where eventId=@EventId and groupNum in @GroupNum)";
                 var dy = new DynamicParameters();
                 dy.Add("GroupNum", groupNum.ToArray());
                 dy.Add("EventId", eventId);
@@ -111,6 +111,32 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
+        //停赛
+        public bool Stop(string groupNum, int eventId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                var sql = $@"update t_event_sign set isStop=@IsStop,updatetime=@UpdateTime  where  eventSignType=@EventSignType and eventId=@EventId  and memberId in (
+                            select memberId from t_event_player_signup where eventId=@EventId and groupNum=@GroupNum)";
+                var dy = new DynamicParameters();
+                dy.Add("GroupNum", groupNum);
+                dy.Add("IsStop",true);
+                dy.Add("EventId", eventId);
+                dy.Add("EventSignType", EventSignTypeEm.选手);
+                dy.Add("UpdateTime",DateTime.Now);
+                _dbContext.Execute(sql, dy);
+                flag = true;
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventSignService.Stop", ex);
+            }
+            return flag;
+        }
         //选手签到列表
         public List<PlayerSignResponse> PlayerSignList(PlayerSignQueryRequest request)
         {
@@ -123,7 +149,7 @@ namespace nsda.Services.Implement.eventmanage
                     request.KeyValue = $"%{request.KeyValue}%";
                     join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or d.groupnum like @KeyValue)");
                 }
-                var sql=$@" select b.gender Gender,b.grade Grade,b.contactmobile ContactMobile,d.groupnum GroupNum,a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.signdate order by a.Id) Signdates,GROUP_CONCAT(a.eventSignStatus order by a.Id) EventSignStatuss
+                var sql=$@" select a.isStop IsStop,b.gender Gender,b.grade Grade,b.contactmobile ContactMobile,d.groupnum GroupNum,a.memberId MemberId,b.completename MemberName,b.code MemberCode,GROUP_CONCAT(a.signdate order by a.Id) Signdates,GROUP_CONCAT(a.eventSignStatus order by a.Id) EventSignStatuss
                             from t_event_sign a 
                             inner join t_member_player b on a.memberId=b.memberId
                             inner join t_event c on a.eventId=c.id
@@ -148,14 +174,23 @@ namespace nsda.Services.Implement.eventmanage
                         List<string> ltSignStatus = item.EventSignStatuss.Split(',').ToList();
                         for (int i = 0; i < ltSignDate.Count; i++)
                         {
+                            var dt = ltSignDate[i].ToDateTime();
                             var model = new PlayerSignSplitResponse
                             {
                                 SignDate = ltSignDate[i].ToDateTime().ToString("MM/dd"),
-                                EventSignStatus = (EventSignStatusEm)ltSignStatus[0].ToInt32()
+                                EventSignStatus = (EventSignStatusEm)ltSignStatus[i].ToInt32()
                             };
-                            if (ltSignDate[i].ToDateTime().ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                            if (dt < Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
                             {
-                                model.IsCurrentDate = true;
+                                model.SignType = 1;
+                            }
+                            else if (dt.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                            {
+                                model.SignType = 2;
+                            }
+                            else
+                            {
+                                model.SignType = 3;
                             }
                             item.List.Add(model);
                         }
@@ -205,14 +240,23 @@ namespace nsda.Services.Implement.eventmanage
                         List<string> ltSignStatus = item.EventSignStatuss.Split(',').ToList();
                         for (int i = 0; i < ltSignDate.Count; i++)
                         {
+                            var dt = ltSignDate[i].ToDateTime();
                             var model = new RefereeSignSplitResponse
                             {
-                                SignDate = ltSignDate[i].ToDateTime().ToString("MM/dd"),
-                                EventSignStatus = (EventSignStatusEm)ltSignStatus[0].ToInt32()
+                                SignDate = dt.ToString("MM/dd"),
+                                EventSignStatus = (EventSignStatusEm)ltSignStatus[i].ToInt32()
                             };
-                            if (ltSignDate[i].ToDateTime().ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                            if (dt < Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
                             {
-                                model.IsCurrentDate = true;
+                                model.SignType = 1;
+                            }
+                            else if (dt.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                            {
+                                model.SignType = 2;
+                            }
+                            else
+                            {
+                                model.SignType = 3;
                             }
                             item.List.Add(model);
                         }
@@ -235,9 +279,10 @@ namespace nsda.Services.Implement.eventmanage
                 var sql = $@"select a.id,b.code EventCode,b.name EventName,a.signdate,a.eventSignStatus from t_event_sign a
                             inner join t_event b on a.eventId=b.id
                             where a.isdelete=0 and a.eventId=@EventId and a.memberId=@MemberId 
-                            and a.signdate=@SignDate and a.eventSignType={(int)eventSignType}";
+                            and a.signdate=@SignDate and a.isStop=@IsStop and a.eventSignType={(int)eventSignType}";
                 var dy = new DynamicParameters();
                 dy.Add("EventId",eventId);
+                dy.Add("IsStop", false);
                 dy.Add("MemberId",memberId);
                 dy.Add("SignDate",DateTime.Now.ToShortDateString());
                 response = _dbContext.QueryFirstOrDefault<SignResponse>(sql,dy);
@@ -247,6 +292,46 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventSignService.GetSign", ex);
             }
             return response;
+        }
+
+        //裁判批量签到或设置组别
+        public bool BatchReferee(List<int> memberId, int eventId, int status, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                if (status == -1)
+                {
+                    var sql = "update t_event_sign set eventSignStatus=@EventSignStatus,signtime=@SignTime where eventSignType=@EventSignType and memberId in @MemberId and eventId=@EventId and signDate=@SignDate ";
+                    var dy = new DynamicParameters();
+                    dy.Add("MemberId", memberId.ToArray());
+                    dy.Add("EventId", eventId);
+                    dy.Add("EventSignType",EventSignTypeEm.裁判);
+                    dy.Add("EventSignStatus", EventSignStatusEm.已签到);
+                    dy.Add("SignTime", DateTime.Now);
+                    dy.Add("SignDate", DateTime.Now.ToString("yyyy-MM-dd"));
+                    _dbContext.Execute(sql, dy);
+                }
+                else
+                {
+                    var sql = "update t_referee_signup set eventGroupId=@EventGroupId,updateTime=@UpdateTime where  eventId=@EventId and  memberId in @MemberId ";
+                    var dy = new DynamicParameters();
+                    dy.Add("MemberId", memberId.ToArray());
+                    dy.Add("EventId", eventId);
+                    dy.Add("EventGroupId", status);
+                    dy.Add("UpdateTime", DateTime.Now);
+                    _dbContext.Execute(sql, dy);
+                }
+                flag = true;
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventSignService.BatchReferee", ex);
+            }
+            return flag;
         }
     }
 }

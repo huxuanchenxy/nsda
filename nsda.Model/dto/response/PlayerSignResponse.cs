@@ -24,13 +24,15 @@ namespace nsda.Model.dto.response
         public string CityName { get; set; }
         public string ContactMobile { get; set; }
         public GradeEm Grade { get; set; }
+        public GenderEm Gender { get; set; }
+        public bool IsStop { get; set; }
     }
 
     public class PlayerSignSplitResponse
     {
         public string SignDate { get; set; }
         public EventSignStatusEm EventSignStatus{ get; set; }
-        public bool IsCurrentDate { get; set; }
+        public int SignType { get; set; }
     }
 
     public class RefereeSignResponse
@@ -54,6 +56,6 @@ namespace nsda.Model.dto.response
     {
         public string SignDate { get; set; }
         public EventSignStatusEm EventSignStatus { get; set; }
-        public bool IsCurrentDate { get; set; }
+        public int SignType { get; set; }
     }
 }

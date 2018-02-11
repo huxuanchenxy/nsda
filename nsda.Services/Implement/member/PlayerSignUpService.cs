@@ -847,7 +847,8 @@ namespace nsda.Services.Implement.member
                                         eventSignType = EventSignTypeEm.裁判,
                                         memberId = itemreferee.memberId,
                                         signdate = item.eventMatchDate,
-                                        eventGroupId= itemreferee.eventGroupId
+                                        eventGroupId= itemreferee.eventGroupId,
+                                        isStop = false
                                     });
                                 }
                             }
@@ -866,7 +867,8 @@ namespace nsda.Services.Implement.member
                                         eventSignType = EventSignTypeEm.选手,
                                         memberId = itemplayer.memberId,
                                         signdate = item.eventMatchDate,
-                                        eventGroupId = itemplayer.eventGroupId
+                                        eventGroupId = itemplayer.eventGroupId,
+                                        isStop = false
                                     });
                                 }
                             }

@@ -27,5 +27,9 @@ namespace nsda.Services.Contract.eventmanage
         SignResponse GetSign(int eventId,int memberId,EventSignTypeEm eventSignType);
         //选手批量签到
         bool PlayerBatchSign(List<string> groupNum, int eventId,out string msg);
+        //停赛
+        bool Stop(string groupNum, int eventId, out string msg);
+        //裁判批量签到或设置组别
+        bool BatchReferee(List<int> memberId, int eventId, int status, out string msg);
     }
 }

@@ -700,22 +700,27 @@ namespace nsda.Services.member
             {
                 if (request.Account.IsEmpty())
                 {
-                    msg = "电子邮箱不能为空";
+                    msg = "Email不能为空";
                     return flag;
                 }
                 if (!request.Account.IsSuccessEmail())
                 {
-                    msg = "电子邮箱格式有误";
+                    msg = "Email格式有误";
                     return flag;
                 }
                 if (request.Pwd.IsEmpty())
                 {
-                    msg = "密码不能为空";
+                    msg = "Password不能为空";
                     return flag;
                 }
                 if (request.Pwd.Length < 6)
                 {
-                    msg = "密码长度不能低于6";
+                    msg = "Password长度不能低于6";
+                    return flag;
+                }
+                if (request.CompleteName.IsEmpty())
+                {
+                    msg = "Nick Name不能为空";
                     return flag;
                 }
                 if (request.PinYinName.IsEmpty())
@@ -774,7 +779,8 @@ namespace nsda.Services.member
                     gender = request.Gender,
                     pinyinname = request.PinYinName,
                     pinyinsurname = request.PinYinSurName,
-                    emergencycontactmobile = request.EmergencyContactMobile
+                    emergencycontactmobile = request.EmergencyContactMobile,
+                    completename=request.CompleteName
                 };
                 try
                 {
@@ -1212,22 +1218,22 @@ namespace nsda.Services.member
                 }
                 if (request.ContactMobile.IsEmpty())
                 {
-                    msg = "联系电话不能为空";
+                    msg = "Phone Number不能为空";
                     return flag;
                 }
                 if (request.EmergencyContact.IsEmpty())
                 {
-                    msg = "紧急联系人不能为空";
+                    msg = "Emergency Contact Person不能为空";
                     return flag;
                 }
                 if (request.EmergencyContactMobile.IsEmpty())
                 {
-                    msg = "紧急联系人电话不能为空";
+                    msg = "Emergency Number不能为空";
                     return flag;
                 }
                 if (request.ContactAddress.IsEmpty())
                 {
-                    msg = "联系地址不能为空";
+                    msg = "Address不能为空";
                     return flag;
                 }
                 var detail = _dbContext.Select<t_member_coach>(c=>c.memberId== userContext.Id).FirstOrDefault();

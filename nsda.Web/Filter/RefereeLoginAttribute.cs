@@ -27,7 +27,7 @@ namespace nsda.Web.Filter
             var userContext = UserContext.WebUserContext;
             if (userContext == null)
             {
-                filterContext.Result = new RedirectResult("/login/login");
+                filterContext.Result = new RedirectResult("/login/referee");
                 return;
             }
 
@@ -35,7 +35,7 @@ namespace nsda.Web.Filter
             {
                 if (!userContext.IsExtendReferee)
                 {
-                    filterContext.Result = new RedirectResult("/login/login");
+                    filterContext.Result = new RedirectResult("/login/referee");
                     return;
                 }
             }

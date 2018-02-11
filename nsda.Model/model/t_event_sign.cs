@@ -43,6 +43,8 @@ namespace nsda.Models
     
         public EventSignStatusEm eventSignStatus { get; set; }
     
+        public bool isStop { get; set; }
+    
         /// <summary>
         /// 创建时间
         /// </summary>

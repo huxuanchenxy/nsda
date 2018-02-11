@@ -129,6 +129,10 @@ namespace nsda.Model.dto.response
         /// </summary>
         public string ContactAddress { get; set; }
         public GenderEm Gender { get; set; }
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        public string CompleteName { get; set; }
     }
 
     public class MemberRefereeResponse

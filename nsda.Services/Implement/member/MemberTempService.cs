@@ -104,7 +104,7 @@ namespace nsda.Services.Implement.member
                     foreach (var item in request)
                     {
                         //创建账号
-                        string code = _dataRepository.MemberRepo.RenderCode("tnsda");
+                        string code = _dataRepository.MemberRepo.RenderCode("nsda");
                         t_member member = new t_member
                         {
                             code = code,
@@ -183,7 +183,8 @@ namespace nsda.Services.Implement.member
                                 eventSignType=EventSignTypeEm.选手,
                                 eventSignStatus=EventSignStatusEm.待签到,
                                 signdate=itemdate.eventMatchDate,
-                                memberId=memberInsertId
+                                memberId=memberInsertId,
+                                isStop = false
                             });
                         }
                     }
@@ -233,7 +234,7 @@ namespace nsda.Services.Implement.member
                 try
                 {
                     _dbContext.BeginTransaction();
-                    string code = _dataRepository.MemberRepo.RenderCode("tnsda");
+                    string code = _dataRepository.MemberRepo.RenderCode("nsda");
                     t_member member = new t_member
                     {
                         code = code,
@@ -300,7 +301,8 @@ namespace nsda.Services.Implement.member
                                 eventSignType = EventSignTypeEm.裁判,
                                 eventSignStatus = EventSignStatusEm.待签到,
                                 signdate = itemdate.eventMatchDate,
-                                memberId = memberInsertId
+                                memberId = memberInsertId,
+                                isStop=false
                             });
                         }
                     }

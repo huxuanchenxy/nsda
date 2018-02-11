@@ -36,6 +36,8 @@ namespace nsda.Models
         /// </summary>
         public string code { get; set; }
     
+        public string completename { get; set; }
+    
         /// <summary>
         /// 拼音姓
         /// </summary>

@@ -148,6 +148,10 @@ namespace nsda.Model.dto.request
         /// 性别
         /// </summary>
         public GenderEm Gender { get; set; }
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        public string CompleteName { get; set; }
     }
 
     public class RegisterRefereeRequest

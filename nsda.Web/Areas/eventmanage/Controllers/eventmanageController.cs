@@ -488,16 +488,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var flag = _refereeSignUpService.Flag(id,UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
-
-        //裁判设置
-        [HttpPost]
-        [AjaxOnly]
-        public ContentResult settingsreferee(int id,int statusOrGroup)
-        {
-            string msg = string.Empty;
-            var flag = _refereeSignUpService.Settings(id, statusOrGroup, out msg);
-            return Result<string>(flag, msg);
-        }
         #endregion
 
         #region 签到管理
@@ -511,6 +501,18 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result<string>(flag, msg);
         }
 
+
+        //裁判批量签到或设置组别
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult batchrefereesign(List<int> memberId, int eventId,int status)
+        {
+            string msg = string.Empty;
+            var flag = _eventSignService.BatchReferee(memberId, eventId, status, out msg);
+            return Result<string>(flag, msg);
+        }
+
+
         //批量签到
         [HttpPost]
         [AjaxOnly]
@@ -518,6 +520,16 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             string msg = string.Empty;
             var flag = _eventSignService.PlayerBatchSign(groupNum, eventId, out msg);
+            return Result<string>(flag, msg);
+        }
+
+        //停赛
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult playerstop(string groupNum, int eventId)
+        {
+            string msg = string.Empty;
+            var flag = _eventSignService.Stop(groupNum, eventId, out msg);
             return Result<string>(flag, msg);
         }
 

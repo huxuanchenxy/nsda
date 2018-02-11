@@ -23,8 +23,6 @@ namespace nsda.Services.Contract.referee
         List<RefereeCurrentEventResponse> CurrentRefereeEvent(int memberId);
         //赛事管理员 裁判报名列表
         List<EventRefereeSignUpListResponse> EventRefereeList(EventRefereeSignUpQueryRequest request);
-        // 修改设置
-        bool Settings(int id, int statusOrGroup, out string msg);
         //裁判赛事报名列表
         List<RefereeSignUpListResponse> RefereeSignUpList(RefereeSignUpQueryRequest request);
         //裁判数据统计

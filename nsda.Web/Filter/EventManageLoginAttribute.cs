@@ -27,13 +27,13 @@ namespace nsda.Web.Filter
             var userContext = UserContext.WebUserContext;
             if (userContext == null)
             {
-                filterContext.Result = new RedirectResult("/login/login");
+                filterContext.Result = new RedirectResult("/login/eventmanage");
                 return;
             }
 
             if (userContext.MemberType != (int)Model.enums.MemberTypeEm.赛事管理员)
             {
-                filterContext.Result = new RedirectResult("/login/login");
+                filterContext.Result = new RedirectResult("/login/eventmanage");
                 return;               
             }
         }

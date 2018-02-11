@@ -410,6 +410,7 @@
     <Content Include="asset\css\coach.css" />
     <Content Include="asset\css\coachboundplayer.css" />
     <Content Include="asset\css\coachinformation.css" />
+    <Content Include="asset\css\coachregform.css" />
     <Content Include="asset\css\event.css" />
     <Content Include="asset\css\eventmanage.css" />
     <Content Include="asset\css\eventmanageknockout.css" />
@@ -432,6 +433,7 @@
     <Content Include="asset\css\playerintegral.css" />
     <Content Include="asset\css\playerpartin.css" />
     <Content Include="asset\css\playerpersonal.css" />
+    <Content Include="asset\css\playerregform.css" />
     <Content Include="asset\css\playersign.css" />
     <Content Include="asset\css\playersource.css" />
     <Content Include="asset\css\regform.css" />
