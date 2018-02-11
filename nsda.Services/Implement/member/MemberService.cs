@@ -841,27 +841,27 @@ namespace nsda.Services.member
             {
                 if (request.Account.IsEmpty())
                 {
-                    msg = "电子邮箱不能为空";
+                    msg = "Email不能为空";
                     return flag;
                 }
                 if (!request.Account.IsSuccessEmail())
                 {
-                    msg = "电子邮箱格式有误";
+                    msg = "Email格式有误";
                     return flag;
                 }
                 if (request.Pwd.IsEmpty())
                 {
-                    msg = "密码不能为空";
+                    msg = "Password不能为空";
                     return flag;
                 }
                 if (request.Pwd.Length < 6)
                 {
-                    msg = "密码长度不能低于6";
+                    msg = "Password长度不能低于6";
                     return flag;
                 }
                 if (request.CompleteName.IsEmpty())
                 {
-                    msg = "中文名不能为空";
+                    msg = "Nick Name不能为空";
                     return flag;
                 }
                 if (request.PinYinName.IsEmpty())

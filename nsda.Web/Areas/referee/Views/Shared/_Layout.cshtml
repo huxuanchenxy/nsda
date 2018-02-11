@@ -1,0 +1,286 @@
+﻿@using nsda.Utilities
+@{
+    var userContext = ViewBag.UserContext as WebUserContext;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <title>@ViewBag.Title 全美演讲与辩论联盟 National Forensic League</title>
+
+    <link href="/asset/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/asset/css/basic.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/iconfont.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/index.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/judge.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    @RenderSection("styles", false)
+</head>
+<body>
+    <nav class="nav navbar-inverse nav-top navbar-fixed-top">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <div class="container search navbar-right">
+                    <a href="/register/player" class="navbar-link link"> &nbsp;|&nbsp; 注册 </a><a href="/login/login" class="navbar-link link">登录</a>
+                    <span class="iconfont icon-yonghu" aria-hidden="true"></span>
+                    <a href="" id="check"><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
+                    <input type="text" class="form-control" name="" placeholder="">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <nav class="navbar navbar-default header container" role="navigation">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"></a>
+
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav drop-list" id="lead">
+                    <li class=""><a href="/">首页</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            关于我们
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/about/nsda">关于NSDA</a></li>
+                            <li><a href="/about/nsda">NSDA中国</a></li>
+                            <li><a href="/about/partner">"合作伙伴</a></li>
+                            <li><a href="/about/us">联系我们</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            会员系统
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">会员系统</a></li>
+                            <li><a href="#">裁判招募</a></li>
+                            <li><a href="#">申请赛事管理员</a></li>
+                            <li><a href="#">排名榜单</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            赛事
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">赛历</a></li>
+                            <li><a href="#">国内赛事</a></li>
+                            <li><a href="#">国际赛事</a></li>
+                        </ul>
+                    </li>
+                    <li class=""><a href="#">课程专栏</a></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            更多
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">辩题</a></li>
+                            <li><a href="#">教材购买</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+                <div class="sear hidden-sm hidden-md hidden-lg">
+                    <input type="text" class="form-control" name="" placeholder="">
+                    <a href="" class="check2"><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
+                    <span class="iconfont icon-yonghu" aria-hidden="true"></span>
+                    <a href="#" class="navbar-link link">注册 | </a><a href="#" class="navbar-link link">&nbsp;登录 </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="mec-ban">
+        <div class="container player">
+            <div class="player-info">
+                <div class="img">
+                    @if (userContext.Head.IsNotEmpty())
+                    {
+                    <img id="uploadPreview" src="@userContext.Head" />
+                    }
+                    else
+                    {
+                    <img id="uploadPreview" src="/asset/img/teacher.png" />
+                    }
+                    <input type="file" title="点击更换头像" name="uploadFile" id="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png">
+                </div>
+                <div class="player-num">
+                    <ul>
+                        <li>
+                            <span>
+                                NSDA CHINA Judge：
+                            </span><p>@userContext.Name</p>
+                        </li>
+                        <li>
+                            <span>
+                                NSDA Points for Judge：
+                            </span><p>@userContext.RefereePoints</p>
+                        </li>
+                        <li><span>Judge Member Number：</span><p>@userContext.Code</p></li>
+                    </ul>
+                </div>
+
+                <a href="#" class="player-code">
+                    <i class="iconfont icon-erweima"></i>
+                    Show QR Code
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container judge-compe">
+        <div class="info-lists">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <p>我的裁判经历</p>
+                                <h3>My Tournaments&nbsp;&nbsp;v</h3>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <ul>
+                                <a href="/referee/referee/signup" class="compe"><li>Apply to Judge</li></a>
+                                <a href="/referee/referee/list" class="compe"><li>Tournaments to Judge</li></a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <p>个人信息</p>
+                                <h3>Personal information&nbsp;&nbsp;v</h3>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            <ul>
+                                <a href="/referee/referee/info" class="compe"><li>修改个人资料</li></a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @RenderBody()
+    </div>
+
+    <!--联系我们-->
+    <div class="container">
+        <div class="row contact">
+            <span></span>
+            <h2>联系我们<br>GET IN TOUCH</h2>
+            <p>全美演讲与辩论联盟中国办公室（NSDA China）欢迎教育、传媒、金融等社会各领域组织机构<br>与我方进行冠名、赞助等多种形式合作，共同推动学术辩论与公共演讲在中国的蓬勃发展。</p>
+
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/map-3.svg" alt="">
+                        <p>上海市杨浦区淞沪路303号创智天地11号楼501室</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/chat-user-2.svg" alt="">
+                        <p>021-60452021</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="~/asset/img/mail-at.svg" alt="">
+                        <p>joyofdebate@dipont-edu.com</p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="blank">
+
+    </div>
+
+    <footer>
+        <p>Copyright © 2005 - 2018 National Forensic League of China All Reserved</p>
+    </footer>
+
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/js/parallax.min.js"></script>
+    <script src="/asset/js/bootstrap.min.js"></script>
+    <script src="/asset/uploadify/ajaxfileupload.js"></script>
+    <script src="/asset/js/layer/layer.js"></script>
+    <script src="/asset/js/validate.js"></script>
+    @RenderSection("scripts", false)
+    <script>
+            $(function () {
+                $('#uploadFile').change(function () {
+                    var f = document.getElementById('uploadFile').files[0]
+                    var src = window.URL.createObjectURL(f);
+                    document.getElementById('uploadPreview').src = src;
+
+                    $.ajaxFileUpload({
+                        url: "/commondata/updatehead",
+                        secureuri: false,
+                        fileElementId: 'uploadFile',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.flag) {
+                                location.reload();
+                            }
+                            else {
+                                layermsg(data.msg, 1);
+                            }
+                        }
+                    });
+                });
+            });
+    </script>
+</body>
+</html>

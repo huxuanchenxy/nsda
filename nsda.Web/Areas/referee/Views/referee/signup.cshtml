@@ -1,0 +1,123 @@
+﻿@using nsda.Utilities
+@{
+    ViewBag.Title = "赛事报名";
+    Layout = "~/Areas/referee/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/judgeapply.css?version=@Constant.Version">
+}
+<div class="judge-con">
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Tournament</th>
+                <th>Events</th>
+                <th>Level</th>
+                <th>Start Date</th>
+                <th>location</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="data"></tbody>
+    </table>
+    <nav aria-label="Page navigation" id="pager">
+    </nav>
+</div>
+
+@section scripts
+{
+    <script src="/asset/js/common.js?version=@Constant.Version"></script>
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script src="/asset/js/pager.js"></script>
+    <script>
+        (function (w) {
+            var refereeevent = {
+                param: {
+                    TotalPage: 1,
+                    PageIndex: 1,
+                    PageSize: 10,
+                    ProvinceId: 0,
+                    CityId: 0,
+                    EventLevel: 0,
+                    StartDate:""
+                }
+            };
+            refereeevent.Load = function (filter) {
+                $.ajax({
+                    url: "/commondata/listevent",
+                    type: "get",
+                    dataType: "json",
+                    data: filter,
+                    success: function (json) {
+                        if (json.records > 0) {
+                            var _pager = new w.pager({
+                                'parent': $('#pager')
+                            });
+                            refereeevent.param.TotalPage = json.total;
+                            _pager.init(filter, refereeevent.param.PageIndex, refereeevent.param.TotalPage, function (p) {
+                                refereeevent.param.PageIndex = p;
+                                refereeevent.Load(refereeevent.param)
+                            });
+                            var html = '';
+                            $.each(json.rows, function (k, val) {
+                                html += '<tr>';
+                                html += '<td>' + val.EventCode + '</td>';
+                                html += '<td>' + val.EventName + '</td>';
+                                html += '<td>' + enumreplace.replaceeventType(val.EventType) + '</td>';
+                                html += '<td>' + enumreplace.replaceeventLevel(val.EventLevel) + '</td>';
+                                html += '<td>' + parseDate(new Date(val.StartEventDate), "yyyy-MM-dd").format + '</td>';
+                                if (val.CityName == null || val.CityName == "") {
+                                    html += '<td>' + val.ProvinceName + '</td>';
+                                }
+                                else {
+                                    html += '<td>' + val.CityName + '</td>';
+                                }
+                                if (val.IsVisiable) {
+                                    html += '<td><a href="javascript:;" data-id='+val.Id+' class="applyfor">Apply for</a></td>';
+                                } else {
+                                    html += '<td>Closed</td>';
+                                }
+                                html += '</tr>';
+                            });
+                            $("#data").html(html)
+                        } else {
+                            $("#data").html('');
+                            $("#pager").html("")
+                        }
+                    }
+                })
+            };
+            w.refereeevent = refereeevent
+        })(window);
+        refereeevent.Load(refereeevent.param);
+
+        $(document).on("click", ".applyfor", function () {
+            $.ajax({
+                url: "/referee/referee/apply",
+                type: "post",
+                dataType: "json",
+                data: {
+                    eventId: $(this).attr("data-id")
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('报名成功', { icon: 1, time: 1000 });
+                        location.href = "/referee/referee/list";
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                   layer.closeAll();
+               }
+            });
+        });
+    </script>
+}

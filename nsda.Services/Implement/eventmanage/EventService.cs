@@ -749,11 +749,6 @@ namespace nsda.Services.Implement.eventmanage
             {
                 var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus ={(int)EventStatusEm.报名中} and starteventdate>='{DateTime.Now.ToShortDateString()}'";
                 list = _dbContext.Query<EventSelectResponse>(sql).ToList();
-                list.Insert(0, new EventSelectResponse
-                {
-                    EventId = 0,
-                    EventName = "暂时不确定"
-                });
             }
             catch (Exception ex)
             {

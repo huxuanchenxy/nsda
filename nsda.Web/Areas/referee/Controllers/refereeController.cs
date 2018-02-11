@@ -126,6 +126,8 @@ namespace nsda.Web.Areas.referee.Controllers
         #region view
         public ActionResult index()
         {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/referee/referee/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
@@ -137,20 +139,26 @@ namespace nsda.Web.Areas.referee.Controllers
 
         public ActionResult info()
         {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
             var data = _memberService.MemberRefereeDetail(UserContext.WebUserContext.Id);
             return View(data);
         }
 
         public ActionResult mail()
         {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
             return View();
         }
 
         //报名页面
         public ActionResult signup()
         {
-            var data = _eventService.EventCondition();
-            ViewBag.Condition = data;
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            //var data = _eventService.EventCondition();
+            //ViewBag.Condition = data;
             return View();
         }
 
@@ -159,6 +167,13 @@ namespace nsda.Web.Areas.referee.Controllers
         {
             var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id,EventSignTypeEm.裁判);
             return View(detail);
+        }
+
+        public ActionResult list()
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            return View();
         }
         #endregion
     }

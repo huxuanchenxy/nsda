@@ -6,7 +6,7 @@
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/regform.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/eventmanageregform.css?version=@Constant.Version">
 }
 
 <div class="ad">
@@ -21,82 +21,63 @@
 @*会员注册*@
 
 <div class="container regform-con">
-    <h3>欢迎加入NSDA会员，您需要几分钟填写申请信息</h3>
+    <h3>欢迎加入NSDA赛事管理员，您需要几分钟填写申请信息</h3>
     <div class="reg-sign">
         <span class="signup">Sign Up</span>
         <form class="form-ctrl">
             <div class="form-group">
-                <label for="email" class="form-label">注册邮箱</label>
-                <input type="email" class="form-input" id="account">
+                <label for="account" class="form-label">注册邮箱</label>
+                <input type="text" class="form-input" id="account">
             </div>
             <div class="form-group">
-                <label for="password" class="form-label">密码</label>
+                <label for="pwd" class="form-label">密码</label>
                 <input type="password" class="form-input" id="pwd">
             </div>
             <div class="form-group">
-                <label for="confirmpassword" class="form-label">确认密码</label>
+                <label for="againpwd" class="form-label">确认密码</label>
                 <input type="password" class="form-input" id="againpwd">
             </div>
             <div class="form-group">
                 <div class="form-group-small">
-                    <label for="lastname" class="form-label">姓</label>
+                    <label for="name" class="form-label">姓</label>
                     <input type="text" class="form-input" id="name">
                 </div>
                 <div class="form-group-small">
-                    <label for="firstname" class="form-label">名</label>
+                    <label for="surname" class="form-label">名</label>
                     <input type="text" class="form-input" id="surname">
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-group-small">
-                    <label for="pylastname" class="form-label">拼音姓</label>
+                    <label for="pyname" class="form-label">拼音姓</label>
                     <input type="text" class="form-input" id="pyname">
                 </div>
                 <div class="form-group-small">
-                    <label for="pyfirstname" class="form-label">拼音名</label>
+                    <label for="pinsurname" class="form-label">拼音名</label>
                     <input type="text" class="form-input" id="pinsurname">
                 </div>
             </div>
             <div class="form-group">
-                <label for="grade" class="form-label">目前年级</label>
-                <select class="form-select-grade" id="grade">
-                    <option value="0">学前</option>
-                    <option value="1">1年级</option>
-                    <option value="2">2年级</option>
-                    <option value="3">3年级</option>
-                    <option value="4">4年级</option>
-                    <option value="5">5年级</option>
-                    <option value="6">6年级</option>
-                    <option value="7">7年级</option>
-                    <option value="8">8年级</option>
-                    <option value="9">9年级</option>
-                    <option value="10">10年级</option>
-                    <option value="11">11年级</option>
-                    <option value="12">12年级</option>
-                    <option value="13">13年级</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="telephone" class="form-label">联系电话</label>
+                <label for="contactMobile" class="form-label">联系电话</label>
                 <input type="text" class="form-input-phone" id="contactMobile">
             </div>
             <div class="form-group">
                 <div class="form-group-small">
-                    <label for="urgentbody" class="form-label">紧急联系人</label>
+                    <label for="emergencycontact" class="form-label">紧急联系人</label>
                     <input type="text" class="form-input" id="emergencycontact">
                 </div>
                 <div class="form-group-small">
-                    <label for="urgentphone" class="form-label">紧急电话</label>
+                    <label for="emergencycontactmobile" class="form-label">紧急电话</label>
                     <input type="text" class="form-input" id="emergencycontactmobile">
                 </div>
             </div>
             <div class="form-group form-sexy">
                 <label for="Gender" class="form-label">性别</label>
                 <label class="radio-inline sexy">
-                    <input type="radio" name="Gender" value="1" checked> 男
+                    <input type="radio" name="Gender" checked> 男
                 </label>
                 <label class="radio-inline sexy">
-                    <input type="radio" name="Gender" value="2"> 女
+                    <input type="radio" name="Gender"> 女
                 </label>
             </div>
             <div class="form-group">
@@ -106,28 +87,14 @@
             <div class="form-group">
                 <label for="card" class="form-label">有效证件</label>
                 <select class="form-select-card" id="card">
-                    <option value="1">身份证</option>
-                    <option value="2">护照</option>
-                    <option value="3">港澳台通行证</option>
+                    <option>身份证</option>
+                    <option>护照</option>
+                    <option>港澳台通行证</option>
                 </select>
                 <input type="text" class="form-input-card" id="idcard">
             </div>
-            <div class="form-group">
-                <label for="school" class="form-label">目前学校</label>
-                <input class="form-select-school" id="startdate">
-                <em class="em">—</em>
-                <input class="form-select-school" id="enddate">
-                <select class="form-select-schoolads schoolads" id="provinceId">
-                    <option>省</option>
-                </select>
-                <select class="form-select-schoolads" id="cityId">
-                    <option>市</option>
-                </select>
-                <select class="form-select-schoolads form-sel-ads" id="schoolId">
-                    <option>学校</option>
-                </select>
-            </div>
-            <button type="button" class="button" id="register">递交注册会员申请</button>
+
+            <button type="button" id="register" class="button">递交申请赛事管理员</button>
         </form>
     </div>
 </div>
@@ -225,7 +192,6 @@
                     Name: $Name,
                     PinYinSurName: $PinYinSurName,
                     PinYinName: $PinYinName,
-                    Grade: $Grade,
                     ContactMobile: $ContactMobile,
                     EmergencyContactMobile: $EmergencyContactMobile,
                     EmergencyContact: $EmergencyContact,

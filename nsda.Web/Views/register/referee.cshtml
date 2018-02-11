@@ -1,12 +1,14 @@
 ﻿@using nsda.Utilities
+@using nsda.Model.dto.response
 @{
     ViewBag.Title = "裁判注册";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var data = ViewBag.Condition as List<EventSelectResponse>;
 }
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/regform.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/judgeregform.css?version=@Constant.Version">
 }
 
 <div class="ad">
@@ -21,113 +23,74 @@
 @*会员注册*@
 
 <div class="container regform-con">
-    <h3>欢迎加入NSDA会员，您需要几分钟填写申请信息</h3>
+    <h3>If you are not an NSDA  judger, create a new account.</h3>
     <div class="reg-sign">
         <span class="signup">Sign Up</span>
         <form class="form-ctrl">
             <div class="form-group">
-                <label for="email" class="form-label">注册邮箱</label>
-                <input type="email" class="form-input" id="account">
+                <label for="account" class="form-label">Email:</label>
+                <input type="text" class="form-input" id="account">
             </div>
             <div class="form-group">
-                <label for="password" class="form-label">密码</label>
+                <label for="pwd" class="form-label">Password:</label>
                 <input type="password" class="form-input" id="pwd">
             </div>
             <div class="form-group">
-                <label for="confirmpassword" class="form-label">确认密码</label>
+                <label for="againpwd" class="form-label">Repeat the Password:</label>
                 <input type="password" class="form-input" id="againpwd">
             </div>
             <div class="form-group">
-                <div class="form-group-small">
-                    <label for="lastname" class="form-label">姓</label>
-                    <input type="text" class="form-input" id="name">
-                </div>
-                <div class="form-group-small">
-                    <label for="firstname" class="form-label">名</label>
-                    <input type="text" class="form-input" id="surname">
-                </div>
+                <label for="completename" class="form-label">Nick Name:</label>
+                <input type="text" class="form-input-phone" id="completename">
             </div>
-            <div class="form-group">
+            <div class="form-group formname">
                 <div class="form-group-small">
-                    <label for="pylastname" class="form-label">拼音姓</label>
+                    <label for="pyname" class="form-label">First Name:</label>
                     <input type="text" class="form-input" id="pyname">
                 </div>
                 <div class="form-group-small">
-                    <label for="pyfirstname" class="form-label">拼音名</label>
+                    <label for="pinsurname" class="form-label">Last Name:</label>
                     <input type="text" class="form-input" id="pinsurname">
                 </div>
             </div>
             <div class="form-group">
-                <label for="grade" class="form-label">目前年级</label>
-                <select class="form-select-grade" id="grade">
-                    <option value="0">学前</option>
-                    <option value="1">1年级</option>
-                    <option value="2">2年级</option>
-                    <option value="3">3年级</option>
-                    <option value="4">4年级</option>
-                    <option value="5">5年级</option>
-                    <option value="6">6年级</option>
-                    <option value="7">7年级</option>
-                    <option value="8">8年级</option>
-                    <option value="9">9年级</option>
-                    <option value="10">10年级</option>
-                    <option value="11">11年级</option>
-                    <option value="12">12年级</option>
-                    <option value="13">13年级</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="telephone" class="form-label">联系电话</label>
+                <label for="contactMobile" class="form-label">Phone Number: </label>
                 <input type="text" class="form-input-phone" id="contactMobile">
             </div>
-            <div class="form-group">
+            <div class="form-group formcontact">
                 <div class="form-group-small">
-                    <label for="urgentbody" class="form-label">紧急联系人</label>
+                    <label for="emergencycontact" class="form-label">Emergency Contact Person:</label>
                     <input type="text" class="form-input" id="emergencycontact">
                 </div>
                 <div class="form-group-small">
-                    <label for="urgentphone" class="form-label">紧急电话</label>
+                    <label for="emergencycontactmobile" class="form-label">Emergency Number:</label>
                     <input type="text" class="form-input" id="emergencycontactmobile">
                 </div>
             </div>
             <div class="form-group form-sexy">
-                <label for="Gender" class="form-label">性别</label>
+                <label for="sex" class="form-label">Gender:</label>
                 <label class="radio-inline sexy">
-                    <input type="radio" name="Gender" value="1" checked> 男
+                    <input type="radio" name="Gender" checked> Male
                 </label>
                 <label class="radio-inline sexy">
-                    <input type="radio" name="Gender" value="2"> 女
+                    <input type="radio" name="Gender"> Female
                 </label>
             </div>
             <div class="form-group">
-                <label for="contactaddress" class="form-label">通讯地址</label>
+                <label for="contactaddress" class="form-label">Address:</label>
                 <input type="text" class="form-input" id="contactaddress">
             </div>
             <div class="form-group">
-                <label for="card" class="form-label">有效证件</label>
-                <select class="form-select-card" id="card">
-                    <option value="1">身份证</option>
-                    <option value="2">护照</option>
-                    <option value="3">港澳台通行证</option>
-                </select>
-                <input type="text" class="form-input-card" id="idcard">
-            </div>
-            <div class="form-group">
-                <label for="school" class="form-label">目前学校</label>
-                <input class="form-select-school" id="startdate">
-                <em class="em">—</em>
-                <input class="form-select-school" id="enddate">
-                <select class="form-select-schoolads schoolads" id="provinceId">
-                    <option>省</option>
-                </select>
-                <select class="form-select-schoolads" id="cityId">
-                    <option>市</option>
-                </select>
-                <select class="form-select-schoolads form-sel-ads" id="schoolId">
-                    <option>学校</option>
+                <label for="event" class="form-label">I want to judge:</label>
+                <select class="form-select-grade" id="event">
+                    <option value="0">- No choice -</option>
+                    @foreach (var item in data)
+                    {
+                        <option value="@item.EventId">@item.EventName</option>
+                    }
                 </select>
             </div>
-            <button type="button" class="button" id="register">递交注册会员申请</button>
+            <button type="button" class="button" id="register">Create Login</button>
         </form>
     </div>
 </div>
@@ -137,23 +100,22 @@
     <script>
         $("#register").click(function () {
             var $Account = $("#account").val();
-            if (validate.isNull($Account))
-            {
-                layer.msg('请输入注册邮箱', { icon: 5, time: 1000 });
+            if (validate.isNull($Account)) {
+                layer.msg('请输入Email', { icon: 5, time: 1000 });
                 return;
             }
             if (!validate.isEmail($Account)) {
-                layer.msg('请输入正确的注册邮箱', { icon: 5, time: 1000 });
+                layer.msg('请输入正确的Email', { icon: 5, time: 1000 });
                 return;
             }
             var $Pwd = $("#pwd").val();
             var $againpwd = $("#againpwd").val();
             if (validate.isNull($Pwd)) {
-                layer.msg('请输入密码', { icon: 5, time: 1000 });
+                layer.msg('请输入Password', { icon: 5, time: 1000 });
                 return;
             }
             if (validate.isNull($againpwd)) {
-                layer.msg('请输入确认密码', { icon: 5, time: 1000 });
+                layer.msg('请输入Repeat the Password', { icon: 5, time: 1000 });
                 return;
             }
             if ($Pwd != $againpwd) {
@@ -164,40 +126,41 @@
                 layer.msg('密码必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
                 return;
             }
-            var $CompleteName = $("#completeName").val();
-            if (validate.isNull($CompleteName))
-            {
-                layer.msg('请输入中文姓名', { icon: 5, time: 1000 });
+
+            var $CompleteName = $("#completename").val();
+            if (validate.isNull($CompleteName)) {
+                layer.msg('请输入Nick Name', { icon: 5, time: 1000 });
                 return;
             }
+
             var $PinYinName = $("#pyname").val();
             if (validate.isNull($PinYinName)) {
-                layer.msg('请输入拼音姓', { icon: 5, time: 1000 });
+                layer.msg('请输入First Name', { icon: 5, time: 1000 });
                 return;
             }
             var $PinYinSurName = $("#pinsurname").val();
             if (validate.isNull($PinYinSurName)) {
-                layer.msg('请输入拼音名', { icon: 5, time: 1000 });
+                layer.msg('请输入Last Name', { icon: 5, time: 1000 });
                 return;
             }
             var $ContactMobile = $("#contactMobile").val();
             if (validate.isNull($ContactMobile)) {
-                layer.msg('请输入联系电话', { icon: 5, time: 1000 });
+                layer.msg('请输入Phone Number', { icon: 5, time: 1000 });
                 return;
             }
             var $EmergencyContact = $("#emergencycontact").val();
             if (validate.isNull($EmergencyContact)) {
-                layer.msg('请输入紧急联系人', { icon: 5, time: 1000 });
+                layer.msg('请输入Emergency Contact Person', { icon: 5, time: 1000 });
                 return;
             }
             var $EmergencyContactMobile = $("#emergencycontactmobile").val();
             if (validate.isNull($EmergencyContactMobile)) {
-                layer.msg('请输入紧急电话', { icon: 5, time: 1000 });
+                layer.msg('请输入Emergency Number', { icon: 5, time: 1000 });
                 return;
             }
             var $ContactAddress = $("#contactaddress").val();
             if (validate.isNull($ContactAddress)) {
-                layer.msg('请输入联系地址', { icon: 5, time: 1000 });
+                layer.msg('请输入Address', { icon: 5, time: 1000 });
                 return;
             }
             var $Gender = $('input[name=Gender]:checked').val();
@@ -212,7 +175,6 @@
                     CompleteName: $CompleteName,
                     PinYinSurName: $PinYinSurName,
                     PinYinName: $PinYinName,
-                    Grade: $Grade,
                     ContactMobile: $ContactMobile,
                     EmergencyContactMobile: $EmergencyContactMobile,
                     EmergencyContact: $EmergencyContact,

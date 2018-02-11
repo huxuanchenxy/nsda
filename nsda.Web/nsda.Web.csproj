@@ -415,7 +415,9 @@
     <Content Include="asset\css\eventmanage.css" />
     <Content Include="asset\css\eventmanageknockout.css" />
     <Content Include="asset\css\eventmanagelists.css" />
+    <Content Include="asset\css\eventmanagelogin.css" />
     <Content Include="asset\css\eventmanageplayer.css" />
+    <Content Include="asset\css\eventmanageregform.css" />
     <Content Include="asset\css\eventmanageroom.css" />
     <Content Include="asset\css\eventmanageround.css" />
     <Content Include="asset\css\eventmanageumpire.css" />
@@ -427,6 +429,11 @@
     <Content Include="asset\css\eventumpiresignin.css" />
     <Content Include="asset\css\iconfont.css" />
     <Content Include="asset\css\index.css" />
+    <Content Include="asset\css\judge.css" />
+    <Content Include="asset\css\judgeapply.css" />
+    <Content Include="asset\css\judgelogin.css" />
+    <Content Include="asset\css\judgeregform.css" />
+    <Content Include="asset\css\judgetour.css" />
     <Content Include="asset\css\player.css" />
     <Content Include="asset\css\playerboundcoach.css" />
     <Content Include="asset\css\playercenter.css" />
@@ -526,6 +533,9 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\addroomplayer.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\refereesign.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\playersign.cshtml" />
+    <Content Include="Areas\referee\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\referee\Views\referee\signup.cshtml" />
+    <Content Include="Areas\referee\Views\referee\list.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
@@ -589,7 +599,6 @@
     <Folder Include="Areas\eventmanage\Models\" />
     <Folder Include="Areas\player\Models\" />
     <Folder Include="Areas\referee\Models\" />
-    <Folder Include="Areas\referee\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

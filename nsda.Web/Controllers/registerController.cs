@@ -123,6 +123,7 @@ namespace nsda.Web.Controllers
         //裁判
         public ActionResult referee()
         {
+            ViewBag.Condition = _eventService.RefereeRegisterEvent();
             return View();
         }
         //教练
