@@ -16,8 +16,8 @@
                 <th>Events</th>
                 <th>Level</th>
                 <th>Start Date</th>
-                <th>location</th>
-                <th></th>
+                <th>Location</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody id="data"></tbody>
@@ -70,11 +70,7 @@
                                 else {
                                     html += '<td>' + val.CityName + '</td>';
                                 }
-                                if (val.IsVisiable) {
-                                    html += '<td><a href="javascript:;" data-id='+val.Id+' class="applyfor">Apply for</a></td>';
-                                } else {
-                                    html += '<td>Closed</td>';
-                                }
+                                html += '<td>' + enumreplace.replacerefereesignUpStatus(val.RefereeSignUpStatus) + '</td>';
                                 html += '</tr>';
                             });
                             $("#data").html(html)

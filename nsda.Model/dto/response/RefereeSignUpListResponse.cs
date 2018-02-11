@@ -32,5 +32,7 @@ namespace nsda.Model.dto.response
         public EventTypeEm EventType { get; set; }
         public string ProvinceName { get; set; }
         public string CityName { get; set; }
+        public EventLevelEm EventLevel { get; set; }
+        public DateTime StartEventDate { get; set; }
     }
 }
