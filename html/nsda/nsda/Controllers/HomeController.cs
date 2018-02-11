@@ -230,5 +230,16 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "申请裁判";
             return View();
         }
+        public ActionResult judgelogin()
+        {
+            ViewBag.Message = "裁判登陆";
+            return View();
+        }
+        public ActionResult eventmanagelogin()
+        {
+            ViewBag.Message = "裁判登陆";
+            return View();
+        }
+        
     }
 }
