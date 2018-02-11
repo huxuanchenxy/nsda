@@ -47,6 +47,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "会员注册";
             return View();
         }
+        public ActionResult eventmanageregform()
+        {
+            ViewBag.Message = "赛事管理员注册";
+            return View();
+        }
         public ActionResult coachregform()
         {
             ViewBag.Message = "教练注册";
@@ -240,6 +245,10 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "裁判登陆";
             return View();
         }
-        
+        public ActionResult judgetour()
+        {
+            ViewBag.Message = "锦标赛";
+            return View();
+        }
     }
 }
