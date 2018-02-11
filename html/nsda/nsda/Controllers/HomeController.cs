@@ -98,6 +98,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "修改个人资料";
             return View();
         }
+        public ActionResult judgeinformation()
+        {
+            ViewBag.Message = "修改个人资料";
+            return View();
+        }
         public ActionResult playerboundcoach()
         {
             ViewBag.Message = "绑定教练";
@@ -168,7 +173,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "添加临时裁判";
             return View();
         }
-
+        public ActionResult judgecenter()
+        {
+            ViewBag.Message = "裁判管理";
+            return View();
+        }
         public ActionResult eventmanageroom()
         {
             ViewBag.Message = "Room管理";

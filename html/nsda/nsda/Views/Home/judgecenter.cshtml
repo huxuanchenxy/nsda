@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "裁判个人中心";
+}
+
+<link href="~/Content/asset/css/judgecenter.css" rel="stylesheet" />
+
+
+@Html.Partial("_judgetop")
+<div class="container judge-compe">
+    @Html.Partial("_judgeleft")
+    <div class="judge-con">
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Tournament</th>
+                    <th>Events</th>
+                    <th>Level</th>
+                    <th>Start Date</th>
+                    <th>location</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>On going</td>
+                    <td><a href="javascript:;" class="login">Apply for</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="msg-box">
+            <p>消息盒子 Message Box</p>
+            <a href="/Home/PlayerMessageBox"><img src="~/Content/asset/img/more.gif" alt="..." class="msg-more"></a>
+        </div>
+        <div class="msgbox-con">
+            <div class="msgimg">
+                <img src="~/Content/asset/img/teacher.png" alt="...">
+                <p>Notice</p><p>01/03  </p><p>13:48</p>
+            </div>
+            <div class="msgc">
+                <p class="msgteam">You meet the qualification to be a judge.</p>
+                <p class="teamcon">Congratulations, your application to be a judge of <a href="#">“National High School Academic Debate and Speech Tournament”</a>has been accepted.</p>
+            </div>
+            <a href="#" class="cmore">Learn More</a>
+        </div>
+    </div>
+</div>
+
+

@@ -236,6 +236,8 @@
     <Content Include="Content\asset\css\iconfont.css" />
     <Content Include="Content\asset\css\judge.css" />
     <Content Include="Content\asset\css\judgeapply.css" />
+    <Content Include="Content\asset\css\judgecenter.css" />
+    <Content Include="Content\asset\css\judgeinformation.css" />
     <Content Include="Content\asset\css\judgelogin.css" />
     <Content Include="Content\asset\css\judgeregform.css" />
     <Content Include="Content\asset\css\judgetour.css" />
@@ -384,6 +386,8 @@
     <Content Include="Views\Home\eventmanagelogin.cshtml" />
     <Content Include="Views\Home\judgetour.cshtml" />
     <Content Include="Views\Home\eventmanageregform.cshtml" />
+    <Content Include="Views\Home\judgeinformation.cshtml" />
+    <Content Include="Views\Home\judgecenter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
