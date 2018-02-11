@@ -52,6 +52,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "教练注册";
             return View();
         }
+        public ActionResult judgeregform()
+        {
+            ViewBag.Message = "裁判注册";
+            return View();
+        }
         public ActionResult playermembercenter()
         {
             ViewBag.Message = "会员中心";
@@ -218,6 +223,11 @@ namespace WebApplication2.Controllers
         public ActionResult eventjudgesignin()
         {
             ViewBag.Message = "裁判签到";
+            return View();
+        }
+        public ActionResult judgeapply()
+        {
+            ViewBag.Message = "申请裁判";
             return View();
         }
     }

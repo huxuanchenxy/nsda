@@ -1,25 +1,24 @@
 ﻿
 @{
-    ViewBag.Title = "教练注册";
+    ViewBag.Title = "裁判注册";
 }
 
 <link href="@Url.Content("~/Content/asset/css/About.css?1.1.2")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/coachregform.css?1.1.3")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/judgeregform.css?1.1.3")" rel="stylesheet" type="text/css" />
 
-<!--这里可能是logo也可能是广告 到底是什么 我也不知道-->
 <div class="ad">
 
 </div>
 
-<!--面包屑导航-->
+
 <div class="rode">
 
 </div>
 
-@*会员注册*@
+@*裁判注册*@
 
 <div class="container regform-con">
-    <h3>If you are not an NSDA  coach, create a new account.</h3>
+    <h3>If you are not an NSDA  judger, create a new account.</h3>
     <div class="reg-sign">
         <span class="signup">Sign Up</span>
         <form class="form-ctrl">
@@ -75,6 +74,12 @@
             <div class="form-group">
                 <label for="address" class="form-label">Address:</label>
                 <input type="text" class="form-input" id="address">
+            </div>
+            <div class="form-group">
+                <label for="grade" class="form-label">I want to judge:</label>
+                <select class="form-select-grade" id="grade">
+                    <option>- No choice -</option>
+                </select>
             </div>
             <button type="submit" class="button">Create Login</button>
         </form>

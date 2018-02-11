@@ -232,6 +232,9 @@
     <Content Include="Content\asset\css\eventmanageplayer.css" />
     <Content Include="Content\asset\css\eventumpiresignin.css" />
     <Content Include="Content\asset\css\iconfont.css" />
+    <Content Include="Content\asset\css\judge.css" />
+    <Content Include="Content\asset\css\judgeapply.css" />
+    <Content Include="Content\asset\css\judgeregform.css" />
     <Content Include="Content\asset\css\playerboundcoach.css" />
     <Content Include="Content\asset\css\playercenter.css" />
     <Content Include="Content\asset\css\index.css" />
@@ -258,6 +261,7 @@
     <Content Include="Content\asset\img\integral.svg" />
     <Content Include="Content\asset\img\mail-at.svg" />
     <Content Include="Content\asset\img\map-3.svg" />
+    <Content Include="Content\asset\img\mecban2_03.png" />
     <Content Include="Content\asset\img\mecban_03.jpg" />
     <Content Include="Content\asset\img\member.svg" />
     <Content Include="Content\asset\img\more.gif" />
@@ -368,6 +372,10 @@
     <Content Include="Views\Home\eventopenplayersignin.cshtml" />
     <Content Include="Views\Home\eventumpiresignin.cshtml" />
     <Content Include="Views\Home\coachregform.cshtml" />
+    <Content Include="Views\Home\judgeapply.cshtml" />
+    <Content Include="Views\Home\_judgetop.cshtml" />
+    <Content Include="Views\Home\_judgeleft.cshtml" />
+    <Content Include="Views\Home\judgeregform.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
