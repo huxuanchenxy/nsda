@@ -1,4 +1,26 @@
-﻿
+﻿.score-con{
+    width:78%;
+    float:left;
+    margin-top:50px;
+    margin-left:15px;
+    position:relative;
+    margin-top:50px;
+}
+.score-top .integral{
+    display:inline;
+    width:36px;
+    height:46px;
+    float:left;
+    margin-right:4px;
+}
+.score-top .scorecheck{
+    font-size:24px;
+    color:#666;
+    float:left;
+    line-height:56px;
+    vertical-align:baseline;
+        
+}
 .person-title{
     margin-top:20px;
     margin-bottom:30px;
@@ -15,7 +37,9 @@
     font-size:16px;
     color:#666;
     border-bottom:1px solid #B4BDC2;
+    margin-top:40px;
     position:relative;
+
 }
 .per-con .modifyinfo label{
     width:13%;
@@ -275,4 +299,9 @@ body{
 .fg-layer .layui-laydate{
     position:absolute;
     z-index:99;
+}
+
+.info-lists .panel:nth-child(3) .panel-body ul a:nth-child(2) li{
+    background:#F0F0F0;
+    color:#5DC1ED;
 }

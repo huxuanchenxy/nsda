@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "会员积分查询";
 }
-<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.2")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/Playerintegral.css?1.1.2")" rel="stylesheet" type="text/css" />
 @Html.Partial("_PlayerTop")
 <div class="container player-compe">
@@ -137,4 +136,10 @@
                     range: true,
                     theme: '#393D49'
                 });
+</script>
+<script>
+    var classVal = document.getElementById("collapseTwo").getAttribute("class");
+    classVal = classVal.concat("in");
+    document.getElementById("collapseTwo").setAttribute("class", classVal);
+
 </script>

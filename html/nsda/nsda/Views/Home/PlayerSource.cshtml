@@ -1,8 +1,6 @@
 ﻿@{
     ViewBag.Title = "会员资源";
 }
-<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.2")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/Playerintegral.css?1.1.2")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/Playersource.css?1.1.2")" rel="stylesheet" type="text/css" />
 
 
@@ -79,3 +77,10 @@
             </nav>
         </div>
 </div>
+
+<script>
+    var classVal = document.getElementById("collapseThree").getAttribute("class");
+    classVal = classVal.concat("in");
+    document.getElementById("collapseThree").setAttribute("class", classVal);
+
+</script>

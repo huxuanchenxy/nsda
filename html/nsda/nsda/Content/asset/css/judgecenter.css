@@ -46,7 +46,9 @@
     -moz-border-radius: 20px;
     color: #666666;
 }
-
+.info-lists .panel:first-child a p.jc,.info-lists .panel:first-child a h3.mc{
+    color:#52BEED;
+}
 
 
 
