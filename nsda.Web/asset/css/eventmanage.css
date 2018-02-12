@@ -4,11 +4,11 @@
     min-height:800px;
     position:relative;
 }
-.event-nav ul a:last-child li{
+.event-nav ul a.litwo li{
     position:relative;
     color:#fff;
 }
-.event-nav ul a:last-child li .tri{
+.event-nav ul a.litwo li .tri{
     width: 0;
     height: 0;
     border-top: 20px solid transparent;
@@ -85,7 +85,7 @@
     right:20px;
     bottom:0;
 }
- .event-nav ul a:last-child li{
+ .event-nav ul a.litwo li{
     color:#fff;
 }
 

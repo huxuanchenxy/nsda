@@ -413,6 +413,7 @@
     <Content Include="asset\css\coachregform.css" />
     <Content Include="asset\css\event.css" />
     <Content Include="asset\css\eventmanage.css" />
+    <Content Include="asset\css\eventmanagecenter.css" />
     <Content Include="asset\css\eventmanageknockout.css" />
     <Content Include="asset\css\eventmanagelists.css" />
     <Content Include="asset\css\eventmanagelogin.css" />
@@ -598,6 +599,8 @@
     <Content Include="Views\register\eventmanage.cshtml" />
     <Content Include="Views\login\referee.cshtml" />
     <Content Include="Views\login\eventmanage.cshtml" />
+    <Content Include="Views\login\findpwd.cshtml" />
+    <Content Include="Views\login\findpwdcert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

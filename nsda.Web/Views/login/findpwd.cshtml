@@ -1,0 +1,133 @@
+﻿@using nsda.Utilities
+@{
+    ViewBag.Title = "会员登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{  
+ <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+ <link rel="stylesheet" href="/asset/css/forgotpwd.css?version=@Constant.Version">
+}
+<div class="ad">
+
+</div>
+
+<!--面包屑导航-->
+<div class="rode">
+
+</div>
+
+<div class="container">
+    <input type="hidden" value="@ViewBag.FindType" id="findType"/>
+    <div class="forgotpwd">
+        <h3>找回密码</h3>
+        <h5>So you forgot your password...</h5>
+        <span></span>
+        <p class="reset">Enter your email address in the box below, and we'll send you an Account Key . </p>
+        <p>输入您的注册电子邮箱，我们会在发送一串验证码，已确定您的身份。并便于您重置密码。</p>
+        <div class="or-spacer">
+            <div class="mask"></div>
+        </div>
+        <div class="forgotinfo">
+            <img src="/asset/img/icon_03.png" alt="Alternate Text" />
+            <div class="info-txt">
+                <h4>注册邮箱</h4>
+                <p>YOUR MAIL</p>
+            </div>
+            <input type="text" name="name" id="email" />
+            <a href="javascript:;" class="code" id="sendcode">发送验证码</a>
+        </div>
+        <div class="forgotinfo">
+            <img src="/asset/img/icon_08.png" alt="Alternate Text" />
+            <div class="info-txt">
+                <h4>验证码</h4>
+                <p>ACCOUNT KEY</p>
+            </div>
+            <input type="text" name="name" value="" id="validateCode" maxlength="6"/>
+        </div>
+        <a id="editpwd" href="javascript:;" class="send">
+            <h4>修改密码  </h4>
+            <p>CREATE NEW PASSWORD</p>
+        </a>
+    </div>
+</div>@section scripts
+{
+    <script>
+        $("#sendcode").click(function () {
+            var $email = $("#email");
+            if (validate.isNull($email.val())) {
+                layer.msg('请输入您的注册邮箱', { icon: 5, time: 1000 });
+                return;
+            }
+            if (!validate.isEmail($email.val())) {
+                layer.msg('邮箱格式有误', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/login/sendemail",
+                type: "post",
+                dataType: "json",
+                data: {
+                    email: $email.val()
+                },
+                beforeSend: function () {
+                    layer.msg('邮件发送中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (!json.flag) {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                    else {
+                        layer.msg('邮件已发送请及时查看邮件', { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+
+        });
+
+        $("#editpwd").click(function () {
+            var $email = $("#email");
+            if (validate.isNull($email.val())) {
+                layer.msg('请输入您的注册邮箱', { icon: 5, time: 1000 });
+                return;
+            }
+            if (!validate.isEmail($email.val())) {
+                layer.msg('邮箱格式有误', { icon: 5, time: 1000 });
+                return;
+            }
+            var $validateCode = $("#validateCode");
+            if (validate.isNull($validateCode.val())) {
+                layer.msg('请输入您的验证码', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/login/validate",
+                type: "post",
+                dataType: "json",
+                data: {
+                    email: $email.val(),
+                    validateCode: $validateCode.val()
+                },
+                beforeSend: function () {
+                    layer.msg('验证中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        location.href = "/login/findpwdcert?email=" + $email.val() + "&findType=" + $("#findType").val();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+}

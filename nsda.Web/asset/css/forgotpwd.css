@@ -1,8 +1,10 @@
 ﻿.or-spacer {
-    margin-top: 100px;
-    margin-left: 100px;
-    width: 400px;
+    margin-top: 40px;
+    margin-bottom:70px;
+    width: 700px;
     position: relative;
+    left:50%;
+    transform:translateX(-50%);
 }
 .or-spacer .mask {
     overflow: hidden;
@@ -15,5 +17,106 @@
     width: 100%;
     height: 25px;
     border-radius: 125px/12px;
-    box-shadow: 0 0 8px black;
+    box-shadow: 0 0 8px #D5D4D4;
 }
+
+.forgotpwd{
+    width:600px;
+    margin:57px auto 260px auto;
+}
+.forgotpwd h3,.forgotpwd h5{
+    text-align:center;
+    color:black;
+}
+.forgotpwd h3{
+    font-size:30px;
+}
+.forgotpwd h5{
+    font-size:16px;
+    line-height:1.8
+}
+.forgotpwd span{
+    display:inline-block;
+    width:90px;
+    height:5px;
+    background:#10B5FF;
+    position:absolute;
+    left:50%;
+    transform:translate(-50%);
+}
+.forgotpwd p.reset{
+    margin-top:40px;
+}
+.forgotpwd p{
+    text-align:center;
+    font-size:14px;
+    color:#666666;
+}
+.forgotpwd .forgotinfo img{
+    display:inline-block;
+    width:46px;
+    height:34px;
+    float:left;
+}
+.forgotpwd .forgotinfo{
+    min-height:50px;
+    margin-bottom:30px;
+}
+.forgotpwd .forgotinfo .info-txt{
+    float:left;
+    width:110px;
+    margin-right:10px;
+    
+}
+.forgotpwd .forgotinfo .info-txt h4,.forgotpwd .forgotinfo .info-txt p{
+    text-align:right;
+}
+.forgotpwd .forgotinfo input{
+    float:left;
+    width:340px;
+    height:36px;
+    margin-right:10px;
+    background:#EFEDED;
+    border:1px solid #B6B6B6;
+}
+.forgotpwd .forgotinfo .code{
+    display:inline-block;
+    line-height:36px;
+    color:#10B5FF;
+}
+
+.forgotpwd a.send{
+    display:inline-block;
+    padding:5px;
+    text-align:center;
+    background:#000000;
+    margin-top:50px;
+    position:absolute;
+    left:50%;
+    transform:translate(-50%);
+    border:none;
+}
+.forgotpwd a.send h4{
+    color:white;
+    line-height:1.3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -105,14 +105,16 @@ namespace nsda.Web.Controllers
                 string code = VerifyCode.GetVerifyCode(6);
                 Session[email] = code;
                 //发送邮件
-                var send = new EmailUtility(Constant.EmailAccount,Constant.EmailPwd,Constant.Email_smtp,Constant.Email_port);
-                Task.Factory.StartNew(()=> {
-                    send.Send("nsda", email, "找回密码", $"您的验证码是{code}");
-                    _emailLogService.Insert(new EmailLogRequest {
-                         Account=email,
-                         Content= $"您的验证码是{code}"
-                      });
-                    });
+                //var send = new EmailUtility(Constant.EmailAccount, Constant.EmailPwd, Constant.Email_smtp, Constant.Email_port);
+                //Task.Factory.StartNew(() =>
+                //{
+                //    send.Send("nsda", email, "找回密码", $"您的验证码是{code}");
+                //    _emailLogService.Insert(new EmailLogRequest
+                //    {
+                //        Account = email,
+                //        Content = $"您的验证码是{code}"
+                //    });
+                //});
                 res.flag = true;
                 return Json(res, JsonRequestBehavior.DenyGet);
             }
@@ -145,12 +147,13 @@ namespace nsda.Web.Controllers
                 res.msg = "验证码失效请重新获取";
                 return Json(res, JsonRequestBehavior.DenyGet);
             }
-            if (string.Equals(Session[email], validateCode))
+            if (!string.Equals(Session[email], validateCode))
             {
                 res.msg = "输入的验证码有误";
                 return Json(res, JsonRequestBehavior.DenyGet);
             }
             res.flag = true;
+            Session[email] = null;
             return Json(res, JsonRequestBehavior.DenyGet);
         }
         //找回密码
@@ -166,6 +169,10 @@ namespace nsda.Web.Controllers
             var res = new Result<string>();
             string msg = string.Empty;
             res.flag = _memberService.EditPwd(id, pwd, out msg);
+            if (res.flag)
+            {
+                Session[Constant.FindPwd] = null;
+            }
             return Json(res, JsonRequestBehavior.DenyGet);
         }
         //生成验证码
@@ -288,6 +295,19 @@ namespace nsda.Web.Controllers
             }
             return View();
         }
-        #endregion 
+
+        //找回密码
+        public ActionResult findpwd(int id)
+        {
+            ViewBag.FindType = id;
+            return View();
+        }
+
+        //修改密码
+        public ActionResult findpwdcert(string email,int findType=1)
+        {
+            return View();
+        }
+        #endregion
     }
 }

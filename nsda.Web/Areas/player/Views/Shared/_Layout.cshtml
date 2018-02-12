@@ -141,7 +141,7 @@
                     <ul>
                         <li><span>NSDA CHINA 注册会员：</span><p>@userContext.Name</p></li>
                         <li><span>目前 NSDA 积分：</span><p>@userContext.PlayerPoints</p></li>
-                        <li><span>NSDA 会员编号：</span><p>@userContext.Code</p></li>
+                        <li><span>NSDA 会员编号：</span><p>@userContext.Code<a href="javascript:;" id="goauth" class="attest">会员认证</a></p></li>
                     </ul>
                 </div>
                 @*<a href="#" class="player-code">
@@ -312,7 +312,7 @@
 
         $("#goauth").click(function(){
             $.ajax({
-                url: "/player/player/polling",
+                url: "/player/player/goauth",
                 type: "get",
                 dataType: "json",
                 success: function (json) {

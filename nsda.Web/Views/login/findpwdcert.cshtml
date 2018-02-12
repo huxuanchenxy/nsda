@@ -1,0 +1,121 @@
+﻿@using nsda.Utilities
+@{
+    ViewBag.Title = "会员登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles
+{  
+ <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+ <link rel="stylesheet" href="/asset/css/forgotpwd.css?version=@Constant.Version">
+ <link rel="stylesheet" href="/asset/css/forgotpwdcert.css?version=@Constant.Version">
+}
+<div class="ad">
+
+</div>
+
+<!--面包屑导航-->
+<div class="rode">
+
+</div>
+
+<div class="container">
+    <input type="hidden" value="@ViewBag.FindType" id="findType" />
+    <div class="forgotpwd">
+        <h3>找回密码</h3>
+        <h5>So you forgot your password...</h5>
+        <span></span>
+        <p class="reset">Enter your email address in the box below, and we'll send you an Account Key . </p>
+        <p>输入您的注册电子邮箱，我们会在发送一串验证码，已确定您的身份。并便于您重置密码。</p>
+        <div class="or-spacer">
+            <div class="mask"></div>
+        </div>
+        <div class="forgotinfo">
+            <img src="/asset/img/icon_03.png" alt="Alternate Text" />
+            <div class="info-txt">
+                <h4>注册邮箱</h4>
+                <p>YOUR MAIL</p>
+            </div>
+            <div class="mail">@Request["email"]</div>
+        </div>
+        <div class="forgotinfo">
+            <img src="/asset/img/icon_08.png" alt="Alternate Text" />
+            <div class="info-txt">
+                <h4>新密码</h4>
+                <p>PASSWORD</p>
+            </div>
+            <input type="password"  id="newpwd"/>
+        </div>
+        <div class="forgotinfo">
+            <img src="/asset/img/icon_08.png" alt="Alternate Text" />
+            <div class="info-txt">
+                <h4>确认新密码</h4>
+                <p>REPEAT PASSWORD</p>
+            </div>
+            <input type="password"  id="againpwd"/>
+        </div>
+        <a href="javascript:;" class="send" id="editpwd">
+            <h4>确认新密码</h4>
+            <p>Submit New Password</p>
+        </a>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $("#editpwd").click(function () {
+            var $newpwd = $("#newpwd").val();
+            var $againpwd = $("#againpwd").val();
+            if (validate.isNull($newpwd)) {
+                layer.msg('请输入密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if (validate.isNull($againpwd)) {
+                layer.msg('请重复输入密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if ($newpwd != $againpwd) {
+                layer.msg('两次输入的密码不一致', { icon: 5, time: 1000 });
+                return;
+            }
+            if (!validate.isPwd($newpwd)) {
+                layer.msg('密码必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
+                return;
+            }
+
+            $.ajax({
+                url: "/login/findpwd",
+                type: "post",
+                dataType: "json",
+                data: {
+                    pwd: $newpwd,
+                },
+                beforeSend: function () {
+                    layer.msg('修改密码中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('密码重置成功，请立即登录', { icon: 5, time: 1000 });
+                        setTimeout(function () {
+                            var findType = $("#findType").val();
+                            if (findType == 4) {
+                                location.href = "/login/eventmanage"
+                            } else if (findType == 3) {
+                                location.href = "/login/referee"
+                            } else {
+                                location.href = "/login/login"
+                            }
+                        },3000);
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+}
