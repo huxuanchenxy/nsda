@@ -19,7 +19,24 @@ namespace WebApplication2.Controllers
 
             return View();
         }
+        public ActionResult forgotpwd()
+        {
+            ViewBag.Message = "忘记密码";
 
+            return View();
+        }
+        public ActionResult forgotpwdcert()
+        {
+            ViewBag.Message = "忘记密码-验证码";
+
+            return View();
+        }
+        public ActionResult playerscorelists()
+        {
+            ViewBag.Message = "评分单";
+
+            return View();
+        }
         public ActionResult contact()
         {
             ViewBag.Message = "Your contact page.";
