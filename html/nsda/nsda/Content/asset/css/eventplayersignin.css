@@ -57,7 +57,17 @@
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
 }
-
+.addtmpplayer{
+    display:inline-block;
+    float:right;
+    padding:5px 10px;
+    background:#47BBED;
+    color:white;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    cursor:pointer;
+}
 .event-lists table{
     border-collapse: collapse;
     width: 100%;
@@ -108,15 +118,119 @@
     -webkit-text-overflow: ellipsis;
 }
 
+body{
+    padding:0;
+    margin:0;
+}
+.fg-layer-iframe iframe{
+    border:2px solid #2C3E50;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.fg-layer-iframe .fg-layer-content{
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.addplayer{
+    overflow:hidden;
+    background:#D8E0E5;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    padding:20px;
+}
+.addplayer h4{
+    font-size:18px;
+    color:#666666;
+    text-align:center;
+}
+.addplayer span{
+    display:inline-block;
+    width:30px;
+    height:3px;
+    margin-bottom:20px;
+    background:#4E5D66;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
 
-
-
-
-
-
-
-
-
+.addplayer button{
+    display:inline-block;
+    width:240px;
+    height:50px;
+    background:#4E5D66;
+    color:#fff;
+    text-align:center;
+    line-height:50px;
+    font-size:18px;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border:none;
+    margin-top:45px;
+    cursor:pointer;
+    margin-left:30%;
+}
+.addplayer .form-group{
+    margin-top:20px;
+    height:36px;
+    width:100%;
+    margin:10px;
+}
+.addplayer .des{
+    margin-top:56px;
+}
+.addplayer .form-group label{
+    float:left;
+    width:100px;
+    text-align:right;
+    color:#666666;
+    font-size:18px;
+}
+.addplayer .form-group p{
+    float:left;
+    text-align:left;
+    color:#666;
+    font-size:18px;
+    padding:0;
+    margin:0;
+}
+.addplayer .form-group input{
+    width:200px;
+    height:36px;
+    background:#FFF6E7;
+    padding-left:5px;
+    border:1px solid #b0b0b0;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.addplayer .form-group select{
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.addplayer .form-group select.form-select-ads{
+    width:100px;
+    height:36px;
+    background:#FFF6E7;
+    border:1px solid #b0b0b0;
+    padding-left:3px;
+}
+.addplayer .form-group select.form-select-school{
+    width:195px;
+    height:36px;
+    background:#FFF6E7;
+    border:1px solid #b0b0b0;
+    padding-left:3px;
+}
 
 
 

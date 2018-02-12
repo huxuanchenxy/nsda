@@ -4,7 +4,7 @@
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/eventmanageround.css?2.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/eventplayersignin.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventplayersignin.css?3.1.0")" rel="stylesheet" type="text/css" />
 
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 @Html.Partial("_manager")
@@ -22,6 +22,7 @@
             <option value="1">批处理为</option>
             <option value="2">签到</option>
         </select>
+        <span class="addtmpplayer"><i class="iconfont icon-add1"></i> 添加临时选手</span>
     </div>
     <table>
         <thead>
@@ -131,3 +132,16 @@
     </nav>
 </div>
 
+<script>
+    $(".addtmpplayer").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Home/addtmpplayer",
+            area: ["565px", "470px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+</script>

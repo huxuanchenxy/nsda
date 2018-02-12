@@ -403,6 +403,7 @@
     <Content Include="Views\Home\forgotpwdcert.cshtml" />
     <Content Include="Views\Home\playerscorelists.cshtml" />
     <Content Include="Views\Home\eventmanagecenter.cshtml" />
+    <Content Include="Views\Home\addtmpplayer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

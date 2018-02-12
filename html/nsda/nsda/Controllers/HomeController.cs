@@ -286,10 +286,15 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "比赛报名";
             return View();
         }
-        
-            public ActionResult eventmanagecenter()
+
+        public ActionResult eventmanagecenter()
         {
             ViewBag.Message = "赛事管理员个人中心";
+            return View();
+        }
+        public ActionResult addtmpplayer()
+        {
+            ViewBag.Message = "添加临时选手";
             return View();
         }
     }

@@ -116,7 +116,7 @@
     padding:2px 10px;
     text-align:center;
 }
-.selected{
+.classcheck .class .group .group-item a.selected{
     color:white;
     background:#FBB7A0;
     border-radius: 20px;
@@ -151,11 +151,11 @@
 .event-lists tbody td:last-child{
     border-right:none
 }
-.event-nav ul a:last-child li{
+.event-nav ul a.litwo li{
     position:relative;
     color:#fff;
 }
-.event-nav ul a:last-child .tri{
+.event-nav ul a.litwo .tri{
     width: 0;
     height: 0;
     border-top: 20px solid transparent;
