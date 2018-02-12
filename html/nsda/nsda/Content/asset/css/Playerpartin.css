@@ -32,6 +32,7 @@
     color:#666699;
     font-size:18px;
     font-weight:400;
+    color:#666;
 }
 .addexper{
     display:inline-block;
@@ -44,8 +45,15 @@
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
     margin-bottom:10px;
+    cursor:pointer;
 }
-
+.addexper:hover{
+    background:#47BBED;
+    color:white;
+}
+.comp-con{
+    margin-top:50px;
+}
 .comp-con table{
     border-collapse: collapse;
     width: 100%;

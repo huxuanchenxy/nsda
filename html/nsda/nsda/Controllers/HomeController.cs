@@ -297,5 +297,10 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "添加临时选手";
             return View();
         }
+        public ActionResult addtmpcompe()
+        {
+            ViewBag.Message = "添加临时参赛";
+            return View();
+        }
     }
 }

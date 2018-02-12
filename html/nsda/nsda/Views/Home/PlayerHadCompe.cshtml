@@ -13,7 +13,7 @@
                 <a href="/Home/playerhadcompe" class="active list">已参与的比赛</a>
                 <a href="/Home/playerexitcompe" class="list">退赛信息</a>
             </div>
-            <a href="javascript:;" class="addexper"><i class="iconfont icon-add1"></i>添加临时参赛</a>
+            <a href="javascript:;" class="addexper"><i class="iconfont icon-add1"></i> 添加临时参赛</a>
             <div class="comp-con">
                 <div class="hadtable">
                     <table>
@@ -113,5 +113,19 @@
     var classVal = document.getElementById("collapseOne").getAttribute("class");
     classVal = classVal.concat("in");
     document.getElementById("collapseOne").setAttribute("class", classVal);
+</script>
+
+<script>
+    $(".addjudge").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Home/addtmpcompe",
+            area: ["565px", "401px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
 
 </script>
