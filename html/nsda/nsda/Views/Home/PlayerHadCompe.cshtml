@@ -2,7 +2,7 @@
     ViewBag.Title = "已参加比赛";
 }
 <link href="@Url.Content("~/Content/asset/css/Playerpartin.css?2.1.5")" rel="stylesheet" type="text/css" />
-
+@Scripts.Render("~/Content/asset/layer/js/layer.js")
 
 @Html.Partial("_PlayerTop")
 
@@ -116,7 +116,7 @@
 </script>
 
 <script>
-    $(".addjudge").click(function () {
+    $(".addexper").click(function () {
         layer.open({
             title: "",
             type: 2,
