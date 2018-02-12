@@ -37,6 +37,7 @@
             <option value="0">批处理为</option>
             <option value="1">签到</option>
         </select>
+        <span class="addtmpplayer" id="addtmpplayer"><i class="iconfont icon-add1"></i> 添加临时选手</span>
     </div>
     <table>
         <thead>
@@ -152,7 +153,6 @@
                                             if(item.EventSignStatus==1)
                                             {
                                                 html+='未签到';
-                                                html+='<a href="javascript:;" class="sign signin" data-id='+val.MemberId+'>签到</a>';
                                             }
                                             else{
                                                 html+='已签到';
@@ -184,7 +184,7 @@
             w.eventplayersign = eventplayersign
         })(window);
         eventplayersign.Load(eventplayersign.param);
-        
+
         $("#search").click(function(){
             eventplayersign.param.KeyValue=$("#txt").val();
             eventplayersign.Load(eventplayersign.param);
@@ -231,7 +231,7 @@
                 }else{
                     layer.msg('请先勾选好数据再进行操作', { icon: 5, time: 1000 });
                 }
-            }        
+            }
         });
 
         $(document).on("click", ".sign", function (){
@@ -279,7 +279,7 @@
                 success: function (json) {
                     layer.closeAll();
                     if (json.flag) {
-                        layer.msg('停赛成功', { icon: 1, time: 1000 });
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
                         eventplayersign.Load(eventplayersign.param);
                     }
                     else {
@@ -288,6 +288,18 @@
                 }
                 ,error: function () {
                     layer.closeAll();
+                }
+            });
+        });
+
+        $("#addtmpplayer").click(function () {
+            layer.open({
+                title: "",
+                type: 2,
+                content: "/eventmanage/eventmanage/addplayer?eventId="+eventplayersign.param.EventId+"&eventGroupId="+eventplayersign.param.EventGroupId,
+                area: ["565px", "470px"],
+                end: function () {
+                    eventplayersign.Load(eventplayersign.param);
                 }
             });
         });

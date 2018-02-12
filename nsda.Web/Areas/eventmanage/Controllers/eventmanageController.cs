@@ -48,6 +48,15 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
+
+        public ActionResult info()
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var data = _memberService.MemberEventDetail(userContext.Id);
+            return View(data);
+        }
+
         //第一步
         public ActionResult start()
         {
@@ -78,14 +87,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.UserContext = userContext;
             var detail = _eventService.EventGroupDetail(eventGroupId);
             return View(detail);
-        }
-
-        public ActionResult info()
-        {
-            var userContext = UserContext.WebUserContext;
-            ViewBag.UserContext = userContext;
-            var data = _memberService.MemberEventDetail(UserContext.WebUserContext.Id);
-            return View(data);
         }
 
         public ActionResult detail(int id)
@@ -201,6 +202,11 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             ViewBag.EventDate = _eventService.EventDate(id);
             return View(detail);
+        }
+
+        public ActionResult addplayer(int eventId, int eventGroupId)
+        {
+            return View();
         }
         #endregion
 

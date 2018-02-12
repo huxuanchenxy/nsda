@@ -28,7 +28,7 @@ namespace nsda.Model.dto.request
         /// </summary>
         public string ContactMobile { get; set; }
         //学校信息
-        public PlayerEduRequest PlayerEdu { get; set; }
+        public int SchoolId { get; set; }
     }
 
     //临时教练
