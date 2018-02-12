@@ -9,10 +9,11 @@
 }
 
 <div class="comp-lists tab">
-    <ul class="comp-title">
-        <a href="javascript:;"><li class="act">已参与比赛</li></a>
-        <a href="/player/playersignup/refund"><li>退赛信息</li></a>
-    </ul>
+    <div class="list-top">
+        <a href="javascript:;" class="active list">已参与的比赛</a>
+        <a href="/player/playersignup/refund" class="list">退赛信息</a>
+    </div>
+    <a href="javascript:;" class="addexper" id="addexper"><i class="iconfont icon-add1"></i> 添加临时参赛</a>
     <div class="comp-con">
         <div class="hadtable">
             <table>
@@ -342,6 +343,18 @@
                 end: function () {
                 }
             })
+        });
+
+        $("#addexper").click(function () {
+            layer.open({
+                title: "",
+                type: 2,
+                content: "/player/playersignup/bindtemp",
+                area: ["565px", "401px"],
+                end: function () {
+                    location.reload();
+                }
+            });
         });
     </script>
 }

@@ -6,29 +6,49 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>bindtemp</title>
+    <title>添加临时参赛经历</title>
+    <link href="/asset/css/playerpartin.css?2.1.0" rel="stylesheet" />
 </head>
 <body>
-    <div> 
+    <div class="addtmpcom">
+        <h4>添加临时参赛经历</h4>
+        <span></span>
+        <div class="form-group des">
+            <label for="compenumber">赛事编号：</label>
+            <input type="text" id="EventCode"/>
+        </div>
+        <div class="form-group">
+            <label for="teamnumber">组队编号：</label>
+            <input type="text" id="GroupNum"/>
+        </div>
+        <div class="form-group">
+            <label for="teamnumber">Speaker：</label>
+            <input type="text" placeholder="选手姓名" id="Name"/>
+            <input type="text" placeholder="输入选手联系电话"  id="ContactMobile"/>
+        </div>
+
+        <button id="bindtemp">确认添加该临时选手</button>
     </div>
+
     <script src="/asset/js/jquery.min.js"></script>
     <script src="/asset/layer/js/layer.js"></script>
     <script src="/asset/js/validate.js?version=@Constant.Version"></script>
     <script>
         $("#bindtemp").click(function () {
+            var $EventCode = $("#EventCode").val();
+            if (validate.isNull($EventCode)) {
+                layer.msg('请输入赛事编码', { icon: 5, time: 1000 });
+                return;
+            }
             var $GroupNum = $("#GroupNum").val();
             if (validate.isNull($GroupNum))
             {
                 layer.msg('请输入队伍编号', { icon: 5, time: 1000 });
                 return;
             }
-            var $Email = $("#Email").val();
-            if (validate.isNull($Email)) {
-                layer.msg('请输入邮箱', { icon: 5, time: 1000 });
-                return;
-            }
-            if (!validate.isEmail($Email)) {
-                layer.msg('请输入正确的注册邮箱', { icon: 5, time: 1000 });
+            var $Name = $("#Name").val();
+            if (validate.isNull($Name)) {
+                layer.msg('请输入姓名', { icon: 5, time: 1000 });
                 return;
             }
             var $ContactMobile = $("#ContactMobile").val();
@@ -42,8 +62,9 @@
                 dataType: "json",
                 data: {
                     GroupNum: $GroupNum,
-                    Email: $Email,
+                    PlayerName: $Name,
                     ContactMobile: $ContactMobile,
+                    EventCode: $EventCode
                 },
                 beforeSend: function () {
                     layer.msg('绑定中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
