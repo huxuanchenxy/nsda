@@ -1,11 +1,24 @@
 ﻿.score-con{
     width:75%;
     float:left;
+    margin-top:50px;
+    margin-left:15px;
+    position:relative;
 }
 .score-top .integral{
     display:inline;
     width:36px;
     height:46px;
+    float:left;
+    margin-right:4px;
+}
+.score-top .scorecheck{
+    font-size:24px;
+    color:#666;
+    float:left;
+    line-height:56px;
+    vertical-align:baseline;
+        
 }
 .score-con span.source-top{
     display:inline-block;
@@ -40,4 +53,8 @@
 }
 .score-con{
     min-height:1000px;
+}
+.info-lists .panel:last-child .panel-body ul a:first-child li{
+    background:#F0F0F0;
+    color:#5DC1ED;
 }

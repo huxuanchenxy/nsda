@@ -1,8 +1,6 @@
 ﻿@{
     ViewBag.Title = "绑定教练";
 }
-<link href="@Url.Content("~/Content/asset/css/playercenter.css?1.1.2")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/playerintegral.css?1.1.2")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/playerboundcoach.css?2.1.0")" rel="stylesheet" type="text/css" />
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 
@@ -83,4 +81,12 @@
         });
     })
     
+</script>
+
+
+<script>
+    var classVal = document.getElementById("collapseTwo").getAttribute("class");
+    classVal = classVal.concat("in");
+    document.getElementById("collapseTwo").setAttribute("class", classVal);
+
 </script>

@@ -1,8 +1,7 @@
 ﻿@{
     ViewBag.Title = "退赛信息";
 }
-<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.2")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/Playerpartin.css?1.1.2")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerpartin.css?2.1.2")" rel="stylesheet" type="text/css" />
 
 
 @Html.Partial("_PlayerTop")
@@ -67,3 +66,11 @@
             </div>
         </div>
 </div>
+
+
+<script>
+    var classVal = document.getElementById("collapseOne").getAttribute("class");
+    classVal = classVal.concat("in");
+    document.getElementById("collapseOne").setAttribute("class", classVal);
+
+</script>

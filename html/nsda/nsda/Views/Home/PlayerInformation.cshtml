@@ -1,9 +1,7 @@
 ﻿@{
     ViewBag.Title = "修改个人资料";
 }
-<link href="@Url.Content("~/Content/asset/css/Playercenter.css?1.1.2")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/Playerintegral.css?1.1.2")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/Playerpersonal.css?1.1.5")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerpersonal.css?2.1.5")" rel="stylesheet" type="text/css" />
 
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 
@@ -115,4 +113,10 @@
             }
         });
     })
+</script>
+<script>
+    var classVal = document.getElementById("collapseTwo").getAttribute("class");
+    classVal = classVal.concat("in");
+    document.getElementById("collapseTwo").setAttribute("class", classVal);
+
 </script>
