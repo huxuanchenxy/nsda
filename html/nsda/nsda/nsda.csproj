@@ -220,6 +220,7 @@
     <Content Include="Content\asset\css\coachregform.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
+    <Content Include="Content\asset\css\eventmanagecenter.css" />
     <Content Include="Content\asset\css\eventmanageknockout.css" />
     <Content Include="Content\asset\css\eventmanagelogin.css" />
     <Content Include="Content\asset\css\eventmanageregform.css" />
@@ -401,6 +402,7 @@
     <Content Include="Views\Home\forgotpwd.cshtml" />
     <Content Include="Views\Home\forgotpwdcert.cshtml" />
     <Content Include="Views\Home\playerscorelists.cshtml" />
+    <Content Include="Views\Home\eventmanagecenter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

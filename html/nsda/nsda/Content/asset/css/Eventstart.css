@@ -4,11 +4,11 @@
     background:#F5F8FA;
     z-index:1;
 }
-.event-nav ul a:first-child li{
+.event-nav ul a.lione li{
     position:relative;
     color:#fff;
 }
-.event-nav ul a:first-child li .tri{
+.event-nav ul a.lione li .tri{
     width: 0;
     height: 0;
     border-top: 20px solid transparent;
