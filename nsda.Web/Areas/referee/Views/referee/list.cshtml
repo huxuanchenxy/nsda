@@ -5,7 +5,8 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/judgeapply.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/judgetourname.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/judgetour.css?version=@Constant.Version">
 }
 <div class="judge-con">
     <table>
@@ -32,6 +33,10 @@
     <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script src="/asset/js/pager.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#collapseOne").addClass("in");
+        });
+
         (function (w) {
             var refereeeventsignup = {
                 param: {

@@ -1,0 +1,19 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "淘汰赛设置";
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventumpiresignin.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+@section scripts
+{
+    <script>     
+    </script>
+}

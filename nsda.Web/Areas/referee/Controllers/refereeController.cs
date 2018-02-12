@@ -3,6 +3,7 @@ using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
 using nsda.Services;
+using nsda.Services.Contract.admin;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
 using nsda.Services.Contract.referee;
@@ -25,7 +26,8 @@ namespace nsda.Web.Areas.referee.Controllers
         IMemberTempService _memberTempService;
         IEventService _eventService;
         IEventSignService _eventSignService;
-        public refereeController(IMemberService memberService, IRefereeService refereeService, IRefereeSignUpService refereeSignUpService, IMemberTempService memberTempService, IEventService eventService,IEventSignService eventSignService)
+        IMailService _mailService;
+        public refereeController(IMailService mailService,IMemberService memberService, IRefereeService refereeService, IRefereeSignUpService refereeSignUpService, IMemberTempService memberTempService, IEventService eventService,IEventSignService eventSignService)
         {
             _memberService = memberService;
             _refereeService = refereeService;
@@ -33,6 +35,7 @@ namespace nsda.Web.Areas.referee.Controllers
             _memberTempService = memberTempService;
             _eventService = eventService;
             _eventSignService = eventSignService;
+            _mailService = mailService;
         }
 
         #region ajax
@@ -128,6 +131,8 @@ namespace nsda.Web.Areas.referee.Controllers
         {
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
+            ViewBag.Mail = _mailService.List(userContext.Id);
+            ViewBag.CurrentRefereeEvent = _refereeSignUpService.CurrentRefereeEvent(userContext.Id);
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/referee/referee/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }

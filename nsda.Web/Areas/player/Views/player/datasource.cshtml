@@ -6,8 +6,6 @@
 
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/playersource.css?version=@Constant.Version">
 }
 <div class="score-con">
@@ -15,6 +13,7 @@
         <img class="integral" src="/asset/img/msour_03.png" alt="...">
         <p class="scorecheck">会员资源</p>
     </div>
+    <span class="source-top"></span>
     <ul class="source-lists" id="data">
     </ul>
     <nav aria-label="Page navigation" id="pager">
@@ -27,6 +26,9 @@
     <script src="/asset/js/pager.js"></script>
     <script src="/asset/js/enumreplace.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#collapseThree").addClass("in");
+        });
         (function (w) {
             var playerdatasource = {
                 param: {

@@ -112,7 +112,7 @@ namespace nsda.Services.Implement.eventmanage
             return flag;
         }
         //停赛
-        public bool Stop(string groupNum, int eventId, out string msg)
+        public bool Stop(string groupNum, int eventId, bool isStop, out string msg)
         {
             bool flag = false;
             msg = string.Empty;
@@ -122,7 +122,7 @@ namespace nsda.Services.Implement.eventmanage
                             select memberId from t_event_player_signup where eventId=@EventId and groupNum=@GroupNum)";
                 var dy = new DynamicParameters();
                 dy.Add("GroupNum", groupNum);
-                dy.Add("IsStop",true);
+                dy.Add("IsStop", isStop);
                 dy.Add("EventId", eventId);
                 dy.Add("EventSignType", EventSignTypeEm.选手);
                 dy.Add("UpdateTime",DateTime.Now);

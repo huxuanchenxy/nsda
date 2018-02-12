@@ -5,6 +5,7 @@
 }
 @section styles
 {
+    <link rel="stylesheet" href="/asset/css/judgetourname.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/judgeapply.css?version=@Constant.Version">
 }
 <div class="judge-con">
@@ -32,6 +33,10 @@
     <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script src="/asset/js/pager.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#collapseOne").addClass("in");
+        });
+
         (function (w) {
             var refereeevent = {
                 param: {
@@ -74,8 +79,8 @@
                                 else {
                                     html += '<td>' + val.CityName + '</td>';
                                 }
-                                if (val.IsVisiable) {
-                                    html += '<td><a href="javascript:;" data-id='+val.Id+' class="applyfor">Apply for</a></td>';
+                                if (val.Visiable==3) {
+                                    html += '<td><a href="javascript:;" data-id=' + val.EventId + ' class="applyfor">Apply for</a></td>';
                                 } else {
                                     html += '<td>Closed</td>';
                                 }

@@ -607,17 +607,18 @@ namespace nsda.Services.Implement.eventmanage
                         if (item.EventStatus == EventStatusEm.审核中 || item.EventStatus == EventStatusEm.拒绝)
                         {
                             item.Visiable = 1;
+                            continue;
                         }
 
                         if (item.EventStatus == EventStatusEm.停止报名)
                         {
                             item.Visiable = 2;
-                            break;
+                            continue;
                         }
                         if (DateTime.Now > item.EndSignDate)
                         {
                             item.Visiable = 2;
-                            break;
+                            continue;
                         }
                         item.Visiable = 3;
                     }

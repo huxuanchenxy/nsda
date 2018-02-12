@@ -1273,11 +1273,11 @@ namespace nsda.Services.member
             msg = string.Empty;
             try
             {
-                if (request.CompleteName.IsEmpty())
-                {
-                    msg = "中文名不能为空";
-                    return flag;
-                }
+                //if (request.CompleteName.IsEmpty())
+                //{
+                //    msg = "NickName 不能为空";
+                //    return flag;
+                //}
                 if (request.PinYinName.IsEmpty())
                 {
                     msg = "First Name不能为空";
@@ -1311,7 +1311,7 @@ namespace nsda.Services.member
                 var detail = _dbContext.Select<t_member_referee>(c => c.memberId == userContext.Id).FirstOrDefault();
                 if (detail != null)
                 {
-                    detail.completename = request.CompleteName;
+                    //detail.completename = request.CompleteName;
                     detail.pinyinname = request.PinYinName;
                     detail.pinyinsurname = request.PinYinSurName;
                     detail.completepinyin = $"{request.PinYinName}{request.PinYinSurName}";
@@ -1833,7 +1833,8 @@ namespace nsda.Services.member
                         ContactAddress = response.contactaddress,
                         ContactMobile = response.contactmobile,
                         EmergencyContact = response.emergencycontact,
-                        EmergencyContactMobile = response.emergencycontactmobile
+                        EmergencyContactMobile = response.emergencycontactmobile,
+                        Gender = response.gender
                     };
                 }
             }

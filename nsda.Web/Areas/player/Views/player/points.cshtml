@@ -6,7 +6,6 @@
 
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
 }
 <div class="score-con">
@@ -48,6 +47,10 @@
     <script src="/asset/js/laydate/laydate.js"></script>
     <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
+        $(document).ready(function () {
+            $("#collapseTwo").addClass("in");
+        });
+
         laydate.render({
             elem: '#querydate',
             lang: 'en',

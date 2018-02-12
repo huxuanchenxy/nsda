@@ -1,8 +1,12 @@
-﻿@{
+﻿@using nsda.Utilities
+@{
     ViewBag.Title = "消息盒子";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
 }
-
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/messagebox.css?version=@Constant.Version">
+}
 <div class="info-con" id="mail">
 </div>
 <nav aria-label="Page navigation" class="info-nav" id="pager">
@@ -17,7 +21,7 @@
                 param: {
                     TotalPage: 1,
                     PageIndex: 1,
-                    PageSize: 4,
+                    PageSize: 10
                 }
             };
             playermail.Load = function (filter) {

@@ -146,3 +146,15 @@
     left:6px;
     margin-bottom:10px;
 }
+
+.info-lists .panel:nth-child(2) .panel-body ul a:last-child li{
+    background:#F0F0F0;
+    color:#5DC1ED;
+}
+
+
+
+
+
+
+

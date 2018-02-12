@@ -10,6 +10,6 @@ namespace nsda.Repository.Contract.member
     public interface ISignUpPlayerRepo : IDependency
     {
         //生成组别编码
-        string RenderCode(string code = "nsda");
+        string RenderCode(int eventId, string code = "nsda");
     }
 }

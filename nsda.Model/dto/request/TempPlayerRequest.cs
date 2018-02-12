@@ -24,16 +24,11 @@ namespace nsda.Model.dto.request
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 邮箱
-        /// </summary>
-        public string Email { get; set; }
-        /// <summary>
         /// 联系方式
         /// </summary>
         public string ContactMobile { get; set; }
         //学校信息
         public PlayerEduRequest PlayerEdu { get; set; }
-        public GradeEm Grade { get; set; }
     }
 
     //临时教练
@@ -60,13 +55,17 @@ namespace nsda.Model.dto.request
         /// </summary>
         public string GroupNum { get; set; }
         /// <summary>
-        /// 邮箱
-        /// </summary>
-        public string Email { get; set; }
-        /// <summary>
         /// 联系方式
         /// </summary>
         public string ContactMobile { get; set; }
+        /// <summary>
+        /// 选手名字
+        /// </summary>
+        public string PlayerName { get; set; }
+        /// <summary>
+        /// 赛事编码
+        /// </summary>
+        public string EventCode { get; set; }
     }
 
     //绑定临时裁判

@@ -144,19 +144,13 @@
                                 NSDA CHINA Judge：
                             </span><p>@userContext.Name</p>
                         </li>
-                        <li>
-                            <span>
-                                NSDA Points for Judge：
-                            </span><p>@userContext.RefereePoints</p>
-                        </li>
                         <li><span>Judge Member Number：</span><p>@userContext.Code</p></li>
                     </ul>
                 </div>
-
-                <a href="#" class="player-code">
+                @*<a href="#" class="player-code">
                     <i class="iconfont icon-erweima"></i>
                     Show QR Code
-                </a>
+                </a>*@
             </div>
         </div>
     </div>
@@ -164,6 +158,9 @@
     <div class="container judge-compe">
         <div class="info-lists">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <a href="/referee/referee"><p class="jc">裁判中心</p><h3 class="mc">Judger Center</h3></a>
+                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
@@ -183,26 +180,11 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <p>个人信息</p>
-                                <h3>Personal information&nbsp;&nbsp;v</h3>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                        <div class="panel-body">
-                            <ul>
-                                <a href="/referee/referee/info" class="compe"><li>修改个人资料</li></a>
-                            </ul>
-                        </div>
-                    </div>
+                    <a href="/referee/referee/info"><p class="jc">个人信息</p><h3 class="mc">Personal information</h3></a>
                 </div>
             </div>
         </div>
-
-        @RenderBody()
+         @RenderBody()
     </div>
 
     <!--联系我们-->
@@ -255,32 +237,32 @@
     <script src="/asset/js/parallax.min.js"></script>
     <script src="/asset/js/bootstrap.min.js"></script>
     <script src="/asset/uploadify/ajaxfileupload.js"></script>
-    <script src="/asset/layer/layer.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
     <script src="/asset/js/validate.js"></script>
     @RenderSection("scripts", false)
     <script>
-            $(function () {
-                $('#uploadFile').change(function () {
-                    var f = document.getElementById('uploadFile').files[0]
-                    var src = window.URL.createObjectURL(f);
-                    document.getElementById('uploadPreview').src = src;
+        $(function () {
+            $('#uploadFile').change(function () {
+                var f = document.getElementById('uploadFile').files[0]
+                var src = window.URL.createObjectURL(f);
+                document.getElementById('uploadPreview').src = src;
 
-                    $.ajaxFileUpload({
-                        url: "/commondata/updatehead",
-                        secureuri: false,
-                        fileElementId: 'uploadFile',
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.flag) {
-                                location.reload();
-                            }
-                            else {
-                                layermsg(data.msg, 1);
-                            }
+                $.ajaxFileUpload({
+                    url: "/commondata/updatehead",
+                    secureuri: false,
+                    fileElementId: 'uploadFile',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.flag) {
+                            location.reload();
                         }
-                    });
+                        else {
+                            layermsg(data.msg, 1);
+                        }
+                    }
                 });
             });
+        });
     </script>
 </body>
 </html>

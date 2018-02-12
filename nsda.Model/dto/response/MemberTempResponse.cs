@@ -23,9 +23,9 @@ namespace nsda.Model.dto.response
         public string Code { get; set; }
 
         /// <summary>
-        /// 邮箱
+        /// 姓名
         /// </summary>
-        public string Email { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 联系方式

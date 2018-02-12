@@ -58,7 +58,7 @@
 .score-con{
     min-height:1000px;
 }
-.info-lists .panel:last-child .panel-body ul a:first-child li{
+.info-lists .panel:last-child .panel-body ul a:last-child li{
     background:#F0F0F0;
     color:#5DC1ED;
 }

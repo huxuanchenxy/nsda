@@ -182,6 +182,26 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventDate = _eventService.EventDate(id);
             return View(detail);
         }
+
+        public ActionResult cyclingsetting(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            ViewBag.EventDate = _eventService.EventDate(id);
+            return View(detail);
+        }
+
+        public ActionResult knockoutsetting(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            ViewBag.EventDate = _eventService.EventDate(id);
+            return View(detail);
+        }
         #endregion
 
         #region 赛事信息设置
@@ -526,10 +546,10 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //停赛
         [HttpPost]
         [AjaxOnly]
-        public ContentResult playerstop(string groupNum, int eventId)
+        public ContentResult playerstop(string groupNum, int eventId,bool isStop)
         {
             string msg = string.Empty;
-            var flag = _eventSignService.Stop(groupNum, eventId, out msg);
+            var flag = _eventSignService.Stop(groupNum, eventId, isStop, out msg);
             return Result<string>(flag, msg);
         }
 

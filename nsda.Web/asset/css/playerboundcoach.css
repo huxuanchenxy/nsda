@@ -1,4 +1,27 @@
-﻿.score-top{
+﻿.score-con{
+    width:78%;
+    float:left;
+    margin-top:50px;
+    margin-left:15px;
+    position:relative;
+    margin-top:70px;
+}
+.score-top .integral{
+    display:inline;
+    width:36px;
+    height:46px;
+    float:left;
+    margin-right:4px;
+}
+.score-top .scorecheck{
+    font-size:24px;
+    color:#666;
+    float:left;
+    line-height:56px;
+    vertical-align:baseline;
+        
+}
+.score-top{
     padding-right: 35px;
 }
 .addbound {
@@ -243,3 +266,9 @@ fg-layer-iframe{
     top:5px;
     left:40px;
 }
+
+.info-lists .panel:nth-child(3) .panel-body ul a:last-child li{
+    background:#F0F0F0;
+    color:#5DC1ED;
+}
+
