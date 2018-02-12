@@ -257,6 +257,7 @@
     <Content Include="Content\asset\css\registered.css" />
     <Content Include="Content\asset\css\playersign.css" />
     <Content Include="Content\asset\css\Site.css" />
+    <Content Include="Content\asset\css\judgetourname.css" />
     <Content Include="Content\asset\img\add_03.png" />
     <Content Include="Content\asset\img\Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg" />
     <Content Include="Content\asset\img\bg1.png" />
@@ -268,6 +269,9 @@
     <Content Include="Content\asset\img\coach.png" />
     <Content Include="Content\asset\img\course.png" />
     <Content Include="Content\asset\img\en-icon.png" />
+    <Content Include="Content\asset\img\icon_03.png" />
+    <Content Include="Content\asset\img\icon_06.png" />
+    <Content Include="Content\asset\img\icon_08.png" />
     <Content Include="Content\asset\img\integral.svg" />
     <Content Include="Content\asset\img\mail-at.svg" />
     <Content Include="Content\asset\img\map-3.svg" />
