@@ -47,13 +47,16 @@
 
 .judge-con nav{
     float:right;
+    
 }
 .page{
     color: #a2a2a2;
     margin: 20px 0;
     display: inline-block;
     text-align: center;
-    width: 100%;
+    float:right;
+    margin-right:40px;
+    margin-top:50px;
 }
 .page a.prev, .page a.next {
     font-size: 14px;
