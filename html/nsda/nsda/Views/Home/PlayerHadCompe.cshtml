@@ -9,10 +9,11 @@
 <div class="container player-compe">
         @Html.Partial("_PlayerLeft")
         <div class="comp-lists tab">
-            <ul class="comp-title">
-                <a href="/Home/PlayerHadCompe"><li class="act">已参与比赛</li></a>
-                <a href="/Home/PlayerExitCompe"><li>退赛信息</li></a>
-            </ul>
+            <div class="list-top">
+                <a href="/Home/playerhadcompe" class="active list">已参与的比赛</a>
+                <a href="/Home/playerexitcompe" class="list">退赛信息</a>
+            </div>
+            <a href="javascript:;" class="addexper"><i class="iconfont icon-add1"></i>添加临时参赛</a>
             <div class="comp-con">
                 <div class="hadtable">
                     <table>
