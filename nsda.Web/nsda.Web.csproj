@@ -485,6 +485,7 @@
     <Content Include="asset\img\partner3.jpg" />
     <Content Include="asset\img\password.svg" />
     <Content Include="asset\img\password_03.jpg" />
+    <Content Include="asset\img\password_03.png" />
     <Content Include="asset\img\pass_03.png" />
     <Content Include="asset\img\per-pic.png" />
     <Content Include="asset\img\Samuel Alito.jpg" />
@@ -551,6 +552,8 @@
     <Content Include="Areas\referee\Views\referee\list.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\knockoutsetting.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\cyclingsetting.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\addplayer.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\info.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />

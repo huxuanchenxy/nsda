@@ -1,0 +1,256 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.MemberEventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "赛事管理员资料";
+    var userContext = ViewBag.UserContext as WebUserContext;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanagecenter.css?version=@Constant.Version">
+}
+<div class="container regform-con">
+    <div class="reg-sign">
+        <div class="form-ctrl">
+            <div class="form-group">
+                <label for="email" class="form-label">注册邮箱</label>
+                @userContext.Account
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="name" class="form-label">姓</label>
+                    <input type="text" class="form-input" id="name" value="@Model.Name">
+                </div>
+                <div class="form-group-small">
+                    <label for="surname" class="form-label">名</label>
+                    <input type="text" class="form-input" id="surname" value="@Model.SurName">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="pyname" class="form-label">拼音姓</label>
+                    <input type="text" class="form-input" id="pyname" value="@Model.PinYinName">
+                </div>
+                <div class="form-group-small">
+                    <label for="pinsurname" class="form-label">拼音名</label>
+                    <input type="text" class="form-input" id="pinsurname" value="@Model.PinYinSurName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contactMobile" class="form-label">联系电话</label>
+                <input type="text" class="form-input-phone" id="contactMobile" value="@Model.ContactMobile">
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="emergencycontact" class="form-label">紧急联系人</label>
+                    <input type="text" class="form-input" id="emergencycontact" value="@Model.EmergencyContact">
+                </div>
+                <div class="form-group-small">
+                    <label for="emergencycontactmobile" class="form-label">紧急电话</label>
+                    <input type="text" class="form-input" id="emergencycontactmobile" value="@Model.EmergencyContactMobile">
+                </div>
+            </div>
+            <div class="form-group form-sexy">
+                <label for="sex" class="form-label">性别</label>
+                <label class="radio-inline">
+                    @if (Model.Gender == nsda.Model.enums.GenderEm.男)
+                    {
+                        <input name="Gender" type="radio" checked="checked" value="1" />
+                    }
+                    else
+                    {
+                        <input name="Gender" type="radio" value="1" />
+                    }
+                    男
+                </label>
+                <label class="radio-inline">
+                    @if (Model.Gender == nsda.Model.enums.GenderEm.女)
+                    {
+                        <input name="Gender" type="radio" checked="checked" value="2" />
+                    }
+                    else
+                    {
+                        <input name="Gender" type="radio" value="2" />
+                    }
+                    女
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="contactaddress" class="form-label">通讯地址</label>
+                <input type="text" class="form-input" id="contactaddress" value="@Model.ContactAddress">
+            </div>
+            <div class="form-group">
+                <label for="card" class="form-label">有效证件</label>
+                <select class="form-select-card" id="card">
+                    @if (Model.CardType == nsda.Model.enums.CardTypeEm.身份证)
+                    {
+                        <option value="1" selected>身份证</option>
+                    }
+                    else
+                    {
+                        <option value="1">身份证</option>
+                    }
+                    @if (Model.CardType == nsda.Model.enums.CardTypeEm.护照)
+                    {
+                        <option value="2" selected>护照</option>
+                    }
+                    else
+                    {
+                        <option value="2">护照</option>
+                    }
+                    @if (Model.CardType == nsda.Model.enums.CardTypeEm.港澳台通行证)
+                    {
+                        <option value="3" selected>港澳台通行证</option>
+                    }
+                    else
+                    {
+                        <option value="3">港澳台通行证</option>
+                    }
+                </select>
+                <input type="text" class="form-input-card" id="idcard" value="@Model.Card">
+            </div>
+            <button type="button" class="button" id="modifyinfo">保存修改</button>
+        </div>
+        <div class="modifypassword">
+            <img src="/asset/img/password_03.png" alt="" />
+            <div class="modifypanel">
+                <input type="password" placeholder="输入新密码" id="newpwd">
+                <input type="password" placeholder="再次输入新密码" id="againpwd">
+                <input type="button" value="确认新密码" class="confirmnewpassword"  id="modifypwd">
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $("#modifypwd").click(function () {
+            var $newpwd = $("#newpwd").val();
+            var $againpwd = $("#againpwd").val();
+            if (validate.isNull($newpwd)) {
+                layer.msg('请输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if (validate.isNull($againpwd)) {
+                layer.msg('请再次输入新密码', { icon: 5, time: 1000 });
+                return;
+            }
+            if ($newpwd != $againpwd) {
+                layer.msg('两次输入的密码不一致', { icon: 5, time: 1000 });
+                return;
+            }
+            if (!validate.isPwd($newpwd)) {
+                layer.msg('密码必须是6-32位数字、大、小写字母、特殊符号中的二种及以上的组合！', { icon: 5, time: 1000 });
+                return;
+            }
+            $.ajax({
+                url: "/commondata/editpwd",
+                type: "post",
+                dataType: "json",
+                data: {
+                    pwd: $newpwd,
+                },
+                beforeSend: function () {
+                    layer.msg('修改密码中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("修改成功", { icon: 1, time: 1000 });
+                        $("#newpwd").val("");
+                        $("#againpwd").val("");
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+
+        $("#modifyinfo").click(function () {
+            var $Name = $("#name").val();
+            if (validate.isNull($Name)) {
+                layer.msg('请输入姓', { icon: 5, time: 1000 });
+                return;
+            }
+            var $SurName = $("#surname").val();
+            if (validate.isNull($SurName)) {
+                layer.msg('请输入名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $PinYinName = $("#pyname").val();
+            if (validate.isNull($PinYinName)) {
+                layer.msg('请输入拼音姓', { icon: 5, time: 1000 });
+                return;
+            }
+            var $PinYinSurName = $("#pinsurname").val();
+            if (validate.isNull($PinYinSurName)) {
+                layer.msg('请输入拼音名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $ContactMobile = $("#contactMobile").val();
+            if (validate.isNull($ContactMobile)) {
+                layer.msg('请输入联系电话', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EmergencyContact = $("#emergencycontact").val();
+            if (validate.isNull($EmergencyContact)) {
+                layer.msg('请输入紧急联系人', { icon: 5, time: 1000 });
+                return;
+            }
+            var $EmergencyContactMobile = $("#emergencycontactmobile").val();
+            if (validate.isNull($EmergencyContactMobile)) {
+                layer.msg('请输入紧急电话', { icon: 5, time: 1000 });
+                return;
+            }
+            var $ContactAddress = $("#contactaddress").val();
+            if (validate.isNull($ContactAddress)) {
+                layer.msg('请输入联系地址', { icon: 5, time: 1000 });
+                return;
+            }
+            var $Card = $("#idcard").val();
+            if (validate.isNull($Card)) {
+                layer.msg('请输入证件号', { icon: 5, time: 1000 });
+                return;
+            }
+            var $CardType = $("#card").val();
+            var $Gender = $('input[name=Gender]:checked').val();
+            $.ajax({
+                url: "/eventmanage/eventmanage/edit",
+                type: "post",
+                dataType: "json",
+                data: {
+                    CardType: $CardType,
+                    Card: $Card,
+                    SurName: $SurName,
+                    Name: $Name,
+                    PinYinSurName: $PinYinSurName,
+                    PinYinName: $PinYinName,
+                    ContactMobile: $ContactMobile,
+                    EmergencyContactMobile: $EmergencyContactMobile,
+                    EmergencyContact: $EmergencyContact,
+                    Gender: $Gender,
+                    ContactAddress: $ContactAddress
+                },
+                beforeSend: function () {
+                    layer.msg('赛事管理员资料修改中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("保存成功", { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+               ,error: function () {
+                   layer.closeAll();
+               }
+            });
+        });
+    </script>
+}

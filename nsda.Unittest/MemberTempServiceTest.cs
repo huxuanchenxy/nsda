@@ -20,10 +20,9 @@ namespace nsda.unittest
                        EventGroupId=3,
                        EventId=2,
                          Name="上官",
-                          PlayerEdu=new Model.dto.request.PlayerEduRequest {
-                               StartDate="2017-01-01",
+
                                SchoolId=1
-                          }
+
 
                 },
                 new Model.dto.request.TempPlayerRequest {
@@ -31,10 +30,8 @@ namespace nsda.unittest
                        EventGroupId=3,
                        EventId=2,
                          Name="上官1",
-                          PlayerEdu=new Model.dto.request.PlayerEduRequest {
-                               StartDate="2017-01-01",
+
                                SchoolId=1
-                          }
 
                 }
             }, 12, out msg);

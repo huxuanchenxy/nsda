@@ -76,7 +76,7 @@ namespace nsda.Services.Implement.member
                         msg = "联系方式不能为空";
                         break;
                     }
-                    if (item.PlayerEdu == null || item.PlayerEdu.SchoolId == 0)
+                    if (item.SchoolId <= 0)
                     {
                         msg = "教育经历不能为空";
                         break;
@@ -157,9 +157,9 @@ namespace nsda.Services.Implement.member
                         _dbContext.Insert(new t_player_edu
                         {
                             startdate = DateTime.Now.AddYears(-1).ToString("yyyy-MM"),
-                            enddate = item.PlayerEdu.EndDate,
+                            enddate = "",
                             memberId = memberInsertId,
-                            schoolId = item.PlayerEdu.SchoolId
+                            schoolId = item.SchoolId
                         });
 
                         //生成签到表

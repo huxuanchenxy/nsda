@@ -1,0 +1,157 @@
+﻿@using nsda.Utilities
+<html>
+<head>
+    <title>添加临时裁判</title>
+    <link rel="stylesheet" href="/asset/css/eventplayersignin.css?version=@Constant.Version">
+</head>
+<body>
+    <input type="hidden" id="eventId" value="@Request["eventId"]"/>
+    <input type="hidden" id="eventGroupId" value="@Request["eventGroupId"]" />
+    <div class="addplayer">
+        <h4>添加临时选手</h4>
+        <span></span>
+        <div class="form-group des">
+            <label for="teamnumber">组队编号：</label>
+            <p>T001</p>
+        </div>
+        <div class="form-group">
+            <label for="teamnumber">Speaker1：</label>
+            <input type="text" placeholder="选手1姓名"  id="Name"/>
+            <input type="text" placeholder="输入选手2联系电话"  id="ContactMobile"/>
+        </div>
+        <div class="form-group">
+            <label for="teamnumber">School：</label>
+            <select class="form-select-ads" id="provinceId">
+                <option>省</option>
+            </select>
+            <select class="form-select-ads" id="cityId">
+                <option>市</option>
+            </select>
+            <select class="form-select-school" id="schoolId">
+                <option>学校</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="teamnumber">Speaker2：</label>
+            <input type="text" placeholder="选手2姓名" id="Name1"/>
+            <input type="text" placeholder="输入选手2联系电话" id="ContactMobile1"/>
+        </div>
+        <div class="form-group">
+            <label for="teamnumber">School：</label>
+            <select class="form-select-ads" id="provinceId1">
+                <option>省</option>
+            </select>
+            <select class="form-select-ads" id="cityId1">
+                <option>市</option>
+            </select>
+            <select class="form-select-school" id="schoolId1">
+                <option>学校</option>
+            </select>
+        </div>
+        <button id="save">确认添加该临时选手</button>
+    </div>
+    <script src="/asset/js/jquery.min.js"></script>
+    <script src="/asset/layer/js/layer.js"></script>
+    <script src="/asset/js/validate.js"></script>
+    <script src="/asset/js/pcs.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.province(0);
+            $.province1(0);
+            $("#provinceId").change(function () {
+                $.city(0, 0);
+                $.school(0, 0);
+            });
+            $("#provinceId1").change(function () {
+                $.city1(0, 0);
+                $.school1(0, 0);
+            });
+            $("#cityId").change(function () {
+                $.school(0, 0);
+            });
+            $("#cityId1").change(function () {
+                $.school1(0, 0);
+            });
+        });
+
+        $("#save").click(function () {
+            var $Name = $("#Name").val();
+            if (validate.isNull($Name)) {
+                layer.msg('请输入选手1姓名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $ContactMobile = $("#ContactMobile").val();
+            if (validate.isNull($ContactMobile)) {
+                layer.msg('请输入选手1手机号码', { icon: 5, time: 1000 });
+                return;
+            }
+            var $SchoolId = $("#schoolId").val();
+            if ($SchoolId==0) {
+                layer.msg('请选择选手1学校', { icon: 5, time: 1000 });
+                return;
+            }
+
+            var $Name1 = $("#Name1").val();
+            if (validate.isNull($Name1)) {
+                layer.msg('请输入选手2姓名', { icon: 5, time: 1000 });
+                return;
+            }
+            var $ContactMobile1 = $("#ContactMobile1").val();
+            if (validate.isNull($ContactMobile1)) {
+                layer.msg('请输入选手2手机号码', { icon: 5, time: 1000 });
+                return;
+            }
+            var $SchoolId1= $("#schoolId1").val();
+            if ($SchoolId1 == 0) {
+                layer.msg('请选择选手2学校', { icon: 5, time: 1000 });
+                return;
+            }
+
+            var tempplayer = [];
+
+            var playerData = {
+                EventId: $("#eventId").val(),
+                EventGroupId: $("#eventGroupId").val(),
+                Name: $Name,
+                ContactMobile: $ContactMobile,
+                SchoolId: $SchoolId
+            };
+            tempplayer.push(playerData);
+
+            var playerData1 = {
+                EventId: $("#eventId").val(),
+                EventGroupId: $("#eventGroupId").val(),
+                Name: $Name1,
+                ContactMobile: $ContactMobile,
+                SchoolId: $SchoolId1
+            };
+            tempplayer.push(playerData1);
+
+            $.ajax({
+                url: "/eventmanage/eventmanage/insertplayer",
+                type: "post",
+                dataType: "json",
+                data: {
+                    request: tempplayer
+                },
+                beforeSend: function () {
+                    layer.msg('添加选手中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        parent.layer.closeAll();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
