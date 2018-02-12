@@ -64,31 +64,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"></a>
+                <a class="navbar-brand" href="javascript:;"></a>
 
             </div>
             <div class="collapse navbar-collapse" id="example-navbar-collapse">
                 <ul class="nav navbar-nav drop-list" id="lead">
                     <li class=""><a href="/">首页</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                             关于我们
                         </a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("关于NSDA","About","Home")</li>
-                            <li><a href="#">NSDA中国</a></li>
+                            <li><a href="javascript:;">NSDA中国</a></li>
                             <li>@Html.ActionLink("合作伙伴", "Aboutp","Home")</li>
                             <li>@Html.ActionLink("联系我们", "Aboutus", "Home")</li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                             会员系统 
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">会员系统</a></li>
-                            <li><a href="#">裁判招募</a></li>
-                            <li><a href="#">申请赛事管理员</a></li>
+                            <li><a href="javascript:;">会员系统</a></li>
+                            <li>@Html.ActionLink("裁判招募", "judgelogin", "Home")</li>
+                            <li>@Html.ActionLink("申请赛事管理员", "eventmanagelogin", "Home")</li>
                             <li><a href="#">排名榜单</a></li>
                         </ul>
                     </li>
@@ -98,20 +98,20 @@
                             赛事
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">赛历</a></li>
-                            <li><a href="#">国内赛事</a></li>
-                            <li><a href="#">国际赛事</a></li>
+                            <li><a href="javascript:;">赛历</a></li>
+                            <li><a href="javascript:;">国内赛事</a></li>
+                            <li><a href="javascript:;">国际赛事</a></li>
                         </ul>
                     </li>
                     <li class=""><a href="#">课程专栏</a></li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                             更多
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">辩题</a></li>
-                            <li><a href="#">教材购买</a></li>
+                            <li><a href="javascript:;">辩题</a></li>
+                            <li><a href="javascript:;">教材购买</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -121,7 +121,7 @@
                     <input type="text" class="form-control" name="" placeholder="">
                     <a href="" class="check2"><span class="iconfont icon-sousuo" aria-hidden="true"></span></a>
                     <span class="iconfont icon-yonghu" aria-hidden="true"></span>
-                    <a href="#" class="navbar-link link">注册 | </a><a href="#" class="navbar-link link">&nbsp;登录 </a>
+                    <a href="/Home/Regform" class="navbar-link link">注册 | </a><a href="/Home/Registered" class="navbar-link link">&nbsp;登录 </a>
                 </div>
             </div>
         </nav>

@@ -71,6 +71,15 @@
     text-align:left;
     font-weight: 600;
 }
+.player-num ul li p a.attest{
+    display:inline-block;
+    padding:0 10px;
+    background:#10B5FF;
+    border-radius: 5px;
+    color:white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
 .player-code {
     padding: 5px 15px;
     float: right;
@@ -149,6 +158,13 @@ body {
 }
 .panel-body{
     padding:0;
+}
+.info-lists .panel a p.jc{
+    padding-right: 20%;
+    line-height: 1.8;
+    color:#666666;
+    text-align:right;
+    font-size:16px;
 }
 .info-lists .panel a h3.mc{
     font-size:16px;

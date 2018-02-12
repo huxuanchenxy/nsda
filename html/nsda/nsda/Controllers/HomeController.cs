@@ -118,6 +118,11 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "消息盒子";
             return View();
         }
+        public ActionResult judgemessagebox()
+        {
+            ViewBag.Message = "消息盒子";
+            return View();
+        }
         public ActionResult coachinformation()
         {
             ViewBag.Message = "Coach Personal Information";
@@ -257,6 +262,11 @@ namespace WebApplication2.Controllers
         public ActionResult judgetour()
         {
             ViewBag.Message = "锦标赛";
+            return View();
+        }
+        public ActionResult playersigndetail()
+        {
+            ViewBag.Message = "比赛报名";
             return View();
         }
     }

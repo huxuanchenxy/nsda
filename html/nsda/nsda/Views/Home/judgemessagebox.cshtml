@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "裁判个人中心";
+}
+
+<link href="~/Content/asset/css/judgeapply.css?1.1.4" rel="stylesheet" />
+<link href="~/Content/asset/css/messagebox.css?1.1.4" rel="stylesheet" />
+
+@Html.Partial("_judgetop")
+<div class="container judge-compe">
+    @Html.Partial("_judgeleft")
+    <div class="judge-con">
+        <div class="msg-box">
+            <p>消息盒子 Message Box</p>
+            <a href="/Home/PlayerMessageBox"><img src="~/Content/asset/img/more.gif" alt="..." class="msg-more"></a>
+        </div>
+        <div class="msgbox-con">
+            <div class="msgimg">
+                <img src="~/Content/asset/img/teacher.png" alt="...">
+                <p>Notice</p><p>01/03  </p><p>13:48</p>
+            </div>
+            <div class="msgc">
+                <p class="msgteam">You meet the qualification to be a judge.</p>
+                <p class="teamcon">Congratulations, your application to be a judge of <a href="#">“National High School Academic Debate and Speech Tournament”</a>has been accepted.</p>
+            </div>
+            <a href="#" class="cmore">Learn More</a>
+        </div>
+        <nav aria-label="Page navigation" class="info-nav" id="pager">
+            <div class="page">
+                <a href="javascript:void(0);" class="prev"><</a>
+                <a href="javascript:void(0);" class="on">1</a>
+                <span>...</span>
+                <a href="javascript:void(0);">4</a>
+                <a href="javascript:void(0);">5</a>
+                <a href="javascript:void(0);">6</a>
+                <span>...</span>
+                <a href="javascript:void(0);">7</a>
+                <a href="javascript:void(0);" class="next">></a>
+            </div>
+        </nav>
+    </div>
+</div>
+
+
+
