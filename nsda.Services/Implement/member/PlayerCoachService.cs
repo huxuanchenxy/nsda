@@ -287,26 +287,30 @@ namespace nsda.Services.member
             {
                 var sql = $@"select * from 
 								(
-								select a.Id,a.toMemberId MemberId,a.startdate,
+								select a.Id,a.toMemberId MemberId,a.enddate,
 										b.completepinyin CoachName
 										from t_player_coach a 
 										inner join t_member_coach  b on a.toMemberId=b.memberId
-										where a.isdelete=0 and a.isCoach=0 and a.isPositive=1 and a.memberId={memberId} and a.playerCoachStatus={(int)PlayerCoachStatusEm.同意}
+										where a.isdelete=0 and a.isCoach=0 and a.isPositive=1 and a.memberId={memberId} and a.playerCoachStatus={(int)PlayerCoachStatusEm.同意} and (isnull(a.enddate) or a.enddate>='{DateTime.Now.ToString("yyyy-MM")}')
 								union all
-								select  a.Id,a.memberId MemberId,a.startdate,
+								select  a.Id,a.memberId MemberId,a.enddate,
 										b.completepinyin CoachName
 										from t_player_coach a 
 										inner join t_member_coach  b on a.memberId=b.memberId
-										where a.isdelete=0 and a.isCoach=1 and a.isPositive=0 and a.toMemberId={memberId} and a.playerCoachStatus={(int)PlayerCoachStatusEm.同意}
-								) a order by a.startdate desc limit 1";
+										where a.isdelete=0 and a.isCoach=1 and a.isPositive=0 and a.toMemberId={memberId} and a.playerCoachStatus={(int)PlayerCoachStatusEm.同意} and (isnull(a.enddate) or a.enddate>='{DateTime.Now.ToString("yyyy-MM")}')
+								) a order by a.enddate limit 1";
                 var data = _dbContext.QueryFirstOrDefault<dynamic>(sql);
                 if (data != null)
                 {
-                    response = new CurrentCoachResponse {
-                        Id = data.Id,
-                        CoachId = data.MemberId,
-                        CoachName=data.CoachName
-                    };
+                    if (string.IsNullOrEmpty(data.enddate.ToObjStr()))
+                    {
+                        response = new CurrentCoachResponse
+                        {
+                            Id = data.Id,
+                            CoachId = data.MemberId,
+                            CoachName = data.CoachName
+                        };
+                    }
                 }
             }
             catch (Exception ex)

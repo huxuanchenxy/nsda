@@ -17,10 +17,8 @@ namespace nsda.unittest
             service.InsertTempPlayer(new System.Collections.Generic.List<Model.dto.request.TempPlayerRequest> {
                 new Model.dto.request.TempPlayerRequest {
                      ContactMobile="18701729689",
-                     Email="123@163.com",
                        EventGroupId=3,
                        EventId=2,
-                        Grade=Model.enums.GradeEm.fifthgrade,
                          Name="上官",
                           PlayerEdu=new Model.dto.request.PlayerEduRequest {
                                StartDate="2017-01-01",
@@ -30,10 +28,8 @@ namespace nsda.unittest
                 },
                 new Model.dto.request.TempPlayerRequest {
                      ContactMobile="1870172968219",
-                      Email="1234@163.com",
                        EventGroupId=3,
                        EventId=2,
-                        Grade=Model.enums.GradeEm.fifthgrade,
                          Name="上官1",
                           PlayerEdu=new Model.dto.request.PlayerEduRequest {
                                StartDate="2017-01-01",
@@ -51,7 +47,6 @@ namespace nsda.unittest
             service.BindTempPlayer(new Model.dto.request.BindTempPlayerRequest
             {
                 ContactMobile = "18701729689",
-                Email = "123@163.com",
                 GroupNum = "nsda1000002",
                 MemberId = 13
             }, out msg);

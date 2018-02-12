@@ -6,7 +6,6 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/playersign.css?version=@Constant.Version">
 }
 <div class="compe-con">
@@ -119,6 +118,10 @@
     <script src="/asset/js/pager.js"></script>
     <script src="/asset/js/tabs.js?version=@Constant.Version"></script>
     <script>
+        $(document).ready(function () {
+            $("#collapseOne").addClass("in");
+        });
+
         (function (w) {
             var playerevent = {
                 param: {
@@ -161,7 +164,7 @@
                                 else {
                                     html += '<td>' + val.CityName + '</td>';
                                 }
-                                if (val.IsVisiable) {
+                                if (val.Visiable==3) {
                                     html += '<td><a href="javascript:;" class="sign">立即报名</a></td>';
                                 } else {
                                     html += '<td>报名已截止</td>';

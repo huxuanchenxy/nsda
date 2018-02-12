@@ -10,9 +10,7 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
 }
 <div class="score-con">
     <div class="score-top">
@@ -83,7 +81,11 @@
 </div>
 @section scripts
 {
+    <script src="/asset/js/validate.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#collapseTwo").addClass("in");
+        });
         $("#modifypwd").click(function () {
             var $newpwd = $("#newpwd").val();
             var $againpwd = $("#againpwd").val();

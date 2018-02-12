@@ -2,12 +2,15 @@
 @model nsda.Model.dto.response.MemberRefereeResponse
 @{
     ViewBag.Title = "裁判个人中心";
-    Layout = "~/Areas/coach/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/referee/Views/Shared/_Layout.cshtml";
     var data = ViewBag.CurrentRefereeEvent as List<nsda.Model.dto.response.RefereeCurrentEventResponse>;
     var mail = ViewBag.Mail as List<nsda.Model.dto.response.MailResponse>;
-}
-@{
     var userContext = ViewBag.UserContext as WebUserContext;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/judgecenter.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/messagebox.css?version=@Constant.Version">
 }
 <div class="judge-con">
     @foreach (var item in data)
@@ -19,6 +22,8 @@
                     <th>Tournament</th>
                     <th>Events</th>
                     <th>Level</th>
+                    <th>Start Date</th>
+                    <th>Location</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,37 +32,50 @@
                     <td>@item.EventName</td>
                     <td>@item.EventType</td>
                     <td>@item.EventLevel</td>
+                    <td>@item.EventStartDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (string.IsNullOrEmpty(item.CityName))
+                        {
+                            @Html.Raw(item.CityName)
+                        }
+                        else
+                        {
+                            @Html.Raw(item.ProvinceName)
+                        }
+                    </td>
                 </tr>
             </tbody>
         </table>
     }
-</div>
-<div class="msg-box">
-    <p>消息盒子 Message Box</p>
-    <a href="/referee/referee/mail"><img src="/asset/img/more.gif" alt="..." class="msg-more"></a>
-</div>
 
-@if (mail != null)
-{
-    foreach (var item in mail)
+    <div class="msg-box">
+        <p>消息盒子 Message Box</p>
+        <a href="/referee/referee/mail"><img src="/asset/img/more.gif" alt="..." class="msg-more"></a>
+    </div>
+
+    @if (mail != null)
     {
-        <div class="msgbox-con">
-            <div class="msgimg">
-                @if (string.IsNullOrEmpty(item.Head))
-                    {
-                    <img src="/asset/img/teacher.png" alt="...">
+        foreach (var item in mail)
+        {
+            <div class="msgbox-con">
+                <div class="msgimg">
+                    @if (string.IsNullOrEmpty(item.Head))
+               {
+                <img src="/asset/img/teacher.png" alt="...">
                 }
                 else
                 {
-                    <img src="@item.Head" alt="...">
+                <img src="@item.Head" alt="...">
                 }
-                <p>Notice</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(5, 5)</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(11, 5)</p>
+                    <p>Notice</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(5, 5)</p><p>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss").Substring(11, 5)</p>
+                </div>
+                <div class="msgc">
+                    <p class="msgteam">@item.Title</p>
+                    <p class="teamcon">@Html.Raw(item.Content)</p>
+                </div>
+                <a href="/referee/referee/list" class="cmore">Learn More</a>
             </div>
-            <div class="msgc">
-                <p class="msgteam">@item.Title</p>
-                <p class="teamcon">@Html.Raw(item.Content)</p>
-            </div>
-            <a href="/player/playersignup/list" class="cmore">查看详情</a>
-        </div>
+        }
     }
-}
+
+</div>

@@ -137,10 +137,10 @@
                                 {
                                     if(val.IsStop)
                                     {
-                                        html+='<td rowspan='+ rowspan + ' class="status">已停赛</td>';
+                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop" data-stop="false">复赛</a></td>';
                                     }
                                     else{
-                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop">停赛</a></td>';
+                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop" data-stop="true">停赛</a></td>';
                                     }
                                 }
                                 $.each(val.List, function (kk, item) {
@@ -270,7 +270,8 @@
                 dataType: "json",
                 data: {
                     groupnum:$(this).attr("data-groupnum"),
-                    eventId:eventplayersign.param.EventId
+                    eventId:eventplayersign.param.EventId,
+                    isStop:$(this).attr("data-stop")
                 },
                 beforeSend: function () {
                     layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });

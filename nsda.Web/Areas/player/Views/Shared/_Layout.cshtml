@@ -32,7 +32,6 @@
     <link href="/asset/css/iconfont.css?version=@Constant.Version" rel="stylesheet" />
     <link href="/asset/css/index.css?version=@Constant.Version" rel="stylesheet" />
     <link href="/asset/css/player.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
-    <link href="/asset/css/playercenter.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     @RenderSection("styles", false)
 </head>
 <body>
@@ -145,10 +144,10 @@
                         <li><span>NSDA 会员编号：</span><p>@userContext.Code</p></li>
                     </ul>
                 </div>
-                <a href="#" class="player-code">
+                @*<a href="#" class="player-code">
                     <i class="iconfont icon-erweima"></i>
                     我的二维码
-                </a>
+                </a>*@
             </div>
         </div>
     </div>
@@ -157,7 +156,7 @@
         <div class="info-lists">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
-                    <a href="/player/player"><h3 class="mc">会员中心</h3></a>
+                    <a href="/player/player"><p class="jc">Player Center</p><h3 class="mc">会员中心</h3></a>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
@@ -172,7 +171,7 @@
                         <div class="panel-body">
                             <ul>
                                 <a href="/player/playersignup/index" class="compe"><li>比赛报名</li></a>
-                                <a href="/player/playersignup/list" class="compe"><li>已参与比赛</li></a>
+                                <a href="/player/playersignup/list" class="compe"><li>已参加比赛</li></a>
                             </ul>
                         </div>
                     </div>

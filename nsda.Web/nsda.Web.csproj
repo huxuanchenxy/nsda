@@ -427,6 +427,8 @@
     <Content Include="asset\css\eventstart.css" />
     <Content Include="asset\css\eventstartlists.css" />
     <Content Include="asset\css\eventumpiresignin.css" />
+    <Content Include="asset\css\forgotpwd.css" />
+    <Content Include="asset\css\forgotpwdcert.css" />
     <Content Include="asset\css\iconfont.css" />
     <Content Include="asset\css\index.css" />
     <Content Include="asset\css\judge.css" />
@@ -436,6 +438,7 @@
     <Content Include="asset\css\judgelogin.css" />
     <Content Include="asset\css\judgeregform.css" />
     <Content Include="asset\css\judgetour.css" />
+    <Content Include="asset\css\judgetourname.css" />
     <Content Include="asset\css\messagebox.css" />
     <Content Include="asset\css\player.css" />
     <Content Include="asset\css\playerboundcoach.css" />
@@ -444,6 +447,7 @@
     <Content Include="asset\css\playerpartin.css" />
     <Content Include="asset\css\playerpersonal.css" />
     <Content Include="asset\css\playerregform.css" />
+    <Content Include="asset\css\playerscorelists.css" />
     <Content Include="asset\css\playersign.css" />
     <Content Include="asset\css\playersource.css" />
     <Content Include="asset\css\regform.css" />
@@ -464,9 +468,13 @@
     <Content Include="asset\img\course.png" />
     <Content Include="asset\img\default.png" />
     <Content Include="asset\img\en-icon.png" />
+    <Content Include="asset\img\icon_03.png" />
+    <Content Include="asset\img\icon_06.png" />
+    <Content Include="asset\img\icon_08.png" />
     <Content Include="asset\img\integral.svg" />
     <Content Include="asset\img\mail-at.svg" />
     <Content Include="asset\img\map-3.svg" />
+    <Content Include="asset\img\mecban2_03.png" />
     <Content Include="asset\img\mecban_03.jpg" />
     <Content Include="asset\img\member.svg" />
     <Content Include="asset\img\more.gif" />
@@ -492,6 +500,7 @@
     <Content Include="asset\img\speach.png" />
     <Content Include="asset\img\Stephen Breyer.jpg" />
     <Content Include="asset\img\teacher.png" />
+    <Content Include="asset\img\tour_03.png" />
     <Content Include="asset\img\txt1.png" />
     <Content Include="asset\js\block.js" />
     <Content Include="asset\js\bootstrap.min.js" />
@@ -539,6 +548,8 @@
     <Content Include="Areas\referee\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\referee\Views\referee\signup.cshtml" />
     <Content Include="Areas\referee\Views\referee\list.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\knockoutsetting.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\cyclingsetting.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />

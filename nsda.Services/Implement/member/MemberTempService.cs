@@ -71,11 +71,6 @@ namespace nsda.Services.Implement.member
                         msg = "姓名不能为空";
                         break;
                     }
-                    if (item.Email.IsEmpty())
-                    {
-                        msg = "邮箱不能为空";
-                        break;
-                    }
                     if (item.ContactMobile.IsEmpty())
                     {
                         msg = "联系方式不能为空";
@@ -84,11 +79,6 @@ namespace nsda.Services.Implement.member
                     if (item.PlayerEdu == null || item.PlayerEdu.SchoolId == 0)
                     {
                         msg = "教育经历不能为空";
-                        break;
-                    }
-                    if (item.PlayerEdu.StartDate.IsEmpty())
-                    {
-                        msg = "教育经历开始时间不能为空";
                         break;
                     }
                 }
@@ -100,7 +90,7 @@ namespace nsda.Services.Implement.member
                 try
                 {
                     _dbContext.BeginTransaction();
-                    string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
+                    string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode(tempplayer.EventId);
                     foreach (var item in request)
                     {
                         //创建账号
@@ -131,7 +121,6 @@ namespace nsda.Services.Implement.member
                             emergencycontact = item.Name,
                             emergencycontactmobile = item.ContactMobile,
                             gender = GenderEm.未知,
-                            grade = item.Grade,
                             pinyinname = item.Name,
                             pinyinsurname = item.Name,
                             surname = item.Name
@@ -147,7 +136,7 @@ namespace nsda.Services.Implement.member
                         {
                             code = groupnum,
                             contactmobile = item.ContactMobile,
-                            email = item.Email,
+                            name = item.Name,
                             eventId = item.EventId,
                             memberId = memberInsertId,
                             tempStatus = TempStatusEm.待绑定,
@@ -167,7 +156,7 @@ namespace nsda.Services.Implement.member
                         });
                         _dbContext.Insert(new t_player_edu
                         {
-                            startdate = item.PlayerEdu.StartDate,
+                            startdate = DateTime.Now.AddYears(-1).ToString("yyyy-MM"),
                             enddate = item.PlayerEdu.EndDate,
                             memberId = memberInsertId,
                             schoolId = item.PlayerEdu.SchoolId
@@ -274,7 +263,7 @@ namespace nsda.Services.Implement.member
                     {
                         code = member.code,
                         contactmobile = request.ContactMobile,
-                        email = string.Empty,
+                        name = string.Empty,
                         eventId = request.EventId,
                         memberId = memberInsertId,
                         tempStatus = TempStatusEm.待绑定,
@@ -334,14 +323,19 @@ namespace nsda.Services.Implement.member
             try
             {
                 //校验数据的真实性
+                if (request.EventCode.IsEmpty())
+                {
+                    msg = "赛事编码不能为空";
+                    return orderId;
+                }
                 if (request.GroupNum.IsEmpty())
                 {
                     msg = "队伍编码不能为空";
                     return orderId;
                 }
-                if (request.Email.IsEmpty())
+                if (request.PlayerName.IsEmpty())
                 {
-                    msg = "邮箱不能为空";
+                    msg = "选手姓名不能为空";
                     return orderId;
                 }
                 if (request.ContactMobile.IsEmpty())
@@ -350,17 +344,23 @@ namespace nsda.Services.Implement.member
                     return orderId;
                 }
 
-                var data = _dbContext.Select<t_member_temp>(c => c.email == request.Email && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
-                if (data == null)
+                var tevent = _dbContext.Select<t_event>(c => c.code == request.EventCode).FirstOrDefault();
+                if (tevent == null)
                 {
-                    msg = "数据不存在，请核对后再操作";
+                    msg = "赛事编码有误";
                     return orderId;
                 }
 
-                t_event t_event = _dbContext.Get<t_event>(data.eventId);
-                if (t_event.eventStatus != EventStatusEm.比赛完成)
+                if (tevent.eventStatus != EventStatusEm.比赛完成)
                 {
                     msg = "赛事未完成不能进行绑定";
+                    return orderId;
+                }
+
+                var data = _dbContext.Select<t_member_temp>(c => c.name == request.PlayerName && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定&&c.eventId==tevent.id).FirstOrDefault();
+                if (data == null)
+                {
+                    msg = "数据不存在，请核对后再操作";
                     return orderId;
                 }
 
@@ -385,7 +385,7 @@ namespace nsda.Services.Implement.member
                             isNeedInvoice = false,
                             mainOrderId = null,
                             memberId = data.memberId,
-                            money = t_event.signfee,
+                            money = tevent.signfee,
                             orderStatus = OrderStatusEm.等待支付,
                             orderType = OrderTypeEm.临时选手绑定,
                             payExpiryDate = DateTime.Now.AddYears(3),
@@ -400,11 +400,11 @@ namespace nsda.Services.Implement.member
                             orderId = orderid,
                             coupon = 0,
                             discountprice = 0,
-                            money = t_event.signfee,
+                            money = tevent.signfee,
                             productId = 0,
-                            name = $"{t_event.name}报名费",
+                            name = $"{tevent.name}报名费",
                             number = 1,
-                            unitprice = t_event.signfee
+                            unitprice = tevent.signfee
                         });
                         //生成支付链接
                         data.tomemberId = request.MemberId;

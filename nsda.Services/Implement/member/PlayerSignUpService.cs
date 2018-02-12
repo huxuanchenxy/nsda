@@ -185,7 +185,7 @@ namespace nsda.Services.Implement.member
                     try
                     {
                         _dbContext.BeginTransaction();
-                        string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
+                        string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode(tevent.id);
                         //邀请者
                         _dbContext.Insert(new t_event_player_signup
                         {
@@ -244,7 +244,7 @@ namespace nsda.Services.Implement.member
                     try
                     {
                         _dbContext.BeginTransaction();
-                        string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode();
+                        string groupnum = _dataRepository.SignUpPlayerRepo.RenderCode(tevent.id);
                         //邀请者
                         _dbContext.Insert(new t_event_player_signup
                         {

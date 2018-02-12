@@ -182,6 +182,8 @@ namespace nsda.Model.dto.response
         /// 联系地址
         /// </summary>
         public string ContactAddress { get; set; }
+
+        public GenderEm Gender { get; set; }
     }
 
     public class MemberEventResponse

@@ -5,7 +5,6 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/playerpartin.css?version=@Constant.Version">
 }
 <div class="comp-lists tab">
@@ -38,6 +37,9 @@
     <script src="/asset/js/pager.js"></script>
     <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
+        $(document).ready(function () {
+            $("#collapseOne").addClass("in");
+        });
         (function (w) {
             var playerrefund = {
                 param: {

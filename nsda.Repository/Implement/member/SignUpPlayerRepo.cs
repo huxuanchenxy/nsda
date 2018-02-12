@@ -18,17 +18,17 @@ namespace nsda.Repository.Implement.member
         {
             _dbContext = dbContext;
         }
-        public string RenderCode(string code = "nsda")
+        public string RenderCode(int eventId,string code = "t")
         {
             lock (lockObject)
             {
                 var dy = new DynamicParameters();
-                string sql = $@"select  groupnum from t_event_player_signup where groupnum like '{code}%' order by Id desc limit 1";
+                string sql = $@"select  groupnum from t_event_player_signup where eventId={eventId} and groupnum like '{code}%' order by Id desc limit 1";
                 object obj = _dbContext.ExecuteScalar(sql);
 
                 if (obj == null || obj.ToString().IsEmpty())
                 {
-                    return $"{code}1000001";
+                    return $"{code}1001";
                 }
                 else
                 {

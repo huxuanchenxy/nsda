@@ -1,16 +1,14 @@
 ﻿.judge-compe{
     width:100%;
-    padding:40px 10px 140px 10px;
+    padding:40px 10px;
     background:#fff;
-    margin-bottom:80px;
 }
 .judge-con{
     width:73%;
     float:left;
-    margin-top:55px;
+    margin-top:60px;
     margin-left:20px;
 }
-
 .judge-con table{
     border-collapse: collapse;
     width: 100%;
@@ -38,7 +36,7 @@
 .judge-con tbody td a{
     display:inline-block;
 }
-.judge-con tbody td a.login {
+.judge-con tbody td a.applyfor {
     padding: 5px 15px;
     background: #FFD600;
     border-radius: 20px;
@@ -46,13 +44,38 @@
     -moz-border-radius: 20px;
     color: #666666;
 }
-.info-lists .panel:first-child a p.jc,.info-lists .panel:first-child a h3.mc{
-    color:#52BEED;
+
+.judge-con nav{
+    float:right;
+    
 }
-
-
-
-
+.page{
+    color: #a2a2a2;
+    margin: 20px 0;
+    display: inline-block;
+    text-align: center;
+    float:right;
+    margin-right:40px;
+    margin-top:50px;
+}
+.page a.prev, .page a.next {
+    font-size: 14px;
+    font-weight: bold;
+}
+.page span, .page a {
+    color: #a2a2a2;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    text-decoration: none;
+}
+.page a:hover, .page .on{
+    background-color: #2577e3;
+    border-radius: 30px;
+    color: #fff;
+}
 
 
 

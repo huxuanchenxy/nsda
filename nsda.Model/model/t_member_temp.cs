@@ -35,7 +35,7 @@ namespace nsda.Models
     
         public string code { get; set; }
     
-        public string email { get; set; }
+        public string name { get; set; }
     
         public string contactmobile { get; set; }
     

@@ -139,6 +139,7 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
 }
-.info-lists .panel-group .panel:nth-child(3) .panel-heading .panel-title h3,.info-lists .panel-group .panel:nth-child(3) .panel-heading .panel-title p{
-    color:#1DB8FF;
+
+.info-lists .panel:last-child a p.jc,.info-lists .panel:last-child a h3.mc{
+    color:#52BEED;
 }
