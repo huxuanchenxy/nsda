@@ -35,7 +35,7 @@
    margin-bottom:10px;
    color:black;
 }
-.selected{
+.group .group-item a.selected,.group .group-con a.selected{
     color:white;
     background:#FBB7A0;
     border-radius: 20px;
