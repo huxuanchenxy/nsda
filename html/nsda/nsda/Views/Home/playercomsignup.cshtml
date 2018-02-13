@@ -17,11 +17,6 @@
         </div>
         <div class="comcon">
             <p class="tourcode">Tournament Code: A45626589</p>
-            <div class="set">
-                <h4>设置组队邀请</h4>
-                <input type="text" placeholder="输入NSDA会员编号/会员姓名" />
-                <a href="javascript:;" class="search">搜索</a>
-            </div>
             <div class="group">
                 <label class="radio-inline sexy">
                     <input type="radio" name="inlineRadioOptions" id="men" value="option1"> 新手组
@@ -29,6 +24,19 @@
                 <label class="radio-inline sexy">
                     <input type="radio" name="inlineRadioOptions" id="women" value="option2"> 公开组
                 </label>
+            </div>
+            <div class="set">
+                <h4>设置组队邀请</h4>
+                <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
+                <a href="javascript:;" id="search" class="search">搜索</a>
+                <select size="2" id="sel" style="display:none;">
+                    <option>123</option>
+                    <option>23456</option>
+                    <option>1111</option>
+                    <option>123333</option>
+                    <option>aaaa</option>
+                    <option>1bbb23</option>
+                </select>
             </div>
             <div class="comlist">
                 <h4>组队队员信息：</h4>
@@ -45,7 +53,7 @@
     </div>
 </div>
 
-
+@Scripts.Render("~/Content/asset/js/block.js")
 <script>
     var classVal = document.getElementById("collapseOne").getAttribute("class");
     classVal = classVal.concat("in");
