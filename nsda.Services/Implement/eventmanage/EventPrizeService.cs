@@ -15,7 +15,7 @@ using nsda.Models;
 namespace nsda.Services.Implement.eventmanage
 {
     /// <summary>
-    /// 赛事奖项设置
+    /// 自定义奖项设置
     /// </summary>
     public class EventPrizeService : IEventPrizeService
     {

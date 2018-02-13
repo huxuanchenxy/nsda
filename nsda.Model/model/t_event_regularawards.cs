@@ -14,11 +14,11 @@ namespace nsda.Models
     /// <summary>
     /// TableModel
     /// </summary>    
-	[Table("t_event_result")]
-    public class t_event_result
+	[Table("t_event_regularawards")]
+    public class t_event_regularawards
     {
 	   //默认构造函数
-	   public t_event_result()
+	   public t_event_regularawards()
 	    {
 			//初始化默认字段
             createtime = DateTime.Now;
@@ -33,9 +33,9 @@ namespace nsda.Models
     
         public int eventGroupId { get; set; }
     
-        public string groupNum { get; set; }
+        public int personal { get; set; }
     
-        public int ranking { get; set; }
+        public int group { get; set; }
     
         /// <summary>
         /// 修改时间

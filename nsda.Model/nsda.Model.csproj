@@ -55,6 +55,7 @@
     <Compile Include="dto\request\EventCyclingRaceSettingsRequest.cs" />
     <Compile Include="dto\request\EventknockoutSettingsRequest.cs" />
     <Compile Include="dto\request\EventPrizeRequest.cs" />
+    <Compile Include="dto\request\EventRegularAwardsRequest.cs" />
     <Compile Include="dto\request\EventRequest.cs" />
     <Compile Include="dto\request\EventRoomQueryRequest.cs" />
     <Compile Include="dto\request\EventRoomRequest.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="dto\response\BaseListResponse.cs" />
     <Compile Include="dto\response\CityResponse.cs" />
     <Compile Include="dto\response\CountryResponse.cs" />
+    <Compile Include="dto\response\EventRegularAwardsResponse.cs" />
     <Compile Include="dto\response\PlayerCurrentEventResponse.cs" />
     <Compile Include="dto\response\DataSourceResponse.cs" />
     <Compile Include="dto\response\EmailLogResponse.cs" />
@@ -243,7 +245,7 @@
     <Compile Include="model\t_event_referee_signup.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
-    <Compile Include="model\t_event_result.cs">
+    <Compile Include="model\t_event_regularawards.cs">
       <DependentUpon>t4_table.tt</DependentUpon>
     </Compile>
     <Compile Include="model\t_event_room.cs">
