@@ -1,28 +1,94 @@
-﻿
-.list-top{
+﻿.newround .roundone{
+    margin-top:90px;
+}
+.roundset .newround .form-group.range{
     width:100%;
-    padding-left:50px;
-    border-bottom:1px solid #C3C8CC;
-    box-sizing:border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    padding-bottom:4px;
 }
-.list-top .active{
-    border:1px solid #C3C8CC;
-    border-top:3px solid #47BBED;
-    border-bottom:3px solid #F5F8FA;
-    border-radius:5px 5px 0 0;
-    -webkit-border-radius:5px 5px 0 0;
-    -moz-border-radius:5px 5px 0 0;
-    box-sizing:border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    padding:5px 10px;
+.roundset .newround .form-group a.confirm{
+    display:inline-block;
+    padding:3px 15px;
+    background:#47BBED;
+    color:white;
+    margin-left:15px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
 }
-.list-top .list{
-    padding:5px 10px;
-    color:#666699;
-    font-size:18px;
-    font-weight:400;
+.roundset .newround .form-group p{
+    font-size:12px;
+    color:#ff6666;
 }
+.newround .roundone ul li label.comname{
+    width:120px;
+    text-align:right;
+}
+.newround .roundone ul li select.rset{
+    margin-right:20px;
+}
+.newround .roundone ul li input[type=checkbox]:checked input[type=checkbox]{
+    color:red;
+}
+.newround .roundone ul li label{
+    margin-left:10px
+}
+
+
+.openround .roundone{
+    margin-top:90px;
+}
+.roundset .openround .form-group.range{
+    width:100%;
+}
+.roundset .openround .form-group a.confirm{
+    display:inline-block;
+    padding:3px 15px;
+    background:#47BBED;
+    color:white;
+    margin-left:15px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.roundset .openround .form-group p{
+    font-size:12px;
+    color:#ff6666;
+}
+.openround .roundone ul li label.comname{
+    width:120px;
+    text-align:right;
+}
+.openround .roundone ul li select.rset{
+    margin-right:20px;
+}
+.openround .roundone ul li input[type=checkbox]:checked input[type=checkbox]{
+    color:red;
+}
+.openround .roundone ul li label{
+    margin-left:10px
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
