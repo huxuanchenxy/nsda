@@ -39,8 +39,6 @@ namespace nsda.Models
     
         public DateTime starttime { get; set; }
     
-        public DateTime endtime { get; set; }
-    
         /// <summary>
         /// 创建时间
         /// </summary>

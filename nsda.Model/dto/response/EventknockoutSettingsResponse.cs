@@ -61,6 +61,5 @@ namespace nsda.Model.dto.response
 
         public DateTime StartTime { get; set; }
 
-        public DateTime EndTime { get; set; }
     }
 }

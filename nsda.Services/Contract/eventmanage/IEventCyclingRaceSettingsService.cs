@@ -1,5 +1,6 @@
 ﻿using nsda.Model.dto.request;
 using nsda.Model.dto.response;
+using nsda.Model.enums;
 using nsda.Utilities;
 using System;
 using System.Collections.Generic;

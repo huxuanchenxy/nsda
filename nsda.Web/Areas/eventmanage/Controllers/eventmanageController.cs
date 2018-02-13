@@ -28,8 +28,12 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         IEventSignService _eventSignService;
         IPlayerSignUpService _playerSignUpService;
         IRefereeSignUpService _refereeSignUpService;
-        public eventmanageController(IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
+        IEventCyclingRaceSettingsService _eventCyclingRaceSettingsService;
+        IEventknockoutSettingsService _eventknockoutSettingsService;
+        public eventmanageController(IEventknockoutSettingsService eventknockoutSettingsService,IEventCyclingRaceSettingsService eventCyclingRaceSettingsService,IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
         {
+            _eventknockoutSettingsService = eventknockoutSettingsService;
+            _eventCyclingRaceSettingsService = eventCyclingRaceSettingsService;
             _eventRoomService = eventRoomService;
             _eventPrizeService = eventPrizeService;
             _memberService = memberService;
@@ -190,7 +194,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.UserContext = userContext;
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
-            ViewBag.EventDate = _eventService.EventDate(id);
+            ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(id);
             return View(detail);
         }
 
@@ -200,7 +204,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.UserContext = userContext;
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
-            ViewBag.EventDate = _eventService.EventDate(id);
+            ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(id);
             return View(detail);
         }
 
@@ -631,11 +635,25 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #endregion
 
         #region 循环赛设置
-
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult cyclingracesettings(List<EventCyclingRaceSettingsRequest> request)
+        {
+            string msg = string.Empty;
+            var flag = _eventCyclingRaceSettingsService.Settints(request,out msg);
+            return Result<string>(flag, msg);
+        }
         #endregion
 
         #region 淘汰赛设置
-
-        #endregion 
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult knockoutsettings(List<EventknockoutSettingsRequest> request)
+        {
+            string msg = string.Empty;
+            var flag = _eventknockoutSettingsService.Settints(request, out msg);
+            return Result<string>(flag, msg);
+        }
+        #endregion
     }
 }

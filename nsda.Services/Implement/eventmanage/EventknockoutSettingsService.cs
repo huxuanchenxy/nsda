@@ -81,16 +81,6 @@ namespace nsda.Services.Implement.eventmanage
                                 messages = "Flight开始时间有误";
                                 break;
                             }
-                            if (itemss.EndTime == DateTime.MaxValue || itemss.EndTime == DateTime.MinValue)
-                            {
-                                messages = "Flight结束时间有误";
-                                break;
-                            }
-                            if (itemss.EndTime <= itemss.StartTime)
-                            {
-                                messages = "Flight结束时间必须大于开始时间";
-                                break;
-                            }
                         }
                         if (messages.IsNotEmpty())
                         {
@@ -143,7 +133,6 @@ namespace nsda.Services.Implement.eventmanage
                                 _dbContext.Insert(new t_event_knockout_detail
                                 {
                                     knockoutId= knockoutId,
-                                    endtime = itemss.EndTime,
                                     eventGroupId = itemss.EventGroupId,
                                     eventId = itemss.EventId,
                                     screenings = itemss.Screenings,
@@ -177,9 +166,7 @@ namespace nsda.Services.Implement.eventmanage
             List<EventknockoutSettingsResponse> list = new List<EventknockoutSettingsResponse>();
             try
             {
-                var sql = $@"select a.*,b.name EventGroupName from t_event_knockout_settings a
-                            inner join t_event_group b on a.eventGroupId=b.id
-                            where a.isdelete=0 and a.eventId={eventId}";
+                var sql = $@"select * from t_event_knockout_settings where isdelete=0 and eventId={eventId}";
                 var data = _dbContext.Query<EventknockoutSettingsResponse>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
@@ -208,7 +195,6 @@ namespace nsda.Services.Implement.eventmanage
                                         EventKnockoutDetailResponse responses = new EventKnockoutDetailResponse
                                         {
                                             KnockoutId =itemss.knockoutId,
-                                            EndTime = itemss.endtime,
                                             Screenings = itemss.screenings,
                                             EventGroupId = itemss.eventGroupId,
                                             EventId = itemss.eventId,

@@ -11,6 +11,7 @@ using nsda.Model.dto.request;
 using nsda.Model.dto.response;
 using nsda.Utilities;
 using nsda.Models;
+using nsda.Model.enums;
 
 namespace nsda.Services.Implement.eventmanage
 {
@@ -35,33 +36,39 @@ namespace nsda.Services.Implement.eventmanage
             msg = string.Empty;
             try
             {
+                if (request == null || request.Count == 0)
+                {
+                    msg = "请核对参数后再保存";
+                    return flag;
+                }
                 var model = request.FirstOrDefault();
                 if (model.EventId <= 0)
                 {
                     msg = "赛事信息有误";
                     return flag;
                 }
-                if (request == null || request.Count == 0)
-                {
-                    msg = "请核对参数后再保存";
-                    return flag;
-                }
                 //循环遍历判断参数合法性
                 foreach (var item in request)
                 {
+                    if (item.StartRange < 0)
+                    {
+                        msg = "开始打分区间有误";
+                        break;
+                    }
+
+                    if (item.EndRange < 0)
+                    {
+                        msg = "结束打分区间有误";
+                        break;
+                    }
+
                     if (item.EndRange < item.StartRange)
                     {
                         msg = "打分区间有误";
                         break;
                     }
 
-                    if (item.TotalRound <= 0)
-                    {
-                        msg = "循环赛总轮次有误";
-                        break;
-                    }
-
-                    if (item.TotalRound != item.ListCyclingRace.Count)
+                    if (item.ListCyclingRace == null || item.ListCyclingRace.Count == 0)
                     {
                         msg = "循环赛轮次有误";
                         break;
@@ -81,16 +88,6 @@ namespace nsda.Services.Implement.eventmanage
                             if (itemss.StartTime == DateTime.MaxValue || itemss.StartTime == DateTime.MinValue)
                             {
                                 messages = "Flight开始时间有误";
-                                break;
-                            }
-                            if (itemss.EndTime == DateTime.MaxValue || itemss.EndTime == DateTime.MinValue)
-                            {
-                                messages = "Flight结束时间有误";
-                                break;
-                            }
-                            if (itemss.EndTime<=itemss.StartTime)
-                            {
-                                messages = "Flight结束时间必须大于开始时间";
                                 break;
                             }
                         }
@@ -130,14 +127,14 @@ namespace nsda.Services.Implement.eventmanage
                             eventId = item.EventId,
                             isallow = item.IsAllow,
                             screenings = item.Screenings,
-                            totalround = item.TotalRound,
+                            totalround = item.ListCyclingRace.Count,
                         }).ToObjInt();
                         //循环赛表
                         foreach (var items in item.ListCyclingRace)
                         {
                             int cyclingraceId = _dbContext.Insert(new t_event_cycling {
                                     currentround=items.CurrentRound,
-                                    cyclingRaceStatus=items.CyclingRaceStatus,
+                                    cyclingRaceStatus= CyclingRaceStatusEm.未开始,
                                     eventGroupId=items.EventGroupId,
                                     eventId=items.EventId,
                                     nextround=items.NextRound,
@@ -149,7 +146,6 @@ namespace nsda.Services.Implement.eventmanage
                             {
                                 _dbContext.Insert(new t_event_cycling_detail {
                                     cyclingraceId=cyclingraceId,
-                                    endtime=itemss.EndTime,
                                     eventGroupId=itemss.EventGroupId,
                                     eventId=itemss.EventId,
                                     screenings=itemss.Screenings,
@@ -185,9 +181,7 @@ namespace nsda.Services.Implement.eventmanage
             List<EventCyclingRaceSettingsResponse> list = new List<EventCyclingRaceSettingsResponse>();
             try
             {
-                var sql = $@"select a.*,b.name EventGroupName from t_event_cycling_settings a
-                            inner join t_event_group b on a.eventGroupId=b.id
-                            where a.isdelete=0 and a.eventId={eventId}";
+                var sql = $@"select * from t_event_cycling_settings where isdelete=0 and eventId={eventId}";
                 var data = _dbContext.Query<EventCyclingRaceSettingsResponse>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
@@ -217,7 +211,6 @@ namespace nsda.Services.Implement.eventmanage
                                         EventCyclingRaceDetailResponse responses = new EventCyclingRaceDetailResponse
                                         {
                                             CyclingRaceId = itemss.cyclingraceId,
-                                            EndTime = itemss.endtime,
                                             Screenings = itemss.screenings,
                                             EventGroupId = itemss.eventGroupId,
                                             EventId = itemss.eventId,

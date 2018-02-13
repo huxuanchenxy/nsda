@@ -22,8 +22,6 @@ namespace nsda.Model.dto.request
         public int EndRange { get; set; }
 
         public int Screenings { get; set; }
-
-        public int TotalRound { get; set; }
         public List<EventCyclingRaceRequest> ListCyclingRace { get; set; }
         public EventCyclingRaceSettingsRequest()
         {
@@ -42,14 +40,20 @@ namespace nsda.Model.dto.request
         public int SettingsId { get; set; }
 
         /// <summary>
-        /// 创建时间
+        /// 配对规则
         /// </summary>
         public PairRuleEm PairRule { get; set; }
-
+        /// <summary>
+        /// 当前轮次
+        /// </summary>
         public int CurrentRound { get; set; }
-
+        /// <summary>
+        /// 下一轮
+        /// </summary>
         public int NextRound { get; set; }
-
+        /// <summary>
+        /// 循环赛状态
+        /// </summary>
         public CyclingRaceStatusEm CyclingRaceStatus { get; set; }
         public List<EventCyclingRaceDetailRequest> ListCyclingRaceDetail { get; set; }
         public EventCyclingRaceRequest()
@@ -71,7 +75,5 @@ namespace nsda.Model.dto.request
         public int Screenings { get; set; }
 
         public DateTime StartTime { get; set; }
-
-        public DateTime EndTime { get; set; }
     }
 }
