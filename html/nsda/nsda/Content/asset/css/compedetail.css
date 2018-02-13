@@ -1,0 +1,118 @@
+﻿.compedetail{
+    text-align:center;
+    margin-top:40px;
+    margin-bottom:90px;
+}
+.compedetail h4,.compedetail h5{
+    font-size:18px;
+    color:#000;
+    font-weight:600;
+    line-height:1.8;
+    font-family:"微软雅黑";
+}
+.compedetail .detailcon{
+    margin-top:30px;
+    padding:30px;
+    border-top:1px solid #E8E8E8;
+}
+.compedetail .detailcon p{
+    text-align:left;
+    margin-bottom:40px;
+    font-size:14px;
+    color:#666666;
+    line-height:1.8;
+    font-family:"微软雅黑";
+}
+.compedetail .compinfo{
+    padding:0 30px;
+}
+.compedetail .row{
+    margin-bottom:30px;
+}
+.compedetail .row img{
+    display:inline-block;
+    float:left;
+    width:38px;
+    height:42px;
+    margin-right:10px;
+}
+.compedetail .row .comp{
+    float:left;
+    text-align:left;
+    line-height:1.8;
+    max-width:300px;
+}
+.condititle{
+    margin-top:50px;
+    min-height:36px;
+}
+.condititle img{
+    display:inline-block;
+    float:left;
+    margin-right:10px;
+}
+.condititle h3{
+    float:left;
+    line-height:36px;
+}
+.groups{
+    margin-top:50px;
+}
+.groups .group{
+    border:3px solid #B4BDC2;
+    text-align:left;
+    padding:10px 16px;
+    max-width:330px;
+    margin-right:30px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    margin-bottom:30px;
+}
+.groups .group h3{
+    font-size:18px;
+    color:#666;
+    line-height:2;
+    font-weight:600;
+}
+.groups .group .ask{
+    margin-top:10px;
+}
+.groups .group .ask h5{
+    float:left;
+    line-height:1.8;
+}
+.groups .group .ask p{
+    font-size:14px;
+    line-height:2.4;
+}
+.imme{
+    display:inline-block;
+    width:270px;
+    height:56px;
+    background:#4E5D66;
+    color:white;
+    font-size:18px;
+    text-align:center;
+    line-height:56px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    cursor:pointer;
+}
+.imme:hover{
+    color:white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -281,9 +281,9 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "锦标赛";
             return View();
         }
-        public ActionResult playersigndetail()
+        public ActionResult compedetail()
         {
-            ViewBag.Message = "比赛报名";
+            ViewBag.Message = "比赛详情";
             return View();
         }
 
@@ -300,6 +300,11 @@ namespace WebApplication2.Controllers
         public ActionResult addtmpcompe()
         {
             ViewBag.Message = "添加临时参赛";
+            return View();
+        }
+        public ActionResult playercomsignup()
+        {
+            ViewBag.Message = "比赛报名";
             return View();
         }
     }

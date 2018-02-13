@@ -218,6 +218,7 @@
     <Content Include="Content\asset\css\coachboundplayer.css" />
     <Content Include="Content\asset\css\coachinformation.css" />
     <Content Include="Content\asset\css\coachregform.css" />
+    <Content Include="Content\asset\css\compedetail.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
     <Content Include="Content\asset\css\eventmanagecenter.css" />
@@ -248,6 +249,7 @@
     <Content Include="Content\asset\css\playerboundcoach.css" />
     <Content Include="Content\asset\css\playercenter.css" />
     <Content Include="Content\asset\css\index.css" />
+    <Content Include="Content\asset\css\playercomsignup.css" />
     <Content Include="Content\asset\css\playerintegral.css" />
     <Content Include="Content\asset\css\playerscorelists.css" />
     <Content Include="Content\asset\css\playersource.css" />
@@ -268,7 +270,9 @@
     <Content Include="Content\asset\img\chat-user-2.svg" />
     <Content Include="Content\asset\img\city-sunny-people-street-1.png" />
     <Content Include="Content\asset\img\coach.png" />
+    <Content Include="Content\asset\img\comp_03.png" />
     <Content Include="Content\asset\img\course.png" />
+    <Content Include="Content\asset\img\detail_09.png" />
     <Content Include="Content\asset\img\en-icon.png" />
     <Content Include="Content\asset\img\icon_03.png" />
     <Content Include="Content\asset\img\icon_06.png" />
@@ -330,6 +334,11 @@
     <None Include="Content\asset\js\_references.js" />
     <Content Include="Content\asset\layer\css\layer.css" />
     <Content Include="Content\asset\layer\css\layer.ext.css" />
+    <Content Include="Content\asset\img\detail_03.png" />
+    <Content Include="Content\asset\img\detail_06.png" />
+    <Content Include="Content\asset\img\detail_15.png" />
+    <Content Include="Content\asset\img\detail_16.png" />
+    <Content Include="Content\asset\img\detail_19.png" />
     <Content Include="Content\asset\layer\img\icon.png" />
     <Content Include="Content\asset\layer\img\loading.gif" />
     <Content Include="Content\asset\layer\js\layer.ext.js" />
@@ -405,6 +414,8 @@
     <Content Include="Views\Home\eventmanagecenter.cshtml" />
     <Content Include="Views\Home\addtmpplayer.cshtml" />
     <Content Include="Views\Home\addtmpcompe.cshtml" />
+    <Content Include="Views\Home\compedetail.cshtml" />
+    <Content Include="Views\Home\playercomsignup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
