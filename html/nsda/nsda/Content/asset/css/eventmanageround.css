@@ -141,7 +141,7 @@
     color:#666699;
 }
 .newround .roundone ul li select.rset{
-    width:200px;
+    width:140px;
     height:30px;
     border:1px solid #E0E0E0;
     background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
@@ -151,10 +151,9 @@
     -moz-border-radius:5px;
     color:#666666;
     font-size:12px;
-    margin-right:20px;
 }
 .newround .roundone ul li input[type=text]{
-    width:160px;
+    width:140px;
     height:30px;
     padding-left:5px;
     border-radius:5px;
@@ -281,7 +280,7 @@
     color:#666699;
 }
 .openround .roundone ul li select.rset{
-    width:200px;
+    width:140px;
     height:30px;
     border:1px solid #E0E0E0;
     background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
@@ -291,10 +290,9 @@
     -moz-border-radius:5px;
     color:#666666;
     font-size:12px;
-    margin-right:20px;
 }
 .openround .roundone ul li input[type=text]{
-    width:160px;
+    width:140px;
     height:30px;
     padding-left:5px;
     border-radius:5px;
