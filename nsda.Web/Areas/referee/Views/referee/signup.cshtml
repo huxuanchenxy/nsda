@@ -112,8 +112,10 @@
                 success: function (json) {
                     layer.closeAll();
                     if (json.flag) {
-                        layer.msg('报名成功', { icon: 1, time: 1000 });
-                        location.href = "/referee/referee/list";
+                        layer.msg('报名成功 等待赛事管理员审核', { icon: 1, time: 1000 });
+                        setTimeout(function () {
+                            location.href = "/referee/referee/list"
+                        }, 2000);
                     }
                     else {
                         layer.msg(json.msg, { icon: 5, time: 1000 });

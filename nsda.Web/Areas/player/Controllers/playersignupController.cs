@@ -38,11 +38,13 @@ namespace nsda.Web.Areas.player.Controllers
             return View();
         }
 
-        //签到页面
-        public ActionResult signview(int eventId)
+        //报名详情页面
+        public ActionResult signup(int eventId)
         {
-            ViewBag.UserContext = UserContext.WebUserContext;
-            var detail = _eventSignService.GetSign(eventId, UserContext.WebUserContext.Id,EventSignTypeEm.选手);
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            ViewBag.EventGroup = _playerSignUpService.EventGroup(eventId, userContext.Id);
+            var detail = _eventService.Detail(eventId);
             return View(detail);
         }
 
@@ -63,16 +65,31 @@ namespace nsda.Web.Areas.player.Controllers
             ViewBag.UserContext = UserContext.WebUserContext;
             return View();
         }
-
-        //赛事详情页
-        public ActionResult eventdetail()
-        {
-            ViewBag.UserContext = UserContext.WebUserContext;
-            return View();
-        }
         #endregion
 
         #region ajax
+        //校验选手是否能报名
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult validateplayer(int eventId)
+        {
+            var userContext = UserContext.WebUserContext;
+            if (userContext.MemberStatus == (int)MemberStatusEm.已认证)
+            {
+                var data = _playerSignUpService.EventGroup(eventId, userContext.Id);
+                if (data != null && data.Count > 0)
+                {
+                    return Result(true, string.Empty, string.Empty);
+                }
+                else {
+                    return Result(false, string.Empty, string.Empty);
+                }
+            }
+            else {
+                return Result(false,"您还没有经过认证，无法报名请去个人中心进行认证", string.Empty);
+            }
+        }
+
         //绑定临时账号
         [HttpPost]
         [AjaxOnly]

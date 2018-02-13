@@ -159,6 +159,7 @@
     <Compile Include="Controllers\callbackController.cs" />
     <Compile Include="Controllers\commondataController.cs" />
     <Compile Include="Controllers\errorController.cs" />
+    <Compile Include="Controllers\eventsController.cs" />
     <Compile Include="Controllers\homeController.cs" />
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Controllers\registerController.cs" />
@@ -411,6 +412,7 @@
     <Content Include="asset\css\coachboundplayer.css" />
     <Content Include="asset\css\coachinformation.css" />
     <Content Include="asset\css\coachregform.css" />
+    <Content Include="asset\css\compedetail.css" />
     <Content Include="asset\css\event.css" />
     <Content Include="asset\css\eventmanage.css" />
     <Content Include="asset\css\eventmanagecenter.css" />
@@ -444,6 +446,7 @@
     <Content Include="asset\css\player.css" />
     <Content Include="asset\css\playerboundcoach.css" />
     <Content Include="asset\css\playercenter.css" />
+    <Content Include="asset\css\playercomsignup.css" />
     <Content Include="asset\css\playerintegral.css" />
     <Content Include="asset\css\playerpartin.css" />
     <Content Include="asset\css\playerpersonal.css" />
@@ -466,8 +469,15 @@
     <Content Include="asset\img\checked.svg" />
     <Content Include="asset\img\city-sunny-people-street-1.png" />
     <Content Include="asset\img\coach.png" />
+    <Content Include="asset\img\comp_03.png" />
     <Content Include="asset\img\course.png" />
     <Content Include="asset\img\default.png" />
+    <Content Include="asset\img\detail_03.png" />
+    <Content Include="asset\img\detail_06.png" />
+    <Content Include="asset\img\detail_09.png" />
+    <Content Include="asset\img\detail_15.png" />
+    <Content Include="asset\img\detail_16.png" />
+    <Content Include="asset\img\detail_19.png" />
     <Content Include="asset\img\en-icon.png" />
     <Content Include="asset\img\icon_03.png" />
     <Content Include="asset\img\icon_06.png" />
@@ -604,6 +614,7 @@
     <Content Include="Views\login\eventmanage.cshtml" />
     <Content Include="Views\login\findpwd.cshtml" />
     <Content Include="Views\login\findpwdcert.cshtml" />
+    <Content Include="Views\events\detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -758,7 +769,7 @@
     <Content Include="Areas\player\Views\playersignup\bindtemp.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\player\Views\playersignup\signview.cshtml" />
+    <Content Include="Areas\player\Views\playersignup\signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\coach\Views\coach\bindplayer.cshtml" />

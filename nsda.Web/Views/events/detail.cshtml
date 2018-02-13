@@ -1,0 +1,200 @@
+﻿@using nsda.Utilities
+@model  nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "赛事详情";
+    var eventDate = ViewBag.EventDate as List<string>;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/compedetail.css?version=@Constant.Version">
+}
+<div class="ad">
+
+</div>
+<div class="rode">
+
+</div>
+
+<div class="container compedetail">
+    <input type="hidden" id="memberType" value="@ViewBag.MemberType" />
+    <input type="hidden" id="login" value="@ViewBag.LoginFlag"/>
+    <input type="hidden" id="eventId" value="@Model.Id"/>
+    <h4>@Model.Name</h4>
+    <h5>@Model.EnglishName</h5>
+
+    <div class="detailcon">
+      @Html.Raw(Model.Remark)
+    </div>
+    <div class="compinfo">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <img src="/asset/img/detail_06.png" alt="Alternate Text" />
+                <div class="comp">
+                    <h3>比赛日期</h3>
+                    <p>@foreach (var item in eventDate)
+                    {
+                        @Html.Raw(item+";")
+                    }</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <img src="/asset/img/detail_03.png" alt="Alternate Text" />
+                <div class="comp">
+                    <h3>报名截止日期</h3>
+                    <p>@Model.EndSignDate.ToString("yyyy-MM-dd")</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <img src="/asset/img/detail_09.png" alt="Alternate Text" />
+                <div class="comp">
+                    <h3>退费截止日期</h3>
+                    <p>@Model.EndRefundDate.ToString("yyyy-MM-dd")</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <img src="/asset/img/detail_16.png" alt="Alternate Text" />
+                <div class="comp">
+                    <h3>报名队伍上限</h3>
+                    <p>@Model.Maxnumber 队</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <img src="/asset/img/detail_15.png" alt="Alternate Text" />
+                <div class="comp">
+                    <h3>赛场地址</h3>
+                    <p>@Model.Address</p>
+                </div>
+            </div>
+        </div>
+        <div class="condititle">
+            <img src="/asset/img/detail_19.png" />
+            <h3>组别条件介绍</h3>
+        </div>
+        <div class="row groups">
+            @foreach (var item in Model.EventGroup)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 group">
+                    <h3>@item.Name</h3>
+                    <div class="ask"><h5>年级要求：</h5><p>@item.MinGradeStr-@item.MaxGradeStr </p></div>
+                    <div class="ask"><h5>累计比赛次数要求：</h5><p>
+                        @if (item.MinTimes == null)
+                        {
+                          @Html.Raw("不限")
+                        }
+                        else
+                        {
+                            @item.MinTimes
+                        }
+                        -
+                        @if (item.MaxTimes == null)
+                        {
+                            @Html.Raw("不限")
+                        }
+                        else
+                        {
+                            @item.MaxTimes
+                        }
+                        次
+                        </p>
+                    </div>
+                </div>
+            }
+           
+        </div>
+        <a href="javascript:;" class="imme" id="signup">立即报名</a>
+    </div>
+    <div class="notfit" id="warn">
+        <p>
+            对不起！<br /> 您不符合此赛事的报名要求。
+        </p>
+        <a href="javascript:;" class="exit" id="exit">关闭窗口</a>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+            $("#exit").click(function(){
+                $("#warn").hide();
+            });
+            $("#signup").click(function () {
+                var flag = $("#login").val();
+                var eventId = $("#eventId").val();
+                if (flag) {
+                    //未登录
+                    location.href = "/login/login?redirecturl=/events/detail/" + eventId;
+                } else {
+                    //已登陆
+                    var memberType = $("#memberType").val();
+                    if (memberType == 1)//选手
+                    {
+                        //检测会员是否可以报名
+                        $.ajax({
+                            url: "/player/playersignup/validateplayer",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                eventId: eventId
+                            },
+                            beforeSend: function () {
+                                layer.msg('报名中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                            },
+                            success: function (json) {
+                                layer.closeAll();
+                                if (json.flag) {
+                                    location.href = "/player/playersignup/signup";
+                                }
+                                else {
+                                    if (json.msg != null && json.msg != "") {
+                                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                                    }
+                                    else {
+                                        $("#warn").show();
+                                    }
+                                }
+                            }
+                          , error: function () {
+                              layer.closeAll();
+                          }
+                        });
+                    } else if (memberType == 2) {
+                        location.href = "/coach/coach/index";
+                    }
+                    else if (memberType == 3) {
+                        $.ajax({
+                            url: "/referee/referee/apply",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                eventId: eventId
+                            },
+                            beforeSend: function () {
+                                layer.msg('报名中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                            },
+                            success: function (json) {
+                                layer.closeAll();
+                                if (json.flag) {
+                                    layer.msg('报名成功 等待赛事管理员审核', { icon: 1, time: 1000 });
+                                    setTimeout(function () {
+                                        location.href = "/referee/referee/list"
+                                    }, 2000);
+                                }
+                                else {
+                                    layer.msg(json.msg, { icon: 5, time: 1000 });
+                                }
+                            }
+                            ,error: function () {
+                                layer.closeAll();
+                            }
+                        });
+                    } else {
+                        location.href = "/eventmanage/eventmanage/index";
+                    }
+                }
+            });
+    </script>
+}

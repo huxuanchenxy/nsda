@@ -333,5 +333,21 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
+        /// <summary>
+        /// 裁判数据统计
+        /// </summary>
+        public RefereeSignDataResponse RefereeSignData(int eventId)
+        {
+            RefereeSignDataResponse response = new RefereeSignDataResponse();
+            try
+            {
+                 //数据统计
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventSignService.RefereeSignData", ex);
+            }
+            return response;
+        }
     }
 }

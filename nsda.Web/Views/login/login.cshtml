@@ -19,6 +19,7 @@
 
 <!--会员注册-->
 <div class="reg-con-big reg-content container-fluid">
+    <input type="hidden" value="@Request["redirecturl"]" id="redirecturl" />
     <div class="reg-left"></div>
     <div class="reg-right"></div>
     <div class="circle"></div>
@@ -74,7 +75,8 @@
                 data: {
                     Account: $playeremail.val(),
                     Pwd: $playerpwd.val(),
-                    MemberType: 1
+                    MemberType: 1,
+                    RedirectUrl: $("#redirecturl").val()
                 },
                 beforeSend: function () {
                     layer.msg('登录中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });

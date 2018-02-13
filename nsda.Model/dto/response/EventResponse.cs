@@ -16,7 +16,7 @@ namespace nsda.Model.dto.response
         public List<EventGroupResponse> EventGroup { get; set; }
         public int SignUpCount { get; set; }
         public int Id { get; set; }
-
+        public string EnglishName { get; set; }
         /// <summary>
         /// 赛事编码
         /// </summary>
@@ -112,10 +112,15 @@ namespace nsda.Model.dto.response
         public int? MinGrade { get; set; }
 
         /// <summary>
+        /// 最小年级
+        /// </summary>
+        public string MinGradeStr { get; set; }
+
+        /// <summary>
         /// 最大年级
         /// </summary>
         public int? MaxGrade { get; set; }
-
+        public string MaxGradeStr { get; set; }
         /// <summary>
         /// 最小比赛次数
         /// </summary>

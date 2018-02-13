@@ -52,7 +52,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
             return View();
         }
-
+        //赛事管理员资料页
         public ActionResult info()
         {
             var userContext = UserContext.WebUserContext;
@@ -60,7 +60,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var data = _memberService.MemberEventDetail(userContext.Id);
             return View(data);
         }
-
         //第一步
         public ActionResult start()
         {
@@ -77,14 +76,14 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventTypeName = eventTypeName;
             return View();
         }
-
+        //二维码
         public ActionResult qrcode(int id)
         {
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
             return View();
         }
-
+        //赛事组别详情
         public ActionResult eventgroup(int eventGroupId)
         {
             var userContext = UserContext.WebUserContext;
@@ -92,7 +91,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.EventGroupDetail(eventGroupId);
             return View(detail);
         }
-
+        //赛事详情
         public ActionResult detail(int id)
         {
             var userContext = UserContext.WebUserContext;
@@ -100,15 +99,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             return View(detail);
         }
-
-        public ActionResult eventresult(int id)
-        {
-            var userContext = UserContext.WebUserContext;
-            ViewBag.UserContext = userContext;
-            var detail = _eventService.Detail(id);
-            return View(detail);
-        }
-
         //选手报名页
         public ActionResult playersignup(int id)
         {
@@ -118,7 +108,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroup = _eventService.SelectEventGroup(id,userContext.Id);
             return View(detail);
         }
-
         //裁判报名页
         public ActionResult refereesignup(int id)
         {
@@ -134,36 +123,39 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventId = id;
             return View();
         }
-
+        //教室管理
         public ActionResult room(int id)
         {
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, userContext.Id);
+            bool isVisiable = false;
+            int roomCount= _eventRoomService.RoomCount(id,out isVisiable);
+            ViewBag.RoomCount = roomCount;
+            ViewBag.IsVisiable = isVisiable;
             return View(detail);
         }
-
+        //添加教室
         public ActionResult addroom(int id)
         {
             ViewBag.EventId = id;
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             return View();
         }
-
+        //更新教室
         public ActionResult updateroom(int id)
         {
             var detail = _eventRoomService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             return View(detail);
         }
-
+        //教室设定特殊选手
         public ActionResult addroomplayer(int id)
         {
             var detail = _eventRoomService.Detail(id);
             return View(detail);
         }
-
         //选手签到页
         public ActionResult playersign(int eventId, int eventGroupId=0)
         {
@@ -176,7 +168,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0?eventgroup.FirstOrDefault().Id: eventGroupId;
             return View(detail);
         }
-
         //裁判签到页
         public ActionResult refereesign(int id)
         {
@@ -185,9 +176,10 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             ViewBag.EventDate = _eventService.EventDate(id);
+            ViewBag.Data = null;
             return View(detail);
         }
-
+        //循环赛设置
         public ActionResult cyclingsetting(int id)
         {
             var userContext = UserContext.WebUserContext;
@@ -197,7 +189,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(id);
             return View(detail);
         }
-
+        //淘汰赛设置
         public ActionResult knockoutsetting(int id)
         {
             var userContext = UserContext.WebUserContext;
@@ -207,7 +199,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(id);
             return View(detail);
         }
-
+        //添加临时报名选手
         public ActionResult addplayer(int eventId, int eventGroupId)
         {
             return View();

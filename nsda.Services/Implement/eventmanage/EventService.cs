@@ -539,7 +539,8 @@ namespace nsda.Services.Implement.eventmanage
                         ProvinceId = tevent.provinceId,
                         Remark = tevent.remark,
                         Signfee = tevent.signfee,
-                        StartEventDate = tevent.starteventdate
+                        StartEventDate = tevent.starteventdate,
+                        EnglishName=tevent.englishname
                     };
                     var eventgroup = _dbContext.Select<t_event_group>(c => c.eventId == id).ToList();
                     if (eventgroup != null && eventgroup.Count > 0)
@@ -555,7 +556,9 @@ namespace nsda.Services.Implement.eventmanage
                                 MinGrade = item.mingrade,
                                 MinTimes = item.mintimes,
                                 Name = item.name,
-                                TeamNumber = item.teamnumber
+                                TeamNumber = item.teamnumber,
+                                MinGradeStr=item.mingrade==null?"不限": EnumExtensions.GetDescription((GradeEm)Enum.Parse(typeof(GradeEm), item.mingrade.ToString())),
+                                MaxGradeStr = item.maxgrade == null ? "不限" : EnumExtensions.GetDescription((GradeEm)Enum.Parse(typeof(GradeEm), item.maxgrade.ToString()))
                             });
                         }
                     }
@@ -868,6 +871,26 @@ namespace nsda.Services.Implement.eventmanage
             catch (Exception ex)
             {
                 LogUtils.LogError("EventService.EventDate", ex);
+            }
+            return date;
+        }
+        public List<string> EventYYYYDate(int eventId)
+        {
+            List<string> date = new List<string>();
+            try
+            {
+                var list = _dbContext.Select<t_event_matchdate>(c => c.eventId == eventId).ToList();
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        date.Add(item.eventMatchDate.ToString("yyyy-MM-dd"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.EventYYYYDate", ex);
             }
             return date;
         }

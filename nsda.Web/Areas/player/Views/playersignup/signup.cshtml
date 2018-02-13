@@ -1,0 +1,97 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    ViewBag.Title = "赛事报名";
+    Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
+    var data = ViewBag.EventGroup as List<EventGroupResponse>;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/playercomsignup.css?version=@Constant.Version">
+}
+<div class="compe-con">
+    <input type="hidden" value="@Model.Id" id="eventId"/>
+    <div class="competitle">
+        <img src="/asset/img/comp_03.png" />
+        <div class="title">
+            <h4>@Model.EnglishName</h4>
+            <h3>@Model.Name</h3>
+        </div>
+    </div>
+    <div class="comcon">
+        <p class="tourcode">Tournament Code: @Model.Code</p>
+        <div class="group">
+            @for (int i = 0; i < data.Count; i++)
+            {       
+                <label class="radio-inline sexy">
+                @if (i == 0)
+                {
+                    <input type="radio" name="EventGroup" value="@data[i].Id" checked>@data[i].Name
+                }
+                else
+                {
+                    <input type="radio" name="EventGroup" value="@data[i].Id"> @data[i].Name
+                }
+               </label>
+            }
+        </div>
+        <div class="set">
+            <h4>设置组队邀请</h4>
+            <input type="text" placeholder="输入NSDA会员编号/会员姓名" />
+            <a href="javascript:;" class="search">搜索</a>
+        </div>
+        <div class="comlist">
+            <h4>组队队员信息：</h4>
+            <div class="memb">
+                <p>N2365942</p>
+                <p class="name">刘诗诗</p>
+                <p>9年级</p>
+                <p>上海外国语大学附属中学</p>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <a href="javascript:;" class="sendinvi" id="apply">发送组队邀请</a>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#collapseOne").addClass("in");
+        });
+
+
+        $("#apply").click(function () {
+            $.ajax({
+                url: "/player/playersignup/insert",
+                type: "post",
+                dataType: "json",
+                data: {
+                    ToMemberId: $("#ToMemberId").val(),
+                    EventId: $("#eventId").val(),
+                    EventGroupId: $('input[name=EventGroup]:checked').val()
+                },
+                beforeSend: function () {
+                    layer.msg('报名中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('邀请成功，等待队友确认', { icon: 1, time: 1000 });
+                        setTimeout(function () {
+                            location.href = "/player/playersignup/list"
+                        }, 2000);
+                    }
+                    else {
+                       layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                ,error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+    </script>
+}

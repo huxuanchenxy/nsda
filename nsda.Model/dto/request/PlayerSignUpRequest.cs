@@ -11,10 +11,6 @@ namespace nsda.Model.dto.request
     public class PlayerSignUpRequest
     {
         /// <summary>
-        /// 赛事类型
-        /// </summary>
-        public EventTypeEm EventType{ get; set; }
-        /// <summary>
         /// 邀请者
         /// </summary>
         public int FromMemberId { get; set; }
@@ -32,10 +28,6 @@ namespace nsda.Model.dto.request
         /// 赛事组别
         /// </summary>
         public int EventGroupId { get; set; }
-
-        public decimal SignFee { get; set; }
-
-        public string GroupNum { get; set; }
     }
 
     public class EventPlayerSignUpQueryRequest : PageQuery

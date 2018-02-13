@@ -265,11 +265,30 @@ namespace nsda.Services.Implement.eventmanage
             List<EventRoomResponse> list = new List<EventRoomResponse>();
             try
             {
-                var sql=$@"select a.*,b.completename MemberName,c.name EventGroupName 
+                var sql = string.Empty;
+                if (request.RoomStatus==RoomStatusEm.停用)//需要计算闲置
+                {
+                    sql = $@"select a.*,b.completename MemberName,c.name EventGroupName 
                             from t_event_room a
                             left join t_member_player b on a.memberId=b.memberId
                             left join t_event_group c on a.eventgroupId=c.id
                             where a.eventId=@EventId and a.isdelete=0  order by a.createtime desc ";
+                }
+                else
+                {
+                    var t_event = _dbContext.Get<t_event>(request.EventId);
+                    if (t_event.eventStatus == EventStatusEm.比赛中)
+                    {
+                        //需要查询房间的实时状态
+                    }
+                    else {
+                        sql = $@"select a.*,b.completename MemberName,c.name EventGroupName 
+                            from t_event_room a
+                            left join t_member_player b on a.memberId=b.memberId
+                            left join t_event_group c on a.eventgroupId=c.id
+                            where a.eventId=@EventId and a.isdelete=0  order by a.createtime desc ";
+                    }
+                }
                 int totalCount = 0;
                 list = _dbContext.Page<EventRoomResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 request.Records = totalCount;
@@ -303,6 +322,22 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventRoomService.Detail", ex);
             }
             return response;
+        }
+
+        //预估房间数量
+        public int RoomCount(int eventId, out bool isVisiable)
+        {
+            int roomCount = 0;
+            isVisiable = false;
+            try
+            {
+                //需要计算
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventRoomService.RoomCount", ex);
+            }
+            return roomCount;
         }
     }
 }

@@ -25,51 +25,41 @@
 .event-lists .class .data .data-con{
     position:relative;
 }
-.event-lists .class .data .data-con ul.hadnumber,.event-lists .class .data .data-con ul.advisenumber{
-    width:25%;
-}
-.event-lists .class .data .data-con ul.statistics{
-    width:360px;
-    margin-left:30px;
-    
-}
-.event-lists .class .data .data-con ul.statistics li a{
-    color:#666;
-}
-.event-lists .class .data .data-con ul{
-    min-width:200px;
-    min-height:60px;
+.number{
+    width:600px;
     float:left;
-    margin-left:10px;
-    margin-bottom:20px;
+    margin-bottom:10px;
 }
-.event-lists .class .data .data-con ul.hadnumber li{
-    width:100%;
-}
-.event-lists .class .data .data-con ul.hadnumber span{
+.number span,.number p{
     float:left;
-    min-width:170px;
-    text-align:right;
-    color:#666;
 }
-.event-lists .class .data .data-con ul.hadnumber p{
+.number .hadnumber,.number .advisenumber{
     float:left;
-    text-align:left;
-    color:#666;
+    width:260px;
+    margin-right:20px;
 }
-.event-lists .class .data .data-con ul.advisenumber li{
-    width:100%;
-    color:#666;
-}
-.event-lists .class .data .data-con ul.advisenumber span{
-    float:left;
-    min-width:170px;
+.number .hadnumber span,.number .advisenumber span{
+    width:170px;
     text-align:right;
 }
-.event-lists .class .data .data-con ul.advisenumber p{
-    text-align:left;
+.number .advisenumber p{
     color:#ff6666;
+    text-align:left;
 }
+
+.statistics{
+    float:left;
+    width:400px;
+}
+.statistics li{
+    width:100%;
+    float:left;
+}
+.data .data-con .statistics li a{
+    float:left;
+    color:#666;
+}
+
 .searchplayer{
     position:relative;
 }

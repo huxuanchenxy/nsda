@@ -44,7 +44,10 @@
                     <p>数据统计：</p>
                 </div>
                 <div class="data-con">
-                    <a href="javascript:;">目前总Room数量为：<span id="roomCount">5</span></a>
+                    <a href="javascript:;">目前总Room数量为：<span id="roomCount">0</span></a>
+                    <a href="javascript:;">建议房间数为：<p>@if (ViewBag.IsVisiable) {
+                        @ViewBag.RoomCount
+                    } else { @Html.Raw("请在比赛规则设置完成后，才能显示。")}</p></a>
                 </div>
             </div>
             <span class="addroom" id="addroom">+ 添加Room</span>
@@ -71,48 +74,6 @@
                 </tr>
             </thead>
             <tbody id="data">
-                @*<tr>
-         <td><span class="mark"><input type="checkbox" class="chkroom" data-id=""/></span>R1899582</td>
-         <td>A401</td>
-         <td>使用中</td>
-         <td>
-             <select class="tbselect">
-                 <option value="1">停用</option>
-                 <option value="2">仅 新手组 使用（组别）</option>
-                 <option value="3">仅 公开组 使用（组别）</option>
-             </select>
-         </td>
-         <td class="modify"><a href="javascript:;" class="modifyroom">修改名称</a></td>
-         <td><p class="playername">tylergypsy</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
-     </tr>
-    <tr>
-         <td><span class="mark"><input type="checkbox" /></span>R189345</td>
-         <td>A402</td>
-         <td>停用</td>
-         <td>
-             <select>
-                 <option value="1">停用</option>
-                 <option value="2">仅 新手组 使用（组别）</option>
-                 <option value="3">仅 公开组 使用（组别）</option>
-             </select>
-         </td>
-         <td class="modify"><a href="javascript:;" class="modifyroom">修改Room</a></td>
-         <td><p class="playername">范湉湉</p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
-     </tr>
-     <tr>
-         <td><span class="mark"><input type="checkbox" /></span>R1899582</td>
-         <td>A401</td>
-         <td>闲置</td>
-         <td>
-             <select>
-                 <option value="1">停用</option>
-                 <option value="2">仅 新手组 使用（组别）</option>
-                 <option value="3">仅 公开组 使用（组别）</option>
-             </select>
-         </td>
-         <td class="modify"><a href="javascript:;" class="modifyroom">修改Room</a></td>
-         <td><p class="playername"></p><a href="javascript:;" class="addassign">添加指定</a><a href="javascript:;" class="clearassign">清楚指定</a></td>
-     </tr>*@
             </tbody>
         </table>
     </div>
