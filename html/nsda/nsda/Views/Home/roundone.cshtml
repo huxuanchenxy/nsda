@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "第一轮";
+}
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/doublecheck.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/writegrades.css?1.0.0" rel="stylesheet" />
+<link href="~/Content/asset/css/roundone.css?1.0.0" rel="stylesheet" />
+
+@Html.Partial("_manager")
+<div class="event-lists ">
+    <div class="list-top">
+        <a href="/Home/doublecheck" class="active list">新手组</a>
+        <a href="/Home/doublecheck" class="list">公开组</a>
+    </div>
+    <div class="event-con">
+        <div>
+            <img src="~/Content/asset/img/vs_03.png" />
+            <h4>第一轮</h4>
+        </div>
+        <div>
+            
+        </div>
+        
+    </div>
+</div>
+
+
+

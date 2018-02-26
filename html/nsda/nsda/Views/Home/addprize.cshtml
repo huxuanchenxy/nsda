@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "";
+    ViewBag.Title = "添加自定义奖项";
+}
+<link href="@Url.Content("~/Content/asset/css/prize.css?1.1.5")" rel="stylesheet" type="text/css" />
+<div class="modiroom add">
+    <h4>添加自定义奖项</h4>
+    <span></span>
+    <div class="form-group roomname">
+        <label for="roomname"></label>
+        <input type="text" id="roomname" value="" placeholder="输入Room名称" />
+    </div>
+    <div class="form-group roomclass">
+        <label for="roomclass"></label>
+        <select id="roomclass">
+            <option value="1">选择 奖项类型</option>
+            <option value="2">仅 新手组 使用（组别）</option>
+            <option value="3">仅 公开组 使用（组别）</option>
+        </select>
+    </div>
+    <div class="form-group inputteam">
+        <textarea placeholder="输入队伍编号"></textarea>
+    </div>
+    <button>确认添加自定义奖项</button>
+</div>
+

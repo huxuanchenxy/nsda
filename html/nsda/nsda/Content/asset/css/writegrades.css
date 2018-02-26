@@ -1,46 +1,135 @@
-﻿.info-lists .panel:nth-child(2) .panel-body ul a:last-child li{
-    background:#F0F0F0;
-    color:#5DC1ED;
-}
-.judge-con{
-    width: 73%;
-    float: left;
-    margin-top: 0;
-    margin-left: 20px;
-}
-.compe-con{
-    margin-top:70px;
-    width:78%;
-    float:left;
-}
-.competitle img{
+﻿button.pre{
     display:inline-block;
+    width:128px;
+    height:30px;
+    text-align:center;
+    border:none;
+    color:#fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding:5px 15px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    margin-left:10px;
+}
+button.pre i{
     float:left;
-    margin-right:10px;
-    
+    font-size:22px;
+    line-height:1;
 }
-.competitle .title h4{
-    font-size:18px;
+.blue{
+    background:#47BBED;
+}
+.orange{
+    background:#F3924B;
+}
+.green{
+    background:#66CC66;
+}
+.posright{
+    float:right;
+}
+.poscen{
+    margin-left:290PX;
+}
+.event-con div{
+    min-height:40px;
+    margin-bottom:20px;
+}
+.event-con div h4{
+    float:left;
+}
+.set{
+    margin-top:20px;
+    margin-bottom:40px;
+    position:relative;
+}
+.set h4{
+    font-size:14px;
+    font-weight:600;
     color:black;
+    line-height:2;
 }
-.competitle .title h3{
-    font-size:18px;
-    color:#8E8E8E;
+.set input{
+    width:200px;
+    height:36px;
+    border:1px solid #C0C5C9;
+    font-size:14px;
+    color:#ccc;
+    padding-left:5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.set a.search{
+    display:inline-block;
+    padding:5px 20px;
+    background:#1A86EA;
+    color:white;
+    font-size:16px;
+    margin-left:5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+button.check{
+    display:inline-block;
+    width:230px;
+    height:36px;
+    text-align:center;
+    line-height:1;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding:5px 15px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+button.check i{
+    float:left;
+    font-size:20px;
+    margin-right:5px;
+}
+button.check p{
     line-height:1.6;
 }
-.comcon{
-    padding:10px 40px;
+.lightgreen{
+    border:1px solid #B8D689;
+    color:#666600;
+    background:linear-gradient(to bottom,#CEEAA0,#C1E48B);
+
 }
-.comcon p{
-    font-size:12px;
-    color:#999;
+.lightorange{
+    border:1px solid #E7DAAD;
+    background:linear-gradient(to bottom,#FFF6D9,#FFEFC2);
+    color:#996633;
+    margin-left:5px;
 }
-.constep{
-    padding-top:50px;
+#sel{
+    width:240px;
+    margin:0;
+    border:1px solid #1C89ED;
+    padding:10px;
+    position:absolute;
+    
+    left:0;
+    z-index:10;
 }
-.constep h3{
-    font-size:18px;
+select#sel::-webkit-scrollbar{
+    width:6px;
+    height:6px;
 }
+select#sel::-webkit-scrollbar-track {
+      background-color: #ddd;
+}
+select#sel::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+}
+
 .constep a{
     margin-top:70px;
     display:inline-block;
@@ -167,8 +256,9 @@
     font-size:20px;
 }
 .paper table tbody tr{
-
+    border:1px solid #B2B8BD;
 }
+
 .paper table tbody tr td.rolebutton{
     cursor:pointer;
     background:linear-gradient(to bottom,#F4F6F8,#E9EDF0);
@@ -178,6 +268,14 @@
 }
 .paper table tbody tr td.rolebutton.click{
     background:#ff6666;
+}
+.paper div{
+    min-height:20px;
+    margin-bottom:10px;
+}
+.paper table{
+    margin-top:20px;
+    margin-bottom:20px;
 }
 .paper label{
     width:50%;
@@ -196,6 +294,7 @@
     background:#4E5D66;
     color:white;
     font-size:18px;
+    border:none;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -204,6 +303,19 @@
     transform:translateX(-50%);
     bottom:10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

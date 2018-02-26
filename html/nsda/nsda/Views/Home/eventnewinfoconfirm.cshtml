@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "比赛信息确认";
+}
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventnewinfoconfirm.css?1.1.0")" rel="stylesheet" type="text/css" />
+@Html.Partial("_manager")
+<div class="event-lists ">
+    <div class="list-top">
+        <a href="/Home/eventnewinfoconfirm" class="active list">新手组</a>
+        <a href="/Home/eventopeninfoconfirm" class="list">公开组</a>
+    </div>
+    <div class="event-con">
+        <div class="rangeconfirm">
+            <div><h3>参赛队伍签到人数：</h3><p>30</p></div>
+            <div><h3>裁判打分区间：</h3><p>20</p><p class="to">至</p><p>30</p></div>
+            <div><h3>是否允许裁判打0.5分： </h3><p>允许</p></div>
+        </div>
+        <div class="listconfirm">
+            <div><h3>循环赛场数为：</h3><p>4</p><p>分 Flight A 和 Flight B</p></div>
+            <div><h3>循环赛第一轮：</h3><p>随机配对 Perset round</p></div>
+            <div><h3>循环赛第三轮：</h3><p>高低配对 High-Low Power Match</p></div>
+            <div><h3>循环赛第四轮：</h3><p>高低配对 High-Low Power Match</p></div>
+        </div>
+        <button class="alter">前往修改</button>
+        <button class="stargame">确认！开始比赛。</button><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>
+    </div>
+</div>

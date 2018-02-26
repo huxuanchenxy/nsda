@@ -231,7 +231,7 @@ namespace WebApplication2.Controllers
             return View();
         }
 
-        public ActionResult eventnewinfocomfirm()
+        public ActionResult eventnewinfoconfirm()
         {
             ViewBag.Message = "开始执行对垒";
             return View();
@@ -305,6 +305,71 @@ namespace WebApplication2.Controllers
         public ActionResult playercomsignup()
         {
             ViewBag.Message = "比赛报名";
+            return View();
+        }
+        public ActionResult judgetoursteptwo()
+        {
+            ViewBag.Message = "第二步";
+            return View();
+        }
+        public ActionResult judgetourstepthree()
+        {
+            ViewBag.Message = "第三步";
+            return View();
+        }
+        public ActionResult doublecheck()
+        {
+            ViewBag.Message = "核对评分单";
+            return View();
+        }
+        public ActionResult writegrades()
+        {
+            ViewBag.Message = "录入评分单";
+            return View();
+        }
+        public ActionResult oneround()
+        {
+            ViewBag.Message = "第一轮";
+            return View();
+        }
+        public ActionResult track()
+        {
+            ViewBag.Message = "查询";
+            return View();
+        }
+        public ActionResult resulttrack()
+        {
+            ViewBag.Message = "赛果查询";
+            return View();
+        }
+        public ActionResult winnerlist()
+        {
+            ViewBag.Message = "获奖名单";
+            return View();
+        }
+        public ActionResult prize()
+        {
+            ViewBag.Message = "奖项设置";
+            return View();
+        }
+        public ActionResult addprize()
+        {
+            ViewBag.Message = "添加自定义奖项";
+            return View();
+        }
+        public ActionResult octafinals()
+        {
+            ViewBag.Message = "Octafinals 评分单录入";
+            return View();
+        }
+        public ActionResult against()
+        {
+            ViewBag.Message = "执行对垒";
+            return View();
+        }
+        public ActionResult roundone()
+        {
+            ViewBag.Message = "第一轮";
             return View();
         }
     }

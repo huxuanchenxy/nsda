@@ -219,6 +219,7 @@
     <Content Include="Content\asset\css\coachinformation.css" />
     <Content Include="Content\asset\css\coachregform.css" />
     <Content Include="Content\asset\css\compedetail.css" />
+    <Content Include="Content\asset\css\doublecheck.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
     <Content Include="Content\asset\css\eventmanagecenter.css" />
@@ -228,7 +229,7 @@
     <Content Include="Content\asset\css\eventmanageroom.css" />
     <Content Include="Content\asset\css\eventmanageround.css" />
     <Content Include="Content\asset\css\eventmanageumpire.css" />
-    <Content Include="Content\asset\css\eventnewinfocomfirm.css" />
+    <Content Include="Content\asset\css\eventnewinfoconfirm.css" />
     <Content Include="Content\asset\css\eventopeninfocomfirm.css" />
     <Content Include="Content\asset\css\eventplayersignin.css" />
     <Content Include="Content\asset\css\eventstart.css" />
@@ -246,6 +247,7 @@
     <Content Include="Content\asset\css\judgeregform.css" />
     <Content Include="Content\asset\css\judgetour.css" />
     <Content Include="Content\asset\css\messagebox.css" />
+    <Content Include="Content\asset\css\octafinals.css" />
     <Content Include="Content\asset\css\playerboundcoach.css" />
     <Content Include="Content\asset\css\playercenter.css" />
     <Content Include="Content\asset\css\index.css" />
@@ -257,10 +259,16 @@
     <Content Include="Content\asset\css\playerpersonal.css" />
     <Content Include="Content\asset\css\player.css" />
     <Content Include="Content\asset\css\playerregform.css" />
+    <Content Include="Content\asset\css\prize.css" />
     <Content Include="Content\asset\css\registered.css" />
     <Content Include="Content\asset\css\playersign.css" />
+    <Content Include="Content\asset\css\resulttrack.css" />
+    <Content Include="Content\asset\css\roundone.css" />
     <Content Include="Content\asset\css\Site.css" />
     <Content Include="Content\asset\css\judgetourname.css" />
+    <Content Include="Content\asset\css\track.css" />
+    <Content Include="Content\asset\css\winnerlist.css" />
+    <Content Include="Content\asset\css\writegrades.css" />
     <Content Include="Content\asset\img\add_03.png" />
     <Content Include="Content\asset\img\Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg" />
     <Content Include="Content\asset\img\bg1.png" />
@@ -292,6 +300,8 @@
     <Content Include="Content\asset\img\password_03.png" />
     <Content Include="Content\asset\img\pass_03.png" />
     <Content Include="Content\asset\img\per-pic.png" />
+    <Content Include="Content\asset\img\prize_03.png" />
+    <Content Include="Content\asset\img\result_03.png" />
     <Content Include="Content\asset\img\Samuel Alito.jpg" />
     <Content Include="Content\asset\img\score_03.jpg" />
     <Content Include="Content\asset\img\scroll-bg.png" />
@@ -307,9 +317,11 @@
     <Content Include="Content\asset\img\Stephen Breyer.jpg" />
     <Content Include="Content\asset\img\teacher.png" />
     <Content Include="Content\asset\img\tour_03.png" />
+    <Content Include="Content\asset\img\track_03.png" />
     <Content Include="Content\asset\img\txt1.png" />
     <Content Include="Content\asset\img\checked.svg" />
     <Content Include="Content\asset\img\check.svg" />
+    <Content Include="Content\asset\img\vs_03.png" />
     <Content Include="Content\asset\js\block.js" />
     <Content Include="Content\asset\js\bootstrap.min.js" />
     <Content Include="Content\asset\js\change.js" />
@@ -341,6 +353,7 @@
     <Content Include="Content\asset\img\detail_19.png" />
     <Content Include="Content\asset\layer\img\icon.png" />
     <Content Include="Content\asset\layer\img\loading.gif" />
+    <Content Include="Content\asset\img\winner_03.png" />
     <Content Include="Content\asset\layer\js\layer.ext.js" />
     <Content Include="Content\asset\layer\js\layer.js" />
     <Content Include="favicon.ico" />
@@ -391,7 +404,7 @@
     <Content Include="Views\Home\addroom.cshtml" />
     <Content Include="Views\Home\eventmanageknockout.cshtml" />
     <Content Include="Views\Home\eventmanageround.cshtml" />
-    <Content Include="Views\Home\eventnewinfocomfirm.cshtml" />
+    <Content Include="Views\Home\eventnewinfoconfirm.cshtml" />
     <Content Include="Views\Home\addassign.cshtml" />
     <Content Include="Views\Home\eventnewplayersignin.cshtml" />
     <Content Include="Views\Home\eventopenplayersignin.cshtml" />
@@ -416,6 +429,18 @@
     <Content Include="Views\Home\addtmpcompe.cshtml" />
     <Content Include="Views\Home\compedetail.cshtml" />
     <Content Include="Views\Home\playercomsignup.cshtml" />
+    <Content Include="Views\Home\judgetoursteptwo.cshtml" />
+    <Content Include="Views\Home\judgetourstepthree.cshtml" />
+    <Content Include="Views\Home\doublecheck.cshtml" />
+    <Content Include="Views\Home\writegrades.cshtml" />
+    <Content Include="Views\Home\oneround.cshtml" />
+    <Content Include="Views\Home\track.cshtml" />
+    <Content Include="Views\Home\resulttrack.cshtml" />
+    <Content Include="Views\Home\winnerlist.cshtml" />
+    <Content Include="Views\Home\prize.cshtml" />
+    <Content Include="Views\Home\addprize.cshtml" />
+    <Content Include="Views\Home\octafinals.cshtml" />
+    <Content Include="Views\Home\roundone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "第一轮评分单确认";
+}
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/doublecheck.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/writegrades.css?1.0.0" rel="stylesheet" />
+@Html.Partial("_manager")
+<div class="event-lists ">
+    <div class="list-top">
+        <a href="/Home/doublecheck" class="active list">新手组</a>
+        <a href="/Home/doublecheck" class="list">公开组</a>
+    </div>
+    <div class="event-con">
+        <div>
+            <img src="~/Content/asset/img/vs_03.png" />
+            <h4>第一轮 评分单录入 </h4>
+            <button class="pre blue posright"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
+        </div>
+        <div>
+            <button class="check poscen lightgreen"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></button>
+            <button class="pre green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></button>
+            <button class="pre orange posright"><i class="iconfont icon-dayin"></i><p>打印评分单</p></button>
+        </div>
+        <div class="set">
+            <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
+            <a href="javascript:;" id="search" class="search">搜索</a>
+            <select size="2" id="sel" style="display:none;">
+                <option>123</option>
+                <option>23456</option>
+                <option>1111</option>
+                <option>123333</option>
+                <option>aaaa</option>
+                <option>1bbb23</option>
+            </select>
+            <button class="check lightorange"><i class="iconfont icon-duihao1"></i><p>查看还未递交评分单的对垒</p></button>
+        </div>
+        <div class="constep">
+            <div class="paper">
+                <div><p class="flight">Flight A</p><p class="ftime">Start 9:25</p></div>
+                <div><h3>裁判：</h3><p class="jnumber">J325691234567890</p><p class="name">Nicolas</p><h3 class="room">Room：</h3><p class="roomnum">A201</p></div>
+                <table class="pro">
+                    <thead>
+                        <tr>
+                            <th colspan="3">PRO.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3">队伍编号： 026<span><i class="iconfont icon-exchangejiaohuan"></i></span></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Points</td>
+                            <td>Rank</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" role="button" class="rolebutton click"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="con">
+                    <thead>
+                        <tr>
+                            <th colspan="3">CON.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3">队伍编号： 651</td>
+                        </tr>
+                        <tr>
+                            <td>asdfghj</td>
+                            <td>Points</td>
+                            <td>Rank</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" role="button" class="rolebutton"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">Double Bye 双赢
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">Aff Bye Neg Forfeit 反方弃权
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">Double Forfeit or Loss 双输
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">Aff Forfeit Neg Bye 正方弃权
+                </label>
+                <button class="refer">提交评分单</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Content/asset/js/block.js")
