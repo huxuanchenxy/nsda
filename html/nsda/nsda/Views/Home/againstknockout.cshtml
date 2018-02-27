@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "执行对垒 淘汰赛";
+}
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventnewinfoconfirm.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/againstkonckout.css?1.1.0" rel="stylesheet" />
+@Html.Partial("_manager")
+<div class="event-lists ">
+    <div class="list-top">
+        <a href="/Home/eventnewinfoconfirm" class="active list">新手组</a>
+        <a href="/Home/eventopeninfoconfirm" class="list">公开组</a>
+    </div>
+    <div class="event-con">
+        <div class="rangeconfirm">
+            <div><h3>晋级队伍数： </h3><p>16</p></div>
+        </div>
+        <div class="listconfirm">
+            <div><h3>Octafinals：</h3><p>每局对垒由3位裁判打分</p></div>
+            <div><h3>Quarterfinals：</h3><p>每局对垒由3位裁判打分</p></div>
+            <div><h3>Semifinals：</h3><p>每局对垒由3位裁判打分</p></div>
+            <div><h3>Finals：</h3><p>每局对垒由3位裁判打分</p></div>
+        </div>
+        <button class="alter">前往修改</button>
+        <button class="stargame">确认！开始比赛。</button><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>
+    </div>
+</div>
+

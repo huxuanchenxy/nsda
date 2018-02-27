@@ -211,6 +211,7 @@
     <Content Include="Content\asset\css\about.css" />
     <Content Include="Content\asset\css\aboutp.css" />
     <Content Include="Content\asset\css\aboutus.css" />
+    <Content Include="Content\asset\css\againstkonckout.css" />
     <Content Include="Content\asset\css\basic.css" />
     <Content Include="Content\asset\css\bootstrap.css" />
     <Content Include="Content\asset\css\bootstrap.min.css" />
@@ -435,12 +436,14 @@
     <Content Include="Views\Home\writegrades.cshtml" />
     <Content Include="Views\Home\oneround.cshtml" />
     <Content Include="Views\Home\track.cshtml" />
-    <Content Include="Views\Home\resulttrack.cshtml" />
+    <Content Include="Views\Home\resulttrackaround.cshtml" />
     <Content Include="Views\Home\winnerlist.cshtml" />
     <Content Include="Views\Home\prize.cshtml" />
     <Content Include="Views\Home\addprize.cshtml" />
     <Content Include="Views\Home\octafinals.cshtml" />
     <Content Include="Views\Home\roundone.cshtml" />
+    <Content Include="Views\Home\resulttrackkonckout.cshtml" />
+    <Content Include="Views\Home\againstknockout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

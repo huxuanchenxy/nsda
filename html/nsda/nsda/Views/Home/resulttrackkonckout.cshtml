@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_EventManage.cshtml";
-    ViewBag.Title = "第一轮评分单确认";
+    ViewBag.Title = "淘汰赛赛果查询";
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/doublecheck.css?1.1.0")" rel="stylesheet" type="text/css" />
@@ -20,8 +20,8 @@
             <h4>赛果查询</h4>
         </div>
         <div class="gameclass">
-            <button class="game viewed">循环赛</button>
-            <button class="game ">淘汰赛</button>
+            <a href="/Home/resulttrackaround" class="game">循环赛</a>
+            <a href="/Home/resulttrackkonckout" class="game viewed">淘汰赛</a>
         </div>
         <div class="set">
             <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
@@ -35,48 +35,12 @@
                 <option>1bbb23</option>
             </select>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>排名</th>
-                    <th>队伍编号</th>
-                    <th>会员编号</th>
-                    <th>姓名</th>
-                    <th>Points</th>
-                    <th>Rank总和</th>
-                    <th>队伍总分</th>
-                    <th>队伍Rank</th>
-                    <th>循环赛</th>
-                    <th>对手胜</th>
-                    <th>对手队伍总分</th>
-                    <th>对手Rank总和</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="2"></td>
-                    <td rowspan="2"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="2"></td>
-                    <td rowspan="2"></td>
-                    <td rowspan="2"></td>
-                    <td rowspan="2" class="remark"><p>Rd1:W</p><p>Rd1:W</p><p>Rd1:W</p></td>
-                    <td rowspan="2"></td>
-                    <td rowspan="2"></td>
-                    <td rowspan="2"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+        
     </div>
 </div>
 
 @Scripts.Render("~/Content/asset/js/block.js")
+
+
 
 

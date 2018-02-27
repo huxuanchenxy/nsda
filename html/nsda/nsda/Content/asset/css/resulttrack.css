@@ -5,7 +5,7 @@
     float:right;
     margin-top:0;
 }
-button.game{
+.game{
     display:inline-block;
     padding:6px 35px;
     float:left;
@@ -19,7 +19,7 @@ button.game{
     border:1px solid #D7E1EA;
     font-weight:600;
 }
-button.game.viewed{
+.game.viewed{
     background:#E6ECF0;
     color:white;
     
