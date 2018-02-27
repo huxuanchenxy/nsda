@@ -211,6 +211,7 @@
     <Content Include="Content\asset\css\about.css" />
     <Content Include="Content\asset\css\aboutp.css" />
     <Content Include="Content\asset\css\aboutus.css" />
+    <Content Include="Content\asset\css\againstaround.css" />
     <Content Include="Content\asset\css\againstkonckout.css" />
     <Content Include="Content\asset\css\basic.css" />
     <Content Include="Content\asset\css\bootstrap.css" />
@@ -264,7 +265,6 @@
     <Content Include="Content\asset\css\registered.css" />
     <Content Include="Content\asset\css\playersign.css" />
     <Content Include="Content\asset\css\resulttrack.css" />
-    <Content Include="Content\asset\css\roundone.css" />
     <Content Include="Content\asset\css\Site.css" />
     <Content Include="Content\asset\css\judgetourname.css" />
     <Content Include="Content\asset\css\track.css" />
@@ -434,16 +434,15 @@
     <Content Include="Views\Home\judgetourstepthree.cshtml" />
     <Content Include="Views\Home\doublecheck.cshtml" />
     <Content Include="Views\Home\writegrades.cshtml" />
-    <Content Include="Views\Home\oneround.cshtml" />
     <Content Include="Views\Home\track.cshtml" />
     <Content Include="Views\Home\resulttrackaround.cshtml" />
     <Content Include="Views\Home\winnerlist.cshtml" />
     <Content Include="Views\Home\prize.cshtml" />
     <Content Include="Views\Home\addprize.cshtml" />
     <Content Include="Views\Home\octafinals.cshtml" />
-    <Content Include="Views\Home\roundone.cshtml" />
     <Content Include="Views\Home\resulttrackkonckout.cshtml" />
     <Content Include="Views\Home\againstknockout.cshtml" />
+    <Content Include="Views\Home\againstaround.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

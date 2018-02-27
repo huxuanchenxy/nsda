@@ -327,11 +327,6 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "录入评分单";
             return View();
         }
-        public ActionResult oneround()
-        {
-            ViewBag.Message = "第一轮";
-            return View();
-        }
         public ActionResult track()
         {
             ViewBag.Message = "查询";
@@ -367,14 +362,14 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "Octafinals 评分单录入";
             return View();
         }
+        public ActionResult againstaround()
+        {
+            ViewBag.Message = "执行对垒 循环赛";
+            return View();
+        }
         public ActionResult againstknockout()
         {
             ViewBag.Message = "执行对垒 淘汰赛";
-            return View();
-        }
-        public ActionResult roundone()
-        {
-            ViewBag.Message = "第一轮";
             return View();
         }
     }

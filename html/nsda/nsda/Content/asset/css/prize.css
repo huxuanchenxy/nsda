@@ -1,5 +1,5 @@
 ﻿.prizesetting{
-    margin-bottom:60px;
+    margin-bottom:160px;
 }
 .prizesetting h3{
     font-size:14px;
@@ -64,9 +64,10 @@ input::-webkit-inner-spin-button {
     -moz-border-radius: 5px;
     color:#fff;
 }
-button.save{
+.save{
     display:inline-block;
     padding:3px 50px;
+    margin-top:30px;
     background:#4E5D66;
     color:#fff;
     border:none;
@@ -78,6 +79,7 @@ button.save{
     position:absolute;
     left:46%;
     transform:translate(-50%);
+
 
 }
 body{
