@@ -104,6 +104,7 @@
     color:white;
 }
 .notfit{
+    display:none;
     width:490px;
     height:182px;
     padding:20px 120px;
