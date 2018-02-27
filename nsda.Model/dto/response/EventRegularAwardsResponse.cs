@@ -13,6 +13,6 @@ namespace nsda.Model.dto.response
         //优秀辩手数量
         public int Personal { get; set; }
         // 团队奖项
-        public int Group { get; set; }
+        public int PrizeGroup { get; set; }
     }
 }

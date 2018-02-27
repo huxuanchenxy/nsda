@@ -1,0 +1,147 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "奖项设置";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+    var eventPrize = ViewBag.EventPrize as EventRegularAwardsResponse;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/writegrades.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+<link href="/asset/css/track.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+<div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id" />
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId" />
+    <div class="list-top">
+        @foreach (var item in eventGroup)
+        {
+            if (item.Id == ViewBag.EventGroupId)
+            {
+                <a href="/eventmanage/eventmanage/track?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+            }
+            else
+            {
+                <a href="/eventmanage/eventmanage/track?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+            }
+        }
+    </div>
+    <div class="event-con">
+        <div>
+            <img src="/asset/img/track_03.png" />
+            <h4>Track 查询</h4>
+        </div>
+        <div class="set">
+            <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
+            <a href="javascript:;" id="search" class="search">搜索</a>
+        </div>
+        <div id="data">
+            <div class="roundgame">
+                <h5>循环赛 Rd. 1</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>队伍编号</th>
+                            <th>Pro. 正方</th>
+                            <th>Points</th>
+                            <th>Rank</th>
+                            <th></th>
+                            <th>队伍编号</th>
+                            <th>Con. 反方</th>
+                            <th>Points</th>
+                            <th>Rank</th>
+                            <th>获胜方</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="divide" rowspan="2"></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2" class="scorelist"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="divide" rowspan="2"></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2" class="scorelist"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $("#search").click(function () {
+            var data = $("#txt").val();
+            if (data == "" || data == null)
+            {
+                return;
+            }
+
+            $.ajax({
+                url: "/eventmanage/eventmanage/trackdetail",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val(),
+                    txtValue: data
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+                           
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
+        });
+    </script>
+}

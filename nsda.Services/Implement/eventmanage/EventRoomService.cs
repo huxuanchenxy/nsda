@@ -280,6 +280,11 @@ namespace nsda.Services.Implement.eventmanage
                     if (t_event.eventStatus == EventStatusEm.比赛中)
                     {
                         //需要查询房间的实时状态
+                        sql = $@"select a.*,b.completename MemberName,c.name EventGroupName 
+                            from t_event_room a
+                            left join t_member_player b on a.memberId=b.memberId
+                            left join t_event_group c on a.eventgroupId=c.id
+                            where a.eventId=@EventId and a.isdelete=0  order by a.createtime desc ";
                     }
                     else {
                         sql = $@"select a.*,b.completename MemberName,c.name EventGroupName 

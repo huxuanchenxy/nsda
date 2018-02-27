@@ -45,6 +45,13 @@ namespace nsda.Services.Implement.eventmanage
                     msg = "获奖队伍/会员编号不能为空";
                     return flag;
                 }
+                if (request.PrizeType == Model.enums.PrizeTypeEm.个人)
+                {
+                    //查询会员编号是否正确
+                }
+                else {
+                    //查询队伍编码是否正确
+                }
                 _dbContext.Insert(new t_event_prize
                 {
                     eventGroupId = request.EventGroupId,
@@ -80,6 +87,14 @@ namespace nsda.Services.Implement.eventmanage
                 {
                     msg = "获奖队伍/会员编号不能为空";
                     return flag;
+                }
+                if (request.PrizeType == Model.enums.PrizeTypeEm.个人)
+                {
+                    //查询会员编号是否正确
+                }
+                else
+                {
+                    //查询队伍编码是否正确
                 }
                 var eventPrize = _dbContext.Get<t_event_prize>(request.Id);
                 if (eventPrize != null)

@@ -40,7 +40,7 @@ namespace nsda.Services.Implement.eventmanage
                     _dbContext.Insert(new t_event_regularawards {
                         eventGroupId=request.EventGroupId,
                         eventId=request.EventId,
-                        group=request.Group,
+                        prizeGroup= request.PrizeGroup,
                         personal=request.Personal 
                     });
                     _dbContext.CommitChanges();
@@ -76,7 +76,7 @@ namespace nsda.Services.Implement.eventmanage
                 if (detail != null)
                 {
                     response.Personal = detail.personal;
-                    response.Group = detail.group;
+                    response.PrizeGroup = detail.prizeGroup;
                 }
             }
             catch (Exception ex)

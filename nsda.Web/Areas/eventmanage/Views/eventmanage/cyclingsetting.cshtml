@@ -18,156 +18,85 @@
     </div>
     <div class="roundset">
         <h3>循环赛规则设置</h3>
-        <div class="newround">
-            <h4>新手组 循环赛规则设置<span><i></i></span></h4>
+        @foreach (var item in eventGroup)
+        {
+            <div class="newround">
+                <h4>@item.Name 循环赛规则设置<span><i></i></span></h4>
 
-            <div class="form-group range">
-                <label>裁判打分值区间：</label>
-                <input type="number" placeholder="输入数值" />至<input type="number" placeholder="输入数值" />
-            </div>
-            <div class="form-group yn">
-                <label>是否允许裁判打0.5分：</label>
-                <label class="radio-inline">
-                    <input type="radio" name="" checked value="1"> 允许
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name=""> 不允许
-                </label>
-                <p>* 如果如果允许，裁判可以在在规定的打分区间内打半分。例如：27.5分</p>
-            </div>
-            <div class="rounds">
-                <a href="javascript:;" class="addrounds">+ 添加比赛轮数</a>
-                <div class="form-group flight">
+                <div class="form-group range">
+                    <label>裁判打分值区间：</label>
+                    <input type="number" placeholder="输入数值" />至<input type="number" placeholder="输入数值" />
+                </div>
+                <div class="form-group yn">
+                    <label>是否允许裁判打0.5分：</label>
                     <label class="radio-inline">
-                        <input type="radio" name="" checked value="1"> 仅 Flight A
+                        <input type="radio" name="half_@item.Id" checked value="1"> 允许
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name=""  value="2"> 分 Flight A 和 Flight B
+                        <input type="radio" name="half_@item.Id"> 不允许
                     </label>
-                    <label class="radio-inline">
-                        <input type="radio" name=""  value="3"> 分 Flight A 、 Flight B 和 FLight C
-                    </label>
-                    <p>* 设置Flight是为了在竟可能少的使用到Room和裁判数量。例如：32支队伍，采用“仅Flight A” 需要使用到的Room数量为16间，裁判至少需要16位。如果采取“分Flight A 和 Flight B” 则需要8间Room,裁判则降为至少需要8位。但是，代价是比赛的时间延长。 </p>
+                    <p>* 如果如果允许，裁判可以在在规定的打分区间内打半分。例如：27.5分</p>
+                </div>
+                <div class="rounds">
+                    <a href="javascript:;" class="addrounds">+ 添加比赛轮数</a>
+                    <div class="form-group flight">
+                        <label class="radio-inline">
+                            <input type="radio" name="flight_@item.Id" checked value="1"> 仅 Flight A
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="flight_@item.Id" value="2"> 分 Flight A 和 Flight B
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="flight_@item.Id" value="3"> 分 Flight A 、 Flight B 和 FLight C
+                        </label>
+                        <p>* 设置Flight是为了在竟可能少的使用到Room和裁判数量。例如：32支队伍，采用“仅Flight A” 需要使用到的Room数量为16间，裁判至少需要16位。如果采取“分Flight A 和 Flight B” 则需要8间Room,裁判则降为至少需要8位。但是，代价是比赛的时间延长。 </p>
+                    </div>
+                </div>
+                <div class="roundone">
+                    <ul>
+                        <li>
+                            <label>循环赛第一轮</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                        @*<li>
+                            <label>循环赛第二轮</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <i class="iconfont icon-close-b"></i>
+                        </li>
+                        <li>
+                            <label>循环赛第三轮</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight C:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <i class="iconfont icon-close-b"></i>
+                        </li>*@
+                    </ul>
                 </div>
             </div>
-            <div class="roundone">
-                <ul>
-                    <li>
-                        <label>循环赛第一轮</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label>循环赛第二轮</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <i class="iconfont icon-close-b"></i>
-                    </li>
-                    <li>
-                        <label>循环赛第三轮</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight C:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <i class="iconfont icon-close-b"></i>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="openround">
-            <h4>新手组 循环赛规则设置<span><i></i></span></h4>
-            <div class="form-group range">
-                <label>裁判打分值区间：</label>
-                <input type="number" placeholder="输入数值" />至<input type="number" placeholder="输入数值" />
-            </div>
-            <div class="form-group yn">
-                <label>是否允许裁判打0.5分：</label>
-                <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 允许
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 不允许
-                </label>
-                <p>* 如果如果允许，裁判可以在在规定的打分区间内打半分。例如：27.5分</p>
-            </div>
-            <div class="rounds">
-                <a href="javascript:;" class="addrounds">+ 添加比赛轮数</a>
-                <div class="form-group flight">
-                    <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 仅 Flight A
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 分 Flight A 和 Flight B
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 分 Flight A 、 Flight B 和 FLight C
-                    </label>
-                    <p>* 设置Flight是为了在竟可能少的使用到Room和裁判数量。例如：32支队伍，采用“仅Flight A” 需要使用到的Room数量为16间，裁判至少需要16位。如果采取“分Flight A 和 Flight B” 则需要8间Room,裁判则降为至少需要8位。但是，代价是比赛的时间延长。 </p>
-                </div>
-            </div>
-            <div class="roundone">
-                <ul>
-                    <li>
-                        <label>循环赛第一轮</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label>循环赛第二轮</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <i class="iconfont icon-close-b"></i>
-                    </li>
-                    <li>
-                        <label>循环赛第三轮</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight C:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <i class="iconfont icon-close-b"></i>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <button class="confirmset">确认保存循环赛设置</button>
+        }
+        <button class="confirmset" id="save" style="margin-top:10px;">确认保存循环赛设置</button>
     </div>
 </div>
 @section scripts
@@ -182,7 +111,34 @@
             });
         });
 
-
-
+        //保存循环赛设置
+        $("#save").click(function () {
+            alert(10);
+            var data = [];
+            data.push("");
+            $.ajax({
+                url: "/eventmanage/eventmanage/cyclingracesettings",
+                type: "post",
+                dataType: "json",
+                data: {
+                    request: data
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("设置成功", { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+             ,error: function () {
+                 layer.closeAll();
+             }
+            });
+        });
     </script>
 }

@@ -228,6 +228,29 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             return View();
         }
+
+        //track查询
+        public ActionResult track(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
+
+        public ActionResult winnerlist(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
         #endregion
 
         #region 赛事信息设置

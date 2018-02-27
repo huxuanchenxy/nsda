@@ -35,7 +35,7 @@ namespace nsda.Models
     
         public int personal { get; set; }
     
-        public int group { get; set; }
+        public int prizeGroup { get; set; }
     
         /// <summary>
         /// 修改时间

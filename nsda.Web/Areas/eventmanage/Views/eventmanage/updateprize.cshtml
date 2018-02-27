@@ -44,7 +44,7 @@
     <script>
         $("#save").click(function () {
             var $prizename = $("#prizename").val();
-            if ($prizename == null) {
+            if ($prizename == "" || $prizename == null) {
                 layer.msg('请输入奖项名称', { icon: 5, time: 1000 });
                 return;
             }

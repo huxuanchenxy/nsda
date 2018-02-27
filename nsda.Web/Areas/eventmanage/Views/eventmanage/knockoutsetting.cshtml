@@ -20,235 +20,171 @@
     </div>
     <div class="roundset">
         <h3>淘汰赛规则设置</h3>
-        <div class="newround">
-            <h4>新手组 淘汰赛规则设置<span><i></i></span></h4>
+        @foreach (var item in eventGroup)
+        {
+            <div class="newround">
+                <h4>@item.Name 淘汰赛规则设置<span><i></i></span></h4>
 
-            <div class="form-group range">
-                <label>晋级队伍数：</label>
-                <input type="number" placeholder="输入数值" />
-                <a href="javascript:;" class="confirm">确认</a>
-                <p>* 建议填写为2的平方数，例如：4、8、16、32、64。最大数值不得超过64。</p>
+                <div class="form-group range">
+                    <label>晋级队伍数：</label>
+                    <input type="number" placeholder="输入数值" id="teamnum_@item.Id"/>
+                    <a href="javascript:;" class="confirm" data-id="@item.Id">确认</a>
+                    <p>* 建议填写为2的平方数，例如：4、8、16、32、64。最大数值不得超过64。</p>
+                </div>
+
+                <div class="roundone">
+                    <ul>
+                        <li>
+                            <label class="comname">Partial :</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <input type="checkbox" checked />
+                            <label>Double Flight</label>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                        <li>
+                            <label class="comname">Triple Octafinals :</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <input type="checkbox" checked />
+                            <label>Double Flight</label>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                        <li>
+                            <label class="comname">Double Octafinals :</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <input type="checkbox" checked />
+                            <label>Double Flight</label>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                        <li>
+                            <label class="comname">Octafinals :</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <input type="checkbox" checked />
+                            <label>Double Flight</label>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                        <li>
+                            <label class="comname">Quarterfinals :</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <input type="checkbox" checked />
+                            <label>Double Flight</label>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                        <li>
+                            <label class="comname">Semifinals :</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <input type="checkbox" checked />
+                            <label>Double Flight</label>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                        <li>
+                            <label class="comname">Finals :</label>
+                            <select class="rset">
+                                <option value="1">随机配对 Perset round</option>
+                                <option value="2">高低配对 High-Low Power Macth</option>
+                                <option value="3">相等配对 High-High Powe</option>
+                            </select>
+                            <input type="checkbox" checked />
+                            <label>Double Flight</label>
+                            <label>Flight A:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                            <label>Flight B:</label>
+                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
+                        </li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="roundone">
-                <ul>
-                    <li>
-                        <label class="comname">Partial :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Triple Octafinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Double Octafinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Octafinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Quarterfinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Semifinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Finals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="openround">
-            <h4>公开组 淘汰赛规则设置<span><i></i></span></h4>
-            <div class="form-group range">
-                <label>晋级队伍数：</label>
-                <input type="number" placeholder="输入数值" />
-                <a href="javascript:;" class="confirm">确认</a>
-                <p>* 建议填写为2的平方数，例如：4、8、16、32、64。最大数值不得超过64。</p>
-            </div>
-
-            <div class="roundone">
-                <ul>
-                    <li>
-                        <label class="comname">Partial :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Triple Octafinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Double Octafinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Octafinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Quarterfinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Semifinals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                    <li>
-                        <label class="comname">Finals :</label>
-                        <select class="rset">
-                            <option value="1">随机配对 Perset round</option>
-                            <option value="2">高低配对 High-Low Power Macth</option>
-                            <option value="3">相等配对 High-High Powe</option>
-                        </select>
-                        <input type="checkbox" checked />
-                        <label>Double Flight</label>
-                        <label>Flight A:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        <label>Flight B:</label>
-                        <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <button class="confirmset">确认保存淘汰赛设置</button>
+        }
+        <button class="confirmset" style="margin-top:10px;" id="save">确认保存淘汰赛设置</button>
     </div>
 </div>
 @section scripts
 {
-    <script>     
+    <script>        
+        $("#save").click(function () {
+            alert("调用了方法");
+            return;
+            var data = [];
+            data.push("");
+            $.ajax({
+                url: "/eventmanage/eventmanage/knockoutsettings",
+                type: "post",
+                dataType: "json",
+                data: {
+                    request: data
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("设置成功", { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+             ,error: function () {
+                 layer.closeAll();
+             }
+            });
+        });
+
+        $(".confirm").click(function () {
+            var teamNum = $("#teamnum_" + $(this).attr("data-id")).val();
+            if (teamNum == null || teamNum == "")
+            {
+                layer.msg('请输入晋级队伍数', { icon: 5, time: 1000 });
+                return;
+            }
+            if (parseInt(teamNum) <= 0 || parseInt(teamNum) > 64) {
+                layer.msg('晋级队伍数有误', { icon: 5, time: 1000 });
+                return;
+            }
+        });
     </script>
 }
