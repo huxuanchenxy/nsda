@@ -1,0 +1,104 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "循环赛赛果";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/writegrades.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/track.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/resulttrack.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+<div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id"/>
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId"/>
+    <div class="list-top">
+        @foreach (var item in eventGroup)
+        {
+            if (item.Id == ViewBag.EventGroupId)
+            {
+                <a href="/eventmanage/eventmanage/resulttrackcycling?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+            }
+            else
+            {
+                <a href="/eventmanage/eventmanage/resulttrackcycling?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+            }
+        }
+    </div>
+    <div class="event-con">
+        <div>
+            <img src="/asset/img/result_03.png" />
+            <h4>赛果查询</h4>
+        </div>
+        <div class="gameclass">
+            <a href="javascript:;" class="game viewed">循环赛</a>
+            <a href="/eventmanage/eventmanage/resulttrackknockout?eventId=@Model.Id&eventGroupId=@ViewBag.EventGroupId" class="game">淘汰赛</a>
+        </div>
+        <div class="set">
+            <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
+            <a href="javascript:;" id="search" class="search">搜索</a>
+            <select size="2" id="sel" style="display:none;">
+                <option>123</option>
+                <option>23456</option>
+                <option>1111</option>
+                <option>123333</option>
+                <option>aaaa</option>
+                <option>1bbb23</option>
+            </select>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>队伍编号</th>
+                    <th>会员编号</th>
+                    <th>姓名</th>
+                    <th>Points</th>
+                    <th>Rank总和</th>
+                    <th>队伍总分</th>
+                    <th>队伍Rank</th>
+                    <th>循环赛</th>
+                    <th>对手胜</th>
+                    <th>对手队伍总分</th>
+                    <th>对手Rank总和</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2" class="remark"><p>Rd1:W</p><p>Rd1:W</p><p>Rd1:W</p></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+}

@@ -587,6 +587,8 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\updateprize.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\track.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\winnerlist.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\resulttrackcycling.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\resulttrackknockout.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
