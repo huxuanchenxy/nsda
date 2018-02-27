@@ -1,10 +1,12 @@
 ﻿@using nsda.Utilities
-@model nsda.Model.dto.response.EventResponse
+@using nsda.Model.dto.response
+@model EventResponse
 @{
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "裁判签到管理";
-    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
     var date = ViewBag.EventDate as List<string>;
+    var data = ViewBag.Data as RefereeSignDataResponse;
 }
 
 @section styles
@@ -44,21 +46,24 @@
                 <div class="data-con">
                     <div class="number">
                         <div>
-                            <div class="hadnumber"><span>目前已签到裁判数量为：</span><p>151234567</p></div>
-                            <div class="advisenumber"><span>建议最少裁判数为：</span><p>15</p></div>
+                            <div class="hadnumber"><span>目前已签到裁判数量为：</span><p>@data.SignCount</p></div>
+                            <div class="advisenumber"><span>建议最少裁判数为：</span><p>@data.LeastCount</p></div>
                         </div>
-                        <div>
-                            <div class="hadnumber"><span>新手组已签到裁判数量为：</span><p>15</p></div>
-                            <div class="advisenumber"><span>建议最少裁判数为：</span><p>15</p></div>
-                        </div>
-                        <div>
-                            <div class="hadnumber"><span>公开组已签到裁判数量为：</span><p>15</p></div>
-                            <div class="advisenumber"><span>建议最少裁判数为：</span><p>15234567</p></div>
-                        </div>
+                        @foreach (var item in eventGroup)
+                        {
+                            var datas = data.RefereeSignGroup.Where(c => c.EventGroupId == item.Id).FirstOrDefault();
+                            if (datas != null)
+                            {
+                                <div>
+                                    <div class="hadnumber"><span>@Html.Raw(item.Name)已签到裁判数量为：</span><p>@datas.SignCount</p></div>
+                                    <div class="advisenumber"><span>建议最少裁判数为：</span><p>@datas.LeastCount</p></div>
+                                </div>
+                            }
+                        }
                     </div>
                     <div style="clear:both;"></div>
                     <ul class="statistics">
-                        <li><a href="javascript:;">使用中数量为：15</a><a href="javascript:;">闲置数量为：15</a><a href="javascript:;">停用数量为：15</a></li>
+                        <li><a href="javascript:;">使用中数量为：@data.UsedCount</a><a href="javascript:;">闲置数量为：@data.UnusedCount</a><a href="javascript:;">停用数量为：@data.StopCount</a></li>
                     </ul>
                 </div>
             </div>

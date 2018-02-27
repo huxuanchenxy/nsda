@@ -124,7 +124,7 @@
             $("#signup").click(function () {
                 var flag = $("#login").val();
                 var eventId = $("#eventId").val();
-                if (flag) {
+                if (flag==0) {
                     //未登录
                     location.href = "/login/login?redirecturl=/events/detail/" + eventId;
                 } else {
@@ -146,7 +146,7 @@
                             success: function (json) {
                                 layer.closeAll();
                                 if (json.flag) {
-                                    location.href = "/player/playersignup/signup";
+                                    location.href = "/player/playersignup/signup/" + eventId;
                                 }
                                 else {
                                     if (json.msg != null && json.msg != "") {

@@ -405,6 +405,7 @@
     <Content Include="asset\css\about.css" />
     <Content Include="asset\css\aboutp.css" />
     <Content Include="asset\css\aboutus.css" />
+    <Content Include="asset\css\againstkonckout.css" />
     <Content Include="asset\css\basic.css" />
     <Content Include="asset\css\bootstrap.css" />
     <Content Include="asset\css\bootstrap.min.css" />
@@ -413,6 +414,7 @@
     <Content Include="asset\css\coachinformation.css" />
     <Content Include="asset\css\coachregform.css" />
     <Content Include="asset\css\compedetail.css" />
+    <Content Include="asset\css\doublecheck.css" />
     <Content Include="asset\css\event.css" />
     <Content Include="asset\css\eventmanage.css" />
     <Content Include="asset\css\eventmanagecenter.css" />
@@ -425,6 +427,7 @@
     <Content Include="asset\css\eventmanageround.css" />
     <Content Include="asset\css\eventmanageumpire.css" />
     <Content Include="asset\css\eventnewinfocomfirm.css" />
+    <Content Include="asset\css\eventnewinfoconfirm.css" />
     <Content Include="asset\css\eventopeninfocomfirm.css" />
     <Content Include="asset\css\eventplayersignin.css" />
     <Content Include="asset\css\eventstart.css" />
@@ -443,6 +446,7 @@
     <Content Include="asset\css\judgetour.css" />
     <Content Include="asset\css\judgetourname.css" />
     <Content Include="asset\css\messagebox.css" />
+    <Content Include="asset\css\octafinals.css" />
     <Content Include="asset\css\player.css" />
     <Content Include="asset\css\playerboundcoach.css" />
     <Content Include="asset\css\playercenter.css" />
@@ -454,9 +458,15 @@
     <Content Include="asset\css\playerscorelists.css" />
     <Content Include="asset\css\playersign.css" />
     <Content Include="asset\css\playersource.css" />
+    <Content Include="asset\css\prize.css" />
     <Content Include="asset\css\regform.css" />
     <Content Include="asset\css\registered.css" />
+    <Content Include="asset\css\resulttrack.css" />
+    <Content Include="asset\css\roundone.css" />
     <Content Include="asset\css\Site.css" />
+    <Content Include="asset\css\track.css" />
+    <Content Include="asset\css\winnerlist.css" />
+    <Content Include="asset\css\writegrades.css" />
     <Content Include="asset\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="asset\img\add_03.png" />
     <Content Include="asset\img\Antonin_Scalia_Official_SCOTUS_Portrait_crop.jpg" />
@@ -498,6 +508,8 @@
     <Content Include="asset\img\password_03.png" />
     <Content Include="asset\img\pass_03.png" />
     <Content Include="asset\img\per-pic.png" />
+    <Content Include="asset\img\prize_03.png" />
+    <Content Include="asset\img\result_03.png" />
     <Content Include="asset\img\Samuel Alito.jpg" />
     <Content Include="asset\img\score_03.jpg" />
     <Content Include="asset\img\scroll-bg.png" />
@@ -513,7 +525,10 @@
     <Content Include="asset\img\Stephen Breyer.jpg" />
     <Content Include="asset\img\teacher.png" />
     <Content Include="asset\img\tour_03.png" />
+    <Content Include="asset\img\track_03.png" />
     <Content Include="asset\img\txt1.png" />
+    <Content Include="asset\img\vs_03.png" />
+    <Content Include="asset\img\winner_03.png" />
     <Content Include="asset\js\block.js" />
     <Content Include="asset\js\bootstrap.min.js" />
     <Content Include="asset\js\change.js" />
@@ -564,6 +579,10 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\cyclingsetting.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\addplayer.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\info.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\cyclingsettingconfirm.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\knockoutsettingconfirm.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\prize.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\addprize.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />

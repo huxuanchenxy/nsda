@@ -22,8 +22,8 @@ namespace nsda.Web.Controllers
             var userContext = UserContext.WebUserContext;
             var detail = _eventService.Detail(id);
             ViewBag.EventDate = _eventService.EventYYYYDate(id);
-            ViewBag.LoginFlag = userContext == null ? false : true;
-            ViewBag.MemberType = userContext == null ? 0 : userContext.MemberType;
+            ViewBag.LoginFlag = userContext == null ? 0 : 1;
+            ViewBag.MemberType = userContext == null ? 1 : userContext.MemberType;
             return View(detail);
         }
     }

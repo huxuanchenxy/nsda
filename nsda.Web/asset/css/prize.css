@@ -1,0 +1,198 @@
+﻿.prizesetting{
+    margin-bottom:60px;
+}
+.prizesetting h3{
+    font-size:14px;
+    color:#666699;
+    line-height:1.8;
+}
+.prizesetting .form-group label{
+    font-size:14px;
+    color:#666699;
+}
+.prizesetting .form-group input{
+    height:30px;
+    padding-left:5px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+.prizesetting .form-group select{
+    height:30px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background:linear-gradient(to bottom,#FFFFFF,#F0F2F3);
+}
+.prize table td.operate{
+    position:relative;
+    width:220px;
+    padding:5px 20px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+.prize table td.operate .prizebtn{
+    display:inline-block;
+    padding:4px 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    color:white;
+}
+.prize table td.operate .amend{
+    background:#1ABC9C;
+    float:left;
+}
+.prize table td.operate .delete{
+    background:#F3924B;
+    float:right;
+}
+.addprize{
+    display:inline-block;
+    padding:4px 20px;
+    background:#47BBED;
+    border:none;
+    float:right;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    color:#fff;
+}
+button.save{
+    display:inline-block;
+    padding:3px 50px;
+    background:#4E5D66;
+    color:#fff;
+    border:none;
+    font-size:18px;
+    line-height:50px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    position:absolute;
+    left:46%;
+    transform:translate(-50%);
+
+}
+body{
+    padding:0;
+    margin:0;
+}
+.fg-layer-iframe iframe{
+    border:2px solid #2C3E50;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.fg-layer-iframe .fg-layer-content{
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.modiroom{
+    overflow:hidden;
+    background:#D8E0E5;
+    padding:10px 160px 39px 160px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.modiroom h4{
+    font-size:18px;
+    color:#666666;
+    text-align:center;
+}
+.modiroom span{
+    display:inline-block;
+    width:30px;
+    height:3px;
+    background:#4E5D66;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+.modiroom .form-group.roomname{
+    margin-top:56px;
+    margin-bottom:10px;
+}
+.modiroom .roomname input{
+    width:230px;
+    height:36px;
+    background:#FFF6E7;
+    padding-left:10px;
+    font-size:14px;
+    color:#999999;
+    box-shadow:none;
+    border:1px solid transparent;
+}
+.roomclass select{
+    width:230px;
+    height:30px;
+    background:linear-gradient(to bottom,#FFFFFF,#F0F2F3);
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    margin-bottom:10px;
+}
+.inputteam textarea{
+    resize:none;
+    width:230px;
+    height:90px;
+    margin-bottom:30px;
+    background:#FFF6E7;
+    color:#999;
+    font-size:14px;
+    padding:10px;
+    line-height:1;
+}
+.add button{
+    display:inline-block;
+    width:230px;
+    height:50px;
+    background:#4E5D66;
+    color:#fff;
+    border:none;
+    font-size:18px;
+    line-height:50px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

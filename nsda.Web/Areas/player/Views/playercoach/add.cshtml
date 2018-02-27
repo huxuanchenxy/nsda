@@ -88,14 +88,13 @@
                     var html = '';
                     if (json.data != null && json.data.length > 0) {
                         $.each(json.data, function (k, val) {
-                            html += '<option value=' + val.MemberId + '>' + val.MemberName + '</option>';
+                            html += '<option  value=' + val.MemberId + '>' + val.MemberName + '</option>';
                         });
                         $("#sel").html(html);
                         $("#sel").show();
                     }
                 }
             });
-
         });
 
         $("#sel").change(function () {

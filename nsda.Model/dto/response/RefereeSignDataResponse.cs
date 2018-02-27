@@ -21,6 +21,18 @@ namespace nsda.Model.dto.response
         /// </summary>
         public int LeastCount { get; set; }
         public List<RefereeSignGroupResponse> RefereeSignGroup { get; set; }
+        /// <summary>
+        /// 使用中数量
+        /// </summary>
+        public int UsedCount { get; set; }
+        /// <summary>
+        /// 停用数量
+        /// </summary>
+        public int StopCount { get; set; }
+        /// <summary>
+        /// 闲置数量
+        /// </summary>
+        public int UnusedCount { get; set; }
     }
 
     public class RefereeSignGroupResponse

@@ -1,0 +1,60 @@
+﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "循环赛设置确认";
+    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventnewinfoconfirm.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+<div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id"/>
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId"/>
+    <div class="list-top">
+        @foreach (var item in eventGroup)
+        {
+            if (item.Id == ViewBag.EventGroupId)
+            {
+                <a href="/eventmanage/eventmanage/cyclingsettingconfirm?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+            }
+            else
+            {
+                <a href="/eventmanage/eventmanage/cyclingsettingconfirm?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+            }
+        }
+    </div>
+    <div class="event-con">
+        <div class="rangeconfirm">
+            <div><h3>参赛队伍签到人数：</h3><p>30</p></div>
+            <div><h3>裁判打分区间：</h3><p>20</p><p class="to">至</p><p>30</p></div>
+            <div><h3>是否允许裁判打0.5分： </h3><p>允许</p></div>
+        </div>
+        <div class="listconfirm">
+            <div><h3>循环赛场数为：</h3><p>4</p><p>分 Flight A 和 Flight B</p></div>
+            <div><h3>循环赛第一轮：</h3><p>随机配对 Perset round</p></div>
+            <div><h3>循环赛第二轮：</h3><p>高低配对 High-Low Power Match</p></div>
+            <div><h3>循环赛第三轮：</h3><p>高低配对 High-Low Power Match</p></div>
+            <div><h3>循环赛第四轮：</h3><p>高低配对 High-Low Power Match</p></div>
+        </div>
+        <button class="alter" id="back">前往修改</button>
+        <button class="stargame" id="start">确认！开始比赛。</button><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        //前往修改
+        $("#back").click(function () {
+            location.href = "/eventmanage/eventmanage/cyclingsetting/"+$("#eventId");
+        });
+        //开始比赛
+        $("#start").click(function () {
+
+        });
+    </script>
+}

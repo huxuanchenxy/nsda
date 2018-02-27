@@ -39,12 +39,12 @@ namespace nsda.Web.Areas.player.Controllers
         }
 
         //报名详情页面
-        public ActionResult signup(int eventId)
+        public ActionResult signup(int id)
         {
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
-            ViewBag.EventGroup = _playerSignUpService.EventGroup(eventId, userContext.Id);
-            var detail = _eventService.Detail(eventId);
+            ViewBag.EventGroup = _playerSignUpService.EventGroup(id, userContext.Id);
+            var detail = _eventService.Detail(id);
             return View(detail);
         }
 
@@ -103,9 +103,9 @@ namespace nsda.Web.Areas.player.Controllers
 
         //邀请组队成员
         [HttpGet]
-        public ContentResult invitation(string keyvalue,int eventId,int groupId)
+        public ContentResult invitation(string keyvalue,int eventId,int eventGroupId)
         {
-            var data = _playerSignUpService.Invitation(keyvalue, eventId, groupId, UserContext.WebUserContext.Id);
+            var data = _playerSignUpService.Invitation(keyvalue, eventId, eventGroupId, UserContext.WebUserContext.Id);
             return Result(true, "", data);
         }
 

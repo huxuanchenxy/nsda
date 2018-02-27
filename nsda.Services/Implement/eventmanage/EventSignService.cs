@@ -341,7 +341,21 @@ namespace nsda.Services.Implement.eventmanage
             RefereeSignDataResponse response = new RefereeSignDataResponse();
             try
             {
-                 //数据统计
+                response.SignCount = 12;
+                response.LeastCount = 24;
+                response.UsedCount = 12;
+                response.UnusedCount = 12;
+                response.StopCount = 48;
+                //数据统计
+                var eventGroup = _dbContext.Select<t_event_group>(c => c.eventId == eventId);
+                foreach (var item in eventGroup)
+                {
+                    response.RefereeSignGroup.Add(new RefereeSignGroupResponse {
+                         EventGroupId=item.id,
+                         LeastCount=12,
+                         SignCount=1 
+                    });
+                }
             }
             catch (Exception ex)
             {

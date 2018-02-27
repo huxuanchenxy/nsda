@@ -148,5 +148,32 @@ namespace nsda.Services.Implement.eventmanage
             }
             return list;
         }
+        //奖项详情
+        public EventPrizeResponse Detail(int id)
+        {
+            EventPrizeResponse response = null;
+            try
+            {
+                var detail = _dbContext.Get<t_event_prize>(id);
+                if (detail != null)
+                {
+                    response = new EventPrizeResponse
+                    {
+                        EventGroupId = detail.eventGroupId,
+                        EventId = detail.eventId,
+                        Id = detail.id,
+                        Name = detail.name,
+                        Num = detail.num,
+                        PrizeType = detail.prizeType,
+                        Remark = detail.remark
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventPrizeService.Detail", ex);
+            }
+            return response;
+        }
     }
 }

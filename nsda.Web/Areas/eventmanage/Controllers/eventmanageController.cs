@@ -176,7 +176,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             ViewBag.EventDate = _eventService.EventDate(id);
-            ViewBag.Data = null;
+            ViewBag.Data = _eventSignService.RefereeSignData(id);
             return View(detail);
         }
         //循环赛设置
@@ -189,6 +189,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(id);
             return View(detail);
         }
+        //循环赛设置确认
+        public ActionResult cyclingsettingconfirm(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId,userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
         //淘汰赛设置
         public ActionResult knockoutsetting(int id)
         {
@@ -197,6 +208,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(id);
+            return View(detail);
+        }
+        //淘汰赛设置确认
+        public ActionResult knockoutsettingconfirm(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
         //添加临时报名选手
@@ -345,6 +367,31 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #endregion
 
         #region 奖项设置
+        //奖项设置
+        public ActionResult prize(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
+
+        public ActionResult addprize(int eventId, int eventGroupId)
+        {
+            ViewBag.EventId = eventId;
+            ViewBag.EventGroupId = eventGroupId;
+            return View();
+        }
+
+        public ActionResult updateprize(int id)
+        {
+            var detail = _eventPrizeService.Detail(id);
+            return View(detail);
+        }
+
         [HttpPost]
         [AjaxOnly]
         public ContentResult insertprize(EventPrizeRequest request)

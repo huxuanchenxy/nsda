@@ -38,16 +38,18 @@
         </div>
         <div class="set">
             <h4>设置组队邀请</h4>
-            <input type="text" placeholder="输入NSDA会员编号/会员姓名" />
-            <a href="javascript:;" class="search">搜索</a>
+            <input type="text"  placeholder="输入NSDA会员编号/会员姓名"  data-id="" id="txtKey"/>
+            <a href="javascript:;" class="search" id="search">搜索</a>
+            <select size="2" id="sel" style="display:none;">
+             </select>
         </div>
-        <div class="comlist">
+        <div class="comlist" style="display:none;" id="showinfo">
             <h4>组队队员信息：</h4>
             <div class="memb">
-                <p>N2365942</p>
-                <p class="name">刘诗诗</p>
-                <p>9年级</p>
-                <p>上海外国语大学附属中学</p>
+                <p id="membercode">N2365942</p>
+                <p id="membername" class="name">刘诗诗</p>
+                <p id="membergrade">9年级</p>
+                <p id="memberschoolname">上海外国语大学附属中学</p>
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -62,14 +64,44 @@
             $("#collapseOne").addClass("in");
         });
 
+        //搜索
+        $("#search").click(function () {
+            $("#showinfo").hide();
+            $.ajax({
+                url: "/player/playersignup/invitation",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId:$('input[name=EventGroup]:checked').val(),
+                    keyvalue: $("#txtKey").val()
+                },
+                success: function (json) {
+                    var html = '';
+                    if (json.data != null && json.data.length > 0) {
+                        $.each(json.data, function (k, val) {
+                            html += '<option value=' + val.MemberId + ' data-membername=' + val.MemberName + ' data-membercode=' + val.MemberCode + ' data-schoolname=' + val.SchoolName + '  data-grade=' + val.Grade + '>' + val.MemberName + '</option>';
+                        });
+                        $("#sel").html(html);
+                        $("#sel").show();
+                    }
+                }
+            });
+        });
 
         $("#apply").click(function () {
+            var tomemberId = $("#txtKey").attr("data-id");
+            if (tomemberId == null || tomemberId == 0)
+            {
+                layer.msg('请先选择队友', { icon: 1, time: 1000 });
+                return;
+            }
             $.ajax({
                 url: "/player/playersignup/insert",
                 type: "post",
                 dataType: "json",
                 data: {
-                    ToMemberId: $("#ToMemberId").val(),
+                    ToMemberId: $("#txtKey").attr("data-id"),
                     EventId: $("#eventId").val(),
                     EventGroupId: $('input[name=EventGroup]:checked').val()
                 },
@@ -82,7 +114,7 @@
                         layer.msg('邀请成功，等待队友确认', { icon: 1, time: 1000 });
                         setTimeout(function () {
                             location.href = "/player/playersignup/list"
-                        }, 2000);
+                        }, 500);
                     }
                     else {
                        layer.msg(json.msg, { icon: 5, time: 1000 });
@@ -92,6 +124,20 @@
                     layer.closeAll();
                 }
             });
+        });
+
+        $("#sel").change(function () {
+            var options = $("#sel option:selected");
+            $("#txtKey").val(options.text());
+            $("#txtKey").attr("data-id", options.val());
+
+            $("#membercode").text(options.attr("data-membercode"));
+            $("#membername").text(options.attr("data-membername"));
+            $("#membergrade").text(options.attr("data-grade"));
+            $("#memberschoolname").text(options.attr("data-schoolname"));
+
+            $(this).hide();
+            $("#showinfo").show();
         });
     </script>
 }

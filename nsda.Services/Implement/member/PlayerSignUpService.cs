@@ -66,15 +66,15 @@ namespace nsda.Services.Implement.member
             return list;
         }
         //邀请队友
-        public List<MemberSelectResponse> Invitation(string keyvalue, int eventId, int groupId, int memberId)
+        public List<InvitationMemberResponse> Invitation(string keyvalue, int eventId, int groupId, int memberId)
         {
-            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
+            List<InvitationMemberResponse> list = new List<InvitationMemberResponse>();
             try
             {
                 //需要过滤已经报名的选手
                 var sql = $@"select a.* from t_member_player a inner join t_member b on a.memberId=b.id                            
                             where a.isdelete=0  and (b.memberType={(int)MemberTypeEm.选手} or b.isExtendPlayer=1) and a.memberId!={memberId}
-                            and b.memberStatus={(int)MemberStatusEm.已认证} and (a.code=@key or a.completename=@key)
+                            and b.memberStatus={(int)MemberStatusEm.已认证} and (a.code=@key or a.completename=@key or a.completepinyin=@key)
                             and a.memberId not in (select memberId from t_event_player_signup 
                                                    where isdelete=0 and signUpStatus not in ({ParamsConfig._signup_notin})
                                                   ) 
@@ -82,7 +82,7 @@ namespace nsda.Services.Implement.member
                          ";
                 var dy = new DynamicParameters();
                 dy.Add("key", keyvalue);
-                var data = _dbContext.Query<t_member_player>(sql).ToList();
+                var data = _dbContext.Query<t_member_player>(sql,dy).ToList();
                 if (data != null && data.Count > 0)
                 {
                     t_event_group group = _dbContext.Get<t_event_group>(groupId);
@@ -91,11 +91,13 @@ namespace nsda.Services.Implement.member
                         //需要判断选手是否满足条件
                         if (IsValid(group, item))
                         {
-                            list.Add(new MemberSelectResponse
+                            list.Add(new InvitationMemberResponse
                             {
                                 MemberId = item.memberId,
                                 MemberCode = item.code,
-                                MemberName = item.completename
+                                MemberName = item.completename,
+                                SchoolName=_dbContext.ExecuteScalar($"select b.chinessname from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id  where a.memberid={item.memberId} and a.isdelete=0 order by a.enddate limit 1").ToObjStr(),
+                                Grade= EnumExtensions.GetDescription((GradeEm)Enum.Parse(typeof(GradeEm), ((int)item.grade).ToString()))
                             });
                         }
                     }
@@ -709,7 +711,7 @@ namespace nsda.Services.Implement.member
                 list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
                 foreach (var item in list)
                 {
-                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by a.startdate desc limit 1").FirstOrDefault();
+                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by a.enddate limit 1").FirstOrDefault();
                     if (data != null)
                     {
                         item.SchoolName = data.chinessname;

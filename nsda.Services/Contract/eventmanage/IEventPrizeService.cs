@@ -22,5 +22,7 @@ namespace nsda.Services.Contract.eventmanage
         bool Delete(int id, int memberId, out string msg);
         //奖项列表
         List<EventPrizeResponse> List(int eventId, int eventGroupId);
+        //奖项详情
+        EventPrizeResponse Detail(int id);
     }
 }
