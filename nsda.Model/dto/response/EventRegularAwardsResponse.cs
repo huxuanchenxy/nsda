@@ -10,7 +10,9 @@ namespace nsda.Model.dto.response
     {
         public int EventId { get; set; }
         public int EventGroupId { get; set; }
+        //优秀辩手数量
         public int Personal { get; set; }
+        // 团队奖项
         public int Group { get; set; }
     }
 }

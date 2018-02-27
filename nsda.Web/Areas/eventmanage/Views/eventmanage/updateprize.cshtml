@@ -1,4 +1,5 @@
 ﻿@using nsda.Utilities
+@model nsda.Model.dto.response.EventPrizeResponse
 @{
     Layout = "";
 }
@@ -7,27 +8,35 @@
     <link rel="stylesheet" href="/asset/css/prize.css?version=@Constant.Version">
 </head>
 <body>
-    <input type="hidden" id="eventGroupId" value="@Request["eventGroupId"]" />
-    <input type="hidden" id="eventId" value="@Request["eventId"]"/>
+    <input type="hidden" id="id" value="@Model.Id"/>
     <div class="modiroom add">
         <h4>添加自定义奖项</h4>
         <span></span>
         <div class="form-group roomname">
             <label for="prizename"></label>
-            <input type="text" id="prizename" value="" placeholder="输入奖项名称" />
+            <input type="text" id="prizename" value="@Model.Name" placeholder="输入奖项名称"/>
         </div>
         <div class="form-group roomclass">
             <label for="prizeType"></label>
             <select id="prizeType">
-                <option value="0">选择 奖项类型</option>               
-                <option value="1">个人</option>
-                <option value="2">团队</option>
+                @if (Model.PrizeType == nsda.Model.enums.PrizeTypeEm.个人)
+                {
+                    <option value="0">选择 奖项类型</option>               
+                    <option value="1" selected>个人</option>
+                    <option value="2">团队</option>
+                }
+                else
+                {
+                    <option value="0">选择 奖项类型</option>
+                    <option value="1" >个人</option>
+                    <option value="2" selected>团队</option>
+                }
             </select>
         </div>
         <div class="form-group inputteam">
-            <textarea placeholder="输入队伍编号/个人编号" id="num"></textarea>
+            <textarea placeholder="输入队伍编号/个人编号" id="num">@Model.Num</textarea>
         </div>
-        <button id="save">保存</button>
+        <button id="save">确认添加自定义奖项</button>
     </div>
 
     <script src="/asset/js/jquery.min.js"></script>
@@ -50,18 +59,17 @@
                 return;
             }
             $.ajax({
-                url: "/eventmanage/eventmanage/insertprize",
+                url: "/eventmanage/eventmanage/editprize",
                 type: "post",
                 dataType: "json",
                 data: {
-                    EventId: $("#eventId").val(),
-                    EventGroupId: $("#eventGroupId").val(),
+                    Id: $("#id").val(),
                     PrizeType: $prizeType,
                     Name: $prizename,
                     Num: $num
                 },
                 beforeSend: function () {
-                    layer.msg('添加奖项中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    layer.msg('编辑奖项中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
                 },
                 success: function (json) {
                     layer.closeAll();

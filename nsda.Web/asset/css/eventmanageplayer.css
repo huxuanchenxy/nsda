@@ -59,13 +59,10 @@
     width:20px;
     height:20px;
 }
-.managelists .clickready{
+.clickbtn{
     display:inline-block;
     width:100%;
     padding:6px;
-    background:#CAE69A;
-    border:1px solid #A7CB6C;
-    color:#999966;
     text-align:center;
     margin-top:5px;
     border-radius:10px;
@@ -73,12 +70,22 @@
     -moz-border-radius:10px;
     line-height:26px;
 }
-.managelists .clickready p{
+.clickready{
+    background:#CAE69A;
+    border:1px solid #A7CB6C;
+    color:#999966;
+}
+.clickbtn p{
     font-size:14px;
 }
-.managelists .clickready h4{
+.clickbtn h4{
     font-size:14px;
     font-weight:600;
+}
+.clickstart{
+    background:linear-gradient(to bottom,#FFA9A8,#FF8281);
+    border:1px solid #F2706E;
+    color:#993333;
 }
 .classcheck img{
     float:left;

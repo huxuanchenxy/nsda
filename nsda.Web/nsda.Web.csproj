@@ -405,6 +405,7 @@
     <Content Include="asset\css\about.css" />
     <Content Include="asset\css\aboutp.css" />
     <Content Include="asset\css\aboutus.css" />
+    <Content Include="asset\css\againstaround.css" />
     <Content Include="asset\css\againstkonckout.css" />
     <Content Include="asset\css\basic.css" />
     <Content Include="asset\css\bootstrap.css" />
@@ -583,6 +584,7 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\knockoutsettingconfirm.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\prize.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\addprize.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\updateprize.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />

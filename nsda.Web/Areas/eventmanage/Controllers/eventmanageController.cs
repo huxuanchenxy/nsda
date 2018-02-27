@@ -30,8 +30,10 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         IRefereeSignUpService _refereeSignUpService;
         IEventCyclingRaceSettingsService _eventCyclingRaceSettingsService;
         IEventknockoutSettingsService _eventknockoutSettingsService;
-        public eventmanageController(IEventknockoutSettingsService eventknockoutSettingsService,IEventCyclingRaceSettingsService eventCyclingRaceSettingsService,IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
+        IEventRegularAwardsService _eventRegularAwardsService;
+        public eventmanageController(IEventRegularAwardsService eventRegularAwardsService,IEventknockoutSettingsService eventknockoutSettingsService,IEventCyclingRaceSettingsService eventCyclingRaceSettingsService,IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
         {
+            _eventRegularAwardsService = eventRegularAwardsService;
             _eventknockoutSettingsService = eventknockoutSettingsService;
             _eventCyclingRaceSettingsService = eventCyclingRaceSettingsService;
             _eventRoomService = eventRoomService;
@@ -376,7 +378,15 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
             ViewBag.EventGroup = eventgroup;
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            ViewBag.EventPrize = _eventRegularAwardsService.Detail(eventId, eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId);
             return View(detail);
+        }
+
+        public ContentResult prizesettings(EventRegularAwardsRequest request)
+        {
+            string msg = string.Empty;
+            var flag = _eventRegularAwardsService.Settings(request,out msg);
+            return Result<string>(flag, msg);
         }
 
         public ActionResult addprize(int eventId, int eventGroupId)
@@ -411,7 +421,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var flag = _eventPrizeService.Edit(request, out msg);
             return Result<string>(flag, msg);
         }
-
 
         [HttpPost]
         [AjaxOnly]

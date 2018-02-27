@@ -1,9 +1,11 @@
 ﻿@using nsda.Utilities
-@model nsda.Model.dto.response.EventResponse
+@using nsda.Model.dto.response
+@model EventResponse
 @{
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "奖项设置";
-    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+    var eventPrize = ViewBag.EventPrize as EventRegularAwardsResponse;
 }
 @section styles
 {
@@ -19,11 +21,11 @@
         {
             if (item.Id == ViewBag.EventGroupId)
             {
-                <a href="/eventmanage/eventmanage/cyclingsettingconfirm?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+                <a href="/eventmanage/eventmanage/prize?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
             }
             else
             {
-                <a href="/eventmanage/eventmanage/cyclingsettingconfirm?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+                <a href="/eventmanage/eventmanage/prize?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
             }
         }
     </div>
@@ -36,16 +38,17 @@
             <h3>常规奖项设置</h3>
             <div class="form-group">
                 <label>优秀辩手 Outstanding Speakers 取 个人排名前：</label>
-                <input type="number" placeholder="输入数字" />
+                <input type="number" placeholder="输入数字" id="personal" value="@eventPrize.Personal"/>
             </div>
             <div class="form-group">
                 <label>团队奖项 取 ：</label>
-                <select id="roomclass">
+                <select id="group">
                     <option value="1">选择 获奖团队</option>
-                    <option value="2">仅 新手组 使用（组别）</option>
-                    <option value="3">仅 公开组 使用（组别）</option>
+                    <option value="2">团队奖</option>
+                    <option value="3">个人奖</option>
                 </select>
             </div>
+            <button class="save" id="saveprizesetting">确认保存设置</button>
         </div>
         <div>
             <div class="prizetitle">
@@ -63,47 +66,20 @@
 
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="operate">
-                            <a href="javascript:;" class="prizebtn amend">修改</a>
-                            <a href="javascript:;" class="prizebtn delete">删除</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="operate">
-                            <a href="javascript:;" class="prizebtn delete">删除</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="operate">
-                            <a href="javascript:;" class="prizebtn amend">修改</a>
-                        </td>
-                    </tr>
+                <tbody id="data">
                 </tbody>
             </table>
 
         </div>
-        <button class="save">确认保存设置</button>
     </div>
 
 </div>
 
 @section scripts
 {
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
+        //添加奖项
         $("#addprize").click(function () {
             layer.open({
                 title: "",
@@ -111,14 +87,49 @@
                 content: "/eventmanage/eventmanage/addprize?eventId=" + $("#eventId").val() + "&eventGroupId=" + $("#eventGroupId").val(),
                 area: ["565px", "410px"],
                 end: function () {
-
+                    renderdata();
                 }
             });
         });
 
+        $(document).ready(function () {
+            renderdata();
+        });
+
+        //渲染数据
         function renderdata()
         {
-
+            $.ajax({
+                url: "/eventmanage/eventmanage/listprize",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val()
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+                            html += '<tr>';
+                            html += '<td>' + val.Name + '</td>';
+                            html += '<td>' + enumreplace.replacePrizeType(val.PrizeType) + '</td>';
+                            if (val.PrizeType == 1) {
+                                html += '<td></td>';
+                                html += '<td>' + val.Num + '</td>';
+                            } else {
+                                html += '<td>' + val.Num + '</td>';
+                                html += '<td></td>';
+                            }
+                            html += '<td class="operate"><a href="javascript:;" data-id=' + val.Id + ' class="prizebtn amend update">修改</a><a href="javascript:;" class="prizebtn delete" data-id=' + val.Id + '>删除</a></td>';
+                            html += '</tr>';
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
         }
 
         //删除
@@ -155,12 +166,43 @@
                 title: "编辑奖项",
                 type: 2,
                 content: "/eventmanage/eventmanage/updateprize/" + $(this).attr("data-id"),
-                area: ["760px", "550px"],
+                area: ["565px", "410px"],
                 end: function () {
                     renderdata();
                 }
             })
         });
 
+        //保存奖项设置
+        $("#saveprizesetting").click(function () {
+            $.ajax({
+                url: "/eventmanage/eventmanage/prizesettings",
+                type: "post",
+                dataType: "json",
+                data: {
+                    EventId: $("#eventId").val(),
+                    EventGroupId:$("#eventGroupId").val(),
+                    Personal: $("#personal").val(),
+                    Group: $("#group").val()
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("操作成功", { icon: 1, time: 1000 });
+                        renderdata();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                 , error: function () {
+                     layer.closeAll();
+                 }
+            });
+
+        });
     </script>
 }

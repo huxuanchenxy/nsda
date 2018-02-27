@@ -1,6 +1,14 @@
 ﻿(function (w) {
     var enumreplace = {
     };
+    enumreplace.replacePrizeType = function (prizeType) {
+        if (prizeType == 1) {
+            return "个人";
+        }
+        else if (prizeType == 2) {
+            return "团队";
+        }
+    };
     enumreplace.replaceGrade = function (grade) {
         if (grade == 0) {
             return "学前";
