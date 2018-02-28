@@ -34,10 +34,12 @@
                 <img src="/asset/img/detail_06.png" alt="Alternate Text" />
                 <div class="comp">
                     <h3>比赛日期</h3>
-                    <p>@foreach (var item in eventDate)
-                    {
-                        @Html.Raw(item+";")
-                    }</p>
+                    <p>
+                        @foreach (var item in eventDate)
+                        {
+                            @Html.Raw(item+";")
+                        }
+                    </p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">

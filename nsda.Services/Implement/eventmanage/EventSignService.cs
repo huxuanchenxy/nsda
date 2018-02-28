@@ -350,10 +350,11 @@ namespace nsda.Services.Implement.eventmanage
                 var eventGroup = _dbContext.Select<t_event_group>(c => c.eventId == eventId);
                 foreach (var item in eventGroup)
                 {
-                    response.RefereeSignGroup.Add(new RefereeSignGroupResponse {
-                         EventGroupId=item.id,
-                         LeastCount=12,
-                         SignCount=1 
+                    response.RefereeSignGroup.Add(new RefereeSignGroupResponse
+                    {
+                        EventGroupId = item.id,
+                        LeastCount = 12,
+                        SignCount = 1
                     });
                 }
             }
@@ -362,6 +363,21 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventSignService.RefereeSignData", ex);
             }
             return response;
+        }
+
+        //查询当天组别签到人数
+        public int SignUpCount(int eventId, int eventGroupId)
+        {
+            int signUpCount = 0;
+            try
+            {
+                signUpCount = _dbContext.ExecuteScalar($"select count(*) from t_event_sign where eventId={eventId} and eventGroupId={eventGroupId} and eventSignType={(int)EventSignTypeEm.选手} and signdate={DateTime.Now.ToString("yyyy-MM-dd")}").ToObjInt();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventSignService.SignUpCount", ex);
+            }
+            return signUpCount;
         }
     }
 }

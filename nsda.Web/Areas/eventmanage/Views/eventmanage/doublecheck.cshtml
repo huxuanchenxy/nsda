@@ -1,0 +1,195 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "doublecheck";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+<div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id"/>
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId"/>
+    <div class="list-top">
+        @foreach (var item in eventGroup)
+        {
+            if (item.Id == ViewBag.EventGroupId)
+            {
+                <a href="/eventmanage/eventmanage/doublecheck?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+            }
+            else
+            {
+                <a href="/eventmanage/eventmanage/doublecheck?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+            }
+        }
+    </div>
+    <div class="event-con">
+        <div>
+            <img src="/asset/img/vs_03.png" />
+            <h4>第一轮 Double Check 核对评分单</h4>
+        </div>
+        <button class="back"><i class="iconfont icon-54"></i><p>返回输入评分单界面</p></button>
+        <div>
+            <h5>勾选批处理:</h5><button class="pass" id="batchconfirm"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>队伍编号</th>
+                    <th>Pro. 正方</th>
+                    <th>Points</th>
+                    <th>Rank</th>
+                    <th></th>
+                    <th>队伍编号</th>
+                    <th>Con. 反方</th>
+                    <th>Points</th>
+                    <th>Rank</th>
+                    <th>获胜方</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="data">
+                <tr>
+                    <td class="allcheck" rowspan="2"><input type="checkbox" /></td>
+                    <td rowspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="divide" rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2" class="scorelist">
+                        <a href="javascript:;" class="score yes confirm">核对通过</a> <a href="javascript:;" class="score modi">修改评分单</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="allcheck" rowspan="2"><input type="checkbox" /></td>
+                    <td rowspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="divide" rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2" class="scorelist">
+                        <a href="javascript:;" class="score yes confirm">核对通过</a> <a href="javascript:;" class="score modi">修改评分单</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="nextstep" id="nextstep"><p>评分单已经确认完毕</p><p>进入下一轮</p></button>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        //确认完成
+        $("#nextstep").click(function () {
+            var eventId = $("#eventId").val();
+            var eventGroupId = $("#eventGroupId").val();
+            //调用方法 检测是否都已经确认 已确认到下一轮
+            alert("开始下一轮");
+        });
+
+        //确认评分单
+        $(document).on("click", ".confirm", function () {
+            alert("测试");
+        });
+
+        //批量确认评分单
+        $("#batchconfirm").click(function () {
+            var arr = [];
+            $(".chkcofirm").each(function () {
+                if ($(this).is(":checked") == true) {
+                    arr.push($(this).attr("data-id"));
+                }
+            });
+            if (arr.length > 0) {
+                $.ajax({
+                    url: "",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                    },
+                    beforeSend: function () {
+                        layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            layer.msg('操作成功', { icon: 1, time: 1000 });
+                            renderdata();
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+                    , error: function () {
+                        layer.closeAll();
+                    }
+                });
+            } else {
+                layer.msg('请先勾选好数据再进行操作', { icon: 5, time: 1000 });
+            }
+        });
+
+        $(document).ready(function () {
+            renderdata();
+        });
+
+        //渲染数据
+        function renderdata()
+        {
+            $.ajax({
+                url: "",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val(),
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
+
+        }
+    </script>
+}

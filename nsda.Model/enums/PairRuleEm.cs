@@ -11,8 +11,8 @@ namespace nsda.Model.enums
     /// </summary>
     public enum PairRuleEm
     {
-        随机配对=1,
-        高低配对=2,
+        随机配对= 1,
+        高低配对= 2,
         相等配对=3
     }
 }

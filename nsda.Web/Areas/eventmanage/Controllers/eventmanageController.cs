@@ -203,7 +203,10 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(eventId);
             var eventgroup = _eventService.SelectEventGroup(eventId,userContext.Id);
             ViewBag.EventGroup = eventgroup;
-            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            eventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            ViewBag.EventGroupId = eventGroupId;
+            ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(eventId).FirstOrDefault(c=>c.EventGroupId== eventGroupId);
+            ViewBag.SignUp = _eventSignService.SignUpCount(eventId,eventGroupId);
             return View(detail);
         }
         //淘汰赛设置
@@ -224,7 +227,9 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(eventId);
             var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
             ViewBag.EventGroup = eventgroup;
+            eventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(eventId).FirstOrDefault(c=>c.EventGroupId==eventGroupId);
             return View(detail);
         }
         //添加临时报名选手
@@ -232,7 +237,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             return View();
         }
-
         //track查询
         public ActionResult track(int eventId, int eventGroupId = 0)
         {
@@ -244,7 +248,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
-
+        //获奖名单
         public ActionResult winnerlist(int eventId, int eventGroupId = 0)
         {
             var userContext = UserContext.WebUserContext;
@@ -255,7 +259,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
-
         //循环赛赛果
         public ActionResult resulttrackcycling(int eventId, int eventGroupId = 0)
         {
@@ -267,7 +270,6 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
-
         //淘汰赛赛果
         public ActionResult resulttrackknockout(int eventId, int eventGroupId = 0)
         {
@@ -279,7 +281,28 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
-
+        //成绩录入
+        public ActionResult resultinput(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
+        //doublecheck
+        public ActionResult doublecheck(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
         #endregion
 
         #region 赛事信息设置

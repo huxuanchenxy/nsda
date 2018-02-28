@@ -5,6 +5,7 @@
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "淘汰赛设置确认";
     var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+    var knockoutSettings=ViewBag.KnockoutSettings as EventknockoutSettingsResponse
 }
 
 @section styles
@@ -56,7 +57,9 @@
         });
         //开始比赛
         $("#start").click(function () {
-
+            var eventId = $("#eventId").val();
+            var eventGroupId = $("#eventGroupId").val();
+            //调用方法修改当前组别赛事状态
         });
     </script>
 }
