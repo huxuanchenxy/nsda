@@ -372,5 +372,10 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "执行对垒 淘汰赛";
             return View();
         }
+        public ActionResult playerscoredetail()
+        {
+            ViewBag.Message = "查看明细";
+            return View();
+        }
     }
 }

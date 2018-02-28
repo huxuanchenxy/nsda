@@ -72,6 +72,7 @@
     float:left;
     margin-top:10px;
 }
+
 .score-table table{
     border-collapse: collapse;
     width: 96%;
@@ -118,7 +119,9 @@
     background:#F0F0F0;
     color:#5DC1ED;
 }
-
+.score-con .scoredetail{
+    margin-top:60px;
+}
 
 
 
