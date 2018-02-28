@@ -1,9 +1,10 @@
 ﻿@using nsda.Utilities
-@model nsda.Model.dto.response.EventResponse
+@using nsda.Model.dto.response
+@model EventResponse
 @{
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "淘汰赛设置";
-    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
 }
 
 @section styles

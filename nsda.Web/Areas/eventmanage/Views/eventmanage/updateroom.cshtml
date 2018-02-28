@@ -1,7 +1,8 @@
 ﻿@using nsda.Utilities
-@model nsda.Model.dto.response.EventRoomResponse
+@using nsda.Model.dto.response
+@model EventRoomResponse
 @{
-    var eventGroup = ViewBag.EventGroup as List<nsda.Model.dto.response.EventGroupResponse>;
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
 }
 <html>
 <head>

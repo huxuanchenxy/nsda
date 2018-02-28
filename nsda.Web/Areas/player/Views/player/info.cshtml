@@ -1,10 +1,11 @@
 ﻿@using nsda.Utilities
-@model nsda.Model.dto.response.MemberPlayerResponse
+@using nsda.Model.dto.response
+@model MemberPlayerResponse
 @{
     ViewBag.Title = "修改个人资料";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
     var userContext = ViewBag.UserContext as WebUserContext;
-    var coachInfo = ViewBag.CoachInfo as nsda.Model.dto.response.CurrentCoachResponse;
+    var coachInfo = ViewBag.CoachInfo as CurrentCoachResponse;
 }
 @section styles
 {

@@ -1,10 +1,11 @@
 ﻿@using nsda.Utilities
-@model nsda.Model.dto.response.MemberRefereeResponse
+@using nsda.Model.dto.response
+@model MemberRefereeResponse
 @{
     ViewBag.Title = "裁判个人中心";
     Layout = "~/Areas/referee/Views/Shared/_Layout.cshtml";
-    var data = ViewBag.CurrentRefereeEvent as List<nsda.Model.dto.response.RefereeCurrentEventResponse>;
-    var mail = ViewBag.Mail as List<nsda.Model.dto.response.MailResponse>;
+    var data = ViewBag.CurrentRefereeEvent as List<RefereeCurrentEventResponse>;
+    var mail = ViewBag.Mail as List<MailResponse>;
     var userContext = ViewBag.UserContext as WebUserContext;
 }
 @section styles

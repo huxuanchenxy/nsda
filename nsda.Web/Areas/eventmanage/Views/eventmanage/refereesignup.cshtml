@@ -1,9 +1,10 @@
 ﻿@using nsda.Utilities
-@model nsda.Model.dto.response.EventResponse
+@using nsda.Model.dto.response
+@model EventResponse
 @{
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "裁判报名管理";
-    var data = ViewBag.RefereeData as nsda.Model.dto.response.RefereeDataResponse;
+    var data = ViewBag.RefereeData as RefereeDataResponse;
 }
 
 @section styles

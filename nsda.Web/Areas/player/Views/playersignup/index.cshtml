@@ -1,8 +1,9 @@
 ﻿@using nsda.Utilities
+@using nsda.Model.dto.response
 @{
     ViewBag.Title = "会员中心";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
-    var data = ViewBag.Condition as List<nsda.Model.dto.response.EventConditionResponse>;
+    var data = ViewBag.Condition as List<EventConditionResponse>;
 }
 @section styles
 {

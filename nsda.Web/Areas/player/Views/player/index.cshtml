@@ -1,9 +1,10 @@
 ﻿@using nsda.Utilities
+@using nsda.Model.dto.response
 @{
     ViewBag.Title = "会员中心";
     Layout = "~/Areas/player/Views/Shared/_Layout.cshtml";
-    var mail = ViewBag.Mail as List<nsda.Model.dto.response.MailResponse>;
-    var data = ViewBag.CurrentPlayerEvent as List<nsda.Model.dto.response.PlayerCurrentEventResponse>;
+    var mail = ViewBag.Mail as List<MailResponse>;
+    var data = ViewBag.CurrentPlayerEvent as List<PlayerCurrentEventResponse>;
     var eventId = 0;
     var flag = 0;
     var rowspan = 1;
