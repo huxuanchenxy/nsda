@@ -133,11 +133,14 @@
     <Compile Include="dto\response\SignResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\response\SysUserResponse.cs" />
+    <Compile Include="dto\response\TrackCyclingResponse.cs" />
+    <Compile Include="dto\response\TrackKnockoutResponse.cs" />
     <Compile Include="dto\response\VoteResponse.cs" />
     <Compile Include="dto\Result.cs" />
     <Compile Include="enums\AvoidRulesEm.cs" />
     <Compile Include="enums\CardTypeEm.cs" />
     <Compile Include="enums\CheckRefereeEnum.cs" />
+    <Compile Include="enums\CyclingMatchStatusEm.cs" />
     <Compile Include="enums\CyclingRaceStatusEm.cs" />
     <Compile Include="enums\DataTypeEm.cs" />
     <Compile Include="enums\EventAreaEm.cs" />

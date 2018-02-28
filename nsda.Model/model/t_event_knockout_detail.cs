@@ -37,7 +37,7 @@ namespace nsda.Models
     
         public int screenings { get; set; }
     
-        public DateTime starttime { get; set; }
+        public DateTime comptime { get; set; }
     
         /// <summary>
         /// 创建时间

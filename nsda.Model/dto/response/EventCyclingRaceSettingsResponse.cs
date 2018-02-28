@@ -66,6 +66,6 @@ namespace nsda.Model.dto.response
         public int EventGroupId { get; set; }
         public int CyclingRaceId { get; set; }
         public int Screenings { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateTime CompTime { get; set; }
     }
 }

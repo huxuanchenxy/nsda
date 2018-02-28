@@ -59,7 +59,7 @@ namespace nsda.Model.dto.response
 
         public int Screenings { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime CompTime { get; set; }
 
     }
 }

@@ -60,6 +60,6 @@ namespace nsda.Model.dto.request
 
         public int Screenings { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime CompTime { get; set; }
     }
 }

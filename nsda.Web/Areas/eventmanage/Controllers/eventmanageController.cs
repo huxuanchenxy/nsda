@@ -20,6 +20,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 {
     public class eventmanageController : eventbaseController
     {
+        IEventCyclingRaceService _eventCyclingRaceService;
+        IEventknockoutService _eventknockoutService;
         IEventRoomService _eventRoomService;
         IEventPrizeService _eventPrizeService;
         IMemberService _memberService;
@@ -31,8 +33,10 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         IEventCyclingRaceSettingsService _eventCyclingRaceSettingsService;
         IEventknockoutSettingsService _eventknockoutSettingsService;
         IEventRegularAwardsService _eventRegularAwardsService;
-        public eventmanageController(IEventRegularAwardsService eventRegularAwardsService,IEventknockoutSettingsService eventknockoutSettingsService,IEventCyclingRaceSettingsService eventCyclingRaceSettingsService,IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
+        public eventmanageController(IEventCyclingRaceService eventCyclingRaceService, IEventknockoutService eventknockoutService,IEventRegularAwardsService eventRegularAwardsService,IEventknockoutSettingsService eventknockoutSettingsService,IEventCyclingRaceSettingsService eventCyclingRaceSettingsService,IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
         {
+            _eventCyclingRaceService = eventCyclingRaceService;
+            _eventknockoutService = eventknockoutService;
             _eventRegularAwardsService = eventRegularAwardsService;
             _eventknockoutSettingsService = eventknockoutSettingsService;
             _eventCyclingRaceSettingsService = eventCyclingRaceSettingsService;
@@ -275,6 +279,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
+
         #endregion
 
         #region 赛事信息设置
@@ -748,6 +753,24 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             string msg = string.Empty;
             var flag = _eventknockoutSettingsService.Settints(request, out msg);
             return Result<string>(flag, msg);
+        }
+        #endregion
+
+        #region 赛果
+        //淘汰赛赛果
+        [HttpGet]
+        public ContentResult trackknockout(int eventId, int eventGroupId, string keyValue)
+        {
+            var data = _eventknockoutService.TrackKnockout(eventId, eventGroupId,keyValue);
+            return Result(true, string.Empty, data);
+        }
+
+        //循环赛赛果
+        [HttpGet]
+        public ContentResult trackcycling(int eventId, int eventGroupId, string keyValue)
+        {
+            var data = _eventCyclingRaceService.TrackCycling(eventId, eventGroupId, keyValue);
+            return Result(true, string.Empty, data);
         }
         #endregion
     }

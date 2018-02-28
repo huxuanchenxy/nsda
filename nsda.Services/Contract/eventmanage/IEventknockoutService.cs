@@ -1,4 +1,5 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.dto.response;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace nsda.Services.Contract.eventmanage
     {
         bool Start(int eventId, int eventGroupId, out string msg);
         bool Next(int eventId, int eventGroupId, int current, out string msg);
+        List<TrackKnockoutResponse> TrackKnockout(int eventId, int eventGroupId,string keyValue);
     }
 }

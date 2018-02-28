@@ -1,4 +1,5 @@
-﻿using nsda.Models;
+﻿using nsda.Model.dto.response;
+using nsda.Models;
 using nsda.Repository;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
@@ -84,5 +85,19 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
+        public List<TrackCyclingResponse> TrackCycling(int eventId, int eventGroupId, string keyValue)
+        {
+            List<TrackCyclingResponse> list = new List<TrackCyclingResponse>();
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventCyclingRaceService.TrackKnockout", ex);
+            }
+            return list;
+        }
+
     }
 }

@@ -45,7 +45,7 @@ namespace nsda.Models
     
         public bool isBye { get; set; }
     
-        public bool isConfirm { get; set; }
+        public CyclingMatchStatusEm cyclingMatchStatus { get; set; }
     
         /// <summary>
         /// 修改时间

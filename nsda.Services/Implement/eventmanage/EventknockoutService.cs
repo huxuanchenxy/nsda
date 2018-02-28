@@ -1,4 +1,5 @@
-﻿using nsda.Models;
+﻿using nsda.Model.dto.response;
+using nsda.Models;
 using nsda.Repository;
 using nsda.Services.Contract.eventmanage;
 using nsda.Services.Contract.member;
@@ -66,6 +67,20 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventknockoutService.Next", ex);
             }
             return flag;
+        }
+        //淘汰赛赛果
+        public List<TrackKnockoutResponse> TrackKnockout(int eventId, int eventGroupId, string keyValue)
+        {
+            List < TrackKnockoutResponse> list = new List<TrackKnockoutResponse>();
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventknockoutService.TrackKnockout", ex);
+            }
+            return list;
         }
     }
 }

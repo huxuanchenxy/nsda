@@ -9,9 +9,57 @@
     <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
 }
 
-积分详情页
+<div class="score-con">
+    <div class="score-table scoredetail">
+        <table>
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>队伍编号</th>
+                    <th>会员编号</th>
+                    <th>姓名</th>
+                    <th>Points</th>
+                    <th>Rank总和</th>
+                    <th>队伍总分</th>
+                    <th>队伍Rank</th>
+                    <th>循环赛</th>
+                    <th>对手胜</th>
+                    <th>对手队伍总分</th>
+                    <th>对手Rank总和</th>
+                    <th>淘汰赛</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2" class="remark"><p>Rd1:W</p><p>Rd1:W</p><p>Rd1:W</p></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                    <td rowspan="2"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section scripts
 {
-    <script src="/asset/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#collapseTwo").addClass("in");
+        });
+    </script>
 }

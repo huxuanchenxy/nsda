@@ -43,14 +43,6 @@
         <div class="set">
             <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
             <a href="javascript:;" id="search" class="search">搜索</a>
-            <select size="2" id="sel" style="display:none;">
-                <option>123</option>
-                <option>23456</option>
-                <option>1111</option>
-                <option>123333</option>
-                <option>aaaa</option>
-                <option>1bbb23</option>
-            </select>
         </div>
         <table>
             <thead>
@@ -69,7 +61,7 @@
                     <th>对手Rank总和</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="data">
                 <tr>
                     <td rowspan="2"></td>
                     <td rowspan="2"></td>
@@ -98,7 +90,38 @@
 {
     <script>
         $(document).ready(function () {
+            renderdata("");
+        });
 
+        //渲染数据
+        function renderdata(keyvalue) {
+            $.ajax({
+                url: "/eventmanage/eventmanage/trackcycling",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val(),
+                    keyValue: keyvalue
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
+        }
+
+        //查询
+        $("#search").click(function () {
+            var keyvalue = $("#txt").val();
+            renderdata(keyvalue);
         });
     </script>
 }

@@ -85,7 +85,7 @@ namespace nsda.Services.Implement.eventmanage
                         string messages = string.Empty;
                         foreach (var itemss in items.ListCyclingRaceDetail)
                         {
-                            if (itemss.StartTime == DateTime.MaxValue || itemss.StartTime == DateTime.MinValue)
+                            if (itemss.CompTime == DateTime.MaxValue || itemss.CompTime == DateTime.MinValue)
                             {
                                 messages = "Flight开始时间有误";
                                 break;
@@ -149,7 +149,7 @@ namespace nsda.Services.Implement.eventmanage
                                     eventGroupId=itemss.EventGroupId,
                                     eventId=itemss.EventId,
                                     screenings=itemss.Screenings,
-                                    starttime=itemss.StartTime
+                                    comptime=itemss.CompTime
                                 });
                             }
                         }
@@ -215,7 +215,7 @@ namespace nsda.Services.Implement.eventmanage
                                             EventGroupId = itemss.eventGroupId,
                                             EventId = itemss.eventId,
                                             Id = itemss.id,
-                                            StartTime = itemss.starttime
+                                            CompTime = itemss.comptime
                                         };
                                         response.ListCyclingRaceDetail.Add(responses);
                                     }

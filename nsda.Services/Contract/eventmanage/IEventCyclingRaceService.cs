@@ -1,4 +1,5 @@
-﻿using nsda.Utilities;
+﻿using nsda.Model.dto.response;
+using nsda.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace nsda.Services.Contract.eventmanage
         bool Start(int eventId, int eventGroupId, out string msg);
         //开始下一轮
         bool Next(int eventId, int eventGroupId,int current, out string msg);
+        List<TrackCyclingResponse> TrackCycling(int eventId, int eventGroupId, string keyValue);
     }
 }
