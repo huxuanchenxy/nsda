@@ -153,6 +153,7 @@
     <Compile Include="enums\GenderEm.cs" />
     <Compile Include="enums\GradeEm.cs" />
     <Compile Include="enums\InvoiceTypeEm.cs" />
+    <Compile Include="enums\KnockoutMatchStatusEm.cs" />
     <Compile Include="enums\KnockoutStatusEm.cs" />
     <Compile Include="enums\KnockoutTypeEm.cs" />
     <Compile Include="enums\LeavingStatusEm.cs" />
