@@ -69,7 +69,7 @@ namespace nsda.Services.Implement.admin
             }
             return list;
         }
-        //订单详情
+        //订单详情 （平台管理员和选手）
         public OrderDetailResponse Detail(int id)
         {
             OrderDetailResponse response = null;

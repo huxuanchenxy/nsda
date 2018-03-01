@@ -30,7 +30,7 @@ namespace nsda.Services.Implement.eventmanage
             _memberOperLogService = memberOperLogService;
         }
 
-        //新增n间教室
+        //新增教室
         public bool Insert(EventRoomRequest request, out string msg)
         {
             bool flag = false;
@@ -259,7 +259,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-        // 教室列表
+        //教室列表
         public List<EventRoomResponse> List(EventRoomQueryRequest request)
         {
             List<EventRoomResponse> list = new List<EventRoomResponse>();
@@ -328,7 +328,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return response;
         }
-
         //预估房间数量
         public int RoomCount(int eventId, out bool isVisiable)
         {

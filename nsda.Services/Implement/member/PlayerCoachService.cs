@@ -15,7 +15,7 @@ using System.Text;
 namespace nsda.Services.member
 {
     /// <summary>
-    /// 选手教练绑定管理
+    /// 选手教练绑定管理(双向)
     /// </summary>
     public class PlayerCoachService: IPlayerCoachService
     {

@@ -28,7 +28,236 @@ namespace nsda.Services.Implement.member
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
         }
+   
+        #region 选手
+        //临时选手绑定 生成支付订单
+        public int BindTempPlayer(BindTempPlayerRequest request, out string msg)
+        {
+            int orderId = 0;
+            msg = string.Empty;
+            try
+            {
+                //校验数据的真实性
+                if (request.EventCode.IsEmpty())
+                {
+                    msg = "赛事编码不能为空";
+                    return orderId;
+                }
+                if (request.GroupNum.IsEmpty())
+                {
+                    msg = "队伍编码不能为空";
+                    return orderId;
+                }
+                if (request.PlayerName.IsEmpty())
+                {
+                    msg = "选手姓名不能为空";
+                    return orderId;
+                }
+                if (request.ContactMobile.IsEmpty())
+                {
+                    msg = "联系电话不能为空";
+                    return orderId;
+                }
 
+                var tevent = _dbContext.Select<t_event>(c => c.code == request.EventCode).FirstOrDefault();
+                if (tevent == null)
+                {
+                    msg = "赛事编码有误";
+                    return orderId;
+                }
+
+                if (tevent.eventStatus != EventStatusEm.比赛完成)
+                {
+                    msg = "赛事未完成不能进行绑定";
+                    return orderId;
+                }
+
+                var data = _dbContext.Select<t_member_temp>(c => c.name == request.PlayerName && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定 && c.eventId == tevent.id).FirstOrDefault();
+                if (data == null)
+                {
+                    msg = "数据不存在，请核对后再操作";
+                    return orderId;
+                }
+
+                //if (data.tomemberId != null && data.tomemberId > 0)
+                //{
+                //    if (data.tomemberId != request.MemberId)
+                //    {
+                //        msg = "此信息已绑定过";
+                //        return orderId;
+                //    }
+                //}
+
+                t_order order = _dbContext.Select<t_order>(c => c.memberId == data.memberId && c.orderType == OrderTypeEm.临时选手绑定 && c.sourceId == data.id).FirstOrDefault();
+                if (order == null)//没创建过订单 
+                {
+                    try
+                    {
+                        _dbContext.BeginTransaction();
+                        //创建订单
+                        var orderid = _dbContext.Insert(new t_order
+                        {
+                            isNeedInvoice = false,
+                            mainOrderId = null,
+                            memberId = data.memberId,
+                            money = tevent.signfee,
+                            orderStatus = OrderStatusEm.等待支付,
+                            orderType = OrderTypeEm.临时选手绑定,
+                            payExpiryDate = DateTime.Now.AddYears(3),
+                            remark = "临时选手绑定",
+                            sourceId = data.id,
+                            totalcoupon = 0,
+                            totaldiscount = 0
+                        }).ToObjInt();
+                        _dbContext.Insert(new t_order_detail
+                        {
+                            memberId = data.memberId,
+                            orderId = orderid,
+                            coupon = 0,
+                            discountprice = 0,
+                            money = tevent.signfee,
+                            productId = 0,
+                            name = $"{tevent.name}报名费",
+                            number = 1,
+                            unitprice = tevent.signfee
+                        });
+                        //生成支付链接
+                        data.tomemberId = request.MemberId;
+                        data.updatetime = DateTime.Now;
+                        _dbContext.Update(data);
+                        _dbContext.CommitChanges();
+                        orderId = orderid;
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "服务异常";
+                        _dbContext.Rollback();
+                        LogUtils.LogError("MemberTempService.BindTempPlayerTran", ex);
+                    }
+                }
+                else//创建过订单
+                {
+                    if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
+                    {
+                        orderId = order.id;
+                    }
+                    else
+                    {
+                        msg = "状态已改变";
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                msg = "服务异常";
+                LogUtils.LogError("MemberTempService.BindTempPlayer", ex);
+            }
+            return orderId;
+        }
+        // 支付回调 进行数据迁移
+        public void Callback(int memberId, int sourceId)
+        {
+            try
+            {
+                using (IDBContext dbcontext = new MySqlDBContext())
+                {
+                    t_member_temp temp = dbcontext.Get<t_member_temp>(sourceId);
+                    if (temp != null && temp.memberId == memberId)
+                    {
+                        try
+                        {
+                            dbcontext.BeginTransaction();
+                            t_member_points points = dbcontext.Select<t_member_points>(c => c.memberId == temp.memberId).FirstOrDefault();
+                            dbcontext.Execute($"update t_member_points set playerPoints=playerPoints+{points.playerPoints},coachPoints=coachPoints+{points.coachPoints},refereePoints=refereePoints+{points.refereePoints} where memberId={temp.tomemberId}");
+                            dbcontext.Execute($"update t_member_temp set updateTime='{DateTime.Now}',tempStatus={(int)TempStatusEm.已绑定}  where id={temp.id}");
+                            dbcontext.Execute($"update t_member_points_record set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            dbcontext.Execute($"update t_event_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
+                            //对垒表也要修改
+                            //1 循环赛
+                            dbcontext.Execute($"update t_event_cycling_match_playerresult set playerId={temp.tomemberId} where playerId={temp.memberId} and isdelete=0");
+                            //2 淘汰赛
+
+                            dbcontext.CommitChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            dbcontext.Rollback();
+                            LogUtils.LogError("MemberTempService.CallbackTran", ex);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberTempService.Callback", ex);
+            }
+        }
+        #endregion
+
+        #region 裁判
+        //临时裁判绑定 
+        public bool BindTempReferee(BindTempRefereeRequest request, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                //校验数据的真实性
+                if (request.TempRefereeNum.IsEmpty())
+                {
+                    msg = "临时裁判编码不能为空";
+                    return flag;
+                }
+
+                if (request.ContactMobile.IsEmpty())
+                {
+                    msg = "手机号码不能为空";
+                    return flag;
+                }
+
+                var data = _dbContext.Select<t_member_temp>(c => c.contactmobile == request.ContactMobile && c.code == request.TempRefereeNum && c.tempType == Model.enums.TempTypeEm.临时裁判 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
+                if (data == null)
+                {
+                    msg = "数据不存在或已绑定过，请核对后再操作";
+                    return flag;
+                }
+
+                t_event t_event = _dbContext.Get<t_event>(data.eventId);
+                if (t_event.eventStatus != EventStatusEm.比赛完成)
+                {
+                    msg = "赛事未完成不能进行绑定";
+                    return flag;
+                }
+
+                try
+                {
+                    _dbContext.BeginTransaction();
+                    t_member_points points = _dbContext.Select<t_member_points>(c => c.memberId == data.memberId).FirstOrDefault();
+                    _dbContext.Execute($"update t_member_points set playerPoints=playerPoints+{points.playerPoints},coachPoints=coachPoints+{points.coachPoints},refereePoints=refereePoints+{points.refereePoints} where memberId={request.MemberId}");
+                    _dbContext.Execute($"update t_member_temp set tomemberId={request.MemberId},updateTime='{DateTime.Now}',tempStatus={(int)TempStatusEm.已绑定}  where id={data.id}");
+                    _dbContext.Execute($"update t_member_points_record set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_event_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_event_cycling_match set refereeId={request.MemberId} where  refereeId={data.memberId} and isdelete=0");
+                    _dbContext.Execute($"update t_event_cycling_match_playerresult set refereeId={request.MemberId} where refereeId={data.memberId} and isdelete=0");
+                    _dbContext.CommitChanges();
+                    flag = true;
+                }
+                catch (Exception ex)
+                {
+                    _dbContext.Rollback();
+                    LogUtils.LogError("MemberTempService.BindTempRefereeTran", ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberTempService.BindTempReferee", ex);
+            }
+            return flag;
+        }
+        #endregion
+
+        #region 赛事管理员
         //新增临时选手
         public bool InsertTempPlayer(List<TempPlayerRequest> request, int memberId, out string msg)
         {
@@ -167,12 +396,12 @@ namespace nsda.Services.Implement.member
                         {
                             _dbContext.Insert(new t_event_sign
                             {
-                                eventGroupId =tempplayer.EventGroupId,
-                                eventId=tempplayer.EventId,
-                                eventSignType=EventSignTypeEm.选手,
-                                eventSignStatus=EventSignStatusEm.待签到,
-                                signdate=itemdate.eventMatchDate,
-                                memberId=memberInsertId,
+                                eventGroupId = tempplayer.EventGroupId,
+                                eventId = tempplayer.EventId,
+                                eventSignType = EventSignTypeEm.选手,
+                                eventSignStatus = EventSignStatusEm.待签到,
+                                signdate = itemdate.eventMatchDate,
+                                memberId = memberInsertId,
                                 isStop = false
                             });
                         }
@@ -276,9 +505,9 @@ namespace nsda.Services.Implement.member
                         eventId = request.EventId,
                         memberId = memberInsertId,
                         refereeSignUpStatus = RefereeSignUpStatusEm.已录取,
-                        isFlag=false
+                        isFlag = false
                     });
-                    if (t_event.eventStatus==EventStatusEm.比赛中)
+                    if (t_event.eventStatus == EventStatusEm.比赛中)
                     {
                         var eventdate = _dbContext.Select<t_event_matchdate>(c => c.eventId == t_event.id);
                         foreach (var itemdate in eventdate)
@@ -291,7 +520,7 @@ namespace nsda.Services.Implement.member
                                 eventSignStatus = EventSignStatusEm.待签到,
                                 signdate = itemdate.eventMatchDate,
                                 memberId = memberInsertId,
-                                isStop=false
+                                isStop = false
                             });
                         }
                     }
@@ -315,190 +544,9 @@ namespace nsda.Services.Implement.member
             }
             return flag;
         }
-        //临时选手绑定 生成支付订单
-        public int BindTempPlayer(BindTempPlayerRequest request, out string msg)
-        {
-            int orderId = 0;
-            msg = string.Empty;
-            try
-            {
-                //校验数据的真实性
-                if (request.EventCode.IsEmpty())
-                {
-                    msg = "赛事编码不能为空";
-                    return orderId;
-                }
-                if (request.GroupNum.IsEmpty())
-                {
-                    msg = "队伍编码不能为空";
-                    return orderId;
-                }
-                if (request.PlayerName.IsEmpty())
-                {
-                    msg = "选手姓名不能为空";
-                    return orderId;
-                }
-                if (request.ContactMobile.IsEmpty())
-                {
-                    msg = "联系电话不能为空";
-                    return orderId;
-                }
+        #endregion
 
-                var tevent = _dbContext.Select<t_event>(c => c.code == request.EventCode).FirstOrDefault();
-                if (tevent == null)
-                {
-                    msg = "赛事编码有误";
-                    return orderId;
-                }
-
-                if (tevent.eventStatus != EventStatusEm.比赛完成)
-                {
-                    msg = "赛事未完成不能进行绑定";
-                    return orderId;
-                }
-
-                var data = _dbContext.Select<t_member_temp>(c => c.name == request.PlayerName && c.contactmobile == request.ContactMobile && c.code == request.GroupNum && c.tempType == TempTypeEm.临时选手 && c.tempStatus == TempStatusEm.待绑定&&c.eventId==tevent.id).FirstOrDefault();
-                if (data == null)
-                {
-                    msg = "数据不存在，请核对后再操作";
-                    return orderId;
-                }
-
-                //if (data.tomemberId != null && data.tomemberId > 0)
-                //{
-                //    if (data.tomemberId != request.MemberId)
-                //    {
-                //        msg = "此信息已绑定过";
-                //        return orderId;
-                //    }
-                //}
-
-                t_order order = _dbContext.Select<t_order>(c => c.memberId == data.memberId && c.orderType == OrderTypeEm.临时选手绑定 && c.sourceId == data.id).FirstOrDefault();
-                if (order == null)//没创建过订单 
-                {
-                    try
-                    {
-                        _dbContext.BeginTransaction();
-                        //创建订单
-                        var orderid = _dbContext.Insert(new t_order
-                        {
-                            isNeedInvoice = false,
-                            mainOrderId = null,
-                            memberId = data.memberId,
-                            money = tevent.signfee,
-                            orderStatus = OrderStatusEm.等待支付,
-                            orderType = OrderTypeEm.临时选手绑定,
-                            payExpiryDate = DateTime.Now.AddYears(3),
-                            remark = "临时选手绑定",
-                            sourceId = data.id,
-                            totalcoupon = 0,
-                            totaldiscount = 0
-                        }).ToObjInt();
-                        _dbContext.Insert(new t_order_detail
-                        {
-                            memberId = data.memberId,
-                            orderId = orderid,
-                            coupon = 0,
-                            discountprice = 0,
-                            money = tevent.signfee,
-                            productId = 0,
-                            name = $"{tevent.name}报名费",
-                            number = 1,
-                            unitprice = tevent.signfee
-                        });
-                        //生成支付链接
-                        data.tomemberId = request.MemberId;
-                        data.updatetime = DateTime.Now;
-                        _dbContext.Update(data);
-                        _dbContext.CommitChanges();
-                        orderId = orderid;
-                    }
-                    catch (Exception ex)
-                    {
-                        msg = "服务异常";
-                        _dbContext.Rollback();
-                        LogUtils.LogError("MemberTempService.BindTempPlayerTran", ex);
-                    }
-                }
-                else//创建过订单
-                {
-                    if (order.orderStatus != OrderStatusEm.等待支付 && order.orderStatus != OrderStatusEm.支付失败)
-                    {
-                        orderId = order.id;
-                    }
-                    else
-                    {
-                        msg = "状态已改变";
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                msg = "服务异常";
-                LogUtils.LogError("MemberTempService.BindTempPlayer", ex);
-            }
-            return orderId;
-        }
-        //临时教练绑定 
-        public bool BindTempReferee(BindTempRefereeRequest request, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                //校验数据的真实性
-                if (request.TempRefereeNum.IsEmpty())
-                {
-                    msg = "临时裁判编码不能为空";
-                    return flag;
-                }
-
-                if (request.ContactMobile.IsEmpty())
-                {
-                    msg = "手机号码不能为空";
-                    return flag;
-                }
-
-                var data = _dbContext.Select<t_member_temp>(c => c.contactmobile == request.ContactMobile && c.code == request.TempRefereeNum && c.tempType == Model.enums.TempTypeEm.临时裁判 && c.tempStatus == TempStatusEm.待绑定).FirstOrDefault();
-                if (data == null)
-                {
-                    msg = "数据不存在或已绑定过，请核对后再操作";
-                    return flag;
-                }
-
-                t_event t_event = _dbContext.Get<t_event>(data.eventId);
-                if (t_event.eventStatus != EventStatusEm.比赛完成)
-                {
-                    msg = "赛事未完成不能进行绑定";
-                    return flag;
-                }
-
-                try
-                {
-                    _dbContext.BeginTransaction();
-                    t_member_points points = _dbContext.Select<t_member_points>(c => c.memberId == data.memberId).FirstOrDefault();
-                    _dbContext.Execute($"update t_member_points set playerPoints=playerPoints+{points.playerPoints},coachPoints=coachPoints+{points.coachPoints},refereePoints=refereePoints+{points.refereePoints} where memberId={request.MemberId}");
-                    _dbContext.Execute($"update t_member_temp set tomemberId={request.MemberId},updateTime='{DateTime.Now}',tempStatus={(int)TempStatusEm.已绑定}  where id={data.id}");
-                    _dbContext.Execute($"update t_member_points_record set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_event_referee_signup set memberId={request.MemberId} where memberId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_event_cycling_match set refereeId={request.MemberId} where  refereeId={data.memberId} and isdelete=0");
-                    _dbContext.Execute($"update t_event_cycling_match_playerresult set refereeId={request.MemberId} where refereeId={data.memberId} and isdelete=0");
-                    _dbContext.CommitChanges();
-                    flag = true;
-                }
-                catch (Exception ex)
-                {
-                    _dbContext.Rollback();
-                    LogUtils.LogError("MemberTempService.BindTempRefereeTran", ex);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("MemberTempService.BindTempReferee", ex);
-            }
-            return flag;
-        }
+        #region 平台管理
         //临时会员数据列表
         public List<MemberTempResponse> ListPlayer(TempMemberQueryRequest request)
         {
@@ -560,43 +608,6 @@ namespace nsda.Services.Implement.member
             }
             return list;
         }
-        // 支付回调 进行数据迁移
-        public void Callback(int memberId, int sourceId)
-        {
-            try
-            {
-                using (IDBContext dbcontext = new MySqlDBContext())
-                {
-                    t_member_temp temp = dbcontext.Get<t_member_temp>(sourceId);
-                    if (temp != null && temp.memberId == memberId)
-                    {
-                        try
-                        {
-                            dbcontext.BeginTransaction();
-                            t_member_points points = dbcontext.Select<t_member_points>(c => c.memberId == temp.memberId).FirstOrDefault();
-                            dbcontext.Execute($"update t_member_points set playerPoints=playerPoints+{points.playerPoints},coachPoints=coachPoints+{points.coachPoints},refereePoints=refereePoints+{points.refereePoints} where memberId={temp.tomemberId}");
-                            dbcontext.Execute($"update t_member_temp set updateTime='{DateTime.Now}',tempStatus={(int)TempStatusEm.已绑定}  where id={temp.id}");
-                            dbcontext.Execute($"update t_member_points_record set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                            dbcontext.Execute($"update t_event_player_signup set memberId={temp.tomemberId} where memberId={temp.memberId} and isdelete=0");
-                            //对垒表也要修改
-                            //1 循环赛
-                            dbcontext.Execute($"update t_event_cycling_match_playerresult set playerId={temp.tomemberId} where playerId={temp.memberId} and isdelete=0");
-                            //2 淘汰赛
-
-                            dbcontext.CommitChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            dbcontext.Rollback();
-                            LogUtils.LogError("MemberTempService.CallbackTran", ex);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("MemberTempService.Callback", ex);
-            }
-        }
+        #endregion
     }
 }

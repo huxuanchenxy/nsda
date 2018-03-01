@@ -29,6 +29,7 @@ namespace nsda.Services.Implement.eventmanage
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
         }
+       
         //设置循环赛
         public bool Settints(List<EventCyclingRaceSettingsRequest> request, out string msg)
         {

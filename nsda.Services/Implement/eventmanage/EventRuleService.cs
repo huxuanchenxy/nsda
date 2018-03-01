@@ -29,6 +29,8 @@ namespace nsda.Services.Implement.eventmanage
             _memberOperLogService = memberOperLogService;
             _sysOperLogService = sysOperLogService;
         }
+
+        #region 赛事管理员
         //编辑循环赛规则
         public bool CyclingRaceRule(CyclingRaceRuleRequest request, out string msg)
         {
@@ -198,5 +200,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return response;
         }
+        #endregion 
     }
 }

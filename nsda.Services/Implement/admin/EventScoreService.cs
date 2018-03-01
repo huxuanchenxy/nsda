@@ -29,7 +29,8 @@ namespace nsda.Services.Implement.admin
             _dataRepository = dataRepository;
             _sysOperLogService = sysOperLogService;
         }
-
+        #region 平台管理员查询
+        //上传评分单
         public bool Insert(EventScoreRequest request, out string msg)
         {
             bool flag = false;
@@ -53,7 +54,7 @@ namespace nsda.Services.Implement.admin
             }
             return flag;
         }
-
+        //删除评分单
         public bool Delete(int id,int sysUserId,out string msg)
         {
             bool flag = false;
@@ -81,7 +82,7 @@ namespace nsda.Services.Implement.admin
             }
             return flag;
         }
-
+        //评分单列表
         public List<EventScoreResponse> List(int eventId,int eventGroupId)
         {
             List<EventScoreResponse> list = new List<EventScoreResponse>();
@@ -96,7 +97,9 @@ namespace nsda.Services.Implement.admin
             }
             return list;
         }
+        #endregion
 
+        #region 选手 查询报名比赛的评分单列表
         //评分单下载
         public List<EventScoreResponse> PlayerList(PlayerEventScoreQueryRequest request)
         {
@@ -115,5 +118,7 @@ namespace nsda.Services.Implement.admin
             }
             return list;
         }
+        #endregion
+
     }
 }

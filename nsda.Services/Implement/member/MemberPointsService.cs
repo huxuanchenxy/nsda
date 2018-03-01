@@ -86,7 +86,7 @@ namespace nsda.Services.Implement.member
             }
             return list;
         }
-
+        //选手积分列表(返回总积分)
         public List<PlayerPointsRecordResponse> PlayerPointsRecord(PlayerPointsRecordQueryRequest request, out decimal totalPoints)
         {
             totalPoints = 0m;

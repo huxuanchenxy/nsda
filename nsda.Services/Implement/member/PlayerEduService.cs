@@ -31,7 +31,7 @@ namespace nsda.Services.member
             _mailService = mailService;
         }
 
-        //1.0 添加教育经历
+        //添加教育经历
         public  bool Insert(PlayerEduRequest request,out string msg)
         {
             bool flag = false;
@@ -64,7 +64,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.1 修改教育经历
+        //修改教育经历
         public  bool Edit(PlayerEduRequest request, out string msg)
         {
             bool flag = false;
@@ -104,7 +104,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.2 删除教育经历
+        //删除教育经历
         public  bool Delete(int id,int memberId,out string msg)
         {
             bool flag = false;
@@ -132,7 +132,7 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //1.3 教育经历列表
+        //教育经历列表
         public List<PlayerEduResponse> List(PlayerEduExperQueryRequest request)
         {
             List<PlayerEduResponse> list = new List<PlayerEduResponse>();

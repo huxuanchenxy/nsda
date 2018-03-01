@@ -33,6 +33,8 @@ namespace nsda.Services.Implement.member
             _memberOperLogService = memberOperLogService;
             _mailService = mailService;
         }
+       
+        #region 选手
         //获取用户可报名的组别
         public List<EventGroupResponse> EventGroup(int eventId, int memberId)
         {
@@ -679,53 +681,6 @@ namespace nsda.Services.Implement.member
             }
             return list;
         }
-        //选手报名列表
-        public List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request)
-        {
-            List<EventPlayerSignUpListResponse> list = new List<EventPlayerSignUpListResponse>();
-            try
-            {
-                StringBuilder join = new StringBuilder();
-                if (request.KeyValue.IsNotEmpty())
-                {
-                    request.KeyValue = $"%{request.KeyValue}%";
-                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
-                }
-                if (request.EventGroupId != null && request.EventGroupId > 0)
-                {
-                    join.Append(" and a.eventGroupId=@EventGroupId");
-                }
-                if (request.SignUpStatus != null && request.SignUpStatus > 0)
-                {
-                    join.Append(" and a.signUpStatus=@SignUpStatus");
-                }
-                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,
-                            b.grade,b.gender,b.contactmobile,d.name EventGroupName from t_event_player_signup a 
-                            inner join t_member_player b on a.memberId=b.memberId
-                            inner join t_event c on a.eventId=c.id
-                            inner join t_event_group d on a.eventGroupId=d.id
-                            and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
-                            order by a.groupnum desc 
-                         ";
-                int totalCount = 0;
-                list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                foreach (var item in list)
-                {
-                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by a.enddate limit 1").FirstOrDefault();
-                    if (data != null)
-                    {
-                        item.SchoolName = data.chinessname;
-                        item.CityName = data.name;
-                    }
-                }
-                request.Records = totalCount;
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("SignUpPlayerService.EventPlayerList", ex);
-            }
-            return list;
-        }
         //判断选手是否可以报名
         private bool IsValid(t_event_group group, t_member_player member)
         {
@@ -810,6 +765,112 @@ namespace nsda.Services.Implement.member
                 LogUtils.LogError("SignUpPlayerService.PlayerSignUpList", ex);
             }
             return list;
+        }     
+        //选手退费列表
+        public List<PlayerRefundListResponse> PlayerRefundList(PlayerSignUpQueryRequest request)
+        {
+            List<PlayerRefundListResponse> list = new List<PlayerRefundListResponse>();
+            try
+            {
+                StringBuilder join = new StringBuilder();
+                var sql = $@"select d.code EventCode,d.name EventName,d.eventType EventType,e.name EventGroupName,a.operationStatus OperationStatus 
+                             from t_order_operation a
+                             inner join t_order b on a.orderId=b.id
+                             inner join t_event_player_signup c on b.sourceId=c.id
+                             inner join t_event d on c.eventId=d.id
+                             inner join t_event_group e on c.eventGroupId=e.id
+                             where a.isdelete=0 and a.memberId=@MemberId  and b.orderType={(int)OrderTypeEm.赛事报名}
+                             {join.ToString()} order by a.createtime desc";
+                int totalCount = 0;
+                list = _dbContext.Page<PlayerRefundListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.PlayerRefundList", ex);
+            }
+            return list;
+        }  
+        //报名成功的学员
+        public List<MemberSelectResponse> SelectPlayer(int eventId,int? eventGroupId,string keyvalue)
+        {
+            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
+            try
+            {
+                if (keyvalue.IsEmpty())
+                {
+                    return list;
+                }
+                var dy = new DynamicParameters();
+                dy.Add("KeyValue", $"%{keyvalue}%");
+                StringBuilder sb = new StringBuilder();
+                if (eventGroupId != null&& eventGroupId>0)
+                {
+                    sb.Append($" and a.eventGroupId={eventGroupId}");
+                }
+                var sql = $@"select a.memberId MemberId,b.code MemberCode,b.completename MemberName
+                             from  t_event_player_signup a 
+                             inner join t_member_player b on a.memberId=b.memberId
+                             where a.isdelete=0 and a.eventId={eventId}  and a.signUpStatus={(int)SignUpStatusEm.报名成功}
+                             and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue) {sb.ToString()}
+                           ";
+                list=_dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.SelectPlayer", ex);
+            }
+            return list;
+        }
+        #endregion
+
+        #region 赛事管理员
+        //选手报名列表
+        public List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request)
+        {
+            List<EventPlayerSignUpListResponse> list = new List<EventPlayerSignUpListResponse>();
+            try
+            {
+                StringBuilder join = new StringBuilder();
+                if (request.KeyValue.IsNotEmpty())
+                {
+                    request.KeyValue = $"%{request.KeyValue}%";
+                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
+                }
+                if (request.EventGroupId != null && request.EventGroupId > 0)
+                {
+                    join.Append(" and a.eventGroupId=@EventGroupId");
+                }
+                if (request.SignUpStatus != null && request.SignUpStatus > 0)
+                {
+                    join.Append(" and a.signUpStatus=@SignUpStatus");
+                }
+                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,
+                            b.grade,b.gender,b.contactmobile,d.name EventGroupName from t_event_player_signup a 
+                            inner join t_member_player b on a.memberId=b.memberId
+                            inner join t_event c on a.eventId=c.id
+                            inner join t_event_group d on a.eventGroupId=d.id
+                            and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
+                            order by a.groupnum desc 
+                         ";
+                int totalCount = 0;
+                list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                foreach (var item in list)
+                {
+                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by a.enddate limit 1").FirstOrDefault();
+                    if (data != null)
+                    {
+                        item.SchoolName = data.chinessname;
+                        item.CityName = data.name;
+                    }
+                }
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.EventPlayerList", ex);
+            }
+            return list;
         }
         // 生成签到信息
         public bool RenderSign(int eventId, out string msg)
@@ -849,7 +910,7 @@ namespace nsda.Services.Implement.member
                                         eventSignType = EventSignTypeEm.裁判,
                                         memberId = itemreferee.memberId,
                                         signdate = item.eventMatchDate,
-                                        eventGroupId= itemreferee.eventGroupId,
+                                        eventGroupId = itemreferee.eventGroupId,
                                         isStop = false
                                     });
                                 }
@@ -889,31 +950,9 @@ namespace nsda.Services.Implement.member
             }
             return flag;
         }
-        //选手退费列表
-        public List<PlayerRefundListResponse> PlayerRefundList(PlayerSignUpQueryRequest request)
-        {
-            List<PlayerRefundListResponse> list = new List<PlayerRefundListResponse>();
-            try
-            {
-                StringBuilder join = new StringBuilder();
-                var sql = $@"select d.code EventCode,d.name EventName,d.eventType EventType,e.name EventGroupName,a.operationStatus OperationStatus 
-                             from t_order_operation a
-                             inner join t_order b on a.orderId=b.id
-                             inner join t_event_player_signup c on b.sourceId=c.id
-                             inner join t_event d on c.eventId=d.id
-                             inner join t_event_group e on c.eventGroupId=e.id
-                             where a.isdelete=0 and a.memberId=@MemberId  and b.orderType={(int)OrderTypeEm.赛事报名}
-                             {join.ToString()} order by a.createtime desc";
-                int totalCount = 0;
-                list = _dbContext.Page<PlayerRefundListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("SignUpPlayerService.PlayerRefundList", ex);
-            }
-            return list;
-        }
+        #endregion
+
+        #region 平台管理员
         //未报名成功的队伍 系统申请退费
         public bool ApplyRefund(int eventId, int operUserId, out string msg)
         {
@@ -977,36 +1016,6 @@ namespace nsda.Services.Implement.member
             }
             return flag;
         }
-        //报名成功的学员
-        public List<MemberSelectResponse> SelectPlayer(int eventId,int? eventGroupId,string keyvalue)
-        {
-            List<MemberSelectResponse> list = new List<MemberSelectResponse>();
-            try
-            {
-                if (keyvalue.IsEmpty())
-                {
-                    return list;
-                }
-                var dy = new DynamicParameters();
-                dy.Add("KeyValue", $"%{keyvalue}%");
-                StringBuilder sb = new StringBuilder();
-                if (eventGroupId != null&& eventGroupId>0)
-                {
-                    sb.Append($" and a.eventGroupId={eventGroupId}");
-                }
-                var sql = $@"select a.memberId MemberId,b.code MemberCode,b.completename MemberName
-                             from  t_event_player_signup a 
-                             inner join t_member_player b on a.memberId=b.memberId
-                             where a.isdelete=0 and a.eventId={eventId}  and a.signUpStatus={(int)SignUpStatusEm.报名成功}
-                             and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue) {sb.ToString()}
-                           ";
-                list=_dbContext.Query<MemberSelectResponse>(sql, dy).ToList();
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("SignUpPlayerService.SelectPlayer", ex);
-            }
-            return list;
-        }
+        #endregion 
     }
 }

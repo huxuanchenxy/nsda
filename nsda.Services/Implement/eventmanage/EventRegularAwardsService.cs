@@ -62,7 +62,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-
         //设置详情
         public EventRegularAwardsResponse Detail(int eventId, int eventGroupId)
         {

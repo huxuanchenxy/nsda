@@ -33,6 +33,7 @@ namespace nsda.Services.member
             _memberOperLogService = memberOperLogService;
             _sysOperLogService = sysOperLogService;
         }
+        //登录
         public WebUserContext Login(LoginRequest request, out string msg)
         {
             WebUserContext userContext = null;
@@ -191,41 +192,6 @@ namespace nsda.Services.member
             }
             return flag;
         }
-        //会员列表 
-        public List<MemberResponse> List(MemberQueryRequest request)
-        {
-            List<MemberResponse> list = new List<MemberResponse>();
-            try
-            {
-                StringBuilder join = new StringBuilder();
-                if (request.Account.IsNotEmpty())
-                {
-                    request.Account = $"%{request.Account}%";
-                    join.Append(" and account like @Account");
-                }
-                if (request.MemberStatus.HasValue && request.MemberStatus > 0)
-                {
-                    join.Append(" and memberStatus=@MemberStatus");
-                }
-
-                if (request.MemberType.HasValue && request.MemberType > 0)
-                {
-                    join.Append(" and memberType=@MemberType");
-                }
-                var sql = $@"select * from t_member where isdelete=0 
-                           and memberType not in ({ParamsConfig._tempmembertype}) 
-                           {join.ToString()} order by createtime desc
-                         ";
-                int totalCount = 0;
-                list = _dbContext.Page<MemberResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("MemberService.List", ex);
-            }
-            return list;
-        }
         //删除会员信息
         public bool Delete(int id, int sysUserId, out string msg)
         {
@@ -317,34 +283,7 @@ namespace nsda.Services.member
             }
             return memberId;
         }
-        //强制认证选手账号
-        public bool Force(int id, int sysUserId, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                var detail = _dbContext.Get<t_member>(id);
-                if (detail != null && detail.memberStatus == MemberStatusEm.待认证)
-                {
-                    detail.updatetime = DateTime.Now;
-                    detail.memberStatus = MemberStatusEm.已认证;
-                    _dbContext.Update(detail);
-                    flag = true;
-                }
-                else
-                {
-                    msg = "会员信息不存在";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("MemberService.Force", ex);
-            }
-            return flag;
-        }
+    
         // 选手下拉框
         public List<MemberSelectResponse> SelectPlayer(string key, string value, int memberId)
         {
@@ -1895,5 +1834,73 @@ namespace nsda.Services.member
                 LogUtils.LogError("MemberService.SaveCurrentUser", ex);
             }
         }
+
+        #region 平台管理员
+        //会员列表 
+        public List<MemberResponse> List(MemberQueryRequest request)
+        {
+            List<MemberResponse> list = new List<MemberResponse>();
+            try
+            {
+                StringBuilder join = new StringBuilder();
+                if (request.Account.IsNotEmpty())
+                {
+                    request.Account = $"%{request.Account}%";
+                    join.Append(" and account like @Account");
+                }
+                if (request.MemberStatus.HasValue && request.MemberStatus > 0)
+                {
+                    join.Append(" and memberStatus=@MemberStatus");
+                }
+
+                if (request.MemberType.HasValue && request.MemberType > 0)
+                {
+                    join.Append(" and memberType=@MemberType");
+                }
+                var sql = $@"select * from t_member where isdelete=0 
+                           and memberType not in ({ParamsConfig._tempmembertype}) 
+                           {join.ToString()} order by createtime desc
+                         ";
+                int totalCount = 0;
+                list = _dbContext.Page<MemberResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("MemberService.List", ex);
+            }
+            return list;
+        }
+
+        //强制认证选手账号 防止掉单情况
+        public bool Force(int id, int sysUserId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                var detail = _dbContext.Get<t_member>(id);
+                if (detail != null && detail.memberStatus == MemberStatusEm.待认证)
+                {
+                    detail.updatetime = DateTime.Now;
+                    detail.memberStatus = MemberStatusEm.已认证;
+                    _dbContext.Update(detail);
+                    flag = true;
+                }
+                else
+                {
+                    msg = "会员信息不存在";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("MemberService.Force", ex);
+            }
+            return flag;
+        }
+
+        #endregion 
     }
 }

@@ -33,6 +33,8 @@ namespace nsda.Services.Implement.referee
             _memberOperLogService = memberOperLogService;
             _mailService = mailService;
         }
+      
+        #region 裁判
         //申请当裁判
         public bool Apply(int eventId, int memberId, out string msg)
         {
@@ -99,120 +101,6 @@ namespace nsda.Services.Implement.referee
             }
             return list;
         }
-        //裁判申请列表
-        public List<EventRefereeSignUpListResponse> EventRefereeList(EventRefereeSignUpQueryRequest request)
-        {
-            List<EventRefereeSignUpListResponse> list = new List<EventRefereeSignUpListResponse>();
-            try
-            {
-                StringBuilder join = new StringBuilder();
-                if (request.KeyValue.IsNotEmpty())
-                {
-                    request.KeyValue = $"%{request.KeyValue}%";
-                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
-                }
-                if (request.RefereeSignUpStatus != null && request.RefereeSignUpStatus > 0)
-                {
-                    if ((int)request.RefereeSignUpStatus == 9)//临时裁判
-                    {
-                        join.Append($" and a.isTemp=1 ");
-                    }
-                    else if ((int)request.RefereeSignUpStatus == 8)//标记
-                    {
-                        join.Append($" and a.isFlag=1 ");
-                    }
-                    else
-                    {
-                        join.Append(" and a.refereeSignUpStatus=@RefereeSignUpStatus ");
-                    }
-                }
-                var sql= $@"select a.*,b.code MemberCode,b.completename MemberName,c.account Email,b.contactmobile ContactMobile from t_event_referee_signup a 
-                            inner join t_member_referee b on a.memberId=b.memberId
-                            inner join t_member         c on a.memberId=c.id
-                            inner join t_event d on a.eventId=d.id
-                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 and d.isdelete=0
-                            and   d.memberId=@MemberId and a.eventId=@EventId 
-                            {join.ToString()} order by a.createtime desc
-                          ";
-                int totalCount = 0;
-                list = _dbContext.Page<EventRefereeSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("RefereeSignUpService.EventRefereeList", ex);
-            }
-            return list;
-        }
-        //裁判审核
-        public bool Check(int id,CheckRefereeEnum checkReferee, int memberId, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                t_event_referee_signup referee_signup = _dbContext.Get<t_event_referee_signup>(id);
-                if (referee_signup != null)
-                {
-                    referee_signup.updatetime = DateTime.Now;
-                    referee_signup.refereeSignUpStatus =checkReferee== CheckRefereeEnum.通过 ? RefereeSignUpStatusEm.已录取 : (checkReferee == CheckRefereeEnum.拒绝?RefereeSignUpStatusEm.未录取: RefereeSignUpStatusEm.候选名单);
-                    if (checkReferee == CheckRefereeEnum.通过)
-                    {
-                        t_event t_event = _dbContext.Get<t_event>(referee_signup.eventId);
-                        if (t_event.eventStatus == EventStatusEm.比赛中)
-                        {
-                            var t_event_sign = _dbContext.Select<t_event_sign>(c => c.eventId == referee_signup.eventId && c.memberId == referee_signup.memberId).ToList();
-                            if (t_event_sign == null && t_event_sign.Count > 0)
-                            {
-                                var eventdate = _dbContext.Select<t_event_matchdate>(c => c.eventId == t_event.id);
-                                foreach (var itemdate in eventdate)
-                                {
-                                    _dbContext.Insert(new t_event_sign
-                                    {
-                                        eventGroupId = 0,
-                                        eventId = referee_signup.eventId,
-                                        eventSignType = EventSignTypeEm.裁判,
-                                        eventSignStatus = EventSignStatusEm.待签到,
-                                        signdate = itemdate.eventMatchDate,
-                                        memberId = referee_signup.memberId,
-                                        isStop = false
-                                    });
-                                }
-                            }
-                        }
-                        _dbContext.Update(referee_signup);
-                        if (checkReferee == CheckRefereeEnum.通过)
-                        {
-                            _dbContext.Insert(new t_sys_mail
-                            {
-                                title = $"You meet the qualification to be a judge.",
-                                content = $"Congratulations, your application to be a judge of {t_event.name} has been accepted.",
-                                isRead = false,
-                                mailType = MailTypeEm.赛事报名邀请,
-                                memberId = referee_signup.memberId,
-                                sendMemberId = memberId
-                            });
-
-                        }
-                    }
-                    else {
-                        _dbContext.Update(referee_signup);
-                    }
-                    flag = true;
-                }
-                else
-                {
-                    msg = "报名信息有误";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("RefereeSignUpService.Check", ex);
-            }
-            return flag;
-        }
         //裁判报名列表
         public List<RefereeSignUpListResponse> RefereeSignUpList(RefereeSignUpQueryRequest request)
         {
@@ -252,6 +140,54 @@ namespace nsda.Services.Implement.referee
             }
             return list;
         }
+        #endregion
+
+        #region 赛事管理员
+        //裁判申请列表
+        public List<EventRefereeSignUpListResponse> EventRefereeList(EventRefereeSignUpQueryRequest request)
+        {
+            List<EventRefereeSignUpListResponse> list = new List<EventRefereeSignUpListResponse>();
+            try
+            {
+                StringBuilder join = new StringBuilder();
+                if (request.KeyValue.IsNotEmpty())
+                {
+                    request.KeyValue = $"%{request.KeyValue}%";
+                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue)");
+                }
+                if (request.RefereeSignUpStatus != null && request.RefereeSignUpStatus > 0)
+                {
+                    if ((int)request.RefereeSignUpStatus == 9)//临时裁判
+                    {
+                        join.Append($" and a.isTemp=1 ");
+                    }
+                    else if ((int)request.RefereeSignUpStatus == 8)//标记
+                    {
+                        join.Append($" and a.isFlag=1 ");
+                    }
+                    else
+                    {
+                        join.Append(" and a.refereeSignUpStatus=@RefereeSignUpStatus ");
+                    }
+                }
+                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,c.account Email,b.contactmobile ContactMobile from t_event_referee_signup a 
+                            inner join t_member_referee b on a.memberId=b.memberId
+                            inner join t_member         c on a.memberId=c.id
+                            inner join t_event d on a.eventId=d.id
+                            where a.isdelete=0 and b.isdelete=0 and c.isdelete=0 and d.isdelete=0
+                            and   d.memberId=@MemberId and a.eventId=@EventId 
+                            {join.ToString()} order by a.createtime desc
+                          ";
+                int totalCount = 0;
+                list = _dbContext.Page<EventRefereeSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("RefereeSignUpService.EventRefereeList", ex);
+            }
+            return list;
+        }
         //裁判统计数据
         public RefereeDataResponse RefereeData(int eventId, int memberId)
         {
@@ -267,10 +203,10 @@ namespace nsda.Services.Implement.referee
                 {
                     response.Total = list.Count;
                     response.Pending = list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.待审核).Count();
-                    response.NoPassed = list.Where(c=>c.refereeSignUpStatus==RefereeSignUpStatusEm.未录取).Count();
-                    response.TempReferee = list.Where(c=>c.isTemp).Count();
+                    response.NoPassed = list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.未录取).Count();
+                    response.TempReferee = list.Where(c => c.isTemp).Count();
                     response.Flag = list.Where(c => c.isFlag).Count();
-                    response.Passed= list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.已录取).Count();
+                    response.Passed = list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.已录取).Count();
                     response.Candidate = list.Where(c => c.refereeSignUpStatus == RefereeSignUpStatusEm.候选名单).Count();
                 }
             }
@@ -294,7 +230,8 @@ namespace nsda.Services.Implement.referee
                     {
                         referee_signup.isFlag = false;
                     }
-                    else {
+                    else
+                    {
                         referee_signup.isFlag = true;
                     }
                     referee_signup.updatetime = DateTime.Now;
@@ -314,5 +251,76 @@ namespace nsda.Services.Implement.referee
             }
             return flag;
         }
+        //裁判审核
+        public bool Check(int id, CheckRefereeEnum checkReferee, int memberId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_event_referee_signup referee_signup = _dbContext.Get<t_event_referee_signup>(id);
+                if (referee_signup != null)
+                {
+                    referee_signup.updatetime = DateTime.Now;
+                    referee_signup.refereeSignUpStatus = checkReferee == CheckRefereeEnum.通过 ? RefereeSignUpStatusEm.已录取 : (checkReferee == CheckRefereeEnum.拒绝 ? RefereeSignUpStatusEm.未录取 : RefereeSignUpStatusEm.候选名单);
+                    if (checkReferee == CheckRefereeEnum.通过)
+                    {
+                        t_event t_event = _dbContext.Get<t_event>(referee_signup.eventId);
+                        if (t_event.eventStatus == EventStatusEm.比赛中)
+                        {
+                            var t_event_sign = _dbContext.Select<t_event_sign>(c => c.eventId == referee_signup.eventId && c.memberId == referee_signup.memberId).ToList();
+                            if (t_event_sign == null && t_event_sign.Count > 0)
+                            {
+                                var eventdate = _dbContext.Select<t_event_matchdate>(c => c.eventId == t_event.id);
+                                foreach (var itemdate in eventdate)
+                                {
+                                    _dbContext.Insert(new t_event_sign
+                                    {
+                                        eventGroupId = 0,
+                                        eventId = referee_signup.eventId,
+                                        eventSignType = EventSignTypeEm.裁判,
+                                        eventSignStatus = EventSignStatusEm.待签到,
+                                        signdate = itemdate.eventMatchDate,
+                                        memberId = referee_signup.memberId,
+                                        isStop = false
+                                    });
+                                }
+                            }
+                        }
+                        _dbContext.Update(referee_signup);
+                        if (checkReferee == CheckRefereeEnum.通过)
+                        {
+                            _dbContext.Insert(new t_sys_mail
+                            {
+                                title = $"You meet the qualification to be a judge.",
+                                content = $"Congratulations, your application to be a judge of {t_event.name} has been accepted.",
+                                isRead = false,
+                                mailType = MailTypeEm.赛事报名邀请,
+                                memberId = referee_signup.memberId,
+                                sendMemberId = memberId
+                            });
+
+                        }
+                    }
+                    else
+                    {
+                        _dbContext.Update(referee_signup);
+                    }
+                    flag = true;
+                }
+                else
+                {
+                    msg = "报名信息有误";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("RefereeSignUpService.Check", ex);
+            }
+            return flag;
+        }
+        #endregion 
     }
 }

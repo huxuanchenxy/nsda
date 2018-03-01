@@ -29,6 +29,7 @@ namespace nsda.Services.Implement.eventmanage
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
         }
+
         //替换教室
         public bool ReplaceRoom(int cyclingMatchId, int roomId, int memberId, out string msg)
         {

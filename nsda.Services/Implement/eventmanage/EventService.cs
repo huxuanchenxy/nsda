@@ -31,6 +31,8 @@ namespace nsda.Services.Implement.eventmanage
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
         }
+     
+        #region 赛事管理员
         //新增赛事
         public bool Insert(EventRequest request, out string msg)
         {
@@ -189,6 +191,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
+        //初始化赛事规则
         private void InsertEventRule(int eventId)
         {
             #region 循环赛设置
@@ -455,62 +458,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-        //设定赛事级别
-        public bool SettingLevel(int id, EventLevelEm eventLevel, int sysUserId, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                t_event tevent = _dbContext.Get<t_event>(id);
-                if (tevent != null)
-                {
-                    tevent.updatetime = DateTime.Now;
-                    tevent.eventLevel = eventLevel;
-                    _dbContext.Update(tevent);
-                    flag = true;
-                }
-                else
-                {
-                    msg = "未找到赛事信息";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("EventService.SettingLevel", ex);
-            }
-            return flag;
-        }
-        // 审核赛事
-        public bool Check(int id, bool isAgree, int sysUserId, out string msg)
-        {
-            bool flag = false;
-            msg = string.Empty;
-            try
-            {
-                t_event tevent = _dbContext.Get<t_event>(id);
-                if (tevent != null && tevent.eventStatus == EventStatusEm.审核中)
-                {
-                    tevent.updatetime = DateTime.Now;
-                    tevent.eventStatus = isAgree ? EventStatusEm.报名中 : EventStatusEm.拒绝;
-                    _dbContext.Update(tevent);
-                    flag = true;
-                }
-                else
-                {
-                    msg = "未找到赛事信息";
-                }
-            }
-            catch (Exception ex)
-            {
-                flag = false;
-                msg = "服务异常";
-                LogUtils.LogError("EventService.Check", ex);
-            }
-            return flag;
-        }
         //赛事详情
         public EventResponse Detail(int id)
         {
@@ -569,71 +516,7 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventService.Detail", ex);
             }
             return response;
-        }
-        //选手 裁判查询赛事列表
-        public List<PlayerOrRefereeEventResponse> PlayerOrRefereeEvent(PlayerOrRefereeEventQueryRequest request)
-        {
-            List<PlayerOrRefereeEventResponse> list = new List<PlayerOrRefereeEventResponse>();
-            try
-            {
-                StringBuilder join = new StringBuilder();
-                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
-                {
-                    join.Append(" and a.provinceId=@ProvinceId ");
-                }
-                if (request.CityId.HasValue && request.CityId > 0)
-                {
-                    join.Append(" and a.cityId=@CityId ");
-                }
-                if (request.EventLevel.HasValue && request.EventLevel > 0)
-                {
-                    join.Append(" and a.eventLevel=@EventLevel ");
-                }
-                if (request.StartDate.HasValue)
-                {
-                    DateTime dt = Convert.ToDateTime(request.StartDate);
-                    join.Append($" and a.starteventdate >='{Utility.FirstDayOfMonth(dt).ToShortDateString()}' and a.starteventdate<='{Utility.LastDayOfMonth(dt).ToShortDateString()}'");
-                }
-                var sql = $@"select a.id EventId,a.code EventCode, a.name EventName,a.eventType EventType, a.eventLevel EventLevel,
-                             a.signfee SignFee, a.eventStatus EventStatus,a.starteventdate StartEventDate, a.endsigndate EndSignDate,
-                             b.name ProvinceName,c.name CityName
-                             from t_event a 
-                             left join t_sys_province b on a.provinceId=b.id
-                             left join t_sys_city     c on a.cityId=c.id
-                             where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by a.createtime desc";
-                int totalCount = 0;
-                list = _dbContext.Page<PlayerOrRefereeEventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                if (list != null&&list.Count>0)
-                {
-                    foreach (var item in list)
-                    {
-                        if (item.EventStatus == EventStatusEm.审核中 || item.EventStatus == EventStatusEm.拒绝)
-                        {
-                            item.Visiable = 1;
-                            continue;
-                        }
-
-                        if (item.EventStatus == EventStatusEm.停止报名)
-                        {
-                            item.Visiable = 2;
-                            continue;
-                        }
-                        if (DateTime.Now > item.EndSignDate)
-                        {
-                            item.Visiable = 2;
-                            continue;
-                        }
-                        item.Visiable = 3;
-                    }
-                }
-                request.Records = totalCount;
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("EventService.PlayerOrRefereeEvent", ex);
-            }
-            return list;
-        }
+        }  
         //赛事管理员赛事列表
         public List<EventResponse> EventList(EventQueryRequest request)
         {
@@ -671,92 +554,6 @@ namespace nsda.Services.Implement.eventmanage
             catch (Exception ex)
             {
                 LogUtils.LogError("EventService.EventList", ex);
-            }
-            return list;
-        }
-        //管理平台赛事列表
-        public List<EventResponse> AdminEventList(EventAdminQueryRequest request)
-        {
-            List<EventResponse> list = new List<EventResponse>();
-            try
-            {
-                StringBuilder join = new StringBuilder();
-                if (request.KeyValue.IsNotEmpty())
-                {
-                    request.KeyValue = $"%{request.KeyValue}%";
-                    join.Append(" and (code like @KeyValue or name like @KeyValue)");
-                }
-                if (request.EventStatus.HasValue && request.EventStatus > 0)
-                {
-                    join.Append(" and eventStatus = @EventStatus");
-                }
-                if (request.EventType.HasValue && request.EventType > 0)
-                {
-                    join.Append(" and eventType = @EventType");
-                }
-                if (request.EventStartDate.HasValue)
-                {
-                    join.Append(" and starteventdate >= @EventStartDate");
-                }
-                if (request.EventEndDate.HasValue)
-                {
-                    request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
-                    join.Append("  and starteventdate <= @EventEndDate");
-                }
-                var sql = $@"select * from t_event where isdelete=0 {join.ToString()} order by createtime desc";
-                int totalCount = 0;
-                list = _dbContext.Page<EventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                request.Records = totalCount;
-                if (list != null && list.Count > 0)
-                {
-                    foreach (var item in list)
-                    {
-                        //计算报名人数或者队伍
-                        if (item.EventStatus != EventStatusEm.审核中 && item.EventStatus != EventStatusEm.拒绝)
-                        {
-                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("EventService.AdminEventList", ex);
-            }
-            return list;
-        }
-        //赛事查询条件
-        public List<EventConditionResponse> EventCondition()
-        {
-            List<EventConditionResponse> list = new List<EventConditionResponse>();
-            try
-            {
-                var sql = $@"select distinct a.isInter IsInter,a.provinceId ProvinceId,a.cityId CityId,
-                            b.name ProvinceName,c.name CityName
-                            from t_event a
-                            left join  t_sys_province b on a.provinceId=b.id
-                            left join  t_sys_city     c on a.cityId=c.id
-                            where a.isdelete=0 and a.eventStatus not in ({ParamsConfig._eventnoquerystatus})";
-                list = _dbContext.Query<EventConditionResponse>(sql).ToList();
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("EventService.EventCondition", ex);
-            }
-            return list;
-        }
-        //裁判注册时 可报名赛事
-        public List<EventSelectResponse> RefereeRegisterEvent()
-        {
-            List<EventSelectResponse> list = new List<EventSelectResponse>();
-            try
-            {
-                var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus ={(int)EventStatusEm.报名中} and starteventdate>='{DateTime.Now.ToShortDateString()}'";
-                list = _dbContext.Query<EventSelectResponse>(sql).ToList();
-            }
-            catch (Exception ex)
-            {
-                LogUtils.LogError("EventService.RefereeRegisterEvent", ex);
             }
             return list;
         }
@@ -894,5 +691,218 @@ namespace nsda.Services.Implement.eventmanage
             }
             return date;
         }
+        #endregion 
+
+        #region 选手/裁判
+        //赛事查询条件
+        public List<EventConditionResponse> EventCondition()
+        {
+            List<EventConditionResponse> list = new List<EventConditionResponse>();
+            try
+            {
+                var sql = $@"select distinct a.isInter IsInter,a.provinceId ProvinceId,a.cityId CityId,
+                            b.name ProvinceName,c.name CityName
+                            from t_event a
+                            left join  t_sys_province b on a.provinceId=b.id
+                            left join  t_sys_city     c on a.cityId=c.id
+                            where a.isdelete=0 and a.eventStatus not in ({ParamsConfig._eventnoquerystatus})";
+                list = _dbContext.Query<EventConditionResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.EventCondition", ex);
+            }
+            return list;
+        }
+        //裁判注册时 可报名赛事
+        public List<EventSelectResponse> RefereeRegisterEvent()
+        {
+            List<EventSelectResponse> list = new List<EventSelectResponse>();
+            try
+            {
+                var sql = $"select id EventId,name EventName from t_event where isdelete=0 and eventStatus ={(int)EventStatusEm.报名中} and starteventdate>='{DateTime.Now.ToShortDateString()}'";
+                list = _dbContext.Query<EventSelectResponse>(sql).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.RefereeRegisterEvent", ex);
+            }
+            return list;
+        }
+        //选手 裁判查询赛事列表
+        public List<PlayerOrRefereeEventResponse> PlayerOrRefereeEvent(PlayerOrRefereeEventQueryRequest request)
+        {
+            List<PlayerOrRefereeEventResponse> list = new List<PlayerOrRefereeEventResponse>();
+            try
+            {
+                StringBuilder join = new StringBuilder();
+                if (request.ProvinceId.HasValue && request.ProvinceId > 0)
+                {
+                    join.Append(" and a.provinceId=@ProvinceId ");
+                }
+                if (request.CityId.HasValue && request.CityId > 0)
+                {
+                    join.Append(" and a.cityId=@CityId ");
+                }
+                if (request.EventLevel.HasValue && request.EventLevel > 0)
+                {
+                    join.Append(" and a.eventLevel=@EventLevel ");
+                }
+                if (request.StartDate.HasValue)
+                {
+                    DateTime dt = Convert.ToDateTime(request.StartDate);
+                    join.Append($" and a.starteventdate >='{Utility.FirstDayOfMonth(dt).ToShortDateString()}' and a.starteventdate<='{Utility.LastDayOfMonth(dt).ToShortDateString()}'");
+                }
+                var sql = $@"select a.id EventId,a.code EventCode, a.name EventName,a.eventType EventType, a.eventLevel EventLevel,
+                             a.signfee SignFee, a.eventStatus EventStatus,a.starteventdate StartEventDate, a.endsigndate EndSignDate,
+                             b.name ProvinceName,c.name CityName
+                             from t_event a 
+                             left join t_sys_province b on a.provinceId=b.id
+                             left join t_sys_city     c on a.cityId=c.id
+                             where a.isdelete=0 and a.eventStatus in ({ParamsConfig._eventstatus}) {join.ToString()} order by a.createtime desc";
+                int totalCount = 0;
+                list = _dbContext.Page<PlayerOrRefereeEventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.EventStatus == EventStatusEm.审核中 || item.EventStatus == EventStatusEm.拒绝)
+                        {
+                            item.Visiable = 1;
+                            continue;
+                        }
+
+                        if (item.EventStatus == EventStatusEm.停止报名)
+                        {
+                            item.Visiable = 2;
+                            continue;
+                        }
+                        if (DateTime.Now > item.EndSignDate)
+                        {
+                            item.Visiable = 2;
+                            continue;
+                        }
+                        item.Visiable = 3;
+                    }
+                }
+                request.Records = totalCount;
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.PlayerOrRefereeEvent", ex);
+            }
+            return list;
+        }
+        #endregion
+
+        #region 平台管理员
+        //管理平台赛事列表
+        public List<EventResponse> AdminEventList(EventAdminQueryRequest request)
+        {
+            List<EventResponse> list = new List<EventResponse>();
+            try
+            {
+                StringBuilder join = new StringBuilder();
+                if (request.KeyValue.IsNotEmpty())
+                {
+                    request.KeyValue = $"%{request.KeyValue}%";
+                    join.Append(" and (code like @KeyValue or name like @KeyValue)");
+                }
+                if (request.EventStatus.HasValue && request.EventStatus > 0)
+                {
+                    join.Append(" and eventStatus = @EventStatus");
+                }
+                if (request.EventType.HasValue && request.EventType > 0)
+                {
+                    join.Append(" and eventType = @EventType");
+                }
+                if (request.EventStartDate.HasValue)
+                {
+                    join.Append(" and starteventdate >= @EventStartDate");
+                }
+                if (request.EventEndDate.HasValue)
+                {
+                    request.EventEndDate = request.EventEndDate.Value.AddDays(1).AddSeconds(-1);
+                    join.Append("  and starteventdate <= @EventEndDate");
+                }
+                var sql = $@"select * from t_event where isdelete=0 {join.ToString()} order by createtime desc";
+                int totalCount = 0;
+                list = _dbContext.Page<EventResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+                request.Records = totalCount;
+                if (list != null && list.Count > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        //计算报名人数或者队伍
+                        if (item.EventStatus != EventStatusEm.审核中 && item.EventStatus != EventStatusEm.拒绝)
+                        {
+                            item.SignUpCount = _dbContext.ExecuteScalar($"select count(distinct(groupnum)) from t_event_player_signup where isdelete=0 and signUpStatus in ({ParamsConfig._signup_in}) and eventId={item.Id}").ToObjInt();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventService.AdminEventList", ex);
+            }
+            return list;
+        }
+        //设定赛事级别
+        public bool SettingLevel(int id, EventLevelEm eventLevel, int sysUserId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_event tevent = _dbContext.Get<t_event>(id);
+                if (tevent != null)
+                {
+                    tevent.updatetime = DateTime.Now;
+                    tevent.eventLevel = eventLevel;
+                    _dbContext.Update(tevent);
+                    flag = true;
+                }
+                else
+                {
+                    msg = "未找到赛事信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventService.SettingLevel", ex);
+            }
+            return flag;
+        }
+        // 审核赛事
+        public bool Check(int id, bool isAgree, int sysUserId, out string msg)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                t_event tevent = _dbContext.Get<t_event>(id);
+                if (tevent != null && tevent.eventStatus == EventStatusEm.审核中)
+                {
+                    tevent.updatetime = DateTime.Now;
+                    tevent.eventStatus = isAgree ? EventStatusEm.报名中 : EventStatusEm.拒绝;
+                    _dbContext.Update(tevent);
+                    flag = true;
+                }
+                else
+                {
+                    msg = "未找到赛事信息";
+                }
+            }
+            catch (Exception ex)
+            {
+                flag = false;
+                msg = "服务异常";
+                LogUtils.LogError("EventService.Check", ex);
+            }
+            return flag;
+        }
+        #endregion
     }
 }

@@ -293,7 +293,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return response;
         }
-
         //裁判批量签到或设置组别
         public bool BatchReferee(List<int> memberId, int eventId, int status, out string msg)
         {
@@ -333,9 +332,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-        /// <summary>
-        /// 裁判数据统计
-        /// </summary>
+        // 裁判数据统计
         public RefereeSignDataResponse RefereeSignData(int eventId)
         {
             RefereeSignDataResponse response = new RefereeSignDataResponse();
@@ -364,7 +361,6 @@ namespace nsda.Services.Implement.eventmanage
             }
             return response;
         }
-
         //查询当天组别签到人数
         public int SignUpCount(int eventId, int eventGroupId)
         {
