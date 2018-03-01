@@ -377,5 +377,20 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "查看明细";
             return View();
         }
+        public ActionResult mapone()
+        {
+            ViewBag.Message = "对垒";
+            return View();
+        }
+        public ActionResult maptwo()
+        {
+            ViewBag.Message = "对垒";
+            return View();
+        }
+        public ActionResult mapfour()
+        {
+            ViewBag.Message = "对垒";
+            return View();
+        }
     }
 }

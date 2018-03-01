@@ -444,6 +444,7 @@
     <Content Include="Views\Home\againstknockout.cshtml" />
     <Content Include="Views\Home\againstaround.cshtml" />
     <Content Include="Views\Home\playerscoredetail.cshtml" />
+    <Content Include="Views\Home\mapone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
