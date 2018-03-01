@@ -11,6 +11,19 @@ namespace nsda.Model.enums
     /// </summary>
     public  enum KnockoutTypeEm
     {
-        partial=1
+        //部分赛
+        partial=1,
+        //1/32
+        tripleoctafinals=2,
+        //1/16
+        doubleoctafinals =3,
+        //1/8
+        octafinals =4,
+        //1/4
+        quarterfinals =5,
+        //半决赛
+        semifinals =6,
+        //决赛
+        finals =7
     }
 }

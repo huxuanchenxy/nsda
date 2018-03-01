@@ -587,6 +587,7 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\resulttrackknockout.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\doublecheck.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\resultinput.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\execmatch.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
