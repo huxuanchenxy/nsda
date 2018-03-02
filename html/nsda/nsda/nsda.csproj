@@ -248,6 +248,13 @@
     <Content Include="Content\asset\css\judgelogin.css" />
     <Content Include="Content\asset\css\judgeregform.css" />
     <Content Include="Content\asset\css\judgetour.css" />
+    <Content Include="Content\asset\css\map.css" />
+    <Content Include="Content\asset\css\mapeight.css" />
+    <Content Include="Content\asset\css\mapfour.css" />
+    <Content Include="Content\asset\css\mapone.css" />
+    <Content Include="Content\asset\css\mapsixteen.css" />
+    <Content Include="Content\asset\css\mapthirtytwo.css" />
+    <Content Include="Content\asset\css\maptwo.css" />
     <Content Include="Content\asset\css\messagebox.css" />
     <Content Include="Content\asset\css\octafinals.css" />
     <Content Include="Content\asset\css\playerboundcoach.css" />
@@ -294,6 +301,7 @@
     <Content Include="Content\asset\img\member.svg" />
     <Content Include="Content\asset\img\more.gif" />
     <Content Include="Content\asset\img\msour_03.png" />
+    <Content Include="Content\asset\img\out_03.png" />
     <Content Include="Content\asset\img\partner1.jpg" />
     <Content Include="Content\asset\img\partner2.jpg" />
     <Content Include="Content\asset\img\partner3.jpg" />
@@ -445,6 +453,11 @@
     <Content Include="Views\Home\againstaround.cshtml" />
     <Content Include="Views\Home\playerscoredetail.cshtml" />
     <Content Include="Views\Home\mapone.cshtml" />
+    <Content Include="Views\Home\maptwo.cshtml" />
+    <Content Include="Views\Home\mapfour.cshtml" />
+    <Content Include="Views\Home\mapeight.cshtml" />
+    <Content Include="Views\Home\mapsixteen.cshtml" />
+    <Content Include="Views\Home\mapthirtytwo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

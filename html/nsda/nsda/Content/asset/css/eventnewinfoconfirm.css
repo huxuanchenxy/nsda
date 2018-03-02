@@ -57,7 +57,7 @@
 }
 .listconfirm{
     margin-top:50px;
-    margin-bottom:120px;
+    margin-bottom:30px;
 }
 .listconfirm h3{
     font-size:14px;
@@ -74,7 +74,8 @@
     color:#ff6666;
     line-height:1.4;
 }
-button.alter{
+
+.alter{
     display:inline-block;
     width:100px;
     height:30px;

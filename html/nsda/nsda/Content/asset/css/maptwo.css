@@ -1,0 +1,71 @@
+﻿.maptwo{
+    height:300px;
+}
+.vs {
+    font-size: 36px;
+    position: absolute;
+    left: 400px;
+    top: 50%;
+    z-index:99;
+    transform: translateY(-50%);
+}
+.mline {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    border-top: 1px solid #B6BCC0;
+    position: absolute;
+}
+.lineright {
+    top: 50%;
+    left: 430px;
+}
+
+.lineleft {
+    top: 50%;
+    left: 260px;
+}
+.win {
+    display: inline-block;
+    width: 100px;
+    font-size: 14px;
+    border: 1px solid #B6BCC0;
+    background: #F5F8FA;
+    position: absolute;
+    text-align: center;
+    line-height: 40px;
+    word-break:break-all;
+}
+.win{
+    position:relative;
+}
+.wtop{
+    top:-20px;
+}
+.wmiddle{
+    left:15%;
+}
+.mlinetwo{
+    display: inline-block;
+    width: 150px;
+    height: 80px;
+    border-top: 1px solid #B6BCC0;
+    border-bottom:1px solid #B6BCC0;
+    position: absolute;
+}
+.linetwoleft{
+    border-right:1px solid #B6BCC0;
+    top:38%;
+    left:110px;
+}
+.linetworight{
+    top:38%;
+    left:580px;
+    border-left:1px solid #B6BCC0;
+}
+.wleft{
+    left:0;
+}
+.wright{
+    left:50px;
+}

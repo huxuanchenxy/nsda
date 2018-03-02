@@ -392,5 +392,20 @@ namespace WebApplication2.Controllers
             ViewBag.Message = "对垒";
             return View();
         }
+        public ActionResult mapeight()
+        {
+            ViewBag.Message = "对垒";
+            return View();
+        }
+        public ActionResult mapsixteen()
+        {
+            ViewBag.Message = "对垒";
+            return View();
+        }
+        public ActionResult mapthirtytwo()
+        {
+            ViewBag.Message = "对垒";
+            return View();
+        }
     }
 }
