@@ -1,18 +1,19 @@
 ﻿.comp-lists{
-    margin-top:15px;
     width:75%;
     float:left;
     margin-left:15px;
 }
+.pi-top{
+    margin-left:21%;
+}
 .list-top{
-    width:100%;
+    width:75%;
     padding-left:50px;
     border-bottom:1px solid #C3C8CC;
     box-sizing:border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     padding-bottom:4px;
-    margin-top:26px;
     margin-bottom:10px;
 }
 .list-top .active{
@@ -28,7 +29,7 @@
     padding:5px 10px;
 }
 .list-top .list{
-    padding:5px 10px;
+    padding:5px 30px;
     color:#666699;
     font-size:18px;
     font-weight:400;
@@ -51,9 +52,7 @@
     background:#47BBED;
     color:white;
 }
-.comp-con{
-    margin-top:50px;
-}
+
 .comp-con table{
     border-collapse: collapse;
     width: 100%;
@@ -64,7 +63,7 @@
     border-top:2px solid #E0E0E0;
 }
 .comp-con .exittable{
-    margin-top:50px;
+    margin-top:10px;
 }
 .comp-con .exittable thead{
     background: #E3E2E2;
@@ -78,19 +77,13 @@
     font-size:14px;
 }
 .comp-con .hadtable tbody td .select{
-    background:#FF7A4C;
-    color:white;
-    width:50%;
-    height:30px;
+    padding:3px 8px;
     margin-right:5px;
     float:left;
     overflow:hidden;
 }
 .comp-con .hadtable tbody td .pay{
-    background:yellow;
-    width:50%;
-    height:30px;
-    color:#666;
+    padding:3px 35px;
     margin-right:2px;
     float:left;
     overflow:hidden;
@@ -98,20 +91,12 @@
 .comp-con .hadtable table tbody tr:nth-child(4n+3) td{background:#f6f3e7;}
 .comp-con .hadtable table tbody tr:nth-child(4n+4) td{background:#f6f3e7;}
 .comp-con .hadtable tbody td .apply{
-    background:#ddd;
-    width:46%;
-    height:30px;
-    color:#666;
+    padding:3px 25px;
     float:right;
     overflow:hidden;
 }
 
-.comp-con .hadtable tbody td .select:hover{
-    background:#ff6a00;
-}
-.comp-con .hadtable tbody td .select:hover{
-    color:white;
-}
+
 .comp-con .hadtable tbody td{
     padding:20px 0 10px 0;
     position:relative;
@@ -135,9 +120,7 @@
     font-size:12px;
 }
 .comp-con .hadtable tbody td .select,.comp-con .hadtable tbody td .pay,.comp-con .hadtable tbody td .apply{
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
+ 
     line-height:2;
 }
 .comp-con table thead{
@@ -159,6 +142,7 @@
     min-width:30%;
     border-right: 1px solid #a7a7a7;
 }
+
 .comp-con{
     min-height:600px;
     position:relative;
@@ -177,6 +161,11 @@
     top:4px;
     left:6px;
     margin-bottom:10px;
+}
+
+.comp-con tbody td.last{
+    width:230px;
+    padding:6px;
 }
 
 .info-lists .panel:nth-child(2) .panel-body ul a:last-child li{

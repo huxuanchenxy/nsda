@@ -1,75 +1,59 @@
 ﻿.score-con{
     width:78%;
     float:left;
-    margin-top:50px;
     margin-left:15px;
     position:relative;
-    margin-top:70px;
 }
-.score-top .integral{
-    display:inline;
-    width:36px;
-    height:46px;
+.pi-top{
+    height:60px;
+    margin-left:21%;
+}
+.pi-top .integral{
+    font-size:36px;
     float:left;
-    margin-right:4px;
 }
-.score-top .scorecheck{
-    font-size:24px;
-    color:#666;
+.pi-top p{
     float:left;
-    line-height:56px;
-    vertical-align:baseline;
-        
-}
-.score-top{
-    padding-right: 35px;
+    font-size:18px;
+    line-height:51px;
+    margin-left:8px;
 }
 .addbound {
     display: inline-block;
-    padding: 5px 15px;
-    font-size: 16px;
+    padding: 3px 10px;
+    font-size: 14px;
     text-align: center;
-    color: white;
-    background: #1ABC9C;
     float: right;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    margin-top: 10px;
+    margin-right:50px;
+    margin-top: 20px;
     border: none;
 }
 .boundtable{
     min-height:600px;
 }
 .boundtable tbody td button {
-    width: 90px;
-    height: 30px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
+    padding:5px 10px;
     border: none;
 
 }
 
 .boundtable tbody td .editcoach {
-    background: #1985E8;
-    margin-right: 20px;
-    color: white;
+    margin-right: 10px;
 }
 
-.boundtable tbody td .delcoach {
-    background: #DDDDDD;
-}
 
 .boundtable tbody td .confirmbound {
     background: #DF812F;
     color: white;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .boundtable tbody td .notpass {
     background: #E67368;
     color: white;
+}
+.last{
+    width:220px;
 }
 .fg-layer{
     border-radius: 20px;
@@ -228,7 +212,7 @@ fg-layer-iframe{
     border-collapse: collapse;
     width: 96%;
     margin-bottom:50px;
-    margin-top:20px;
+    margin-top:10px;
 }
 .info-con table thead{
     background: #E3D2D2;

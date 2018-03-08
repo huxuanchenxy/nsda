@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "比赛进程管理";
+}
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+
+<link href="@Url.Content("~/Content/asset/css/Eventmanage.css?3.1.0")" rel="stylesheet" type="text/css" />
+
+<div class="container event-lists eventstarlists">
+    <h4>比赛进程管理</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>赛事编码</th>
+                <th>赛事名称</th>
+                <th>赛事类别</th>
+                <th>报名队伍数</th>
+                <th>报名截止时间</th>
+                <th>赛程状态</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>0</i>/108</td>
+                <td>2018-02-15</td>
+                <td>审核中...</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>50</i>/108</td>
+                <td>2018-02-15</td>
+                <td>报名中</td>
+                <td><a href="/Eventmanage/eventmanageplayer" class="entercompe darkgreen color-white radius5">进入比赛</a></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>140</i>/108</td>
+                <td>2018-02-15</td>
+                <td>比赛中</td>
+                <td><a href="/Eventmanage/eventmanageplayer" class="entercompe darkgreen color-white radius5">进入比赛</a></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>115</i>/108</td>
+                <td>2018-02-15</td>
+                <td>比赛完结</td>
+                <td><a href="#" class="checkresult orange color-white radius5">查看赛果</a></td>
+            </tr>
+            <tr>
+                <td>A56894512</td>
+                <td>2017-18赛季全国中学生学术辩论联赛</td>
+                <td>公共论坛式辩论</td>
+                <td><i>104</i>/108</td>
+                <td>2018-02-15</td>
+                <td>比赛完结</td>
+                <td><a href="#" class="checkresult orange color-white radius5">查看赛果</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" id="page">
+        <div class="page">
+            <a href="javascript:void(0);" class="prev"><</a>
+            <a href="javascript:void(0);" class="on">1</a>
+            <span>...</span>
+            <a href="javascript:void(0);">4</a>
+            <a href="javascript:void(0);">5</a>
+            <a href="javascript:void(0);">6</a>
+            <span>...</span>
+            <a href="javascript:void(0);">7</a>
+            <a href="javascript:void(0);" class="next">></a>
+        </div>
+    </nav>
+</div>

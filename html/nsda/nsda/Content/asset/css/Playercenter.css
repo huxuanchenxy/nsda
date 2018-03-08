@@ -28,35 +28,13 @@
 }
 .info-con tbody tr td a {
     display: inline;
-    padding: 10px 16px;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    text-align: center;
-    color: white;
+    padding: 8px 16px;
     font-size:14px;
 }
-.info-con tbody tr td a.enter {
-    background: #FF6E4F;
-    box-shadow: inset -4px -3px 4px #C06261;
-    -webkit-box-shadow: inset -4px -3px 4px #C06261;
-    -moz-box-shadow: inset -4px -3px 4px #C06261;
-}
-.info-con tbody tr td a.check {
-    background: #4BB47F;
-    box-shadow: inset -4px -3px 4px #215A3D;
-    -webkit-box-shadow: inset -4px -3px 4px #215A3D;
-    -moz-box-shadow: inset -4px -3px 4px #215A3D;
-}
-
-tbody tr td a.enter:hover {
-    background:#ae3838;
-    color:white;
-}
-tbody tr td a.check:hover {
-    background:#215A3D;
-    color:white;
-}
+tbody tr td.last{
+    width:120px;
+    padding:6px;
+} 
 
 
 nav.info-nav{

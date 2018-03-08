@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "锦标赛";
+}
+<link href="~/Content/asset/css/judgetourname.css?1.1.0" rel="stylesheet" />
+
+
+<link href="@Url.Content("~/Content/asset/css/judgetour.css?1.1.0")" rel="stylesheet" type="text/css" />
+@Html.Partial("_judgetop")
+<div class="container judge-compe">
+    <div class="pi-top competitle">
+        <img src="~/Content/asset/img/tour_03.png" />
+        <div class="title">
+            <h4>National High School Academic Debate And Speech Tournament</h4>
+            <h3>全国中学生学术辩论与演讲联赛</h3>
+        </div>
+    </div>
+    @Html.Partial("_judgeleft")
+    <div class="judge-con">
+        
+        <div class="comcon">
+            <p>Tournament Code: A45626589</p>
+            <div class="constep">
+                <h3>STEP 1：Click “Sign in” </h3>
+                <a href="/Judge/judgetoursteptwo">
+                    <i class="iconfont icon-qiandao"></i><p>Sign In</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var classVal = document.getElementById("collapseOne").getAttribute("class");
+    classVal = classVal.concat("in");
+    document.getElementById("collapseOne").setAttribute("class", classVal);
+
+</script>

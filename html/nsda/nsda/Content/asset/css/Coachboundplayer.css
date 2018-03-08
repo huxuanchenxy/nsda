@@ -1,6 +1,25 @@
 ﻿.coach-con{
     width:100%;
     background:white;
+    padding-top:20px;
+    border-radius:0 0 8px 8px ;
+    -webkit-border-radius:0 0 8px 8px ;
+    -moz-border-radius:0 0 8px 8px ;
+}
+
+.pi-top{
+    height:51px;
+    margin-left:25%;
+}
+.pi-top .integral{
+    font-size:36px;
+    float:left;
+}
+.pi-top p{
+    float:left;
+    font-size:18px;
+    line-height:51px;
+    margin-left:8px;
 }
 .score-top{
     padding-right: 35px;
@@ -8,8 +27,6 @@
 .score-con{
     width:73%;
     float:left;
-    margin-top:50px;
-    margin-left:10px;
     position:relative;
     min-height:700px;
 }
@@ -38,46 +55,28 @@
     padding: 5px 15px;
     font-size: 16px;
     text-align: center;
-    color: white;
-    background: #1ABC9C;
     float: right;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     margin-top: 10px;
     border: none;
+    margin-right: 65px;
 }
 
 .boundtable tbody td button {
     width: 90px;
     height: 30px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border: none;
-
 }
 
 .boundtable tbody td .editcoach {
-    background: #1985E8;
     margin-right: 20px;
-    color: white;
 }
 
-.boundtable tbody td .delcoach {
-    background: #DDDDDD;
-}
 
 .boundtable tbody td .confirmbound {
-    background: #DF812F;
-    color: white;
     margin-right: 20px;
 }
 
-.boundtable tbody td .notpass {
-    background: #E67368;
-    color: white;
-}
+
 
 .fg-layer{
     border-radius: 20px;
@@ -131,9 +130,6 @@ fg-layer-iframe{
 }
 
 .addcoach .form-group select {
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     background: #526476;
     color: white;
     font-size: 16px;
@@ -150,9 +146,6 @@ fg-layer-iframe{
 .addcoach .form-group input {
     width: 40%;
     height: 36px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     box-shadow: none;
     border: 1px solid #1ABC9C;
     position:relative;
@@ -263,7 +256,7 @@ a{
     border-right: 1px solid #a7a7a7;
 }
 
-.info-lists .panel-group .panel:last-child .panel-heading .panel-title h3{
+.info-lists .panel-group .panel:last-child .panel-heading .panel-title h3,.info-lists .panel-group .panel:last-child .panel-heading .panel-title p{
     color:#1DB8FF;
 }
 .score-con nav{

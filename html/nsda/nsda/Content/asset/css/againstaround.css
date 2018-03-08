@@ -17,7 +17,7 @@
     display:inline-block;
     width:100%;
     font-size:14px;
-    color:#666699;
+    color:#666;
     margin-bottom:5px;
 }
 .idle .allselects{
@@ -39,7 +39,7 @@
     font-weight:normal;
 }
 .idle p{
-    color:#666699;
+    color:#666;
 }
 .idle label{
     color:#BEC3C8;
@@ -67,14 +67,9 @@
 .star{
     display:inline-block;
     float:right;
-    padding:6px 10px;
-    background:#FF6666;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
+    padding:4px 10px;
     border:none;
     font-size:18px;
-    color:white;
 }
 .star .iconfont{
     font-size:26px;
@@ -86,8 +81,8 @@
     float:left;
     line-height:2;
 }
-button.butt{
-    width:140px;
+.butt{
+    padding:4px;
     line-height:20px;
 }
 .flighttable{

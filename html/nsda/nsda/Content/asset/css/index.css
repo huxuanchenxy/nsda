@@ -1437,7 +1437,7 @@ a:hover {
         line-height: 100px;
         cursor:pointer;
     }
-
+    
     .contact p {
         padding: 0 50px;
     }
@@ -1705,6 +1705,7 @@ input.form-control {
 
 .contact {
     text-align: center;
+    margin-top:120px;
 }
 
 .thumbnail {

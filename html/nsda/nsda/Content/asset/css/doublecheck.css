@@ -14,14 +14,11 @@
     border-radius:5px 5px 0 0;
     -webkit-border-radius:5px 5px 0 0;
     -moz-border-radius:5px 5px 0 0;
-    box-sizing:border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     padding:5px 10px;
 }
 .list-top .list{
     padding:5px 30px;
-    color:#666699;
+    color:#666;
     font-size:18px;
     font-weight:400;
 }
@@ -41,21 +38,15 @@ button.back{
     margin-top:30px;
     margin-bottom:30px;
     display:inline-block;
-    width:218px;
+    width:220px;
     height:36px;
     text-align:center;
     line-height:1;
     border:1px solid #E6D8A7;
     color:#996633;
     background:linear-gradient(to bottom,#FFF5D8,#FFEFC4);
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     font-size:14px;
     padding:5px 15px;
-    box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    -moz-box-sizing:border-box;
 }
 button.back i.iconfont{
     font-size:24px;
@@ -81,13 +72,7 @@ button.pass{
     border:1px solid #B8D689;
     color:#666600;
     background:linear-gradient(to bottom,#CEEAA0,#C1E48B);
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     padding:5px 15px;
-    box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    -moz-box-sizing:border-box;
 }
 button.pass i{
     float:left;
@@ -103,7 +88,7 @@ button.pass p{
 }
 .event-con table thead th{
     background:#D8E0E5;
-    color:#666699;
+    color:#666;
     font-size:14px;
 }
 button.nextstep{
@@ -112,15 +97,8 @@ button.nextstep{
     text-align:center;
     line-height:1.2;
     border:none;
-    color:#fff;
     background:#4E5D66;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     font-size:18px;
-    box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    -moz-box-sizing:border-box;
     position:absolute;
     left:46%;
     transform:translateX(-50%);
@@ -138,18 +116,8 @@ button.nextstep{
 a.score{
     display:inline-block;
     padding:3px 8px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    color:white;
     margin-right:10px;
     margin-bottom:5px;
-}
-a.yes{
-    background:#1BBC9B;
-}
-a.modi{
-    background:#F2924A;
 }
 
 

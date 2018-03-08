@@ -5,31 +5,20 @@
     float:right;
     color:#FD7E7F;
 }
-.classcheck .class .addroom{
+.addroom{
     display:inline-block;
     padding:4px 10px;
-    background:#47BBED;
-    color:#fff;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     cursor:pointer;
-    position:absolute;
-    right:0;
-    top:140px;
+    float:right;
+    margin-bottom:20px;
 }
-.classcheck select.batch{
+.batch{
     max-width:200px;
     height:30px;
-    border:1px solid #EDEDED;
-    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    border:1px solid #dedbdb;
+    background: #fff;
     padding-left:5px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    position:absolute;
-    top:165px;
-    left:0;
+    float:left;
 }
 .event-lists table tbody td:first-child span.mark{
     display:inline-block;
@@ -48,11 +37,6 @@
 .event-lists table tbody td a.modifyroom{
     display:inline-block;
     padding:5px 10px;
-    color:white;
-    background:#4E5D66;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     position:absolute;
     left:50%;
     top:30%;
@@ -77,8 +61,8 @@
 .event-lists table tbody td select{
     max-width:200px;
     height:30px;
-    border:1px solid #EDEDED;
-    background: linear-gradient(#F2F4F5,#fff,#F2F4F5);
+    border:1px solid #dedbdb;
+    background: #fff;
     padding-left:5px;
     border-radius:5px;
     -webkit-border-radius:5px;
@@ -114,11 +98,9 @@
 
 }
 .event-lists table tbody tr td a.addassign{
-    background:#1ABC9C;
     left:36%;
 }
 .event-lists table tbody tr td a.clearassign{
-    background:#F3924B;
     left:66%;
 }
 body{

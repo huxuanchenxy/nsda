@@ -8,7 +8,7 @@
 }
 
 .player-info {
-    margin-left: 20%;
+    margin-left: 19%;
     padding-bottom: 10px;
     padding-left: 30px;
     padding-right: 20px;
@@ -32,6 +32,9 @@
     width:100%;
     height:100%;
     cursor:pointer;
+    border-radius:50%;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
 }
 .player-info input{
     position:absolute;
@@ -66,7 +69,8 @@
     min-width:400px;
     height:30px;
     font-size: 14px;
-    color: #666;
+    font-weight:normal;
+    color: #b1adad;
     line-height: 2.1;
     text-align:left;
     font-weight: 600;
@@ -113,7 +117,7 @@
 
 .player {
     width: 100%;
-    background: rgba(255, 255, 255,0.9);
+    background: #fff;
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -135,7 +139,6 @@ body {
     width:20%;
     float:left;
     height:600px;
-    margin-top:120px;
 }
 .info-lists .panel-title a p,.info-lists .panel-title a h3{
     text-align:right;
@@ -199,7 +202,7 @@ body {
 .player-compe{
     width:100%;
     background:white;
-    padding:10px 10px 180px 10px;
+    padding:40px 10px 180px 10px;
     border-radius:0 0 8px 8px ;
     -webkit-border-radius: 0 0 8px 8px;
     -moz-border-radius: 0 0 8px 8px;
@@ -211,7 +214,6 @@ body {
     width:73%;
     float:left;
     margin-left:15px;
-    margin-top:110px;
     background:#fff;
     position:relative;
 }

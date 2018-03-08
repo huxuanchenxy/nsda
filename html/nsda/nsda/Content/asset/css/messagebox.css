@@ -12,8 +12,7 @@
 .msg-box a .msg-more{
     float:right;
     display:inline;
-    width:68px;
-    height:20px;
+    margin-top:8px;
 }
 .msgbox-con {
     padding: 20px 10px;
@@ -45,19 +44,11 @@
 }
 .msgbox-con .cmore {
     float: right;
-    padding: 8px 20px;
+    padding: 5px 10px;
     margin-top: 10px;
 }
 .msgbox-con .cmore {
     display: inline;
-    background: #3CC2FF;
-    color: white;
     text-align: center;
-    border-radius: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
 }
 
-.msgbox-con .cmore:hover {
-    background: #5486cb;
-}

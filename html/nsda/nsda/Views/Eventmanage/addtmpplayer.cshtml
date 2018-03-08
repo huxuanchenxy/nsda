@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "";
+    ViewBag.Title = "添加临时选手";
+}
+<link href="@Url.Content("~/Content/asset/css/eventplayersignin.css?3.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+
+<div class="addplayer">
+    <h4>添加临时选手</h4>
+    <span></span>
+    <div class="form-group des">
+        <label for="teamnumber">组队编号：</label>
+        <p>T001</p>
+    </div>
+    <div class="form-group">
+        <label for="teamnumber">Speaker1：</label>
+        <input type="text" class="radius5" placeholder="选手1姓名" />
+        <input type="text" class="radius5" placeholder="输入选手2联系电话" />
+    </div>
+    <div class="form-group">
+        <label for="teamnumber">School：</label>
+        <select class="form-select-ads radius5" id="province">
+        </select>
+        <select class="form-select-ads radius5" id="city">
+        </select>
+        <select class="form-select-school radius5" id="school">
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="teamnumber">Speaker2：</label>
+        <input type="text" class="radius5" placeholder="选手2姓名" />
+        <input type="text"v placeholder="输入选手2联系电话" />
+    </div>
+    <div class="form-group">
+        <label for="teamnumber">School：</label>
+        <select class="form-select-ads radius5" id="province"></select>
+        <select class="form-select-ads radius5" id="city"></select>
+        <select class="form-select-school radius5" id="school"></select>
+    </div>
+    <button class="radius5 darkblue color-white">确认添加该临时选手</button>
+</div>
+
+
+

@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "赛事管理员中心";
+}
+
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanagecenter.css?2.1.0")" rel="stylesheet" type="text/css" />
+
+<div class="container regform-con">
+    <div class="reg-sign">
+        <div class="form-ctrl">
+            <div class="form-group">
+                <label for="email" class="form-label">注册邮箱</label>
+                <input type="email" class="form-input" id="email">
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="lastname" class="form-label">姓</label>
+                    <input type="text" class="form-input" id="lastname">
+                </div>
+                <div class="form-group-small">
+                    <label for="firstname" class="form-label">名</label>
+                    <input type="text" class="form-input" id="firstname">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="pylastname" class="form-label">拼音姓</label>
+                    <input type="text" class="form-input" id="pylastname">
+                </div>
+                <div class="form-group-small">
+                    <label for="pyfirstname" class="form-label">拼音名</label>
+                    <input type="text" class="form-input" id="pyfirstname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telephone" class="form-label">联系电话</label>
+                <input type="text" class="form-input-phone" id="telephone">
+            </div>
+            <div class="form-group">
+                <div class="form-group-small">
+                    <label for="urgentbody" class="form-label">紧急联系人</label>
+                    <input type="text" class="form-input" id="urgentbody">
+                </div>
+                <div class="form-group-small">
+                    <label for="urgentphone" class="form-label">紧急电话</label>
+                    <input type="text" class="form-input" id="urgentphone">
+                </div>
+            </div>
+            <div class="form-group form-sexy">
+                <label for="sex" class="form-label">性别</label>
+                <label class="radio-inline sexy">
+                    <input type="radio" name="inlineRadioOptions" id="men" value="option1"> 男
+                </label>
+                <label class="radio-inline sexy">
+                    <input type="radio" name="inlineRadioOptions" id="women" value="option2"> 女
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="address" class="form-label">通讯地址</label>
+                <input type="text" class="form-input" id="address">
+            </div>
+            <div class="form-group">
+                <label for="idcard" class="form-label">有效证件</label>
+                <select class="form-select-card" id="card">
+                    <option>身份证</option>
+                    <option>护照</option>
+                    <option>港澳台通行证</option>
+                </select>
+                <input type="text" class="form-input-card" id="idcard">
+            </div>
+            <button type="submit" class="button">保存修改</button>
+        </div>
+        <div class="modifypassword">
+            <img src="~/Content/asset/img/password_03.png" alt="" />
+            <div class="modifypanel">
+                <input type="password" placeholder="输入新密码">
+                <input type="password" placeholder="再次输入新密码">
+                <input type="button" value="确认新密码" class="confirmnewpassword">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    laydate.render({
+        elem: '#startyear'
+        , type: 'month'
+    });
+    laydate.render({
+        elem: '#endyear'
+        , type: 'month'
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

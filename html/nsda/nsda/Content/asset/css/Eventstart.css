@@ -1,10 +1,37 @@
 ﻿.event-select{
     width:100%;
-    height:370px;
     background:#F5F8FA;
     z-index:1;
 }
-.event-nav ul a.lione li{
+.event{
+    margin-left:80px;
+    padding-top:60px;
+    padding-bottom:60px;
+}
+.event h4{
+    font-size:18px;
+    color:#333;
+    font-weight:600;
+    letter-spacing:1px;
+    line-height:1.8;
+    margin-bottom:20px;
+}
+.event select{
+    width:200px;
+    height:40px;
+    font-size:14px;
+}
+.event .form-group{
+    margin-bottom:30px;
+}
+
+
+.event .next-step:hover{
+    color:white;
+}
+
+
+/*.event-nav ul a.lione li{
     position:relative;
     color:#fff;
 }
@@ -50,8 +77,8 @@
     color:#829199;
     float:left;
     margin-right:25px;
-}
-.selects a{
+}*/
+/*.selects a{
     display:inline-block;
     width:20%;
     height:35px;
@@ -66,7 +93,7 @@
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-}
+}*/
 
 
 

@@ -1,36 +1,34 @@
 ﻿.coach-con{
     width:100%;
     background:white;
-    padding:20px 10px 180px 10px;
     border-radius:0 0 8px 8px ;
     -webkit-border-radius: 0 0 8px 8px;
     -moz-border-radius: 0 0 8px 8px;
     margin-bottom:80px;
+    padding-top:20px;
+    padding-bottom:80px;
 }
 .coach-personal{
     width:75%;
     float:left;
-    margin-top:50px;
+    margin-top:15px;
 }
-.per-top{
-    padding-left:20px;
+
+.pi-top{
+    height:51px;
+    margin-left:25%;
 }
-.per-top .integral{
+.pi-top .integral{
     font-size:36px;
     float:left;
-    line-height:50px;
-    margin-right:20px;
 }
-.per-top .scorecheck{
-    font-size:18px;
-    color:#666;
+.pi-top p{
     float:left;
-    line-height:66px;
-    font-family:"微软雅黑"
+    font-size:18px;
+    line-height:51px;
+    margin-left:8px;
 }
-.per-con{
-    margin-top:60px;
-}
+
 .person-title{
     width:96%;
     height:30px;
@@ -58,14 +56,32 @@
     width:45%;
     float:left;
     margin-bottom:15px;
+    
+}
+.per-con .modifyinfo .two-label div input{
+    width:200px;
+    height:30px;
+    border:1px solid #bdbdbd;
+    padding-left:5px;
 }
 .per-con .modifyinfo .two-label div label{
     width:24%;
+    line-height:30px;
+}
+.ress label{
+    line-height:30px;
+}
+.ress input{
+    width:200px;
+    height:30px;
+    border:1px solid #bdbdbd;
+    padding-left:5px;
 }
 .per-con .two-label{
     height:22px;
     margin-bottom:30px;
 }
+
 .per-con .form-group .form-con label{
     width:6%;
     margin-right:50px;
@@ -91,15 +107,10 @@
 }
 .per-con .modifyinfo button{
     border:none;
-    background:#4E5D66;
-    border-radius:6px;
-    -webkit-border-radius:6px;
-    -webkit-border-radius:6px;
     padding:10px 20px;
     font-size:18px;
-    color:white;
     font-family:"微软雅黑";
-    margin-left:15%;
+    margin-left:19%;
     margin-top:50px;
     margin-bottom:40px;
 }
@@ -121,23 +132,19 @@
     width:100%;
     height:40px;
     margin-bottom:30px;
-    font-size:16px;
+    font-size:14px;
     color:#666;
     padding-left:5px;
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border:1px solid #eee;
+    padding-left:5px;
+    border:1px solid #d1cbcb;
 }
-.modifypanel input.confirmnewpassword{
+.modifypanel .confirmnewpassword{
     width:100%;
     height:40px;
-    background:#1ABC9C;
-    color:white;
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
+    border:none;
+    font-size:14px;
+    text-align:center;
 }
-.info-lists .panel-group .panel:nth-child(2) .panel-heading .panel-title h3{
+.info-lists .panel-group .panel:first-child .panel-heading .panel-title h3,.info-lists .panel-group .panel:first-child .panel-heading .panel-title p{
     color:#1DB8FF;
 }

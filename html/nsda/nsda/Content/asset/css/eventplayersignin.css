@@ -20,7 +20,7 @@
     padding:5px 10px;
 }
 .list-top .list{
-    padding:5px 10px;
+    padding:5px 30px;
     color:#666699;
     font-size:18px;
     font-weight:400;
@@ -32,7 +32,7 @@
     position:relative;
 }
 .searchplayer input{
-    width:235px;
+    width:200px;
     height:30px;
     background:transparent;
     border:1px solid #D2D6DA;
@@ -44,16 +44,11 @@
 .searchplayer a.search{
     display:inline-block;
     padding:4px 20px;
-    background:#1683E7;
-    color:white;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     margin-left:20px;
     cursor:pointer;
 }
 .searchplayer select#sel{
-    width:235px;
+    width:200px;
     position:absolute;
     left:0;
     top:30px;
@@ -77,8 +72,8 @@
 .batchsignin{
     width:200px;
     height:30px;
-    border:1px solid #EDEDED;
-    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    border:1px solid #D2D6DA;
+    background: #fff;
     padding-left:5px;
     border-radius:5px;
     -webkit-border-radius:5px;
@@ -88,11 +83,6 @@
     display:inline-block;
     float:right;
     padding:5px 10px;
-    background:#47BBED;
-    color:white;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     cursor:pointer;
 }
 .event-lists table{
@@ -126,12 +116,8 @@
     -moz-border-radius:5px;
     color:#fff;
 }
-.event-lists table tbody td.status a.stop{
-    background:#FF6666;
-}
-.event-lists table tbody td.status a.signin{
-    background:#47BBED;
-}
+
+
 .event-lists table tbody td:not(:last-child){
     max-width: 130px;
     word-break: keep-all;

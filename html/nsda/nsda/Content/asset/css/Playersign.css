@@ -1,5 +1,4 @@
 ﻿.compe-con{
-    margin-top:115px;
     float:left;
     width:78%;
     position:relative;
@@ -151,36 +150,25 @@
 .compe-con tbody td:not(:last-child) {
     border-right: 1px solid #a7a7a7;
 }
-.compe-con tbody tr td a.sign{
-    display:inline;
-    padding:6px 15px;
-    font-size:14px;
-    background:#FFD600;
-    border-radius: 20px;
-    -webkit-border-radius:20px;
-    -moz-border-radius: 20px;
-}
-.compe-con tbody tr td a.sign:hover{
-    background:#a2a81f;
-    color:white;
-}
 .compe-con nav{
     float:right;
     margin:20px;
 }
 .compe-con tbody tr td{
-    font-size:16px;
+    font-size:14px;
 }
 .compe-con tbody tr td a.sign{
     display:inline;
-    padding:6px 20px;
-    font-size:16px;
-    color:#666;
-    background:#FFD600;
-    border-radius: 20px;
-    -webkit-border-radius:20px;
-    -moz-border-radius: 20px;
+    padding:6px 10px;
+    font-size:14px;
 }
+td.last{
+    width:120px;
+    padding:6px;
+}
+
+
+
 
 .info-lists .panel:nth-child(2) .panel-body ul a:first-child li{
     background:#F0F0F0;

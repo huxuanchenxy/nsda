@@ -51,6 +51,7 @@
     float:left;
     margin-right:20px;
     color:#666;
+    line-height:30px;
 }
 .per-con .modifyinfo .two-label div{
     width:45%;
@@ -59,6 +60,7 @@
 }
 .per-con .modifyinfo .two-label div label{
     width:24%;
+    line-height:30px;
 }
 .per-con .two-label{
     height:22px;
@@ -67,6 +69,7 @@
 .per-con .form-group .form-con label{
     width:6%;
     margin-right:50px;
+    line-height:30px;
 }
 .per-con .emergency{
     border-top:1px solid #D2D9DD;
@@ -86,6 +89,7 @@
 .per-con .emergency .form-group label{
     width:24%;
     float:left;
+    line-height:30px;
 }
 .per-con .modifyinfo button{
     border:none;
@@ -139,7 +143,11 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
 }
-
+.form-group input[type=text]{
+    padding-left:5px;
+    border:1px solid #ddd;
+    height:30px;
+}
 .info-lists .panel:last-child a p.jc,.info-lists .panel:last-child a h3.mc{
     color:#52BEED;
 }

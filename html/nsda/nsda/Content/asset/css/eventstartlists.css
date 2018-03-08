@@ -6,21 +6,8 @@
     z-index:1;
     margin-bottom:180px;
 }
-.event-nav ul a:first-child li{
-    position:relative;
-    color:#fff;
-}
-.event-nav ul a:first-child li .tri{
-    width: 0;
-    height: 0;
-    border-top: 20px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 20px solid #F5F8FA;
-    border-left: 15px solid transparent;
-    position:absolute;
-    top:20px;
-    left:40%;
-    z-index:9;
+.eventstarlists{
+    padding-left:80px;
 }
 
 
@@ -37,7 +24,7 @@
 
 .event-select .compename input{
     width:100%;
-    height:46px;
+    height:36px;
     font-size:14px;
     background:transparent;
     border:1px solid #cccccc;
@@ -49,7 +36,7 @@
 }
 .event-select .compedeadtime input,.event-select .compecost input,.event-select .comperetime input{
     width:20%;
-    height:46px;
+    height:36px;
     font-size:14px;
     background:#fff;
     border:1px solid #cccccc;
@@ -66,7 +53,7 @@
 }
 .event-select .form-group .adddate input{
     width:100%;
-    height:46px;
+    height:36px;
     font-size:14px;
     background:#fff;
     border:1px solid #cccccc;
@@ -86,15 +73,14 @@
 .event-select .form-group .addinput{
     margin-left:25px;
     cursor:pointer;
-    line-height:46px;
+    line-height:36px;
 }
 .event-select .compedeadtime input{
     width:20%;
-    height:46px;
+    height:36px;
 }
 .event-select .compeaddress select,.event-select .compeaddress input{
-
-    height:46px;
+    height:36px;
     font-size:14px;
     color:#787373;
     background:#fff;
@@ -131,7 +117,7 @@
 }
 .event-select .comperetime input{
     width:20%;
-    height:46px;
+    height:36px;
     font-size:14px;
     color:#787373;
     background:#fff;
@@ -144,7 +130,7 @@
 }
 .event-select .compenumber input{
     width:12%;
-    height:46px;
+    height:36px;
     font-size:14px;
     color:#787373;
     background:#fff;
@@ -157,7 +143,7 @@
 }
 .event-select .teambg{
     width:100%;
-    background:#28353C;
+    background:#162329;
     padding:0 0 30px 0;
 }
 .event-select .teambg h3{
@@ -166,27 +152,28 @@
     line-height:60px;
     float:left;
 }
-.event-select .teambg .addteam{
+.teambg .addteam{
     display:inline-block;
     float:left;
     margin-left:6%;
     padding:6px 15px;
-    background:#47BBED;
-    color:#333333;
     margin-top:13px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
 }
+.teambg .addteam:hover{
+    color:white;
+}
 .event-select .teambg .tbg{
     width:100%;
-    background:#162329;
+    background:#28353C;
    margin-bottom:20px;
    padding:10px;
 }
 .event-select .tbg .teamlist{
     width:30%;
-    border:1px solid #28353C;
+    border:1px solid #fff;
     float:left;
     margin-right:60px;
     padding:10px;
@@ -196,7 +183,7 @@
 }
 .event-select .tbg .teamlist .groupname input{
     width:100%;
-    height:46px;
+    height:36px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -219,7 +206,7 @@
 }
 .event-select .tbg .teamlist .grade select{
     width:30%;
-    height:30px;
+    height:36px;
     float:left;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -240,7 +227,7 @@
 }
 .event-select .tbg .teamlist .allnum input{
     width:35%;
-    height:30px;
+    height:36px;
     float:left;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -252,26 +239,15 @@
 .event-select .tbg .teamlist .delteam{
     display:inline-block;
     padding:6px 20px;
-    background:#cb4444;
     margin:0 auto;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    color:white;
     margin-left:50%;
     transform:translate(-50%);
 }
 .event-select button{
-    width:270px;
-    height:55px;
+    padding:2px 35px;
     border:none;
-    background:#4E5D66;
-    color:white;
     font-size:18px;
     line-height:55px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     position:absolute;
     left:50%;
     transform:translate(-50%);

@@ -11,6 +11,7 @@
     min-width:7%;
     text-align:right;
     float:left;
+    color:#666;
 }
 .data .data-con{
     float:left;
@@ -24,6 +25,7 @@
 }
 .event-lists .class .data .data-con{
     position:relative;
+    color:#666;
 }
 .number{
     width:600px;
@@ -38,9 +40,13 @@
     width:260px;
     margin-right:20px;
 }
-.number .hadnumber span,.number .advisenumber span{
+.number .hadnumber span{
     width:170px;
-    text-align:right;
+    text-align:left;
+}
+.number .advisenumber span{
+    width:130px;
+    text-align:left;
 }
 .number .advisenumber p{
     color:#ff6666;
@@ -64,28 +70,21 @@
     position:relative;
 }
 .searchplayer input{
-    width:235px;
-    height:30px;
+    width:200px;
+    height:36px;
     background:transparent;
     border:1px solid #D2D6DA;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     padding-left:10px;
 }
 .searchplayer a.search{
     display:inline-block;
-    padding:4px 20px;
-    background:#1683E7;
-    color:white;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
+    padding:5px 20px;
+    font-size:16px;
     margin-left:20px;
     cursor:pointer;
 }
 .searchplayer select#sel{
-    width:235px;
+    width:200px;
     position:absolute;
     left:0;
     top:30px;
@@ -109,17 +108,14 @@
 .batchsignin{
     width:200px;
     height:30px;
-    border:1px solid #EDEDED;
-    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    border:1px solid #D2D6DA;
+    background: #fff;
     padding-left:5px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
 }
 .event-lists table{
     border-collapse: collapse;
     width: 100%;
-    color: #666699;
+    color: #666;
     margin-top: 20px;
     margin-bottom: 70px;
 }
@@ -139,10 +135,6 @@
 .event-lists table tbody tr td a{
     display: inline-block;
     padding: 5px 10px;
-    color: white;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
 }
 .event-lists table tbody td.status{
     min-width:50px;
@@ -150,13 +142,6 @@
 .event-lists table tbody td.status a{
     display:inline-block;
     padding:4px 16px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    color:#fff;
-}
-.event-lists table tbody td.status a.signin{
-    background:#47BBED;
 }
 .event-lists table tbody td:not(:last-child){
     max-width: 130px;

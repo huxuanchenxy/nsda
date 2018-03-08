@@ -6,7 +6,6 @@
 .judge-con{
     width:73%;
     float:left;
-    margin-top:60px;
     margin-left:20px;
 }
 .judge-con table{
@@ -38,11 +37,6 @@
 }
 .judge-con tbody td a.applyfor {
     padding: 5px 15px;
-    background: #FFD600;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    color: #666666;
 }
 
 .judge-con nav{

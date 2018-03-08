@@ -1,0 +1,214 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "第一轮";
+}
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/doublecheck.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/writegrades.css?2.0.0" rel="stylesheet" />
+<link href="~/Content/asset/css/againstaround.css?2.0.0" rel="stylesheet" />
+
+@Html.Partial("_manager")
+<div class="event-lists ">
+    <div class="list-top">
+        <a href="/Eventmanage/doublecheck" class="active list">新手组</a>
+        <a href="/Eventmanage/doublecheck" class="list">公开组</a>
+    </div>
+    <div class="event-con">
+        <div>
+            <img src="~/Content/asset/img/vs_03.png" />
+            <h4>第一轮</h4>
+        </div>
+        <div class="roundtop">
+            <div class="idle">
+                <div class="idlejudge radius5">
+                    <span>闲置裁判池：</span>
+                    <div class="allselects">
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                    </div>
+                </div>
+                <div class="idleroom radius5">
+                    <span>闲置Room池：</span>
+                    <div class="allselects">
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" name="name" value="" /><label>J2563 </label><p>Nicolas</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="roundbtn">
+                <div class="btnleft">
+                    <div>
+                        <button class="pre radius5 color-white blue posright"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
+                    </div>
+                    <div class="btnbottom">
+                        <button class="pre radius5 color-white orange"><i class="iconfont icon-dayin"></i><p>打印评分单</p></button>
+                        <button class="pre radius5 color-white green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></button>
+                    </div>
+                </div>
+                <div class="btnright">
+                    <button class="star radius5 lightred color-white"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></button>
+                </div>
+            </div>
+        </div>
+        <div class="operation">
+            <p>勾选替换操作：</p><button class="pre radius5 color-white blue butt">替换 FLight 位置</button><button class="pre radius5 color-white green butt">替换Room按钮</button><button class="pre radius5 color-white orange butt">替换 裁判</button>
+        </div>
+        <div class="flighttable">
+            
+            <div class="fli  radius5">
+                <div class="flitop">
+                    <p>Flight A</p>
+                    <div class="form-group"><p>比赛时间：</p><p>2017-2-1</p></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>队伍编号</th>
+                            <th>选手名字</th>
+                            <th></th>
+                            <th>队伍编号</th>
+                            <th>选手名字</th>
+                            <th>Room</th>
+                            <th>裁判</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" class="markbox"><input type="checkbox" /></td>
+                            <td></td>
+                            <td rowspan="2"><i class="iconfont icon-vs2"></i></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="markbox"><input type="checkbox" /></td>
+                            <td></td>
+                            <td rowspan="2"><i class="iconfont icon-vs2"></i></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="fli radius5">
+                <div class="flitop">
+                    <p>Flight B</p>
+                    <div class="form-group"><p>比赛时间：</p><p>2017-2-1</p></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>队伍编号</th>
+                            <th>选手名字</th>
+                            <th></th>
+                            <th>队伍编号</th>
+                            <th>选手名字</th>
+                            <th>Room</th>
+                            <th>裁判</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" class="markbox"><input type="checkbox" /></td>
+                            <td></td>
+                            <td rowspan="2"><i class="iconfont icon-vs2"></i></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="markbox"><input type="checkbox" /></td>
+                            <td></td>
+                            <td rowspan="2"><i class="iconfont icon-vs2"></i></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="fli radius5">
+                <div class="flitop">
+                    <p>Flight C</p>
+                    <div class="form-group"><p>比赛时间：</p><p>2017-2-1</p></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>队伍编号</th>
+                            <th>选手名字</th>
+                            <th></th>
+                            <th>队伍编号</th>
+                            <th>选手名字</th>
+                            <th>Room</th>
+                            <th>裁判</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" class="markbox"><input type="checkbox" /></td>
+                            <td></td>
+                            <td rowspan="2"><i class="iconfont icon-vs2"></i></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="markbox"><input type="checkbox" /></td>
+                            <td></td>
+                            <td rowspan="2"><i class="iconfont icon-vs2"></i></td>
+                            <td rowspan="2"></td>
+                            <td></td>
+                            <td rowspan="2"></td>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

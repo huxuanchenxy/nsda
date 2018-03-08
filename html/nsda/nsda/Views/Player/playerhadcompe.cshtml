@@ -1,0 +1,133 @@
+﻿@{
+    Layout = "~/Views/Shared/_Role.cshtml";
+    ViewBag.Title = "已参加比赛";
+}
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerpartin.css?2.1.5")" rel="stylesheet" type="text/css" />
+@Scripts.Render("~/Content/asset/layer/js/layer.js")
+
+@Html.Partial("_PlayerTop")
+
+<div class="container player-compe">
+    <div class="pi-top list-top">
+        <a href="/Player/playerhadcompe" class="active list">已参与的比赛</a>
+        <a href="/Player/playerexitcompe" class="list">退赛信息</a>
+    </div>
+    @Html.Partial("_PlayerLeft")
+    <div class="comp-lists tab">
+        <a href="javascript:;" class="addexper"><i class="iconfont icon-add1"></i> 添加临时参赛</a>
+        <div class="comp-con">
+            <div class="hadtable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>队伍编码</th>
+                            <th>比赛名称</th>
+                            <th>类别</th>
+                            <th>会员编码</th>
+                            <th>队员</th>
+                            <th>状态</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2">n123345</td>
+                            <td rowspan="2"><span>No.12345678765</span>nsda中国注册会员目前积分是谁大家看法half</td>
+                            <td rowspan="2">n1233456789</td>
+                            <td>n12334567890</td>
+                            <td>n12334567890</td>
+                            <td>报名邀请中</td>
+                            <td class="last"><a href="javascript:;" class="select radius5 color-white orange" title="是否接受组队">是否接受组队</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>确认组队</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">01</td>
+                            <td rowspan="2">02</td>
+                            <td rowspan="2">03</td>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>组队成功</td>
+                            <td class="last"><a href="javascript:;" class="pay radius5 color-white yellow" title="付款">付款</a><a href="javascript:;" class="apply radius5 color-3 gary" title="退赛申请">退赛申请</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>06</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">01</td>
+                            <td rowspan="2">02</td>
+                            <td rowspan="2">03</td>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>报名成功</td>
+                            <td class="last"><a href="javascript:;" class="apply radius5 color-3 gary" title="退赛申请">退赛申请</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>06</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">01</td>
+                            <td rowspan="2">02</td>
+                            <td rowspan="2">03</td>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>报名成功</td>
+                            <td class="last"><a href="javascript:;" class="apply radius5 color-3 gary" title="退赛申请">退赛申请</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>06</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation" id="pager">
+                    <div class="page">
+                        <a href="javascript:void(0);" class="prev"><</a>
+                        <a href="javascript:void(0);" class="on">1</a>
+                        <span>...</span>
+                        <a href="javascript:void(0);">4</a>
+                        <a href="javascript:void(0);">5</a>
+                        <a href="javascript:void(0);">6</a>
+                        <span>...</span>
+                        <a href="javascript:void(0);">7</a>
+                        <a href="javascript:void(0);" class="next">></a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("contact")
+<script>
+    var classVal = document.getElementById("collapseOne").getAttribute("class");
+    classVal = classVal.concat("in");
+    document.getElementById("collapseOne").setAttribute("class", classVal);
+</script>
+
+<script>
+    $(".addexper").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Player/addtmpcompe",
+            area: ["565px", "401px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+
+</script>

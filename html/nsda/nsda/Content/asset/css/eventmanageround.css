@@ -3,9 +3,6 @@
     width:100%;
     padding-left:50px;
     border-bottom:1px solid #C3C8CC;
-    box-sizing:border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     padding-bottom:4px;
 }
 .list-top .active{
@@ -21,8 +18,8 @@
     padding:5px 10px;
 }
 .list-top .list{
-    padding:5px 10px;
-    color:#666699;
+    padding:5px 20px;
+    color:#666;
     font-size:18px;
     font-weight:400;
 }
@@ -31,7 +28,7 @@
 }
 .roundset h3{
     font-size:24px;
-    color:#666699;
+    color:#666;
 }
 .roundset .newround{
     padding:40px 0;
@@ -39,7 +36,7 @@
 }
 .roundset .newround h4{
     font-size:18px;
-    color:#666699;
+    color:#666;
     position:relative;
 }
 .roundset .newround span{
@@ -86,9 +83,6 @@
     height:25px;
     padding-left:5px;
     background:transparent;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     border:3px solid #EBF0F2;
     color:#cccccc;
     font-size:12px;
@@ -106,10 +100,6 @@
     display:inline-block;
     padding:5px 12px;
     color:white;
-    background:#47BBED;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     margin-right:100px;
 }
 .newround .rounds .form-group.flight{
@@ -138,7 +128,7 @@
 }
 .newround .roundone ul li label{
     font-size:14px;
-    color:#666699;
+    color:#666;
 }
 .newround .roundone ul li select.rset{
     width:140px;
@@ -146,9 +136,6 @@
     border:1px solid #E0E0E0;
     background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
     padding-left:5px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     color:#666666;
     font-size:12px;
 }
@@ -156,9 +143,6 @@
     width:140px;
     height:30px;
     padding-left:5px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     background:#F5F8FA;
     border:2px solid #EBF0F2 ;
 
@@ -166,7 +150,6 @@
 .newround .roundone ul li i.iconfont{
     position:absolute;
     font-size:24px;
-    color:#FF6666;
     right:-10px;
     top:50%;
     transform:translateY(-50%);
@@ -178,7 +161,7 @@
 }
 .roundset .openround h4{
     font-size:18px;
-    color:#666699;
+    color:#666;
     position:relative;
 }
 .roundset .openround span{
@@ -225,9 +208,6 @@
     height:25px;
     padding-left:5px;
     background:transparent;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     border:3px solid #EBF0F2;
     color:#cccccc;
     font-size:12px;
@@ -245,10 +225,6 @@
     display:inline-block;
     padding:5px 12px;
     color:white;
-    background:#47BBED;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     margin-right:100px;
 }
 .openround .rounds .form-group.flight{
@@ -277,7 +253,7 @@
 }
 .openround .roundone ul li label{
     font-size:14px;
-    color:#666699;
+    color:#666;
 }
 .openround .roundone ul li select.rset{
     width:140px;
@@ -285,19 +261,13 @@
     border:1px solid #E0E0E0;
     background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
     padding-left:5px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     color:#666666;
     font-size:12px;
 }
 .openround .roundone ul li input[type=text]{
     width:140px;
     height:30px;
-    padding-left:5px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
+    padding-left: 5px;
     background:#F5F8FA;
     border:2px solid #EBF0F2 ;
 
@@ -305,7 +275,6 @@
 .openround .roundone ul li i.iconfont{
     position:absolute;
     font-size:24px;
-    color:#FF6666;
     right:-10px;
     top:50%;
     transform:translateY(-50%);
@@ -315,13 +284,8 @@
     display:inline-block;
     width:270px;
     height:60px;
-    background:#4E5D66;
-    color:#fff;
     text-align:center;
     line-height:60px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     border:none;
     font-size:18px;
     position:absolute;

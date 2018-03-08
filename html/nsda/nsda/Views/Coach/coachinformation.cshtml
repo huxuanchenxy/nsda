@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Shared/_Role.cshtml";
+    ViewBag.Title = "Personal Information";
+}
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/coachinformation.css?3.1.2")" rel="stylesheet" type="text/css" />
+
+
+@Html.Partial("_coachtop")
+
+<div class="container coach-con">
+    <div class="pi-top">
+        <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
+        <p class="scorecheck">Changing your account information</p>
+    </div>
+    @Html.Partial("_coachleft")
+    <div class="coach-personal">
+        <div class="per-con">
+            <div class="person-title"></div>
+            <div class="modifyinfo">
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <div class="form-con" id="email"><p>admin@enreachedu.com</p></div>
+                </div>
+                <div class="form-group two-label">
+                    <div>
+                        <label for="firstname"> First Name:</label>
+                        <div class="form-con">
+                            <input type="text" class="radius5" id="firstname">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="lastname">Last Name:</label>
+                        <div class="form-con">
+                            <input type="text" class="radius5" id="lastname">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="form-con">
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Male
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Female
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ress">
+                    <label for="address">Address:</label>
+                    <div class="form-con" id="address">
+                        <input type="text" class="radius5" />
+                    </div>
+                </div>
+                <div class="emergency ress">
+                    <h4>Emergency Contact Information</h4>
+                    <div class="form-group">
+                        <label>Emergency Contact Person:</label>
+                        <div class="form-con">
+                            <input type="text"  class="radius5" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Emergency Numbe:</label>
+                        <div class="form-con">
+                            <input type="text" class="radius5" />
+                        </div>
+                    </div>
+                    <button class="radius5 darkblue color-white">Confirm Your Information</button>
+                </div>
+            </div>
+            <div class="modifypassword">
+                <img src="~/Content/asset/img/pass_03.png" alt="" />
+                <div class="modifypanel radius5">
+                        <input type="password" class="radius5" placeholder="输入新密码">
+                        <input type="password" class="radius5" placeholder="再次输入新密码">
+                        <button class="confirmnewpassword radius5 darkblue color-white">确认新密码</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -8,6 +8,10 @@
     margin-top: 0;
     margin-left: 20px;
 }
+.pi-top{
+    height:60px;
+    margin-left:25%;
+}
 .compe-con{
     margin-top:70px;
     width:78%;
@@ -29,7 +33,7 @@
     line-height:1.6;
 }
 .comcon{
-    padding:10px 40px;
+    padding:0 40px;
 }
 .comcon p{
     font-size:12px;

@@ -44,13 +44,16 @@
     text-align:right;
     float:left;
 }
+.data .data-item p{
+    color:#666;
+}
 .data .data-con{
     float:left;
-    width:80%
+    width:90%
 }
 .data .data-con a{
     float:left;
-    color:black;
+    color:#666;
     margin-left:2%;
     margin-right:2%;
 }
@@ -58,21 +61,15 @@
     margin-bottom:40px;
 }
 
-.classcheck .class .addjudge{
+.addjudge{
     display:inline-block;
     padding:4px 10px;
-    background:#47BBED;
-    color:#fff;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     cursor:pointer;
-    position:absolute;
-    right:0;
-    top:100px;
+    float:right;
+    margin-bottom:20px;
 }
 .event-lists table{
-    margin-top:180px;
+    margin-top:200px;
 }
 .event-lists table tbody td:not(:last-child){
     max-width:130px;
@@ -99,24 +96,17 @@
 .event-lists table tbody tr td a{
     display:inline-block;
     padding:5px 10px;
-    color:white;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     position:absolute;
     top:50%;
     transform:translateY(-50%);
 }
 .event-lists table tbody tr td a.enrol{
-    background:#1ABC9C;
     left:6%;
 }
 .event-lists table tbody tr td a.refuse{
-    background:#F3924B;
     left:36%;
 }
 .event-lists table tbody tr td a.candidate{
-    background:#4E5D66;
     left:66%;
 }
 .event-lists table tbody td:first-child{
@@ -149,9 +139,7 @@
 .event-lists table tbody tr td span.snap{
     display:inline-block;
     padding:1px 8px;
-    color:#fff;
     font-size:12px;
-    background:#1ABC9C;
     border-radius:40px;
     -webkit-border-radius:40px;
     -moz-border-radius:40px;
@@ -181,9 +169,6 @@ body{
     overflow:hidden;
     background:#D8E0E5;
     padding:10px 120px 39px 120px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
 }
 .addtemporaryjudge h4{
     font-size:18px;
@@ -194,7 +179,6 @@ body{
     display:inline-block;
     width:30px;
     height:3px;
-    background:#4E5D66;
     text-align:center;
     position:absolute;
     left:50%;
@@ -222,14 +206,9 @@ body{
     display:inline-block;
     width:270px;
     height:50px;
-    background:#4E5D66;
-    color:#fff;
     text-align:center;
     line-height:50px;
     font-size:18px;
-    border-radius:10px;
-    -webkit-border-radius:10px;
-    -moz-border-radius:10px;
     border:none;
     margin-top:45px;
     margin-left:35px;

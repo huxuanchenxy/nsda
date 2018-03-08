@@ -12,9 +12,6 @@
     padding: 6px 35px;
     float: left;
     margin-right: 20px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     background: linear-gradient(to bottom,#DCF0FF,#CCE8FF);
     color: #336699;
     font-size: 18px;
@@ -23,7 +20,7 @@
 }
 
 .game.viewed {
-    background: #E6ECF0;
+    background: #ddcbcb;
     color: white;
 }
 

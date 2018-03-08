@@ -3,19 +3,18 @@
 }
 .prizesetting h3{
     font-size:14px;
-    color:#666699;
+    color:#666;
     line-height:1.8;
 }
 .prizesetting .form-group label{
     font-size:14px;
-    color:#666699;
+    color:#666;
 }
 .prizesetting .form-group input{
+    width:200px;
     height:30px;
     padding-left:5px;
-    box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    -moz-box-sizing:border-box;
+    border:1px solid #d1cccc;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -23,15 +22,16 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 .prizesetting .form-group select{
+    width:200px;
+    border:1px solid #d1cccc;
     height:30px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    background:linear-gradient(to bottom,#FFFFFF,#F0F2F3);
+    background:#fff;
+    color:#666;
+    padding-left:5px;
 }
 .prize table td.operate{
     position:relative;
-    width:220px;
+    width:190px;
     padding:5px 20px;
     box-sizing:border-box;
     -webkit-box-sizing:border-box;
@@ -40,42 +40,26 @@ input::-webkit-inner-spin-button {
 .prize table td.operate .prizebtn{
     display:inline-block;
     padding:4px 20px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    color:white;
 }
 .prize table td.operate .amend{
-    background:#1ABC9C;
     float:left;
 }
 .prize table td.operate .delete{
-    background:#F3924B;
     float:right;
 }
 .addprize{
     display:inline-block;
     padding:4px 20px;
-    background:#47BBED;
     border:none;
     float:right;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    color:#fff;
 }
 .save{
     display:inline-block;
     padding:3px 50px;
     margin-top:30px;
-    background:#4E5D66;
-    color:#fff;
     border:none;
     font-size:18px;
     line-height:50px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     position:absolute;
     left:46%;
     transform:translate(-50%);
@@ -104,9 +88,6 @@ body{
     overflow:hidden;
     background:#D8E0E5;
     padding:10px 160px 39px 160px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
 }
 .modiroom h4{
     font-size:18px;
@@ -140,10 +121,8 @@ body{
 .roomclass select{
     width:230px;
     height:30px;
-    background:linear-gradient(to bottom,#FFFFFF,#F0F2F3);
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
+    background:#fff;
+    border:1px solid #d1cdcd;
     margin-bottom:10px;
 }
 .inputteam textarea{
@@ -161,14 +140,9 @@ body{
     display:inline-block;
     width:230px;
     height:50px;
-    background:#4E5D66;
-    color:#fff;
     border:none;
     font-size:18px;
     line-height:50px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
 }
 
 

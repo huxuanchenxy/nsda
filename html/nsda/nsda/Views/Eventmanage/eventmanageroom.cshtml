@@ -1,0 +1,174 @@
+﻿@{
+    Layout = "~/Views/Shared/_EventManage.cshtml";
+    ViewBag.Title = "Room管理";
+}
+<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageumpire.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageroom.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+@Scripts.Render("~/Content/asset/layer/js/layer.js")
+@Html.Partial("_manager")
+<div class="event-lists">
+    <div class="classcheck">
+        <img src="~/Content/asset/img/sinfo_03.png" alt="" />
+        <div class="class">
+            <div class="group">
+                <div class="group-item">
+                    <p>按组别查看：</p><a href="javascript:;" class="selected">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;">新手组</a>
+                    <a href="javascript:;">公开组</a>
+                </div>
+            </div>
+            <div class="group">
+                <div class="group-item">
+                    <p>按状态查看：</p><a href="javascript:;" class="selected">不限</a>
+                </div>
+                <div class="group-con">
+                    <a href="javascript:;">使用中</a>
+                    <a href="javascript:;">停用</a>
+                    <a href="javascript:;">限制</a>
+                </div>
+            </div>
+            <div class="data">
+                <div class="data-item">
+                    <p>数据统计：</p>
+                </div>
+                <div class="data-con">
+                    <a href="javascript:;">目前总Room数量为：5</a>
+                    <a href="javascript:;">建议房间数为：<p>请在比赛规则设置完成后，才能显示。</p></a>
+                </div>
+            </div>
+        </div>
+
+        <select class="batch radius5">
+            <option value="1">批量处理</option>
+            <option value="2">停用</option>
+            <option value="3">仅 新手组 使用（组别）</option>
+            <option value="4">仅 公开组 使用（组别）</option>
+        </select>
+        <span class="addroom radius5 blue color-white">+ 添加Room</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>Room编号</th>
+                    <th>Room名称</th>
+                    <th>目前状态</th>
+                    <th>操作</th>
+                    <th>修改</th>
+                    <th>指定选手使用该房间（每间room仅可指定一位） </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="mark"><input type="checkbox"  /></span>R1899582</td>
+                    <td>A401</td>
+                    <td>使用中</td>
+                    <td>
+                        <select>
+                            <option value="1">停用</option>
+                            <option value="2">仅 新手组 使用（组别）</option>
+                            <option value="3">仅 公开组 使用（组别）</option>
+                        </select>
+                    </td>
+                    <td class="modify"><a href="javascript:;" class="modifyroom radius5 color-white darkblue">修改Room</a></td>
+                    <td><p class="playername">tylergypsy</p><a href="javascript:;" class="addassign radius5 color-white darkgreen">添加指定</a><a href="javascript:;" class="clearassign radius5 color-white orange">清除指定</a></td>
+                </tr>
+                <tr>
+                    <td><span class="mark"><input type="checkbox" /></span>R189345</td>
+                    <td>A402</td>
+                    <td>停用</td>
+                    <td>
+                        <select>
+                            <option value="1">停用</option>
+                            <option value="2">仅 新手组 使用（组别）</option>
+                            <option value="3">仅 公开组 使用（组别）</option>
+                        </select>
+                    </td>
+                    <td class="modify"><a href="javascript:;" class="modifyroom radius5 color-white darkblue">修改Room</a></td>
+                    <td><p class="playername">范湉湉</p><a href="javascript:;" class="addassign radius5 color-white darkgreen">添加指定</a><a href="javascript:;" class="clearassign radius5 color-white orange">清除指定</a></td>
+                </tr>
+                <tr>
+                    <td><span class="mark"><input type="checkbox" /></span>R1899582</td>
+                    <td>A401</td>
+                    <td>闲置</td>
+                    <td>
+                        <select>
+                            <option value="1">停用</option>
+                            <option value="2">仅 新手组 使用（组别）</option>
+                            <option value="3">仅 公开组 使用（组别）</option>
+                        </select>
+                    </td>
+                    <td class="modify"><a href="javascript:;" class="modifyroom radius5 color-white darkblue">修改Room</a></td>
+                    <td><p class="playername"></p><a href="javascript:;" class="addassign radius5 color-white darkgreen">添加指定</a><a href="javascript:;" class="clearassign radius5 color-white orange">清除指定</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation" id="page">
+        <div class="page">
+            <a href="javascript:void(0);" class="prev"><</a>
+            <a href="javascript:void(0);" class="on">1</a>
+            <span>...</span>
+            <a href="javascript:void(0);">4</a>
+            <a href="javascript:void(0);">5</a>
+            <a href="javascript:void(0);">6</a>
+            <span>...</span>
+            <a href="javascript:void(0);">7</a>
+            <a href="javascript:void(0);" class="next">></a>
+        </div>
+    </nav>
+</div>
+<script>
+    $(".addroom").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Eventmanage/addroom",
+            area: ["565px", "410px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+    $(".modifyroom").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Eventmanage/modifyroom",
+            area: ["565px", "410px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+    $(".addassign").click(function () {
+        layer.open({
+            title: "",
+            type: 2,
+            content: "/Eventmanage/addassign",
+            area: ["565px", "410px"],
+            end: function () {
+                location.reload();
+            }
+        });
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
