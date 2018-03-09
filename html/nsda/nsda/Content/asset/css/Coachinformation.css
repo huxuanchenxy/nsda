@@ -120,6 +120,9 @@
 .modifypassword img{
     display:inline;
     float:left;
+    width: 120px;
+    height: 180px;
+    margin-top: 30px;
 }
 .modifypassword .modifypanel{
     width:357px;

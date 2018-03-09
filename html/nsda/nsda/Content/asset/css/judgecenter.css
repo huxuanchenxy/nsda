@@ -49,9 +49,45 @@
 }
 
 
+.judge-compe{
+    position:relative;
+}
 
-
-
+nav.info-nav{
+    float:right;
+    padding-right:3%;
+    position:absolute;
+    right:0;
+    bottom:0;
+    margin-bottom:50px;
+}
+.page{
+    color: #a2a2a2;
+    margin: 20px 0;
+    display: inline-block;
+    text-align: center;
+    float:right;
+    margin-top:60px;
+    margin-right:20px;
+}
+.page a.prev, .page a.next {
+    font-size: 14px;
+    font-weight: bold;
+}
+.page span, .page a {
+    color: #a2a2a2;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    text-decoration: none;
+}
+.page a:hover, .page .on{
+    background-color: #2577e3;
+    border-radius: 30px;
+    color: #fff;
+}
 
 
 

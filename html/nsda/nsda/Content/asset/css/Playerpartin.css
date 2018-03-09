@@ -56,6 +56,7 @@
 .comp-con table{
     border-collapse: collapse;
     width: 100%;
+    margin-top:40px;
 }
 .comp-con .hadtable thead{
     background: #E3D2D2;

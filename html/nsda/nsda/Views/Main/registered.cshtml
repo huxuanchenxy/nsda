@@ -2,8 +2,10 @@
 @{
     ViewBag.Title = "会员登录";
 }
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.2")" rel="stylesheet" type="text/css" />
+
 <link href="@Url.Content("~/Content/asset/css/About.css?1.1.2")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/registered.css?1.1.2")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/registered.css?2.1.2")" rel="stylesheet" type="text/css" />
 
 
 <!--这里可能是logo也可能是广告 到底是什么 我也不知道-->
@@ -20,7 +22,7 @@
 <div class="reg-con-big reg-content container-fluid">
     <div class="reg-left"></div>
     <div class="reg-right"></div>
-    <div class="circle"></div>
+    <div class="circle radius50"></div>
     <div class="medium"></div>
     <div class="triangle"></div>
     <div class="register container">
@@ -29,11 +31,11 @@
             <p>注册邮箱 Email</p>
             <form  class="form-horizontal" action="" method="post">
                 <img src="~/Content/asset/img/member.svg" alt="Alternate Text" />
-                <input type="text" name="name" value="" />
+                <input type="text" class="radius5" name="name" value="" />
                 <p>登录密码 Password <a href="/Main/forgotpwd">忘记密码 Forgot?</a></p>
                 <img src="~/Content/asset/img/password.svg" alt="Alternate Text" />
-                <input type="password" name="name" value="" />
-                <a id="test1" href="/Player/playermembercenter" class="button">登录 Sign In</a>
+                <input type="password" class="radius5" name="name" value="" />
+                <a id="test1" href="/Player/playermembercenter" class="button radius5 color-white blue">登录 Sign In</a>
                 <p>Not a member?  <a href="/Main/Regform" class="reg-a">即刻注册会员 Sign up now</a></p>
             </form>
         </div>
@@ -42,11 +44,11 @@
             <p>注册邮箱 Email</p>
             <form action="/" method="post">
                 <img src="~/Content/asset/img/member.svg" alt="Alternate Text" />
-                <input type="text" name="name" value="" />
+                <input type="text" class="radius5" name="name" value="" />
                 <p>登录密码 Password <a href="/Main/forgotpwd">忘记密码 Forgot?</a></p>
                 <img src="~/Content/asset/img/password.svg" alt="Alternate Text" />
-                <input type="password" name="name" value="" />
-                <a href="/Coach/coachboundplayer" class="button">登录 Sign In</a>
+                <input type="password" class="radius5" name="name" value="" />
+                <a href="/Coach/coachboundplayer" class="button radius5 color-white orange">登录 Sign In</a>
                 <p>Not a coach member?  <a href="/Coach/coachregform" class="reg-a">Sign up now</a></p>
             </form>
             

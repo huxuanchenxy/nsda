@@ -97,15 +97,10 @@
 }
 .education .form-con .edulists li .addedu{
     display:inline;
-    padding:5px 30px;
+    padding:5px 25px;
     font-size:16px;
     float:right;
-    background:#1ABC9C;
-    color:white;
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    margin-right:10px;
+    margin-right:8px;
     cursor:pointer;
 }
 .education .form-con .edulists li .editedu,.education .form-con .edulists li .deledu{
@@ -158,6 +153,9 @@
 .modifypassword img{
     display:inline;
     float:left;
+    width: 110px;
+    height: 180px;
+    margin-top: 40px;
 }
 .modifypassword .modifypanel{
     width:357px;
@@ -192,7 +190,7 @@
     -webkit-border-radius:20px;
     -moz-border-radius: 20px;
 }
-fg-layer-iframe{
+.fg-layer-iframe{
    border-radius: 20px;
     -webkit-border-radius:20px;
     -moz-border-radius: 20px;
@@ -207,12 +205,15 @@ fg-layer-iframe{
     font-size:20px;
 }
 .fg-layer-content{
-    border-radius: 0 0 16px 16px ;
-    -webkit-border-radius: 0 0 16px 16px ;
-    -moz-border-radius:  0 0 16px 16px ;
+    border-radius:5px ;
+    -webkit-border-radius:5px ;
+    -moz-border-radius:5px ;
     background:#ECF0F1;
 }
-
+.addeducation{
+    padding:15px 30px 0 30px;
+    
+}
 .addeducation i{
     font-size:30px;
     position:absolute;
@@ -229,38 +230,28 @@ fg-layer-iframe{
 }
 .addeducation .form-group{
     width:90%;
-    margin:90px auto;
+    margin:60px auto 30px;
 }
 .addeducation .form-group select,.addeducation .form-group input{
-    margin-bottom:70px;
-    background:#1ABC9C;
-    height:46px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    color:white;
+    margin-bottom:40px;
+    height:36px;
     padding-left:8px;
-    border:none;
-    font-size:20px;
+    font-size:14px;
     cursor:pointer;
+    background:#fff;
+    border:1px solid #dddcdc;
 }
 .addeducation .form-group em{
     color:#1ABC9C;
 }
 .addeducation button{
-    width:100%;
-    height:50px;
-    color:white;
-    background:#1ABC9C;
-    text-align:center;
-    border-radius: 0 0 10px 10px;
-    -webkit-border-radius: 0 0 10px 10px;
-    -moz-border-radius: 0 0 10px 10px;
+    padding:10px 90px;
     border:none;
+    font-size:18px;
     box-shadow:none;
     position:absolute;
-    bottom:0;
-    left:0;
+    left:50%;
+    transform:translateX(-50%);
     cursor:pointer;
 }
 .addeducation .form-group .form-select-school{
@@ -276,9 +267,9 @@ body{
     margin:0;
 }
 .addeducation .form-group input:focus{
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 .fg-layer{
     position:absolute;
@@ -293,3 +284,31 @@ body{
     background:#F0F0F0;
     color:#5DC1ED;
 }
+.fg-layer-iframe iframe{
+    position:relative;
+}
+fg-layer-iframe{
+    z-index:1 !important;
+}
+.layui-laydate{
+    position:absolute;
+    z-index:19891099 !important;
+}
+.layui-laydate-content{
+    padding:0 !important;
+}
+
+input[type=text]{
+    border:1px solid #c6bfbf;
+    height:30px;
+    padding-left:5px;
+}
+label{
+    line-height:30px;
+}
+.form-group p{
+    line-height:30px;
+}
+
+
+

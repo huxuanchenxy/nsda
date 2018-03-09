@@ -75,14 +75,10 @@
     text-align:left;
     font-weight: 600;
 }
-.player-num ul li p a.attest{
+.attest{
     display:inline-block;
-    padding:0 10px;
-    background:#10B5FF;
-    border-radius: 5px;
-    color:white;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
+    padding:0 8px;
+    font-size:12px;
 }
 .player-code {
     padding: 5px 15px;

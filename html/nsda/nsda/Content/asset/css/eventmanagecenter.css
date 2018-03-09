@@ -67,11 +67,9 @@
 }
 .form-group input.form-input,.form-group .form-select-grade,.form-group .form-input-phone,.form-group .form-select-card,.form-group .form-input-card,.form-group .form-select-school,.form-group .form-select-schoolads{
     height:35px;
-    border-radius:6px;
-    -webkit-border-radius:6px;
-    -moz-border-radius:6px;
-    border:1px solid #797979;
-    background:#F4F4F1;
+    border:1px solid #a7a7a7;
+    background:#fff;
+   
 }
 .form-group .form-select-card{
     width:23%;
@@ -106,13 +104,8 @@
 }
 .form-ctrl .button{
     display:inline-block;
-    width:270px;
-    height:55px;
-    background:#4E5D66;
-    color:white;
-    border-radius:6px;
-    -webkit-border-radius:6px;
-    -moz-border-radius:6px;
+    padding:15px 90px;
+    border:none;
     margin-top:20px;
     margin-left:30%;
     font-size:18px;
@@ -124,6 +117,9 @@
 .modifypassword img{
     display:inline;
     float:left;
+    width: 110px;
+    height: 190px;
+    margin-top: 40px;
 }
 .modifypassword .modifypanel{
     width:357px;
@@ -136,25 +132,15 @@
     width:100%;
     height:40px;
     margin-bottom:30px;
-    font-size:16px;
-    color:#666;
+    font-size:14px;
     padding-left:5px;
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
     border:1px solid #eee;
 }
-.modifypanel input:focus{
-    border:2px solid #4E5D66;
-}
+
 .modifypanel input.confirmnewpassword{
     width:100%;
     height:40px;
-    background:#4E5D66;
-    color:white;
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
+    font-size:16px;
 }
 .regform-con{
     padding-top:35px; 
@@ -167,4 +153,7 @@
 .form-group{
     height:35px;
     
+}
+.form-group input[type=text],.form-group input[type=email]{
+    padding-left:5px;
 }

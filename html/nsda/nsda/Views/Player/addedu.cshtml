@@ -2,29 +2,31 @@
     Layout = "";
     ViewBag.Title = "添加教育经历";
 }
-<link href="@Url.Content("~/Content/asset/css/playerpersonal.css?1.1.5")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/common.css?1.1.0" rel="stylesheet" />
+<link href="@Url.Content("~/Content/asset/css/playerpersonal.css?3.1.5")" rel="stylesheet" type="text/css" />
 
 
-<div class="addeducation" id="addeducation">
+<div class="addeducation box-sizing" id="addeducation">
+    <h3>新增教育经历</h3>
     <div class="form-group">
-        <input class="form-select-school" id="staryear" readonly="readonly">
-        <em class="em"> —</em>
-        <input class="form-select-school" id="endyear" readonly="readonly">
-        <select class="form-select-schools" id="province">
+        <input class="form-select-school radius5 color-79 year" id="staryear" readonly="readonly">
+        <em class="em">—</em>
+        <input class="form-select-school radius5 color-79 year" id="endyear" readonly="readonly">
+        <select class="form-select-schools radius5 color-79" id="province">
             <option>省</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
             <option>5</option>
         </select>
-        <select class="form-select-schools" id="city">
+        <select class="form-select-schools radius5 color-79" id="city">
             <option>市</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
             <option>5</option>
         </select>
-        <select class="form-select-schoolads" id="school">
+        <select class="form-select-schoolads radius5 color-79" id="school">
             <option>学校</option>
             <option>2</option>
             <option>3</option>
@@ -32,18 +34,17 @@
             <option>5</option>
         </select>
     </div>
-    <button class="confirmadd" id="confirmadd">添加</button>
+    <button class="boconfirmadd undcoach radius5 color-white darkblue" id="confirmadd">添加</button>
 </div>
 
 @Scripts.Render("~/Content/asset/js/laydate/laydate.js")
 <script>
-    laydate.render({
-        elem: '#staryear',
-        type: 'month'
-
-    });
-    laydate.render({
-        elem: '#endyear',
-        type: 'month'
+    lay('.year').each(function () {
+        laydate.render({
+            elem: this
+            , showBottom: false
+            , trigger: 'click'
+            , zIndex: 9999999999999999 
+        });
     });
 </script>

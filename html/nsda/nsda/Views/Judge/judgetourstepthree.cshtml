@@ -1,8 +1,9 @@
 ﻿@{
     ViewBag.Title = "锦标赛";
 }
+<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
 <link href="~/Content/asset/css/judgetourname.css?1.1.0" rel="stylesheet" />
-<link href="@Url.Content("~/Content/asset/css/judgetour.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/judgetour.css?2.1.0")" rel="stylesheet" type="text/css" />
 @Html.Partial("_judgetop")
 <div class="container judge-compe">
     <div class="pi-top competitle">
@@ -93,7 +94,7 @@
                     <label class="radio-inline">
                         <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">Aff Forfeit Neg Bye 正方弃权
                     </label>
-                    <button class="refer">提交评分单</button>
+                    <button class="refer radius5 color-white darkblue">提交评分单</button>
                 </div>
             </div>
         </div>

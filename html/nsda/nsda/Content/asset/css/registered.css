@@ -42,9 +42,6 @@
         height:40px;
         border:1px solid black;
         margin-bottom:30px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
     }
     .reg-content-small .button{
         display:block;
@@ -54,9 +51,6 @@
         line-height:38px;
         color:white;
         font-size:14px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
         margin-left:40px;
         margin-bottom:15px;
     }
@@ -105,9 +99,6 @@
         height:40px;
         border:1px solid black;
         margin-bottom:30px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
     }
     .reg-content-small .button{
         display:block;
@@ -117,9 +108,6 @@
         line-height:38px;
         color:white;
         font-size:14px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
         margin-left:40px;
         margin-bottom:15px;
     }
@@ -168,9 +156,6 @@
         height:40px;
         border:1px solid black;
         margin-bottom:30px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
     }
     .reg-content-small .button{
         display:block;
@@ -180,9 +165,6 @@
         line-height:38px;
         color:white;
         font-size:14px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
         margin-left:40px;
         margin-bottom:15px;
     }
@@ -229,9 +211,6 @@
         height:40px;
         border:1px solid black;
         margin-bottom:30px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
     }
     .register .button{
         display:block;
@@ -241,9 +220,6 @@
         line-height:38px;
         color:white;
         font-size:14px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
         margin-left:40px;
         margin-bottom:15px;
     }
@@ -286,9 +262,6 @@
         height:40px;
         border:1px solid black;
         margin-bottom:30px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
     }
     .register .button{
         display:block;
@@ -298,9 +271,6 @@
         line-height:38px;
         color:white;
         font-size:14px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
         margin-left:40px;
         margin-bottom:15px;
     }
@@ -343,9 +313,6 @@
         height:40px;
         border:1px solid black;
         margin-bottom:30px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
     }
     .register .button{
         display:block;
@@ -355,9 +322,6 @@
         line-height:38px;
         color:white;
         font-size:14px;
-        border-radius:6px;
-        -webkit-border-radius:6px;
-        -moz-border-radius:6px;
         margin-left:40px;
         margin-bottom:15px;
     }
@@ -396,9 +360,6 @@
     left: 50%;
     transform: translate(-50%);
     bottom:-30px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
 }
 .medium{
     width: 10px;
@@ -435,12 +396,6 @@
     position: relative;
 }
 
-.register .reg-zh .button,.reg-top .button{
-    background:#10B5FF;
-}
-.register .reg-en .button,.reg-bottom .button{
-    background:#FF7A4C;
-}
 .register .reg-zh input{
     background:transparent;
 }
@@ -466,9 +421,6 @@
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
 }
 .circle-left{
     left:-20px;
@@ -505,4 +457,7 @@
     top: 50%;
     transform:translateY(-50%);
     right: 0;
+}
+input{
+    padding-left:5px;
 }

@@ -3,7 +3,7 @@
     ViewBag.Title = "修改个人资料";
 }
 <link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/Playerpersonal.css?2.1.5")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/Playerpersonal.css?3.1.5")" rel="stylesheet" type="text/css" />
 
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 
@@ -26,20 +26,20 @@
                     <div class="form-group">
                         <label for="phone">联系电话</label>
                         <div class="form-con">
-                            <input type="text" id="phone">
+                            <input type="text" class="radius5" id="phone">
                         </div>
                     </div>
                     <div class="form-group two-label">
                         <div>
                             <label for="emrcontact">紧急联系人</label>
                             <div class="form-con">
-                                <input type="text" id="emrcontact">
+                                <input type="text" class="radius5" id="emrcontact">
                             </div>
                         </div>
                         <div>
                             <label for="emrphone">紧急电话</label>
                             <div class="form-con">
-                                <input type="text" id="emrphone">
+                                <input type="text" class="radius5" id="emrphone">
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="form-con">
                             <ul class="edulists">
                                 <li>
-                                    <span class="addedu" id="addedu">添加</span>
+                                    <span class="addedu radius5 color-white darkgreen" id="addedu">添加</span>
                                 </li>
                                 <li>
                                     <p>1999 / 09 - 至今</p>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="modifypassword">
                     <img src="~/Content/asset/img/password_03.png" alt="" />
-                    <div class="modifypanel">
+                    <div class="modifypanel radius5">
                             <input type="password" placeholder="输入新密码">
                             <input type="password" placeholder="再次输入新密码">
                             <input type="button" value="确认新密码" class="confirmnewpassword">
@@ -106,12 +106,12 @@
 
 @Html.Partial("contact")
 <script>
-    $("#addedu").click(function () {
+    $(".addedu").click(function () {
         layer.open({
-            title: "新增教育经历",
+            title: "",
             type: 2,
-            content: "/Home/addedu",
-            area: ["760px", "530px"],
+            content: "/Player/addedu",
+            area: ["565px", "401px"],
             end: function () {
                 location.reload();
             }

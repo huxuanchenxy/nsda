@@ -55,35 +55,41 @@
 .last{
     width:220px;
 }
+body,html{
+    padding:0;
+    margin:0;
+}
 .fg-layer{
-    border-radius: 20px;
-    -webkit-border-radius:20px;
-    -moz-border-radius: 20px;
+    border-radius: 5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius: 5px;
 }
 fg-layer-iframe{
-   border-radius: 20px;
-    -webkit-border-radius:20px;
-    -moz-border-radius: 20px;
+   border-radius: 5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius: 5px;
 }
-.fg-layer-title{
-    border-radius: 16px 16px 0 0;
-    -webkit-border-radius: 16px 16px 0 0;
-    -moz-border-radius:  16px 16px 0 0;
-    background:#34495E;
-    color: #1ABC9C;
-    font-weight:800;
-    font-size:20px;
-}
+
 .fg-layer-setwin{
     color:white;
 }
+.boundtitle{
+    width:100%;
+    height:56px;
+    color:#1ABC9C;
+    padding:0 20px;
+    font-size:18px;
+    line-height:56px;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+}
 .fg-layer-content{
-    border-radius: 0 0 16px 16px ;
-    -webkit-border-radius: 0 0 16px 16px ;
-    -moz-border-radius:  0 0 16px 16px ;
+    border-radius: 5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px ;
     background:#ECF0F1;
 }
-
 
 .addcoach .addtitle i {
     float: right;
@@ -96,65 +102,58 @@ fg-layer-iframe{
     display: inline;
     margin: 0 auto;
     position: absolute;
-    top:0;
     left: 50%;
     transform: translate(-50%);
 }
 
 .addcoach .form-group {
     margin-top: 130px;
-    padding: 0 80px;
+    padding: 0 60px;
 }
 
 .addcoach .form-group select {
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    background: #526476;
-    color: white;
-    font-size: 16px;
-    padding-left: 6px;
+    background: #fff;
+    font-size: 14px;
+    padding-left: 5px;
     cursor:pointer;
+    border: 1px solid #a7a7a7;
 }
 .addcoach .form-group select.form-select-schools {
-    width: 25%;
+    width: 140px;
     height: 36px;
 }
 
 .addcoach .form-group input {
-    width: 40%;
+    width: 220px;
     height: 36px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     box-shadow: none;
-    border: 1px solid #1ABC9C;
+    border: 1px solid #a7a7a7;
     position:relative;
-    font-size:16px;
-    padding-left:10px;
+    font-size:14px;
+    padding-left:5px;
 }
 .addcoach .form-group .form-select-school {
-    width: 45%;
+    width: 220px;
     height: 36px;
-    margin-bottom: 70px;
-    background:#526476;
-    color:white;
+    margin-bottom: 30px;
+    background:#fff;
     cursor:pointer;
 }
-
+.addcoach .form-group #txt{
+    position:relative;
+}
 .addcoach .form-group select#sel{
-    width:300px;
-    margin:0;
-    border:1px solid white;
-    padding:10px;
-    position:absolute;
-    bottom:270px;
-    left:23%;
-    z-index:10;
+    width: 240px;
+    margin: 0;
+    border: 1px solid #a7a7a7;
+    padding: 10px;
+    position: absolute;
+    bottom: 110px;
+    left: 205px;
 
 }
 .addcoach .form-group select#sel::-webkit-scrollbar{
-    width:6px;
+    width:5px;
     height:6px;
 }
 .addcoach .form-group select#sel::-webkit-scrollbar-track {
@@ -171,13 +170,8 @@ fg-layer-iframe{
 }
 .addcoach .form-group .searchcoach {
     display: inline;
-    padding: 8px 20px;
-    background: #34495E;
+    padding: 6px 20px;
     margin-left: 15px;
-    color: white;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
     font-size: 16px;
     border:none;
     cursor:pointer;
@@ -191,17 +185,13 @@ fg-layer-iframe{
 .addcoach .form-group .boundcoach {
     padding: 12px 95px;
     font-size: 18px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    background: #34495E;
     border: none;
-    color: white;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
     bottom:50px;
     text-decoration:none;
+    cursor:pointer;
 }
 
 .boundtable table thead {
@@ -251,8 +241,28 @@ fg-layer-iframe{
     left:40px;
 }
 
+.fg-layer{
+    position:absolute;
+    z-index:-1;
+}
+.fg-layer .layui-laydate{
+    position:absolute;
+    z-index:99;
+}
+.fg-layer-iframe iframe{
+    position:relative;
+}
+fg-layer-iframe{
+    z-index:1 !important;
+}
+.layui-laydate{
+    position:absolute;
+    z-index:19891099 !important;
+}
+.layui-laydate-content{
+    padding:0 !important;
+}
 .info-lists .panel:nth-child(3) .panel-body ul a:last-child li{
     background:#F0F0F0;
     color:#5DC1ED;
 }
-

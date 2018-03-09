@@ -4,7 +4,7 @@
 }
 
 <link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/coachboundplayer.css?3.1.1")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/coachboundplayer.css?4.1.1")" rel="stylesheet" type="text/css" />
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 
 @Html.Partial("_coachtop")
@@ -78,16 +78,15 @@
 </div>
 @Html.Partial("contact")
 <script>
-    $("#addplayer").click(function () {
+    $(".addbound").click(function () {
         layer.open({
-            title: "Add your students",
+            title: "",
             type: 2,
             content: "/Coach/boundplayer",
-            area: ["760px", "550px"],
+            area: ["600px", "461px"],
             end: function () {
                 location.reload();
             }
         });
     })
-
 </script>

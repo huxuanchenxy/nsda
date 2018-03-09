@@ -3,25 +3,29 @@
     ViewBag.Title = "添加教育经历";
 }
 <link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/coachboundplayer.css?1.1.5")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/coachboundplayer.css?2.1.5")" rel="stylesheet" type="text/css" />
 
 <div class="addcoach" id="addeducation">
+    <div class="boundtitle darkblue box-sizing">
+        添加绑定教练
+    </div>
     <img class="coachimg" src="~/Content/asset/img/bound_03.png" alt="...">
     <div class="form-group">
-        <input class="form-select-school" id="staryear" readonly="readonly">
+        <input class="form-select-school radius5 color-79 rangeyear" id="staryear" readonly="readonly">
         <em class="em"> —</em>
-        <input class="form-select-school" id="endyear" readonly="readonly">
-        <select class="form-select-schools" id="player">
+        <input class="form-select-school radius5 color-79 rangeyear" id="endyear" readonly="readonly">
+        <select class="form-select-schools radius5 color-79" id="player">
             <option>Students Name</option>
             <option>NSDA Code</option>
         </select>
-        <input id="txt" />
-        <a class="searchcoach" id="search" href="javascript:;  ">Search&nbsp;<i class="iconfont icon-sousuo1"></i></a>
-        <select size="6" id="sel" style="display:none;">
+        <input class="color-79 radius5" id="txt" />
+        <a class="searchcoach radius5 color-white darkblue" id="search" href="javascript:;  ">Search&nbsp;<i class="iconfont icon-sousuo1"></i></a>
+        <select size="2" id="sel" class="radius5 color-79" style="display:none;">
             <option>123</option>
             <option>23456</option>
         </select>
-        <a href="javascript:;" class="boundcoach" id="confirmadd">Submit</a>
+
+        <button class="boundcoach radius5 color-white darkblue" id="confirmadd">Submit</button>
     </div>
 </div>
 
@@ -29,13 +33,13 @@
 @Scripts.Render("~/Content/asset/js/laydate/laydate.js")
 
 <script>
-    laydate.render({
-        elem: '#staryear',
-        type:'month'
-    });
-    laydate.render({
-        elem: '#endyear',
-        type: 'month'
+    lay('.rangeyear').each(function () {
+        laydate.render({
+            elem: this
+            , showBottom: false
+            , trigger: 'click'
+            , zIndex: 99999999999
+        });
     });
 </script>
 

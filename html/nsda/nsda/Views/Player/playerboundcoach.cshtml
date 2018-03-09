@@ -72,18 +72,17 @@
 </div>
 @Html.Partial("contact")
 <script>
-    $("#addcoach").click(function () {
+    $(".addbound").click(function () {
         layer.open({
-            title: "添加绑定教练",
+            title: "",
             type: 2,
             content: "/Player/boundcoach",
-            area: ["760px", "550px"],
+            area: ["600px", "461px"],
             end: function () {
                 location.reload();
             }
         });
     })
-    
 </script>
 
 
