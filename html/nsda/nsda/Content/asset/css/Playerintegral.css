@@ -16,6 +16,10 @@
 .pi-top{
     height:60px;
     margin-left:21%;
+    position:relative;
+}
+#layui-laydate100001{
+    position:absolute;
 }
 .pi-top .integral{
     font-size:36px;
@@ -29,7 +33,7 @@
 }
 .score-top .date-input{
     float:right;
-    width:200px;
+    width:220px;
     height:36px;
     border:2px solid #d8cece;
     padding:0 5px;

@@ -4,7 +4,7 @@
 }
 
 <link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/eventstartlists.css?3.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventstartlists.css?4.1.0")" rel="stylesheet" type="text/css" />
 
 <div class="container-fulid event-select eventstarlists">
     <div class="form-group container compename">
@@ -156,14 +156,17 @@
 <script>
     laydate.render({
         elem: '.compedate',
+        zIndex:99999999999,
         showBottom: false
     });
     laydate.render({
         elem: '#deadlinedate',
+        zIndex: 99999999999,
         showBottom: false
     });
     laydate.render({
         elem: '#refunddate',
+        zIndex: 99999999999,
         showBottom: false
     });
 </script>
