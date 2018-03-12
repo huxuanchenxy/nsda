@@ -53,14 +53,14 @@ namespace nsda.Web.Areas.admin.Controllers
 
             res.flag = _sysUserService.Login(account,pwd, out msg);
             res.msg = msg;
-            Task.Factory.StartNew(() => {
-                _loginLogService.Insert(new LoginLogRequest
-                {
-                    Account = account,
-                    LoginResult = res.flag  ? "ok" : msg,
-                    DataType = DataTypeEm.平台管理员
-                });
-            });
+            //Task.Factory.StartNew(() => {
+            //    _loginLogService.Insert(new LoginLogRequest
+            //    {
+            //        Account = account,
+            //        LoginResult = res.flag  ? "ok" : msg,
+            //        DataType = DataTypeEm.平台管理员
+            //    });
+            //});
             return Json(res, JsonRequestBehavior.DenyGet);
         }
     }

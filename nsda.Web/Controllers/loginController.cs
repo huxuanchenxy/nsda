@@ -79,14 +79,14 @@ namespace nsda.Web.Controllers
                 res.msg = msg;
                 res.flag = false;
             }
-            Task.Factory.StartNew(() => {
-                _loginLogService.Insert(new LoginLogRequest
-                {
-                    Account = request.Account,
-                    LoginResult = userContetxt != null ? "ok" : msg,
-                    DataType = datatype
-                });
-            });
+            //Task.Factory.StartNew(() => {
+            //    _loginLogService.Insert(new LoginLogRequest
+            //    {
+            //        Account = request.Account,
+            //        LoginResult = userContetxt != null ? "ok" : msg,
+            //        DataType = datatype
+            //    });
+            //});
             return Json(res, JsonRequestBehavior.DenyGet);
         }
         //发送邮件
