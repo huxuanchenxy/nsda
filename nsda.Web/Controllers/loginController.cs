@@ -309,5 +309,11 @@ namespace nsda.Web.Controllers
             return View();
         }
         #endregion
+
+
+        public PartialViewResult UserInfoControl()
+        {
+            return PartialView("~/Views/login/UserInfoControl.cshtml");
+        }
     }
 }

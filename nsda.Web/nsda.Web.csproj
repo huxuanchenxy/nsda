@@ -639,6 +639,7 @@
     <Content Include="Views\login\findpwd.cshtml" />
     <Content Include="Views\login\findpwdcert.cshtml" />
     <Content Include="Views\events\detail.cshtml" />
+    <Content Include="Views\login\UserInfoControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
