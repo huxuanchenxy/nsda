@@ -86,6 +86,10 @@ input[type=number]::-webkit-outer-spin-button {
 } 
 
 
+/*button尺寸*/
+.minsize{
+    padding:5px 10px;
+}
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
@@ -105,3 +109,30 @@ input[type=number]::-webkit-outer-spin-button {
 ::-webkit-scrollbar-thumb:window-inactive {
     background:rgba(0,0,0,0.4);
 }
+
+/*分页*/
+.page a.prev, .page a.next {
+    font-size: 14px;
+    font-weight: bold;
+}
+.page span, .page a {
+    color: #a2a2a2;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px;
+    text-decoration: none;
+}
+.page a:hover, .page .on{
+    background-color: #2577e3;
+    border-radius: 30px;
+    color: #fff;
+}
+
+
+
+
+
+
+

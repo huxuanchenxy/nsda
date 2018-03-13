@@ -132,9 +132,14 @@
 .event-lists table{
     border-collapse:collapse;
     width:100%;
-    color:#666;
     margin-top:90px;
     margin-bottom:70px;
+}
+thead{
+    color:#666699;
+}
+tbody{
+    color:#666;
 }
 .event-lists table thead{
     background:#D8E0E5;
@@ -179,24 +184,6 @@
 .page{
     position:absolute;
     right:0;
-}
-.page a.prev, .page a.next {
-    font-size: 14px;
-    font-weight: bold;
-}
-.page span, .page a {
-    color: #a2a2a2;
-    display: block;
-    float: left;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 12px;
-    text-decoration: none;
-}
-.page a:hover, .page .on{
-    background-color: #2577e3;
-    border-radius: 30px;
-    color: #fff;
 }
 
 

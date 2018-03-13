@@ -1,7 +1,10 @@
 ﻿.compe-con{
-    margin-top:70px;
     width:78%;
     float:left;
+}
+.pi-top{
+    height:60px;
+    margin-left:22%;
 }
 .competitle img{
     display:inline-block;

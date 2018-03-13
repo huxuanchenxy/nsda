@@ -3,8 +3,8 @@
     ViewBag.Title = "循环赛规则设置";
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?3.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/eventmanageround.css?4.1.1")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanageround.css?5.1.1")" rel="stylesheet" type="text/css" />
 @Html.Partial("_manager")
 <div class="event-lists">
     <div class="list-top box-sizing">
@@ -173,6 +173,7 @@
         laydate.render({
             elem: this,
             type: 'datetime',
+            zIndex:99999999999,
             trigger: 'click'
         });
     });
