@@ -1,0 +1,141 @@
+﻿.list-top{
+    width:100%;
+    padding-left:50px;
+    border-bottom:1px solid #C3C8CC;
+    box-sizing:border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding-bottom:4px;
+}
+.list-top .active{
+    border:1px solid #C3C8CC;
+    border-top:3px solid #47BBED;
+    border-bottom:3px solid #F5F8FA;
+    border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px 5px 0 0;
+    -moz-border-radius:5px 5px 0 0;
+    box-sizing:border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding:5px 10px;
+}
+.list-top .list{
+    padding:5px 30px;
+    color:#666699;
+    font-size:18px;
+    font-weight:400;
+}
+.event-con{
+    padding:20px 50px;
+}
+.event-con .rangeconfirm div{
+    float:left;
+    margin-right:110px;
+}
+.event-con .rangeconfirm h3{
+    font-size:14px;
+    color:#666699;
+    float:left;
+    line-height:1.5;
+    letter-spacing:1px;
+}
+.event-con .rangeconfirm i,.event-con .rangeconfirm p{
+    float:left;
+    font-size:14px;
+
+}
+.event-con .rangeconfirm i{
+    margin-left:2px;
+    margin-right:2px;
+}
+.event-con .rangeconfirm p{
+    color:#ff6666;
+    letter-spacing:1px;
+}
+.event-con .rangeconfirm p.to{
+    color:#666699;
+}
+.listconfirm{
+    margin-top:50px;
+    margin-bottom:30px;
+}
+.listconfirm h3{
+    font-size:14px;
+    float:left;
+    line-height:1.8;
+    color:#666699;
+}
+.listconfirm div{
+    margin-bottom:8px;
+}
+.listconfirm p{
+    display:inline-block;
+    margin-right:20px;
+    color:#ff6666;
+    line-height:1.4;
+}
+
+.alter{
+    display:inline-block;
+    width:100px;
+    height:30px;
+    text-align:center;
+    line-height:30px;
+    border:1px solid #BAC4CA;
+    background:linear-gradient(to bottom,#FDFDFE,#F0F2F4);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    position:absolute;
+    left:20%;
+    transform:translateX(-50%);
+}
+button.stargame{
+    display:inline-block;
+    width:200px;
+    height:40px;
+    text-align:center;
+    line-height:40px;
+    color:white;
+    border:none;
+    font-size:18px;
+    background:#2E93EA;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+p.tips{
+    font-size:14px;
+    color:#ff6666;
+    margin-top:20px;
+    position:absolute;
+    left:50%;
+    transform:translateX(-35%);
+    bottom:-50px;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,153 @@
+﻿.coach-con{
+    width:100%;
+    background:white;
+    border-radius:0 0 8px 8px ;
+    -webkit-border-radius: 0 0 8px 8px;
+    -moz-border-radius: 0 0 8px 8px;
+    margin-bottom:80px;
+    padding-top:20px;
+    padding-bottom:80px;
+}
+.coach-personal{
+    width:75%;
+    float:left;
+    margin-top:15px;
+}
+
+.pi-top{
+    height:51px;
+    margin-left:25%;
+}
+.pi-top .integral{
+    font-size:36px;
+    float:left;
+}
+.pi-top p{
+    float:left;
+    font-size:18px;
+    line-height:51px;
+    margin-left:8px;
+}
+
+.person-title{
+    width:96%;
+    height:30px;
+    background:#ECECEC;
+    border-bottom:2px solid #d9d3d3;
+    border-top:2px solid #d9d3d3;
+    margin-bottom:30px;
+}
+.per-con .modifyinfo{
+    padding:10px;
+    box-sizing:border-box;
+}
+.per-con .modifyinfo .form-group{
+    height:30px;
+    margin-bottom:30px;
+}
+.per-con .modifyinfo .form-group label{
+    width:11%;
+    text-align:right;
+    float:left;
+    margin-right:20px;
+    color:#666;
+}
+.per-con .modifyinfo .two-label div{
+    width:45%;
+    float:left;
+    margin-bottom:15px;
+    
+}
+.per-con .modifyinfo .two-label div input{
+    width:200px;
+    height:30px;
+    border:1px solid #bdbdbd;
+    padding-left:5px;
+}
+.per-con .modifyinfo .two-label div label{
+    width:24%;
+    line-height:30px;
+}
+.ress label{
+    line-height:30px;
+}
+.ress input{
+    width:200px;
+    height:30px;
+    border:1px solid #bdbdbd;
+    padding-left:5px;
+}
+.per-con .two-label{
+    height:22px;
+    margin-bottom:30px;
+}
+
+.per-con .form-group .form-con label{
+    width:6%;
+    margin-right:50px;
+}
+.per-con .emergency{
+    border-top:1px solid #D2D9DD;
+    border-bottom:1px solid #D2D9DD;
+    margin-right:25px;
+    padding-top:20px;
+    padding-left:10px;
+}
+.per-con .emergency h4{
+    font-size:14px;
+    font-family:"微软雅黑";
+    color:#333366;
+    font-weight:600;
+    padding-left:4px;
+    margin-bottom:30px;
+}
+.per-con .emergency .form-group label{
+    width:24%;
+    float:left;
+}
+.per-con .modifyinfo button{
+    border:none;
+    padding:10px 20px;
+    font-size:18px;
+    font-family:"微软雅黑";
+    margin-left:19%;
+    margin-top:50px;
+    margin-bottom:40px;
+}
+.modifypassword{
+    padding:50px 30px 0 120px;
+}
+.modifypassword img{
+    display:inline;
+    float:left;
+    width: 120px;
+    height: 180px;
+    margin-top: 30px;
+}
+.modifypassword .modifypanel{
+    width:357px;
+    height:240px;
+    background:#ECF0F1;
+    margin-left:180px;
+    padding:30px 15px;
+}
+.modifypanel input{
+    width:100%;
+    height:40px;
+    margin-bottom:30px;
+    font-size:14px;
+    color:#666;
+    padding-left:5px;
+    padding-left:5px;
+    border:1px solid #d1cbcb;
+}
+.modifypanel .confirmnewpassword{
+    width:100%;
+    height:40px;
+    border:none;
+    font-size:14px;
+    text-align:center;
+}
+.info-lists .panel-group .panel:first-child .panel-heading .panel-title h3,.info-lists .panel-group .panel:first-child .panel-heading .panel-title p{
+    color:#1DB8FF;
+}

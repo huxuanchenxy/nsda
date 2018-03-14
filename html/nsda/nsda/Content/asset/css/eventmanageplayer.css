@@ -180,6 +180,7 @@ tbody{
 }
 .event-lists{
     position:relative;
+    min-height:900px;
 }
 .page{
     position:absolute;

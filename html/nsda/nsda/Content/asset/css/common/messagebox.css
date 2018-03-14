@@ -1,0 +1,54 @@
+﻿.msg-box{
+    width:100%;
+    padding:8px;
+    min-height:40px;
+    border-top: 1px solid #a7a7a7;
+    border-bottom: 1px solid #a7a7a7;
+}
+.msg-box p{
+    float:left;
+    font-size:16px;
+}
+.msg-box a .msg-more{
+    float:right;
+    display:inline;
+    margin-top:8px;
+}
+.msgbox-con {
+    padding: 20px 10px;
+    min-height: 200px;
+    border-bottom: 1px solid #a7a7a7;
+}
+
+.msgimg img {
+    display: inline;
+    width: 46px;
+    height: 46px;
+    float: left;
+}
+
+.msgimg p {
+    float: left;
+    margin-left: 10px;
+    line-height: 46px;
+    font-size: 14px;
+    color: #666666;
+}
+.msgc {
+    margin-top: 48px;
+    margin-left: 56px;
+    margin-right: 100px;
+}
+.msgc .teamcon{
+    margin-top:10px;
+}
+.msgbox-con .cmore {
+    float: right;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+.msgbox-con .cmore {
+    display: inline;
+    text-align: center;
+}
+

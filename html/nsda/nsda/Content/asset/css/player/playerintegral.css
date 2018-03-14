@@ -1,0 +1,120 @@
+﻿.player-score{
+    padding-top:100px;
+}
+.score-con{
+    width:78%;
+    float:left;
+    margin-left:15px;
+    position:relative;
+}
+
+.score-top{
+    width:75%;
+    height:46px;
+    padding-left:10px;
+}
+.pi-top{
+    height:60px;
+    margin-left:21%;
+    position:relative;
+}
+#layui-laydate100001{
+    position:absolute;
+}
+.pi-top .integral{
+    font-size:36px;
+    float:left;
+}
+.pi-top p{
+    float:left;
+    font-size:18px;
+    line-height:51px;
+    margin-left:8px;
+}
+.score-top .date-input{
+    float:right;
+    width:220px;
+    height:36px;
+    border:2px solid #d8cece;
+    padding:0 5px;
+    font-size:18px;
+    color:#666;
+    margin-top:8px;
+}
+.score-search{
+    display:inline;
+    height:36px;
+    margin-left:10px;
+    padding:5px 10px;
+    float:right;
+    font-size:18px;
+    letter-spacing:1px;
+    margin-top:8px;
+    line-height:1;
+}
+.score-search i{
+    font-size:24px;
+    line-height:1;
+    margin-right:5px;
+}
+#layui-laydate1{
+    top:350px;
+}
+.score-con .score-table{
+    width:100%;
+    float:left;
+}
+
+.score-table table{
+    border-collapse: collapse;
+    width: 96%;
+    margin-bottom:50px;
+}
+.score-table table thead{
+    background: #E3D2D2;
+}
+.score-table thead th{
+    border-top: 1px solid #a7a7a7;
+    border-bottom: 1px solid #a7a7a7;
+    text-align: center;
+    color: #666666;
+    padding: 7px;
+}
+.score-table tbody td{
+    border-bottom: 1px solid #a7a7a7;
+    text-align: center;
+    padding: 12px;
+    box-sizing: border-box;
+}
+.score-table tbody td:not(:last-child) {
+    border-right: 1px solid #a7a7a7;
+}
+.score-con .score-table table thead{
+    background:#ECECEC;
+}
+.score-con .score-table table tbody td a.checkdetail{
+    display:inline;
+    padding:5px 20px;
+}
+.score-con nav{
+    position:absolute;
+    bottom:-90px;
+    right:50px;
+}
+
+.info-lists .panel:nth-child(3) .panel-body ul a:first-child li{
+    background:#F0F0F0;
+    color:#5DC1ED;
+}
+.score-con .scoredetail{
+    margin-top:10px;
+}
+
+.last{
+    width:130px;
+    padding:6px;
+}
+
+
+
+

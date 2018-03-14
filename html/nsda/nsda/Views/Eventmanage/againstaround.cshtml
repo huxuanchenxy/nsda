@@ -3,10 +3,10 @@
     ViewBag.Title = "第一轮";
 }
 <link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/doublecheck.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/doublecheck.css?3.1.0")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="~/Content/asset/css/writegrades.css?2.0.0" rel="stylesheet" />
-<link href="~/Content/asset/css/againstaround.css?2.0.0" rel="stylesheet" />
+<link href="~/Content/asset/css/writegrades.css?3.0.0" rel="stylesheet" />
+<link href="~/Content/asset/css/againstaround.css?3.0.0" rel="stylesheet" />
 
 @Html.Partial("_manager")
 <div class="event-lists ">
@@ -54,17 +54,20 @@
                         <button class="pre radius5 color-white blue posright"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
                     </div>
                     <div class="btnbottom">
-                        <button class="pre radius5 color-white orange"><i class="iconfont icon-dayin"></i><p>打印评分单</p></button>
-                        <button class="pre radius5 color-white green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></button>
+                        <a href="javascript:;" class="pre radius5 color-white orange"><i class="iconfont icon-dayin"></i><p>打印评分单</p></a>
+                        <a href="javascript:;" class="pre radius5 color-white green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></a>
                     </div>
                 </div>
                 <div class="btnright">
-                    <button class="star radius5 lightred color-white"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></button>
+                    <a href="/Eventmanage/writegrades" class="star radius5 lightred color-white"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></a>
                 </div>
             </div>
         </div>
         <div class="operation">
-            <p>勾选替换操作：</p><button class="pre radius5 color-white blue butt">替换 FLight 位置</button><button class="pre radius5 color-white green butt">替换Room按钮</button><button class="pre radius5 color-white orange butt">替换 裁判</button>
+            <p>勾选替换操作：</p>
+            <button class="pre radius5 color-white blue butt">替换 FLight 位置</button>
+            <button class="pre radius5 color-white green butt">替换Room按钮</button>
+            <button class="pre radius5 color-white orange butt">替换 裁判</button>
         </div>
         <div class="flighttable">
             

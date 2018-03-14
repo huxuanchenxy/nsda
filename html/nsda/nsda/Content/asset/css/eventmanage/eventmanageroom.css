@@ -1,0 +1,330 @@
+﻿.data .data-con a{
+    float:left;
+}
+.data .data-con a p{
+    float:right;
+    color:#FD7E7F;
+}
+.addroom{
+    display:inline-block;
+    padding:4px 10px;
+    cursor:pointer;
+    float:right;
+    margin-bottom:20px;
+}
+.batch{
+    max-width:200px;
+    height:30px;
+    border:1px solid #dedbdb;
+    background: #fff;
+    padding-left:5px;
+    float:left;
+}
+.event-lists table tbody td:first-child span.mark{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    position:absolute;
+    left:3px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+.event-lists table tbody td.modify{
+    position:relative;
+    min-width:90px;
+}
+.event-lists table tbody td a.modifyroom{
+    display:inline-block;
+    padding:5px 10px;
+    position:absolute;
+    left:50%;
+    top:30%;
+    transform:translate(-50%);
+}
+.event-lists table tbody td:first-child{
+    min-width:140px;
+}
+
+.event-lists table tbody td:not(:last-child){
+    max-width:200px;
+    word-break:keep-all;
+    word-wrap:break-word;
+    overflow:hidden; 
+    text-overflow:ellipsis;  
+    -o-text-overflow:ellipsis;
+    -icab-text-overflow: ellipsis;
+    -khtml-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+}
+.event-lists table tbody td select{
+    max-width:200px;
+    height:30px;
+    border:1px solid #dedbdb;
+    background: #fff;
+    padding-left:5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.event-lists table tbody tr td:last-child{
+    min-width:200px;
+    position:relative;
+}
+.event-lists table tbody tr td a:not(:last-child){
+    margin-right:10px;
+}
+.event-lists table tbody tr td{
+    padding:25px 0;
+}
+.event-lists table tbody tr td:last-child a{
+    display:inline-block;
+    padding:5px 10px;
+    color:white;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+}
+.event-lists table tbody tr td p.playername{
+    display:inline-block;
+    width:30%;
+    color:#666;
+    left:6%;
+    float:left;
+
+}
+.event-lists table tbody tr td a.addassign{
+    left:36%;
+}
+.event-lists table tbody tr td a.clearassign{
+    left:66%;
+}
+body{
+    padding:0;
+    margin:0;
+}
+.fg-layer-iframe iframe{
+    border:2px solid #2C3E50;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.fg-layer-iframe .fg-layer-content{
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.modiroom{
+    overflow:hidden;
+    background:#D8E0E5;
+    padding:10px 160px 39px 160px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.modiroom h4{
+    font-size:18px;
+    color:#666666;
+    text-align:center;
+}
+.modiroom span{
+    display:inline-block;
+    width:30px;
+    height:3px;
+    background:#4E5D66;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+.modiroom .form-group.roomname{
+    margin-top:70px;
+    margin-bottom:60px;
+}
+.modiroom .form-group input{
+    width:230px;
+    height:40px;
+    background:#FFF6E7;
+    padding-left:10px;
+    font-size:14px;
+    color:#999999;
+    box-shadow:none;
+    border:1px solid transparent;
+}
+.modiroom .roomclass{
+    margin-bottom:18px;
+}
+.modiroom .roomclass label{
+    color:#666;
+    font-size:14px;
+}
+.modiroom .roomclass select{
+    min-width: 180px;
+    height:30px;
+    border:1px solid #EDEDED;
+    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    padding-left:5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+
+.modiroom button{
+    display:inline-block;
+    width:240px;
+    height:50px;
+    background:#4E5D66;
+    color:#fff;
+    text-align:center;
+    line-height:50px;
+    font-size:18px;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border:none;
+    margin-top:45px;
+    cursor:pointer;
+}
+.addplayer{
+    overflow:hidden;
+    background:#D8E0E5;
+    padding:10px 80px 39px 80px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+}
+.addplayer h4{
+    font-size:18px;
+    color:#666666;
+    text-align:center;
+}
+.addplayer span{
+    display:inline-block;
+    width:30px;
+    height:3px;
+    background:#4E5D66;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+.addplayer .form-group.searchplayer{
+    margin-top:70px;
+    margin-bottom:30px;
+    margin-left:20px;
+    position:relative;
+}
+.addplayer .form-group.searchplayer input{
+    width:237px;
+    height:32px;
+    float:left;
+    background:#F2F2F2;
+    padding-left:10px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    font-size:14px;
+    color:#cccccc;
+    box-shadow:none;
+    border:1px solid #BBC1C6;
+    
+}
+.addplayer .form-group.searchplayer #sel{
+    width:237px;
+    padding:10px;
+    font-size:14px;
+    position:absolute;
+    top:32px;
+    left:0;
+}
+.addplayer .form-group.searchplayer a.search{
+    display:inline-block;
+    padding:6px 26px;
+    background:#1B88EC;
+    border-radius:5px;
+    color:#fff;
+    font-size:14px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    margin-left:25px;
+    cursor:pointer;
+}
+.addplayer .form-group.searchplayer select#sel::-webkit-scrollbar{
+    width:6px;
+    height:6px;
+}
+.addplayer .form-group.searchplayer select#sel::-webkit-scrollbar-track {
+      background-color: #ddd;
+}
+
+.addplayer .form-group.searchplayer select#sel::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+}
+.addplayer .form-group.searchplayer select#sel::-webkit-scrollbar-button {
+    background-color: #888;
+    display: none;
+}
+.addplayer .form-group.inputplayername{
+    margin-left:20px;
+}
+.addplayer .form-group.inputplayername p{
+    font-size:14px;
+    color:#666666;
+}
+.addplayer .form-group.inputplayername input{
+    width:350px;
+    height:32px;
+    float:left;
+    background:#FFF6E7;
+    padding-left:10px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    font-size:14px;
+    color:#cccccc;
+    box-shadow:none;
+    border:1px solid #BBC1C6;
+}
+.addplayer button{
+    display:inline-block;
+    width:240px;
+    height:50px;
+    background:#4E5D66;
+    color:#fff;
+    text-align:center;
+    line-height:50px;
+    font-size:18px;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border:none;
+    margin-top:65px;
+    cursor:pointer;
+    margin-left:70px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

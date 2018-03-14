@@ -1,0 +1,29 @@
+﻿.gameclass {
+    float: left;
+}
+
+.set {
+    float: right;
+    margin-top: 0;
+}
+
+.game {
+    display: inline-block;
+    padding: 6px 35px;
+    float: left;
+    margin-right: 20px;
+    background: linear-gradient(to bottom,#DCF0FF,#CCE8FF);
+    color: #336699;
+    font-size: 18px;
+    border: 1px solid #D7E1EA;
+    font-weight: 600;
+}
+
+.game.viewed {
+    background: #ddcbcb;
+    color: white;
+}
+
+table td.remark {
+    color: #996633;
+}
