@@ -40,7 +40,7 @@ namespace nsda.Repository.Implement.eventmanage
                             from t_event_room a
                             left join t_member_player b on a.memberId=b.memberId
                             left join t_event_group c on a.eventgroupId=c.id
-                            where a.eventId=@EventId and a.isdelete=0 {join.ToString()}  order by a.eventgroupId desc ";
+                            where a.eventId=@EventId and a.isdelete=0 {join.ToString()}  order by a.eventgroupId desc ,a.roomStatus asc ";
             int totalCount = 0;
             list = _dbContext.Page<EventRoomResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
             request.Records = totalCount;
