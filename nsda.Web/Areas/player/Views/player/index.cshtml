@@ -11,15 +11,16 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
-<link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/messagebox.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playercenter.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/messagebox.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
-<div class="info-con">
+<div class="info-con playercenter role">
 @foreach (var item in data)
 {
     <table>
-        <thead>
+        <thead class="pinkbg">
             <tr>
                 <th width="13%">比赛编码</th>
                 <th width="22%">比赛名称</th>

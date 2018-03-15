@@ -1,13 +1,21 @@
-﻿@{
-    Layout = "~/Views/Shared/_EventManage.cshtml";
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "第一轮评分单确认";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
 }
-<link href="@Url.Content("~/Content/asset/css/eventmanage/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/eventmanage/doublecheck.css?2.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/common/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="~/Content/asset/css/eventmanage/writegrades.css?3.0.0" rel="stylesheet" />
-@Html.Partial("_manager")
+@section styles{
+    <link href="@Url.Content("~/Content/asset/css/eventmanage/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/asset/css/eventmanage/doublecheck.css?2.1.0")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/asset/css/common/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+    <link href="~/Content/asset/css/eventmanage/writegrades.css?3.0.0" rel="stylesheet" />
+}
+@Html.Partial("_left")
 <div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id" />
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId" />
     <div class="list-top">
         <a href="/Eventmanage/doublecheck" class="active list">新手组</a>
         <a href="/Eventmanage/doublecheck" class="list">公开组</a>
@@ -117,5 +125,3 @@
         </div>
     </div>
 </div>
-
-@Scripts.Render("~/Content/asset/js/block.js")

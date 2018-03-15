@@ -31,6 +31,7 @@
     margin-bottom:80px;
     float:left;
     margin-left:300px;
+    min-height:900px;
 }
 .managelists{
     width:200px;
@@ -38,7 +39,7 @@
     float:left;
     position:absolute;
     left:85px;
-    top:340px;
+    top:220px;
 }
 .managelists ul{
     padding:6px;

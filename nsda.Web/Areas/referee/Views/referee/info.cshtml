@@ -8,11 +8,11 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/judgeinformation.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/judge/judgeinformation.css?version=@Constant.Version">
 }
 
-<div class="pi-top per-top">
+<div class="pi-top">
     <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
     <p class="scorecheck">Changing your account information</p>
 </div>
@@ -72,12 +72,6 @@
                         <input type="text" class="radius5 box-sizing" id="address" value="@Model.ContactAddress">
                     </div>
                 </div>
-                <div>
-                    <label for="contactNumber">Contact Number:</label>
-                    <div class="form-con">
-                        <input type="text" class="radius5 box-sizing" id="contactNumber" value="@Model.ContactMobile">
-                    </div>
-                </div>
             </div>
             <div class="emergency">
                 <h4>Emergency Contact Information</h4>
@@ -98,10 +92,10 @@
         </div>
         <div class="modifypassword">
             <img src="/asset/img/pass_03.png" alt="" />
-            <div class="modifypanel">
-                <input type="password" class="radius5 box-sizing" placeholder="Password" id="newpwd">
-                <input type="password" class="radius5 box-sizing" placeholder="Repeat the Password" id="againpwd">
-                <input type="button" value="Create The New Password" id="modifypwd" class="confirmnewpassword">
+            <div class="modifypanel radius5">
+                <input type="password" class="radius5 box-sizing color-79" placeholder="Password" id="newpwd">
+                <input type="password" class="radius5 box-sizing color-79" placeholder="Repeat the Password" id="againpwd">
+                <input type="button" value="Create The New Password" id="modifypwd" class="confirmnewpassword radius5 color-white green">
             </div>
         </div>
     </div>

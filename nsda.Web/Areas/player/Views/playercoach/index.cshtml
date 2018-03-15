@@ -5,8 +5,9 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playerboundcoach.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playerboundcoach.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
 
 <div class="pi-top score-top">
@@ -14,11 +15,11 @@
     <p class="scorecheck">绑定教练</p>
     <button class="addbound radius5 color-white darkgreen" id="addCoach">添加绑定 &nbsp;<i class="iconfont icon-jiahao"></i></button>
 </div>
-<div class="score-con">
+<div class="info-con playerboundcoach role">
     
     <div class="boundtable">
         <table>
-            <thead>
+            <thead class="garybg">
                 <tr>
                     <th>时间</th>
                     <th>NSDA教练编号</th>

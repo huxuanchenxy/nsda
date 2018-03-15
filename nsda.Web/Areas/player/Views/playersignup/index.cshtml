@@ -7,9 +7,12 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playersign.css?version=@Constant.Version">
+
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playersign.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
-<div class="compe-con">
+<div class="compe-con comsign role">
     <div class="address group">
         @if (data != null)
         {
@@ -95,7 +98,7 @@
     </div>
 
     <table>
-        <thead>
+        <thead class="pinkbg">
             <tr>
                 <th>比赛编码</th>
                 <th>比赛名称</th>

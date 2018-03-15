@@ -10,14 +10,16 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/judgecenter.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/messagebox.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/judge/judgecenter.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/messagebox.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    
 }
-<div class="judge-con">
+<div class="judge-con role">
     @foreach (var item in data)
     {
         <table>
-            <thead>
+            <thead class="greenbg">
                 <tr>
                     <th>Code</th>
                     <th>Tournament</th>

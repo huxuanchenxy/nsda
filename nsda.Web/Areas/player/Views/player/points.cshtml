@@ -6,10 +6,11 @@
 
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playerintegral.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
-<div class="pi-top score-top">
+<div class="pi-top score-top checkscore">
     <img class="integral" src="/asset/img/score_03.jpg" alt="...">
     <p class="scorecheck">积分查询</p>
     <a href="javascript:;" id="search">
@@ -20,10 +21,10 @@
     <input type="text" class="date-input radius5" id="querydate" placeholder="选择日期" readonly>
 
 </div>
-<div class="score-con">
+<div class="score-con role playerscore">
     <div class="score-table">
         <table>
-            <thead>
+            <thead class="garybg">
                 <tr>
                     <th>比赛编码</th>
                     <th>比赛名称</th>

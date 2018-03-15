@@ -683,9 +683,7 @@ select#sel::-webkit-scrollbar-thumb {
     font-weight:400;
     color:#666;
 }
-.hadcompe .pi-top{
-    height:30px;
-}
+
 .comp-lists{
     width:75%;
     float:left;
