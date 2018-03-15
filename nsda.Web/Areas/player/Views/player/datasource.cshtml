@@ -8,11 +8,13 @@
 {
     <link rel="stylesheet" href="/asset/css/playersource.css?version=@Constant.Version">
 }
+
+<div class="pi-top score-top">
+    <img class="integral" src="/asset/img/msour_03.png" alt="...">
+    <p class="scorecheck">会员资源</p>
+</div>
 <div class="score-con">
-    <div class="score-top">
-        <img class="integral" src="/asset/img/msour_03.png" alt="...">
-        <p class="scorecheck">会员资源</p>
-    </div>
+    
     <span class="source-top"></span>
     <ul class="source-lists" id="data">
     </ul>
@@ -52,7 +54,8 @@
                             _pager.init(filter, playerdatasource.param.PageIndex, playerdatasource.param.TotalPage, function (p) {
                                 playerdatasource.param.PageIndex = p;
                                 playerdatasource.Load(playerdatasource.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html += '<li> <img src="' + enumreplace.replaceFileType(val.FileType) + '" alt="" />';
                                 html += ' <span class="source-content">'

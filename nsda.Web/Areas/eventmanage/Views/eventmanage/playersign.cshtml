@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/eventmanageround.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/eventplayersignin.css?version=@Constant.Version">
+    <link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists newplayer">
@@ -31,14 +32,14 @@
     </div>
     <div class="form-group searchplayer">
         <input id="txt" placeholder="输入组队编号/会员编号/姓名" />
-        <a class="search" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
+        <a class="search radius5 color-white deepblue" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
     </div>
     <div class="form-group batch">
-        <select class="batchsignin" id="batchsignin">
+        <select class="batchsignin color-79" id="batchsignin">
             <option value="0">批处理为</option>
             <option value="1">签到</option>
         </select>
-        <span class="addtmpplayer" id="addtmpplayer"><i class="iconfont icon-add1"></i> 添加临时选手</span>
+        <span class="addtmpplayer radius5 blue color-white" id="addtmpplayer"><i class="iconfont icon-add1"></i> 添加临时选手</span>
     </div>
     <table>
         <thead>
@@ -139,7 +140,7 @@
                                 {
                                     if(val.IsStop)
                                     {
-                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop" data-stop="false">复赛</a></td>';
+                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop radius5 lightred color-white" data-stop="false">复赛</a></td>';
                                     }
                                     else{
                                         html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop" data-stop="true">停赛</a></td>';
@@ -163,7 +164,7 @@
                                         {
                                             if(item.EventSignStatus==1)
                                             {
-                                                html+='<a href="javascript:;" class="sign signin" data-id='+val.MemberId+'>签到</a>';
+                                                html+='<a href="javascript:;" class="sign signin radius5 blue color-white" data-id='+val.MemberId+'>签到</a>';
                                             }
                                             else{
                                                 html+='已签到';

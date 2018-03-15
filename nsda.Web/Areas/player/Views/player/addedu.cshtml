@@ -5,37 +5,39 @@
 <html>
 <head>
     <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
 </head>
 <body>
-        <div class="addeducation" id="addeducation">
+    <div class="addeducation" id="addeducation">
+        <h3>新增教育经历</h3>
         <div class="form-group">
-            <input class="form-select-school" id="startdate" readonly>
+            <input class="form-select-school radius5 color-79 year" id="startdate" readonly>
             <em class="em"> —</em>
-            <input class="form-select-school" id="enddate" readonly>
-            <select class="form-select-schools" id="provinceId">
+            <input class="form-select-school radius5 color-79 year" id="enddate" readonly>
+            <select class="form-select-schools radius5 color-79" id="provinceId">
                 <option value="0">省</option>
             </select>
-            <select class="form-select-schools" id="cityId">
+            <select class="form-select-schools radius5 color-79" id="cityId">
                 <option value="0">市</option>
             </select>
-            <select class="form-select-schoolads" id="schoolId">
+            <select class="form-select-schoolads radius5 color-79" id="schoolId">
                 <option value="0">学校</option>
             </select>
         </div>
-        <button class="confirmadd" id="confirmadd">保存</button>
+        <button class="confirmadd  radius5 color-white darkblue" id="confirmadd">保存</button>
     </div>
         <script src="/asset/js/jquery.min.js"></script>
         <script src="/asset/js/laydate/laydate.js"></script>
         <script src="/asset/layer/js/layer.js"></script>
         <script src="/asset/js/pcs.js?version=@Constant.Version"></script>
         <script>
-            laydate.render({
-                elem: '#startdate',
-                type: 'month'
-            });
-            laydate.render({
-                elem: '#enddate',
-                type: 'month'
+            lay('.year').each(function () {
+                laydate.render({
+                    elem: this
+                    , showBottom: false
+                    , trigger: 'click'
+                    , zIndex: 9999999999999999
+                });
             });
 
             $("#confirmadd").click(function () {

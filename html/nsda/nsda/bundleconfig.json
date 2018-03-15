@@ -1,0 +1,26 @@
+[
+  {
+    "outputFileName": "Content/asset/css/player/per.min.css",
+    "inputFiles": [
+      "Content/asset/css/player/per.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/asset/css/player/playercom.min.min.css",
+    "inputFiles": [
+      "Content/asset/css/player/playercom.min.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/asset/css/player/playercom.min.css",
+    "inputFiles": [
+      "Content/asset/css/player/playercom.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/asset/css/player/player.min.css",
+    "inputFiles": [
+      "Content/asset/css/player/player.css"
+    ]
+  }
+]

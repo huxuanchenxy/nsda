@@ -5,7 +5,9 @@
 }
 @section styles
 {  
+
  <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
  <link rel="stylesheet" href="/asset/css/eventmanagelogin.css?version=@Constant.Version">
 }
 <div class="ad">
@@ -23,11 +25,11 @@
         <h3>赛事管理员登陆</h3>
         <p>注册邮箱 Email</p>
         <img src="/asset/img/member.svg" alt="Alternate Text"/>
-        <input type="text" name="name" value="" id="eventemail"/>
+        <input type="text" class="radius5" name="name" value="" id="eventemail"/>
         <p>登录密码 Password <a href="/login/findpwd/4">忘记密码 Forgot?</a></p>
         <img src="/asset/img/password.svg" alt="Alternate Text" />
-        <input type="password" name="name" value="" id="eventpwd"/>
-        <a href="javascript:;" id="login" class="button">登录 Sign In</a>
+        <input type="password" class="radius5" name="name" value="" id="eventpwd"/>
+        <a href="javascript:;" id="login" class="button radius5">登录 Sign In</a>
         <p>还不是赛事管理员?  <a href="/register/eventmanage" class="reg-a">点击申请赛事管理员</a></p>
     </div>
 </div>

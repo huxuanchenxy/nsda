@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
     <link href="/asset/css/eventmanageumpire.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     <link href="/asset/css/eventmanageroom.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+<link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists">
@@ -51,10 +52,9 @@
                     } else { @Html.Raw("请在比赛规则设置完成后，才能显示。")}</p></a>
                 </div>
             </div>
-            <span class="addroom" id="addroom">+ 添加Room</span>
         </div>
 
-        <select class="batch" id="batch">
+        <select class="batch radius5 color-79" id="batch">
             <option value="-2">批量处理</option>
             <option value="-1">停用</option>
             <option value="0">随机使用</option>
@@ -63,6 +63,7 @@
                 <option value="@item.Id">仅 @item.Name 使用（组别）</option>
             }
         </select>
+        <span class="addroom radius5 blue color-white" id="addroom">+ 添加Room</span>
         <table>
             <thead>
                 <tr>
@@ -90,7 +91,7 @@
         function returnGroup(roomId,eventGroupId,status)
         {
             var obj=$.parseJSON(data)
-            var html='<select class="tbselect" data-id='+roomId+'>';
+            var html='<select class="tbselect radius5 color-79" data-id='+roomId+'>';
             if(status==2)//停用状态
             { 
                 html+='<option value="-1" selected>停用</option>';
@@ -153,16 +154,16 @@
                                 html+='<td>'+val.Name+'</td>';
                                 html+='<td>'+enumreplace.replaceRoomStatus(val.RoomStatus)+'</td>';
                                 html+='<td>'+returnGroup(val.Id,val.EventGroupId,val.RoomStatus)+'</td>';
-                                html+=' <td class="modify"><a href="javascript:;" class="modifyroom" data-id='+val.Id+'>修改名称</a></td>';
+                                html+=' <td class="modify"><a href="javascript:;" class="modifyroom radius5 color-white darkblue" data-id='+val.Id+'>修改名称</a></td>';
                                 html+='<td>';
                                 if(val.MemberName!=null)
                                 {
                                     html+='<p class="playername">'+val.MemberName+'</p>';
                                 }
-                                html+='<a href="javascript:;" class="addassign" data-id='+val.Id+'>添加指定</a>';
+                                html+='<a href="javascript:;" class="addassign radius5 color-white darkgreen" data-id='+val.Id+'>添加指定</a>';
                                 if(val.MemberName!=null)
                                 {
-                                   html+='<a href="javascript:;" class="clearassign" data-id='+val.Id+'>清除指定</a>';
+                                    html+='<a href="javascript:;" class="clearassign radius5 color-white orange" data-id='+val.Id+'>清除指定</a>';
                                 }
                                 html+='</td>'
                                 html+='</tr>';

@@ -6,8 +6,9 @@
 
 @section styles{
     <link href="/asset/css/eventmanage.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
-<div class="container event-lists">
+<div class="container event-lists eventstarlists">
     <div class="tri"></div>
     <h4>您发起的赛事列表</h4>
     <table>
@@ -57,7 +58,8 @@
                             _pager.init(filter, eventlist.param.PageIndex, eventlist.param.TotalPage, function (p) {
                                 eventlist.param.PageIndex = p;
                                 eventlist.Load(eventlist.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html += '<tr>';
                                 html += '<td>' + val.Code + '</td>';
@@ -67,9 +69,9 @@
                                 html += '<td>' +parseDate(new Date(val.EndSignDate), "yyyy-MM-dd").format+ '</td>';
                                 html += '<td>' + enumreplace.replaceEventStatus(val.EventStatus) + '</td>';
                                 if (val.EventStatus == 3 || val.EventStatus == 4 || val.EventStatus == 5) {
-                                    html += '<td><a href="/eventmanage/eventmanage/playersignup/' + val.Id + '" class="entercompe">进入比赛</a></td>'
+                                    html += '<td><a href="/eventmanage/eventmanage/playersignup/' + val.Id + '" class="entercompe darkgreen color-white radius5">进入比赛</a></td>'
                                 } else if (val.EventStatus == 6) {
-                                    html += '<td><a href="/eventmanage/eventmanage/eventresult/' + val.Id + '" class="checkresult">查看赛果</a></td>'
+                                    html += '<td><a href="/eventmanage/eventmanage/eventresult/' + val.Id + '" class="checkresult darkgreen color-white radius5">查看赛果</a></td>'
                                 } else {
                                     html += '<td></td>';
                                 }

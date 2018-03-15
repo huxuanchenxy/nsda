@@ -2,20 +2,21 @@
 @using nsda.Model.dto.response
 @model MemberRefereeResponse
 @{
-    ViewBag.Title = "教练个人中心";
+    ViewBag.Title = "裁判个人信息";
     Layout = "~/Areas/referee/Views/Shared/_Layout.cshtml";
     var userContext = ViewBag.UserContext as WebUserContext;
 }
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/judgeinformation.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
 }
 
+<div class="pi-top per-top">
+    <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
+    <p class="scorecheck">Changing your account information</p>
+</div>
 <div class="judge-con">
-    <div class="per-top">
-        <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
-        <p class="scorecheck">Changing your account information</p>
-    </div>
     <div class="per-con">
         <div class="person-title"></div>
         <div class="modifyinfo">
@@ -27,13 +28,13 @@
                 <div>
                     <label for="firstname"> First Name:</label>
                     <div class="form-con">
-                        <input type="text" id="firstname" value="@Model.PinYinSurName">
+                        <input type="text" class="radius5 box-sizing" id="firstname" value="@Model.PinYinSurName">
                     </div>
                 </div>
                 <div>
                     <label for="lastname">Last Name:</label>
                     <div class="form-con">
-                        <input type="text" id="lastname" value="@Model.PinYinName">
+                        <input type="text" class="radius5 box-sizing" id="lastname" value="@Model.PinYinName">
                     </div>
                 </div>
             </div>
@@ -68,13 +69,13 @@
                 <div>
                     <label for="address">Address:</label>
                     <div class="form-con">
-                        <input type="text" id="address" value="@Model.ContactAddress">
+                        <input type="text" class="radius5 box-sizing" id="address" value="@Model.ContactAddress">
                     </div>
                 </div>
                 <div>
                     <label for="contactNumber">Contact Number:</label>
                     <div class="form-con">
-                        <input type="text" id="contactNumber" value="@Model.ContactMobile">
+                        <input type="text" class="radius5 box-sizing" id="contactNumber" value="@Model.ContactMobile">
                     </div>
                 </div>
             </div>
@@ -83,13 +84,13 @@
                 <div class="form-group">
                     <label for="emergencyContact">Emergency Contact Person:</label>
                     <div class="form-con">
-                        <input type="text" id="emergencyContact" value="@Model.EmergencyContact">
+                        <input type="text" class="radius5 box-sizing" id="emergencyContact" value="@Model.EmergencyContact">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="emergencyContactMobile">Emergency Number:</label>
                     <div class="form-con">
-                        <input type="text" id="emergencyContactMobile" value="@Model.EmergencyContactMobile">
+                        <input type="text" class="radius5 box-sizing" id="emergencyContactMobile" value="@Model.EmergencyContactMobile">
                     </div>
                 </div>
                 <button id="modifyinfo">Confirm Your Information</button>
@@ -98,8 +99,8 @@
         <div class="modifypassword">
             <img src="/asset/img/pass_03.png" alt="" />
             <div class="modifypanel">
-                <input type="password" placeholder="Password" id="newpwd">
-                <input type="password" placeholder="Repeat the Password" id="againpwd">
+                <input type="password" class="radius5 box-sizing" placeholder="Password" id="newpwd">
+                <input type="password" class="radius5 box-sizing" placeholder="Repeat the Password" id="againpwd">
                 <input type="button" value="Create The New Password" id="modifypwd" class="confirmnewpassword">
             </div>
         </div>

@@ -7,8 +7,10 @@
 @section styles{
     <link href="/asset/css/eventstartlists.css?version=@Constant.Version" rel="stylesheet" />
     <link href="/asset/simditor/css/simditor.css" rel="stylesheet" />
+    <link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
+<link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
-<div class="container-fulid event-select">
+<div class="container-fulid event-select eventstarlists">
     <div class="form-group container compename">
         <label for="eventName">本次赛事名称：</label>
         <div>
@@ -65,14 +67,14 @@
         </div>
     </div>
     <div class="form-group container compenumber">
-        <label>报名队伍数上限:</label>
+        <label>报名人数上限:</label>
         <div>
-            <input type="number" placeholder="输入队伍数" id="maxteamNum">队
+            <input type="number" placeholder="输入人数" id="maxteamNum">队
         </div>
     </div>
     <div class="container-fulid teambg">
         <div class="container">
-            <a href="javascript:;" style="margin-left: 0%;margin-bottom: 10px;" id="addgroup" class="addteam">+添加组别</a>
+            <a href="javascript:;" style="margin-left: 0%;margin-bottom: 10px;" id="addgroup" class="addteam radius5 blue color-white">+添加组别</a>
         </div>
         <div class="tbg">
             <div class="container" id="eventgroup">
@@ -82,7 +84,7 @@
     <input type="hidden" id="isInter" value="false" />
     <input type="hidden" id="eventType" value="@ViewBag.EventType" />
     <input type="hidden" id="eventTypeName" value="@ViewBag.EventTypeName" />
-    <button type="button" id="submit">递交发布赛事申请</button>
+    <button type="button" id="submit" class="color-white darkblue radius5">递交发布赛事申请</button>
 </div>
 @section scripts
 {
@@ -276,7 +278,7 @@
         //添加组别
         $("#addgroup").click(function () {
             CurrentGroupCount = CurrentGroupCount + 1;
-            var html = '<div class="teamlist" id="eventgroup' + CurrentGroupCount + '">';
+            var html = '<div class="teamlist radius5" id="eventgroup' + CurrentGroupCount + '">';
             html += '<div class="form-group groupname">';
             html += '  <input type="text" name="groupname" placeholder="输入组别名称">'
             html += '</div>';
@@ -300,7 +302,7 @@
             html += '<input type="number" name="maxTimes" placeholder="填写参赛次数">';
             html += '</div>';
             html += '</div>';
-            html += '  <a href="javascript:;" class="delteam delgroup">删除</a>'
+            html += '  <a href="javascript:;" class="delteam delgroup red radius5 color-white">删除</a>'
             html += '</div>';
             $("#eventgroup").append(html);
         });
@@ -326,7 +328,7 @@
         //添加赛事时间
         $("#eventMatchDate").click(function () {
             EventMatchDate = EventMatchDate + 1;
-            var html = '<div class="adddate" style="margin-left:20px;" id="EventMatchDate' + EventMatchDate + '">';
+            var html = '<div class="adddate" style="margin-right:20px; margin-bottom:20px;" id="EventMatchDate' + EventMatchDate + '">';
             html += '<input type="text" class="eventdate" name="eventdate" placeholder="选择比赛日期" readonly="readonly">';
             html += ' <i class="iconfont icon-close-b delinput delMatchDate"></i>'
             html += ' </div>';

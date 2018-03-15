@@ -7,10 +7,11 @@
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/eventstart.css?version=@Constant.Version">
+    <link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 <div class="tri"></div>
 <div class="container-fulid event-select">
-    <div class="container-fulid  eventsel">
+    @*<div class="container-fulid  eventsel">
         <div class="container">
             <h4>赛事类别</h4>
         </div>
@@ -29,6 +30,27 @@
             </select>
             <a href="javascript:;" id="next">NEXT STEP 下一步</a>
         </div>
+    </div>*@
+
+    <div class="container event eventstarlists  selects">
+        <h4>赛事类别</h4>
+        <div class="form-group">
+            <label>选择赛事类别：</label>
+            <select class="form-control"  id="eventType">
+                <option value="1">辩论</option>
+                <option value="2">演讲</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>选择类别：</label>
+            <select class="form-control" id="eventTypeName">
+                <option>公共论坛式辩论</option>
+                <option>林肯·道格拉斯辩论</option>
+                <option>英国议会制辩论</option>
+            </select>
+        </div>
+        <a href="javascript:;" id="next" class="next-step darkblue linkbutton-min radius5 color-white">NEXT STEP 下一步</a>
+
     </div>
 </div>
 @section scripts

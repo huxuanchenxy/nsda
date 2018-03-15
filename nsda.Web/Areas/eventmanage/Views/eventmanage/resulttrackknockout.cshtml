@@ -13,6 +13,7 @@
     <link href="/asset/css/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     <link href="/asset/css/track.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     <link href="/asset/css/resulttrack.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+<link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists ">
@@ -37,12 +38,12 @@
             <h4>赛果查询</h4>
         </div>
         <div class="gameclass">
-            <a href="/eventmanage/eventmanage/resulttrackcycling?eventId=@Model.Id&eventGroupId=@ViewBag.EventGroupId" class="game">循环赛</a>
-            <a href="javascript:;" class="game viewed">淘汰赛</a>
+            <a href="/eventmanage/eventmanage/resulttrackcycling?eventId=@Model.Id&eventGroupId=@ViewBag.EventGroupId" class="game radius5">循环赛</a>
+            <a href="javascript:;" class="game radius5 viewed">淘汰赛</a>
         </div>
         <div class="set">
-            <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
-            <a href="javascript:;" id="search" class="search">搜索</a>
+            <input id="txt" class="radius5" type="text" placeholder="输入NSDA会员编号/会员姓名" />
+            <a href="javascript:;" id="search" class="search radius5 color-white deepblue">搜索</a>
         </div>
         <table>
             <thead>

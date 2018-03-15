@@ -11,6 +11,7 @@
 {
     <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
     <link href="/asset/css/eventmanageumpire.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+<link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="container event-lists">
@@ -44,8 +45,8 @@
                     <a href="javascript:;">标记：@data.Flag</a>
                 </div>
             </div>
-            <span class="addjudge" id="addReferee">+ 添加临时裁判</span>
         </div>
+        <span class="addjudge radius5 color-white blue" id="addReferee">+ 添加临时裁判</span>
 
         <table>
             <thead>

@@ -6,6 +6,7 @@
 @section styles
 {  
  <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
  <link rel="stylesheet" href="/asset/css/registered.css?version=@Constant.Version">
 }
 <div class="ad">
@@ -22,7 +23,7 @@
     <input type="hidden" value="@Request["redirecturl"]" id="redirecturl" />
     <div class="reg-left"></div>
     <div class="reg-right"></div>
-    <div class="circle"></div>
+    <div class="circle radius50"></div>
     <div class="medium"></div>
     <div class="triangle"></div>
     <div class="register container">
@@ -30,22 +31,22 @@
             <h3>NSDA会员登录</h3>
             <p>注册邮箱 Email</p>
                 <img src="/asset/img/member.svg" alt="Alternate Text" />
-                <input type="text" name="playeremail" id="playeremail" value="" />
+                <input type="text" class="radius5" name="playeremail" id="playeremail" value="" />
                 <p>登录密码 Password <a href="/login/findpwd/1">忘记密码 Forgot?</a></p>
                 <img src="/asset/img/password.svg" alt="Alternate Text" />
-                <input type="password" name="playerpwd" id="playerpwd" value="" />
-                <a id="player" href="javascript:;" class="button">登录 Sign In</a>
+                <input type="password" class="radius5" name="playerpwd" id="playerpwd" value="" />
+                <a id="player" href="javascript:;" class="button radius5 color-white blue">登录 Sign In</a>
                 <p>Not a member?  <a href="/register/player" class="reg-a">即刻注册会员 Sign up now</a></p>
         </div>
         <div class="reg-en">
             <h3>NSDA Coach Login</h3>
             <p>注册邮箱 Email</p>
                 <img src="/asset/img/member.svg" alt="Alternate Text" />
-                <input type="text" name="coachemail" id="coachemail" value="" />
+                <input type="text" class="radius5" name="coachemail" id="coachemail" value="" />
                 <p>登录密码 Password <a href="/login/findpwd/2">忘记密码 Forgot?</a></p>
                 <img src="/asset/img/password.svg" alt="Alternate Text" />
-                <input type="password" name="coachpwd" id="coachpwd" value="" />
-                <a id="coach" href="javascript:;" class="button">登录 Sign In</a>
+                <input type="password" class="radius5" name="coachpwd" id="coachpwd" value="" />
+                <a id="coach" href="javascript:;" class="button radius5 color-white orange">登录 Sign In</a>
                 <p>Not a coach member?  <a href="/register/coach" class="reg-a">Sign up now</a></p>
         </div>
     </div>

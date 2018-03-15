@@ -236,7 +236,6 @@
     <Content Include="Content\asset\css\common\iconfont.css" />
     <Content Include="Content\asset\css\common\index.css" />
     <Content Include="Content\asset\css\common\messagebox.css" />
-    <Content Include="Content\asset\css\compedetail.css" />
     <Content Include="Content\asset\css\doublecheck.css" />
     <Content Include="Content\asset\css\event.css" />
     <Content Include="Content\asset\css\eventmanage.css" />
@@ -303,7 +302,6 @@
     <Content Include="Content\asset\css\judge\judgelogin.css" />
     <Content Include="Content\asset\css\judge\judgeregform.css" />
     <Content Include="Content\asset\css\judge\judgetour.css" />
-    <Content Include="Content\asset\css\judge\judgetourname.css" />
     <Content Include="Content\asset\css\main\about.css" />
     <Content Include="Content\asset\css\main\aboutp.css" />
     <Content Include="Content\asset\css\main\aboutus.css" />
@@ -319,22 +317,13 @@
     <Content Include="Content\asset\css\maptwo.css" />
     <Content Include="Content\asset\css\messagebox.css" />
     <Content Include="Content\asset\css\octafinals.css" />
-    <Content Include="Content\asset\css\playerboundcoach.css" />
-    <Content Include="Content\asset\css\playercenter.css" />
     <Content Include="Content\asset\css\index.css" />
-    <Content Include="Content\asset\css\playercomsignup.css" />
-    <Content Include="Content\asset\css\playerintegral.css" />
-    <Content Include="Content\asset\css\playerscorelists.css" />
-    <Content Include="Content\asset\css\playersource.css" />
-    <Content Include="Content\asset\css\playerpartin.css" />
-    <Content Include="Content\asset\css\playerpersonal.css" />
-    <Content Include="Content\asset\css\player.css" />
-    <Content Include="Content\asset\css\playerregform.css" />
-    <Content Include="Content\asset\css\player\compedetail.css" />
     <Content Include="Content\asset\css\player\player.css" />
+    <Content Include="Content\asset\css\player\player.min.css">
+      <DependentUpon>player.css</DependentUpon>
+    </Content>
     <Content Include="Content\asset\css\player\playerboundcoach.css" />
     <Content Include="Content\asset\css\player\playercenter.css" />
-    <Content Include="Content\asset\css\player\playercomsignup.css" />
     <Content Include="Content\asset\css\player\playerintegral.css" />
     <Content Include="Content\asset\css\player\playerpartin.css" />
     <Content Include="Content\asset\css\player\playerpersonal.css" />
@@ -344,7 +333,6 @@
     <Content Include="Content\asset\css\player\playersource.css" />
     <Content Include="Content\asset\css\prize.css" />
     <Content Include="Content\asset\css\registered.css" />
-    <Content Include="Content\asset\css\playersign.css" />
     <Content Include="Content\asset\css\resulttrack.css" />
     <Content Include="Content\asset\css\judgetourname.css" />
     <Content Include="Content\asset\css\track.css" />
@@ -426,6 +414,7 @@
     <Content Include="Content\asset\js\layer\theme\default\loading-2.gif" />
     <Content Include="Content\asset\js\parallax.min.js" />
     <Content Include="Content\asset\js\tabs.js" />
+    <None Include="bundleconfig.json" />
     <None Include="Content\asset\js\_references.js" />
     <Content Include="Content\asset\layer\css\layer.css" />
     <Content Include="Content\asset\layer\css\layer.ext.css" />

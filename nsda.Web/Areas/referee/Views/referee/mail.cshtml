@@ -5,6 +5,7 @@
 }
 @section styles
 {
+    <link rel="stylesheet" href="/asset/css/judgecenter.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/judgeapply.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/messagebox.css?version=@Constant.Version">
 }
@@ -54,7 +55,7 @@
                                 html += '<div class="msgc">';
                                 html += '<p class="msgteam">' + val.Title + '</p>';
                                 html += '<p class="teamcon">'+val.Content+'</p>';
-                                html += '</div><a href="/referee/referee/list" class="cmore">Learn More</a>';
+                                html += '</div><a href="/referee/referee/list" class="cmore radius5 color-white blue">Learn More</a>';
                                 html += '</div>';
                             });
                             $("#mail").html(html);

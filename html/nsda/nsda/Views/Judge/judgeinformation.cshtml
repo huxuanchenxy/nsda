@@ -1,18 +1,18 @@
 ﻿@{
     ViewBag.Title = "裁判个人中心";
 }
-<link href="~/Content/asset/css/common.css?2.1.0" rel="stylesheet" />
-<link href="~/Content/asset/css/judgeinformation.css?2.1.0" rel="stylesheet" />
-
+<link href="~/Content/asset/css/common/common.css?2.1.0" rel="stylesheet" />
+<link href="~/Content/asset/css/judge/judgeinformation.css?2.1.0" rel="stylesheet" />
+<link href="@Url.Content("~/Content/asset/css/judge/judgetour.css?1.1.0")" rel="stylesheet" type="text/css" />
 
 @Html.Partial("_judgetop")
 <div class="container judge-compe">
+    <div class="pi-top">
+        <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
+        <p class="scorecheck">Changing your account information</p>
+    </div>
     @Html.Partial("_judgeleft")
     <div class="judge-con">
-        <div class="per-top">
-            <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
-            <p class="scorecheck">Changing your account information</p>
-        </div>
         <div class="per-con">
             <div class="person-title"></div>
             <div class="modifyinfo">
@@ -70,10 +70,10 @@
             </div>
             <div class="modifypassword">
                 <img src="~/Content/asset/img/pass_03.png" alt="" />
-                <div class="modifypanel">
-                    <input type="password" placeholder="Password">
-                    <input type="password" placeholder="Repeat the Password">
-                    <input type="button" value="Create The New Password" class="confirmnewpassword">
+                <div class="modifypanel radius5">
+                    <input type="password" class="radius5 color-79" placeholder="Password">
+                    <input type="password" class="radius5 color-79" placeholder="Repeat the Password">
+                    <input type="button" value="Create The New Password" class="confirmnewpassword radius5 color-white green">
                 </div>
             </div>
         </div>

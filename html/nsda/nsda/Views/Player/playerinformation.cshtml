@@ -2,20 +2,22 @@
     Layout = "~/Views/Shared/_Role.cshtml";
     ViewBag.Title = "修改个人资料";
 }
-<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/Playerpersonal.css?3.1.5")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common/common.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/player/Playerpersonal.css?4.1.5")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/player/playercom.min.css?1.1.0" rel="stylesheet" />
+
 
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 
 @Html.Partial("_PlayerTop")
 
-<div class="container player-compe">
+<div class="container player-compe playerinfo">
     <div class="pi-top score-top">
         <img class="integral" src="~/Content/asset/img/score_03.jpg" alt="...">
         <p class="scorecheck">修改个人资料</p>
     </div>
         @Html.Partial("_PlayerLeft")
-        <div class="score-con">
+        <div class="compe-con">
             <div class="per-con">
                 <div class="person-title"></div>
                 <div class="modifyinfo">
@@ -95,8 +97,8 @@
                 <div class="modifypassword">
                     <img src="~/Content/asset/img/password_03.png" alt="" />
                     <div class="modifypanel radius5">
-                            <input type="password" placeholder="输入新密码">
-                            <input type="password" placeholder="再次输入新密码">
+                            <input type="password" class="radius5" placeholder="输入新密码">
+                            <input type="password" class="radius5" placeholder="再次输入新密码">
                             <input type="button" value="确认新密码" class="confirmnewpassword">
                     </div>
                 </div>

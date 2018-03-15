@@ -7,19 +7,20 @@
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/playerintegral.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
 }
-<div class="score-con">
-    <div class="score-top">
-        <img class="integral" src="/asset/img/score_03.jpg" alt="...">
-        <p class="scorecheck">积分查询</p>
-        <a href="javascript:;" id="search">
-            <span class="score-search">
-                <i class="iconfont icon-fangdajing"></i>搜索
-            </span>
-        </a>
-        <input type="text" class="date-input" id="querydate" placeholder="Date Select" readonly>
+<div class="pi-top score-top">
+    <img class="integral" src="/asset/img/score_03.jpg" alt="...">
+    <p class="scorecheck">积分查询</p>
+    <a href="javascript:;" id="search">
+        <span class="score-search box-sizing color-white radius5 darkblue">
+            <i class="iconfont icon-fangdajing"></i>搜索
+        </span>
+    </a>
+    <input type="text" class="date-input radius5" id="querydate" placeholder="选择日期" readonly>
 
-    </div>
+</div>
+<div class="score-con">
     <div class="score-table">
         <table>
             <thead>
@@ -86,7 +87,8 @@
                             _pager.init(filter, playerpoints.param.PageIndex, playerpoints.param.TotalPage, function (p) {
                                 playerpoints.param.PageIndex = p;
                                 playerpoints.Load(playerpoints.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html += '<tr>';
                                 html += '<td>' + val.EventCode + '</td>'
@@ -94,7 +96,7 @@
                                 html += '<td>' + enumreplace.replaceeventType(val.EventType)+ '</td>';
                                 html += '<td>'+ val.EventGroupName +'</td>';
                                 html += '<td>'+val.Points+'</td>';
-                                html += ' <td><a href="/player/player/pointsdetail/'+val.Id+'" class="checkdetail">查看明细</a></td>';
+                                html += ' <td class="last"><a href="/player/player/pointsdetail/' + val.Id + '" class="checkdetail radius5 color-white yellow">查看明细</a></td>';
                                 html += '</tr>';
                             });
                             $("#data").html(html)

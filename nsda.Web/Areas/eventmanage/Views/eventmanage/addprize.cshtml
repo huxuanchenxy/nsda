@@ -5,6 +5,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="/asset/css/prize.css?version=@Constant.Version">
+    <link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 </head>
 <body>
     <input type="hidden" id="eventGroupId" value="@Request["eventGroupId"]" />
@@ -14,20 +15,20 @@
         <span></span>
         <div class="form-group roomname">
             <label for="prizename"></label>
-            <input type="text" id="prizename" value="" placeholder="输入奖项名称" />
+            <input type="text" id="prizename" class="radius5" value="" placeholder="输入奖项名称" />
         </div>
         <div class="form-group roomclass">
             <label for="prizeType"></label>
-            <select id="prizeType">
+            <select id="prizeType" class="radius5 color-79">
                 <option value="0">选择 奖项类型</option>               
                 <option value="1">个人</option>
                 <option value="2">团队</option>
             </select>
         </div>
         <div class="form-group inputteam">
-            <textarea placeholder="输入队伍编号/个人编号" id="num"></textarea>
+            <textarea placeholder="输入队伍编号/个人编号" class="radius5" id="num"></textarea>
         </div>
-        <button id="save">保存</button>
+        <button id="save" class="radius5 darkblue color-white">保存</button>
     </div>
 
     <script src="/asset/js/jquery.min.js"></script>

@@ -12,6 +12,7 @@
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/playercenter.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
     <link rel="stylesheet" href="/asset/css/messagebox.css?version=@Constant.Version">
 }
 <div class="info-con">
@@ -53,7 +54,7 @@
                 <td>@item.MemberName</td>
                 @if (flag == 1)
                 {
-                   <td rowspan="@rowspan"><a href="#" class="enter">进入比赛</a></td>
+                   <td rowspan="@rowspan"><a href="#" class="enter radius5 color-white orange">进入比赛</a></td>
                 }
             </tr>
    
@@ -85,7 +86,7 @@
                     <p class="msgteam">@item.Title</p>
                     <p class="teamcon">@Html.Raw(item.Content)</p>
                 </div>
-                <a href="/player/playersignup/list" class="cmore">查看详情</a>
+                <a href="/player/playersignup/list" class="cmore radius5 color-white blue">查看详情</a>
             </div>
        }
    }

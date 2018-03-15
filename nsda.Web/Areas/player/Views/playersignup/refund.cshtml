@@ -7,11 +7,11 @@
 {
     <link rel="stylesheet" href="/asset/css/playerpartin.css?version=@Constant.Version">
 }
+<div class="pi-top list-top">
+    <a href="/player/playersignup/list" class="list">已参与的比赛</a>
+    <a href="javascript:;" class="active list">退赛信息</a>
+</div>
 <div class="comp-lists tab">
-    <div class="list-top">
-        <a href="/player/playersignup/list" class="list">已参与的比赛</a>
-        <a href="javascript:;" class="active list">退赛信息</a>
-    </div>
     <div class="comp-con">
         <div class="exittable">
             <table>
@@ -63,7 +63,8 @@
                             _pager.init(filter, playerrefund.param.PageIndex, playerrefund.param.TotalPage, function (p) {
                                 playerrefund.param.PageIndex = p;
                                 playerrefund.Load(playerrefund.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html += '<tr>';
                                 html += '<td>' + val.EventCode+"</br/>"+ val.EventName + '</td>';

@@ -12,6 +12,7 @@
     <link href="/asset/css/writegrades.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     <link href="/asset/css/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     <link href="/asset/css/againstaround.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+<link href="/asset/css/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists ">
@@ -37,7 +38,7 @@
         </div>
         <div class="roundtop">
             <div class="idle">
-                <div class="idlejudge">
+                <div class="idlejudge radius5">
                     <span>闲置裁判池：</span>
                     <div class="allselects">
                         <div class="form-group"><input type="checkbox" class="unusedReferee"  value="1" /><label>J2563 </label><p>Nicolas</p></div>
@@ -45,7 +46,7 @@
                         <div class="form-group"><input type="checkbox" class="unusedReferee"  value="3" /><label>J2563 </label><p>Nicolas</p></div>
                     </div>
                 </div>
-                <div class="idleroom">
+                <div class="idleroom radius5">
                     <span>闲置Room池：</span>
                     <div class="allselects">
                         <div class="form-group"><input type="checkbox" class="unusedRoom" value="1" /><label>J2563 </label><p>Nicolas</p></div>
@@ -57,24 +58,24 @@
             <div class="roundbtn">
                 <div class="btnleft">
                     <div>
-                        <button class="pre blue posright" id="previewmatch"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
+                        <button class="pre radius5 color-white blue posright" id="previewmatch"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
                     </div>
                     <div class="btnbottom">
-                        <button class="pre orange" id="printscore"><i class="iconfont icon-dayin"></i><p>打印评分单</p></button>
-                        <button class="pre green posright" id="printtag"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></button>
+                        <button class="pre radius5 color-white orange" id="printscore"><i class="iconfont icon-dayin"></i><p>打印评分单</p></button>
+                        <button class="pre radius5 color-white green posright" id="printtag"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></button>
                     </div>
                 </div>
                 <div class="btnright">
-                    <button class="star" id="exec"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></button>
+                    <a href="javascript:;" class="star radius5 lightred color-white" id="exec"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></a>
                 </div>
             </div>
         </div>
         <div class="operation">
-            <p>勾选替换操作：</p><button class="pre blue butt" id="replaceflight">替换 FLight 位置</button><button class="pre green butt" id="replaceroom">替换Room按钮</button><button class="pre orange butt" id="replacereferee">替换 裁判</button>
+            <p>勾选替换操作：</p><button class="pre radius5 color-white blue butt" id="replaceflight">替换 FLight 位置</button><button class="pre radius5 color-white green butt" id="replaceroom">替换Room按钮</button><button class="pre radius5 color-white orange butt" id="replacereferee">替换 裁判</button>
         </div>
         <div class="flighttable">
 
-            <div class="fli">
+            <div class="fli  radius5">
                 <div class="flitop">
                     <p>Flight A</p>
                     <div class="form-group"><p>比赛时间：</p><p>2017-2-1</p></div>
@@ -121,7 +122,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="fli">
+            <div class="fli  radius5">
                 <div class="flitop">
                     <p>Flight B</p>
                     <div class="form-group"><p>比赛时间：</p><p>2017-2-1</p></div>
@@ -168,7 +169,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="fli">
+            <div class="fli  radius5">
                 <div class="flitop">
                     <p>Flight C</p>
                     <div class="form-group"><p>比赛时间：</p><p>2017-2-1</p></div>

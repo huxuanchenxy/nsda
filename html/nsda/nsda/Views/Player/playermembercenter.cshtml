@@ -5,12 +5,15 @@
 <link href="@Url.Content("~/Content/asset/css/common/common.css?2.1.0")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/player/playercenter.css?4.1.2")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/asset/css/common/messagebox.css?4.1.2")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/player/player.min.css?1.1.0" rel="stylesheet" />
+
+
 @Html.Partial("_PlayerTop")
 <div class="container player-compe">
         @Html.Partial("_PlayerLeft")
-        <div class="info-con">
+        <div class="info-con playercenter role">
             <table>
-                <thead>
+                <thead class="pinkbg">
                     <tr>
                         <th>比赛编码</th>
                         <th>比赛名称</th>

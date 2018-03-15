@@ -8,29 +8,33 @@
 <head>
 
     <link rel="stylesheet" href="/asset/css/coachboundplayer.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common.css?version=@Constant.Version">
 </head>
 <body>
     <input type="hidden" value="@Model.Id" id="id" />
     <div class="addcoach" id="addeducation">
+        <div class="boundtitle darkblue box-sizing">
+            绑定学生
+        </div>
         <img class="coachimg" src="/asset/img/bound_03.png" alt="...">
         <div class="form-group">
-            <input class="form-select-school" id="startdate" value="@Model.StartDate">
+            <input class="form-select-school radius5 color-79 rangeyear" id="startdate" value="@Model.StartDate">
             <em class="em"> —</em>
-            <input class="form-select-school" id="enddate" value="@Model.EndDate">
-            <a href="javascript:;" class="boundcoach" id="confirmadd">绑定教练</a>
+            <input class="form-select-school radius5 color-79 rangeyear" id="enddate" value="@Model.EndDate">
+            <a href="javascript:;" class="boundcoach radius5 color-white darkblue" id="confirmadd">确认修改</a>
         </div>
     </div>
     <script src="/asset/js/jquery.min.js"></script>
     <script src="/asset/js/laydate/laydate.js"></script>
     <script src="/asset/layer/js/layer.js"></script>
     <script>
-        laydate.render({
-            elem: '#startdate',
-            type: 'month'
-        });
-        laydate.render({
-            elem: '#enddate',
-            type: 'month'
+        lay('.rangeyear').each(function () {
+            laydate.render({
+                elem: this
+                , type:"month"
+                , trigger: 'click'
+                , zIndex: 99999999999
+            });
         });
 
        $("#confirmadd").click(function () {
