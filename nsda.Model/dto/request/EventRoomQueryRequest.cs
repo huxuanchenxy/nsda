@@ -14,5 +14,7 @@ namespace nsda.Model.dto.request
         public int EventId { get; set; }
         public int? GroupId { get; set; }
         public RoomStatusEm? RoomStatus { get; set; }
+
+        public int? EventGroupId { get; set; }
     }
 }

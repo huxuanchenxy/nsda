@@ -32,5 +32,7 @@ namespace nsda.Services.Contract.eventmanage
         EventRoomResponse Detail(int id);
         //预估房间数量
         int RoomCount(int eventId,out bool isVisiable);
+
+        List<EventRoomResponse> GetList(EventRoomQueryRequest request);
     }
 }

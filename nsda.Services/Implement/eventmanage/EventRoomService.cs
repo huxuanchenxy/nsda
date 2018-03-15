@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using nsda.Model.dto.response;
 using nsda.Model.enums;
 using Dapper;
+using nsda.Repository.Contract.eventmanage;
+
 namespace nsda.Services.Implement.eventmanage
 {
     /// <summary>
@@ -23,11 +25,13 @@ namespace nsda.Services.Implement.eventmanage
         IDBContext _dbContext;
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
-        public EventRoomService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService)
+        IRoomRepo _roomData;
+        public EventRoomService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService,IRoomRepo roomRepo)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
+            _roomData = roomRepo;
         }
 
         //新增教室
@@ -259,7 +263,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-        //教室列表
+        //教室列表 弃用
         public List<EventRoomResponse> List(EventRoomQueryRequest request)
         {
             List<EventRoomResponse> list = new List<EventRoomResponse>();
@@ -342,6 +346,21 @@ namespace nsda.Services.Implement.eventmanage
                 LogUtils.LogError("EventRoomService.RoomCount", ex);
             }
             return roomCount;
+        }
+
+
+        public List<EventRoomResponse> GetList(EventRoomQueryRequest request)
+        {
+            List<EventRoomResponse> list = new List<EventRoomResponse>();
+            try
+            {
+                list = _roomData.GetList(request);
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventRoomService.List", ex);
+            }
+            return list;
         }
     }
 }

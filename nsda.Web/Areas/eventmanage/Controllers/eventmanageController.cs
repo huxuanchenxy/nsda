@@ -588,7 +588,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [HttpGet]
         public ContentResult listroom(EventRoomQueryRequest request)
         {
-            var data = _eventRoomService.List(request);
+            var data = _eventRoomService.GetList(request);
             var res = new ResultDto<EventRoomResponse>
             {
                 page = request.PageIndex,
