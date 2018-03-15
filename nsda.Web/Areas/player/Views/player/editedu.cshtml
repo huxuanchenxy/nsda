@@ -6,26 +6,29 @@
 }
 <html>
 <head>
-    <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playerpersonal.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 </head>
 <body>
     <input type="hidden" id="id" value="@Model.Id"/>
     <div class="addeducation" id="addeducation">
+        <h3>编辑教育经历</h3>
         <div class="form-group">
-            <input class="form-select-school" id="startdate" value="@Model.StartDate" readonly>
+            <input class="form-select-school radius5 color-79 year" id="startdate" value="@Model.StartDate" readonly>
             <em class="em"> —</em>
-            <input class="form-select-school" id="enddate" value="@Model.EndDate" readonly>
-            <select class="form-select-schools" id="provinceId">
+            <input class="form-select-school radius5 color-79 year" id="enddate" value="@Model.EndDate" readonly>
+            <select class="form-select-schools radius5 color-79" id="provinceId">
                 <option value="0">省</option>
             </select>
-            <select class="form-select-schools" id="cityId">
+            <select class="form-select-schools radius5 color-79" id="cityId">
                 <option value="0">市</option>
             </select>
-            <select class="form-select-schoolads" id="schoolId">
+            <select class="form-select-schoolads radius5 color-79" id="schoolId">
                 <option value="0">学校</option>
             </select>
         </div>
-        <button class="confirmadd" id="confirmadd">保存</button>
+        <button class="confirmadd radius5 color-white darkblue" id="confirmadd">保存</button>
     </div>
 
     <script src="/asset/js/jquery.min.js"></script>
@@ -35,15 +38,14 @@
     <script src="/asset/js/pcs.js?version=@Constant.Version"></script>
 
     <script>
+        lay('.year').each(function () {
             laydate.render({
-                elem: '#startdate',
-                type: 'month'
+                elem: this
+                , showBottom: false
+                , trigger: 'click'
+                , zIndex: 9999999999999999
             });
-            laydate.render({
-                elem: '#enddate',
-                type: 'month'
-            });
-
+        });
             $("#confirmadd").click(function () {
                 var $startdate = $("#startdate").val();
                 if ($startdate == null)

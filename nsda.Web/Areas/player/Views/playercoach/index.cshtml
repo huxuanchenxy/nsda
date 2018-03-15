@@ -5,17 +5,21 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playerboundcoach.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playerboundcoach.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
-<div class="score-con">
-    <div class="score-top">
-        <img class="integral" src="/asset/img/score_03.jpg" alt="...">
-        <p class="scorecheck">绑定教练</p>
-        <button class="addbound" id="addCoach">添加绑定 &nbsp;<i class="iconfont icon-jiahao"></i></button>
-    </div>
+
+<div class="pi-top score-top">
+    <img class="integral" src="/asset/img/score_03.jpg" alt="...">
+    <p class="scorecheck">绑定教练</p>
+    <button class="addbound radius5 color-white darkgreen" id="addCoach">添加绑定 &nbsp;<i class="iconfont icon-jiahao"></i></button>
+</div>
+<div class="info-con playerboundcoach role">
+    
     <div class="boundtable">
         <table>
-            <thead>
+            <thead class="garybg">
                 <tr>
                     <th>时间</th>
                     <th>NSDA教练编号</th>
@@ -100,24 +104,26 @@
 
         //编辑
         $(document).on("click", ".update", function () {
+            
             layer.open({
-                title: "绑定教练",
+                title: "",
                 type: 2,
-                content: "/player/playercoach/update/"+$(this).attr("data-id"),
-                area: ["760px", "550px"],
+                content: "/player/playercoach/update/" + $(this).attr("data-id"),
+                area: ["600px", "461px"],
                 end: function () {
                     playercoach.Load(playercoach.param);
                 }
-            })
+            });
+
         });
 
         //新增
         $(document).on("click", "#addCoach", function () {
             layer.open({
-                title: "绑定教练",
+                title: "",
                 type: 2,
                 content: "/player/playercoach/add",
-                area: ["760px", "550px"],
+                area: ["600px", "461px"],
                 end: function () {
                     playercoach.Load(playercoach.param);
                 }
@@ -147,7 +153,8 @@
                             _pager.init(filter, playercoach.param.PageIndex, playercoach.param.TotalPage, function (p) {
                                 playercoach.param.PageIndex = p;
                                 playercoach.Load(playercoach.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html+='<tr>';
                                 html += '<td>' + val.StartDate + '-';
@@ -162,11 +169,11 @@
                                 html += '<td>' + val.CoachCode + '</td>';
                                 html += '<td>' + val.CoachName + '</td>';
                                 if (val.Flag) {
-                                    html += '<td><button class="editcoach update" data-id=' + val.Id + '>Edit 修改</button> <button class="delcoach delete" data-id=' + val.Id + '>Del 删除</button></td>';
+                                    html += '<td class="last"><button class="editcoach update radius5 color-white deepblue" data-id=' + val.Id + '>Edit 修改</button> <button class="delcoach delete radius5 color-3 gary" data-id=' + val.Id + '>Del 删除</button></td>';
                                 }
                                 else {
                                     if (val.PlayerCoachStatus == 0) {
-                                        html += '<td><button data-id=' + val.Id + ' data-agree=true class="confirmbound check">确认绑定</button> <button class="notpass check" data-id=' + val.Id + ' data-agree=false>不通过</button></td>';
+                                        html += '<td class="last><button data-id=' + val.Id + ' data-agree=true class="confirmbound check radius5 color-white orange">确认绑定</button> <button class="notpass check radius5 color-white lightred" data-id=' + val.Id + ' data-agree=false>不通过</button></td>';
                                     } else {
                                         html+='<td></td>'
                                     }

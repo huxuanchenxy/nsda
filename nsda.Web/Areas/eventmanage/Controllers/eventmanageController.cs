@@ -315,6 +315,14 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(detail);
         }
 
+        public ActionResult writegrades()
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
+            return View();
+        }
+
         #endregion
 
         #region 赛事信息设置

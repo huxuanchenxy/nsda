@@ -26,11 +26,12 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <title>@ViewBag.Title - NSDA</title>
-    <link href="/asset/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/asset/css/basic.css?version=@Constant.Version" rel="stylesheet" />
-    <link href="/asset/css/iconfont.css?version=@Constant.Version" rel="stylesheet" />
-    <link href="/asset/css/index.css?version=@Constant.Version" rel="stylesheet" />
-    <link href="/asset/css/event.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/common/bootstrap.min.css" rel="stylesheet" />
+    <link href="/asset/css/common/basic.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/common/iconfont.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/common/index.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/eventmanage/event.css?version=@Constant.Version" rel="stylesheet" />
     @RenderSection("styles", false)
 </head>
 <body>
@@ -40,17 +41,10 @@
         <h3>NSDA 赛事管理员</h3>
         <h5>Code: @userContext.Code</h5>
     </div>
-    <div class="container-fluid event-nav">
-        <div class="container">
-            <ul>
-                <a href="/eventmanage/eventmanage/start" class="lione"><li>发起比赛<span class="tri"></span></li></a>
-                <a href="/eventmanage/eventmanage/index" class="litwo"><li>比赛进程管理<span class="tri"></span></li></a>
-                <a href="/eventmanage/eventmanage/info" class="litre"><li>赛事管理员资料<span class="tri"></span></li></a>
-            </ul>
-        </div>
-    </div>
     <div class="eventleft">
         <a href="/eventmanage/eventmanage/index"><i class="iconfont icon-shouye"></i></a>
+
+        <a href="/eventmanage/eventmanage/start"><i class="iconfont icon-add3"></i></a>
         <a href="/eventmanage/eventmanage/info"><i class="iconfont icon-yonghu3"></i></a>
         <a href="javascript:;"><i class="iconfont icon-youjianxinjian"></i></a>
     </div>
@@ -93,9 +87,6 @@
         </div>
     </div>
 
-    <div class="blank">
-
-    </div>
     <footer>
         <p>Copyright © 2005 - 2018 National Forensic League of China All Reserved</p>
     </footer>

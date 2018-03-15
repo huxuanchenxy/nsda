@@ -2,14 +2,15 @@
     Layout = "~/Views/Shared/_Role.cshtml";
     ViewBag.Title = "比赛报名";
 }
-<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/playersign.css?1.1.4")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/player/playersign.css?2.1.4")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/player/player.min.css?1.1.0" rel="stylesheet" />
 
 @Html.Partial("_playertop")
 
 <div class="container player-compe">
     @Html.Partial("_playerleft")
-    <div class="compe-con">
+    <div class="compe-con comsign role">
         <div class="address group">
             <div class="address-item group-item">
                 <p>地点：</p><a href="javascript:;" class="selected">不限</a>
@@ -93,7 +94,7 @@
 
 
         <table>
-            <thead>
+            <thead class="pinkbg">
                 <tr>
                     <th>比赛编码</th>
                     <th>比赛名称</th>

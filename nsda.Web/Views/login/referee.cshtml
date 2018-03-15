@@ -5,8 +5,10 @@
 }
 @section styles
 {  
- <link rel="stylesheet" href="/asset/css/about.css?version=@Constant.Version">
- <link rel="stylesheet" href="/asset/css/judgelogin.css?version=@Constant.Version">
+ <link rel="stylesheet" href="/asset/css/main/about.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+
+ <link rel="stylesheet" href="/asset/css/judge/judgelogin.css?version=@Constant.Version">
 }
 <div class="ad">
 
@@ -23,11 +25,11 @@
         <h3>NSDA Judge Login</h3>
         <p>注册邮箱 Email</p>
         <img src="/asset/img/member.svg" alt="Alternate Text" />
-        <input type="text" name="name" value="" id="refereeemail"/>
+        <input type="text" class="radius5" name="name" value="" id="refereeemail"/>
         <p>登录密码 Password <a href="/login/findpwd/3">忘记密码 Forgot?</a></p>
         <img src="/asset/img/password.svg" alt="Alternate Text" />
-        <input type="password" name="name" value="" id="refereepwd"/>
-        <a href="javascript:;" id="login" class="button">登录 Sign In</a>
+        <input type="password" class="radius5" name="name" value="" id="refereepwd"/>
+        <a href="javascript:;" id="login" class="button radius5">登录 Sign In</a>
         <p>Not a judge member? <a href="/register/referee" class="reg-a">Sign up now</a></p>
     </div>
 

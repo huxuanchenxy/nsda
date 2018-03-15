@@ -1,0 +1,106 @@
+﻿.coach-con{
+    width:100%;
+    background:white;
+    border-radius:0 0 8px 8px ;
+    -webkit-border-radius: 0 0 8px 8px;
+    -moz-border-radius: 0 0 8px 8px;
+    margin-bottom:80px;
+    padding-top:20px;
+    padding-bottom:80px;
+}
+
+
+.person-title{
+    width:96%;
+    height:30px;
+    background:#ECECEC;
+    border-bottom:2px solid #d9d3d3;
+    border-top:2px solid #d9d3d3;
+    margin-bottom:30px;
+}
+.modifyinfo{
+    padding:10px;
+    box-sizing:border-box;
+}
+.modifyinfo .form-group{
+    height:30px;
+    margin-bottom:30px;
+}
+.modifyinfo .form-group label{
+    width:11%;
+    text-align:right;
+    float:left;
+    margin-right:20px;
+    color:#666;
+}
+.modifyinfo .two-label div{
+    width:45%;
+    float:left;
+    margin-bottom:15px;
+    
+}
+.modifyinfo .two-label div input{
+    width:200px;
+    height:30px;
+    border:1px solid #bdbdbd;
+    padding-left:5px;
+}
+.modifyinfo .two-label div label{
+    width:24%;
+    line-height:30px;
+}
+.ress label{
+    line-height:30px;
+}
+.ress input{
+    width:200px;
+    height:30px;
+    border:1px solid #bdbdbd;
+    padding-left:5px;
+}
+.two-label{
+    height:22px;
+    margin-bottom:30px;
+}
+
+.form-group .form-con label{
+    width:6%;
+    margin-right:50px;
+}
+.emergency{
+    border-top:1px solid #D2D9DD;
+    border-bottom:1px solid #D2D9DD;
+    margin-right:25px;
+    padding-top:20px;
+    padding-left:10px;
+}
+.emergency h4{
+    font-size:14px;
+    font-family:"微软雅黑";
+    color:#333366;
+    font-weight:600;
+    padding-left:4px;
+    margin-bottom:30px;
+}
+.emergency .form-group label{
+    width:24%;
+    float:left;
+}
+.modifyinfo button{
+    border:none;
+    padding:10px 20px;
+    font-size:18px;
+    font-family:"微软雅黑";
+    margin-left:19%;
+    margin-top:50px;
+    margin-bottom:40px;
+}
+
+.modifypanel .confirmnewpassword{
+    width:100%;
+    height:40px;
+    border:none;
+}
+.info-lists .panel-group .panel:first-child .panel-heading .panel-title h3,.info-lists .panel-group .panel:first-child .panel-heading .panel-title p{
+    color:#1DB8FF;
+}

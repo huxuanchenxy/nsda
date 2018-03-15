@@ -2,24 +2,26 @@
     Layout = "~/Views/Shared/_Role.cshtml";
     ViewBag.Title = "已参加比赛";
 }
-<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/Playerpartin.css?2.1.5")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/player/Playerpartin.css?2.1.5")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/player/player.min.css?1.1.0" rel="stylesheet" />
+
 @Scripts.Render("~/Content/asset/layer/js/layer.js")
 
 @Html.Partial("_PlayerTop")
 
 <div class="container player-compe">
-    <div class="pi-top list-top">
-        <a href="/Player/playerhadcompe" class="active list">已参与的比赛</a>
-        <a href="/Player/playerexitcompe" class="list">退赛信息</a>
+    <div class="pi-top list-top hadcompe">
+        <a href="/Player/playerhadcompe" class="active box-sizing list">已参与的比赛</a>
+        <a href="/Player/playerexitcompe" class="list box-sizing">退赛信息</a>
     </div>
     @Html.Partial("_PlayerLeft")
     <div class="comp-lists tab">
-        <a href="javascript:;" class="addexper"><i class="iconfont icon-add1"></i> 添加临时参赛</a>
-        <div class="comp-con">
+        <a href="javascript:;" class="addexper radius5 blue color-white"><i class="iconfont icon-add1"></i> 添加临时参赛</a>
+        <div class="comp-con part role">
             <div class="hadtable">
                 <table>
-                    <thead>
+                    <thead class="pinkbg">
                         <tr>
                             <th>队伍编码</th>
                             <th>比赛名称</th>
@@ -44,6 +46,51 @@
                             <td>04</td>
                             <td>05</td>
                             <td>确认组队</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">01</td>
+                            <td rowspan="2">02</td>
+                            <td rowspan="2">03</td>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>组队成功</td>
+                            <td class="last"><a href="javascript:;" class="pay radius5 color-white yellow" title="付款">付款</a><a href="javascript:;" class="apply radius5 color-3 gary" title="退赛申请">退赛申请</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>06</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">01</td>
+                            <td rowspan="2">02</td>
+                            <td rowspan="2">03</td>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>报名成功</td>
+                            <td class="last"><a href="javascript:;" class="apply radius5 color-3 gary" title="退赛申请">退赛申请</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>06</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">01</td>
+                            <td rowspan="2">02</td>
+                            <td rowspan="2">03</td>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>报名成功</td>
+                            <td class="last"><a href="javascript:;" class="apply radius5 color-3 gary" title="退赛申请">退赛申请</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>05</td>
+                            <td>06</td>
                             <td></td>
                         </tr>
                         <tr>

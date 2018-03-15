@@ -2,10 +2,10 @@
     Layout = "~/Views/Shared/_EventManage.cshtml";
     ViewBag.Title = "第一轮评分单确认";
 }
-<link href="@Url.Content("~/Content/asset/css/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/doublecheck.css?2.1.0")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/asset/css/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-<link href="~/Content/asset/css/writegrades.css?2.0.0" rel="stylesheet" />
+<link href="@Url.Content("~/Content/asset/css/eventmanage/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/eventmanage/doublecheck.css?2.1.0")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common/common.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/eventmanage/writegrades.css?3.0.0" rel="stylesheet" />
 @Html.Partial("_manager")
 <div class="event-lists ">
     <div class="list-top">
@@ -16,12 +16,12 @@
         <div>
             <img src="~/Content/asset/img/vs_03.png" />
             <h4>第一轮 评分单录入 </h4>
-            <button class="pre radius5 blue posright"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
+            <a href="javascript:;" class="pre radius5 blue posright"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></a>
         </div>
         <div>
-            <button class="check radius5 poscen lightgreen"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></button>
-            <button class="pre radius5 green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></button>
-            <button class="pre radius5 orange posright"><i class="iconfont icon-dayin"></i><p>打印评分单</p></button>
+            <a href="/Eventmanage/doublecheck" class="check radius5 poscen lightgreen"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></a>
+            <a href="javascript:;" class="pre radius5 green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></a>
+            <a href="javascript:;" class="pre radius5 orange posright"><i class="iconfont icon-dayin"></i><p>打印评分单</p></a>
         </div>
         <div class="set">
             <input id="txt" class="radius5" type="text" placeholder="输入NSDA会员编号/会员姓名" />
@@ -81,7 +81,7 @@
                             <td colspan="3">队伍编号： 651</td>
                         </tr>
                         <tr>
-                            <td>asdfghj</td>
+                            <td></td>
                             <td>Points</td>
                             <td>Rank</td>
                         </tr>

@@ -8,7 +8,8 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/eventmanagecenter.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/eventmanage/eventmanagecenter.css?version=@Constant.Version">
+<link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 <div class="container regform-con">
     <div class="reg-sign">
@@ -20,35 +21,35 @@
             <div class="form-group">
                 <div class="form-group-small">
                     <label for="name" class="form-label">姓</label>
-                    <input type="text" class="form-input" id="name" value="@Model.Name">
+                    <input type="text" class="form-input radius5 color-79" id="name" value="@Model.Name">
                 </div>
                 <div class="form-group-small">
                     <label for="surname" class="form-label">名</label>
-                    <input type="text" class="form-input" id="surname" value="@Model.SurName">
+                    <input type="text" class="form-input radius5 color-79" id="surname" value="@Model.SurName">
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-group-small">
                     <label for="pyname" class="form-label">拼音姓</label>
-                    <input type="text" class="form-input" id="pyname" value="@Model.PinYinName">
+                    <input type="text" class="form-input radius5 color-79" id="pyname" value="@Model.PinYinName">
                 </div>
                 <div class="form-group-small">
                     <label for="pinsurname" class="form-label">拼音名</label>
-                    <input type="text" class="form-input" id="pinsurname" value="@Model.PinYinSurName">
+                    <input type="text" class="form-input radius5 color-79" id="pinsurname" value="@Model.PinYinSurName">
                 </div>
             </div>
             <div class="form-group">
                 <label for="contactMobile" class="form-label">联系电话</label>
-                <input type="text" class="form-input-phone" id="contactMobile" value="@Model.ContactMobile">
+                <input type="text" class="form-input-phone radius5 color-79" id="contactMobile" value="@Model.ContactMobile">
             </div>
             <div class="form-group">
                 <div class="form-group-small">
                     <label for="emergencycontact" class="form-label">紧急联系人</label>
-                    <input type="text" class="form-input" id="emergencycontact" value="@Model.EmergencyContact">
+                    <input type="text" class="form-input radius5 color-79" id="emergencycontact" value="@Model.EmergencyContact">
                 </div>
                 <div class="form-group-small">
                     <label for="emergencycontactmobile" class="form-label">紧急电话</label>
-                    <input type="text" class="form-input" id="emergencycontactmobile" value="@Model.EmergencyContactMobile">
+                    <input type="text" class="form-input radius5 color-79" id="emergencycontactmobile" value="@Model.EmergencyContactMobile">
                 </div>
             </div>
             <div class="form-group form-sexy">
@@ -78,11 +79,11 @@
             </div>
             <div class="form-group">
                 <label for="contactaddress" class="form-label">通讯地址</label>
-                <input type="text" class="form-input" id="contactaddress" value="@Model.ContactAddress">
+                <input type="text" class="form-input radius5 color-79" id="contactaddress" value="@Model.ContactAddress">
             </div>
             <div class="form-group">
                 <label for="card" class="form-label">有效证件</label>
-                <select class="form-select-card" id="card">
+                <select class="form-select-card radius5 color-79" id="card">
                     @if (Model.CardType == nsda.Model.enums.CardTypeEm.身份证)
                     {
                         <option value="1" selected>身份证</option>
@@ -108,16 +109,16 @@
                         <option value="3">港澳台通行证</option>
                     }
                 </select>
-                <input type="text" class="form-input-card" id="idcard" value="@Model.Card">
+                <input type="text" class="form-input-card radius5 color-79" id="idcard" value="@Model.Card">
             </div>
-            <button type="button" class="button" id="modifyinfo">保存修改</button>
+            <button type="button" class="button radius5 color-white darkblue" id="modifyinfo">保存修改</button>
         </div>
         <div class="modifypassword">
             <img src="/asset/img/password_03.png" alt="" />
             <div class="modifypanel">
-                <input type="password" placeholder="输入新密码" id="newpwd">
-                <input type="password" placeholder="再次输入新密码" id="againpwd">
-                <input type="button" value="确认新密码" class="confirmnewpassword"  id="modifypwd">
+                <input type="password" class="radius5" placeholder="输入新密码" id="newpwd">
+                <input type="password" class="radius5" placeholder="再次输入新密码" id="againpwd">
+                <input type="button" value="确认新密码" class="confirmnewpassword radius5 color-white darkblue"  id="modifypwd">
             </div>
         </div>
     </div>

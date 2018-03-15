@@ -1,0 +1,138 @@
+﻿.idle{
+    width:360px;
+    padding:10px;
+    
+}
+.event-con div{
+    min-height:30px;
+    margin-bottom:5px;
+}
+.idlejudge,.idleroom{
+    border:1px solid #BEC3C8;
+    margin-top:20px;
+    padding:5px;
+    box-sizing:border-box;
+}
+.idle span{
+    display:inline-block;
+    width:100%;
+    font-size:14px;
+    color:#666;
+    margin-bottom:5px;
+}
+.idle .allselects{
+    display:inline-block;
+    width:100%;
+}
+.idle .form-group{
+    display:inline-block;
+    float:left;
+    margin-right:15px;
+    margin-bottom:3px;
+}
+.idle input[type=checkbox],.idle label,.idle p{
+    float:left;
+    margin-right:3px;
+}
+.idle label,.idle p{
+    font-size:14px;
+    font-weight:normal;
+}
+.idle p{
+    color:#666;
+}
+.idle label{
+    color:#BEC3C8;
+}
+.roundtop{
+    position:relative;
+}
+.roundbtn{
+    width:400px;
+    position:absolute;
+    right:0;
+    bottom:0;
+}
+.btnleft{
+    width:280px;
+    float:left;
+}
+.btnright{
+    float:right;
+}
+.btnbottom{
+    margin-top:10px;
+}
+
+.star{
+    display:inline-block;
+    float:right;
+    padding:4px 10px;
+    border:none;
+    font-size:18px;
+    text-align:center;
+    cursor:pointer;
+}
+.star .iconfont{
+    font-size:26px;
+}
+.posleft{
+    float:left;
+}
+.operation p{
+    float:left;
+    line-height:2;
+}
+.butt{
+    padding:4px;
+    line-height:20px;
+}
+.flighttable{
+    margin-top:30px;
+}
+.fli{
+    width:32%;
+    border:1px solid black;
+    float:left;
+    margin-right:8px;
+    padding:8px;
+}
+.fli p{
+    float:left;
+    line-height:1.7;
+}
+.fli .form-group{
+    display:inline-block;
+    margin-left:20px;
+}
+.fli .form-group p{
+    margin-right:8px;
+}
+.gametime{
+    background:transparent;
+    border:1px solid #D4D9DC;
+}
+.markbox{
+    position:relative;
+}
+.markbox input[type=checkbox]{
+    position:absolute;
+    left:2px;
+    top:50%;
+    transform:translateY(-50%);
+    margin:0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

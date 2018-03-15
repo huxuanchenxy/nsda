@@ -2,20 +2,22 @@
 @using nsda.Model.dto.response
 @model MemberCoachResponse
 @{
-    ViewBag.Title = "教练个人中心";
+    ViewBag.Title = "Personal information";
     Layout = "~/Areas/coach/Views/Shared/_Layout.cshtml";
     var userContext = ViewBag.UserContext as WebUserContext;
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/coachinformation.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/coach/coachinformation.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/coach/coach.css?version=@Constant.Version">
 }
+<div class="pi-top per-top">
+    <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
+    <p class="scorecheck">Changing your account information</p>
+</div>
 <div class="coach-personal">
-    <div class="per-top">
-        <i class="iconfont icon-yonghu1 integral" aria-hidden="true"></i>
-        <p class="scorecheck">Changing your account information</p>
-    </div>
-    <div class="per-con">
+    <div class="score-con">
         <div class="person-title"></div>
         <div class="modifyinfo">
             <div class="form-group">
@@ -26,13 +28,13 @@
                 <div>
                     <label for="firstname"> First Name:</label>
                     <div class="form-con">
-                        <input type="text" id="firstname" value="@Model.PinYinSurName">
+                        <input type="text" class="radius5" id="firstname" value="@Model.PinYinSurName">
                     </div>
                 </div>
                 <div>
                     <label for="lastname">Last Name:</label>
                     <div class="form-con">
-                        <input type="text" id="lastname" value="@Model.PinYinName">
+                        <input type="text" class="radius5" id="lastname" value="@Model.PinYinName">
                     </div>
                 </div>
             </div>
@@ -68,39 +70,33 @@
                 <div>
                     <label for="address">Address:</label>
                     <div class="form-con">
-                        <input type="text" id="address" value="@Model.ContactAddress">
-                    </div>
-                </div>
-                <div>
-                    <label for="contactNumber">Contact Number:</label>
-                    <div class="form-con">
-                        <input type="text" id="contactNumber" value="@Model.ContactMobile">
+                        <input type="text" class="radius5" id="address" value="@Model.ContactAddress">
                     </div>
                 </div>
             </div>
-            <div class="emergency">
+            <div class="emergency ress">
                 <h4>Emergency Contact Information</h4>
                 <div class="form-group">
                     <label for="emergencyContact">Emergency Contact Person:</label>
                     <div class="form-con">
-                        <input type="text" id="emergencyContact" value="@Model.EmergencyContact">
+                        <input type="text" class="radius5" id="emergencyContact" value="@Model.EmergencyContact">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="emergencyContactMobile">Emergency Number:</label>
                     <div class="form-con">
-                        <input type="text" id="emergencyContactMobile" value="@Model.EmergencyContactMobile">
+                        <input type="text" class="radius5" id="emergencyContactMobile" value="@Model.EmergencyContactMobile">
                     </div>
                 </div>
-                <button id="modifyinfo">Confirm Your Information</button>
+                <button id="modifyinfo" class="radius5 darkblue color-white">Confirm Your Information</button>
             </div>
         </div>
         <div class="modifypassword">
             <img src="/asset/img/pass_03.png" alt="" />
-            <div class="modifypanel">
-                <input type="password" id="newpwd" placeholder="输入新密码">
-                <input type="password" id="againpwd" placeholder="再次输入新密码">
-                <input type="button" value="确认新密码" class="confirmnewpassword" id="modifypwd">
+            <div class="modifypanel radius5">
+                <input type="password" class="radius5" id="newpwd" placeholder="输入新密码">
+                <input type="password" class="radius5" id="againpwd" placeholder="再次输入新密码">
+                <input type="button" value="确认新密码" class="confirmnewpassword radius5 darkblue color-white" id="modifypwd">
             </div>
         </div>
     </div>

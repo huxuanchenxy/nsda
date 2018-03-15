@@ -1,0 +1,303 @@
+﻿
+.list-top{
+    width:100%;
+    padding-left:50px;
+    border-bottom:1px solid #C3C8CC;
+    padding-bottom:4px;
+}
+.list-top .active{
+    border:1px solid #C3C8CC;
+    border-top:3px solid #47BBED;
+    border-bottom:3px solid #F5F8FA;
+    border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px 5px 0 0;
+    -moz-border-radius:5px 5px 0 0;
+    box-sizing:border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding:5px 10px;
+}
+.list-top .list{
+    padding:5px 20px;
+    color:#666;
+    font-size:18px;
+    font-weight:400;
+}
+.roundset{
+    padding:30px 30px;
+}
+.roundset h3{
+    font-size:24px;
+    color:#666;
+}
+.roundset .newround{
+    padding:40px 0;
+    border-bottom:1px solid #C0C5CA;
+}
+.roundset .newround h4{
+    font-size:18px;
+    color:#666;
+    position:relative;
+}
+.roundset .newround span{
+    display:inline-block;
+    width:195px;
+    height:3px;
+    background:#57656E;
+    position:absolute;
+    bottom:-5px;
+    left:0
+}
+.roundset .newround span i{
+    display:inline-block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:70px;
+    height:3px;
+    background:#FF6666;
+}
+.roundset .newround .form-group{
+    margin-top:30px;
+    min-height:50px;
+    float:left;
+}
+.roundset .newround .form-group.range{
+    width:40%
+}
+.roundset .newround .form-group.yn{
+   width:50%;
+}
+.roundset .newround .form-group.yn .radio-inline{
+    margin-left:60px;
+}
+.roundset .newround .form-group.yn p{
+    color:#ff6666;
+    font-size:12px;
+}
+.roundset .newround .form-group.yn .radio-inline input[type=radio]{
+    
+}
+.roundset .newround .form-group input[type=number]{
+    width:73px;
+    height:25px;
+    padding-left:5px;
+    background:transparent;
+    border:3px solid #EBF0F2;
+    color:#cccccc;
+    font-size:12px;
+    margin-left:5px;
+    margin-right:5px;
+}
+.roundset .newround .form-group input[type=number]::-webkit-inner-spin-button,.roundset .newround .form-group input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+.newround .rounds .addrounds{
+    float:left;
+    display:inline-block;
+    padding:5px 12px;
+    color:white;
+    margin-right:100px;
+}
+.newround .rounds .form-group.flight{
+    float:left;
+    margin:0;
+    padding:0;
+    width:70%;
+}
+.newround .rounds .form-group.flight .radio-inline {
+
+}
+.newround .rounds .form-group.flight p{
+    color:#ff6666;
+    font-size:12px;
+    line-height:1.6;
+}
+.newround .roundone{
+    margin-top:200px;
+}
+.newround .roundone ul li{
+    padding:5px 10px;
+    background:#F2F2F2;
+    line-height:normal;
+    margin-bottom:10px;
+    position:relative;
+}
+.newround .roundone ul li label{
+    font-size:14px;
+    color:#666;
+}
+.newround .roundone ul li select.rset{
+    width:130px;
+    height:30px;
+    border:1px solid #E0E0E0;
+    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    padding-left:5px;
+    color:#666666;
+    font-size:12px;
+}
+.newround .roundone ul li input[type=text]{
+    width:140px;
+    height:30px;
+    padding-left:5px;
+    background:#F5F8FA;
+    border:2px solid #EBF0F2 ;
+
+}
+.newround .roundone ul li i.iconfont{
+    position:absolute;
+    font-size:24px;
+    right:-10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+
+.roundset .openround{
+    padding:40px 0;
+}
+.roundset .openround h4{
+    font-size:18px;
+    color:#666;
+    position:relative;
+}
+.roundset .openround span{
+    display:inline-block;
+    width:195px;
+    height:3px;
+    background:#57656E;
+    position:absolute;
+    bottom:-5px;
+    left:0
+}
+.roundset .openround span i{
+    display:inline-block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:70px;
+    height:3px;
+    background:#FF6666;
+}
+.roundset .openround .form-group{
+    margin-top:30px;
+    min-height:50px;
+    float:left;
+}
+.roundset .openround .form-group.range{
+    width:40%
+}
+.roundset .openround .form-group.yn{
+   width:50%;
+}
+.roundset .openround .form-group.yn .radio-inline{
+    margin-left:60px;
+}
+.roundset .openround .form-group.yn p{
+    color:#ff6666;
+    font-size:12px;
+}
+.roundset .openround .form-group.yn .radio-inline input[type=radio]{
+    
+}
+.roundset .openround .form-group input[type=number]{
+    width:73px;
+    height:25px;
+    padding-left:5px;
+    background:transparent;
+    border:3px solid #EBF0F2;
+    color:#cccccc;
+    font-size:12px;
+    margin-left:5px;
+    margin-right:5px;
+}
+.roundset .openround .form-group input[type=number]::-webkit-inner-spin-button,.roundset .openround .form-group input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+.openround .rounds .addrounds{
+    float:left;
+    display:inline-block;
+    padding:5px 12px;
+    color:white;
+    margin-right:100px;
+}
+.openround .rounds .form-group.flight{
+    float:left;
+    margin:0;
+    padding:0;
+    width:70%;
+}
+.openround .rounds .form-group.flight .radio-inline {
+
+}
+.openround .rounds .form-group.flight p{
+    color:#ff6666;
+    font-size:12px;
+    line-height:1.6;
+}
+.openround .roundone{
+    margin-top:200px;
+}
+.openround .roundone ul li{
+    padding:5px 10px;
+    background:#F2F2F2;
+    line-height:normal;
+    margin-bottom:10px;
+    position:relative;
+}
+.openround .roundone ul li label{
+    font-size:14px;
+    color:#666;
+}
+.openround .roundone ul li select.rset{
+    width:130px;
+    height:30px;
+    border:1px solid #E0E0E0;
+    background: linear-gradient(#e9e5e5,#fff,#e9e5e5);
+    padding-left:5px;
+    color:#666666;
+    font-size:12px;
+}
+.openround .roundone ul li input[type=text]{
+    width:140px;
+    height:30px;
+    padding-left: 5px;
+    background:#F5F8FA;
+    border:2px solid #EBF0F2 ;
+
+}
+.openround .roundone ul li i.iconfont{
+    position:absolute;
+    font-size:24px;
+    right:-10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+.event-lists .roundset button.confirmset{
+    display:inline-block;
+    width:270px;
+    height:60px;
+    text-align:center;
+    line-height:60px;
+    border:none;
+    font-size:18px;
+    position:absolute;
+    left:46%;
+    transform:translateX(-50%);
+}
+
+.layui-laydate{
+    position:absolute;
+}
+
+
+
+
+

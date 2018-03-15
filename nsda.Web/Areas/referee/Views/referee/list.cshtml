@@ -5,12 +5,12 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/judgetourname.css?version=@Constant.Version">
-    <link rel="stylesheet" href="/asset/css/judgetour.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/judge/judgetour.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
 }
-<div class="judge-con">
+<div class="judge-con role">
     <table>
-        <thead>
+        <thead class="greenbg">
             <tr>
                 <th>Code</th>
                 <th>Tournament</th>
@@ -23,7 +23,7 @@
         </thead>
         <tbody id="data"></tbody>
     </table>
-    <nav aria-label="Page navigation" id="pager">
+    <nav aria-label="Page navigation" class="info-nav" id="pager">
     </nav>
 </div>
 

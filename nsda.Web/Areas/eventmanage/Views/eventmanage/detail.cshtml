@@ -8,7 +8,8 @@
 
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/eventmanagelists.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/eventmangage/eventmanagelists.css?version=@Constant.Version">
+<link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 <div class="container event-lists">
     <div class="classcheck">
@@ -102,7 +103,8 @@
                             _pager.init(filter, eventplayerlist.param.PageIndex, eventplayerlist.param.TotalPage, function (p) {
                                 eventplayerlist.param.PageIndex = p;
                                 eventplayerlist.Load(eventplayerlist.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             var groupNum = "";
                             var flag = 0;
                             var rowspan = 1;

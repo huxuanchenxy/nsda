@@ -9,13 +9,16 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playerpersonal.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playerpersonal.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
-<div class="score-con">
-    <div class="score-top">
-        <img class="integral" src="/asset/img/score_03.jpg" alt="...">
-        <p class="scorecheck">修改个人资料</p>
-    </div>
+<div class="pi-top score-top">
+    <img class="integral" src="/asset/img/score_03.jpg" alt="...">
+    <p class="scorecheck">修改个人资料</p>
+</div>
+<div class="compe-con playerinfo">
+    
     <div class="per-con">
         <div class="person-title"></div>
         <div class="modifyinfo">
@@ -26,20 +29,20 @@
             <div class="form-group">
                 <label for="phone">联系电话</label>
                 <div class="form-con">
-                    <input type="text" id="phone" value="@Model.ContactMobile">
+                    <input type="text" class="radius5" id="phone" value="@Model.ContactMobile">
                 </div>
             </div>
             <div class="form-group two-label">
                 <div>
                     <label for="emrcontact">紧急联系人</label>
                     <div class="form-con">
-                        <input type="text" id="emrcontact" value="@Model.EmergencyContact">
+                        <input type="text" class="radius5" id="emrcontact" value="@Model.EmergencyContact">
                     </div>
                 </div>
                 <div>
                     <label for="emrphone">紧急电话</label>
                     <div class="form-con">
-                        <input type="text" id="emrphone" value="@Model.EmergencyContactMobile">
+                        <input type="text" class="radius5" id="emrphone" value="@Model.EmergencyContactMobile">
                     </div>
                 </div>
             </div>
@@ -51,7 +54,7 @@
                         <p class="coach">
                             @Html.Raw(coachInfo.CoachName)
                         </p>
-                        <a href="/player/playercoach/index" class="modifycoach">修改</a>
+                        <a href="/player/playercoach/index" class="modifycoach radius5">修改</a>
                 }
                 else
                 { <a href="/player/playercoach/index" class="modifycoach">去绑定</a> }
@@ -61,19 +64,19 @@
                 <label>教育经历</label>
                 <div class="form-con">
                     <ul class="edulists" id="edu">
-                        <li><span class="addedu" id="addedu">添加</span></li>
+                        <li><span class="addedu radius5 color-white darkgreen" id="addedu">添加</span></li>
                     </ul>
                   
                 </div>
             </div>
-            <input type="button" value="修改个人资料" class="submit" id="modifyinfo">
+            <input type="button" value="修改个人资料" class="submit radius5 color-white darkblue" id="modifyinfo">
         </div>
         <div class="modifypassword">
             <img src="/asset/img/password_03.jpg" alt="" />
             <div class="modifypanel">
-                    <input type="password" id="newpwd" placeholder="输入新密码">
-                    <input type="password" id="againpwd" placeholder="再次输入新密码">
-                    <input type="button" value="确认新密码" class="confirmnewpassword" id="modifypwd">
+                    <input type="password" class="radius5" id="newpwd" placeholder="输入新密码">
+                    <input type="password" class="radius5" id="againpwd" placeholder="再次输入新密码">
+                    <input type="button" value="确认新密码" class="confirmnewpassword radius5" id="modifypwd">
             </div>
         </div>
     </div>
@@ -184,7 +187,7 @@
                 type: "get",
                 dataType: "json",
                 success: function (json) {
-                    var html = '<li><span class="addedu" id="addedu">添加</span></li>';
+                    var html = '<li><span class="addedu radius5 color-white darkgreen" id="addedu">添加</span></li>';
                     if (json.data != null && json.data.length > 0)
                     {
                         $.each(json.data, function (k, val) {
@@ -237,23 +240,24 @@
 
         $(document).on("click", "#addedu", function () {
             layer.open({
-                title: "添加教育经历",
+                title: "",
                 type: 2,
                 content: "/player/player/addedu",
-                area: ["760px", "530px"],
+                area: ["565px", "401px"],
                 end: function () {
-                    renderedu();
+                    location.reload();
                 }
             });
         });
 
         $(document).on("click", ".editedu", function () {
             var id = $(this).attr("data-id");
+            
             layer.open({
-                title: "编辑教育经历",
+                title: "",
                 type: 2,
-                content: "/player/player/editedu/"+id,
-                area: ["760px", "530px"],
+                content: "/player/player/editedu/" + id,
+                area: ["565px", "401px"],
                 end: function () {
                     renderedu();
                 }

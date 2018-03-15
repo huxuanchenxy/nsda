@@ -1,0 +1,86 @@
+﻿
+
+.person-title{
+    width:96%;
+    height:30px;
+    background:#CAE699;
+    border-bottom:2px solid #E1E1E1;
+    border-top:2px solid #E1E1E1;
+    margin-bottom:30px;
+}
+.per-con .modifyinfo{
+    padding:10px;
+    box-sizing:border-box;
+}
+.per-con .modifyinfo .form-group{
+    height:30px;
+    margin-bottom:30px;
+}
+.per-con .modifyinfo .form-group label{
+    width:11%;
+    text-align:right;
+    float:left;
+    margin-right:20px;
+    color:#666;
+    line-height:30px;
+}
+.per-con .modifyinfo .two-label div{
+    width:45%;
+    float:left;
+    margin-bottom:15px;
+}
+.per-con .modifyinfo .two-label div label{
+    width:24%;
+    line-height:30px;
+}
+.per-con .two-label{
+    height:22px;
+    margin-bottom:30px;
+}
+.per-con .form-group .form-con label{
+    width:6%;
+    margin-right:50px;
+    line-height:30px;
+}
+.per-con .emergency{
+    border-top:1px solid #D2D9DD;
+    border-bottom:1px solid #D2D9DD;
+    margin-right:25px;
+    padding-top:20px;
+    padding-left:10px;
+}
+.per-con .emergency h4{
+    font-size:14px;
+    font-family:"微软雅黑";
+    color:#333366;
+    font-weight:600;
+    padding-left:4px;
+    margin-bottom:30px;
+}
+.per-con .emergency .form-group label{
+    width:24%;
+    float:left;
+    line-height:30px;
+}
+.per-con .modifyinfo button{
+    border:none;
+    background:#4E5D66;
+    border-radius:6px;
+    -webkit-border-radius:6px;
+    -webkit-border-radius:6px;
+    padding:10px 20px;
+    font-size:18px;
+    color:white;
+    font-family:"微软雅黑";
+    margin-left:15%;
+    margin-top:50px;
+    margin-bottom:40px;
+}
+.form-group input[type=text]{
+    padding-left:5px;
+    border:1px solid #ddd;
+    height:30px;
+}
+.info-lists .panel:last-child a p.jc,.info-lists .panel:last-child a h3.mc{
+    color:#52BEED;
+}

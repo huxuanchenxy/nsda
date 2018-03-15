@@ -8,8 +8,9 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
-    <link href="/asset/css/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/asset/css/eventmangage/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventmangage/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists ">
@@ -20,11 +21,11 @@
         {
             if (item.Id == ViewBag.EventGroupId)
             {
-                <a href="/eventmanage/eventmanage/doublecheck?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+                <a href="/eventmanage/eventmanage/doublecheck?eventId=@item.EventId&eventGroupId=@item.Id" class="active box-sizing list">@item.Name</a>
             }
             else
             {
-                <a href="/eventmanage/eventmanage/doublecheck?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+                <a href="/eventmanage/eventmanage/doublecheck?eventId=@item.EventId&eventGroupId=@item.Id" class="list box-sizing">@item.Name</a>
             }
         }
     </div>
@@ -33,9 +34,9 @@
             <img src="/asset/img/vs_03.png" />
             <h4>第一轮 Double Check 核对评分单</h4>
         </div>
-        <button class="back"><i class="iconfont icon-54"></i><p>返回输入评分单界面</p></button>
+        <button class="back radius5 box-sizing"><i class="iconfont icon-54"></i><p>返回输入评分单界面</p></button>
         <div>
-            <h5>勾选批处理:</h5><button class="pass" id="batchconfirm"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></button>
+            <h5>勾选批处理:</h5><button class="pass radius5 box-sizing" id="batchconfirm"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></button>
         </div>
         <table>
             <thead>
@@ -68,7 +69,7 @@
                     <td></td>
                     <td rowspan="2"></td>
                     <td rowspan="2" class="scorelist">
-                        <a href="javascript:;" class="score yes confirm">核对通过</a> <a href="javascript:;" class="score modi">修改评分单</a>
+                        <a href="javascript:;" class="score radius5 color-white darkgreen">核对通过</a> <a href="javascript:;" class="score radius5 color-white orange">修改评分单</a>
                     </td>
                 </tr>
                 <tr>
@@ -92,7 +93,7 @@
                     <td></td>
                     <td rowspan="2"></td>
                     <td rowspan="2" class="scorelist">
-                        <a href="javascript:;" class="score yes confirm">核对通过</a> <a href="javascript:;" class="score modi">修改评分单</a>
+                        <a href="javascript:;" class="score radius5 color-white darkgreen">核对通过</a> <a href="javascript:;" class="score radius5 color-white orange">修改评分单</a>
                     </td>
                 </tr>
                 <tr>
@@ -105,7 +106,7 @@
                 </tr>
             </tbody>
         </table>
-        <button class="nextstep" id="nextstep"><p>评分单已经确认完毕</p><p>进入下一轮</p></button>
+        <button class="nextstep color-white darkblue radius5 box-sizing" id="nextstep"><p>评分单已经确认完毕</p><p>进入下一轮</p></button>
     </div>
 </div>
 

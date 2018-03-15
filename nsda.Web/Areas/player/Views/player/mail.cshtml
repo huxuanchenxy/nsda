@@ -5,7 +5,9 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/messagebox.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/messagebox.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+<link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
 <div class="info-con" id="mail">
 </div>
@@ -53,7 +55,7 @@
                                 html += '<div class="msgc">';
                                 html += '<p class="msgteam">' + val.Title + '</p>';
                                 html += '<p class="teamcon">'+val.Content+'</p>';
-                                html += '</div><a href="/player/playersignup/list" class="cmore">查看详情</a>';
+                                html += '</div><a href="/player/playersignup/list" class="cmore radius5 color-white blue">查看详情</a>';
                                 html += '</div>';
                             });
                             $("#mail").html(html);

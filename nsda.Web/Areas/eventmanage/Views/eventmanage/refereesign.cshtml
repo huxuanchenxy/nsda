@@ -11,8 +11,9 @@
 
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
-    <link href="/asset/css/eventumpiresignin.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventmanage/eventumpiresignin.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists newplayer">
@@ -71,12 +72,12 @@
     </div>
 
     <div class="form-group searchplayer">
-        <input id="txt" placeholder="输入组队编号/会员编号/姓名" />
-        <a class="search" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
+        <input id="txt" class="radius5" placeholder="输入组队编号/会员编号/姓名" />
+        <a class="search radius5 deepblue color-white" id="search"><i class="iconfont icon-sousuo1"></i>搜索&nbsp;</a>
     </div>
 
     <div class="form-group batch">
-        <select class="batchsignin" id="batchsignin">
+        <select class="batchsignin radius5 color-79" id="batchsignin">
             <option value="-2">批处理为</option>
             <option value="-1">签到</option>
             <option value="0">随机使用</option>

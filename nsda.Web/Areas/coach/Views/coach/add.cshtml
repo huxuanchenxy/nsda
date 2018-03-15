@@ -4,36 +4,40 @@
 }
 <html>
 <head>
-    <link rel="stylesheet" href="/asset/css/coachboundplayer.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/coach/coachboundplayer.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
 </head>
 <body>
     <div class="addcoach" id="addeducation">
+        <div class="boundtitle darkblue box-sizing">
+            绑定学生
+        </div>
         <img class="coachimg" src="/asset/img/bound_03.png" alt="...">
         <div class="form-group">
-            <input class="form-select-school" id="startdate">
+            <input class="form-select-school radius5 color-79 rangeyear" id="startdate">
             <em class="em">—</em>
-            <input class="form-select-school" id="enddate">
-            <select class="form-select-schools" id="player">
+            <input class="form-select-school radius5 color-79 rangeyear" id="enddate">
+            <select class="form-select-schools radius5 color-79" id="player">
                 <option value="completename">Students Name</option>
                 <option value="code">NSDA Code</option>
             </select>
-            <input id="txtPlayerValue" value="" data-id="0" />
-            <a class="searchcoach" id="search">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
-            <select id="sel" size="2" style="display:none;"></select>
-            <a href="javascript:;" class="boundcoach" id="confirmadd">绑定学生</a>
+            <input id="txtPlayerValue" class="color-79 radius5" value="" data-id="0" />
+            <a class="searchcoach radius5 color-white darkblue" id="search">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
+            <select id="sel" size="2" class="radius5 color-79" style="display:none;"></select>
+            <a href="javascript:;" class="boundcoach radius5 color-white darkblue" id="confirmadd">绑定学生</a>
         </div>
     </div>
     <script src="/asset/js/jquery.min.js"></script>
     <script src="/asset/js/laydate/laydate.js"></script>
     <script src="/asset/layer/js/layer.js"></script>
     <script>
-        laydate.render({
-            elem: '#startdate',
-            type: 'month'
-        });
-        laydate.render({
-            elem: '#enddate',
-            type: 'month'
+        lay('.rangeyear').each(function () {
+            laydate.render({
+                elem: this
+                , type:"month"
+                , trigger: 'click'
+                , zIndex: 99999999999
+            });
         });
 
        $("#confirmadd").click(function () {

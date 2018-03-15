@@ -1,18 +1,19 @@
 ﻿@using nsda.Utilities
 @{
-    ViewBag.Title = "教练个人中心";
+    ViewBag.Title = "绑定学员";
     Layout = "~/Areas/coach/Views/Shared/_Layout.cshtml";
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/coachboundplayer.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/coach/coachboundplayer.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
 }
+<div class="pi-top score-top">
+    <img class="integral" src="/asset/img/add_03.png" alt="...">
+    <p class="scorecheck">Add your students</p>
+    <button class="addbound radius5 color-white darkgreen" id="addplayer">Add New &nbsp;<i class="iconfont icon-jiahao"></i></button>
+</div>
 <div class="score-con">
-    <div class="score-top">
-        <img class="integral" src="/asset/img/add_03.png" alt="...">
-        <p class="scorecheck">Add your students</p>
-        <button class="addbound" id="addplayer">Add New &nbsp;<i class="iconfont icon-jiahao"></i></button>
-    </div>
     <div class="boundtable">
         <table>
             <thead>
@@ -97,23 +98,23 @@
             //编辑
             $(document).on("click", ".update", function () {
                 layer.open({
-                    title: "绑定学生",
+                    title: "",
                     type: 2,
                     content: "/coach/coach/update/" + $(this).attr("data-id"),
-                    area: ["760px", "550px"],
+                    area: ["600px", "461px"],
                     end: function () {
                         location.reload();
                     }
-                })
+                });
             });
 
             //新增
             $(document).on("click", "#addplayer", function () {
                 layer.open({
-                    title: "绑定学生",
+                    title: "",
                     type: 2,
                     content: "/coach/coach/add",
-                    area: ["760px", "550px"],
+                    area: ["600px", "461px"],
                     end: function () {
                         location.reload();
                     }
@@ -147,7 +148,7 @@
                                 var html = '';
                                 $.each(json.rows, function (k, val) {
                                     html+='<tr>';
-                                    html += '<td>' + val.StartDate + '-';
+                                    html += '<td class="ftime">' + val.StartDate + '-';
                                     if (val.EndDate == "" || val.EndDate == null) {
                                         html += "至今";
                                     } else {
@@ -160,13 +161,13 @@
                                     html += '<td>' + val.PlayerPinYinName + '</td>';
                                     html += '<td>' + val.Times + '</td>';
                                     if (val.Flag) {
-                                        html += '<td><button class="editcoach update" data-id=' + val.Id + '>Edit 修改</button> <button class="delcoach delete" data-id=' + val.Id + '>Del 删除</button></td>';
+                                        html += '<td class="last"><button class="editcoach radius5 color-white deepblue update" data-id=' + val.Id + '>Edit 修改</button> <button class="delcoach radius5 color-3 gary delete" data-id=' + val.Id + '>Del 删除</button></td>';
                                     }
                                     else {
                                         if (val.PlayerCoachStatus == 0) {
-                                            html += '<td><button data-id=' + val.Id + ' data-agree=true class="confirmbound check">确认绑定</button> <button class="notpass check" data-id=' + val.Id + ' data-agree=false>不通过</button></td>';
+                                            html += '<td class="last"><button data-id=' + val.Id + ' data-agree=true class="confirmbound check radius5 color-white orange">确认绑定</button> <button class="notpass check radius5 color-white lightred" data-id=' + val.Id + ' data-agree=false>不通过</button></td>';
                                         } else {
-                                            html+='<td></td>'
+                                            html += '<td class="last"></td>'
                                         }
                                     }
                                     html+='</tr>';

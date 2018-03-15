@@ -1,0 +1,139 @@
+﻿.list-top{
+    width:100%;
+    padding-left:50px;
+    border-bottom:1px solid #C3C8CC;
+    box-sizing:border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding-bottom:4px;
+}
+.list-top .active{
+    border:1px solid #C3C8CC;
+    border-top:3px solid #47BBED;
+    border-bottom:3px solid #F5F8FA;
+    border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px 5px 0 0;
+    -moz-border-radius:5px 5px 0 0;
+    padding:5px 10px;
+}
+.list-top .list{
+    padding:5px 30px;
+    color:#666;
+    font-size:18px;
+    font-weight:400;
+}
+.event-con{
+    padding:30px 50px;
+}
+.event-con div img{
+    display:inline-block;
+    float:left;
+    margin-right:20px;
+}
+.event-con div h4{
+    line-height:3;
+    font-weight:600;
+}
+.back{
+    margin-top:30px;
+    margin-bottom:30px;
+    display:inline-block;
+    width:220px;
+    height:36px;
+    text-align:center;
+    line-height:1;
+    border:1px solid #E6D8A7;
+    color:#996633;
+    background:linear-gradient(to bottom,#FFF5D8,#FFEFC4);
+    font-size:14px;
+    padding:5px 15px;
+}
+.back i.iconfont{
+    font-size:24px;
+    margin-right:5px;
+    float:left;
+}
+.back p{
+    font-size:14px;
+    line-height:1.8;
+}
+.event-con div h5{
+    font-size:14px;
+    color:#666600;
+    float:left;
+    line-height:2.5;
+}
+.pass{
+    display:inline-block;
+    width:220px;
+    height:36px;
+    text-align:center;
+    line-height:1;
+    border:1px solid #B8D689;
+    color:#666600;
+    background:linear-gradient(to bottom,#CEEAA0,#C1E48B);
+    padding:5px 15px;
+}
+.pass i{
+    float:left;
+    font-size:20px;
+    margin-right:10px;
+}
+.pass p{
+    line-height:1.6;
+}
+.event-con table{
+    margin-top:20px;
+    margin-bottom:100px;
+}
+.event-con table thead th{
+    background:#D8E0E5;
+    color:#666;
+    font-size:14px;
+}
+.nextstep{
+    display:inline-block;
+    padding:5px 40px;
+    text-align:center;
+    line-height:1.2;
+    border:none;
+    background:#4E5D66;
+    font-size:18px;
+    position:absolute;
+    left:46%;
+    transform:translateX(-50%);
+}
+.event-con table td.allcheck{
+    padding:5px 10px;
+}
+.event-con table td.divide{
+    padding:5px;
+    background:#d4d2d2;
+}
+.event-con table td.scorelist{
+    min-width:130px;
+}
+a.score{
+    display:inline-block;
+    padding:3px 8px;
+    margin-right:10px;
+    margin-bottom:5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

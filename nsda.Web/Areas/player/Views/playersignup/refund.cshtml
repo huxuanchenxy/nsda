@@ -5,17 +5,19 @@
 }
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/playerpartin.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playerpartin.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 }
+<div class="pi-top list-top hadcompe">
+    <a href="/player/playersignup/list" class="list">已参与的比赛</a>
+    <a href="javascript:;" class="active list">退赛信息</a>
+</div>
 <div class="comp-lists tab">
-    <div class="list-top">
-        <a href="/player/playersignup/list" class="list">已参与的比赛</a>
-        <a href="javascript:;" class="active list">退赛信息</a>
-    </div>
-    <div class="comp-con">
+    <div class="comp-con part role">
         <div class="exittable">
             <table>
-                <thead>
+                <thead class="garybg">
                     <tr>
                         <th>赛事编码/名称</th>
                         <th>类别</th>
@@ -63,7 +65,8 @@
                             _pager.init(filter, playerrefund.param.PageIndex, playerrefund.param.TotalPage, function (p) {
                                 playerrefund.param.PageIndex = p;
                                 playerrefund.Load(playerrefund.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             $.each(json.rows, function (k, val) {
                                 html += '<tr>';
                                 html += '<td>' + val.EventCode+"</br/>"+ val.EventName + '</td>';

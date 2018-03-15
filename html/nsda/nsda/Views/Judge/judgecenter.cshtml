@@ -1,16 +1,16 @@
 ﻿@{
     ViewBag.Title = "裁判个人中心";
 }
-<link href="~/Content/asset/css/common.css?2.1.0" rel="stylesheet" />
-<link href="~/Content/asset/css/judgecenter.css" rel="stylesheet" />
-<link href="~/Content/asset/css/messagebox.css" rel="stylesheet" />
+<link href="~/Content/asset/css/common/common.css?2.1.0" rel="stylesheet" />
+<link href="~/Content/asset/css/judge/judgecenter.css" rel="stylesheet" />
+<link href="~/Content/asset/css/common/messagebox.css" rel="stylesheet" />
 
 @Html.Partial("_judgetop")
-<div class="container judge-compe">
+<div class="container judge-compe judgecenter">
     @Html.Partial("_judgeleft")
-    <div class="judge-con">
+    <div class="judge-con role">
         <table>
-            <thead>
+            <thead class="greenbg">
                 <tr>
                     <th>Code</th>
                     <th>Tournament</th>

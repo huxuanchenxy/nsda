@@ -2,55 +2,56 @@
     Layout = "~/Views/Shared/_Role.cshtml";
     ViewBag.Title = "比赛报名";
 }
-<link href="@Url.Content("~/Content/asset/css/playercomsignup.css?1.1.4")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/asset/css/common/common.css?2.1.0")" rel="stylesheet" type="text/css" />
+
+<link href="@Url.Content("~/Content/asset/css/player/playersign.css?1.1.0")" rel="stylesheet" type="text/css" />
+<link href="~/Content/asset/css/player/player.min.css?1.1.0" rel="stylesheet" />
 
 @Html.Partial("_playertop")
 
-<div class="container player-compe">
+<div class="container player-compe comsignup">
+    <div class="pi-top competitle">
+        <img src="~/Content/asset/img/comp_03.png" />
+        <div class="title">
+            <h4>National High School Academic Debate And Speech Tournament</h4>
+            <h3>全国中学生学术辩论与演讲联赛</h3>
+        </div>
+    </div>
     @Html.Partial("_playerleft")
-    <div class="compe-con">
-        <div class="competitle">
-            <img src="~/Content/asset/img/comp_03.png" />
-            <div class="title">
-                <h4>National High School Academic Debate And Speech Tournament</h4>
-                <h3>全国中学生学术辩论与演讲联赛</h3>
-            </div>
+    <div class="compe-con comcon role">  
+        <p class="tourcode">Tournament Code: A45626589</p>
+        <div class="group">
+            <label class="radio-inline sexy">
+                <input type="radio" name="inlineRadioOptions" id="men" value="option1"> 新手组
+            </label>
+            <label class="radio-inline sexy">
+                <input type="radio" name="inlineRadioOptions" id="women" value="option2"> 公开组
+            </label>
         </div>
-        <div class="comcon">
-            <p class="tourcode">Tournament Code: A45626589</p>
-            <div class="group">
-                <label class="radio-inline sexy">
-                    <input type="radio" name="inlineRadioOptions" id="men" value="option1"> 新手组
-                </label>
-                <label class="radio-inline sexy">
-                    <input type="radio" name="inlineRadioOptions" id="women" value="option2"> 公开组
-                </label>
-            </div>
-            <div class="set">
-                <h4>设置组队邀请</h4>
-                <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
-                <a href="javascript:;" id="search" class="search">搜索</a>
-                <select size="2" id="sel" style="display:none;">
-                    <option>123</option>
-                    <option>23456</option>
-                    <option>1111</option>
-                    <option>123333</option>
-                    <option>aaaa</option>
-                    <option>1bbb23</option>
-                </select>
-            </div>
-            <div class="comlist">
-                <h4>组队队员信息：</h4>
-                <div class="memb">
-                    <p>N2365942</p>
-                    <p class="name">刘诗诗</p>
-                    <p>9年级</p>
-                    <p>上海外国语大学附属中学</p>
-                </div>
-                <div style="clear:both;"></div>
-            </div>
-            <a href="javascript:;" class="sendinvi">发送组队邀请</a>
+        <div class="set">
+            <h4>设置组队邀请</h4>
+            <input id="txt" type="text" placeholder="输入NSDA会员编号/会员姓名" />
+            <a href="javascript:;" id="search" class="search radius5 color-white deepblue">搜索</a>
+            <select size="2" id="sel" style="display:none;">
+                <option>123</option>
+                <option>23456</option>
+                <option>1111</option>
+                <option>123333</option>
+                <option>aaaa</option>
+                <option>1bbb23</option>
+            </select>
         </div>
+        <div class="comlist">
+            <h4>组队队员信息：</h4>
+            <div class="memb">
+                <p>N2365942</p>
+                <p class="name">刘诗诗</p>
+                <p>9年级</p>
+                <p>上海外国语大学附属中学</p>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <a href="javascript:;" class="sendinvi radius5 color-white deepblue">发送组队邀请</a>
     </div>
 </div>
 

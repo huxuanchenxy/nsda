@@ -1,0 +1,21 @@
+﻿
+.judge-con{
+    width:73%;
+    float:left;
+    margin-left:20px;
+}
+.judgecenter table{
+    margin-bottom:50px;
+}
+.judge-con tbody td a{
+    display:inline-block;
+}
+.judge-con tbody td a.login {
+    padding: 5px 10px;
+}
+.last{
+    width:120px;
+}
+.info-lists .panel:first-child a p.jc,.info-lists .panel:first-child a h3.mc{
+    color:#52BEED;
+}

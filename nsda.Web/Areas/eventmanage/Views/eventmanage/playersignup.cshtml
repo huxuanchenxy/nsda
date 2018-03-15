@@ -9,7 +9,8 @@
 
 @section styles
 {
-    <link rel="stylesheet" href="/asset/css/eventmanageplayer.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists">
@@ -104,7 +105,8 @@
                             _pager.init(filter, eventplayerlist.param.PageIndex, eventplayerlist.param.TotalPage, function (p) {
                                 eventplayerlist.param.PageIndex = p;
                                 eventplayerlist.Load(eventplayerlist.param)
-                            });                            var html = '';
+                            });
+                            var html = '';
                             var groupNum = "";
                             var flag = 0;
                             var rowspan = 1;

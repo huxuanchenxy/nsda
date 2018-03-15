@@ -4,36 +4,41 @@
 }
 <html>
 <head>
-    <link rel="stylesheet" href="/asset/css/playerboundcoach.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/playerboundcoach.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/common/common.css?version=@Constant.Version">
+    <link rel="stylesheet" href="/asset/css/player/player.min.css?version=@Constant.Version">
 </head>
 <body>
     <div class="addcoach" id="addeducation">
+        <div class="boundtitle darkblue box-sizing">
+            添加绑定教练
+        </div>
         <img class="coachimg" src="/asset/img/bound_03.png" alt="...">
         <div class="form-group">
-            <input class="form-select-school" id="startdate" readonly>
+            <input class="form-select-school radius5 color-79 rangeyear" id="startdate" readonly>
             <em class="em"> —</em>
-            <input class="form-select-school" id="enddate" readonly>
-            <select class="form-select-schools" id="coach">
+            <input class="form-select-school radius5 color-79 rangeyear" id="enddate" readonly>
+            <select class="form-select-schools radius5 color-79" id="coach">
                 <option value="completepinyin">教练名字</option>
                 <option value="code">NSDA教练编号</option>
             </select>
-            <input id="txtCoachValue" value="" data-id="0" />
-            <a class="searchcoach" id="search" style="cursor:pointer;">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
-            <select size="2" id="sel" style="display:none;"></select>
-            <a href="javascript:;" class="boundcoach" id="confirmadd">绑定教练</a>
+            <input id="txtCoachValue" class="radius5 color-79" value="" data-id="0" />
+            <a class="searchcoach radius5 color-white darkblue" id="search" style="cursor:pointer;">搜索&nbsp;<i class="iconfont icon-sousuo1"></i></a>
+            <select size="2" id="sel" class="radius5 color-79" style="display:none;"></select>
+            <a href="javascript:;" class="boundcoach radius5 color-white darkblue" id="confirmadd">绑定教练</a>
         </div>
     </div>
     <script src="/asset/js/jquery.min.js"></script>
     <script src="/asset/js/laydate/laydate.js"></script>
     <script src="/asset/layer/js/layer.js"></script>
     <script>
-        laydate.render({
-            elem: '#startdate',
-            type: 'month'
-        });
-        laydate.render({
-            elem: '#enddate',
-            type: 'month'
+        lay('.rangeyear').each(function () {
+            laydate.render({
+                elem: this
+                , showBottom: false
+                , trigger: 'click'
+                , zIndex: 99999999999
+            });
         });
 
         $("#confirmadd").click(function () {
