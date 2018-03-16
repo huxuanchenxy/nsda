@@ -14,6 +14,7 @@ using nsda.Model.enums;
 using nsda.Services.Contract.admin;
 using Dapper;
 using nsda.Model;
+using nsda.Repository.Contract.eventmanage;
 
 namespace nsda.Services.Implement.member
 {
@@ -26,12 +27,14 @@ namespace nsda.Services.Implement.member
         IDataRepository _dataRepository;
         IMemberOperLogService _memberOperLogService;
         IMailService _mailService;
-        public PlayerSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService, IMailService mailService)
+        IEventPlayerSignUpRepo _eventPlayerSignUpRepo;
+        public PlayerSignUpService(IDBContext dbContext, IDataRepository dataRepository, IMemberOperLogService memberOperLogService, IMailService mailService, IEventPlayerSignUpRepo eventPlayerSignUpRepo)
         {
             _dbContext = dbContext;
             _dataRepository = dataRepository;
             _memberOperLogService = memberOperLogService;
             _mailService = mailService;
+            _eventPlayerSignUpRepo = eventPlayerSignUpRepo;
         }
        
         #region 选手
@@ -826,45 +829,59 @@ namespace nsda.Services.Implement.member
 
         #region 赛事管理员
         //选手报名列表
+        //public List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request)
+        //{
+        //    List<EventPlayerSignUpListResponse> list = new List<EventPlayerSignUpListResponse>();
+        //    try
+        //    {
+        //        StringBuilder join = new StringBuilder();
+        //        if (request.KeyValue.IsNotEmpty())
+        //        {
+        //            request.KeyValue = $"%{request.KeyValue}%";
+        //            join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
+        //        }
+        //        if (request.EventGroupId != null && request.EventGroupId > 0)
+        //        {
+        //            join.Append(" and a.eventGroupId=@EventGroupId");
+        //        }
+        //        if (request.SignUpStatus != null && request.SignUpStatus > 0)
+        //        {
+        //            join.Append(" and a.signUpStatus=@SignUpStatus");
+        //        }
+        //        var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,
+        //                    b.grade,b.gender,b.contactmobile,d.name EventGroupName from t_event_player_signup a 
+        //                    inner join t_member_player b on a.memberId=b.memberId
+        //                    inner join t_event c on a.eventId=c.id
+        //                    inner join t_event_group d on a.eventGroupId=d.id
+        //                    and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
+        //                    order by a.groupnum desc 
+        //                 ";
+        //        int totalCount = 0;
+        //        list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
+        //        foreach (var item in list)
+        //        {
+        //            var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by a.enddate limit 1").FirstOrDefault();
+        //            if (data != null)
+        //            {
+        //                item.SchoolName = data.chinessname;
+        //                item.CityName = data.name;
+        //            }
+        //        }
+        //        request.Records = totalCount;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogUtils.LogError("SignUpPlayerService.EventPlayerList", ex);
+        //    }
+        //    return list;
+        //}
+
         public List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request)
         {
             List<EventPlayerSignUpListResponse> list = new List<EventPlayerSignUpListResponse>();
             try
             {
-                StringBuilder join = new StringBuilder();
-                if (request.KeyValue.IsNotEmpty())
-                {
-                    request.KeyValue = $"%{request.KeyValue}%";
-                    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
-                }
-                if (request.EventGroupId != null && request.EventGroupId > 0)
-                {
-                    join.Append(" and a.eventGroupId=@EventGroupId");
-                }
-                if (request.SignUpStatus != null && request.SignUpStatus > 0)
-                {
-                    join.Append(" and a.signUpStatus=@SignUpStatus");
-                }
-                var sql = $@"select a.*,b.code MemberCode,b.completename MemberName,
-                            b.grade,b.gender,b.contactmobile,d.name EventGroupName from t_event_player_signup a 
-                            inner join t_member_player b on a.memberId=b.memberId
-                            inner join t_event c on a.eventId=c.id
-                            inner join t_event_group d on a.eventGroupId=d.id
-                            and c.memberId=@MemberId and a.eventId=@EventId {join.ToString()}
-                            order by a.groupnum desc 
-                         ";
-                int totalCount = 0;
-                list = _dbContext.Page<EventPlayerSignUpListResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);
-                foreach (var item in list)
-                {
-                    var data = _dbContext.Query<dynamic>($"select b.chinessname,c.name from t_player_edu  a inner join t_sys_school b on a.schoolId=b.id inner join t_sys_city c on c.id=b.cityId  where a.memberid={item.MemberId} and a.isdelete=0 order by a.enddate limit 1").FirstOrDefault();
-                    if (data != null)
-                    {
-                        item.SchoolName = data.chinessname;
-                        item.CityName = data.name;
-                    }
-                }
-                request.Records = totalCount;
+                list = _eventPlayerSignUpRepo.EventPlayerList(request);
             }
             catch (Exception ex)
             {

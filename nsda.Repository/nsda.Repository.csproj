@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contract\eventmanage\IEventRepo.cs" />
+    <Compile Include="Contract\eventmanage\IEventPlayerSignUpRepo.cs" />
     <Compile Include="Contract\eventmanage\IRoomRepo.cs" />
     <Compile Include="Contract\eventmanage\IEventRoomRepo.cs" />
     <Compile Include="Contract\member\IMemberRepo.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="DataRepository.cs" />
     <Compile Include="IDataRepository.cs" />
     <Compile Include="Implement\eventmanage\EventRepo.cs" />
+    <Compile Include="Implement\eventmanage\EventPlayerSignUpRepo.cs" />
     <Compile Include="Implement\eventmanage\RoomRepo.cs" />
     <Compile Include="Implement\eventmanage\EventRoomRepo.cs" />
     <Compile Include="Implement\member\MemberRepo.cs" />
