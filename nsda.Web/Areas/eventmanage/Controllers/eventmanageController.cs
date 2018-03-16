@@ -33,7 +33,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         IEventCyclingRaceSettingsService _eventCyclingRaceSettingsService;
         IEventknockoutSettingsService _eventknockoutSettingsService;
         IEventRegularAwardsService _eventRegularAwardsService;
-        public eventmanageController(IEventCyclingRaceService eventCyclingRaceService, IEventknockoutService eventknockoutService,IEventRegularAwardsService eventRegularAwardsService,IEventknockoutSettingsService eventknockoutSettingsService,IEventCyclingRaceSettingsService eventCyclingRaceSettingsService,IEventRoomService eventRoomService,IEventPrizeService eventPrizeService,IMemberService memberService, IEventService eventService, IMemberTempService memberTempService,IEventSignService eventSignService, IPlayerSignUpService playerSignUpService,IRefereeSignUpService refereeSignUpService)
+        public eventmanageController(IEventCyclingRaceService eventCyclingRaceService, IEventknockoutService eventknockoutService, IEventRegularAwardsService eventRegularAwardsService, IEventknockoutSettingsService eventknockoutSettingsService, IEventCyclingRaceSettingsService eventCyclingRaceSettingsService, IEventRoomService eventRoomService, IEventPrizeService eventPrizeService, IMemberService memberService, IEventService eventService, IMemberTempService memberTempService, IEventSignService eventSignService, IPlayerSignUpService playerSignUpService, IRefereeSignUpService refereeSignUpService)
         {
             _eventCyclingRaceService = eventCyclingRaceService;
             _eventknockoutService = eventknockoutService;
@@ -111,7 +111,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
             var detail = _eventService.Detail(id);
-            ViewBag.EventGroup = _eventService.SelectEventGroup(id,userContext.Id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, userContext.Id);
             return View(detail);
         }
         //裁判报名页
@@ -137,7 +137,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, userContext.Id);
             bool isVisiable = false;
-            int roomCount= _eventRoomService.RoomCount(id,out isVisiable);
+            int roomCount = _eventRoomService.RoomCount(id, out isVisiable);
             ViewBag.RoomCount = roomCount;
             ViewBag.IsVisiable = isVisiable;
             return View(detail);
@@ -163,7 +163,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(detail);
         }
         //选手签到页
-        public ActionResult playersign(int eventId, int eventGroupId=0)
+        public ActionResult playersign(int eventId, int eventGroupId = 0)
         {
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
@@ -171,7 +171,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var eventgroup = _eventService.SelectEventGroup(eventId, UserContext.WebUserContext.Id);
             ViewBag.EventGroup = eventgroup;
             ViewBag.EventDate = _eventService.EventDate(eventId);
-            ViewBag.EventGroupId = eventGroupId == 0?eventgroup.FirstOrDefault().Id: eventGroupId;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
         //裁判签到页
@@ -201,14 +201,16 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
             var detail = _eventService.Detail(eventId);
-            var eventgroup = _eventService.SelectEventGroup(eventId,userContext.Id);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
             ViewBag.EventGroup = eventgroup;
             eventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             ViewBag.EventGroupId = eventGroupId;
-            ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(eventId).FirstOrDefault(c=>c.EventGroupId== eventGroupId);
-            ViewBag.SignUp = _eventSignService.SignUpCount(eventId,eventGroupId);
+            ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(eventId).FirstOrDefault(c => c.EventGroupId == eventGroupId);
+            ViewBag.SignUp = _eventSignService.SignUpCount(eventId, eventGroupId);
             return View(detail);
         }
+        
+
         //淘汰赛设置
         public ActionResult knockoutsetting(int id)
         {
@@ -219,6 +221,9 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(id);
             return View(detail);
         }
+
+        
+
         //淘汰赛设置确认
         public ActionResult knockoutsettingconfirm(int eventId, int eventGroupId = 0)
         {
@@ -229,7 +234,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroup = eventgroup;
             eventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
-            ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(eventId).FirstOrDefault(c=>c.EventGroupId==eventGroupId);
+            ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(eventId).FirstOrDefault(c => c.EventGroupId == eventGroupId);
             return View(detail);
         }
         //添加临时报名选手
@@ -315,12 +320,22 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(detail);
         }
 
+        //第一轮成绩录入
         public ActionResult writegrades()
         {
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
             //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
-            return View();
+            return View(new EventResponse() { Id = 8 });
+        }
+
+        //double check
+        public ActionResult doublecheck()
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
+            return View(new EventResponse() { Id = 8 });
         }
 
         #endregion
@@ -431,7 +446,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //修改赛事状态
         [HttpPost]
         [AjaxOnly]
-        public ContentResult editeventstatus(int id,EventStatusEm eventStatus)
+        public ContentResult editeventstatus(int id, EventStatusEm eventStatus)
         {
             string msg = string.Empty;
             var flag = _eventService.EditEventStatus(id, eventStatus, UserContext.WebUserContext.Id, out msg);
@@ -458,7 +473,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [HttpGet]
         public ContentResult listeventgroup(int eventId)
         {
-            var data = _eventService.SelectEventGroup(eventId,UserContext.WebUserContext.Id);
+            var data = _eventService.SelectEventGroup(eventId, UserContext.WebUserContext.Id);
             return Result(true, string.Empty, data);
         }
         #endregion
@@ -480,7 +495,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult prizesettings(EventRegularAwardsRequest request)
         {
             string msg = string.Empty;
-            var flag = _eventRegularAwardsService.Settings(request,out msg);
+            var flag = _eventRegularAwardsService.Settings(request, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -608,9 +623,9 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
 
         [HttpGet]
-        public ContentResult selectplayer(int eventId,int? eventGroupId,string keyvalue)
+        public ContentResult selectplayer(int eventId, int? eventGroupId, string keyvalue)
         {
-            var data = _playerSignUpService.SelectPlayer(eventId, eventGroupId,keyvalue);
+            var data = _playerSignUpService.SelectPlayer(eventId, eventGroupId, keyvalue);
             return Result(true, string.Empty, data);
         }
         #endregion
@@ -645,7 +660,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //裁判审核
         [HttpPost]
         [AjaxOnly]
-        public ContentResult checkreferee(int id,CheckRefereeEnum checkReferee)
+        public ContentResult checkreferee(int id, CheckRefereeEnum checkReferee)
         {
             string msg = string.Empty;
             var flag = _refereeSignUpService.Check(id, checkReferee, UserContext.WebUserContext.Id, out msg);
@@ -658,7 +673,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult refereeflag(int id)
         {
             string msg = string.Empty;
-            var flag = _refereeSignUpService.Flag(id,UserContext.WebUserContext.Id, out msg);
+            var flag = _refereeSignUpService.Flag(id, UserContext.WebUserContext.Id, out msg);
             return Result<string>(flag, msg);
         }
         #endregion
@@ -670,7 +685,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult batchsign(List<int> memberId, int eventId, EventSignTypeEm eventSignType)
         {
             string msg = string.Empty;
-            var flag = _eventSignService.BatchSign(memberId,eventId, eventSignType, out msg);
+            var flag = _eventSignService.BatchSign(memberId, eventId, eventSignType, out msg);
             return Result<string>(flag, msg);
         }
 
@@ -678,7 +693,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //裁判批量签到或设置组别
         [HttpPost]
         [AjaxOnly]
-        public ContentResult batchrefereesign(List<int> memberId, int eventId,int status)
+        public ContentResult batchrefereesign(List<int> memberId, int eventId, int status)
         {
             string msg = string.Empty;
             var flag = _eventSignService.BatchReferee(memberId, eventId, status, out msg);
@@ -699,7 +714,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         //停赛
         [HttpPost]
         [AjaxOnly]
-        public ContentResult playerstop(string groupNum, int eventId,bool isStop)
+        public ContentResult playerstop(string groupNum, int eventId, bool isStop)
         {
             string msg = string.Empty;
             var flag = _eventSignService.Stop(groupNum, eventId, isStop, out msg);
@@ -783,7 +798,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult cyclingracesettings(List<EventCyclingRaceSettingsRequest> request)
         {
             string msg = string.Empty;
-            var flag = _eventCyclingRaceSettingsService.Settints(request,out msg);
+            var flag = _eventCyclingRaceSettingsService.Settints(request, out msg);
             return Result<string>(flag, msg);
         }
         #endregion
@@ -804,7 +819,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         [HttpGet]
         public ContentResult trackknockout(int eventId, int eventGroupId, string keyValue)
         {
-            var data = _eventknockoutService.TrackKnockout(eventId, eventGroupId,keyValue);
+            var data = _eventknockoutService.TrackKnockout(eventId, eventGroupId, keyValue);
             return Result(true, string.Empty, data);
         }
 
@@ -816,5 +831,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result(true, string.Empty, data);
         }
         #endregion
+
+
+        
     }
 }

@@ -7,11 +7,12 @@
     var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
 }
 @section styles{
-    <link href="@Url.Content("~/Content/asset/css/eventmanage/eventmanageplayer.css?2.1.0")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/asset/css/eventmanage/doublecheck.css?2.1.0")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/asset/css/common/common.css?1.1.0")" rel="stylesheet" type="text/css" />
-    <link href="~/Content/asset/css/eventmanage/writegrades.css?3.0.0" rel="stylesheet" />
+    <link href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanage/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanage/writegrades.css?version=@Constant.Version" rel="stylesheet" />
 }
+
 @Html.Partial("_left")
 <div class="event-lists ">
     <input type="hidden" id="eventId" value="@Model.Id" />
@@ -22,12 +23,12 @@
     </div>
     <div class="event-con">
         <div>
-            <img src="~/Content/asset/img/vs_03.png" />
+            <img src="/asset/img/vs_03.png" />
             <h4>第一轮 评分单录入 </h4>
             <a href="javascript:;" class="pre radius5 blue posright"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></a>
         </div>
         <div>
-            <a href="/Eventmanage/doublecheck" class="check radius5 poscen lightgreen"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></a>
+            <a href="/eventmanage/eventmanage/writegrades" class="check radius5 poscen lightgreen"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></a>
             <a href="javascript:;" class="pre radius5 green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></a>
             <a href="javascript:;" class="pre radius5 orange posright"><i class="iconfont icon-dayin"></i><p>打印评分单</p></a>
         </div>
