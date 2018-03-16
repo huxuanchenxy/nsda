@@ -297,17 +297,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
-        //doublecheck
-        public ActionResult doublecheck(int eventId, int eventGroupId = 0)
-        {
-            var userContext = UserContext.WebUserContext;
-            ViewBag.UserContext = userContext;
-            var detail = _eventService.Detail(eventId);
-            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
-            ViewBag.EventGroup = eventgroup;
-            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
-            return View(detail);
-        }
+
+        
         //执行对垒
         public ActionResult execmatch(int eventId, int eventGroupId = 0)
         {
@@ -321,6 +312,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
 
         //第一轮成绩录入
+
         public ActionResult writegrades()
         {
             var userContext = UserContext.WebUserContext;
@@ -338,12 +330,14 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(new EventResponse() { Id = 8 });
         }
 
+
+
         #endregion
 
-        #region 赛事信息设置
-        /// <summary>
-        /// 上传图片 赛事描述
-        /// </summary>
+            #region 赛事信息设置
+            /// <summary>
+            /// 上传图片 赛事描述
+            /// </summary>
         [HttpPost]
         public ContentResult uploadimage()
         {
