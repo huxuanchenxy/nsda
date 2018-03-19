@@ -3,7 +3,7 @@
 @model EventResponse
 @{
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "选手签到管理";
+    ViewBag.Title = "选手报名管理";
     var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
 }
 
@@ -66,8 +66,15 @@
 @section scripts
 {
    <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
+        
+        $(".clickready").click(function(){
+            console.log(1)
+            slide();
+            
+        })
         function foreach(data,groupNum) {
             var reval = new Array();
             if (data != null) {

@@ -105,6 +105,7 @@
 @section scripts
 {
     <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
     <script>
         lay('.settime').each(function () {
             laydate.render({
@@ -113,6 +114,10 @@
                 trigger: 'click'
             });
         });
+        $(".clickready").click(function () {
+            slide();
+
+        })
 
         //保存循环赛设置
         $("#save").click(function () {

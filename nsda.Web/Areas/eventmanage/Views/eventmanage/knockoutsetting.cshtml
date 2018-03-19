@@ -145,7 +145,12 @@
 </div>
 @section scripts
 {
-    <script>        
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
+    <script> 
+        $(".clickready").click(function () {
+            slide();
+
+        })
         $("#save").click(function () {
             alert("调用了方法");
             return;

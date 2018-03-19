@@ -126,4 +126,11 @@
         </div>
     </div>
 </div>
-<script src="/asset/js/block.js?version=@Constant.Version"></script>
+@section scripts
+{
+    <script src="/asset/js/block.js?version=@Constant.Version"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
+    <script>
+        b();
+    </script>
+}

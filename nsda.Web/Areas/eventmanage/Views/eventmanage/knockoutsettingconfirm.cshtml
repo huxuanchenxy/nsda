@@ -48,7 +48,14 @@
 
 @section scripts
 {
+
+<script src="/asset/js/slide.js?version=@Constant.Version"></script>
     <script>
+        $(".clickready").click(function () {
+            console.log(1)
+            b();
+
+        })
         //前往修改
         $("#back").click(function () {
             location.href = "/eventmanage/eventmanage/knockoutsetting/" + $("#eventId");
