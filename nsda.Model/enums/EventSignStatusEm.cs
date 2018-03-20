@@ -30,6 +30,7 @@ namespace nsda.Model.enums
     public enum RefereeStatusEm
     {
         闲置 = 1,
-        使用中 = 2
+        使用中 = 2,
+        停用 = 3
     }
 }

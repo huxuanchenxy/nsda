@@ -183,6 +183,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             ViewBag.EventDate = _eventService.EventDate(id);
             ViewBag.Data = _eventSignService.RefereeSignData(id, userContext.Id.ToString());
+            ViewBag.EventId = id;
             return View(detail);
         }
         //循环赛设置
