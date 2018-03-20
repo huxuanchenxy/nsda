@@ -350,12 +350,6 @@ namespace nsda.Services.Implement.eventmanage
             RefereeSignDataResponse response = new RefereeSignDataResponse();
             try
             {
-                //response.SignCount = 12;
-                //response.LeastCount = 24;
-                //response.UsedCount = 12;
-                //response.UnusedCount = 12;
-                //response.StopCount = 48;
-
                 //数据统计
                 List<t_event_sign> list = _refereeSignRepo.RefereeSignData(eventId, manMemberId);
                 List<EventRoomResponse> list1 = _roomData.GetList(new EventRoomQueryRequest() { EventId = eventId });

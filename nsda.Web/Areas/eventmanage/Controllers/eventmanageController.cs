@@ -719,6 +719,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
                 records = request.Records,
                 rows = data
             };
+            Initrendersign(request.EventId);
             return Content(res.Serialize());
         }
 
@@ -735,6 +736,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
                 records = request.Records,
                 rows = data
             };
+            InitrendersignReferee(request.EventId);
+
             return Content(res.Serialize());
         }
 
@@ -744,8 +747,30 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult rendersign(int eventId)
         {
             string msg = string.Empty;
-            var flag = _playerSignUpService.RenderSign(eventId, out msg);
+            var flag = _playerSignUpService.RenderSign(eventId, out msg,UserContext.WebUserContext.Id);
             return Result<string>(flag, msg);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult rendersignReferee(int eventId)
+        {
+            string msg = string.Empty;
+            var flag = _playerSignUpService.RenderSignReferee(eventId, out msg, UserContext.WebUserContext.Id);
+            return Result<string>(flag, msg);
+        }
+
+
+        private void Initrendersign(int eventId)
+        {
+            string msg = string.Empty;
+            var flag = _playerSignUpService.RenderSign(eventId, out msg, UserContext.WebUserContext.Id);
+        }
+
+        private void InitrendersignReferee(int eventId)
+        {
+            string msg = string.Empty;
+            var flag = _playerSignUpService.RenderSignReferee(eventId, out msg, UserContext.WebUserContext.Id);
         }
         #endregion
 

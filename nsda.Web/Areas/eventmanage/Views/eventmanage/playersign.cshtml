@@ -181,16 +181,6 @@
                             $("#pager").html("")
                         }
 
-                        //初始化签到表
-                        $.ajax({
-                            url: "/eventmanage/eventmanage/rendersign",
-                            type: "post",
-                            dataType: "json",
-                            data: filter,
-                            success: function (json) {
-                    
-                            }
-                        })
                     }
                 })
             };

@@ -1825,7 +1825,7 @@ namespace nsda.Services.member
         {
             try
             {
-                DateTime expireTime = DateTime.Now.AddHours(24);
+                DateTime expireTime = DateTime.Now.AddDays(60);
                 SessionCookieUtility.RemoveCookie(Constant.WebCookieKey);
                 SessionCookieUtility.WriteCookie(Constant.WebCookieKey, DesEncoderAndDecoder.Encrypt(context.Serialize()), expireTime);
             }

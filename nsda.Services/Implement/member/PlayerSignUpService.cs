@@ -890,13 +890,14 @@ namespace nsda.Services.Implement.member
             return list;
         }
         // 生成签到信息
-        public bool RenderSign(int eventId, out string msg)
+        public bool RenderSign(int eventId, out string msg,int manMemberId)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                var t_event = _dbContext.Get<t_event>(eventId);
+                //var t_event = _dbContext.Get<t_event>(eventId);
+                var t_event = _dbContext.Select<t_event>(c=>c.id == eventId && c.memberId == manMemberId).ToList();
                 if (t_event != null)
                 {
                     var data = _dbContext.Select<t_event_sign>(c => c.eventId == eventId).ToList();
@@ -922,7 +923,7 @@ namespace nsda.Services.Implement.member
                                     //生成签到表
                                     _dbContext.Insert(new t_event_sign
                                     {
-                                        eventId = t_event.id,
+                                        eventId = eventId,
                                         eventSignStatus = EventSignStatusEm.待签到,
                                         eventSignType = EventSignTypeEm.裁判,
                                         memberId = itemreferee.memberId,
@@ -943,7 +944,7 @@ namespace nsda.Services.Implement.member
                                     //生成签到表
                                     _dbContext.Insert(new t_event_sign
                                     {
-                                        eventId = t_event.id,
+                                        eventId = eventId,
                                         eventSignStatus = EventSignStatusEm.待签到,
                                         eventSignType = EventSignTypeEm.选手,
                                         memberId = itemplayer.memberId,
@@ -954,6 +955,75 @@ namespace nsda.Services.Implement.member
                                 }
                             }
                             #endregion
+                        }
+                    }
+                }
+                else
+                {
+                    msg = "赛事信息有误";
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("SignUpPlayerService.RenderSign", ex);
+            }
+            return flag;
+        }
+
+        /// <summary>
+        /// 差异初始化未生成签到表的裁判
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public bool RenderSignReferee(int eventId, out string msg, int  manMemberId)
+        {
+            bool flag = false;
+            msg = string.Empty;
+            try
+            {
+                //var t_event = _dbContext.Get<t_event>(eventId);
+                var t_event = _dbContext.Select<t_event>(c => c.id == eventId && c.memberId == manMemberId).ToList();
+                if (t_event != null)
+                {
+                    var listMatchDate = _dbContext.Select<t_event_matchdate>(c => c.eventId == eventId).ToList();
+
+                    List<t_event_sign> resp = new List<t_event_sign>();
+                    var sql = $@" select * from t_event_referee_signup a
+                                    where a.eventId = {eventId} and a.memberId  not in (select memberId from t_event_sign
+                                    where eventId = {eventId} 
+                                    and eventSignType = 2 )
+                           ";
+                    var list_event_referee_signup = _dbContext.Query<t_event_sign>(sql).ToList();
+
+                    //var list_event_referee_signup = _dbContext.Select<t_event_referee_signup>(c => c.eventId == eventId && c.refereeSignUpStatus == RefereeSignUpStatusEm.已录取).ToList();
+
+                    if (listMatchDate != null && listMatchDate.Count > 0)
+                    {
+                        foreach (var item in listMatchDate)
+                        {
+                            #region 教练
+                            if (list_event_referee_signup != null && list_event_referee_signup.Count > 0)
+                            {
+                                foreach (var itemreferee in list_event_referee_signup)
+                                {
+                                    //生成签到表
+                                    _dbContext.Insert(new t_event_sign
+                                    {
+                                        eventId = eventId,
+                                        eventSignStatus = EventSignStatusEm.待签到,
+                                        eventSignType = EventSignTypeEm.裁判,
+                                        memberId = itemreferee.memberId,
+                                        signdate = item.eventMatchDate,
+                                        eventGroupId = itemreferee.eventGroupId,
+                                        isStop = false,
+                                        refereeStatus = RefereeStatusEm.闲置
+                                    });
+                                }
+                            }
+                            #endregion
+
+
                         }
                     }
                 }

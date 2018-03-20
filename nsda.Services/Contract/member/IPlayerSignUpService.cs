@@ -38,7 +38,9 @@ namespace nsda.Services.Contract.member
         //选手报名列表
         List<PlayerSignUpListResponse> PlayerSignUpList(PlayerSignUpQueryRequest request);
         //生成签到表
-        bool RenderSign(int eventId, out string msg);
+        bool RenderSign(int eventId, out string msg,int manMemberId);
+
+        bool RenderSignReferee(int eventId, out string msg, int manMemberId);
         //选手退赛列表
         List<PlayerRefundListResponse> PlayerRefundList(PlayerSignUpQueryRequest request);
         //未报名成功的队伍 申请退费

@@ -125,6 +125,7 @@ namespace nsda.Utilities
             cookie.Value = strValue;
             cookie.Expires = expires;
             HttpContext.Current.Response.AppendCookie(cookie);
+            //HttpContext.Current.Response.Cookies.Add(cookie);
         }
 
         #endregion Cookie操作
