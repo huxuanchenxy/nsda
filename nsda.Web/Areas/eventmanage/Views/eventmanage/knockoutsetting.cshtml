@@ -30,7 +30,7 @@
                 <div class="form-group range">
                     <label>晋级队伍数：</label>
                     <input type="number" class="radius5" placeholder="输入数值" id="teamnum_@item.Id"/>
-                    <a href="javascript:;" class="confirm" id="confirmnum" data-id="@item.Id">确认</a>
+                    <a href="javascript:;" class="confirm" data-id="@item.Id">确认</a>
                     <p>* 建议填写为2的平方数，例如：4、8、16、32、64。最大数值不得超过64。</p>
                 </div>
 
@@ -169,7 +169,7 @@
         html += '</li>';
         
 
-        $("#confirmnum").click(function () {
+        $(".confirm").click(function () {
             var teamNum = $("#teamnum_" + $(this).attr("data-id")).val();
             if (parseInt(teamNum) < 2 || parseInt(teamNum) > 64) {
                 layer.msg('晋级队伍数有误,最小为2', { icon: 5, time: 1000 });
@@ -193,6 +193,21 @@
             }
             if (teamNum == 64) {
                 $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Triple Octafinals :</label>' + html)
+            }
+            if (2 < teamNum < 4) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+            }
+            if (4 < teamNum < 8) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html)
+            }
+            if (8 < teamNum < 16) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html)
+            }
+            if (16 < teamNum < 32) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Octafinals :</label>' + html)  
+            }
+            if (32 < teamNum < 64) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Double Octafinals :</label>' + html)
             }
             lay('.settime').each(function () {
                 laydate.render({

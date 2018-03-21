@@ -1,0 +1,105 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "演讲循环赛设置";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+    var cyclingRaceSettings = ViewBag.CyclingRaceSettings as List<EventCyclingRaceSettingsResponse>;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventmanage/eventmanageround.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
+}
+@Html.Partial("_left")
+<div class="event-lists">
+    <div class="list-top">
+        <a href="javascript:;" class="active box-sizing list">循环赛规则设置</a>
+        <a href="/eventmanage/eventmanage/speechknockoutsetting/@Model.Id" class="list box-sizing">淘汰赛规则设置</a>
+    </div>
+    <div class="roundset">
+        <h3>循环赛规则设置</h3>
+        @foreach (var item in eventGroup)
+        {
+            <div class="newround">
+                <h4>@item.Name 循环赛规则设置<span><i></i></span></h4>
+
+                <div class="form-group range">
+                    <label>裁判打分值区间：</label>
+                    <input type="number" class="radius5" placeholder="输入数值" />至<input type="number" class="radius5" placeholder="输入数值" />
+                </div>
+                <div class="form-group yn">
+                    <label>是否允许裁判打0.5分：</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="half_@item.Id" checked value="1"> 允许
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="half_@item.Id"> 不允许
+                    </label>
+                    <p>* 如果如果允许，裁判可以在在规定的打分区间内打半分。例如：27.5分</p>
+                </div>
+                <div class="form-group cnum">
+                    <label>循环赛场数：</label>
+                    <input type="number" class="radius5 color-6" placeholder="输入数值" />
+                </div>
+                <div class="form-group rnum">
+                    <label>每间Room 最大容纳参赛人数：</label>
+                    <input type="number" class="radius5 color-6" placeholder="输入数值" />
+                </div>
+            </div>
+        }
+        <button class="confirmset darkblue radius5 color-white" id="save" style="margin-top:10px;">确认保存循环赛设置</button>
+    </div>
+</div>
+@section scripts
+{
+    <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
+    <script>
+        lay('.settime').each(function () {
+            laydate.render({
+                elem: this,
+                type: 'datetime',
+                trigger: 'click'
+            });
+        });
+        $(function () {
+            $(".clickready").click(function () {
+                slide();
+
+            });
+        });
+
+        //保存循环赛设置
+        $("#save").click(function () {
+            alert(10);
+            var data = [];
+            data.push("");
+            $.ajax({
+                url: "/eventmanage/eventmanage/speechcyclingracesettings",
+                type: "post",
+                dataType: "json",
+                data: {
+                    request: data
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg("设置成功", { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+             ,error: function () {
+                 layer.closeAll();
+             }
+            });
+        });
+    </script>
+}
