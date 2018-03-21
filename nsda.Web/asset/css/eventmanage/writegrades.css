@@ -271,10 +271,55 @@ select#sel::-webkit-scrollbar-thumb {
     text-align:center;
 }
 
-
-
-
-
+.speechpaper{
+    width:580px;
+    margin-top:30px;
+    padding:10px 30px;
+    border:1px solid #B1B7BC;
+    background:#F5F5F5;
+    position:relative;
+}
+.speechpaper p{
+    font-size:14px;
+    color:#666699;
+    margin-right:15px;
+    line-height:1.8;
+}
+.speechpaper p.flight{
+    color:#ff6666;
+    float:left;
+}
+.speechpaper h3{
+    float:left;
+    font-size:14px;
+    line-height:1.8;
+    color:#666699;
+}
+.speechpaper p.name,.speechpaper h3.room,.speechpaper p.roomnum{
+    float:left;
+}
+.speechpaper p.jnumber{
+    color:#B4BABF;
+    float:left;
+}
+.speechpaper .refer{
+    display:inline-block;
+    width:270px;
+    height:56px;
+    font-size:18px;
+    border:none;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:20px;
+}
+.speechpaper table{
+    width:100%;
+    border:1px solid #ccc;
+}
+.event-lists table tr td{
+    border:1px solid #ccc;
+}
 
 
 

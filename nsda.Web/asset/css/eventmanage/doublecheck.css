@@ -120,18 +120,36 @@ a.score{
     margin-bottom:5px;
 }
 
+.speechdoublecheck table thead{
+    background:#D8E0E5;
+
+}
+.speechdoublecheck table thead th{
+    border:1px solid #ccc;
+}
 
 
-
-
-
-
-
-
-
-
-
-
+.speechdoublecheck tbody td:last-child{
+    border-right:1px solid #ccc;
+}
+.speechdoublecheck table{
+    margin-bottom:0;
+}
+.speechdoublecheck .last{
+    width:220px;
+    position:relative;
+}
+.last a{
+    display:inline-block;
+    padding:5px 16px;
+}
+.last .reedit{
+    margin-left:10px;
+}
+.first input{
+    width:20px;
+    height:20px;
+}
 
 
 

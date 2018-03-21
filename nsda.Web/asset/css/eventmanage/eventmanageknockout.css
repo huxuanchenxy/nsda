@@ -19,11 +19,11 @@
     color:#ff6666;
 }
 .newround .roundone ul li label.comname{
-    width:120px;
+    width:128px;
     text-align:right;
 }
 .newround .roundone ul li select.rset{
-    margin-right:20px;
+    margin-right:5px;
 }
 .newround .roundone ul li input[type=checkbox]:checked input[type=checkbox]{
     color:red;
