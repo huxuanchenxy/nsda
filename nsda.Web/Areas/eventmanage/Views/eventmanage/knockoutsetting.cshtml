@@ -160,14 +160,13 @@
         html += '<option value="2">高低配对 High-Low Power Macth</option>';
         html += '<option value="3">相等配对 High-High Powe</option>';
         html += '</select>';
-        html += '<input type="checkbox" checked />';
+        html += '<input type="checkbox" class="double" />';
         html += '<label>Double Flight</label>';
         html += '<label>Flight A:</label>';
         html += '<input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />';
-        html += '<label>Flight B:</label>';
-        html += '<input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />';
         html += '</li>';
         
+        var flightb = '<label>Flight B:</label><input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />'
 
         $(".confirm").click(function () {
             var teamNum = $("#teamnum_" + $(this).attr("data-id")).val();
@@ -175,40 +174,49 @@
                 layer.msg('晋级队伍数有误,最小为2', { icon: 5, time: 1000 });
                 return;
             }
-            
             if (teamNum == 2) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Finals :</label>'+html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Finals :</label>'+html)
             }
             if (teamNum == 4) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Semifinals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Semifinals :</label>' + html)
             }
             if (teamNum == 8) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Quarterfinals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Quarterfinals :</label>' + html)
             }
             if (teamNum == 16) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Octafinals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Octafinals :</label>' + html)
             }
             if (teamNum == 32) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Double Octafinals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Double Octafinals :</label>' + html)
             }
             if (teamNum == 64) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Triple Octafinals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Triple Octafinals :</label>' + html)
             }
-            if (2 < teamNum < 4) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+            if (teamNum >2 && teamNum < 4) {
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
             }
-            if (4 < teamNum < 8) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html)
+            if (teamNum > 4 && teamNum < 8) {
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html)
             }
-            if (8 < teamNum < 16) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html)
+            if (teamNum > 8 && teamNum < 16) {
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html)
             }
-            if (16 < teamNum < 32) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Octafinals :</label>' + html)  
+            if (teamNum > 16 && teamNum < 32) {
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Octafinals :</label>' + html)
             }
-            if (32 < teamNum < 64) {
-                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Double Octafinals :</label>' + html)
+            if (teamNum > 32 && teamNum < 64) {
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Double Octafinals :</label>' + html)
             }
+            var checkbox = $(".double");
+            checkbox.change(function (e) {
+                var checkbox = e.target;
+                if (checkbox.checked) {
+                    $(this).parent("li").append(flightb)
+                } else {
+                    $(this).parent("li").children("label:last").remove()
+                    $(this).parent("li").children("input:last").remove()
+                }
+            })
             lay('.settime').each(function () {
                 laydate.render({
                     elem: this,
