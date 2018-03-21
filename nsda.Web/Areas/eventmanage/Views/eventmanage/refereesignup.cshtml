@@ -75,8 +75,7 @@
             $(".clickready").click(function(){
                 slide();
             })
-        })
-        
+        });
         (function (w) {
             var eventrefereelist = {
                 param: {
@@ -143,7 +142,7 @@
                                 }
                                 html+='</td>';
                                 html+='</tr>';
-                             });
+                            });
                             $("#data").html(html)
                         } else {
                             $("#data").html('');
@@ -154,6 +153,7 @@
             };
             w.eventrefereelist = eventrefereelist
         })(window);
+
         eventrefereelist.Load(eventrefereelist.param);
         $("#refereesignUnlimited").click(function () {
             $(this).addClass("selected");
@@ -240,5 +240,6 @@
                 }
             });
         })
+
     </script>
 }

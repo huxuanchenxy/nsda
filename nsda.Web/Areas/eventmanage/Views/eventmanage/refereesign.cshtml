@@ -83,6 +83,7 @@
         <select class="batchsignin radius5 color-79" id="batchsignin">
             <option value="-2">批处理为</option>
             <option value="-1">签到</option>
+            <option value="-3">停用</option>
             <option value="0">随机使用</option>
             @foreach (var item in eventGroup)
             {
@@ -296,7 +297,7 @@
 
         $("#batchsignin").change(function(){
             var val=$(this).val();
-            if(val!=-2)
+            if(val!=-2)//批处理不动操作
             {
                 var arr=[];
                 $(".chksign").each(function(){

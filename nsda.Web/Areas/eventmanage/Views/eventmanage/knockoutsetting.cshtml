@@ -30,13 +30,13 @@
                 <div class="form-group range">
                     <label>晋级队伍数：</label>
                     <input type="number" class="radius5" placeholder="输入数值" id="teamnum_@item.Id"/>
-                    <a href="javascript:;" class="confirm" data-id="@item.Id">确认</a>
+                    <a href="javascript:;" class="confirm" id="confirmnum" data-id="@item.Id">确认</a>
                     <p>* 建议填写为2的平方数，例如：4、8、16、32、64。最大数值不得超过64。</p>
                 </div>
 
                 <div class="roundone">
-                    <ul>
-                        <li>
+                    <ul class="teamclass">
+                        @*<li>
                             <label class="comname">Partial :</label>
                             <select class="rset radius5">
                                 <option value="1">随机配对 Perset round</option>
@@ -134,7 +134,7 @@
                             <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
                             <label>Flight B:</label>
                             <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>
@@ -146,11 +146,64 @@
 @section scripts
 {
     <script src="/asset/js/slide.js?version=@Constant.Version"></script>
+    <script src="/asset/js/laydate/laydate.js"></script>
     <script> 
-        $(".clickready").click(function () {
-            slide();
+        $(function () {
+            $(".clickready").click(function () {
+                slide();
 
+            });
+        });
+
+        var html = '<select class="rset radius5">';
+        html += '<option value="1">随机配对 Perset round</option>';
+        html += '<option value="2">高低配对 High-Low Power Macth</option>';
+        html += '<option value="3">相等配对 High-High Powe</option>';
+        html += '</select>';
+        html += '<input type="checkbox" checked />';
+        html += '<label>Double Flight</label>';
+        html += '<label>Flight A:</label>';
+        html += '<input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />';
+        html += '<label>Flight B:</label>';
+        html += '<input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />';
+        html += '</li>';
+        
+
+        $("#confirmnum").click(function () {
+            var teamNum = $("#teamnum_" + $(this).attr("data-id")).val();
+            if (parseInt(teamNum) < 2 || parseInt(teamNum) > 64) {
+                layer.msg('晋级队伍数有误,最小为2', { icon: 5, time: 1000 });
+                return;
+            }
+            
+            if (teamNum == 2) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Finals :</label>'+html)
+            }
+            if (teamNum == 4) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Semifinals :</label>' + html)
+            }
+            if (teamNum == 8) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Quarterfinals :</label>' + html)
+            }
+            if (teamNum == 16) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Octafinals :</label>' + html)
+            }
+            if (teamNum == 32) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Double Octafinals :</label>' + html)
+            }
+            if (teamNum == 64) {
+                $(this).parent().siblings(".roundone").children(".teamclass").append('<li><label class="comname">Triple Octafinals :</label>' + html)
+            }
+            lay('.settime').each(function () {
+                laydate.render({
+                    elem: this,
+                    type: 'datetime',
+                    trigger: 'click'
+                });
+            })
         })
+
+
         $("#save").click(function () {
             alert("调用了方法");
             return;
@@ -188,10 +241,7 @@
                 layer.msg('请输入晋级队伍数', { icon: 5, time: 1000 });
                 return;
             }
-            if (parseInt(teamNum) <= 0 || parseInt(teamNum) > 64) {
-                layer.msg('晋级队伍数有误', { icon: 5, time: 1000 });
-                return;
-            }
+            
         });
     </script>
 }

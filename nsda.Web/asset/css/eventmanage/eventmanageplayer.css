@@ -56,6 +56,7 @@
     height:25px;
     margin-right:6px;
 }
+
 .bigbox .list label input[type=checkbox]{
     width:20px;
     height:20px;
@@ -157,7 +158,7 @@ tbody{
     background:#D8E0E5;
 }
 .event-lists table thead tr th{
-    padding:6px 0;
+    padding:6px;
     text-align:center;
     font-size:14px;
 }
@@ -165,10 +166,10 @@ tbody{
     text-align:center;
     border:1px solid #ccc;
     box-sizing:border-box;
-    padding:6px 0;
+    padding:6px;
     font-size:14px;
 }
-.event-lists tbody td:first-child{
+tbody td:first-child{
     border-left:none;
 }
 .event-lists tbody td:last-child{
@@ -197,35 +198,3 @@ tbody{
     position:absolute;
     right:0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

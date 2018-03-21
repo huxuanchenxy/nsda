@@ -306,13 +306,13 @@ namespace nsda.Services.Implement.eventmanage
             return response;
         }
         //裁判批量签到或设置组别
-        public bool BatchReferee(List<int> memberId, int eventId, int status, out string msg)
+        public bool BatchReferee(List<int> memberId, int eventId, int status, out string msg,int RefereeStatus)
         {
             bool flag = false;
             msg = string.Empty;
             try
             {
-                if (status == -1)
+                if (status == -1)//签到
                 {
                     var sql = "update t_event_sign set eventSignStatus=@EventSignStatus,signtime=@SignTime where eventSignType=@EventSignType and memberId in @MemberId and eventId=@EventId and signDate=@SignDate ";
                     var dy = new DynamicParameters();
@@ -324,14 +324,16 @@ namespace nsda.Services.Implement.eventmanage
                     dy.Add("SignDate", DateTime.Now.ToString("yyyy-MM-dd"));
                     _dbContext.Execute(sql, dy);
                 }
-                else
+                else//批处理
                 {
-                    var sql = "update t_event_referee_signup set eventGroupId=@EventGroupId,updateTime=@UpdateTime where  eventId=@EventId and  memberId in @MemberId ";
+                    //var sql = "update t_event_referee_signup set  eventGroupId=@EventGroupId,updateTime=@UpdateTime where  eventId=@EventId and  memberId in @MemberId ";
+                    var sql = "update t_event_sign set RefereeStatus = @RefereeStatus,  eventGroupId=@EventGroupId,updateTime=@UpdateTime where  eventId=@EventId and  memberId in @MemberId ";
                     var dy = new DynamicParameters();
                     dy.Add("MemberId", memberId.ToArray());
                     dy.Add("EventId", eventId);
                     dy.Add("EventGroupId", status);
                     dy.Add("UpdateTime", DateTime.Now);
+                    dy.Add("RefereeStatus", RefereeStatus);
                     _dbContext.Execute(sql, dy);
                 }
                 flag = true;
