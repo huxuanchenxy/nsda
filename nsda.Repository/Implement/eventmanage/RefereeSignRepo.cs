@@ -47,9 +47,9 @@ namespace nsda.Repository.Implement.eventmanage
         /// <param name="eventId"></param>
         /// <param name="memberId"></param>
         /// <param name="manMemberId"></param>
-        public void RefereeSignSetting(int memberId, int manMemberId,int refereeStatus,int eventGroupId)
+        public void RefereeSignSetting(int memberId, int manMemberId,int refereeStatus,int eventGroupId,int eventid)
         {
-            var sql = $@" UPDATE t_event_sign set refereeStatus = {refereeStatus},eventGroupId = {eventGroupId} where memberId = {memberId} and eventId = (select id from t_event where memberId = {manMemberId})
+            var sql = $@" UPDATE t_event_sign set refereeStatus = {refereeStatus},eventGroupId = {eventGroupId} where  memberId = {memberId} and eventId = {eventid})
                            ";
             _dbContext.Execute(sql);
             

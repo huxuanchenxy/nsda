@@ -784,11 +784,11 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        public ContentResult editRefereeSettings(int memberid, int statusSet,int eventGroupId)
+        public ContentResult editRefereeSettings(int memberid, int statusSet,int eventGroupId,int eventid)
         {
             string msg = string.Empty;
 
-            _eventSignService.RefereeSignSetting(memberid, UserContext.WebUserContext.Id, statusSet,eventGroupId);
+            _eventSignService.RefereeSignSetting(memberid, UserContext.WebUserContext.Id, statusSet,eventGroupId,eventid);
 
             return Result<string>(true, msg);
         }

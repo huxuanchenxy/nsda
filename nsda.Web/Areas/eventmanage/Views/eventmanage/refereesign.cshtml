@@ -383,7 +383,8 @@
                 data: {
                     memberid: memberid,
                     statusSet: statusSet,
-                    eventGroupId:statusSet
+                    eventGroupId:statusSet,
+                    eventid:$('#hidEventId').val()
                 },
                 beforeSend: function () {
                     layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });

@@ -100,12 +100,20 @@
 
                                     }
                                 </select>
-
-                                @foreach (var flight in Race.ListCyclingRaceDetail)
+                                @for (var i = 0; i < Race.ListCyclingRaceDetail.Count; i++)
                                 {
+                                    if (i == 0)
+                                    { <label>Flight A:</label>}
+                                    else if (i == 1)
+                                    {
+                                        <label>Flight B:</label>
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        <label>Flight C:</label>
+                                    }
 
-                                    <label>Flight A:</label>
-                                    <input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly />
+                                    <input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly value='@Race.ListCyclingRaceDetail[i].CompTime.ToString("yyyy-MM-dd HH:mm:ss")' />
 
                                 }
                             </li>

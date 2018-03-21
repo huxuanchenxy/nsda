@@ -405,7 +405,7 @@ namespace nsda.Services.Implement.eventmanage
         /// <param name="memberId"></param>
         /// <param name="manMemberId"></param>
         /// <param name="refereeStatus"></param>
-        public void RefereeSignSetting(int memberId, int manMemberId, int statusSet,int eventGroupId)
+        public void RefereeSignSetting(int memberId, int manMemberId, int statusSet,int eventGroupId,int eventid)
         {
             RefereeStatusEm refereeStatus;
             if (statusSet == -1)//页面传来停用操作否则就是闲置
@@ -418,7 +418,7 @@ namespace nsda.Services.Implement.eventmanage
                 refereeStatus = RefereeStatusEm.闲置;
 
             }
-            _refereeSignRepo.RefereeSignSetting(memberId, manMemberId,(int)refereeStatus,eventGroupId);
+            _refereeSignRepo.RefereeSignSetting(memberId, manMemberId,(int)refereeStatus,eventGroupId, eventid);
         }
 
     }

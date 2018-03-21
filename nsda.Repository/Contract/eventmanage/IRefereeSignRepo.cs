@@ -14,6 +14,6 @@ namespace nsda.Repository.Contract.eventmanage
     {
         List<t_event_sign> RefereeSignData(int eventId, string manMemberId);
 
-        void RefereeSignSetting(int memberId, int manMemberId, int refereeStatus, int eventGroupId);
+        void RefereeSignSetting(int memberId, int manMemberId, int refereeStatus, int eventGroupId,int eventid);
     }
 }

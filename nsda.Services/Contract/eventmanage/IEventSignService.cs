@@ -35,6 +35,6 @@ namespace nsda.Services.Contract.eventmanage
         //查询当天组别签到人数
         int SignUpCount(int eventId, int eventGroupId);
 
-        void RefereeSignSetting(int memberId, int manMemberId, int statusSet, int eventGroupId);
+        void RefereeSignSetting(int memberId, int manMemberId, int statusSet, int eventGroupId,int eventid);
     }
 }
