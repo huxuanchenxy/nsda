@@ -1631,11 +1631,11 @@ input.form-control {
 }
 
 .twoLink ul.bg > li:first-child {
-    background: url(../img/bg1.png) no-repeat center /cover;
+    background: url(/asset/img/bg1.png) no-repeat center /cover;
 }
 
 .twoLink ul.bg > li:last-child {
-    background: url("../img/bg2 .png") no-repeat center /cover;
+    background: url("/asset/img/bg2 .png") no-repeat center /cover;
 }
 
 .twoLink ul.bg > li img {
@@ -1870,7 +1870,7 @@ input.form-control {
     background: silver;
     border-radius: 50%;
     float: left;
-    background: url("../img/teacher.png") no-repeat center /cover;
+    background: url("/asset/img/teacher.png") no-repeat center /cover;
 }
 
 .course-detail h5, .course-detail h4 {

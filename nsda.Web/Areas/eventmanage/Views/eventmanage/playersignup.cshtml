@@ -70,11 +70,7 @@
    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
     <script>
         
-        $(".clickready").click(function(){
-            console.log(1)
-            slide();
-            
-        })
+       
         function foreach(data,groupNum) {
             var reval = new Array();
             if (data != null) {
@@ -197,5 +193,12 @@
             }
             eventplayerlist.Load(eventplayerlist.param);
         });
+        $(function() {
+            $(".clickready").click(function(){
+                slide();
+            
+            });
+        });
+        
     </script>
 }

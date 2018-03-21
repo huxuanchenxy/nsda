@@ -287,16 +287,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(detail);
         }
         //成绩录入
-        public ActionResult resultinput(int eventId, int eventGroupId = 0)
-        {
-            var userContext = UserContext.WebUserContext;
-            ViewBag.UserContext = userContext;
-            var detail = _eventService.Detail(eventId);
-            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
-            ViewBag.EventGroup = eventgroup;
-            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
-            return View(detail);
-        }
+        
 
         
         //执行对垒
@@ -322,12 +313,15 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         }
 
         //double check
-        public ActionResult doublecheck()
+        public ActionResult doublecheck(int eventId, int eventGroupId = 0, int eventType = 1)
         {
             var userContext = UserContext.WebUserContext;
             ViewBag.UserContext = userContext;
-            //ViewBag.QRCode = "/commondata/makeqrcode?data=" + HttpUtility.UrlEncode($"/eventmanage/eventmanage/qrcode/{UserContext.WebUserContext.Id}");
-            return View(new EventResponse() { Id = 8 });
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
         }
 
 
@@ -827,6 +821,68 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         #endregion
 
 
+
+
+        //演讲
+
+        //循环赛规则设置
         
+        public ActionResult speechcyclingsetting(int id)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(id);
+            ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(id);
+            return View(detail);
+        }
+
+        //淘汰赛规则设置
+        public ActionResult speechknockoutsetting(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
+
+        //执行对垒
+        public ActionResult speechwork(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
+
+        //演讲成绩录入
+        public ActionResult speechwritegrades(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
+
+        //演讲doublecheck
+        public ActionResult speechdoublecheck(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            ViewBag.UserContext = userContext;
+            var detail = _eventService.Detail(eventId);
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            ViewBag.EventGroup = eventgroup;
+            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            return View(detail);
+        }
     }
 }

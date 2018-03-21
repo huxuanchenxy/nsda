@@ -114,10 +114,12 @@
                 trigger: 'click'
             });
         });
-        $(".clickready").click(function () {
-            slide();
+        $(function () {
+            $(".clickready").click(function () {
+                slide();
 
-        })
+            });
+        });
 
         //保存循环赛设置
         $("#save").click(function () {

@@ -124,12 +124,79 @@
 }
 
 
+.event-lists table tbody tr td{
+    border:none;
+}
 
+.event-con div.flitable{
+    width:100%;
+    overflow-x:scroll;
+    margin-bottom:80px;
+}
 
+/* 设置滚动条的样式 */
+.flitable::-webkit-scrollbar {
+    width:6px;
+    height:6px;
+}
+/* 滚动槽 */
+.flitable::-webkit-scrollbar-track {
+    border-radius:10px;
+}
+/* 滚动条滑块 */
+.flitable::-webkit-scrollbar-thumb {
+    border-radius:10px;
+    background:rgba(0,0,0,0.1);
+}
+.flitable::-webkit-scrollbar-thumb:window-inactive {
+    background:rgba(0,0,0,0.4);
+}
 
-
-
-
+.speechwork table{
+    width:1000px;
+    margin-bottom:20px;
+}
+.speechwork tbody{
+    border-bottom:1px solid #6cc4eb;
+}
+.speechwork table thead th{
+    border:1px solid #6CC4EB;
+}
+.event-lists .speechwork table tbody td{
+    border-left:1px solid #6CC4EB;
+    border-right:1px solid #6CC4EB;
+}
+.speechwork table input[type=checkbox]{
+    margin-right:8px;
+    margin-top:8px;
+    width:15px;
+    height:15px;
+    float:left;
+}
+.speechwork table .judge{
+    background:#9AE19A;
+    border-bottom:1px solid #6CC4EB;
+}
+.speechwork table label,.speechwork table p{
+    float:left;
+    margin-top:5px;
+    margin-right:4px;
+}
+.flitime{
+    width:150px;
+}
+.speechwork .flitime h5{
+    font-size:16px;
+}
+.speechwork .comtime{
+    width:140px;
+    height:30px;
+    background:#fff;
+    border:1px solid #a7a7a7;
+}
+.event-lists .speechwork table tbody td:not(:first-child){
+    width:260px;
+}
 
 
 

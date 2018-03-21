@@ -588,7 +588,7 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\resulttrackcycling.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\resulttrackknockout.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\doublecheck.cshtml" />
-    <Content Include="Areas\eventmanage\Views\eventmanage\resultinput.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\speechwritegrades.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\execmatch.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\writegrades.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\mapeight.cshtml" />
@@ -598,6 +598,10 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\mapthirtytwo.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\maptwo.cshtml" />
     <Content Include="Areas\eventmanage\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\speechwork.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\speechcyclingsetting.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\speechknockoutsetting.cshtml" />
+    <Content Include="Areas\eventmanage\Views\eventmanage\speechdoublecheck.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
