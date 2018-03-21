@@ -84,9 +84,14 @@
 </div>
 @section scripts
 {
-   <script src="/asset/js/pager.js?version=@Constant.Version"></script>
-   <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
     <script>
+        $(".clickready").click(function(){
+            slide();
+            
+        })
         var data=$("#eventgroupData").val();
         function returnGroup(roomId,eventGroupId,status)
         {

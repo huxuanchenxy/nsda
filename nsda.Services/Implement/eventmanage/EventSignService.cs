@@ -232,7 +232,7 @@ namespace nsda.Services.Implement.eventmanage
                         join.Append(" and a.RefereeStatus = @RefereeStatus ");
                     }
                 }
-                var sql = $@" select a.RefereeStatus,e.name EventGroupName,a.memberId MemberId,b.completename MemberName,b.code MemberCode,b.contactmobile ContactMobile,GROUP_CONCAT(a.signdate order by a.Id) Signdates,GROUP_CONCAT(a.eventSignStatus order by a.Id) EventSignStatuss
+                var sql = $@" select a.eventGroupId,a.RefereeStatus,e.name EventGroupName,a.memberId MemberId,b.completename MemberName,b.code MemberCode,b.contactmobile ContactMobile,GROUP_CONCAT(a.signdate order by a.Id) Signdates,GROUP_CONCAT(a.eventSignStatus order by a.Id) EventSignStatuss
                             from t_event_sign a 
                             inner join t_member_referee b on a.memberId=b.memberId
                             inner join t_event c on a.eventId=c.id
@@ -373,8 +373,8 @@ namespace nsda.Services.Implement.eventmanage
                         EventGroupId = item.id,
                         LeastCount = list1.Where(c => c.EventGroupId == item.id).Count(),
                         SignCount = list.Where(c => c.eventSignStatus == EventSignStatusEm.已签到 && c.eventGroupId == item.id).Count()
-                });
-            }
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -382,19 +382,42 @@ namespace nsda.Services.Implement.eventmanage
             }
             return response;
         }
-//查询当天组别签到人数
-public int SignUpCount(int eventId, int eventGroupId)
-{
-    int signUpCount = 0;
-    try
-    {
-        signUpCount = _dbContext.ExecuteScalar($"select count(*) from t_event_sign where eventId={eventId} and eventGroupId={eventGroupId} and eventSignType={(int)EventSignTypeEm.选手} and signdate={DateTime.Now.ToString("yyyy-MM-dd")}").ToObjInt();
-    }
-    catch (Exception ex)
-    {
-        LogUtils.LogError("EventSignService.SignUpCount", ex);
-    }
-    return signUpCount;
-}
+        //查询当天组别签到人数
+        public int SignUpCount(int eventId, int eventGroupId)
+        {
+            int signUpCount = 0;
+            try
+            {
+                signUpCount = _dbContext.ExecuteScalar($"select count(*) from t_event_sign where eventId={eventId} and eventGroupId={eventGroupId} and eventSignType={(int)EventSignTypeEm.选手} and signdate={DateTime.Now.ToString("yyyy-MM-dd")}").ToObjInt();
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("EventSignService.SignUpCount", ex);
+            }
+            return signUpCount;
+        }
+
+        /// <summary>
+        /// 裁判签到改变状态
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="manMemberId"></param>
+        /// <param name="refereeStatus"></param>
+        public void RefereeSignSetting(int memberId, int manMemberId, int statusSet,int eventGroupId)
+        {
+            RefereeStatusEm refereeStatus;
+            if (statusSet == -1)//页面传来停用操作否则就是闲置
+            {
+                refereeStatus = RefereeStatusEm.停用;
+                eventGroupId = 0;
+            }
+            else
+            {
+                refereeStatus = RefereeStatusEm.闲置;
+
+            }
+            _refereeSignRepo.RefereeSignSetting(memberId, manMemberId,(int)refereeStatus,eventGroupId);
+        }
+
     }
 }

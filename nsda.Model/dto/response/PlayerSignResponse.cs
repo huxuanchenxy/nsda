@@ -51,6 +51,7 @@ namespace nsda.Model.dto.response
         public string ContactMobile { get; set; }
         public string EventGroupName { get; set; }
         public RefereeStatusEm RefereeStatus { get; set; }
+        public int eventGroupId { get; set; }
     }
 
     public class RefereeSignSplitResponse

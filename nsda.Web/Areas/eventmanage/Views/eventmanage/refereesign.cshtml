@@ -40,7 +40,7 @@
                 </div>
                 <div class="group-con">
                     <a href="javascript:;" class="refereesign" data-status="2">使用中</a>
-                    <a href="javascript:;" class="refereesign" data-status="1">闲置</a>
+					<a href="javascript:;" class="refereesign" data-status="1">闲置</a>
                 </div>
             </div>
             <div class="data">
@@ -114,8 +114,9 @@
 </div>
 @section scripts
 {
-   <script src="/asset/js/pager.js?version=@Constant.Version"></script>
-   <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script src="/asset/js/pager.js?version=@Constant.Version"></script>
+    <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
     <script>
         var data=$("#eventgroupData").val();
         function returnGroup(eventid,memberid,eventGroupId,status)
@@ -149,9 +150,7 @@
             html+=' </select>';
             return html;
         }
-
-
-        (function (w) {
+ (function (w) {
             var eventrefereelist = {
                 param: {
                     TotalPage: 1,
@@ -193,7 +192,7 @@
                                 //}else{
                                 //    html+='<td>随机使用</td>';
                                 //}
-                                html+='<td>'+returnGroup(inner_eventid,val.MemberId,val.EventGroupId,val.RefereeStatus)+'</td>';
+                                html+='<td>'+returnGroup(inner_eventid,val.MemberId,val.eventGroupId,val.RefereeStatus)+'</td>';
                                 if(val.RefereeStatus == undefined || val.RefereeStatus == '' || val.RefereeStatus == null || val.RefereeStatus == 1)
                                 {
                                     html+='<td>闲置</td>';
@@ -243,6 +242,7 @@
         $("#refereesignUnlimited").click(function () {
             $(this).addClass("selected");
             $(".refereesign").removeClass("selected");
+            
             //eventrefereelist.param.RefereeSignUpStatus = 0;
             eventrefereelist.param.RefereeStatus = 0;
             //refereeStatus
@@ -253,12 +253,14 @@
             if ($this.hasClass("selected")) {
                 $this.removeClass("selected");
                 $("#refereesignUnlimited").addClass("selected");
+                
                 //eventrefereelist.param.RefereeSignUpStatus = 0;
                 eventrefereelist.param.RefereeStatus = 0;
             } else {
                 $(".refereesign").removeClass("selected");
                 $this.addClass("selected");
                 $("#refereesignUnlimited").removeClass("selected");
+                
                 //eventrefereelist.param.RefereeSignUpStatus = $this.attr("data-status");
                 eventrefereelist.param.RefereeStatus = $this.attr("data-status");
             }
@@ -269,6 +271,7 @@
             $(this).addClass("selected");
             $(".eventgroup").removeClass("selected");
             eventrefereelist.param.EventGroupId = 0;
+            
             eventrefereelist.Load(eventrefereelist.param);
         });
         $(".eventgroup").click(function () {
@@ -366,19 +369,20 @@
 
         //表格下拉框操作
         $(document).on("change", ".tbselect", function (){
-            var id=$(this).attr("data-id");
-            var status=$(this).val();
-            if(status==-2)//待验证20180320
-            {
-                return;
-            }
+            var memberid=$(this).attr("data-memberid");
+            var statusSet=$(this).val();
+            //if(status==-2)//待验证20180320
+            //{
+            //    return;
+            //}
             $.ajax({
-                url: "/eventmanage/eventmanage/editroomsett8888",
+                url: "/eventmanage/eventmanage/editRefereeSettings",
                 type: "post",
                 dataType: "json",
                 data: {
-                    id: id,
-                    status: status
+                    memberid: memberid,
+                    statusSet: statusSet,
+                    eventGroupId:statusSet
                 },
                 beforeSend: function () {
                     layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });

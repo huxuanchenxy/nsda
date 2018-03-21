@@ -41,6 +41,18 @@ namespace nsda.Repository.Implement.eventmanage
             return list;
         }
 
-
+        /// <summary>
+        /// 裁判签到管理设置状态
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="memberId"></param>
+        /// <param name="manMemberId"></param>
+        public void RefereeSignSetting(int memberId, int manMemberId,int refereeStatus,int eventGroupId)
+        {
+            var sql = $@" UPDATE t_event_sign set refereeStatus = {refereeStatus},eventGroupId = {eventGroupId} where memberId = {memberId} and eventId = (select id from t_event where memberId = {manMemberId})
+                           ";
+            _dbContext.Execute(sql);
+            
+        }
     }
 }
