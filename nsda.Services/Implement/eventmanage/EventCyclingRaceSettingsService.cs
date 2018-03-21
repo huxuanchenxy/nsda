@@ -179,11 +179,11 @@ namespace nsda.Services.Implement.eventmanage
         //循环赛详情
         public List<EventCyclingRaceSettingsResponse> CyclingRaceSettings(int eventId)
         {
-            List<EventCyclingRaceSettingsResponse> list = new List<EventCyclingRaceSettingsResponse>();
+            List<EventCyclingRaceSettingsResponse> data = new List<EventCyclingRaceSettingsResponse>();
             try
             {
                 var sql = $@"select * from t_event_cycling_settings where isdelete=0 and eventId={eventId}";
-                var data = _dbContext.Query<EventCyclingRaceSettingsResponse>(sql).ToList();
+                data = _dbContext.Query<EventCyclingRaceSettingsResponse>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
                     foreach (var item in data)
@@ -231,7 +231,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 LogUtils.LogError("EventCyclingRaceSettingsService.CyclingRaceSettings", ex);
             }
-            return list;
+            return data;
         }
     }
 }

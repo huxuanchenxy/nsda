@@ -25,6 +25,7 @@ namespace nsda.Model.dto.response
         public int RefereeCount { get; set; }
 
         public int TotalRound { get; set; }
+        public string EventGroupName { get; set; }
         public List<EventCyclingRaceResponse> ListCyclingRace { get; set; }
         public EventCyclingRaceSettingsResponse()
         {

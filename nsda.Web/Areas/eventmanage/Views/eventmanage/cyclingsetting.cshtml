@@ -21,23 +21,39 @@
     </div>
     <div class="roundset">
         <h3>循环赛规则设置</h3>
-        @foreach (var item in eventGroup)
+        @foreach (var item in cyclingRaceSettings)
         {
+            var groupName = eventGroup.Where(c => c.Id == @item.EventGroupId).ToList()[0].Name;
+
             <div class="newround">
-                <h4>@item.Name 循环赛规则设置<span><i></i></span></h4>
+                <h4>@groupName 循环赛规则设置<span><i></i></span></h4>
 
                 <div class="form-group range">
                     <label>裁判打分值区间：</label>
-                    <input type="number" class="radius5" placeholder="输入数值" />至<input type="number"  class="radius5"placeholder="输入数值" />
+                    <input type="number" class="radius5" placeholder="输入数值" value="@item.StartRange" />至<input type="number" class="radius5" placeholder="输入数值" value="@item.EndRange" />
                 </div>
                 <div class="form-group yn">
                     <label>是否允许裁判打0.5分：</label>
-                    <label class="radio-inline">
-                        <input type="radio" name="half_@item.Id" checked value="1"> 允许
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="half_@item.Id"> 不允许
-                    </label>
+                    @{
+                        if (item.IsAllow)
+                        {
+                            <label class="radio-inline">
+                                <input type="radio" name="IsAllow_@item.Id" checked value="1"><label>允许</label>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="IsAllow_@item.Id"> <label>不允许</label>
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="radio-inline">
+                                <input type="radio" name="IsAllow_@item.Id" value="1"><label>允许</label>
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="IsAllow_@item.Id" checked> <label>不允许</label>
+                            </label>
+                        }
+                    }
                     <p>* 如果如果允许，裁判可以在在规定的打分区间内打半分。例如：27.5分</p>
                 </div>
                 <div class="rounds">
@@ -57,48 +73,49 @@
                 </div>
                 <div class="roundone">
                     <ul class="eventRound">
-                        <li id="eventId">
-                            <label>循环赛第一轮</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly />
-                        </li>
-                        @*<li>
-                            <label>循环赛第二轮</label>
-                            <select class="rset">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                            <i class="iconfont icon-close-b"></i>
-                        </li>
-                        <li>
-                            <label>循环赛第三轮</label>
-                            <select class="rset">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                            <label>Flight C:</label>
-                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                            <i class="iconfont icon-close-b"></i>
-                        </li>*@
+                        @foreach (var Race in item.ListCyclingRace)
+                        {
+                            <li id="eventId">
+                                <label>循环赛第</label>@Race.CurrentRound<label>轮</label>
+                                <select class="rset radius5">
+                                    @{
+                                        var selectPair1 = "";
+                                        var selectPair2 = "";
+                                        var selectPair3 = "";
+                                        if ((int)Race.PairRule == 1)
+                                        {
+                                            selectPair1 = "selected";
+                                        }
+                                        else if ((int)Race.PairRule == 2)
+                                        {
+                                            selectPair2 = "selected";
+                                        }
+                                        else if ((int)Race.PairRule == 3)
+                                        {
+                                            selectPair3 = "selected";
+                                        }
+                                        <option value="1" @selectPair1>随机配对 Perset round</option>
+                                        <option value="2" @selectPair2>高低配对 High-Low Power Macth</option>
+                                        <option value="3" @selectPair3>相等配对 High-High Powe</option>
+
+                                    }
+                                </select>
+
+                                @foreach (var flight in Race.ListCyclingRaceDetail)
+                                {
+
+                                    <label>Flight A:</label>
+                                    <input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly />
+
+                                }
+                            </li>
+                                        }
                     </ul>
                 </div>
+
+
             </div>
-        }
+                                        }
         <button class="confirmset darkblue radius5 color-white" id="save" style="margin-top:10px;">确认保存循环赛设置</button>
     </div>
 </div>
@@ -145,7 +162,7 @@
                         layer.msg(json.msg, { icon: 5, time: 1000 });
                     }
                 }
-             ,error: function () {
+             , error: function () {
                  layer.closeAll();
              }
             });
@@ -198,7 +215,7 @@
         html3 += '<label>Flight C:</label><input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly />';
         html3 += '</li>';
 
-        
+
         $(".addRound").click(function () {
             var val = $(this).siblings(".flight").children(".flightlevel").children("input:checked").val();
             if (val == 1) {
@@ -220,6 +237,6 @@
         $(document).on("click", ".delRound", function () {
             $(this).parent().remove();
         })
-        
+
     </script>
 }
