@@ -833,6 +833,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             //var flag = true;
             return Result<string>(flag, msg);
         }
+
+        [HttpGet]
+        public ActionResult Getcyclingsetting(int id)
+        {
+            CyclingsettingResponse resp = new CyclingsettingResponse();
+
+            resp.groups = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            resp.settings = _eventCyclingRaceSettingsService.CyclingRaceSettings(id);
+            
+            return Json(resp, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region 淘汰赛设置
