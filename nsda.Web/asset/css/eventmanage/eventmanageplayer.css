@@ -41,24 +41,31 @@
     left:85px;
     top:220px;
 }
-.managelists ul{
+.bigbox{
     padding:6px;
 }
-.managelists ul li{
+.bigbox .list{
     border-bottom:1px dashed #CED4D7;
     padding:6px;
     font-size:18px;
     color:#666;
 }
-.managelists ul li label{
+.bigbox .list label{
     float:left;
     width:25px;
     height:25px;
     margin-right:6px;
 }
-.managelists ul li label input[type=checkbox]{
+.bigbox .list label input[type=checkbox]{
     width:20px;
     height:20px;
+}
+.hidebox{
+    display:none;
+}
+.clbtn{
+    height:60px;
+    position:relative;
 }
 .clickbtn{
     display:inline-block;
@@ -67,11 +74,15 @@
     text-align:center;
     margin-top:5px;
     line-height:26px;
+    position:absolute;
+    left:0;
+    top:0;
 }
 .clickready{
     background:#CAE69A;
     border:1px solid #A7CB6C;
     color:#999966;
+    z-index:9;
 }
 .clickbtn p{
     font-size:14px;

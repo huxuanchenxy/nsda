@@ -41,25 +41,25 @@
                     <p>* 如果如果允许，裁判可以在在规定的打分区间内打半分。例如：27.5分</p>
                 </div>
                 <div class="rounds">
-                    <a href="javascript:;" class="addrounds radius5 color-white blue">+ 添加比赛轮数</a>
+                    <a href="javascript:;" class="addrounds radius5 color-white blue addRound">+ 添加比赛轮数</a>
                     <div class="form-group flight">
-                        <label class="radio-inline">
+                        <label class="radio-inline flightlevel">
                             <input type="radio" name="flight_@item.Id" checked value="1"> 仅 Flight A
                         </label>
-                        <label class="radio-inline">
+                        <label class="radio-inline flightlevel">
                             <input type="radio" name="flight_@item.Id" value="2"> 分 Flight A 和 Flight B
                         </label>
-                        <label class="radio-inline">
+                        <label class="radio-inline flightlevel">
                             <input type="radio" name="flight_@item.Id" value="3"> 分 Flight A 、 Flight B 和 FLight C
                         </label>
                         <p>* 设置Flight是为了在竟可能少的使用到Room和裁判数量。例如：32支队伍，采用“仅Flight A” 需要使用到的Room数量为16间，裁判至少需要16位。如果采取“分Flight A 和 Flight B” 则需要8间Room,裁判则降为至少需要8位。但是，代价是比赛的时间延长。 </p>
                     </div>
                 </div>
                 <div class="roundone">
-                    <ul>
-                        <li>
+                    <ul class="eventRound">
+                        <li id="eventId">
                             <label>循环赛第一轮</label>
-                            <select class="rset">
+                            <select class="rset radius5">
                                 <option value="1">随机配对 Perset round</option>
                                 <option value="2">高低配对 High-Low Power Macth</option>
                                 <option value="3">相等配对 High-High Powe</option>
@@ -105,6 +105,7 @@
 @section scripts
 {
     <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
     <script>
         lay('.settime').each(function () {
             laydate.render({
@@ -113,6 +114,10 @@
                 trigger: 'click'
             });
         });
+        $(".clickready").click(function () {
+            slide();
+
+        })
 
         //保存循环赛设置
         $("#save").click(function () {
@@ -143,5 +148,76 @@
              }
             });
         });
+
+        //添加比赛轮数
+        var html = '<li>';
+        html += '<label>'
+        html += '循环赛第一轮';
+        html += '</label>';
+        html += '<select class="rset radius5" style="margin-left:3px;margin-right:3px;">';
+        html += '<option value="1">随机配对 Perset round</option>';
+        html += '<option value="2">高低配对 High-Low Power Macth</option>';
+        html += '<option value="3">相等配对 High-High Powe</option>';
+        html += '</select>';
+        html += '<label>Flight A:</label>';
+        html += '<input type="text" class="settime radius5 color-79" style="margin-left:3px;margin-right:3px;" placeholder="输入比赛时间" readonly />';
+        html += '<i class="iconfont icon-close-b delRound" style="color:#ff6666;"></i>'
+        html += '</li>';
+
+
+        var html2 = '<li>';
+        html2 += '<label>'
+        html2 += '循环赛第一轮';
+        html2 += '</label>';
+        html2 += '<select class="rset radius5" style="margin-left:3px;margin-right:3px;">';
+        html2 += '<option value="1">随机配对 Perset round</option>';
+        html2 += '<option value="2">高低配对 High-Low Power Macth</option>';
+        html2 += '<option value="3">相等配对 High-High Powe</option>';
+        html2 += '</select>';
+        html2 += '<label>Flight A:</label>';
+        html2 += '<input type="text" class="settime radius5 color-79" style="margin-left:3px;margin-right:3px;" placeholder="输入比赛时间" readonly />';
+        html2 += '<label>Flight B:</label><input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly />';
+        html2 += '<i class="iconfont icon-close-b delRound" style="color:#ff6666;"></i>';
+        html2 += '</li>';
+
+        var html3 = '<li>';
+        html3 += '<label>'
+        html3 += '循环赛第一轮';
+        html3 += '</label>';
+        html3 += '<select class="rset radius5" style="margin-left:3px;margin-right:3px;">';
+        html3 += '<option value="1">随机配对 Perset round</option>';
+        html3 += '<option value="2">高低配对 High-Low Power Macth</option>';
+        html3 += '<option value="3">相等配对 High-High Powe</option>';
+        html3 += '</select>';
+        html3 += '<label>Flight A:</label>';
+        html3 += '<input type="text" class="settime radius5 color-79" style="margin-left:3px;margin-right:3px;" placeholder="输入比赛时间" readonly />';
+        html3 += '<label>Flight B:</label><input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly />';
+        html3 += '<i class="iconfont icon-close-b delRound" style="color:#ff6666;"></i>';
+        html3 += '<label>Flight C:</label><input type="text" class="settime radius5 color-79" placeholder="输入比赛时间" readonly />';
+        html3 += '</li>';
+
+        
+        $(".addRound").click(function () {
+            var val = $(this).siblings(".flight").children(".flightlevel").children("input:checked").val();
+            if (val == 1) {
+                $(this).parent().siblings(".roundone").children(".eventRound").append(html);
+            } else if (val == 2) {
+                $(this).parent().siblings(".roundone").children(".eventRound").append(html2);
+            } else if (val == 3) {
+                $(this).parent().siblings(".roundone").children(".eventRound").append(html3);
+            }
+            lay('.settime').each(function () {
+                laydate.render({
+                    elem: this,
+                    type: 'datetime',
+                    trigger: 'click'
+                });
+            })
+        });
+
+        $(document).on("click", ".delRound", function () {
+            $(this).parent().remove();
+        })
+        
     </script>
 }

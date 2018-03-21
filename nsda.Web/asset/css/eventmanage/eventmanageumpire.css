@@ -1,44 +1,4 @@
 ﻿
-.managelists ul{
-    padding:6px;
-}
-.managelists ul li{
-    border-bottom:1px dashed #CED4D7;
-    padding:6px;
-    font-size:18px;
-    color:#666699;
-}
-.managelists ul li label{
-    float:left;
-    width:25px;
-    height:25px;
-    margin-right:6px;
-}
-.managelists ul li label input[type=checkbox]{
-    width:20px;
-    height:20px;
-}
-.managelists .clickready{
-    display:inline-block;
-    width:100%;
-    padding:6px;
-    background:#CAE69A;
-    border:1px solid #A7CB6C;
-    color:#999966;
-    text-align:center;
-    margin-top:5px;
-    border-radius:10px;
-    -webkit-border-radius:10px;
-    -moz-border-radius:10px;
-    line-height:26px;
-}
-.managelists .clickready p{
-    font-size:14px;
-}
-.managelists .clickready h4{
-    font-size:14px;
-    font-weight:600;
-}
 .data .data-item{
     min-width:7%;
     text-align:right;

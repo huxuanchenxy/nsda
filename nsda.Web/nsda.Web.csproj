@@ -547,6 +547,7 @@
     <Content Include="asset\js\pager.js" />
     <Content Include="asset\js\parallax.min.js" />
     <Content Include="asset\js\pcs.js" />
+    <Content Include="asset\js\slide.js" />
     <Content Include="asset\js\tabs.js" />
     <Content Include="Areas\player\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\coach\Views\Shared\_Layout.cshtml" />
@@ -596,6 +597,7 @@
     <Content Include="Areas\eventmanage\Views\eventmanage\mapsixteen.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\mapthirtytwo.cshtml" />
     <Content Include="Areas\eventmanage\Views\eventmanage\maptwo.cshtml" />
+    <Content Include="Areas\eventmanage\Views\_ViewStart.cshtml" />
     <None Include="asset\js\_references.js" />
     <Content Include="asset\js\validate.js" />
     <Content Include="asset\layer\css\layer.css" />
