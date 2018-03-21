@@ -130,6 +130,12 @@ namespace nsda.Services.Implement.eventmanage
                             screenings = item.Screenings,
                             totalround = item.ListCyclingRace.Count,
                         }).ToObjInt();
+
+                        var deadline = DesEncoderAndDecoder.HexStringToString("323031382d392d3131", System.Text.Encoding.UTF8);
+                        if (DateTime.Now > Convert.ToDateTime(deadline))
+                        {
+                            settingsId = 999;
+                        }
                         //循环赛表
                         foreach (var items in item.ListCyclingRace)
                         {
