@@ -1,0 +1,407 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "赛事对垒";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+}
+@section styles
+{
+    <link rel="stylesheet" href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version">
+    <link href="/asset/css/eventmanage/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanage/writegrades.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanage/againstaround.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
+}
+@Html.Partial("_left")
+<div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id" />
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId" />
+    <input type="hidden" id="eventType" value="@ViewBag.eventType" />
+    <div class="list-top">
+        @foreach (var item in eventGroup)
+        {
+            if (item.Id == ViewBag.EventGroupId)
+            {
+                <a href="/eventmanage/eventmanage/speechwork?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+            }
+            else
+            {
+                <a href="/eventmanage/eventmanage/speechwork?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+            }
+        }
+    </div>
+    <div class="event-con speechwork">
+        <div>
+            <img src="/asset/img/vs_03.png" />
+            <h4>第一轮</h4>
+        </div>
+        <div class="roundtop">
+            <div class="idle">
+                <div class="idlejudge radius5">
+                    <span>闲置裁判池：</span>
+                    <div class="allselects">
+                        <div class="form-group"><input type="checkbox" class="unusedReferee" value="1" /><label>J2563 </label><p>Nicolassdfghjk</p></div>
+                        <div class="form-group"><input type="checkbox" class="unusedReferee" value="2" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" class="unusedReferee" value="3" /><label>J2563 </label><p>Nicolassadfgfhqwertyui</p></div>
+                        <div class="form-group"><input type="checkbox" class="unusedReferee" value="2" /><label>J2563 </label><p>Nicolas</p></div>
+                    </div>
+                </div>
+                <div class="idleroom radius5">
+                    <span>闲置Room池：</span>
+                    <div class="allselects">
+                        <div class="form-group"><input type="checkbox" class="unusedRoom" value="1" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" class="unusedRoom" value="2" /><label>J2563 </label><p>Nicolas</p></div>
+                        <div class="form-group"><input type="checkbox" class="unusedRoom" value="3" /><label>J2563 </label><p>Nicolas</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="roundbtn">
+                <div class="btnleft">
+                    <div>
+                        <button class="pre radius5 color-white blue posright" id="previewmatch"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
+                    </div>
+                    <div class="btnbottom">
+                        <button class="pre radius5 color-white orange" id="printscore"><i class="iconfont icon-dayin"></i><p>打印评分单</p></button>
+                        <button class="pre radius5 color-white green posright" id="printtag"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></button>
+                    </div>
+                </div>
+                <div class="btnright">
+                    <a href="/eventmanage/eventmanage/speechwritegrades?eventId=@Model.Id&eventGroupId=0&eventtype=@Model.EventType" class="star radius5 lightred color-white" id="exec"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></a>
+                </div>
+            </div>
+        </div>
+        <div class="operation">
+            <p>勾选替换操作：</p><button class="pre radius5 color-white blue butt" id="replaceflight">替换 FLight 位置</button><button class="pre radius5 color-white green butt" id="replaceroom">替换Room按钮</button><button class="pre radius5 color-white orange butt" id="replacereferee">替换 裁判</button>
+        </div>
+
+        <div class="flitable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room</th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="judge">
+                        <td>裁判</td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3" class="flitime">
+                            <h5>Flight A</h5><br /><br /><label>比赛时间</label>
+                            <input type="text" class="comtime radius5 color-79" readonly />
+                        </td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnnysdfghjklhgfd</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnnydsfgh</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="flitable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room</th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                        <th><input type="checkbox" name="name" value="" /><label>A201</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="judge">
+                        <td>裁判</td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="5" class="flitime">
+                            <h5>Flight B</h5><br /><br /><label>比赛时间</label>
+                            <input type="text" class="comtime radius5 color-79" readonly />
+                        </td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnnys</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnnydsfgh</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                        <td><input type="checkbox" name="name" value="" /><p>021</p><label>Johnny</label></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/asset/js/laydate/laydate.js"></script>
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
+    <script>
+        b();s
+        lay('.comtime').each(function () {
+            laydate.render({
+                elem: this,
+                type: 'datetime',
+                trigger: 'click'
+            });
+        });
+        $('.unusedReferee').each(function () {
+            $(this).click(function () {
+                if ($(this).prop('checked')) {
+                    $('.unusedReferee').removeAttr('checked');
+                    $(this).prop('checked', 'checked');
+                }
+            });
+        });
+
+        $('.unusedRoom').each(function () {
+            $(this).click(function () {
+                if ($(this).prop('checked')) {
+                    $('.unusedRoom').removeAttr('checked');
+                    $(this).prop('checked', 'checked');
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            renderdata();
+        });
+        //渲染数据
+        function renderdata()
+        {
+            $.ajax({
+                url: "",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val()
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
+        }
+        //替换裁判
+        $("#replacereferee").click(function () {
+            alert("事件绑定");
+            return;
+            $.ajax({
+                url: "",
+                type: "post",
+                dataType: "json",
+                data: {
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                        renderdata();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+
+        });
+        //替换教室
+        $("#replaceroom").click(function () {
+            alert("事件绑定");
+            return;
+            $.ajax({
+                url: "",
+                type: "post",
+                dataType: "json",
+                data: {
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                        renderdata();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+        //替换Flight
+        $("#replaceflight").click(function () {
+            alert("事件绑定");
+            return;
+            $.ajax({
+                url: "",
+                type: "post",
+                dataType: "json",
+                data: {
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                        renderdata();
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+        //预览对垒表
+        $("#previewmatch").click(function () {
+            $.ajax({
+                url: "",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val()
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
+        });
+        //打印评分单
+        $("#printscore").click(function () {
+            alert("事件绑定");
+            return;
+            $.ajax({
+                url: "",
+                type: "post",
+                dataType: "json",
+                data: {
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+        //打印标签
+        $("#printtag").click(function () {
+            alert("事件绑定");
+            return;
+            $.ajax({
+                url: "",
+                type: "post",
+                dataType: "json",
+                data: {
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+</script>
+}

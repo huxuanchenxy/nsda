@@ -1,0 +1,130 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "演讲成绩录入";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+}
+@section styles{
+    <link href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanage/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanage/writegrades.css?version=@Constant.Version" rel="stylesheet" />
+}
+@Html.Partial("_left")
+<div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id"/>
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId"/>
+    <input type="hidden" id="eventType" value="@ViewBag.eventType" />
+    <div class="list-top">
+        @foreach (var item in eventGroup)
+        {
+            if (item.Id == ViewBag.EventGroupId)
+            {
+                <a href="/eventmanage/eventmanage/speechwritegrades?eventId=@item.EventId&eventGroupId=@item.Id" class="active list">@item.Name</a>
+            }
+            else
+            {
+                <a href="/eventmanage/eventmanage/speechwritegrades?eventId=@item.EventId&eventGroupId=@item.Id" class="list">@item.Name</a>
+            }
+        }
+    </div>
+    <div class="event-con">
+        <div>
+            <img src="/asset/img/vs_03.png" />
+            <h4>第一轮 评分单录入 </h4>
+            <button class="pre radius5 blue posright"><i class="iconfont icon-plus-preview"></i><p>预览对垒表</p></button>
+        </div>
+        <div>
+            <a href="/eventmanage/eventmanage/speechdoublecheck?eventId=@Model.Id&eventGroupId=0&eventtype=@Model.EventType" class="check radius5 poscen lightgreen"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></a>
+            <a href="javascript:;" class="pre radius5 green posright"><i class="iconfont icon-dayin"></i><p>打印标签纸</p></a>
+            <a href="javascript:;" class="pre radius5 orange posright"><i class="iconfont icon-dayin"></i><p>打印评分单</p></a>
+        </div>
+        <div class="set">
+            <input id="txt" class="radius5" type="text" placeholder="输入NSDA会员编号/会员姓名" />
+            <a href="javascript:;" id="search" class="search radius5 deepblue color-white">搜索</a>
+            <button class="check radius5 lightorange"><i class="iconfont icon-duihao1"></i><p>查看还未递交评分单的对垒</p></button>
+        </div>
+        <div class="constep">
+            <div class="speechpaper radius5">
+                <div><p class="flight">Flight A</p><p class="ftime">Start 9:25</p></div>
+                <div><h3>裁判：</h3><p class="jnumber">J325691234567890</p><p class="name">Nicolas</p><h3 class="room">Room：</h3><p class="roomnum">A201</p></div>
+                <table>
+                    <tr>
+                        <td>序号</td>
+                        <td>姓名</td>
+                        <td>Rank</td>
+                        <td>Points</td>
+                    </tr>
+                    <tr>
+                        <td>No.123</td>
+                        <td>steven</td>
+                        <td>23</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>No.123</td>
+                        <td>steven</td>
+                        <td>23</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>No.123</td>
+                        <td>steven</td>
+                        <td>23</td>
+                        <td>12</td>
+                    </tr>
+                </table>
+                <button class="refer radius5 darkblue color-white">提交评分单</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
+    <script>
+        b();
+        //搜索
+        $("#search").click(function () {
+            var data = $("#txt").val();
+            if (data == "" || data == null) {
+                return;
+            }
+            $.ajax({
+                url: "",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val(),
+                    txtValue: data
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
+        });
+
+        //成绩录入
+        $(document).on("click", ".resultinput", function () {
+           
+        });
+        
+        //替换位置
+        $(document).on("click", ".replace", function () {
+
+        });
+    </script>
+}
