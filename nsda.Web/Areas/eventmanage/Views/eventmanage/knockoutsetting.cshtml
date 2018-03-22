@@ -171,7 +171,7 @@
         $(".confirm").click(function () {
             var teamNum = $("#teamnum_" + $(this).attr("data-id")).val();
             if (parseInt(teamNum) < 2 || parseInt(teamNum) > 64) {
-                layer.msg('晋级队伍数有误,最小为2', { icon: 5, time: 1000 });
+                layer.msg('晋级队伍数有误', { icon: 5, time: 1000 });
                 return;
             }
             if (teamNum == 2) {
