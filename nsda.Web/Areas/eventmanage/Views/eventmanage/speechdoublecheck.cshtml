@@ -1,0 +1,200 @@
+﻿@using nsda.Utilities
+@using nsda.Model.dto.response
+@model EventResponse
+@{
+    Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "演讲dublecheck";
+    var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+}
+@section styles
+{
+    <link href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/eventmanage/doublecheck.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
+}
+@Html.Partial("_left")
+<div class="event-lists ">
+    <input type="hidden" id="eventId" value="@Model.Id" />
+    <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId" />
+    <input type="hidden" id="eventType" value="@ViewBag.eventType" />
+    <div class="list-top">
+        <a href="/Eventmanage/speechdoublecheck" class="active list">新手组</a>
+        <a href="/Eventmanage/speechdoublecheck" class="list">公开组</a>
+    </div>
+    <div class="event-con speechdoublecheck">
+        <div>
+            <img src="/asset/img/vs_03.png" />
+            <h4>第一轮 Double Check 核对评分单</h4>
+        </div>
+        <a href="/eventmanage/eventmanage/speechwritegrades?eventId=@Model.Id&eventGroupId=0&eventtype=@Model.EventType" class="back radius5 box-sizing"><i class="iconfont icon-54"></i><p>返回输入评分单界面</p></a>
+        <div>
+            <h5>勾选批处理:</h5><button class="pass radius5 box-sizing" id="batchconfirm"><i class="iconfont icon-duihao1"></i><p>Double Check 审核通过</p></button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2"></th>
+                    <th rowspan="2">选手编号</th>
+                    <th rowspan="2">姓名</th>
+                    <th colspan="2">J25 ERIC</th>
+                    <th colspan="2">J25 ERIC</th>
+                    <th rowspan="2" colspan="3"></th>
+                </tr>
+                <tr>
+                    <th>Rank</th>
+                    <th>Points</th>
+                    <th>Rank</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="10" class="first"><label><input type="checkbox" name="name" value="" /></label></td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>s</td>
+                    <td>dsf</td>
+                    <td>dsf</td>
+                    <td>we</td>
+                    <td rowspan="10" class="last"><a href="javascript:;" class="radius5 color-white green">审核通过</a><a href="javascript:;" class="radius5 color-white orange reedit">修改评分单</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>s</td>
+                    <td>dsf</td>
+                    <td>dsf</td>
+                    <td>we</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>s</td>
+                    <td>dsf</td>
+                    <td>dsf</td>
+                    <td>we</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>s</td>
+                    <td>dsf</td>
+                    <td>dsf</td>
+                    <td>we</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>s</td>
+                    <td>dsf</td>
+                    <td>dsf</td>
+                    <td>we</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>s</td>
+                    <td>dsf</td>
+                    <td>dsf</td>
+                    <td>we</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>s</td>
+                    <td>dsf</td>
+                    <td>dsf</td>
+                    <td>we</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+
+    <script src="/asset/js/slide.js?version=@Constant.Version"></script>
+    <script>
+        b();
+        //确认完成
+        $("#nextstep").click(function () {
+            var eventId = $("#eventId").val();
+            var eventGroupId = $("#eventGroupId").val();
+            //调用方法 检测是否都已经确认 已确认到下一轮
+            alert("开始下一轮");
+        });
+
+        //确认评分单
+        $(document).on("click", ".confirm", function () {
+            alert("测试");
+        });
+
+        //批量确认评分单
+        $("#batchconfirm").click(function () {
+            var arr = [];
+            $(".chkcofirm").each(function () {
+                if ($(this).is(":checked") == true) {
+                    arr.push($(this).attr("data-id"));
+                }
+            });
+            if (arr.length > 0) {
+                $.ajax({
+                    url: "",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                    },
+                    beforeSend: function () {
+                        layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            layer.msg('操作成功', { icon: 1, time: 1000 });
+                            renderdata();
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+                    , error: function () {
+                        layer.closeAll();
+                    }
+                });
+            } else {
+                layer.msg('请先勾选好数据再进行操作', { icon: 5, time: 1000 });
+            }
+        });
+
+        $(document).ready(function () {
+            renderdata();
+        });
+
+        //渲染数据
+        function renderdata()
+        {
+            $.ajax({
+                url: "",
+                type: "get",
+                dataType: "json",
+                data: {
+                    eventId: $("#eventId").val(),
+                    eventGroupId: $("#eventGroupId").val(),
+                },
+                success: function (json) {
+                    if (json.flag && json.data != null && json.data.length > 0) {
+                        var html = '';
+                        $.each(json.data, function (k, val) {
+
+                        });
+                        $("#data").html(html)
+                    } else {
+                        $("#data").html('');
+                    }
+                }
+            });
+
+        }
+    </script>
+}
