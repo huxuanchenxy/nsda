@@ -78,11 +78,11 @@ namespace nsda.Services.Implement.eventmanage
                     string message = string.Empty;
                     foreach (var items in item.ListCyclingRace)
                     {
-                        if (item.Screenings != items.ListCyclingRaceDetail.Count)
-                        {
-                            message = "Flight信息有误";
-                            break;
-                        }
+                        //if (item.Screenings != items.ListCyclingRaceDetail.Count)
+                        //{
+                        //    message = "Flight信息有误";
+                        //    break;
+                        //}
                         string messages = string.Empty;
                         foreach (var itemss in items.ListCyclingRaceDetail)
                         {

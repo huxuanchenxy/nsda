@@ -829,8 +829,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult cyclingracesettings(List<EventCyclingRaceSettingsRequest> request)
         {
             string msg = string.Empty;
-            //var flag = _eventCyclingRaceSettingsService.Settints(request, out msg);
-            var flag = true;
+            var flag = _eventCyclingRaceSettingsService.Settints(request, out msg);
+            //var flag = true;
             return Result<string>(flag, msg);
         }
         #endregion

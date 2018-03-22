@@ -160,6 +160,7 @@
                 var _startRange = $(this).find("[data-startRange]").val();
                 var _endRange = $(this).find("[data-endRange]").val();
                 var _isallow = $(this).find("input[name^='IsAllow']:checked ").val();
+                _isallow = _isallow == 0 ? false : true;
                 var eventGroupId = $(this).attr("data-EventGroupId");
                 var roundobj = $(this).find("li[class='round']");
                 var roundData = [];//轮次数组
@@ -179,16 +180,18 @@
 
                     var flightobj = $(this).find(".settime");
                     //alert(flightobj);
+                    var screen = 1;
                     $(flightobj).each(function () {
                         var currentCompTime = $(this).val();
-                        flightData.push({ EventId: eid, EventGroupId: eventGroupId, CompTime: currentCompTime });
+                        flightData.push({ EventId: eid, EventGroupId: eventGroupId, CompTime: currentCompTime, Screenings: screen });
+                        screen++;
                     });
-                    roundData.push({ListCyclingRaceDetail:flightData, EventId: eid, EventGroupId: eventGroupId, PairRule: pairRule, CurrentRound: currentRound, NextRound: nextRound });
+                    roundData.push({ ListCyclingRaceDetail: flightData, EventId: eid, EventGroupId: eventGroupId, PairRule: pairRule, CurrentRound: currentRound, NextRound: nextRound });
                     currentRound++;
                     totolRound++;
 
                 });
-                data.push({ EventId: eid, StartRange: _startRange, EndRange: _endRange, IsAllow: _isallow, EventGroupId: eventGroupId, TotalRound: totolRound, ListCyclingRace: roundData });
+                data.push({ EventId: eid, StartRange: _startRange, EndRange: _endRange, IsAllow: _isallow, EventGroupId: eventGroupId, TotalRound: totolRound, ListCyclingRace: roundData, Screenings:totolRound});
 
             });
 

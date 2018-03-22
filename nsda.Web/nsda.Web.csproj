@@ -737,10 +737,6 @@
     <Content Include="Areas\admin\asset\css\fonts\fontawesome-webfont.woff" />
     <Content Include="Areas\admin\asset\css\fonts\fontawesome-webfont.woff2" />
     <Content Include="Areas\admin\asset\css\fonts\FontAwesome.otf" />
-    <Content Include="Areas\admin\asset\js\plugins\datepicker\lang\vssver.scc" />
-    <Content Include="Areas\admin\asset\js\plugins\datepicker\skin\default\vssver.scc" />
-    <Content Include="Areas\admin\asset\js\plugins\datepicker\skin\vssver.scc" />
-    <Content Include="Areas\admin\asset\js\plugins\datepicker\skin\whyGreen\vssver.scc" />
     <Content Include="Areas\admin\asset\js\plugins\simditor\css\editor.scss" />
     <Content Include="Areas\admin\asset\js\plugins\simditor\css\fonticon.scss" />
     <Content Include="Areas\admin\asset\js\plugins\simditor\css\simditor.scss" />
