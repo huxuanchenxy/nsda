@@ -194,6 +194,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             ViewBag.CyclingRaceSettings = _eventCyclingRaceSettingsService.CyclingRaceSettings(id);
+            ViewBag.EventId = id;
             return View(detail);
         }
         //循环赛设置确认
@@ -828,7 +829,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult cyclingracesettings(List<EventCyclingRaceSettingsRequest> request)
         {
             string msg = string.Empty;
-            var flag = _eventCyclingRaceSettingsService.Settints(request, out msg);
+            //var flag = _eventCyclingRaceSettingsService.Settints(request, out msg);
+            var flag = true;
             return Result<string>(flag, msg);
         }
         #endregion
