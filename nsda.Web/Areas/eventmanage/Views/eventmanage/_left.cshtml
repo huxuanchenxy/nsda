@@ -5,7 +5,7 @@
         <input type="hidden" id="eventId" value="@Model.Id" />
         <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId" />
         <input type="hidden" id="eventType" value="@ViewBag.eventType" />
-        <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/cyclingsetting/@Model.Id"><p>比赛规则设置</p></a></div>
+        <div class="list"><label><input type="checkbox" name="name" value="" /></label><a id="lkRuleSettings" href="/eventmanage/eventmanage/cyclingsetting/@Model.Id"><p>比赛规则设置</p></a></div>
         <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/playersignup/@Model.Id"><p>选手报名管理</p></a></div>
         <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/refereesignup/@Model.Id"><p>裁判报名管理</p></a></div>
         <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/room/@Model.Id"><p>Room管理</p></a></div>
@@ -15,19 +15,71 @@
         </div>
         <div class="list clbtn">
             <a href="javascript:;" class="clickbtn clickready radius5"><p>准备好了吗？</p><h4>点击开始比赛当日操作</h4></a>
-            <a href="/eventmanage/eventmanage/execmatch?eventId=@Model.Id&eventGroupId=0" class="clickbtn clickstart radius5"><p>开始比赛</p><h4>点击开始执行对垒</h4></a>
+            <a id="lkredbutton"  class="clickbtn clickstart radius5"><p>开始比赛</p><h4>点击开始执行对垒</h4></a>
         </div>
         
 
         <div class="hidebox">
-            <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/track?eventId=@Model.Id&eventGroupId=0"><p>Track 查询</p></a></div>
-            <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/resulttrackcycling?eventId=@Model.Id&eventGroupId=0"><p>赛果查询</p></a></div>
+            <div class="list"><label><input type="checkbox" name="name" value="" /></label><a id="lktrack" ><p>Track 查询</p></a></div>
+            <div class="list"><label><input type="checkbox" name="name" value="" /></label><a  href="/eventmanage/eventmanage/resulttrackcycling?eventId=@Model.Id&eventGroupId=0"><p>赛果查询</p></a></div>
             <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/prize?eventId=@Model.Id&eventGroupId=0"><p>奖项设置</p></a></div>
             <div class="list"><label><input type="checkbox" name="name" value="" /></label><a href="/eventmanage/eventmanage/winnerlist?eventId=@Model.Id&eventGroupId=0"><p>获奖名单</p></a></div>
         </div>
     </div>
 </div>
+<script src="/asset/js/jquery.min.js"></script>
+<script src="/asset/js/jquery.cookie.js"></script>
+<script type="text/javascript">
 
+    $(function () {
+        var cook = $.cookie('currentEventType');
+        if (cook != '' && cook != undefined && cook != null) {
+            $('#eventType').val($.cookie('currentEventType'));
+        }
+    });
+
+    $(document).on('click', '#lkRuleSettings', function () {
+        var cook = $.cookie('currentEventType');
+        var eventid = $('#eventId').val();
+        if (cook != '' && cook != undefined && cook != null) {
+            var t = $.cookie('currentEventType');
+            if (t == 1)//辩论
+            {
+                location.href = "/eventmanage/eventmanage/cyclingsetting/" + eventid;
+            } else {
+                location.href = "/eventmanage/eventmanage/speechcyclingsetting/" + eventid;
+            }
+        }
+    });
+
+    $(document).on('click', '#lkredbutton', function () {
+        var cook = $.cookie('currentEventType');
+        var eventid = $('#eventId').val();
+        if (cook != '' && cook != undefined && cook != null) {
+            var t = $.cookie('currentEventType');
+            if (t == 1)//辩论
+            {
+                location.href = "/eventmanage/eventmanage/cyclingsettingconfirm?eventId="+eventid+"&eventGroupId=0";
+            } else {
+                location.href = "/eventmanage/eventmanage/knockoutsettingconfirm?eventId/" + eventid + "&eventGroupId=0";;
+            }
+        }
+    });
+
+    $(document).on('click', '#lktrack', function () {
+        var cook = $.cookie('currentEventType');
+        var eventid = $('#eventId').val();
+        if (cook != '' && cook != undefined && cook != null) {
+            var t = $.cookie('currentEventType');
+            if (t == 1)//辩论
+            {
+                location.href = "/eventmanage/eventmanage/track?eventId=" + eventid + "&eventGroupId=0";
+            } else {
+                location.href = "/eventmanage/eventmanage/track?eventId=" + eventid + "&eventGroupId=0";
+            }
+        }
+    });
+</script>
 
 
 
