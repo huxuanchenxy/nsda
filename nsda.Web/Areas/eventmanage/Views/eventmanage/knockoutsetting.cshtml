@@ -155,6 +155,8 @@
             });
         });
 
+        var li = '<li>';
+
         var html = '<select class="rset radius5">';
         html += '<option value="1">随机配对 Perset round</option>';
         html += '<option value="2">高低配对 High-Low Power Macth</option>';
@@ -175,37 +177,37 @@
                 return;
             }
             if (teamNum == 2) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Finals :</label>'+html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li+'<label class="comname">Finals :</label>'+html)
             }
             if (teamNum == 4) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
             }
             if (teamNum == 8) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
             }
             if (teamNum == 16) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Octafinals :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             if (teamNum == 32) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Double Octafinals :</label>' + html + '<li><label class="comname">Octafinals :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Double Octafinals :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             if (teamNum == 64) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Triple Octafinals :</label>' + html + '<li><label class="comname">Double Octafinals :</label>' + html + '<li><label class="comname">Octafinals :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Triple Octafinals :</label>' + html + li + '<label class="comname">Double Octafinals :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             if (teamNum >2 && teamNum < 4) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             if (teamNum > 4 && teamNum < 8) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             if (teamNum > 8 && teamNum < 16) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             if (teamNum > 16 && teamNum < 32) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Octafinals :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             if (teamNum > 32 && teamNum < 64) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append('<li><label class="comname">Partial :</label>' + html + '<li><label class="comname">Double Octafinals :</label>' + html + '<li><label class="comname">Octafinals :</label>' + html + '<li><label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Double Octafinals :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
             }
             var checkbox = $(".double");
             checkbox.change(function (e) {
