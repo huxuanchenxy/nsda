@@ -83,6 +83,7 @@
     line-height:30px;
     border:1px solid #BAC4CA;
     background:linear-gradient(to bottom,#FDFDFE,#F0F2F4);
+    color:#666;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -90,7 +91,7 @@
     left:20%;
     transform:translateX(-50%);
 }
-button.stargame{
+.stargame{
     display:inline-block;
     width:200px;
     height:40px;
@@ -107,7 +108,7 @@ button.stargame{
     left:50%;
     transform:translateX(-50%);
 }
-p.tips{
+.tips{
     font-size:14px;
     color:#ff6666;
     margin-top:20px;
