@@ -40,6 +40,7 @@ namespace nsda.Model.dto.response
 
         public KnockoutStatusEm KnockoutStatus { get; set; }
 
+        public PairRuleEm PairRule { get; set; }
         public List<EventKnockoutDetailResponse> ListKnockoutDetail { get; set; }
         public EventKnockoutResponse()
         {

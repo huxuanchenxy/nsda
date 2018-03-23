@@ -12,12 +12,13 @@
 @section styles
 {
     <link rel="stylesheet" href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version">
-    <link href="/asset/css/eventmanage/eventmanageround.css?version=@Constant.Version" rel="stylesheet" type="text/css" /> 
+    <link href="/asset/css/eventmanage/eventmanageround.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     <link href="/asset/css/eventmanage/eventmanageknockout.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
     <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists">
+    <input type="hidden" id="hidEventId" value="@Hideventid" />
     <div class="list-top">
         <a href="/eventmanage/eventmanage/cyclingsetting/@Model.Id" class="list box-sizing">循环赛规则设置</a>
         <a href="javascript:;" class="active box-sizing list">淘汰赛规则设置</a>
@@ -32,113 +33,13 @@
 
                 <div class="form-group range">
                     <label>晋级队伍数：</label>
-                    <input type="number" class="radius5" placeholder="输入数值" id="teamnum_@item.Id"/>
+                    <input type="number" class="radius5" placeholder="输入数值" id="teamnum_@item.Id" />
                     <a href="javascript:;" class="confirm" data-id="@item.Id">确认</a>
                     <p>* 建议填写为2的平方数，例如：4、8、16、32、64。最大数值不得超过64。</p>
                 </div>
 
                 <div class="roundone">
-                    <ul class="teamclass">
-                        @*<li>
-                            <label class="comname">Partial :</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <input type="checkbox" class="radius5" checked />
-                            <label>Double Flight</label>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-
-                            <label>Flight B:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                        </li>
-                        <li>
-                            <label class="comname">Triple Octafinals :</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <input type="checkbox" checked />
-                            <label>Double Flight</label>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                        </li>
-                        <li>
-                            <label class="comname">Double Octafinals :</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <input type="checkbox" checked />
-                            <label>Double Flight</label>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                        </li>
-                        <li>
-                            <label class="comname">Octafinals :</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <input type="checkbox" checked />
-                            <label>Double Flight</label>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                        </li>
-                        <li>
-                            <label class="comname">Quarterfinals :</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <input type="checkbox" checked />
-                            <label>Double Flight</label>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime" placeholder="输入比赛时间" readonly />
-                        </li>
-                        <li>
-                            <label class="comname">Semifinals :</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <input type="checkbox" checked />
-                            <label>Double Flight</label>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                        </li>
-                        <li>
-                            <label class="comname">Finals :</label>
-                            <select class="rset radius5">
-                                <option value="1">随机配对 Perset round</option>
-                                <option value="2">高低配对 High-Low Power Macth</option>
-                                <option value="3">相等配对 High-High Powe</option>
-                            </select>
-                            <input type="checkbox" checked />
-                            <label>Double Flight</label>
-                            <label>Flight A:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                            <label>Flight B:</label>
-                            <input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />
-                        </li>*@
-                    </ul>
+                    <ul class="teamclass"></ul>
                 </div>
             </div>
 
@@ -150,7 +51,7 @@
 {
     <script src="/asset/js/slide.js?version=@Constant.Version"></script>
     <script src="/asset/js/laydate/laydate.js"></script>
-    <script> 
+    <script>
         $(function () {
             $(".clickready").click(function () {
                 slide();
@@ -158,7 +59,7 @@
             });
         });
 
-        var li = '<li>';
+        var li = '<li class="round"><label>裁判数:</label><input type="text" class="radius5 refereeCount"  placeholder="输入数字" />';
 
         var html = '<select class="rset radius5">';
         html += '<option value="1">随机配对 Perset round</option>';
@@ -170,7 +71,7 @@
         html += '<label>Flight A:</label>';
         html += '<input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />';
         html += '</li>';
-        
+
         var flightb = '<label>Flight B:</label><input type="text" class="settime radius5" placeholder="输入比赛时间" readonly />'
 
         $(".confirm").click(function () {
@@ -180,37 +81,37 @@
                 return;
             }
             if (teamNum == 2) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li+'<label class="comname">Finals :</label>'+html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum == 4) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum == 8) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Quarterfinals :</label>' + html + '<li><label class="comname">Semifinals :</label>' + html + '<li><label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="5">Quarterfinals :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum == 16) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="4">Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="5">Quarterfinals :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum == 32) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Double Octafinals :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="3">Double Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="4">Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="5">Quarterfinals :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum == 64) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Triple Octafinals :</label>' + html + li + '<label class="comname">Double Octafinals :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="2">Triple Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="3">Double Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="4">Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="5">Quarterfinals :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
-            if (teamNum >2 && teamNum < 4) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+            if (teamNum > 2 && teamNum < 4) {
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="1">Partial :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum > 4 && teamNum < 8) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="1">Partial :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum > 8 && teamNum < 16) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="1">Partial :</label>' + html + li + '<label class="comname" data-knockoutType="5">Quarterfinals :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum > 16 && teamNum < 32) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="1">Partial :</label>' + html + li + '<label class="comname" data-knockoutType="4">Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="5">Quarterfinals :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             if (teamNum > 32 && teamNum < 64) {
-                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Double Octafinals :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
+                $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname" data-knockoutType="1">Partial :</label>' + html + li + '<label class="comname" data-knockoutType="3">Double Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="4">Octafinals :</label>' + html + li + '<label class="comname" data-knockoutType="5">Quarterfinals :</label>' + html + li + '<label class="comname" data-knockoutType="6">Semifinals :</label>' + html + li + '<label class="comname" data-knockoutType="7">Finals :</label>' + html)
             }
             var checkbox = $(".double");
             checkbox.change(function (e) {
@@ -221,28 +122,51 @@
                     $(this).parent("li").children("label:last").remove()
                     $(this).parent("li").children("input:last").remove()
                 }
+                setTimelay();
             })
+            setTimelay();
+        })
+
+        function setTimelay() {
             lay('.settime').each(function () {
                 laydate.render({
                     elem: this,
                     type: 'datetime',
                     trigger: 'click'
                 });
-            })
-        })
-
-
+            });
+        }
         $("#save").click(function () {
             //alert("调用了方法");
             //return;
+            var eid = $("#hidEventId").val();
             var data = [];
             var obj = $('.newround');
             $(obj).each(function () {
                 var roundobj = $(this).find("li[class='round']");
                 var eventGroupId = $(this).attr("data-EventGroupId");
+                var teamnumber = $(this).find(".form-group>input").val();
 
-                alert(eventGroupId);
-                data.push({ EventGroupId: eventGroupId });
+                var listknockout = [];
+
+                var screening = 1;
+                $(roundobj).each(function () {
+                    var pairRule = $(this).find("select").val();
+                    var knockouttype = $(this).find(".comname").attr("data-knockouttype");
+                    var refereeCount = $(this).find(".refereeCount").val();
+                    //alert(refereeCount);
+                    var listknockoutdetail = [];
+                    var flightobj = $(this).find(".settime");
+                    var flight = 1;
+                    $(flightobj).each(function () {
+                        var t = $(this).val();
+                        listknockoutdetail.push({ EventGroupId: eventGroupId, EventId: eid, Screenings: flight, CompTime: t });
+                        flight++;
+                    });
+                    listknockout.push({ EventGroupId: eventGroupId, EventId: eid, PairRule: pairRule, ListKnockoutDetail: listknockoutdetail, KnockoutType: knockouttype, RefereeCount: refereeCount, Screenings:screening });
+                    screening++;
+                });
+                data.push({ EventGroupId: eventGroupId, EventId: eid, Teamnumber: teamnumber, ListKnockout: listknockout });
             });
             $.ajax({
                 url: "/eventmanage/eventmanage/knockoutsettings",
@@ -263,7 +187,7 @@
                         layer.msg(json.msg, { icon: 5, time: 1000 });
                     }
                 }
-             ,error: function () {
+             , error: function () {
                  layer.closeAll();
              }
             });
@@ -271,12 +195,11 @@
 
         $(".confirm").click(function () {
             var teamNum = $("#teamnum_" + $(this).attr("data-id")).val();
-            if (teamNum == null || teamNum == "")
-            {
+            if (teamNum == null || teamNum == "") {
                 layer.msg('请输入晋级队伍数', { icon: 5, time: 1000 });
                 return;
             }
-            
+
         });
     </script>
 }
