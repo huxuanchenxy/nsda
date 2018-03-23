@@ -95,8 +95,8 @@
                             }
 
                             html+='</div>';
-                            html+='<a href="/eventmanage/eventmanage/cyclingsetting/@Model.Id" class="alter">前往修改</a>';
-                            html+='<a href="/eventmanage/eventmanage/speechwork?eventId=@Model.Id&eventGroupId=0" class="stargame">确认！开始比赛。</a><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>';
+                            html+='<a href="/eventmanage/eventmanage/cyclingsetting/@Model.Id" class="alter" id="back">前往修改</a>';
+                            html+='<a href="/eventmanage/eventmanage/speechwork?eventId=@Model.Id&eventGroupId=0" class="stargame" id="start">确认！开始比赛。</a><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>';
                             $("#data").html(html)
                         });
 

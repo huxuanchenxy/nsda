@@ -5,7 +5,7 @@
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "淘汰赛设置确认";
     var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
-    var knockoutSettings=ViewBag.KnockoutSettings as EventknockoutSettingsResponse
+    var knockoutSettings = ViewBag.KnockoutSettings as EventknockoutSettingsResponse;
 }
 
 @section styles
@@ -18,6 +18,7 @@
 <div class="event-lists ">
     <input type="hidden" id="eventId" value="@Model.Id" />
     <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId" />
+    <input type="hidden" id="eventType" value="@ViewBag.eventType" />
     <div class="list-top">
         @foreach (var item in eventGroup)
         {
@@ -31,18 +32,15 @@
             }
         }
     </div>
-    <div class="event-con">
-        <div class="rangeconfirm">
-            <div><h3>晋级队伍数： </h3><p>@knockoutSettings.Teamnumber</p></div>
+    <div class="event-con" id="data">
+        @*<div class="rangeconfirm">
+            <div><h3>晋级队伍数： </h3><p>6</p></div>
         </div>
         <div class="listconfirm">
-             @foreach (var item in knockoutSettings.ListKnockout)
-             {
-                <div><h3>@item.KnockoutType：</h3><p>每局对垒由 @item.RefereeCount 位裁判打分</p></div>
-             }
+                <div><h3>2：</h3><p>每局对垒由 4 位裁判打分</p></div>
         </div>
         <button class="alter" id="back">前往修改</button>
-        <a href="/eventmanage/eventmanage/execmatch/" class="stargame" id="start">确认！开始比赛。</a><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>
+        <a href="/eventmanage/eventmanage/execmatch/" class="stargame" id="start">确认！开始比赛。</a><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>*@
     </div>
 </div>
 
@@ -57,6 +55,70 @@
 
             });
         });
+        (function (w) {
+            var infolists = {
+                param: {
+                    EventId:@Model.Id,
+                    EventGroupId:0,
+                    groupsId:0
+                }
+            };
+            infolists.Load = function (filter) {
+
+                $.ajax({
+                    url:"GetKnockoutsetting/@Model.Id",
+                    type:"get",
+                    dataType:"json",
+                    success:function(json){
+                        $.each(json.settings,function(k,val){
+                            var html='<div class="rangeconfirm">';
+                            html+='<div><h3>晋级队伍数： </h3><p>'+ val.Teamnumber +'</p></div>';
+                            html+='</div>';
+                            
+                            html+='<div class="listconfirm">';
+                            for(var i=0;i<val.ListKnockout.length;i++){
+                                
+                                html+='<div>';
+                                if(val.ListKnockout[i].KnockoutType == 1){
+                                    html+='<h3>Partial：</h3>';
+                                }
+                                else if(val.ListKnockout[i].KnockoutType == 2){
+                                    html+='<h3>Triple Octafinals：</h3>';
+                                }
+                                else if(val.ListKnockout[i].KnockoutType == 3){
+                                    html+='<h3>Double Octafinals：</h3>';
+                                }
+                                else if(val.ListKnockout[i].KnockoutType == 4){
+                                    html+='<h3>Octafinals：</h3>';
+                                }
+                                else if(val.ListKnockout[i].KnockoutType == 5){
+                                    html+='<h3>Quarterfinals：</h3>';
+                                }
+                                else if(val.ListKnockout[i].KnockoutType == 6){
+                                    html+='<h3>Semifinals：</h3>';
+                                }
+                                else if(val.ListKnockout[i].KnockoutType == 7){
+                                    html+='<h3>Finals：</h3>';
+                                }
+                                html+='<p>每局对垒由'+ val.ListKnockout[i].RefereeCount +'位裁判打分</p>';
+
+                                html+='</div>';
+                            }
+                            html+='</div>'
+                            html+='<a href="/eventmanage/eventmanage/knockoutsetting/@Model.Id" class="alter" id="back">前往修改</a>';
+                            html+='<a href="/eventmanage/eventmanage/execmatch?eventId=@Model.Id&eventGroupId=0" class="stargame" id="start">确认！开始比赛。</a><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>';
+                            $("#data").html(html);
+                        })
+                    }
+
+                })
+            }
+            w.infolists = infolists;
+        })(window);
+        infolists.Load(infolists.param);
+
+
+
         //前往修改
         $("#back").click(function () {
             location.href = "/eventmanage/eventmanage/knockoutsetting/" + $("#eventId");
