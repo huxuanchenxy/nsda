@@ -5,6 +5,8 @@
     Layout = "~/Areas/eventmanage/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "淘汰赛设置";
     var eventGroup = ViewBag.EventGroup as List<EventGroupResponse>;
+    var KnockoutSettings = ViewBag.KnockoutSettings as List<EventknockoutSettingsResponse>;
+    var Hideventid = ViewBag.EventId;
 }
 
 @section styles
@@ -22,10 +24,11 @@
     </div>
     <div class="roundset">
         <h3>淘汰赛规则设置</h3>
-        @foreach (var item in eventGroup)
+        @foreach (var item in KnockoutSettings)
         {
-            <div class="newround">
-                <h4>@item.Name 淘汰赛规则设置<span><i></i></span></h4>
+            var groupName = eventGroup.Where(c => c.Id == @item.EventGroupId).ToList()[0].Name;
+            <div class="newround" data-EventGroupId="@item.EventGroupId">
+                <h4>@groupName 淘汰赛规则设置<span><i></i></span></h4>
 
                 <div class="form-group range">
                     <label>晋级队伍数：</label>
@@ -228,10 +231,17 @@
 
 
         $("#save").click(function () {
-            alert("调用了方法");
-            return;
+            //alert("调用了方法");
+            //return;
             var data = [];
-            data.push("");
+            var obj = $('.newround');
+            $(obj).each(function () {
+                var roundobj = $(this).find("li[class='round']");
+                var eventGroupId = $(this).attr("data-EventGroupId");
+
+                alert(eventGroupId);
+                data.push({ EventGroupId: eventGroupId });
+            });
             $.ajax({
                 url: "/eventmanage/eventmanage/knockoutsettings",
                 type: "post",

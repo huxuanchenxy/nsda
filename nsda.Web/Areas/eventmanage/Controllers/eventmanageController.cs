@@ -852,7 +852,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult knockoutsettings(List<EventknockoutSettingsRequest> request)
         {
             string msg = string.Empty;
-            var flag = _eventknockoutSettingsService.Settints(request, out msg);
+            //var flag = _eventknockoutSettingsService.Settints(request, out msg);
+            var flag = true;
             return Result<string>(flag, msg);
         }
         #endregion

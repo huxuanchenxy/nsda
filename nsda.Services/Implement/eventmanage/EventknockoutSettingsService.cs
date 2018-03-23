@@ -163,11 +163,11 @@ namespace nsda.Services.Implement.eventmanage
         //淘汰赛设置详情
         public List<EventknockoutSettingsResponse> KnockoutSettings(int eventId)
         {
-            List<EventknockoutSettingsResponse> list = new List<EventknockoutSettingsResponse>();
+            List<EventknockoutSettingsResponse> data = new List<EventknockoutSettingsResponse>();
             try
             {
                 var sql = $@"select * from t_event_knockout_settings where isdelete=0 and eventId={eventId}";
-                var data = _dbContext.Query<EventknockoutSettingsResponse>(sql).ToList();
+                data = _dbContext.Query<EventknockoutSettingsResponse>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
                     foreach (var item in data)
@@ -214,7 +214,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 LogUtils.LogError("EventknockoutSettingsService.KnockoutSettings", ex);
             }
-            return list;
+            return data;
         }
     }
 }
