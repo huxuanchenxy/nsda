@@ -41,6 +41,8 @@ namespace nsda.Model.dto.request
 
         public KnockoutStatusEm KnockoutStatus { get; set; }
 
+        public PairRuleEm PairRule { get; set; }
+
         public List<EventKnockoutDetailRequest> ListKnockoutDetail{ get; set; }
         public EventKnockoutRequest()
         {

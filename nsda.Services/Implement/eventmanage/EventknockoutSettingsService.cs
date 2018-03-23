@@ -68,11 +68,11 @@ namespace nsda.Services.Implement.eventmanage
                             message = "场次有误";
                             break;
                         }
-                        if (items.Screenings != items.ListKnockoutDetail.Count)
-                        {
-                            message = "场次对应信息有误";
-                            break;
-                        }
+                        //if (items.Screenings != items.ListKnockoutDetail.Count)
+                        //{
+                        //    message = "场次对应信息有误";
+                        //    break;
+                        //}
                         string messages = string.Empty;
                         foreach (var itemss in items.ListKnockoutDetail)
                         {
@@ -125,7 +125,8 @@ namespace nsda.Services.Implement.eventmanage
                                 eventGroupId = items.EventGroupId,
                                 screenings=items.Screenings,
                                 eventId = items.EventId,
-                                settingsId = settingsId
+                                settingsId = settingsId,
+                                pairRule = items.PairRule
                             }).ToObjInt();
 
                             foreach (var itemss in items.ListKnockoutDetail)
@@ -163,11 +164,11 @@ namespace nsda.Services.Implement.eventmanage
         //淘汰赛设置详情
         public List<EventknockoutSettingsResponse> KnockoutSettings(int eventId)
         {
-            List<EventknockoutSettingsResponse> list = new List<EventknockoutSettingsResponse>();
+            List<EventknockoutSettingsResponse> data = new List<EventknockoutSettingsResponse>();
             try
             {
                 var sql = $@"select * from t_event_knockout_settings where isdelete=0 and eventId={eventId}";
-                var data = _dbContext.Query<EventknockoutSettingsResponse>(sql).ToList();
+                data = _dbContext.Query<EventknockoutSettingsResponse>(sql).ToList();
                 if (data != null && data.Count > 0)
                 {
                     foreach (var item in data)
@@ -185,7 +186,8 @@ namespace nsda.Services.Implement.eventmanage
                                     KnockoutType=items.knockoutType,
                                     SettingsId=items.settingsId,
                                     RefereeCount=items.refereeCount,
-                                    Id = items.id                                   
+                                    Id = items.id,
+                                    PairRule = items.pairRule                                   
                                 };
                                 var itemsdata = _dbContext.Select<t_event_knockout_detail>(c => c.knockoutId == items.id).ToList();
                                 if (itemsdata != null && itemsdata.Count > 0)
@@ -214,7 +216,7 @@ namespace nsda.Services.Implement.eventmanage
             {
                 LogUtils.LogError("EventknockoutSettingsService.KnockoutSettings", ex);
             }
-            return list;
+            return data;
         }
     }
 }

@@ -26,4 +26,6 @@ namespace nsda.Model.enums
         //决赛
         finals =7
     }
+
+
 }

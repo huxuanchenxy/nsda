@@ -221,6 +221,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(id);
             ViewBag.EventGroup = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             ViewBag.KnockoutSettings = _eventknockoutSettingsService.KnockoutSettings(id);
+            ViewBag.EventId = id;
             return View(detail);
         }
 
@@ -853,7 +854,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         {
             string msg = string.Empty;
             var flag = _eventknockoutSettingsService.Settints(request, out msg);
+            //var flag = true;
             return Result<string>(flag, msg);
+        }
+
+        [HttpGet]
+        public ActionResult GetKnockoutsetting(int id)
+        {
+            KnockoutsettingResponse resp = new KnockoutsettingResponse();
+            resp.groups = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            resp.settings = _eventknockoutSettingsService.KnockoutSettings(id);
+            return Json(resp, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace nsda.Model.dto.response
 {
-    public class CyclingsettingResponse
+    public class KnockoutsettingResponse
     {
         public List<EventGroupResponse> groups { get; set; }
-        public List<EventCyclingRaceSettingsResponse> settings { get; set; }
+        public List<EventknockoutSettingsResponse> settings { get; set; }
     }
 
 
