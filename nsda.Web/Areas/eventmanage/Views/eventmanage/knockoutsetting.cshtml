@@ -155,7 +155,7 @@
             });
         });
 
-        var li = '<li>';
+        var li = '<li class="cat">';
 
         var html = '<select class="rset radius5">';
         html += '<option value="1">随机配对 Perset round</option>';
@@ -208,7 +208,7 @@
             }
             if (teamNum > 32 && teamNum < 64) {
                 $(this).parent().siblings(".roundone").children(".teamclass").empty().append(li + '<label class="comname">Partial :</label>' + html + li + '<label class="comname">Double Octafinals :</label>' + html + li + '<label class="comname">Octafinals :</label>' + html + li + '<label class="comname">Quarterfinals :</label>' + html + li + '<label class="comname">Semifinals :</label>' + html + li + '<label class="comname">Finals :</label>' + html)
-            }
+            };
             var checkbox = $(".double");
             checkbox.change(function (e) {
                 var checkbox = e.target;
@@ -219,6 +219,7 @@
                     $(this).parent("li").children("input:last").remove()
                 }
             })
+
             lay('.settime').each(function () {
                 laydate.render({
                     elem: this,
@@ -226,7 +227,9 @@
                     trigger: 'click'
                 });
             })
+
         })
+
 
 
         $("#save").click(function () {
