@@ -12,7 +12,7 @@
 {
     <link rel="stylesheet" href="/asset/css/eventmanage/eventmanageplayer.css?version=@Constant.Version">
     <link href="/asset/css/eventmanage/eventnewinfoconfirm.css?version=@Constant.Version" rel="stylesheet" type="text/css" />
-<link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
+    <link href="/asset/css/common/common.css?version=@Constant.Version" rel="stylesheet" />
 }
 @Html.Partial("_left")
 <div class="event-lists ">
@@ -42,7 +42,7 @@
              }
         </div>
         <button class="alter" id="back">前往修改</button>
-        <button class="stargame" id="start">确认！开始比赛。</button><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>
+        <a href="/eventmanage/eventmanage/execmatch/" class="stargame" id="start">确认！开始比赛。</a><p class="tips">* 确认开始比赛后，将无法修改“比赛规则设置”。 </p>
     </div>
 </div>
 
