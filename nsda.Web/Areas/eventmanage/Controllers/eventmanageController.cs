@@ -857,6 +857,15 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             //var flag = true;
             return Result<string>(flag, msg);
         }
+
+        [HttpGet]
+        public ActionResult GetKnockoutsetting(int id)
+        {
+            KnockoutsettingResponse resp = new KnockoutsettingResponse();
+            resp.groups = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
+            resp.settings = _eventknockoutSettingsService.KnockoutSettings(id);
+            return Json(resp, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region 赛果
