@@ -47,6 +47,8 @@
 .event-lists tbody td .entercompe{
     display:inline-block;
     padding:3px 15px;
+    cursor: pointer;
+    text-decoration: none;
 }
 .event-lists tbody td .checkresult{
     display:inline-block;

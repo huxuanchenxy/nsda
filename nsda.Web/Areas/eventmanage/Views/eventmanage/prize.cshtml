@@ -18,6 +18,7 @@
 <div class="event-lists">
     <input type="hidden" id="eventId" value="@Model.Id"/>
     <input type="hidden" id="eventGroupId" value="@ViewBag.EventGroupId"/>
+    <input type="hidden" id="hidPrizeGroup" value="@eventPrize.PrizeGroup" />
     <div class="list-top">
         @foreach (var item in eventGroup)
         {
@@ -52,9 +53,14 @@
             <div class="form-group">
                 <label>团队奖项 取 ：</label>
                 <select id="group" class="radius5">
-                    <option value="1">选择 获奖团队</option>
-                    <option value="2">团队奖</option>
-                    <option value="3">个人奖</option>
+                    <option value="">选择 获奖团队</option>
+                    <option value="7">Triple Octafinals</option>
+                    <option value="6">Double Octafinals</option>
+                    <option value="5">Octafinals</option>
+                    <option value="4">Quarterfinals</option>
+                    <option value="3">3rd 季军</option>
+                    <option value="2">2nd 亚军</option>
+                    <option value="1">1st 冠军</option>
                 </select>
             </div>
             <button class="save radius5 darkblue color-white" id="saveprizesetting">确认保存设置</button>
@@ -105,6 +111,7 @@
 
         $(document).ready(function () {
             renderdata();
+            renderGroup();
         });
 
         //渲染数据
@@ -141,6 +148,13 @@
                     }
                 }
             });
+
+            
+        }
+        function renderGroup()
+        {
+            var priceGroup = $("#hidPrizeGroup").val();
+            $("#group").val(priceGroup);
         }
 
         //删除
@@ -171,68 +185,68 @@
             });
         });
 
-        //编辑奖项
-        $(document).on("click", ".update", function () {
-            layer.open({
-                title: "",
-                type: 2,
-                content: "/eventmanage/eventmanage/updateprize/" + $(this).attr("data-id"),
-                area: ["565px", "410px"],
-                end: function () {
-                    renderdata();
-                }
-            })
-        });
-
-        //保存奖项设置
-        $("#saveprizesetting").click(function () {
-            var $Personal = $("#personal").val();
-            if ($Personal == ""||$Personal == null)
-            {
-                layer.msg('请输入个人排名数量', { icon: 5, time: 1000 });
-                return;
-            }
-            if (parseInt($Personal) <= 0)
-            {
-                layer.msg('请输入个人排名数量有误', { icon: 5, time: 1000 });
-                return;
-            }
-            var $Group = $("#group").val();
-            if ($Group <= 0)
-            {
-                layer.msg('请选择团队奖项', { icon: 5, time: 1000 });
-                return;
-            }
-            $.ajax({
-                url: "/eventmanage/eventmanage/prizesettings",
-                type: "post",
-                dataType: "json",
-                data: {
-                    EventId: $("#eventId").val(),
-                    EventGroupId:$("#eventGroupId").val(),
-                    Personal: $Personal,
-                    PrizeGroup: $("#group").val()
-                },
-                beforeSend: function () {
-                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
-                },
-                success: function (json) {
-                    layer.closeAll();
-                    if (json.flag) {
-                        layer.msg("操作成功", { icon: 1, time: 1000 });         
-                        setTimeout(function () {
-                            renderdata();
-                        }, 500);
+            //编辑奖项
+            $(document).on("click", ".update", function () {
+                layer.open({
+                    title: "",
+                    type: 2,
+                    content: "/eventmanage/eventmanage/updateprize/" + $(this).attr("data-id"),
+                    area: ["565px", "410px"],
+                    end: function () {
+                        renderdata();
                     }
-                    else {
-                        layer.msg(json.msg, { icon: 5, time: 1000 });
-                    }
-                }
-                 , error: function () {
-                     layer.closeAll();
-                 }
+                })
             });
 
-        });
+            //保存奖项设置
+            $("#saveprizesetting").click(function () {
+                var $Personal = $("#personal").val();
+                if ($Personal == ""||$Personal == null)
+                {
+                    layer.msg('请输入个人排名数量', { icon: 5, time: 1000 });
+                    return;
+                }
+                if (parseInt($Personal) <= 0)
+                {
+                    layer.msg('请输入个人排名数量有误', { icon: 5, time: 1000 });
+                    return;
+                }
+                var $Group = $("#group").val();
+                if ($Group <= 0)
+                {
+                    layer.msg('请选择团队奖项', { icon: 5, time: 1000 });
+                    return;
+                }
+                $.ajax({
+                    url: "/eventmanage/eventmanage/prizesettings",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        EventId: $("#eventId").val(),
+                        EventGroupId:$("#eventGroupId").val(),
+                        Personal: $Personal,
+                        PrizeGroup: $("#group").val()
+                    },
+                    beforeSend: function () {
+                        layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                    },
+                    success: function (json) {
+                        layer.closeAll();
+                        if (json.flag) {
+                            layer.msg("操作成功", { icon: 1, time: 1000 });         
+                            setTimeout(function () {
+                                renderdata();
+                            }, 500);
+                        }
+                        else {
+                            layer.msg(json.msg, { icon: 5, time: 1000 });
+                        }
+                    }
+                     , error: function () {
+                         layer.closeAll();
+                     }
+                });
+
+            });
     </script>
 }

@@ -96,6 +96,8 @@
     background:linear-gradient(to bottom,#FFA9A8,#FF8281);
     border:1px solid #F2706E;
     color:#993333;
+    cursor:pointer;
+    text-decoration:none;
 }
 .classcheck img{
     float:left;

@@ -23,14 +23,13 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody id="data">
-        </tbody>
+        <tbody id="data"></tbody>
     </table>
     <nav aria-label="Page navigation" id="pager">
     </nav>
 </div>
 @section scripts
-{   
+{
     <script src="/asset/js/common.js?version=@Constant.Version"></script>
     <script src="/asset/js/pager.js?version=@Constant.Version"></script>
     <script src="/asset/js/enumreplace.js?version=@Constant.Version"></script>
@@ -61,15 +60,16 @@
                             });
                             var html = '';
                             $.each(json.rows, function (k, val) {
-                                html += '<tr>';
+                                html += '<tr data-eventid="' + val.Id + '" data-eventtype="' + val.EventType + '"';
+                                html += '>';
                                 html += '<td>' + val.Code + '</td>';
                                 html += '<td>' + val.Name + '</td>';
                                 html += '<td>' + enumreplace.replaceeventTypeName(val.EventTypeName) + '</td>';
                                 html += '<td><i>' + val.SignUpCount + '</i>/' + val.Maxnumber + '</td>';
-                                html += '<td>' +parseDate(new Date(val.EndSignDate), "yyyy-MM-dd").format+ '</td>';
+                                html += '<td>' + parseDate(new Date(val.EndSignDate), "yyyy-MM-dd").format + '</td>';
                                 html += '<td>' + enumreplace.replaceEventStatus(val.EventStatus) + '</td>';
                                 if (val.EventStatus == 3 || val.EventStatus == 4 || val.EventStatus == 5) {
-                                    html += '<td><a href="/eventmanage/eventmanage/playersignup/' + val.Id + '" class="entercompe darkgreen color-white radius5">进入比赛</a></td>'
+                                    html += '<td><a id="lkSetting"  class="entercompe darkgreen color-white radius5">进入比赛</a></td>'
                                 } else if (val.EventStatus == 6) {
                                     html += '<td><a href="/eventmanage/eventmanage/eventresult/' + val.Id + '" class="checkresult darkgreen color-white radius5">查看赛果</a></td>'
                                 } else {
@@ -88,6 +88,19 @@
             w.eventlist = eventlist
         })(window);
         eventlist.Load(eventlist.param);
+
+
+        $(document).on('click', '#lkSetting', function () {
+            var currentEventId = $(this).parent().parent().attr("data-eventid");
+            var currentEventType = $(this).parent().parent().attr("data-eventtype");
+            var cook = $.cookie('currentEventType');
+            if (cook != '' && cook != undefined && cook != null)
+            {
+                $.cookie('currentEventType', null);
+            }
+            $.cookie('currentEventType', currentEventType);
+            location.href = "/eventmanage/eventmanage/playersignup/" + currentEventId;
+        });
     </script>
 }
 

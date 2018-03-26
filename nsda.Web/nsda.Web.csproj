@@ -536,6 +536,7 @@
     <Content Include="asset\js\info.js" />
     <Content Include="asset\js\ipc.js" />
     <Content Include="asset\js\jquery-3.2.1.min.js" />
+    <Content Include="asset\js\jquery.cookie.js" />
     <Content Include="asset\js\jquery.form.js" />
     <Content Include="asset\js\jquery.min.js" />
     <Content Include="asset\js\jquery.tabslet.min.js" />
