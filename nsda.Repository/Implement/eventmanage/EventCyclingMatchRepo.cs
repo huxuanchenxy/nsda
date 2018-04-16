@@ -232,6 +232,7 @@ namespace nsda.Repository.Implement.eventmanage
             {
                 TrackCyclingResponse obj = new TrackCyclingResponse()
                 {
+                    id = li.id,
                     eventId = li.eventId,
                     eventGroupId = li.eventGroupId
                 ,
