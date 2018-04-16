@@ -90,6 +90,7 @@
     <Compile Include="dto\response\BaseListResponse.cs" />
     <Compile Include="dto\response\CityResponse.cs" />
     <Compile Include="dto\response\CountryResponse.cs" />
+    <Compile Include="dto\response\CyclingRankResponse.cs" />
     <Compile Include="dto\response\KnockoutsettingResponse.cs" />
     <Compile Include="dto\response\CyclingsettingResponse.cs" />
     <Compile Include="dto\response\EventRegularAwardsResponse.cs" />

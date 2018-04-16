@@ -94,6 +94,8 @@ namespace nsda.Services.Implement.eventmanage
                             group p by new { p.groupnum } into g
                             select new t_event_player_signup { groupnum = g.Key.groupnum };
                 List<t_event_player_signup> teamlist = query.Cast<t_event_player_signup>().ToList<t_event_player_signup>();
+
+
                 //(1)先两两分组,先计算一共有几场pk
                 var pk = 0;
                 if (teamlist.Count % 2 == 0)//正好2的整数倍
@@ -131,6 +133,66 @@ namespace nsda.Services.Implement.eventmanage
                 //用户设几间房就充分利用,设了是用户自己的事情
                 //如果是第一轮则随机配对
                 var pr = cyclingrace.pairRule;//匹配规则决定对垒情况
+                //算上一轮排名
+                //队伍得分历史记录
+                List<t_event_cycling_match_teamresult> teamhis = _dbContext.Select<t_event_cycling_match_teamresult>(c => c.eventId == eventId && c.eventGroupId == eventGroupId).ToList();
+                //对垒历史记录,为了找对手
+                List<t_event_cycling_match> matchhis = _dbContext.Select<t_event_cycling_match>(c => c.eventId == eventId && c.eventGroupId == eventGroupId).ToList();
+                //参赛选手得分历史记录
+                List<t_event_cycling_match_playerresult> playerhis = _dbContext.Select<t_event_cycling_match_playerresult>(c => c.eventId == eventId && c.eventGroupId == eventGroupId).ToList();
+
+                #region 算历史排名
+                List<CyclingRankResponse> resultTeamList = new List<CyclingRankResponse>();
+                foreach (var team in teamlist)
+                {
+                    var curGroup = team.groupnum;
+                    CyclingRankResponse o = new CyclingRankResponse() { groupNum = curGroup };
+
+
+                    //1.获胜场数 （越大越靠前）
+                    var _selfWin = (int)teamhis.Where(p => p.groupNum == team.groupnum && p.eventId == eventId && p.eventGroupId == eventGroupId && p.isWin).Count();
+                    o.selfWin = _selfWin;
+                    //2.队伍选手总分 （越大越靠前）
+                    var _selfPoint = (int)teamhis.Where(p => p.groupNum == team.groupnum && p.eventId == eventId && p.eventGroupId == eventGroupId).Sum(p => p.totalScore);
+                    o.selfPoint = _selfPoint;
+                    //3.对手获胜场数 （越大越靠前）
+                    //3.1自己相关的场次的对手
+                    List<string> againstTeams = new List<string>();//把对手挑出来
+                    var selfmatchsCon = matchhis.Where(p => p.progroupNum == team.groupnum  && p.eventId == eventId && p.eventGroupId == eventGroupId);
+                    foreach (var aa in selfmatchsCon)
+                    {
+                        if (!againstTeams.Contains(aa.congroupNum))
+                        {
+                            againstTeams.Add(aa.congroupNum);
+                        }
+                    }
+                    var selfmatchsPro = matchhis.Where(p => p.congroupNum == team.groupnum && p.eventId == eventId && p.eventGroupId == eventGroupId);
+                    foreach (var aa in selfmatchsPro)
+                    {
+                        if (!againstTeams.Contains(aa.progroupNum))
+                        {
+                            againstTeams.Add(aa.progroupNum);
+                        }
+                    }
+                    //3.2 算对手的获胜场数
+                    var queryAgainst =(from e in teamhis
+                                           where againstTeams.Contains(e.groupNum) && e.eventId == eventId && e.eventGroupId == eventGroupId
+                                           select e).ToList();
+
+                    int againstWin = (int)queryAgainst.Where(p => p.isWin).Count();
+                    o.againstWin = againstWin;
+                    int againstPoint = (int)queryAgainst.Sum(p => p.totalScore);
+                    o.againstPoint = againstPoint;
+
+                    resultTeamList.Add(o);//放入统计排名列表里
+                }
+                #endregion
+
+                if (pr == Model.enums.PairRuleEm.高低配对)
+                {
+                }
+
+
                 var newteamlist = Utility.RandomSortList(teamlist);
                 for (int i = 0; i < newteamlist.Count; i = i + 2)//选手总归要都待分配的
                 {
@@ -210,7 +272,7 @@ namespace nsda.Services.Implement.eventmanage
                 //看是否有双赢双输队伍
                 //查看上一轮所有的对垒 
                 //var cyclingracesettings = _dbContext.Select<t_event_cycling_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
-                var cyclingrace = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingRaceStatus == Model.enums.CyclingRaceStatusEm.未开始).OrderBy(c=>c.currentround).FirstOrDefault();
+                var cyclingrace = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingRaceStatus == Model.enums.CyclingRaceStatusEm.未开始).OrderBy(c => c.currentround).FirstOrDefault();
                 //var cyclingracedetail = _dbContext.Select<t_event_cycling_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();
 
                 _eventCyclingMatchRepo.GotoNext(cyclingrace.eventId, cyclingrace.eventGroupId, cyclingrace.currentround);
@@ -249,7 +311,7 @@ namespace nsda.Services.Implement.eventmanage
         {
             return _eventCyclingMatchRepo.GetTrackCyclingCur(eventId, eventGroupId, keyValue);
         }
-        
+
 
 
 
