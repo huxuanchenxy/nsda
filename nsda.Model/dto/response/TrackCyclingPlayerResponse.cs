@@ -8,7 +8,7 @@ using nsda.Models;
 
 namespace nsda.Model.dto.response
 {
-    public class TrackCyclingTeamResponse
+    public class TrackCyclingPlayerResponse
     {
         public int id { get; set; }
 
@@ -18,13 +18,14 @@ namespace nsda.Model.dto.response
 
         public int cyclingMatchId { get; set; }
 
+        public int playerId { get; set; }
+
+        public int refereeId { get; set; }
+
         public string groupNum { get; set; }
 
-        public decimal totalScore { get; set; }
+        public int ranking { get; set; }
 
-        public bool isWin { get; set; }
-
-        public WinTypeEm winType { get; set; }
-        public List<TrackCyclingPlayerResponse> players { get; set; }
+        public decimal score { get; set; }
     }
 }

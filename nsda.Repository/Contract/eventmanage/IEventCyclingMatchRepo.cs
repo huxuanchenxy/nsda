@@ -21,5 +21,8 @@ namespace nsda.Repository.Contract.eventmanage
 
         void GotoNext(int eventId, int eventGroupId, int currentRound);
         List<TrackCyclingResponse> GetTrackCyclingCur(int eventId, int eventGroupId, string keyValue);
+        List<TrackCyclingResponse> GetTrackCycling(int eventId, int eventGroupId, string keyValue);
+        
+        t_event_cycling GetCurCycling(int eventId, int eventGroupId);
     }
 }

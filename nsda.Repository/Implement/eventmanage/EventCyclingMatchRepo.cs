@@ -262,7 +262,26 @@ namespace nsda.Repository.Implement.eventmanage
                              where pp.eventId == eventId && pp.eventGroupId == eventGroupId && pp.cyclingMatchId == li.id && pp.groupNum == ct.groupNum
                              select pp;
                     List<t_event_cycling_match_playerresult> curPlayers = q2.Cast<t_event_cycling_match_playerresult>().ToList<t_event_cycling_match_playerresult>();
-                    ttp.players = curPlayers;
+                    List<TrackCyclingPlayerResponse> arrPlayers = new List<TrackCyclingPlayerResponse>();
+                    foreach (var pl in curPlayers)
+                    {
+                        var objp = new TrackCyclingPlayerResponse()
+                        {
+                            id = pl.id,
+                            cyclingMatchId = pl.cyclingMatchId
+                        ,
+                            eventGroupId = pl.eventGroupId,
+                            eventId = pl.eventId,
+                            groupNum = pl.groupNum
+                        ,
+                            playerId = pl.playerId,
+                            ranking = pl.ranking,
+                            refereeId = pl.refereeId,
+                            score = pl.score
+                        };
+                        arrPlayers.Add(objp);
+                    }
+                    ttp.players = arrPlayers;
                     teamResp.Add(ttp);
 
                 }
@@ -273,5 +292,108 @@ namespace nsda.Repository.Implement.eventmanage
 
             return list;
         }
+
+        public t_event_cycling GetCurCycling(int eventId, int eventGroupId)
+        {
+            //取当前比赛没结束的当前轮次的运行状态,左侧菜单跳转判断用,1就是未开始跳生成对垒表页面，2就是一开始只能跳track确认页面
+            var ret = _dbContext.Select<t_event_cycling>(c => c.eventId == eventId && c.eventGroupId == eventGroupId && c.cyclingRaceStatus != Model.enums.CyclingRaceStatusEm.已结束).OrderBy(c => c.currentround).FirstOrDefault();
+            return ret;
+        }
+
+        /// <summary>
+        /// track查询
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="eventGroupId"></param>
+        /// <param name="keyValue"></param>
+        /// <returns></returns>
+        public List<TrackCyclingResponse> GetTrackCycling(int eventId, int eventGroupId, string keyValue)
+        {
+            List<TrackCyclingResponse> list = new List<TrackCyclingResponse>();
+
+            StringBuilder join = new StringBuilder();
+            //if (request.KeyValue.IsNotEmpty())
+            //{
+            //    request.KeyValue = $"%{request.KeyValue}%";
+            //    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
+            //}
+            var sql = $@" SELECT * FROM t_event_cycling_match
+                          WHERE cyclingDetailId IN (SELECT id FROM t_event_cycling_detail
+                          WHERE eventId = {eventId}  AND eventGroupId = {eventGroupId} AND cyclingraceId = (
+                            SELECT id FROM t_event_cycling
+                                WHERE eventId = {eventId} AND eventGroupId = {eventGroupId} AND cyclingRaceStatus = 2
+                                ) 
+                        )";
+            List<t_event_cycling_match> matchs = _dbContext.Query<t_event_cycling_match>(sql).ToList();
+
+
+            //初筛team成绩
+            var teams = _dbContext.Select<t_event_cycling_match_teamresult>(c => c.eventId == eventId && c.eventGroupId == eventGroupId).ToList();
+            //初筛player成绩
+            var players = _dbContext.Select<t_event_cycling_match_playerresult>(c => c.eventId == eventId && c.eventGroupId == eventGroupId).ToList();
+            foreach (var li in matchs)
+            {
+                TrackCyclingResponse obj = new TrackCyclingResponse()
+                {
+                    id = li.id,
+                    eventId = li.eventId,
+                    eventGroupId = li.eventGroupId
+                ,
+                    congroupNum = li.congroupNum,
+                    cyclingDetailId = li.cyclingDetailId,
+                    cyclingMatchStatus = li.cyclingMatchStatus
+                ,
+                    isBye = li.isBye,
+                    progroupNum = li.progroupNum,
+                    refereeId = (int)li.refereeId,
+                    roomId = (int)li.roomId
+                };
+
+                var q1 = from t in teams
+                         where (t.groupNum == li.progroupNum || t.groupNum == li.congroupNum) && t.eventId == eventId && t.eventGroupId == eventGroupId && t.cyclingMatchId == li.id
+                         select t;
+                //应该有两条记录，说明两个队伍pk
+                List<t_event_cycling_match_teamresult> curTeams = q1.Cast<t_event_cycling_match_teamresult>().ToList<t_event_cycling_match_teamresult>();
+                List<TrackCyclingTeamResponse> teamResp = new List<TrackCyclingTeamResponse>();
+                foreach (var ct in curTeams)
+                {
+                    TrackCyclingTeamResponse ttp = new TrackCyclingTeamResponse()
+                    {
+                        id = ct.id,
+                        cyclingMatchId = ct.cyclingMatchId
+                    ,
+                        eventGroupId = ct.eventGroupId,
+                        eventId = ct.eventId,
+                        groupNum = ct.groupNum,
+                        isWin = ct.isWin
+                    ,
+                        totalScore = ct.totalScore,
+                        winType = ct.winType
+                    };
+
+                    var q2 = from pp in players
+                             where pp.eventId == eventId && pp.eventGroupId == eventGroupId && pp.cyclingMatchId == li.id && pp.groupNum == ct.groupNum
+                             select pp;
+                    List<t_event_cycling_match_playerresult> curPlayers = q2.Cast<t_event_cycling_match_playerresult>().ToList<t_event_cycling_match_playerresult>();
+                    List<TrackCyclingPlayerResponse> arrPlayers = new List<TrackCyclingPlayerResponse>();
+                    foreach (var pl in curPlayers)
+                    {
+                        var objp = new TrackCyclingPlayerResponse() {id=pl.id, cyclingMatchId = pl.cyclingMatchId
+                        , eventGroupId = pl.eventGroupId, eventId = pl.eventId, groupNum = pl.groupNum
+                        , playerId = pl.playerId, ranking = pl.ranking, refereeId = pl.refereeId, score = pl.score};
+                        arrPlayers.Add(objp);
+                    }
+                    ttp.players = arrPlayers;
+                    teamResp.Add(ttp);
+
+                }
+                obj.teams = teamResp;
+
+                list.Add(obj);
+            }
+
+            return list;
+        }
+
     }
 }

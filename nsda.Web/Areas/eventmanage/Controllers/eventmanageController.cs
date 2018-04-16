@@ -333,6 +333,22 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return Result(true, string.Empty, data);
         }
 
+        /// <summary>
+        /// //取当前比赛没结束的当前轮次的运行状态,左侧菜单跳转判断用,1就是未开始跳生成对垒表页面，2就是一开始只能跳track确认页面
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="eventGroupId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ContentResult GetCurCycling(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            var _eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            int curEventGroupID = eventGroupId == 0 ? _eventgroup.FirstOrDefault().Id : eventGroupId;
+            var data = _eventCyclingRaceService.GetCurCycling(eventId, curEventGroupID);
+            return Result(true, string.Empty, data);
+        }
+
         [HttpPost]
         [AjaxOnly]
         public ContentResult NextExec(int eventId, int eventGroupId = 0)
