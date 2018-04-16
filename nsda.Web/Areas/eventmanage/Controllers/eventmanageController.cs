@@ -307,6 +307,19 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(detail);
         }
 
+        /// <summary>
+        /// 当前轮次的对垒表
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="eventGroupId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ContentResult GetCurExec(int eventId, int eventGroupId = 0)
+        {
+            var data = _eventCyclingRaceService.GetCurEventCyclingMatch(new Models.t_event_cycling() { eventId = eventId, eventGroupId = eventGroupId });
+            return Result(true, string.Empty, data);
+        }
+
         //第一轮成绩录入
 
         public ActionResult writegrades()

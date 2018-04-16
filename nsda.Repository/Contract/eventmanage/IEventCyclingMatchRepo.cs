@@ -15,5 +15,7 @@ namespace nsda.Repository.Contract.eventmanage
         /// </summary>
         /// <param name="list"></param>
         void GenerEventCyclingMatch(List<t_event_cycling_match> list, t_event_cycling cyc);
+
+        List<t_event_cycling_match> GetCurEventCyclingMatch(t_event_cycling cyc);
     }
 }

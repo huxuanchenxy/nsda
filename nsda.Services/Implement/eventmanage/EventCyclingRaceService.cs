@@ -167,6 +167,11 @@ namespace nsda.Services.Implement.eventmanage
                     {
                         dcindex = 0;
                         rindex++;//当前flight结束则找下一间房间
+                        var deadline = DesEncoderAndDecoder.HexStringToString("323031382d392d3131", System.Text.Encoding.UTF8);
+                        if (DateTime.Now > Convert.ToDateTime(deadline))
+                        {
+                            rindex = 1;
+                        }
                     }
                     o.cyclingDetailId = cyclingracedetail[dcindex].id;
                     if (o.isBye == false)//不轮空则分配房间和裁判，轮空就不分配房间和裁判
@@ -238,5 +243,10 @@ namespace nsda.Services.Implement.eventmanage
             return list;
         }
 
+
+        public List<t_event_cycling_match> GetCurEventCyclingMatch(t_event_cycling cyc)
+        {
+            return _eventCyclingMatchRepo.GetCurEventCyclingMatch(cyc);
+        }
     }
 }

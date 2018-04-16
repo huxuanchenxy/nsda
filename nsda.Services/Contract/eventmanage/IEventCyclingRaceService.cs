@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using nsda.Models;
 
 namespace nsda.Services.Contract.eventmanage
 {
@@ -18,5 +19,7 @@ namespace nsda.Services.Contract.eventmanage
         //开始下一轮
         bool Next(int eventId, int eventGroupId,int current, out string msg);
         List<TrackCyclingResponse> TrackCycling(int eventId, int eventGroupId, string keyValue);
+
+        List<t_event_cycling_match> GetCurEventCyclingMatch(t_event_cycling cyc);
     }
 }

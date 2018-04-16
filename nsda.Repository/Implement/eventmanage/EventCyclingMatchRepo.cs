@@ -77,5 +77,21 @@ namespace nsda.Repository.Implement.eventmanage
                 LogUtils.LogError("EventCyclingMatchRepo.GenerEventCyclingMatch", ex);
             }
         }
+
+
+
+        public List<t_event_cycling_match> GetCurEventCyclingMatch(t_event_cycling cyc)
+        {
+            var curCyc = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == cyc.eventGroupId && c.eventId == cyc.eventId && c.cyclingRaceStatus == Model.enums.CyclingRaceStatusEm.未开始).OrderBy(c => c.currentround).FirstOrDefault();
+
+            List<t_event_cycling_match> ret;
+
+            string sql = $@" select * from t_event_cycling_match
+                            where cyclingDetailId in (select id  from t_event_cycling_detail where cyclingraceId = '{curCyc.id}' )
+                            ORDER BY id ";
+            ret = _dbContext.Query<t_event_cycling_match>(sql).ToList();
+            return ret;
+
+        }
     }
 }
