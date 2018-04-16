@@ -56,5 +56,7 @@ namespace nsda.Models
         public DateTime updatetime { get; set; }
     
         public bool isdelete { get; set; }
+    
+        public RefereeStatusEm? refereeStatus { get; set; }
     }
 }

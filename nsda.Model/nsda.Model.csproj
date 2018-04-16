@@ -59,6 +59,7 @@
     <Compile Include="dto\request\EventRequest.cs" />
     <Compile Include="dto\request\EventRoomQueryRequest.cs" />
     <Compile Include="dto\request\EventRoomRequest.cs" />
+    <Compile Include="dto\request\EventSignRequest.cs" />
     <Compile Include="dto\request\EventScoreRequest.cs" />
     <Compile Include="dto\request\LeavingMsgRequest.cs" />
     <Compile Include="dto\request\ListMatchRequest.cs" />

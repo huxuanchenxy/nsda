@@ -340,6 +340,8 @@ namespace nsda.Services.Implement.eventmanage
             try
             {
                 //需要计算
+                List<EventRoomResponse> list = _roomData.GetList(new EventRoomQueryRequest() { EventId = eventId });
+                roomCount = list.Count();
             }
             catch (Exception ex)
             {

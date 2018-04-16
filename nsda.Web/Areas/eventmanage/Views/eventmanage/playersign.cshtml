@@ -52,7 +52,7 @@
                 <th>年级</th>
                 <th>学校</th>
                 <th>学校所在城市</th>
-                <th>状态</th>
+                <th>操作</th>
                 @foreach (var item in date)
                 {
                     <th>@item</th>
@@ -140,10 +140,10 @@
                                 {
                                     if(val.IsStop)
                                     {
-                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop radius5 lightred color-white" data-stop="false">复赛</a></td>';
+                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop radius5 lightred color-white" data-stop="false">点击复赛</a></td>';
                                     }
                                     else{
-                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop" data-stop="true">停赛</a></td>';
+                                        html+='<td rowspan='+ rowspan + ' class="status"><a href="javascript:;" data-groupnum='+val.GroupNum +' class="stop" data-stop="true">点击停赛</a></td>';
                                     }
                                 }
                                 $.each(val.List, function (kk, item) {
@@ -180,6 +180,17 @@
                             $("#data").html('');
                             $("#pager").html("")
                         }
+
+                        //初始化签到表
+                        $.ajax({
+                            url: "/eventmanage/eventmanage/rendersign",
+                            type: "post",
+                            dataType: "json",
+                            data: filter,
+                            success: function (json) {
+                    
+                            }
+                        })
                     }
                 })
             };

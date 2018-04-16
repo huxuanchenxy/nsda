@@ -35,7 +35,7 @@ namespace nsda.Models
     
         public int settingsId { get; set; }
     
-        public int screenings { get; set; }
+        public int? screenings { get; set; }
     
         public KnockoutTypeEm knockoutType { get; set; }
     

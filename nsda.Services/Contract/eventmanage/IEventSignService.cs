@@ -31,7 +31,7 @@ namespace nsda.Services.Contract.eventmanage
         bool Stop(string groupNum, int eventId, bool isStop, out string msg);
         //裁判批量签到或设置组别
         bool BatchReferee(List<int> memberId, int eventId, int status, out string msg);
-        RefereeSignDataResponse RefereeSignData(int eventId);
+        RefereeSignDataResponse RefereeSignData(int eventId,string manMemberId);
         //查询当天组别签到人数
         int SignUpCount(int eventId, int eventGroupId);
     }

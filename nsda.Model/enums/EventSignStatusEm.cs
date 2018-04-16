@@ -23,4 +23,13 @@ namespace nsda.Model.enums
         选手 = 1,
         裁判 = 2
     }
+
+    /// <summary>
+    /// 裁判当日使用状态
+    /// </summary>
+    public enum RefereeStatusEm
+    {
+        闲置 = 1,
+        使用中 = 2
+    }
 }

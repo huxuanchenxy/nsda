@@ -928,7 +928,8 @@ namespace nsda.Services.Implement.member
                                         memberId = itemreferee.memberId,
                                         signdate = item.eventMatchDate,
                                         eventGroupId = itemreferee.eventGroupId,
-                                        isStop = false
+                                        isStop = false,
+                                        refereeStatus = RefereeStatusEm.闲置
                                     });
                                 }
                             }

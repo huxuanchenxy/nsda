@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using nsda.Model.dto.response;
 using nsda.Model.dto.request;
+using nsda.Models;
 
 namespace nsda.Repository.Contract.eventmanage
 {
-    public interface IEventPlayerSignUpRepo : IDependency
+    public interface IRefereeSignRepo : IDependency
     {
-        List<EventPlayerSignUpListResponse> EventPlayerList(EventPlayerSignUpQueryRequest request);
+        List<t_event_sign> RefereeSignData(int eventId, string manMemberId);
 
     }
 }
