@@ -161,7 +161,7 @@ namespace nsda.Services.Implement.eventmanage
                             inner join t_event_player_signup d on d.eventId=a.eventId and d.eventGroupId=a.eventGroupId and a.memberId=d.memberId
                             where a.isdelete=0 and b.isdelete=0 and c.isdelete=0
                             and a.eventId=@EventId and a.eventGroupId=@EventGroupId and c.memberId=@MemberId and eventSignType={(int)EventSignTypeEm.选手}
-                            {join.ToString()} group by a.memberId order by a.createtime desc
+                            {join.ToString()} group by a.memberId order by d.GroupNum desc
                         ";
                 int totalCount = 0;
                 list = _dbContext.Page<PlayerSignResponse>(sql, out totalCount, request.PageIndex, request.PageSize, request);

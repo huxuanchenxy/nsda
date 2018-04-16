@@ -302,6 +302,8 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
             ViewBag.EventGroup = eventgroup;
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            string msg = string.Empty;
+            var t = _eventCyclingRaceService.Start(eventId, eventGroupId,out msg);
             return View(detail);
         }
 

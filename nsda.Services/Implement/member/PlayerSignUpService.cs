@@ -931,6 +931,7 @@ namespace nsda.Services.Implement.member
                                         eventGroupId = itemreferee.eventGroupId,
                                         isStop = false,
                                         refereeStatus = RefereeStatusEm.闲置
+                                       
                                     });
                                 }
                             }
