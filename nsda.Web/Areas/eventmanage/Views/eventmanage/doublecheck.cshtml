@@ -113,6 +113,31 @@
             var eventGroupId = $("#eventGroupId").val();
             //调用方法 检测是否都已经确认 已确认到下一轮
             alert("开始下一轮");
+            $.ajax({
+                url: "/eventmanage/eventmanage/DoubleCheckNext",
+                type: "post",
+                dataType: "json",
+                data: {
+                    eventId: $('#eventId').val(),
+                    eventGroupId: $('#eventGroupId').val()
+                },
+                success: function (json) {
+                    //console.log(json);
+                    if (json.data != null) {
+                        var jobj = json.data;
+                        var nextround = jobj.nextround;
+                        if (nextround == '999')
+                        {
+                            alert("循环赛结束,进入淘汰赛");
+                            return false;
+                        }else
+                        {
+                            location.href = "/eventmanage/eventmanage/execmatch?eventId=" + $('#eventId').val() + "&eventGroupId=0";
+                        }
+                    }
+                }
+            });
+
         });
 
         //确认评分单

@@ -312,18 +312,35 @@ namespace nsda.Repository.Implement.eventmanage
             List<TrackCyclingResponse> list = new List<TrackCyclingResponse>();
 
             StringBuilder join = new StringBuilder();
-            //if (request.KeyValue.IsNotEmpty())
-            //{
-            //    request.KeyValue = $"%{request.KeyValue}%";
-            //    join.Append(" and (b.code like @KeyValue or b.completename like @KeyValue or a.groupnum like @KeyValue)");
-            //}
+
             var sql = $@" SELECT * FROM t_event_cycling_match
-                          WHERE cyclingDetailId IN (SELECT id FROM t_event_cycling_detail
-                          WHERE eventId = {eventId}  AND eventGroupId = {eventGroupId} AND cyclingraceId = (
-                            SELECT id FROM t_event_cycling
-                                WHERE eventId = {eventId} AND eventGroupId = {eventGroupId} AND cyclingRaceStatus = 2
-                                ) 
-                        )";
+                            WHERE eventid = {eventId} and eventGroupId = {eventGroupId}
+                        ";
+            if (keyValue.IsNotEmpty())
+            {
+                var key = $"%{keyValue}%";
+
+                sql = $@" select t.id,t.eventId,t.eventGroupId,t.progroupNum,t.congroupNum,t.roomId,t.refereeId
+                        ,t.cyclingDetailId,t.isBye,t.cyclingMatchStatus
+                         FROM
+                        (
+                        SELECT a.*,c.code as proCode,'' as conCode, d.completename as proCName,'' as conCName from t_event_cycling_match a
+                        LEFT JOIN t_event_player_signup b on a.progroupNum = b.groupnum
+                        LEFT JOIN t_member c on b.memberId = c.id
+                        LEFT JOIN t_member_player d on d.memberId = c.id 
+                        where a.eventId = {eventId} and a.eventGroupId = {eventGroupId}
+                        union 
+                        SELECT a.*,'' as proCode, c.code as conCode,'' as proCName, d.completename as conCName from t_event_cycling_match a
+                        LEFT JOIN t_event_player_signup b on a.congroupNum = b.groupnum
+                        LEFT JOIN t_member c on b.memberId = c.id
+                        LEFT JOIN t_member_player d on d.memberId = c.id 
+                        where a.eventId = {eventId} and a.eventGroupId = {eventGroupId}
+                        ) t 
+                        where t.proCode like '{key}' or t.conCode like '{key}' or t.proCName like '{key}' or t.conCName like '{key}'
+                        ORDER BY t.id
+                         ";
+            }
+
             List<t_event_cycling_match> matchs = _dbContext.Query<t_event_cycling_match>(sql).ToList();
 
 
@@ -393,6 +410,35 @@ namespace nsda.Repository.Implement.eventmanage
             }
 
             return list;
+        }
+
+
+        /// <summary>
+        /// 把当前进行中的轮次设置成结束状态
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="eventGroupId"></param>
+        /// <param name="currentRound"></param>
+        public t_event_cycling DoubleCheckNext(int eventId, int eventGroupId)
+        {
+            t_event_cycling curCycDoing = new t_event_cycling();
+            try
+            {
+                _dbContext.BeginTransaction();
+                curCycDoing = _dbContext.Select<t_event_cycling>(c => c.eventId == eventId && c.eventGroupId == eventGroupId && c.cyclingRaceStatus == Model.enums.CyclingRaceStatusEm.比赛中).FirstOrDefault();
+                
+                string sql = $@" UPDATE t_event_cycling SET cyclingRaceStatus = 3 WHERE id = {curCycDoing.id} ";
+                _dbContext.ExecuteScalar(sql);
+                
+                _dbContext.CommitChanges();
+
+            }
+            catch (Exception ex)
+            {
+                _dbContext.Rollback();
+                LogUtils.LogError("EventCyclingMatchRepo.GenerEventCyclingMatch", ex);
+            }
+            return curCycDoing;
         }
 
     }

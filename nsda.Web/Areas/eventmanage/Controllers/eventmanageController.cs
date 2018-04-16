@@ -256,13 +256,33 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
-
+        /// <summary>
+        /// 当前的track
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="eventGroupId"></param>
+        /// <returns></returns>
         [HttpGet]
         public ContentResult GetCurTrack(int eventId, int eventGroupId = 0)
         {
             var userContext = UserContext.WebUserContext;
             var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
             var data = _eventCyclingRaceService.TrackCyclingCur(eventId, eventGroupId,"");
+            return Result(true, string.Empty, data);
+        }
+
+        /// <summary>
+        /// 查询的track
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="eventGroupId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ContentResult GetTrack(int eventId, string keyvalue, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            var data = _eventCyclingRaceService.TrackCycling(eventId, eventGroupId, keyvalue);
             return Result(true, string.Empty, data);
         }
 
@@ -380,7 +400,21 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(detail);
         }
 
-
+        /// <summary>
+        /// doublecheck操作把当前进行中的轮次关闭，跳转下一轮对垒
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="eventGroupId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult DoubleCheckNext(int eventId, int eventGroupId = 0)
+        {
+            string msg = string.Empty;
+            var data = _eventCyclingRaceService.DoubleCheckNext(eventId, eventGroupId);
+            return Result(true, string.Empty, data);
+        }
+        
 
         #endregion
 

@@ -82,6 +82,12 @@
                             $("#data").html('');
                             $("#pager").html("")
                         }
+
+                        var cook = $.cookie('currentEventType');
+                        //alert(cook);
+                        if (cook != '' && cook != undefined && cook != null) {
+                            $.removeCookie('currentEventType');
+                        }
                     }
                 })
             };
@@ -93,11 +99,7 @@
         $(document).on('click', '#lkSetting', function () {
             var currentEventId = $(this).parent().parent().attr("data-eventid");
             var currentEventType = $(this).parent().parent().attr("data-eventtype");
-            var cook = $.cookie('currentEventType');
-            if (cook != '' && cook != undefined && cook != null)
-            {
-                $.cookie('currentEventType', null);
-            }
+            
             $.cookie('currentEventType', currentEventType);
             location.href = "/eventmanage/eventmanage/playersignup/" + currentEventId;
         });

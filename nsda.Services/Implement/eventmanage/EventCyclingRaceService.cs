@@ -236,11 +236,11 @@ namespace nsda.Services.Implement.eventmanage
             List<TrackCyclingResponse> list = new List<TrackCyclingResponse>();
             try
             {
-
+                list = _eventCyclingMatchRepo.GetTrackCycling(eventId, eventGroupId, keyValue);
             }
             catch (Exception ex)
             {
-                LogUtils.LogError("EventCyclingRaceService.TrackKnockout", ex);
+                LogUtils.LogError("EventCyclingRaceService.TrackCycling", ex);
             }
             return list;
         }
@@ -263,6 +263,12 @@ namespace nsda.Services.Implement.eventmanage
             //取当前比赛没结束的当前轮次的运行状态,左侧菜单跳转判断用,1就是未开始跳生成对垒表页面，2就是一开始只能跳track确认页面
             var ret = _eventCyclingMatchRepo.GetCurCycling(eventId, eventGroupId);
             return ret;
+        }
+
+
+        public t_event_cycling DoubleCheckNext(int eventId, int eventGroupId)
+        {
+            return _eventCyclingMatchRepo.DoubleCheckNext(eventId, eventGroupId);
         }
     }
 }

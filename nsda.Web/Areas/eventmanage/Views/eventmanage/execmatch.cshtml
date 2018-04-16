@@ -449,6 +449,7 @@
                     layer.closeAll();
                     if (json.flag) {
                         layer.msg('操作成功', { icon: 1, time: 1000 });
+                        location.href = "/eventmanage/eventmanage/doublecheck?eventId=" + $('#eventId').val() + "&eventGroupId=" + $('#eventGroupId').val();
                     }
                     else {
                         layer.msg(json.msg, { icon: 5, time: 1000 });
