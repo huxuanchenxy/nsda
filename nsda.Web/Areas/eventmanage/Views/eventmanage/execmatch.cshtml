@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="btnright">
-                    <a href="/eventmanage/eventmanage/writegrades/" class="star radius5 lightred color-white" id="exec"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></a>
+                    <a  class="star radius5 lightred color-white" id="exec"><i class="iconfont icon-bofang"></i><p>执行对垒表</p></a>
                 </div>
             </div>
         </div>
@@ -414,6 +414,33 @@
                 type: "post",
                 dataType: "json",
                 data: {
+                },
+                beforeSend: function () {
+                    layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.flag) {
+                        layer.msg('操作成功', { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.msg(json.msg, { icon: 5, time: 1000 });
+                    }
+                }
+                , error: function () {
+                    layer.closeAll();
+                }
+            });
+        });
+
+        $("#exec").click(function () {
+            $.ajax({
+                url: "/eventmanage/eventmanage/NextExec",
+                type: "post",
+                dataType: "json",
+                data: {
+                    eventId: $('#eventId').val()
+                    , eventGroupId: $('#eventGroupId').val()
                 },
                 beforeSend: function () {
                     layer.msg('操作中...', { shade: [0.5, '#f5f5f5'], scrollbar: false, time: 10000 });

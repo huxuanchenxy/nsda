@@ -136,6 +136,7 @@
     <Compile Include="dto\response\SignResponse.cs" />
     <Compile Include="dto\response\SysOperLogResponse.cs" />
     <Compile Include="dto\response\SysUserResponse.cs" />
+    <Compile Include="dto\response\TrackCyclingTeamResponse.cs" />
     <Compile Include="dto\response\TrackCyclingResponse.cs" />
     <Compile Include="dto\response\TrackKnockoutResponse.cs" />
     <Compile Include="dto\response\VoteResponse.cs" />

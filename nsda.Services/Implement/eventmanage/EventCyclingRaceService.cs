@@ -130,6 +130,7 @@ namespace nsda.Services.Implement.eventmanage
                 }
                 //用户设几间房就充分利用,设了是用户自己的事情
                 //如果是第一轮则随机配对
+                var pr = cyclingrace.pairRule;//匹配规则决定对垒情况
                 var newteamlist = Utility.RandomSortList(teamlist);
                 for (int i = 0; i < newteamlist.Count; i = i + 2)//选手总归要都待分配的
                 {
@@ -198,7 +199,7 @@ namespace nsda.Services.Implement.eventmanage
             }
             return flag;
         }
-        //开始下一轮
+        //开始下一轮 current 当前状态可以从后台算出不需要传入2018-3-28
         public bool Next(int eventId, int eventGroupId, int current, out string msg)
         {
             bool flag = false;
@@ -208,17 +209,18 @@ namespace nsda.Services.Implement.eventmanage
                 //先检测是否上一轮成绩都录入完
                 //看是否有双赢双输队伍
                 //查看上一轮所有的对垒 
-                var cyclingracesettings = _dbContext.Select<t_event_cycling_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
-                var cyclingrace = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.currentround == 1).FirstOrDefault();
-                var cyclingracedetail = _dbContext.Select<t_event_cycling_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();
+                //var cyclingracesettings = _dbContext.Select<t_event_cycling_settings>(c => c.eventGroupId == eventGroupId && c.eventId == eventId).FirstOrDefault();
+                var cyclingrace = _dbContext.Select<t_event_cycling>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingRaceStatus == Model.enums.CyclingRaceStatusEm.未开始).OrderBy(c=>c.currentround).FirstOrDefault();
+                //var cyclingracedetail = _dbContext.Select<t_event_cycling_detail>(c => c.eventGroupId == eventGroupId && c.eventId == eventId && c.cyclingraceId == cyclingrace.id).FirstOrDefault();
 
+                _eventCyclingMatchRepo.GotoNext(cyclingrace.eventId, cyclingrace.eventGroupId, cyclingrace.currentround);
                 //获取报名队伍信息
                 //获取裁判信息
                 //教室信息
-                var room = _dbContext.Query<t_event_room>($"").ToList();
+                //var room = _dbContext.Query<t_event_room>($"").ToList();
                 //获取教练信息
                 //排对垒 根据对垒规则 如果随机就无需查对垒规则
-
+                flag = true;
 
             }
             catch (Exception ex)
@@ -242,6 +244,13 @@ namespace nsda.Services.Implement.eventmanage
             }
             return list;
         }
+
+        public List<TrackCyclingResponse> TrackCyclingCur(int eventId, int eventGroupId, string keyValue)
+        {
+            return _eventCyclingMatchRepo.GetTrackCyclingCur(eventId, eventGroupId, keyValue);
+        }
+        
+
 
 
         public List<t_event_cycling_match> GetCurEventCyclingMatch(t_event_cycling cyc)

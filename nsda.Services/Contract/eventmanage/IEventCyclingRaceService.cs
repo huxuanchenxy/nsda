@@ -20,6 +20,8 @@ namespace nsda.Services.Contract.eventmanage
         bool Next(int eventId, int eventGroupId,int current, out string msg);
         List<TrackCyclingResponse> TrackCycling(int eventId, int eventGroupId, string keyValue);
 
+        List<TrackCyclingResponse> TrackCyclingCur(int eventId, int eventGroupId, string keyValue);
+
         List<t_event_cycling_match> GetCurEventCyclingMatch(t_event_cycling cyc);
     }
 }

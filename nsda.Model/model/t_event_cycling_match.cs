@@ -58,5 +58,7 @@ namespace nsda.Models
         public DateTime createtime { get; set; }
     
         public bool isdelete { get; set; }
+
+        public string cyclingraceId { get; set; }
     }
 }

@@ -256,6 +256,17 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
             return View(detail);
         }
+
+        [HttpGet]
+        public ContentResult GetCurTrack(int eventId, int eventGroupId = 0)
+        {
+            var userContext = UserContext.WebUserContext;
+            var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
+            var data = _eventCyclingRaceService.TrackCyclingCur(eventId, eventGroupId,"");
+            return Result(true, string.Empty, data);
+        }
+
+
         //获奖名单
         public ActionResult winnerlist(int eventId, int eventGroupId = 0)
         {
@@ -290,7 +301,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             return View(detail);
         }
         //成绩录入
-        
+
 
 
         //执行对垒
@@ -301,9 +312,11 @@ namespace nsda.Web.Areas.eventmanage.Controllers
             var detail = _eventService.Detail(eventId);
             var eventgroup = _eventService.SelectEventGroup(eventId, userContext.Id);
             ViewBag.EventGroup = eventgroup;
-            ViewBag.EventGroupId = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            int curEventGroupID = eventGroupId == 0 ? eventgroup.FirstOrDefault().Id : eventGroupId;
+            ViewBag.EventGroupId = curEventGroupID;
             string msg = string.Empty;
-            var t = _eventCyclingRaceService.Start(eventId, eventGroupId,out msg);
+
+            var t = _eventCyclingRaceService.Start(eventId, curEventGroupID, out msg);
             return View(detail);
         }
 
@@ -317,6 +330,15 @@ namespace nsda.Web.Areas.eventmanage.Controllers
         public ContentResult GetCurExec(int eventId, int eventGroupId = 0)
         {
             var data = _eventCyclingRaceService.GetCurEventCyclingMatch(new Models.t_event_cycling() { eventId = eventId, eventGroupId = eventGroupId });
+            return Result(true, string.Empty, data);
+        }
+
+        [HttpPost]
+        [AjaxOnly]
+        public ContentResult NextExec(int eventId, int eventGroupId = 0)
+        {
+            string msg = string.Empty;
+            var data = _eventCyclingRaceService.Next(eventId, eventGroupId, 0, out msg);
             return Result(true, string.Empty, data);
         }
 
@@ -801,11 +823,11 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
         [HttpPost]
         [AjaxOnly]
-        public ContentResult editRefereeSettings(int memberid, int statusSet,int eventGroupId,int eventid)
+        public ContentResult editRefereeSettings(int memberid, int statusSet, int eventGroupId, int eventid)
         {
             string msg = string.Empty;
 
-            _eventSignService.RefereeSignSetting(memberid, UserContext.WebUserContext.Id, statusSet,eventGroupId,eventid);
+            _eventSignService.RefereeSignSetting(memberid, UserContext.WebUserContext.Id, statusSet, eventGroupId, eventid);
 
             return Result<string>(true, msg);
         }
@@ -857,7 +879,7 @@ namespace nsda.Web.Areas.eventmanage.Controllers
 
             resp.groups = _eventService.SelectEventGroup(id, UserContext.WebUserContext.Id);
             resp.settings = _eventCyclingRaceSettingsService.CyclingRaceSettings(id);
-            
+
             return Json(resp, JsonRequestBehavior.AllowGet);
         }
         #endregion
